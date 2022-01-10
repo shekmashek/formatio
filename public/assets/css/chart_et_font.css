@@ -7,17 +7,12 @@
 :root {
     --header-height: 3rem;
     --nav-width: 80px;
-    --first-color: rgb(255, 255, 255);
-    --first-color-light: #ffffff;
+    --first-color: red;
+    --first-color-light: #ffff;
     --white-color: #868282;
     --body-font: "Open Sans", sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;
-    --star-size: 24px;
-    --star-color: rgb(82, 80, 80);
-    --star-background: orangered;
-    --progress_bar-color: #f1f1f1;
-    --progress_bar_background : orangered;
 }
 
 *,
@@ -29,31 +24,16 @@
 body {
     position: relative;
     margin: var(--header-height) 0 0 0;
-    padding: 0 1rem;
+    padding: 0;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: 0.5s;
 }
 
-/* start rating  */
-.Stars {
-    --pourcentage: calc(var(--note) / 5 * 100%);
-    display: inline-block;
-    font-size: var(--star-size);
-    font-family: Times;
-    line-height: 1;
+.btn_nouveau_color{
+    background-color: orangered;
+    color: white;
 }
-
-.Stars::before {
-    content: '★★★★★';
-    letter-spacing: 3px;
-    background: linear-gradient(90deg, var(--star-background) var(--pourcentage), var(--star-color) var(--pourcentage));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* fin start rating */
 .body-pd {
     padding-left: calc(var(--nav-width) + 1rem);
 }
@@ -84,7 +64,7 @@ input[type="email"],
 input[type="search"],
 textarea,
 select {
-    margin-top: 0.5rem;
+    margin-top: .5rem;
     background-color: none;
     height: 50px;
 }
@@ -92,12 +72,12 @@ input[type="file"] {
     margin-top: 1rem;
     background-color: none;
 }
-.label_margin_bottom {
+.label_margin_bottom{
     margin-bottom: 0;
-    margin-top: 0.5rem;
+    margin-top: .5rem;
 }
-.select_formulaire {
-    margin-top: 0.5rem;
+.select_formulaire{
+    margin-top: .5rem;
 }
 .formulaire_entreprise label {
     background-color: rgb(193, 188, 188);
@@ -219,7 +199,7 @@ select:invalid {
 .header-right .notification-box {
     position: fixed;
     z-index: 99;
-    top: 10px;
+    top: 15px;
     right: 200px;
     width: 50px;
     height: 50px;
@@ -240,8 +220,8 @@ select:invalid {
     line-height: 30px;
     font-size: 18px;
     border-radius: 50%;
-    background-color: #ff4927;
-    color: #fff;
+    background-color: yellow;
+    color: #000000;
     animation: zoom 5s 5s both infinite;
 }
 
@@ -298,7 +278,7 @@ select:invalid {
 .header-right .message-box {
     position: fixed;
     z-index: 99;
-    top: 10px;
+    top: 15px;
     right: 165px;
     width: 50px;
     height: 50px;
@@ -319,8 +299,8 @@ select:invalid {
     line-height: 30px;
     font-size: 18px;
     border-radius: 50%;
-    background-color: #ff4927;
-    color: #fff;
+    background-color: yellow;
+    color: #000000;
     animation: zoom 5s 5s both infinite;
 }
 
@@ -399,6 +379,7 @@ select:invalid {
 
 /* icon notifications */
 
+/* bulle  profile */
 .header-right .header_img {
     width: 40px;
     height: 40px;
@@ -407,14 +388,13 @@ select:invalid {
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid gray;
+    border: white 1px solid;
 }
 
 .header-right .header_img img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
 }
-/* bulle  profile */
+
 .header-right .pdp_profil {
     display: none;
     height: 0px;
@@ -425,6 +405,7 @@ select:invalid {
     border-radius: 5px 0px 5px 5px;
     background-color: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 .header-right .pdp_profil .container {
     padding: 0;
@@ -518,6 +499,7 @@ select:invalid {
 .l-navbar:hover,
 .nav:hover {
     width: var(--nav-width) + 150px;
+    background-color: var(--first-color-light);
 }
 
 .nav:hover {
@@ -1280,7 +1262,7 @@ Détails Formation
 
 .table-rating-bar .bar-container {
     width: 100%;
-    background-color: var(--progress_bar-color);
+    background-color: #f1f1f1;
     text-align: center;
     color: white;
     border-radius: 20px;
@@ -1289,37 +1271,37 @@ Détails Formation
 }
 
 .table-rating-bar .bar-container .bar-5 {
-    width: var(--progress_bar);
+    width: 70%;
     height: 13px;
-    background-color: var(--progress_bar_background);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-4 {
-    width: var(--progress_bar);
+    width: 50%;
     height: 13px;
-    background-color: var(--progress_bar_background);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-3 {
-    width: var(--progress_bar);
+    width: 30%;
     height: 13px;
-    background-color: var(--progress_bar_background);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-2 {
-    width: var(--progress_bar);
+    width: 15%;
     height: 13px;
-    background-color: var(--progress_bar_background);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-1 {
-    width: var(--progress_bar);
+    width: 0%;
     height: 13px;
-    background-color: var(--progress_bar_background);
+    background-color: orangered;
     border-radius: 20px;
 }
 

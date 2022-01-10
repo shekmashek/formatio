@@ -1,31 +1,27 @@
-/* .container {
-    max-width: 500px;
-    margin: 50px auto;
-    text-align: left;
-    font-family: sans-serif;
-} */
-.card-columns {
-    @include media-breakpoint-only(lg) {
-      column-count: 4;
-    }
-    @include media-breakpoint-only(xl) {
-      column-count: 5;
-    }
-  }
-/* form {
-    border: 1px solid #1A33FF;
-    background: #ecf5fc;
-    padding: 40px 50px 45px;
-} */
-
-/* .form-control:focus {
-    border-color: #000;
-    box-shadow: none;
-} */
-
-/* label {
-    font-weight: 600;
-} */
+body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-size: 100%;
+    width: 100%;
+    color: black;
+}
+body:before {
+    content: "";
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-image: url("../../img/background_login/pexels-oleg-magni-2058128.jpg");
+    background-size: cover;
+    z-index: -1;
+    filter: blur(5px);
+    background-size: cover;
+}
 
 .error {
     color: red;
@@ -37,10 +33,10 @@
 
 .form-control.error {
     border-color: red;
-    padding: .375rem .75rem;
+    padding: 0.375rem 0.75rem;
 }
 
-.border-imput-login{
+.border-imput-login {
     font-size: 19px;
     border-radius: 10rem;
     background-color: #b9b9b9;
@@ -48,136 +44,161 @@
     text-align: start;
     padding-left: 50px;
 }
-.btn-login{
+.btn-login {
     font-size: 20px;
-    background-color: #04803A;
+    background-color: #04803a;
     width: 300px;
     height: 48;
     color: white;
     border-radius: 5rem;
 }
-.btn-login:hover{
+.btn-login:hover {
     color: white;
 }
 
-.forgot-login{
+.forgot-login {
     float: right;
     text-decoration: none;
     color: #101010;
     font-weight: bold;
 }
-.forgot-login:hover{
-    color: #E7B000;
+.forgot-login:hover {
+    color: #e7b000;
 }
 
 .design-login-tete {
-
     color: white;
-    background-color: #04803A;
+    background-color: #04803a;
     width: auto;
     height: 70px;
 }
 
-.border-form-login{
+.border-form-login {
     border-radius: 20px;
 }
 
-.logo{
+.logo {
     width: 138px;
     height: 49px;
 }
 
-
-.logo_facture{
-    width: 138px;
-    height: 49px;
+.logo_facture {
+    width: 300px;
+    height: 90px;
 }
-.logo-catalogue{
+.logo-catalogue {
     width: 60px;
     height: 60px;
 }
-.tarif-payer{
-    background-color: #04803A;
+.tarif-payer {
+    background-color: #04803a;
     color: white;
 }
-.tarif-reste-positif{
+.tarif-reste-positif {
     background-color: red;
     color: white;
 }
 
-.tarif-reste-negatif{
+.tarif-reste-negatif {
     background-color: black;
     color: white;
     background-color: yellow;
     color: black;
 }
 
-.titre-fiche-facture{
+.titre-fiche-facture {
     color: rgb(218, 25, 115);
 }
 
-.login img{
+.login img {
     border-bottom-left-radius: 30px;
     border-top-left-radius: 30px;
 }
-.container-fluid{
+.container-fluid {
     margin: 0;
     padding: 0;
 }
-.formulaire{
+.formulaire {
     padding-left: 5rem;
 }
-.login-image{
+.login-image {
     border-radius: 2rem;
     border-top-left-radius: 2rem;
     border-bottom-left-radius: 2rem;
 }
-.libele{
+.libele {
     font-weight: bold;
     font-size: small;
 }
-.btn-login{
+.btn-login {
     width: 100%;
     border-radius: 0.5rem;
-    background-image:linear-gradient(60deg,#30cfeb,#2811f3);
+    background-image: linear-gradient(60deg, #30cfeb, #2811f3);
 }
-.btn-login:hover{
-    background-image:linear-gradient(60deg,#6908d8,#075bd8);
+.btn-login:hover {
+    background-image: linear-gradient(60deg, #6908d8, #075bd8);
     transition: 1s;
 }
-.bienvenue{
-    background-image:linear-gradient(60deg,#3da7ee 10%,#2008f8 90%);
+.bienvenue {
+    background-image: linear-gradient(60deg, #3da7ee 10%, #2008f8 90%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-.bienvenue:hover{
-    background-image:linear-gradient(60deg,#6908d8,#357de9);
+.bienvenue:hover {
+    background-image: linear-gradient(60deg, #6908d8, #357de9);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 }
-a{
+a {
     text-decoration: none;
 }
-.linear_gradient{
-    background:linear-gradient(blue,rgb(241, 44, 9));
+.linear_gradient {
+    background: linear-gradient(blue, rgb(241, 44, 9));
     background-size: contain;
     border-radius: 30px;
 }
-input{
+input {
     outline: #6908d8;
 }
-.row{
-    background-color: white;
-    border-radius: 30px;
-    box-shadow: 12px 22px 22px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: auto;
+.forgot-login {
+    padding: 0;
+    background-image: linear-gradient(60deg, #6908d8, #357de9);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }
-.forgot-login{
-    color: #4109db;
-}
-.forgot-login:hover{
+.forgot-login:hover {
     color: red;
 }
+
+.form_add_contact {
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.background_transparent {
+    background-color: rgba(255, 255, 255, 0.4);
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    padding-top: 100px;
+    padding-bottom: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.postion_login{
+    padding-top: 10%;
+}
+
+.centrer_img {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
