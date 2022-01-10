@@ -94,6 +94,8 @@
                                                         <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
                                                         @endforeach
                                                     </select>
+                                                    <p><strong style="color: red" id="err_msg">Aucune module détectée!</strong></p>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -122,8 +124,14 @@
             }
             , success: function(response) {
                 var userData = response;
-                for (var $i = 0; $i < userData.length; $i++) {
-                    $("#module").append('<option value="' + userData[$i].id + '">' + userData[$i].nom_module + '</option>');
+
+                if (userData.length <= 0) {
+                    document.getElementById("err_msg").innerHTML = "Aucune module détectée!";
+                } else {
+                    document.getElementById("err_msg").innerHTML = "";
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        $("#module").append('<option value="' + userData[$i].id + '">' + userData[$i].nom_module + '</option>');
+                    }
                 }
             }
             , error: function(error) {
@@ -131,6 +139,36 @@
             }
         });
 
+    });
+
+
+    $('#liste_pj').on('change', function(e) {
+        $('#groupe').empty();
+
+        var id = $(this).val();
+        $.ajax({
+            url: 'show_groupe/' + id
+            , type: 'get'
+            , data: {
+                id: id
+            }
+            , success: function(response) {
+                var userData = response;
+                if (userData.length <= 0) {
+                    document.getElementById("err_session").innerHTML = "Acucun session est détester! veuiller choisir une project pour avoir session";
+                } else {
+                    document.getElementById("err_session").innerHTML = "";
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        $("#groupe").append('<option value="' + userData[$i].id + '">' + userData[$i].nom_groupe + '</option>');
+                    }
+                }
+
+
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
     });
 
 </script>

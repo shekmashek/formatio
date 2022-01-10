@@ -18,7 +18,7 @@
     {{-- <link rel="icon" href="{{asset('img/logo_numerika/logonmrk.png')}}" sizes="90x60" type="image/png">
     <title>{{ config('app.name', 'Laravel') }}</title> --}}
     <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
-    <title> Formation.mg </title>
+    <title> formation.mg </title>
     {{-- catalogue --}}
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
