@@ -1,0 +1,17 @@
+th
+{
+  vertical-align: bottom;
+  text-align:center;
+}
+th span
+{
+  -ms-writing-mode: tb-rl;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: pre-line;
+}
+
+table, th, td {
+    border: 2px solid black;
+ }

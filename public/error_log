@@ -1,0 +1,1 @@
+[10-Jan-2022 11:53:31 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/formatio/public_html/bootstrap/app.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/formatio/public_html/public/index.php on line 38

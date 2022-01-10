@@ -1,0 +1,58 @@
+body{
+	margin : 0;
+	padding : 0;
+}
+.btn_login{
+	background-color: orange;
+}
+.btn_contactez_nous{
+	background-color: rgb(212,218,226);
+}
+.form_control{
+	border-radius: 10px;
+	border : none;
+	box-shadow : none;
+	padding : 8px 16px;
+}
+.form_control:focus{
+	outline : none;
+	border : none;
+	box-shadow : none;
+}
+.section1{
+		position : absolute;
+}
+.div_formation_mg{
+	margin-top : 35%;
+	margin-left : 5%;
+}
+.foramtion_mg{
+	font-size : 72px;
+	font-family : Times New romans;
+	font-weight : bold;
+}
+.mot_section1{
+	font-size : 32px;
+	font-family : Times New romans;
+}
+.logo_formation{
+	margin-top : 10%;
+	margin-left : 70%;
+}
+.mot_section2{
+	font-size : 24px;
+	font-family : Times New romans;
+	padding : 3%;
+}
+.qui_sommes_nous{
+	text-align : center;
+	font-size : 3rem;
+	font-family : Times New romans;
+}
+.div_image_section_3{
+	padding : 5%;
+	align-items : center;
+}
+.votre_partenaire{
+	font-family : Times New romans;
+}

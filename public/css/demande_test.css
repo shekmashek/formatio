@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+select:invalid,textarea:invalid{
+    border-right: 2px solid orangered;
+}
+select:valid,textarea:valid{
+    border-left: 2px solid rgb(67, 248, 22);
+}
+.bouton{
+    width: 80%;
+    background-image:linear-gradient(60deg,orange,orangered);
+}
+.bouton:hover{
+    background-image:linear-gradient(60deg,orange,red);
+}
+label{
+    font-weight: bold;
+}
+.stagiaire{
+    background-image:linear-gradient(60deg,orange,orangered);
+    color: white;
+    width: 150px;
+}
+.stagiaire:hover{
+    background-image:linear-gradient(60deg,orange,red);
+}
+.valider{
+    background-image:linear-gradient(60deg,orange,orangered);
+    color: white;
+    width: 50%;
+    border:none;
+    margin: auto;
+    display: block;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+}
+.valider:hover{
+    background-image:linear-gradient(60deg,orange,red);
+}
+

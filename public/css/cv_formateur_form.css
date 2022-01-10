@@ -1,0 +1,27 @@
+.form_insert_formateur input,select{
+    margin-top: 1rem;
+    background-color: none;
+}
+.form_insert_formateur .row form {
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: auto;
+}
+.form_insert_formateur input:valid,select:valid{
+    border-left: 2px solid rgb(63, 248, 63);
+}
+.form_insert_formateur input:invalid{
+    border-right: 1px solid orangered;
+}
+.form_insert_formateur input.envoyer{
+    border-left: transparent;
+    width: 50%;
+    /* background-image:linear-gradient(60deg,orange,red); */
+}
+.form_insert_formateur input.envoyer:hover{
+    border-radius: 0.5rem;
+    background-image:linear-gradient(60deg,red,orange);
+}
+

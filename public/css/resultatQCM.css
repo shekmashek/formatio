@@ -1,0 +1,62 @@
+.wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* background-color: #E1F5FE */
+}
+
+.card {
+    padding: 10px;
+    width: 350px;
+    height: 170px;
+    border: none;
+    overflow: hidden;
+    border-radius: 15px;
+    cursor: pointer;
+    border: 1px solid #eee;
+    background: rgb(131, 58, 180);
+    background: -moz-linear-gradient(309deg, rgba(131, 58, 180, 1) 0%, rgba(200, 42, 18, 0.87718837535014) 64%);
+    background: -webkit-linear-gradient(309deg, rgba(131, 58, 180, 1) 0%, rgba(200, 42, 18, 0.87718837535014) 64%);
+    background: linear-gradient(309deg, rgba(131, 58, 180, 1) 0%, rgba(200, 42, 18, 0.87718837535014) 64%)
+}
+
+.name {
+    margin-top: -6px;
+    opacity: 0
+}
+
+.visa {
+    opacity: 0
+}
+
+.cardnumber {
+    color: #fff
+}
+
+.card:hover .visa {
+    animation: anim 0.8s ease-in forwards
+}
+
+.card:hover .name {
+    animation: anim 0.8s ease-in-out forwards
+}
+
+@keyframes anim {
+    0% {
+        opacity: 0
+    }
+
+    50% {
+        opacity: 0.3
+    }
+
+    75% {
+        opacity: 0.7
+    }
+
+    100% {
+        opacity: 1
+    }
+}

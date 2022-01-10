@@ -1,0 +1,13 @@
+.profil-stagiaire{
+    width: 40px;
+    height: 40px;
+    border-radius: 100% solid;
+}
+
+.profil-entreprise{
+    width: 60px;
+    height: 60px;
+    border-radius: 100% solid;
+}
+
+.page2{top: 28vh;}

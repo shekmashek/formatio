@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Niveau;
+
+class NiveauController extends Controller
+{
+
+    public function index()
+    {
+        $niveau = Niveau::all();
+        return view('admin.niveau.niveau', compact('niveau'));
+    }
+
+
+    public function create()
+    {
+        //
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate(
+            [
+                'niveau' => ["required"]
+            ],
+            [
+                'niveau.required' => 'Veuillez remplir le champ'
+            ]
+        );
+        $niveau = new Niveau();
+        $niveau->niveau = $request->niveau;
+        $niveau->save();
+        return back();
+    }
+
+
+    public function show($id)
+    {
+        //
+    }
+
+
+    public function edit($id)
+    {
+        //
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+
+    public function destroy($id)
+    {
+        $niveau = Niveau::find($id);
+        $niveau->delete();
+        return back();
+    }
+}

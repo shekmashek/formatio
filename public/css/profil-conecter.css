@@ -1,0 +1,37 @@
+.profile-connecter{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+.css-menu{
+background-color: #E7B000;
+}
+.css-menuInter{
+    background-color: #3ece7c;
+    }
+
+    /* .li-menu{
+        text-decoration: none;
+        color: green;
+    } */
+
+    /* .navbar-light .navbar-nav .nav-item .nav-link {
+
+        color: rgb(233, 19, 126);
+
+      } */
+
+      /* .navbar-nav > .active > .a {
+
+        color: red;
+
+      } */
+
+      .navbar-nav .active {
+        color: rgb(253, 152, 21);
+      }
+
+
+.li-menu:hover{
+        color: #f1169d;
+    }

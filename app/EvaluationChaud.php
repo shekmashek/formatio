@@ -1,0 +1,281 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\FonctionGenerique;
+
+class EvaluationChaud extends Model
+{
+    protected $table = "reponse_evaluationchaud";
+    public $v_mere="v_question_mere";
+    public $qst_mere="question_mere";
+    public $qst_fille="question_fille";
+    public $type_champ="type_champs";
+
+    protected $fillable = [
+        'reponse_desc_champ','id_desc_champ','stagiaire_id','detail_id','created_at','updated_at'
+    ];
+
+    // find v_question_mere
+    public function findAllChampReponse(){
+        $fonction = new FonctionGenerique();
+        return $fonction->findAll("description_champ_reponse");
+    }
+
+      // find question mere
+    public function findAllQuestionMere(){
+        $fonction = new FonctionGenerique();
+        return $fonction->findAll("question_mere");
+    }
+
+      // find question fille
+    public function findAllQuestionFille(){
+        $fonction = new FonctionGenerique();
+        return $fonction->findAll("v_question_fille");
+    }
+
+      // find question type champs
+    public function findAllTypeChamp(){
+        $fonction = new FonctionGenerique();
+        return $fonction->findAll("type_champs");
+    }
+
+
+    public function findDetailProject($matricule){
+        $fonction = new FonctionGenerique();
+
+        $stagiaire = $fonction->findWhereOne("v_participant_groupe","matricule","=",$matricule);
+        $detail = $fonction->findWhereOne("v_participant_groupe","detail_id","=",$stagiaire->detail_id);
+
+        $data['stagiaire'] = $stagiaire;
+        $data['detail'] = $detail;
+        return $data;
+    }
+
+    //=============== ajout reponse formulaire de l'evaluation  à chaud par le stagiaire
+    public function insertTeste($reponse,$id_desc_champ,$id_stag,$id_detail){
+        $evaluation = new EvaluationChaud();
+        $evaluation->reponse_desc_champ =  $reponse;
+        $evaluation->id_desc_champ =  $id_desc_champ;
+        $evaluation->stagiaire_id =  $id_stag;
+        $evaluation->detail_id =  $id_detail;
+        $evaluation->save();
+    }
+
+    public function verifyExistsEvaluationChaud($id_stag,$id_detail){
+        $verify = DB::select('select (count(stagiaire_id)) verify from reponse_evaluationchaud where stagiaire_id = ?', [$id_stag]);
+        return $verify[0]->verify;
+    }
+
+    public function insert($reponse,$id_desc_champ,$id_stag,$id_detail){
+
+        DB::beginTransaction();
+
+        try {
+            DB::insert("INSERT INTO reponse_evaluationchaud(reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,1,1,NOW(),NOW())",
+            [$reponse,$id_desc_champ,$id_stag]);
+            DB::commit();
+            $message['success']="Votre evaluation à chaud est terminer avec succes!";
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message['error']="Désoler,pendant votre evaluation il y en a des bug de connection, veuillez recommencer merci";
+            throw $e;
+        }
+        return $message;
+    }
+
+    public function controlleCreationEvaluation($id_stag,$id_detail,$imput)
+    {
+        $qst_fille = $this->findAllQuestionFille(); // return question a l'interieur de question mere
+        $type_champ = $this->findAllChampReponse();
+
+        $valiny = array();
+        for($i=0;$i<count($qst_fille);$i+=1)
+        {
+            if ($qst_fille[$i]->desc_champ == "NOMBRE")
+            {
+                $valiny['result'][$i] = $imput["nb_qst_fille_".$qst_fille[$i]->id];
+                $valiny['id_champ'][$i] = $imput["id_champ_".$qst_fille[$i]->id];
+            } elseif ($qst_fille[$i]->desc_champ == "TEXT")
+            {
+                $valiny['result'][$i] = $imput["txt_qst_fille_".$qst_fille[$i]->id];
+                $valiny['id_champ'][$i] = $imput["id_champ_".$qst_fille[$i]->id];
+            } else
+            {
+                $tmp = $imput["case_qst_fille_".$qst_fille[$i]->id];
+                $str= explode("concat", $tmp);
+                $valiny['result'][$i] =$str[0];
+                $valiny['id_champ'][$i] = $str[1];
+            }
+        }
+        //============ insert multiple
+        for ($j=0; $j <count($valiny['result']) ; $j++) {
+            $message= $this->insert($valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$id_detail);
+        }
+
+        return $message;
+    }
+
+        public function verificationEvaluation($id_stag,$id_detail,$imput){
+
+
+            $verify = $this->verifyExistsEvaluationChaud($id_stag,$id_detail);
+            if($verify<=0)
+            {
+                $message = $this->controlleCreationEvaluation($id_stag,$id_detail,$imput);
+            } else {
+                $message['error']="Oups! votre evaluation sur cette project est déjà fait,merci beaucoup de diligence";
+            }
+
+            return $message;
+        }
+
+        public function getDetailResponseEvaluationChaud($stagiaire_id,$detail_id){
+            $fonction = new FonctionGenerique();
+            $data  = $fonction->findWhere("v_reponse_evaluationchaud",["stagiaire_id"],[$stagiaire_id]);
+            return $data;
+        }
+
+
+// fonction ajout evaluation à chaud
+        public function insert_qste_mere($qte_mere,$desc){
+
+            $data = [$qte_mere,$desc];
+
+            DB::beginTransaction();
+            try {
+                DB::insert("INSERT INTO question_mere(qst_mere,desc_reponse,created_at,updated_at) values (?,?,NOW(),NOW())",
+                $data);
+                DB::commit();
+                $message['success']="Votre question d'évaluation à chaud est bien enregistrer avec succèss !";
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message['error']="Désoler,pendant votre evaluation il y en a des bug de connection, veuillez recommencer merci";
+                throw $e;
+            }
+            return $message;
+        }
+
+public function insert_qste_fille($question_fille,$id_type_champ,$id_qste_mere){
+    DB::beginTransaction();
+
+    try {
+        DB::insert("INSERT INTO question_fille(qst_fille ,created_at,updated_at,id_type_champs,id_qst_mere) values (?,NOW(),NOW(),?,?)",
+
+        [$question_fille,$id_type_champ,$id_qste_mere]);
+        DB::commit();
+        $message['success']="Votre question d'évaluation à chaud est bien enregistrer avec succèss !";
+    } catch (\Exception $e) {
+        DB::rollback();
+        $message['error']="Désoler,pendant votre evaluation il y en a des bug de connection, veuillez recommencer merci";
+        throw $e;
+    }
+    return $message;
+
+}
+
+public function insert_desc_champ_reponse($desc,$id_qst_fille,$nb_max){
+
+    DB::beginTransaction();
+
+    try {
+            if($nb_max == null){
+                DB::insert("INSERT INTO description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at) values (?,?,null,NOW(),NOW())",[$desc,$id_qst_fille]);
+            } else {
+                DB::insert("INSERT INTO description_champ_reponse(descr_champs,id_qst_fille,nb_max,created_at,updated_at) values (?,?,?,NOW(),NOW())",[$desc,$id_qst_fille,$nb_max]);
+            }
+            DB::commit();
+        $message['success']="Votre question d'évaluation à chaud est bien enregistrer avec succèss !";
+    } catch (\Exception $e) {
+        DB::rollback();
+        $message['error']="Désoler,pendant votre evaluation il y en a des bug de connection, veuillez recommencer merci";
+        throw $e;
+    }
+    return $message;
+
+}
+
+
+    public function verify_insert_qste($request)
+    {
+        $fonct = new FonctionGenerique();
+
+        $type_champ_id = $fonct->findWhereMulitOne("type_champs",["desc_champ"],[$request->type_champ]);
+        $qste_mere = $fonct->findWhereMulitOne("question_mere",["qst_mere"],[$request->qstmere]);
+
+        if($request->qstmere!= null && count($request["desc_reponse_qste_fille"]) >0 ){
+
+            if($qste_mere == null)
+            {
+                $msg1 = $this->insert_qste_mere($request->qstmere,$request->descmere);
+                $qste_mere = $fonct->findWhereMulitOne("question_mere",["qst_mere"],[$request->qstmere]);
+
+
+                    $qste_fille = $fonct->findWhereMulitOne("question_fille",["qst_fille","id_qst_mere","id_type_champs"],[$request->qstfille,$qste_mere->id,$type_champ_id->id]);
+                    if($qste_fille == null)
+                    {
+                        $msg2 = $this->insert_qste_fille($request->qstfille,$type_champ_id->id,$qste_mere->id);
+                        $qste_fille = $fonct->findWhereMulitOne("question_fille",["qst_fille","id_qst_mere","id_type_champs"],[$request->qstfille,$qste_mere->id,$type_champ_id->id]);
+
+                        for ($i=0; $i <count($request["desc_reponse_qste_fille"]) ; $i++)
+                            {
+                                if($request["nb_max_desc__reponse_fille"]!=null){
+                                    $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,$request["nb_max_desc__reponse_fille"][$i]);
+                                } else {
+                                    $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,null);
+                                }
+                            }
+                    } else
+                    {
+                        for ($i=0; $i <count($request["desc_reponse_qste_fille"]) ; $i++)
+                        {
+                            if($request["nb_max_desc__reponse_fille"]!=null){
+                                $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,$request["nb_max_desc__reponse_fille"][$i]);
+                            } else {
+                                $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,null);
+                            }
+                        }
+
+                    }
+
+            } else
+            {
+                    $qste_fille = $fonct->findWhereMulitOne("question_fille",["qst_fille","id_qst_mere","id_type_champs"],[$request->qstfille,$qste_mere->id,$type_champ_id->id]);
+                    if($qste_fille == null)
+                    {
+                        $msg2 = $this->insert_qste_fille($request->qstfille,$type_champ_id->id,$qste_mere->id);
+                        $qste_fille = $fonct->findWhereMulitOne("question_fille",["qst_fille","id_qst_mere","id_type_champs"],[$request->qstfille,$qste_mere->id,$type_champ_id->id]);
+
+                        for ($i=0; $i <count($request["desc_reponse_qste_fille"]) ; $i++)
+                            {
+                                if($request["nb_max_desc__reponse_fille"]!=null){
+                                    $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,$request["nb_max_desc__reponse_fille"][$i]);
+                                } else {
+                                    $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,null);
+                                }
+                            }
+                    } else
+                    {
+                        for ($i=0; $i <count($request["desc_reponse_qste_fille"]) ; $i++)
+                        {
+                            if($request["nb_max_desc__reponse_fille"]!=null){
+                                $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,$request["nb_max_desc__reponse_fille"][$i]);
+                            } else {
+                                $msg3 = $this->insert_desc_champ_reponse($request["desc_reponse_qste_fille"][$i],$qste_fille->id,null);
+                            }
+                        }
+
+                    }
+            }
+
+            return back();
+        } else {
+            return back()->with("error","champ vide");
+        }
+
+    }
+
+}
