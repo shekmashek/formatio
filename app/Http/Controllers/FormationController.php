@@ -156,8 +156,8 @@ class FormationController extends Controller
         return view('referent.catalogue.liste_formation', compact('infos'));
     }
     public function affichageParModule($id){
-        $infos = DB::select('select * from moduleFormation where module_id = ?', [$id])[0];
-        $nb_avis = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleFormation mf left join avis a on mf.module_id = a.module_id where mf.module_id = ? group by mf.module_id',[$id])[0]->nb_avis;
+        $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
+        $nb_avis = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.module_id = ? group by mf.module_id',[$id])[0]->nb_avis;
         $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
         $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
         $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);

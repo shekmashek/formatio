@@ -100,7 +100,7 @@
 
                                         @foreach($datas as $formateur)
                                     		<tr>
-                                    			<td>{{$formateur->nom_formateur}}</td>
+                                    			<td>{{$formateur->nom_formateur .' '.$formateur->prenom_formateur}}</td>
                                     			<td>{{$formateur->mail_formateur}}</td>
 
                                             </tr>

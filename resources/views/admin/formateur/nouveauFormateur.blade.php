@@ -64,7 +64,7 @@
                                             </div>
                                             @enderror
                                             <div class="form-group">
-                                                <input type="text" name="prenom" id="prenom" placeholder="Prenom" class="form-control" pattern="[A-Za-z' -]{0,255}" title="5 à 255 caractères">
+                                                <input type="text" name="prenom" id="prenom" placeholder="Prenom" class="form-control"  title="1 à 255 caractères">
                                             </div>
                                             @error('prenom')
                                             <div class="col-sm-6">
@@ -189,7 +189,7 @@
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="taches[]" id="taches" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Tâches faites dans l'entreprise" class="domaine" required>
+                                                        <input type="text" class="form-control" name="taches[]" id="taches" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Description des tâches faites dans l'entreprise" class="domaine" required>
                                                     </div>
                                                 </div>
                                             </div>
