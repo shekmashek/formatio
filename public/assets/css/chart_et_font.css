@@ -1594,6 +1594,17 @@ Détails Formation
   Page message
 -----------------------*/
 
+/*---------------------
+  nouveau dropdown menu left
+-----------------------*/
+.new_dropdown_left{
+    display: none;
+}
+
+/*---------------------
+  nouveau dropdown menu left
+-----------------------*/
+
 @media screen and (min-width: 768px) {
     body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;

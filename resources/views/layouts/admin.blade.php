@@ -269,8 +269,8 @@
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_chefDepartement')}}">Chefs Départements</a>
                                 </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('nouveau_manager')}}">Nouveau Département</a>
+                                <li class="my-1 sousMenu new_dropdown_left">
+                                    <a href="{{route('nouveau_manager')}}">Nouveau Chef</a>
                                 </li>
                             </ul>
                         </li>
@@ -558,6 +558,11 @@
             });
         });
 
+        $(document).ready(function() {
+            $('.new_dropdown_left').on('click', function() {
+                document.getElementById(affiche).style.display = none;
+            });
+        });
 
 
         $(document).ready(function() {
