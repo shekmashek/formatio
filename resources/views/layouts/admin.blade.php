@@ -287,9 +287,22 @@
                     <li class="my-2">
                         <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between">
                                 <a href="{{route('liste_projet')}}">Projets</a>
+                                <p>60</p>
                             </li>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets en cours</a>
+                                <p>10</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets termine</a>
+                                <p>5</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets a venir</a>
+                                <p>6</p>
+                            </span>
                         </ul>
                     </li>
                     @endcanany
@@ -298,17 +311,21 @@
                     <li class="my-2">
                         <a href="#gsutSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Gestion des Utilisateurs</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="gsutSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_utilisateur')}}">Responsables</a>
+                                <p>65</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('utilisateur_stagiaire')}}">Stagiaires</a>
+                                <p>80</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('utilisateur_formateur')}}">Formateurs</a>
+                                <p>32</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('utilisateur_cfp')}}">Cfp</a>
+                                <p>5</p>
                             </li>
                         </ul>
                     </li>
@@ -319,8 +336,9 @@
                     <li class="my-2">
                         <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="frmtSubMenu">
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('liste_formateur')}}">Listes</a>
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_formateur')}}">Formateur</a>
+                                <p>5</p>
                             </li>
                             <li class="my-1 sousMenu">
                                 <a href="{{route('nouveau_formateur')}}">Nouveau Formateur</a>
@@ -334,10 +352,11 @@
                     <li class="my-2">
                         <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="mngrSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_chefDepartement')}}">Chefs Départements</a>
+                                <p>8</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('nouveau_manager')}}">Nouveau Chef</a>
                             </li>
                         </ul>
@@ -349,11 +368,12 @@
                     <li class="my-2">
                         <a href="#refSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Référents</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="refSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_responsable')}}">Référents</a>
+                                <p>7</p>
                             </li>
                             @canany(['isSuperAdmin','isAdmin'])
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('nouveau_responsable')}}">Nouveau référent</a>
                             </li>
                             @endcanany
@@ -365,10 +385,11 @@
                     <li class="my-2">
                         <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Stagiaires</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="stgrSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_participant')}}">Stagiaires</a>
+                                <p>80</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('nouveau_participant')}}">Nouveau Stagiaire</a>
                             </li>
                         </ul>
