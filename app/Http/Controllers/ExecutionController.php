@@ -17,7 +17,7 @@ use App\formation;
 use App\formateur;
 use App\participant_groupe;
 use App\programme;
-use App\Responsable;
+use App\responsable;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\FonctionGenerique;
@@ -53,7 +53,7 @@ class ExecutionController extends Controller
         $formation = formation::all();
         $module = module::orderBy('nom_module')->get();
         $programme =programme::orderBy('titre')->get();
-        
+
         return view('admin.stagiaire.ajout_stagiaire', compact('id_groupe', 'programme', 'module', 'formation', 'stagiaire', 'detail', 'nom_etp', 'date_horaire_formation', 'nb_meme_horaire'));
     }
 
@@ -166,8 +166,8 @@ class ExecutionController extends Controller
             $datas = DB::select('select * from v_detail_projet_groupe where entreprise_id = ?', [$entreprise_id]);
         }
         if (Gate::allows('isStagiaire')) {
-            $entreprise_id = stagiaire::where('user_id',$id_user)->value('entreprise_id');
-            $datas =DB::select('select * from v_participant_groupe where entreprise_id = ?', [$entreprise_id]);
+            $stagiaire_id = stagiaire::where('user_id',$id_user)->value('id');
+            $datas =DB::select('select * from v_participant_groupe where stagiaire_id = ?', [$stagiaire_id]);
         }
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id',$id_user)->value('id');

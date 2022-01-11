@@ -10,7 +10,7 @@
                     <div class="py-2">
                         <label for="cfp" class="form-label">Centre de Formation</label>
                         <select class="form-select" id="centre_formation" name="centre" aria-label="centre" required>
-                            <option value="">Choisissez une formation...</option>
+                            <option value="">Choisissez une centre de formation...</option>
                             @foreach ($centre as $ctr)
                                 <option value="{{$ctr->id}}">{{$ctr->nom}}</option>
                             @endforeach

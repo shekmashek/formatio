@@ -107,7 +107,8 @@
                     @isset($totale_invitation)
                     @if($totale_invitation>0)
                     {{$totale_invitation}}
-
+                    @else
+                    0
                     @endif
                     @endisset
                 </span>
@@ -126,7 +127,8 @@
                                 @isset($totale_invitation)
                                 @if($totale_invitation>0)
                                 ({{$totale_invitation}})
-
+                                @else
+                                0
                                 @endif
                                 @endisset
                             </strong></h4>

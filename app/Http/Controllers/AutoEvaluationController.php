@@ -130,6 +130,7 @@ class AutoEvaluationController extends Controller
     public function insert_stagiaire(Request $request)
     {
         $id_dmd = $request->demande;
+        
         $stagiaire = $request['stagiaire'];
         for ($i = 0; $i < count($stagiaire); $i++) {
             DB::insert('insert into stagiaire_pour_test_niveaux (stagiaire_id, demande_tn_id) values (?, ?)', [$stagiaire[$i], $id_dmd]);

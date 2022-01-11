@@ -19,7 +19,7 @@
                             <tr>
                                 <td>{{$lst->description_test}}</td>
                                 <td>{{$lst->entreprise->nom_etp}}</td>
-                                <td>{{$lst->cfp->Nom}}</td>
+                                <td>{{$lst->cfp->nom}}</td>
                                 <td>{{$lst->formation->nom_formation}}</td>
                                 <td><a href="{{route('choix_stagiaires',['id'=>$lst->id])}}"><button class="btn btn-warning stagiaire">Stagiare</button></a></td>
                             </tr>

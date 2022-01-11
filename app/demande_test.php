@@ -11,7 +11,7 @@ class Demande_test extends Model
         'description_test','entreprise_id','cfp_id','formation_id','date_creation'
     ];
     public function entreprise(){
-        return $this->belongsTo('App\cntreprise');
+        return $this->belongsTo('App\entreprise');
     }
     public function cfp(){
         return $this->belongsTo('App\cfp');
