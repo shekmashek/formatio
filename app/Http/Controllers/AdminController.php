@@ -20,7 +20,7 @@ class AdminController extends Controller
         $etp_cfp = DB::select('select COUNT(*) as etp_cfp FROM `demmande_etp_cfp` where inviter_cfp_id = ? and activiter = ?',[$id_cfp,1])[0]->etp_cfp;
         $entreprise = $etp_cfp + $cfp_etp;
 
-        $projet_en_cours = DB::select('select count(*) as projet_en_cours FROM `projets` where cfp_id = ? and status = ?',[$id_cfp,'En Cour'])[0]->projet_en_cours;
+        $projet_en_cours = DB::select('select count(*) as projet_en_cours FROM `projets` where cfp_id = ? and status = ?',[$id_cfp,'En Cours'])[0]->projet_en_cours;
         $projet_termime = DB::select('select count(*) as projet_termine FROM `projets` where cfp_id = ? and status = ?',[$id_cfp,'termine'])[0]->projet_termine;
         $projet_a_venir = DB::select('select count(*) as projet_a_venir FROM `projets` where cfp_id = ? and status = ?',[$id_cfp,'A venir'])[0]->projet_a_venir;
         $projet = DB::select('select count(*) as all_projet from projets where cfp_id =?',[$id_cfp])[0]->all_projet;
@@ -40,7 +40,7 @@ class AdminController extends Controller
         $etp_cfp = DB::select('select COUNT(*) as etp_cfp FROM `demmande_etp_cfp` where demmandeur_etp_id = ? and activiter = ?',[$id_etp,1])[0]->etp_cfp;
         $cfp = $etp_cfp + $cfp_etp;
 
-        $projet_en_cours_etp = DB::select('select count(*) as projet_en_cours FROM `projets` where entreprise_id = ? and status = ?',[$id_etp,'En Cour'])[0]->projet_en_cours;
+        $projet_en_cours_etp = DB::select('select count(*) as projet_en_cours FROM `projets` where entreprise_id = ? and status = ?',[$id_etp,'En Cours'])[0]->projet_en_cours;
         $projet_termime_etp = DB::select('select count(*) as projet_termine FROM `projets` where entreprise_id = ? and status = ?',[$id_etp,'termine'])[0]->projet_termine;
         $projet_a_venir_etp = DB::select('select count(*) as projet_a_venir FROM `projets` where entreprise_id = ? and status = ?',[$id_etp,'A venir'])[0]->projet_a_venir;
         $projet_etp = DB::select('select count(*) as all_projet from projets where entreprise_id =?',[$id_etp])[0]->all_projet;
