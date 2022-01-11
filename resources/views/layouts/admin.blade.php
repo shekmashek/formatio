@@ -138,23 +138,19 @@
     </header>
 
     <div class="l-navbar" id="nav-bar">
-        <div class="container-fluid">
+        <div class="container-fluid ">
             <nav class="nav">
                 <div class="d-flex align-items-center justify-content-space-between ms-3 img"><a href="{{ route('accueil_admin') }}" class="d-flex align-items-center"><img src="{{asset('img/images/logo_fmg.png')}}" id="img" class="img-fluid logo" alt="logo">&nbsp;<span class="d-flex textS">FORMATION.MG</span></a></div>
                 <div class="nav_list">
                     <ul class="lisst-unstyled p-0">
                         {{-- categorie de formation --}}
                         <li class="">
-                            <a href="#categSubmenu" data-toggle="collapse" aria-expanded="false" class="nav_linke active dropdown-toggle liste"><i class='bx bx-home-smile nav_icon'></i><span class="nav_name">Catalogue de formation</span></a>
+                            <a href="#categSubmenu" data-toggle="collapse" aria-expanded="false" class="nav_linke active dropdown-toggle liste"><i class='bx bx-home-smile nav_icon'></i><span class="nav_name">Catalogue</span></a>@canany(['isCFP','isSuperAdmin','isAdmin','isFormateur'])&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouvelle_formation')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau formation"></i></a>@endcanany
                             <ul class="collapse lisst-unstyled submenuColor" id="categSubmenu">
                                 <li class="my-2 sousMenu">
                                     <a href="{{route('liste_formation')}}">Formations</a>
                                 </li>
                                 @canany(['isCFP','isSuperAdmin','isAdmin','isFormateur'])
-                                <li class="my-2 sousMenu">
-                                    <a href="{{route('nouvelle_formation')}}">Nouvelle Formation</a>
-                                </li>
-
                                 <li class="my-2 sousMenu">
                                     <a href="{{route('liste_module')}}">Modules</a>
                                 </li>
@@ -176,13 +172,10 @@
                         {{-- entreprise --}}
                         @canany(['isSuperAdmin','isAdmin'])
                         <li class="my-2">
-                            <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
+                            <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprises</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouvelle_entreprise')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau entreprise"></i></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_entreprise')}}">Entreprises</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('nouvelle_entreprise')}}">Nouvelle Entreprise</a>
                                 </li>
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('departement.index')}}">Département</a>
@@ -192,25 +185,17 @@
                         @endcanany
                         @can('isCFP')
                         <li class="my-2">
-                            <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_entreprise')}}">Entreprises</a>
-                                </li>
-                            </ul>
+                            <a href="{{route('liste_entreprise')}}" class="nav_linke liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprises</span></a>
                         </li>
                         @endcan
 
                         {{-- projet de formation --}}
                         @canany(['isCFP','isSuperAdmin'])
                         <li class="my-2">
-                            <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
+                            <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_projet')}}">Projets</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('nouveau_projet')}}">Nouvelle Projet</a>
                                 </li>
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_groupe')}}">Groupes</a>
@@ -220,18 +205,13 @@
                         @endcanany
                         @can('isReferent')
                         <li class="my-2">
-                            <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_projet')}}">Projets</a>
-                                </li>
-                            </ul>
+                            <a href="{{route('liste_projet')}}" class="nav_linke liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>
                         </li>
                         @endcan
                         {{-- utilisateurs --}}
                         @canany(['isSuperAdmin','isAdmin'])
                         <li class="my-2">
-                            <a href="#gsutSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Gestion des Utilisateurs</span></a>
+                            <a href="#gsutSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Utilisateurs</span></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="gsutSubMenu">
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_utilisateur')}}">Responsables</a>
@@ -249,13 +229,10 @@
                         {{-- formateurs --}}
                         @canany(['isCFP','isSuperAdmin','isAdmin'])
                         <li class="my-2">
-                            <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>
+                            <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_formateur')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau formateur"></i></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="frmtSubMenu">
                                 <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_formateur')}}">Listes</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('nouveau_formateur')}}">Nouveau Formateur</a>
+                                    <a href="{{route('liste_formateur')}}">Formateurs</a>
                                 </li>
                             </ul>
                         </li>
@@ -263,14 +240,11 @@
 
                         {{-- manager --}}
                         @canany(['isSuperAdmin','isReferent','isAdmin'])
-                        <li class="my-2">
-                            <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>
+                        <li class="my-2" style="width: 100%;">
+                            <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_manager')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau chef departement"></i></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="mngrSubMenu">
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_chefDepartement')}}">Chefs Départements</a>
-                                </li>
-                                <li class="my-1 sousMenu new_dropdown_left">
-                                    <a href="{{route('nouveau_manager')}}">Nouveau Chef</a>
                                 </li>
                             </ul>
                         </li>
@@ -279,13 +253,10 @@
                         {{-- Referent --}}
                         @canany(['isCFP','isAdmin','isSuperAdmin'])
                         <li class="my-2">
-                            <a href="#refSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Réferents</span></a>
+                            <a href="#refSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Réferents</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_responsable')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau responsable"></i></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="refSubMenu">
                                 <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_responsable')}}">Réferents</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('nouveau_responsable')}}">Nouveau réferent</a>
+                                    <a href="{{route('liste_responsable')}}">Résponsables</a>
                                 </li>
                             </ul>
                         </li>
@@ -293,41 +264,23 @@
                         {{-- stagiares --}}
                         @canany(['isSuperAdmin','isReferent'])
                         <li class="my-2">
-                            <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Stagiaires</span></a>
+                            <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Participants</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_participant')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau stagiaire"></i></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="stgrSubMenu">
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_participant')}}">Stagiaires</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('nouveau_participant')}}">Nouveau Stagiaire</a>
                                 </li>
                             </ul>
                         </li>
                         @endcanany
 
-                        {{-- sessions --}}
-                        {{-- @canany(['isSuperAdmin','isCFP'])
-                            <li class="my-2">
-                                <a href="#sesnSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-group nav_icon"></i><span class="nav_name">Gestion des Sessions</span></a>
-                                <ul class="collapse lisst-unstyled submenuColor" id="sesnSubMenu">
-                                    <li class="my-1 sousMenu">
-                                        <a href="{{route('liste_detail')}}">Détails</a>
-                        </li>
-                    </ul>
-                    </li>
-                    @endcanany --}}
-
                     {{-- action de formations --}}
                     @canany(['isSuperAdmin','isCFP','isReferent','isFormateur'])
                     <li class="my-2">
-                        <a href="#actfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-line-chart nav_icon'></i><span class="nav_name">Action de Formation</span></a>
+                        <a href="#actfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-line-chart nav_icon'></i><span class="nav_name">Sessions</span></a>@canany(['isSuperAdmin','isCFP','isReferent'])&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('execution')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau session"></i></a>@endcanany
                         <ul class="collapse lisst-unstyled submenuColor" id="actfSubMenu">
                             @canany(['isSuperAdmin','isCFP','isReferent'])
                             <li class="my-1 sousMenu">
-                                <a href="{{route('liste_detail')}}">Détails</a>
-                            </li>
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('execution')}}">execution</a>
+                                <a href="{{route('liste_detail')}}">Listes</a>
                             </li>
                             @endcanany
                             @canany(['isFormateur'])
@@ -340,22 +293,12 @@
                     @endcanany
                     {{-- calendrire de formations --}}
                     <li class="my-2">
-                        <a href="#caldrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-calendar-check nav_icon'></i><span class="nav_name">Calendrier de Formation</span></a>
-                        <ul class="collapse lisst-unstyled submenuColor" id="caldrSubMenu">
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('calendrier')}}">Calendrier</a>
-                            </li>
-                        </ul>
+                        <a href="{{route('calendrier')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Calendrier</span></a>
                     </li>
                     {{-- commercial --}}
                     @canany(['isSuperAdmin','isCFP','isReferent'])
                     <li class="my-2">
-                        <a href="#gstcSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-comment nav_icon'></i><span class="nav_name">Gestion Commercial</span></a>
-                        <ul class="collapse lisst-unstyled submenuColor" id="gstcSubMenu">
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('collaboration')}}">Collaboration</a>
-                            </li>
-                        </ul>
+                        <a href="{{route('collaboration')}}" class="nav_linke liste"><i class='bx bxs-message-dots nav_icon'></i><span class="nav_name">Collaboration</span></a>
                     </li>
                     @endcanany
                     {{-- financier --}}
@@ -364,29 +307,14 @@
                     {{-- route facture pour référent --}}
                     @canany(['isCFP','isSuperAdmin','isAdmin','isReferent'])
                     <li class="my-2">
-                        <a href="#gstfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-money nav_icon'></i><span class="nav_name">Gestion Financière</span></a>
-                        <ul class="collapse lisst-unstyled submenuColor" id="gstfSubMenu">
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('liste_facture',3)}}">Facturation</a>
-                            </li>
-                            {{-- <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_facture',3)}}">Facturation</a>
-                    </li> --}}
-                    {{-- <li class="my-1 sousMenu">
-                                    <a href="">Encaissement</a>
-                                </li> --}}
-                    </ul>
+                        <a href="{{route('liste_facture',3)}}" class="nav_linke liste"><i class='bx bxs-wallet-alt nav_icon'></i><span class="nav_name">Factures</span></a>
                     </li>
                     @endcanany
-
                     {{-- competence --}}
                     @canany(['isSuperAdmin','isReferent','isManager'])
                     <li class="my-2">
-                        <a href="#gstcpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-minus nav_icon'></i><span class="nav_name">Gestion de Compétence</span></a>
+                        <a href="#gstcpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-minus nav_icon'></i><span class="nav_name">Aptitude</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('demande_test_niveau')}}"><i class='bx bxs-plus-circle nouveau_icon' title="Demande test de niveau"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="gstcpSubMenu">
-                            <li class="my-1 sousMenu">
-                                <a href="{{ route('demande_test_niveau') }}">Demande test de niveau </a>
-                            </li>
                             <li class="my-1 sousMenu">
                                 <a href="{{ route('evaluation_stagiaire') }}">Tableau de compétence</a>
                             </li>
@@ -397,22 +325,14 @@
                     {{-- plan de formation --}}
                     @canany(['isSuperAdmin','isReferent','isManager','isStagiaire'])
                     <li class="my-2">
-                        <a href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan de Formation</span></a>
+                        <a @canany(['isStagiaire']) href="{{route('liste_demande_formation')}}"@endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="pdfrmSubMenu">
-                            @canany(['isStagiaire'])
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('liste_demande_formation')}}">Demandes</a>
-                            </li>
-                            @endcanany
                             @canany(['isSuperAdmin','isReferent','isManager'])
                             <li class="my-1 sousMenu">
                                 <a href="{{route('liste_demande_stagiaire')}}">Demandes</a>
                             </li>
                             <li class="my-1 sousMenu">
                                 <a href="{{ route('listePlanFormation') }}">Plans de Formations</a>
-                            </li>
-                            <li class="my-1 sousMenu">
-                                <a href="{{ route('ajout_plan') }}">Nouveau Plan</a>
                             </li>
                             @endcanany
                         </ul>
@@ -435,13 +355,7 @@
                     @endcanany
                     @can('isReferent')
                     <li class="my-2">
-                        <a href="#abnmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-sketch nav_icon'></i><span class="nav_name">Abonnement</span></a>
-                        <ul class="collapse lisst-unstyled submenuColor" id="abnmtSubMenu">
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('ListeAbonnement')}}">Mon compte</a>
-                            </li>
-
-                        </ul>
+                        <a href="{{route('ListeAbonnement')}}" class="nav_linke liste"><i class='bx bxl-sketch nav_icon'></i><span class="nav_name">Abonnement</span></a>
                     </li>
                     @endcan
 
@@ -552,18 +466,6 @@
                 }
             });
         }
-        $(document).ready(function() {
-            $('.sousMenu').on('click', function() {
-                document.getElementById(affiche).style.display = none;
-            });
-        });
-
-        $(document).ready(function() {
-            $('.new_dropdown_left').on('click', function() {
-                document.getElementById(affiche).style.display = none;
-            });
-        });
-
 
         $(document).ready(function() {
             var down = false;
