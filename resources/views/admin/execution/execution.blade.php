@@ -56,10 +56,13 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        @canany(['isSuperAdmin','isReferent','isCFP','isFormateur'])
+                                        @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isManager'])
                                         <th>Projet</th>
                                         <th>Groupe</th>
-                                        <th>Convoquer les stagiaires</th>
+                                        @canany(['isFormateur', 'isCFP'])
+                                            <th>Convoquer les stagiaires</th>
+                                        @endcanany
+
                                         <th>Ajout stagiaire</th>
                                         @endcanany
                                         @canany(['isStagiaire'])
@@ -74,12 +77,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @canany(['isSuperAdmin','isReferent','isCFP','isFormateur'])
+                                    @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isManager'])
                                     @foreach ($datas as $d)
                                     <tr>
                                         <td>{{$d->nom_projet}}</td>
                                         <td>{{$d->nom_groupe}}</td>
-                                        <td><a href="{{route('convocationMail',[$d->detail_id,$d->groupe_id])}}">Convoquer</a></td>
+                                        @canany(['isFormateur', 'isCFP'])
+                                            <td><a href="{{route('convocationMail',[$d->detail_id,$d->groupe_id])}}">Convoquer</a></td>
+                                        @endcanany
                                         <td><a href="{{route('ajout_participant',['id_detail' => $d->detail_id])}}"><i class="fa fa-plus"></i></a></td>
                                     </tr>
                                     @endforeach

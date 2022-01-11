@@ -49,7 +49,7 @@ class CollaborationController extends Controller
         if ($verify->id == 0) {
             return $this->collaboration->verify_collaboration_formateur_cfp($req);
         } else {
-            return back()->with('error', "une invitation a été déjà envoyer sur cette centre de formation !");
+            return back()->with('error', "une invitation a été déjà envoyée à ce centre de formation !");
         }
     }
 

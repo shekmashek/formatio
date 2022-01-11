@@ -68,6 +68,8 @@
                                     <option value="{{$format->formateur_id}}">{{$format->nom_formateur}} {{$format->prenom_formateur}}</option>
                                     @endforeach
                                 </select>
+                                <p><strong style="color: red" id="err_formateur">Aucun formateur détecté! </strong></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="lieu">Lieu</label>
@@ -127,6 +129,32 @@
                     for (var $i = 0; $i < userData.length; $i++) {
                         $("#groupe").append('<option value="' + userData[$i].id + '">' + userData[$i].nom_groupe + '</option>');
                     }
+                }
+
+
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+    $('#liste_pj').on('change', function(e) {
+        $('#groupe').empty();
+
+        var id = $(this).val();
+        $.ajax({
+            url: 'show_formateur'
+            , type: 'get'
+            , data: {
+                id: id
+            }
+            , success: function(response) {
+                var userData = response;
+                if (userData.length <= 0) {
+
+                    document.getElementById("err_formateur").innerHTML = "Acucun formateur est détesté! veuiller choisir une project pour avoir session";
+                } else {
+                    document.getElementById("err_formateur").innerHTML = "";
                 }
 
 

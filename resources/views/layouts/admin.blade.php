@@ -465,7 +465,7 @@
                             @endcanany
                             @canany(['isReferent','isManager'])
                             <li class="my-1 sousMenu">
-                                <a href="{{ route('evaluation_stagiaire') }}">Tableau de compétence</a>
+                                <a href="{{ route('tableau_competence') }}">Tableau de compétence</a>
                             </li>
                             @endcanany
                         </ul>

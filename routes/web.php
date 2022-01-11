@@ -199,6 +199,7 @@ Route::get('/searchCategorie','ModuleController@getCategorie')->name('searchCate
 Route::post('ajout_session','SessionController@store')->name('ajout_session');
 Route::get('liste_session','SessionController@index')->name('liste_session');
 Route::get('show_groupe/{id}','SessionController@show')->name('show_groupe');
+Route::get('show_formateur','ProfController@show_formateur')->name('show_formateur');
 //Route détail du projet
 Route::resource('detail','DetailController')->except([
     'create','edit','index'
