@@ -267,6 +267,18 @@
                         </li>
                         @endcan
 
+                        @can('isReferent')
+                        <li class="my-2">
+                            <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
+                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
+                                <li class="sousMenu me-2 d-flex justify-content-between">
+                                    <a href="{{route('utilisateur_cfp')}}">Centre</a>
+                                    <p class="my-1" id="cfp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                                </li>
+                            </ul>
+                        </li>
+                        @endcan
+
                         {{-- projet de formation --}}
                         @canany(['isCFP'])
                         <li class="my-2">
@@ -298,7 +310,7 @@
                     </ul>
                     </li>
                     @endcanany
-                    @canany(['isReferent','isManager','isSuperAdmin','isAdmin'])
+                    @canany(['isManager','isSuperAdmin','isAdmin'])
                     <li class="my-2">
                         <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
@@ -306,17 +318,28 @@
                                 <a href="{{route('liste_projet')}}">Projets</a>
                                 <p class="my-1" ></p>
                             </li>
+                        </ul>
+                    </li>
+                    @endcanany
+                    @canany(['isReferent'])
+                    <li class="my-2">
+                        <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_projet')}}">Projets</a>
+                                <p class="my-1" id="projets_etp"></p>
+                            </li>
                             <span class="sousMenu me-2 d-flex justify-content-between">
                                 <a>Projets en cours</a>
-                                <p class="my-1" ></p>
+                                <p class="my-1" id="projet_en_cours_etp"></p>
                             </span>
                             <span class="sousMenu me-2 d-flex justify-content-between">
                                 <a>Projets termine</a>
-                                <p class="my-1"></p>
+                                <p class="my-1" id="projet_terminer_etp"></p>
                             </span>
                             <span class="sousMenu me-2 d-flex justify-content-between">
                                 <a>Projets a venir</a>
-                                <p class="my-1"></p>
+                                <p class="my-1" id="projet_a_venir_etp"></p>
                             </span>
                         </ul>
                     </li>
@@ -788,6 +811,26 @@
                 $("#projet_a_venir").append(nombre[3]);
                 $("#projets").append(nombre[4]);
                 $("#formateur").append(nombre[5]);
+                // alert(nombre);
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $.ajax({
+            url: '{{ route("admin_count_etp") }}'
+            , type: 'get'
+            , success: function(response) {
+                var nombre = response;
+                $("#cfp").append(nombre[0]);
+
+                $("#projet_en_cours_etp").append(nombre[1]);
+                $("#projet_terminer_etp").append(nombre[2]);
+                $("#projet_a_venir_etp").append(nombre[3]);
+                $("#projets_etp").append(nombre[4]);
                 // alert(nombre);
             }
             , error: function(error) {
