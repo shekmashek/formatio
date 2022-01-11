@@ -261,8 +261,21 @@
                         <li class="my-2">
                             <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
-                                <li class="my-1 sousMenu">
+                                <li class="sousMenu me-2 d-flex justify-content-between">
                                     <a href="{{route('liste_entreprise')}}">Entreprises</a>
+                                    <p class="my-1" id="entreprise" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                                </li>
+                            </ul>
+                        </li>
+                        @endcan
+
+                        @can('isReferent')
+                        <li class="my-2">
+                            <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
+                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
+                                <li class="sousMenu me-2 d-flex justify-content-between">
+                                    <a href="{{route('utilisateur_cfp')}}">Centre</a>
+                                    <p class="my-1" id="cfp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
                                 </li>
                             </ul>
                         </li>
@@ -273,25 +286,63 @@
                         <li class="my-2">
                             <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                                <li class="my-1 sousMenu">
+                                <span class="sousMenu me-2 d-flex justify-content-between">
                                     <a href="{{route('liste_projet')}}">Projets</a>
-                                </li>
-                                <li class="my-1 sousMenu">
+                                    <p class="my-1" id="projets" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                                </span>
+                                <span class="sousMenu me-2 d-flex justify-content-between">
                                     <a href="{{route('nouveau_projet')}}">Nouveau Projet</a>
-                                </li>
+                                    <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">+</p>
+                                </span>
+                                <span class="sousMenu me-2 d-flex justify-content-between">
+                                    <a>Projets en cours</a>
+                                    <p class="my-1" id="projet_en_cours" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                                </span>
+                                <span class="sousMenu me-2 d-flex justify-content-between">
+                                    <a>Projets termine</a>
+                                    <p class="my-1" id="projet_terminer" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                                </span>
+                                <span class="sousMenu me-2 d-flex justify-content-between">
+                                    <a>Projets a venir</a>
+                                    <p class="my-1" id="projet_a_venir" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                                </span>
                                 {{-- <li class="my-1 sousMenu">
                                         <a href="{{route('liste_groupe')}}">Groupes</a>
                         </li> --}}
                     </ul>
                     </li>
                     @endcanany
-                    @canany(['isReferent','isManager','isSuperAdmin','isAdmin'])
+                    @canany(['isManager','isSuperAdmin','isAdmin'])
                     <li class="my-2">
                         <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between">
                                 <a href="{{route('liste_projet')}}">Projets</a>
+                                <p class="my-1" ></p>
                             </li>
+                        </ul>
+                    </li>
+                    @endcanany
+                    @canany(['isReferent'])
+                    <li class="my-2">
+                        <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets de Formation</span></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_projet')}}">Projets</a>
+                                <p class="my-1" id="projets_etp"></p>
+                            </li>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets en cours</a>
+                                <p class="my-1" id="projet_en_cours_etp"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets termine</a>
+                                <p class="my-1" id="projet_terminer_etp"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets a venir</a>
+                                <p class="my-1" id="projet_a_venir_etp"></p>
+                            </span>
                         </ul>
                     </li>
                     @endcanany
@@ -300,17 +351,21 @@
                     <li class="my-2">
                         <a href="#gsutSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Gestion des Utilisateurs</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="gsutSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_utilisateur')}}">Responsables</a>
+                                <p class="my-1">65</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('utilisateur_stagiaire')}}">Stagiaires</a>
+                                <p class="my-1">80</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('utilisateur_formateur')}}">Formateurs</a>
+                                <p class="my-1">32</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('utilisateur_cfp')}}">Cfp</a>
+                                <p class="my-1">5</p>
                             </li>
                         </ul>
                     </li>
@@ -321,12 +376,14 @@
                     <li class="my-2">
                         <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="frmtSubMenu">
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('liste_formateur')}}">Listes</a>
-                            </li>
-                            <li class="my-1 sousMenu">
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_formateur')}}">Formateur</a>
+                                <p class="my-1" id="formateur" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
                                 <a href="{{route('nouveau_formateur')}}">Nouveau Formateur</a>
-                            </li>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">+</p>
+                            </span>
                         </ul>
                     </li>
                     @endcanany
@@ -336,12 +393,14 @@
                     <li class="my-2">
                         <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="mngrSubMenu">
-                            <li class="my-1 sousMenu">
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_chefDepartement')}}">Chefs Départements</a>
-                            </li>
-                            <li class="my-1 sousMenu">
+                                <p class="my-1">7</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('nouveau_manager')}}">Nouveau Chef</a>
-                            </li>
+                                <p class="my-1">+</p>
+                            </span>
                         </ul>
                     </li>
                     @endcanany
@@ -351,12 +410,14 @@
                     <li class="my-2">
                         <a href="#refSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Référents</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="refSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_responsable')}}">Référents</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
                             </li>
                             @canany(['isSuperAdmin','isAdmin'])
-                            <li class="my-1 sousMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('nouveau_responsable')}}">Nouveau référent</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">+</p>
                             </li>
                             @endcanany
                         </ul>
@@ -367,10 +428,11 @@
                     <li class="my-2">
                         <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Stagiaires</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="stgrSubMenu">
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_participant')}}">Stagiaires</a>
+                                <p>80</p>
                             </li>
-                            <li class="my-1 sousMenu">
+                            <li class="my-1 sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('nouveau_participant')}}">Nouveau Stagiaire</a>
                             </li>
                         </ul>
@@ -440,9 +502,33 @@
                     <li class="my-2">
                         <a href="#gstfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-money nav_icon'></i><span class="nav_name">Gestion Financière</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="gstfSubMenu">
-                            <li class="my-1 sousMenu">
+                            {{-- <li class="my-1 sousMenu">
                                 <a href="{{route('liste_facture',3)}}">Facturation</a>
-                            </li>
+                            </li> --}}
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                                <a href="{{route('liste_facture',3)}}">Total facture</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                                <a href="#">Facture en retard</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                                <a href="#">Facture paye</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                                <a href="#">Facture envoye</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                                <a href="#">Facture non envoye</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">347</p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                                <a href="#">Brouillon</a>
+                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                            </span>
                             {{-- <li class="my-1 sousMenu">
                                     <a href="{{route('liste_facture',3)}}">Facturation</a>
                     </li> --}}
@@ -711,6 +797,52 @@
     });
 
 </script>
+
+{{-- fonction nombre des collaborateur --}}
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '{{ route("admin_count") }}'
+            , type: 'get'
+            , success: function(response) {
+                var nombre = response;
+                $("#entreprise").append(nombre[0]);
+                $("#projet_en_cours").append(nombre[1]);
+                $("#projet_terminer").append(nombre[2]);
+                $("#projet_a_venir").append(nombre[3]);
+                $("#projets").append(nombre[4]);
+                $("#formateur").append(nombre[5]);
+                // alert(nombre);
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $.ajax({
+            url: '{{ route("admin_count_etp") }}'
+            , type: 'get'
+            , success: function(response) {
+                var nombre = response;
+                $("#cfp").append(nombre[0]);
+
+                $("#projet_en_cours_etp").append(nombre[1]);
+                $("#projet_terminer_etp").append(nombre[2]);
+                $("#projet_a_venir_etp").append(nombre[3]);
+                $("#projets_etp").append(nombre[4]);
+                // alert(nombre);
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+</script>
+
 
 @can('isStagiaire')
 <script>

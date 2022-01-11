@@ -27,11 +27,9 @@ class DepartementController extends Controller
 
     public function index()
     {
-
         $liste_entreprise = $this->liste_entreprise;
         $entreprise_id = entreprise::orderBy('nom_etp')->get();
         $liste_departement = $this->liste_departement;
-
         return view('admin.entreprise.departement', compact('liste_entreprise', 'liste_departement'));
     }
 
