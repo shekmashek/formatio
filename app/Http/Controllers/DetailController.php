@@ -129,6 +129,11 @@ public function index()
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));
         }
+        elseif (Gate::allows('isStagiaire')) {
+            $entreprise_id = stagiaire::where('user_id', $users)->value('entreprise_id');
+            $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
+            return view('admin.detail.detail', compact('datas', 'projet'));
+        }
         elseif (Gate::allows('isManager')) {
             $entreprise_id =chefDepartement::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);

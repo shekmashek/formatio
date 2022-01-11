@@ -41,14 +41,19 @@ class EvaluationChaudController extends Controller
     {
         DB::beginTransaction();
         try{
+            $fonct = new FonctionGenerique();
+
             $note = $request->nb_qst_fille_1;
             $commentaire = $request->txt_qst_fille_20;
-            $module_id = DB::select('select module_id from v_detailmodule where detail_id = ?',[$detail_id])[0]->module_id;
-            DB::insert('insert into avis(stagiaire_id,module_id,note,commentaire,status,date_avis) value(?,?,?,?,?,?)',[$stagiaire_id,$module_id,$note,$commentaire,'Fini',date('Y-m-d')]);
+            $module = $fonct->findWhereMulitOne("v_detailmodule",["detail_id"],[$detail_id]);
+
+            DB::insert('insert into avis(stagiaire_id,module_id,note,commentaire,status,date_avis) value(?,?,?,?,?,?)',[$stagiaire_id,$module->module_id,$note,$commentaire,'Fini',date('Y-m-d')]);
             $evaluation = new EvaluationChaud();
-            $message = $evaluation->verificationEvaluation($stagiaire_id,$detail_id,$request);
+
+            $message = $evaluation->verificationEvaluation($stagiaire_id,$module->groupe_id,$module->cfp_id,$detail_id,$request);
             DB::commit();
-            return back()->with('avis','avis pour la formation');
+            return redirect()->route('execution');
+            // return back()->with('avis','avis pour la formation');
         }catch(Exception $e){
             DB::rollback();
             return redirect()->back()->with('error','insertion échoué');

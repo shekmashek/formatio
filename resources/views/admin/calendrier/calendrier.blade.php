@@ -211,6 +211,7 @@
                     event.push({
                         title: entry.nom_projet + ': ' + entry.h_debut + "h -" + entry.h_fin + "h"
                         , start: entry.date_detail
+                        ,backgroundColor:"green"
                         , nom_projet: entry.nom_projet
                         , nom_module: entry.nom_module
                         , nom_formation: entry.nom_formation
@@ -236,6 +237,7 @@
                         left: 'prev,next'
                         , center: 'title'
                         , right: 'dayGridMonth'
+
                     }
                     , editable: true
                     , eventClick: function(info) {

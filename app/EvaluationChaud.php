@@ -70,12 +70,12 @@ class EvaluationChaud extends Model
         return $verify[0]->verify;
     }
 
-    public function insert($reponse,$id_desc_champ,$id_stag,$id_detail){
+    public function insert($reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id){
 
         DB::beginTransaction();
 
         try {
-            DB::insert("INSERT INTO reponse_evaluationchaud(reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,1,1,NOW(),NOW())",
+            DB::insert("INSERT INTO reponse_evaluationchaud(reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,$groupe_id,$cfp_id,NOW(),NOW())",
             [$reponse,$id_desc_champ,$id_stag]);
             DB::commit();
             $message['success']="Votre evaluation à chaud est terminer avec succes!";
@@ -87,7 +87,7 @@ class EvaluationChaud extends Model
         return $message;
     }
 
-    public function controlleCreationEvaluation($id_stag,$id_detail,$imput)
+    public function controlleCreationEvaluation($id_stag,$groupe_id,$cfp_id,$imput)
     {
         $qst_fille = $this->findAllQuestionFille(); // return question a l'interieur de question mere
         $type_champ = $this->findAllChampReponse();
@@ -113,19 +113,19 @@ class EvaluationChaud extends Model
         }
         //============ insert multiple
         for ($j=0; $j <count($valiny['result']) ; $j++) {
-            $message= $this->insert($valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$id_detail);
+            $message= $this->insert($valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id);
         }
 
         return $message;
     }
 
-        public function verificationEvaluation($id_stag,$id_detail,$imput){
+        public function verificationEvaluation($id_stag,$groupe_id,$cfp_id,$id_detail,$imput){
 
 
             $verify = $this->verifyExistsEvaluationChaud($id_stag,$id_detail);
             if($verify<=0)
             {
-                $message = $this->controlleCreationEvaluation($id_stag,$id_detail,$imput);
+                $message = $this->controlleCreationEvaluation($id_stag,$groupe_id,$cfp_id,$imput);
             } else {
                 $message['error']="Oups! votre evaluation sur cette project est déjà fait,merci beaucoup de diligence";
             }

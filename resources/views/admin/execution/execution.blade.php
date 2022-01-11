@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-            	<br>
+                <br>
 
                 <h3>ACTION DE FORMATION</h3>
             </div>
@@ -33,22 +33,22 @@
 
 
         </div>
-            <!-- /.row -->
+        <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <ul class="nav nav-pills">
-                            <li class ="{{ Route::currentRouteNamed('execution') ? 'active' : '' }}"><a href="{{route('execution')}}" ><span class="glyphicon glyphicon-plus"></span> Ajouter des participants</a></li>
-                            <li class ="{{ Route::currentRouteNamed('liste_detail') ? 'active' : '' }}"><a href="{{route('liste_detail')}}" ><span class="glyphicon glyphicon-th-list"></span>  Liste des détails</a></li>
+                            <li class="{{ Route::currentRouteNamed('execution') ? 'active' : '' }}"><a href="{{route('execution')}}"><span class="glyphicon glyphicon-plus"></span> Ajouter des participants</a></li>
+                            <li class="{{ Route::currentRouteNamed('liste_detail') ? 'active' : '' }}"><a href="{{route('liste_detail')}}"><span class="glyphicon glyphicon-th-list"></span> Liste des détails</a></li>
                         </ul>
                     </div>
                     @if (\Session::has('success'))
-                        <div class="alert alert-success">
-                            <ul>
-                                <li>{!! \Session::get('success') !!}</li>
-                            </ul>
-                        </div>
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('success') !!}</li>
+                        </ul>
+                    </div>
                     @endif
 
                     <div class="panel-body">
@@ -57,45 +57,56 @@
                                 <thead>
                                     <tr>
                                         @canany(['isSuperAdmin','isReferent','isCFP','isFormateur'])
-                                            <th>Projet</th>
-                                            <th>Groupe</th>
-                                            <th>Convoquer les stagiaires</th>
-                                            <th>Ajout stagiaire</th>
+                                        <th>Projet</th>
+                                        <th>Groupe</th>
+                                        <th>Convoquer les stagiaires</th>
+                                        <th>Ajout stagiaire</th>
                                         @endcanany
                                         @canany(['isStagiaire'])
-                                            <th>Formation</th>
-                                            <th>Module</th>
-                                            <th>Formateur</th>
-                                            <th>Lieu</th>
-                                            <th>Date début</th>
-                                            <th>Date fin</th>
-                                            <th>Action</th>
+                                        <th>Formation</th>
+                                        <th>Module</th>
+                                        <th>Formateur</th>
+                                        <th>Lieu</th>
+                                        <th>Date début</th>
+                                        <th>Date fin</th>
+                                        <th>Action</th>
                                         @endcanany
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @canany(['isSuperAdmin','isReferent','isCFP','isFormateur'])
-                                       @foreach ($datas as $d)
-                                       <tr>
-                                           <td>{{$d->nom_projet}}</td>
-                                           <td>{{$d->nom_groupe}}</td>
-                                           <td><a href="{{route('convocationMail',[$d->detail_id,$d->groupe_id])}}">Convoquer</a></td>
-                                            <td><a href="{{route('ajout_participant',['id_detail' => $d->detail_id])}}"><i class="fa fa-plus"></i></a></td>
-                                        </tr>
-                                       @endforeach
+                                    @foreach ($datas as $d)
+                                    <tr>
+                                        <td>{{$d->nom_projet}}</td>
+                                        <td>{{$d->nom_groupe}}</td>
+                                        <td><a href="{{route('convocationMail',[$d->detail_id,$d->groupe_id])}}">Convoquer</a></td>
+                                        <td><a href="{{route('ajout_participant',['id_detail' => $d->detail_id])}}"><i class="fa fa-plus"></i></a></td>
+                                    </tr>
+                                    @endforeach
                                     @endcanany
                                     @canany(['isStagiaire'])
-                                       @foreach ($datas as $d)
-                                       <tr>
-                                           <td>{{$d->nom_formation}}</td>
-                                           <td>{{$d->nom_module}}</td>
-                                           <td>{{$d->nom_formateur}}</td>
-                                           <td>{{$d->lieu}}</td>
-                                           <td>{{$d->date_debut}}</td>
-                                           <td>{{$d->date_fin}}</td>
-                                            <td><a href="{{route('faireEvaluationChaud',$d->matricule)}}"><button class="btn btn-primary" id="{{$d->matricule}}">Evaluation à chaud</button></a></td>
-                                        </tr>
-                                       @endforeach
+                                    @foreach ($datas as $d)
+                                    <tr>
+                                        <td>{{$d->nom_formation}}</td>
+                                        <td>{{$d->nom_module}}</td>
+                                        <td>{{$d->nom_formateur}}</td>
+                                        <td>{{$d->lieu}}</td>
+                                        <td>{{$d->date_debut}}</td>
+                                        <td>{{$d->date_fin}}</td>
+                                        <td>
+                                            @isset($verifyExist)
+                                                @if($verifyExist>0)
+                                                <a href="{{route('evaluationchaud.show',$d->matricule)}}"><button class="btn btn-primary" id="{{$d->matricule}}">Voir Evaluation</button></a>
+                                                @else
+                                                <a href="{{route('faireEvaluationChaud',$d->matricule)}}"><button class="btn btn-primary" id="{{$d->matricule}}">Evaluation à chaud</button></a>
+                                                @endif
+                                            @else
+                                                <a href="{{route('faireEvaluationChaud',$d->matricule)}}"><button class="btn btn-primary" id="{{$d->matricule}}">Evaluation à chaud</button></a>
+                                            @endisset
+
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                     @endcanany
                                 </tbody>
                             </table>

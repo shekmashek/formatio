@@ -18,6 +18,8 @@ use App\formateur;
 use App\participant_groupe;
 use App\programme;
 use App\responsable;
+use App\chefDepartement;
+use App\EvaluationChaud;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\FonctionGenerique;
@@ -156,18 +158,31 @@ class ExecutionController extends Controller
         if (Gate::allows('isSuperAdmin')) {
             $datas = DB::select('select * from v_detail_projet_groupe');
         }
-        // if (Gate::allows('isReferent') || Gate::allows('isStagiaire')) {
-        //     $entreprise_id = Stagiaire::where('user_id', $id_user)->value('entreprise_id');
-        //     $datas = DB::select('select * from v_detail_projet_groupe where entreprise_id = ?', [$entreprise_id]);
-        // }
-        // return view('admin.execution.execution', compact('datas'));
+
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id',$id_user)->value('entreprise_id');
             $datas = DB::select('select * from v_detail_projet_groupe where entreprise_id = ?', [$entreprise_id]);
         }
+         if (Gate::allows('isManager')) {
+            $entreprise_id = chefDepartement::where('user_id',$id_user)->value('entreprise_id');
+           $datas = DB::select('select * from v_detail_projet_groupe where entreprise_id = ?', [$entreprise_id]);
+        }
+
         if (Gate::allows('isStagiaire')) {
-            $stagiaire_id = stagiaire::where('user_id',$id_user)->value('id');
-            $datas =DB::select('select * from v_participant_groupe where stagiaire_id = ?', [$stagiaire_id]);
+            $evaluation = new EvaluationChaud();
+            $fonct = new FonctionGenerique();
+
+            $stagiaire = $fonct->findWhereOne("stagiaires","user_id","=",$id_user);
+            $parti_grp = $fonct->findWhereMulitOne("participant_groupe",
+            ["stagiaire_id"],
+            [$stagiaire->id]);
+
+            $verifyExist = count($fonct->findWhere("reponse_evaluationchaud",
+            ["stagiaire_id","groupe_id"],
+            [$parti_grp->stagiaire_id,$parti_grp->groupe_id]));
+
+            $datas =DB::select('select * from v_participant_groupe where stagiaire_id = ?', [$stagiaire->id]);
+            return view('admin.execution.execution',compact('datas','verifyExist'));
         }
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id',$id_user)->value('id');

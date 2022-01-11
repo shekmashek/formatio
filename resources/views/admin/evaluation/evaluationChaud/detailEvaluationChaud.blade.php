@@ -4,23 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{asset('img/logo_numerika/logonmrk.png')}}" sizes="90x60" type="image/png">
     <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
     <link href="{{asset('bootstrapCss/css/bootstrap-glyphicons.css')}} " rel="stylesheet">
     <link rel="stylesheet" href="{{asset('login_css/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
-    <title>Evaluation Chaud fini de {{$stagiaire->nom_stagiaire}}</title>
+   <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
+    <title> formation.mg </title>
+
 </head>
 <body>
 
-    <div class="container-fluid mt-5">
-        <a href="#"><button type="button" class="btn btn-success">retour static</button></a>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                        <h4 class="btn-warning"> detail Evaluation à Chaud Par Stagiaire</h4>
-            </div>
-        </div>
-    </div>
+
 
     <div class="container mt-4">
         <div class="row">
@@ -57,7 +51,7 @@
 
             </div>
 
-            <h4 class="card-title text-center">Formateur: <img src=" {{asset('storage/'.$detail->photos)}} " class="profil-stagiaire" alt="..."/> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5>
+            <h4 class="card-title text-center">Formateur: <img src=" {{asset('images/formateurs/'.$detail->photos)}} " class="profil-stagiaire" alt="..."/> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5>
 
         </div>
     </div>

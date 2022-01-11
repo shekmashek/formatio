@@ -394,7 +394,7 @@
                     <li class="my-2">
                         <a href="#actfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-line-chart nav_icon'></i><span class="nav_name">Action de Formation</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="actfSubMenu">
-                            @canany(['isCFP','isFormateur','isReferent','isManager','isSuperAdmin','isAdmin'])
+                            @canany(['isCFP','isFormateur','isReferent','isStagiaire','isManager','isSuperAdmin','isAdmin'])
                             <li class="my-1 sousMenu">
                                 <a href="{{route('liste_detail')}}">Détails</a>
                             </li>
@@ -714,33 +714,34 @@
 
 @can('isStagiaire')
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         $.ajax({
-            url:'{{ route("notification_stagiaire") }}',
-            type:'get',
-            success:function(response){
-                var datas=response;
+            url: '{{ route("notification_stagiaire") }}'
+            , type: 'get'
+            , success: function(response) {
+                var datas = response;
                 var nb_notif = datas.length;
                 var html = '';
                 for (let i = 0; i < datas.length; i++) {
-                    var info = datas[i].cfp_id+','+datas[i].formation_id;
+                    var info = datas[i].cfp_id + ',' + datas[i].formation_id;
                     var url = '{{route("auto_evaluation",[":id_cfp",":id_formation"])}}';
-                    url = url.replace(':id_cfp',datas[i].cfp_id);
-                    url = url.replace(':id_formation',datas[i].formation_id);
-                    html += '<a href="'+url+'">';
+                    url = url.replace(':id_cfp', datas[i].cfp_id);
+                    url = url.replace(':id_formation', datas[i].formation_id);
+                    html += '<a href="' + url + '">';
                     html += '<div class="notifications-item">';
-                    html += '<p>'+datas[i].description_test+'</p>';
-                    html +='</div>';
-                    html +='</a>';
+                    html += '<p>' + datas[i].description_test + '</p>';
+                    html += '</div>';
+                    html += '</a>';
                 }
                 $("#nb_notif").append(nb_notif);
                 $("#notifications").append(html);
-            },
-            error:function(error){
+            }
+            , error: function(error) {
                 console.log(error);
             }
         });
     });
+
 </script>
 @endcan
 
