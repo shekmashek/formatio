@@ -1,13 +1,10 @@
 @extends('./layouts/admin')
+@section('title')
+<h3 class="text-white ms-5">Nouvelle Formation</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <br>
-                <h3>Nouvelle Formation</h3>
-            </div>
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
@@ -39,23 +36,6 @@
                     </div>
                 </div>
             </nav>
-
-            {{-- <form class="navbar-form navbar-left" role="search">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        Tout <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{route('liste_formation',5)}}">5</a></li>
-            <li><a href="{{route('liste_formation',10)}}">10</a></li>
-            <li><a href="{{route('liste_formation',25)}}">25</a></li>
-            <li><a href="{{route('liste_formation',25)}}">50</a></li>
-            <li><a href="{{route('liste_formation',25)}}">100</a></li>
-            <li class="divider"></li>
-            <li><a href="{{route('liste_formation')}}">Tout</a></li>
-            </ul>
-        </div>
-        </form> --}}
     </div>
     <!-- /.row -->
     <div class="row">
