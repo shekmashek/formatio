@@ -388,7 +388,6 @@
 
                     {{-- action de formations --}}
                     @canany(['isSuperAdmin','isCFP','isReferent','isFormateur','isStagiaire'])
-
                     <li class="my-2">
                         <a href="#actfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-line-chart nav_icon'></i><span class="nav_name">Sessions</span></a>@canany(['isSuperAdmin','isCFP','isReferent'])&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('execution')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau session"></i></a>@endcanany
                         <ul class="collapse lisst-unstyled submenuColor" id="actfSubMenu">

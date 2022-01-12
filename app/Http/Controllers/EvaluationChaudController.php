@@ -52,6 +52,7 @@ class EvaluationChaudController extends Controller
 
             $message = $evaluation->verificationEvaluation($stagiaire_id,$module->groupe_id,$module->cfp_id,$detail_id,$request);
             DB::commit();
+
             return redirect()->route('execution');
             // return back()->with('avis','avis pour la formation');
         }catch(Exception $e){

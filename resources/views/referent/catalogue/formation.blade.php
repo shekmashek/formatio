@@ -52,7 +52,7 @@
                                         Nos consultants-formateurs sont des experts dans leurs univers d'intervention en conseil et en formation. Leur expérience fait leur force. Ils évoluent avec les besoins de l'apprenant et les enjeux de l'entreprise. Ils sont sélectionnés selon un processus qualité strict.        </p>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-4 col-md-2">
                                 <div class="formation-service">
                                     <h4><span class="lnr lnr-license"></span>Services Professionnels</h4>
                                     <p>

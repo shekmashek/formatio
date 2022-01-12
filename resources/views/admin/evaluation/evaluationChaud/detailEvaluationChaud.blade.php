@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+@extends('./layouts/admin')
+@section('content')
+
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,12 +13,8 @@
     <link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
    <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
     <title> formation.mg </title>
-
 </head>
-<body>
-
-
-
+<body> --}}
     <div class="container mt-4">
         <div class="row">
 
@@ -41,7 +40,7 @@
                 {{-- <div class="card shadow p-3 mb-5 bg-body rounded"> --}}
                     <h4 class="card-title"> Information du Stagiaire</h4>
                     <div class="card-body">
-                        <h5 class="card-title"><img src=" {{asset('storage/'.$stagiaire->photos)}}" class="profil-stagiaire" alt="..."> {{$stagiaire->nom_stagiaire.' '.$stagiaire->prenom_stagiaire}}</h5>
+                        <h5 class="card-title"><img src=" {{asset('images/stagiaires/'.$stagiaire->photos)}}" class="logo" alt="..."> {{$stagiaire->nom_stagiaire.' '.$stagiaire->prenom_stagiaire}}</h5>
                         <h6 class="card-title my-1">Matricule: {{$stagiaire->matricule}}  Genre: {{$stagiaire->genre_stagiaire}}</h6>
                         <h6 class="card-title my-1">Foncion: {{$stagiaire->fonction_stagiaire}} </h6>
                         <h6 class="card-title my-1">Mail: <a href="#">{{$stagiaire->mail_stagiaire}}</a> </h6>
@@ -51,7 +50,7 @@
 
             </div>
 
-            <h4 class="card-title text-center">Formateur: <img src=" {{asset('images/formateurs/'.$detail->photos)}} " class="profil-stagiaire" alt="..."/> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5>
+            <h4 class="card-title text-center">Formateur: <img src=" {{asset('images/formateurs/'.$detail->photos)}} " class="logo" alt="..."/> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5>
 
         </div>
     </div>
@@ -119,5 +118,6 @@
     </div>
 
 
-</body>
-</html>
+{{-- </body>
+</html> --}}
+@endsection
