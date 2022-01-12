@@ -13,9 +13,11 @@
 <div class="container-fluid mt-4">
     <div class="row">
         <div class="col-sm-7 pe-3">
+            <p><h4 class="text-center text-danger text_formation">Formation.mg</h4></p>
             <div class="card essai">
-
+                
             </div>
+            
         </div>
         <div class="col-sm-5 ps-3">
             <div class="card" style="background: linear-gradient(45deg, rgb(251, 202, 50), rgb(245, 62, 57)); border-radius:20px;">
@@ -49,6 +51,7 @@
         </div>
     </div>
 </div>
+<br><br>
 <div>
     <h1>Guide d'utilisation</h1>
     <section>
@@ -120,13 +123,17 @@
         background-size: 100%;
         background-repeat: no-repeat;
         width: 100%;
-        height: 500px;
+        height: 400px;
     }
     .card_1{
         width: 50%;
     }
     .card_2{
         height: 150px;p;
+    }
+    .text_formation{
+        font-weight: bold;
+        font-family: "Times New Roman", Times, serif;
     }
 </style>
 @endsection
