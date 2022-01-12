@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\User;
 use App\cfp;
+use App\entreprise;
 use App\formateur;
 use App\responsable;
 
@@ -102,17 +103,33 @@ class CollaborationController extends Controller
     public function collaboration_formateur_cfp()
     {
         $fonct = new FonctionGenerique();
+        $cfp = new cfp();
+
         $id = Auth::id();
         $formateur_id = formateur::where('user_id', $id)->value('id');
         $demmande = $fonct->findWhere("v_demmande_formateur_pour_cfp", ["demmandeur_formateur_id"], [$formateur_id]);
         $invitation = $fonct->findWhere("v_invitation_formateur_pour_cfp", ["inviter_formateur_id"], [$formateur_id]);
-        $cfps = $fonct->findAll("cfps");
+        // $cfps = $fonct->findAll("cfps");
+
+          // ======== formateur collaborer
+            $cfp1 = $fonct->findWhere("v_demmande_formateur_cfp", ["formateur_id"], [$formateur_id]);
+            $cfp2 = $fonct->findWhere("v_demmande_cfp_formateur", ["formateur_id"], [$formateur_id]);
+            $cfpCollaborer1_tmp = $fonct->concatTwoList($cfp1,$cfp2);
+
+            $cfpCollaborer1 = $cfp->getCfpCollaborer($cfpCollaborer1_tmp);
+            $cfpCollaborer2 = $cfp->getCfpNotCollaborer($cfpCollaborer1);
+
+            $cfps = $fonct->concatTwoList($cfpCollaborer1,$cfpCollaborer2);
+
         return view('collaboration.collaboration_frmt', compact('cfps', 'demmande', 'invitation', 'formateur_id'));
     }
 
     public function collaboration_cfp_etp_et_formateur()
     {
         $fonct = new FonctionGenerique();
+
+
+
         $id = Auth::id();
         $cfp_id =cfp::where('user_id', $id)->value('id');
         $demmande_etp = $fonct->findWhere("v_demmande_cfp_pour_etp", ["demmandeur_cfp_id"], [$cfp_id]);
@@ -123,10 +140,61 @@ class CollaborationController extends Controller
         $entreprise = $fonct->findAll("entreprises");
         $formateur = $fonct->findAll("formateurs");
 
+         // ======== formateur collaborer
+        $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+        $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+        // $formateurCollaborer = $fonct->concatTwoList($formateur1,$formateur2);
+        $formateur_tmp = $fonct->concatTwoList($formateur1,$formateur2);
+        $format = new formateur();
+        $forma_colab1 = $format->getCollaborer("formateurs",$formateur_tmp);
+        $forma_colab2 = $format->getNotCollaborer("formateurs",$forma_colab1);
+
+        $formateur = $fonct->concatTwoList($forma_colab1,$forma_colab2);
+
+        // dd($formateurCollaborer);
+        // ======== entreprise collaborer
+        $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
+        $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+        // $entrepriseCollaborer = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
+        $entreprise_tmp = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
+        $etp = new entreprise();
+        $entreprise1 = $etp->getCollaborer("entreprises",$entreprise_tmp);
+        $entreprise2 = $etp->getNotCollaborer("entreprises",$entreprise1);
+
+        $entreprise = $fonct->concatTwoList($entreprise1,$entreprise2);
+        // dd($entrepriseCollaborer);
+
         return view('collaboration.collaboration_cfp', compact('entreprise', 'formateur', 'demmande_etp', 'invitation_etp', 'demmande_formateur', 'invitation_formateur', 'cfp_id'));
     }
 
+/*
+ public function collaboration_cfp_etp_et_formateur()
+    {
+        $fonct = new FonctionGenerique();
 
+        $id = Auth::id();
+        $cfp_id =cfp::where('user_id', $id)->value('id');
+        $demmande_etp = $fonct->findWhere("v_demmande_cfp_pour_etp", ["demmandeur_cfp_id"], [$cfp_id]);
+        $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+        $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
+        $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
+
+        $entreprise = $fonct->findAll("entreprises");
+        $formateur = $fonct->findAll("formateurs");
+
+         // ======== formateur collaborer
+        $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+        $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+        $formateurCollaborer = $fonct->concatTwoList($formateur1,$formateur2);
+
+        // ======== entreprise collaborer
+        $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
+        $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+        $entrepriseCollaborer = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
+
+        return view('collaboration.collaboration_cfp', compact('entreprise', 'formateur', 'demmande_etp', 'invitation_etp', 'demmande_formateur', 'invitation_formateur', 'cfp_id','formateurCollaborer','entrepriseCollaborer'));
+    }
+*/
     public function collaboration()
     {
         $role_id = User::where('email', Auth::user()->email)->value('role_id');
