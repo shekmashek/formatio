@@ -525,3 +525,8 @@ Route::get('module_formation','GroupeController@module_formation')->name('module
 
 // profil_user
 Route::get('profil_user','HomeController@profil_user')->name('profil_user');
+
+//projet et session by me don't touch man !!!!!!!!!!!!
+Route::get('projet_session', function () {
+    return view('projet_session/index');
+});
