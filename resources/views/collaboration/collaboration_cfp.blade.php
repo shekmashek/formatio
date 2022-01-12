@@ -42,11 +42,11 @@
                         <h4 class="card-title">Formateurs</h4>
                         <p class="card-description"> Liste des Formateurs </p>
                         <div class="table-responsive text-center">
-                            <table class="table table-dark table-borderless table-hover table-sm" id="table_frmt">
+                            <table class="table  table-borderless table-hover table-sm" id="table_frmt">
                                 <tbody>
                                     @foreach($formateur as $format)
                                     <tr>
-                                        <td><img src="{{asset('images/formateur/'.$format->photos)}}" class="logo">
+                                        <td><img src="{{asset('images/formateurs/'.$format->photos)}}" class="logo">
                                             <div id="pdp_formateur_{{$format->id}}" class="collapse">
                                                 <hr>
                                                 Niveau d'étude: {{$format->niveau}} <br>
@@ -60,12 +60,19 @@
                                         <td>{{$format->adresse}}</td>
                                         <td><a href="#" type="button" data-toggle="collapse" data-target="#pdp_formateur_{{$format->id}}"><i class="bx bxs-plus-circle actions" title="Details"></i></a></td>
                                         <td>
+                                            @if ($format->collaboration==0)
                                                 <form action="{{ route('create_cfp_formateur') }}" method="POST">
                                                     @csrf
                                                     <input name="formateur_id" type="hidden" value="{{ $format->id }}">
                                                     <input name="cfp_id" type="hidden" value="{{ $cfp_id }}">
                                                     <button type="submit" class="btn btn-primary" id="demande"><i class="bx bx-layer-plus actions" title="Collaborer"></i></button>
                                                 </form>
+                                            @else
+                                                    <strong> <h5><i class="bx bx-user-check"></i></h5> </strong>
+
+
+                                            @endif
+
 
                                         </td>
                                     </tr>
@@ -107,12 +114,13 @@
                         <h4 class="card-title">Entreprises</h4>
                         <p class="card-description"> Liste des Entreprises </p>
                         <div class="table-responsive text-center">
-                            <table class="table table-dark table-borderless table-hover table-sm" id="table_etp">
+                            <table class="table table-link table-borderless table-hover table-sm" id="table_etp">
                                 <tbody>
 
                                     @foreach($entreprise as $etp)
+
                                     <tr>
-                                        <td><img src="{{asset('images/entreprise/'.$etp->logo)}}" class="logo">
+                                        <td><img src="{{asset('images/entreprises/'.$etp->logo)}}" class="logo">
                                             <div id="etp_pdp_{{$etp->id}}" class="collapse">
                                                 <hr>
 
@@ -126,14 +134,20 @@
                                         <td><a href="#" type="button" data-toggle="collapse" data-target="#etp_pdp_{{$etp->id}}"><i class="bx bxs-plus-circle actions" title="Details"></i></a></td>
 
                                         <td>
-                                            <form action="{{ route('create_cfp_etp') }}" method="POST">
-                                                @csrf
-                                                <input name="etp_id" type="hidden" value="{{ $etp->id }}">
-                                                <input name="cfp_id" type="hidden" value="{{ $cfp_id }}">
-                                                <button type="submit" class="btn btn-primary" id="demande"><i class="bx bx-layer-plus actions" title="Collaborer"></i></button>
-                                            </form>
+                                            @if ($etp->collaboration==0)
+                                                <form action="{{ route('create_cfp_etp') }}" method="POST">
+                                                    @csrf
+                                                    <input name="etp_id" type="hidden" value="{{ $etp->id }}">
+                                                    <input name="cfp_id" type="hidden" value="{{ $cfp_id }}">
+                                                    <button type="submit" class="btn btn-primary" id="demande"><i class="bx bx-layer-plus actions" title="Collaborer"></i></button>
+                                                </form>
+                                            @else
+                                                    <strong> <h5><i class="bx bx-user-check"></i></h5> </strong>
+                                            @endif
+
                                         </td>
                                     </tr>
+
                                     @endforeach
 
                                 </tbody>
@@ -180,7 +194,7 @@
                                     @foreach($demmande_formateur as $demmande_forma)
                                         <tr>
                                         <td><a href="" data-toggle="collapse" data-target="#plus_{{$demmande_forma->id}}">
-                                            <img src="{{asset('images/formateur/'.$demmande_forma->photo_formateur)}}" class="logo"><br>
+                                            <img src="{{asset('images/formateurs/'.$demmande_forma->photo_formateur)}}" class="logo"><br>
                                         </a>
                                             <div id="plus_{{$demmande_forma->id}}" class="collapse">
                                                 <hr>
@@ -216,7 +230,7 @@
                                     @foreach($demmande_etp as $demand)
                                         <tr>
                                         <td><a href="" data-toggle="collapse" data-target="#plus_{{$demand->id}}">
-                                            <img src="{{asset('images/entreprise/'.$demand->logo_etp)}}" class="logo"><br>
+                                            <img src="{{asset('images/entreprises/'.$demand->logo_etp)}}" class="logo"><br>
                                         </a>
                                         <div id="plus_{{$demand->id}}" class="collapse">
                                             <hr>
@@ -292,7 +306,7 @@
                                 <tbody>
                                     @foreach($invitation_etp as $invit)
                                         <tr>
-                                        <td><a href="" data-toggle="collapse" data-target="#info_{{$invit->id}}"><img src="{{asset('images/entreprise/'.$invit->logo_etp)}}" class="logo"></a>
+                                        <td><a href="" data-toggle="collapse" data-target="#info_{{$invit->id}}"><img src="{{asset('images/entreprises/'.$invit->logo_etp)}}" class="logo"></a>
                                             <div id="info_{{$invit->id}}" class="collapse">
                                             @csrf
                                             <hr>

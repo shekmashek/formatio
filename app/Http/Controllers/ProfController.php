@@ -12,7 +12,7 @@ use App\cfp;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
 
 class ProfController extends Controller
@@ -30,17 +30,14 @@ class ProfController extends Controller
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            $formateur = $forma->getFormateur($formateur1,$formateur2);
+            $formateur = $forma->getFormateur($formateur1, $formateur2);
             return view('admin.formateur.formateur', compact('formateur'));
         } else {
             $formateur1 = $fonct->findAll("v_demmande_formateur_cfp");
             $formateur2 = $fonct->findAll("v_demmande_cfp_formateur");
-            $formateur = $forma->getFormateur($formateur1,$formateur2);
+            $formateur = $forma->getFormateur($formateur1, $formateur2);
             return view('admin.formateur.formateur', compact('formateur'));
         }
-
-
-
     }
     public function create()
     {
@@ -121,7 +118,7 @@ class ProfController extends Controller
             $experience->save();
         }
         // return redirect()->route('utilisateur_formateur');
-        return back()->with('success','success terminer! pour travail avec le nouveaux formateur,vous devrez collaborer');
+        return back()->with('success', 'success terminer! pour travail avec le nouveaux formateur,vous devrez collaborer');
     }
 
 
@@ -137,7 +134,8 @@ class ProfController extends Controller
         return response()->json($formateur);
     }
 
-    public function show_formateur(Request $req){
+    public function show_formateur(Request $req)
+    {
         $id = $req->id;
 
         $fonct = new FonctionGenerique();
@@ -145,11 +143,11 @@ class ProfController extends Controller
         $forma = new formateur();
 
 
-            $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
-            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            $formateur = $forma->getFormateur($formateur1,$formateur2);
-            return response()->json($formateur);
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+        $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+        $formateur = $forma->getFormateur($formateur1, $formateur2);
+        return response()->json($formateur);
     }
 
     public function update(Request $request)
@@ -170,10 +168,43 @@ class ProfController extends Controller
 
     public function destroy(Request $request)
     {
-        $id = $request->id_get;
-        $del = formateur::where('id', $id)->delete();
+        $user_id = Auth::user()->id;
+        $id_formateur = $request->id_get;
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            DB::beginTransaction();
+            try {
+                DB::delete('delete from demmande_formateur_cfp where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$id_formateur, $cfp_id]);
+                DB::delete('delete from demmande_cfp_formateur where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+        }
+
+        if (Gate::allows('isSuperAdmin','isAdmin')) {
+            DB::beginTransaction();
+            try {
+                DB::delete('delete from formateurs where id = ?', [$id_formateur]);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+        }
         return back();
     }
+
+    public function desactivation_formateur(Request $req){
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $id_formateur = $req->id_get;
+            DB::update('update demmande_formateur_cfp set activiter = 0 where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$id_formateur, $cfp_id]);
+            DB::update('update demmande_cfp_formateur set activiter = 0 where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
+
+        return back();
+    }
+
     public function cvFormateur(Request $request)
     {
         $id = $request->id_formateur;

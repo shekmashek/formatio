@@ -49,8 +49,8 @@ Route::get('/nouveau_projet','ProjetControlleur@index')->name('nouveau_projet');
 Route::get('projet/result', 'ProjetControlleur@show')->name('projet.show');
 
 Route::get('edit_projet','ProjetControlleur@edit')->name('edit_projet');
-Route::get('destroy_projet','ProjetControlleur@destroy')->name('destroy_projet');
-Route::get('update_projet','ProjetControlleur@update')->name('update_projet');
+Route::post('destroy_projet','ProjetControlleur@destroy')->name('destroy_projet');
+Route::post('update_projet/{id?}','ProjetControlleur@update')->name('update_projet');
 
 //route groupe
 Route::resource('groupe','GroupeController')->except([
@@ -123,6 +123,7 @@ Route::get('/nouveau_formateur',function(){
 Route::get('/edit_formateur','ProfController@edit')->name('edit_formateur');
 Route::post('/update_formateur','ProfController@update')->name('update_formateur');
 Route::get('/destroy_formateur','ProfController@destroy')->name('destroy_formateur');
+Route::post('desactivation_formateur','ProfController@desactivation_formateur')->name('desactivation_formateur');
 //profil
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
 

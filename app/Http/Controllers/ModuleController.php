@@ -82,7 +82,7 @@ class ModuleController extends Controller
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
-            $liste = formation::orderBy('nom_formation')->get();
+            $liste = formation::where('cfp_id',$cfp_id)->orderBy('nom_formation')->get();
             $niveau = Niveau::all();
         } else {
             $liste = formation::orderBy('nom_formation')->get();

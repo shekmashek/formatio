@@ -187,9 +187,9 @@
                                                         <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="date" value="{{ $grp->date_fin }}"  name="edit_dte_fin" class="form-control formPayement" required="required">  </div>
                                                     </div>
                                                 </div>
-                                                <span>Status</span>
+                                                <strong>Status du session</strong>
                                                 <div class="inputbox inputboxP mt-3">
-                                                    <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status" value="{{ $grp->status }}"  name="edit_status"/>
+                                                    <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du session" list="edit_status" value="{{ $grp->status }}"  name="edit_status"/>
                                                         <datalist id="edit_status">
                                                                 <option>En Cours</option>
                                                                 <option>Fini</option>

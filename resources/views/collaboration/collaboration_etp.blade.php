@@ -41,7 +41,7 @@
                             @endif
 
                         <div class="table-responsive text-center">
-                            <table class="table table-dark table-borderless table-hover table-sm" id="table_frmt">
+                            <table class="table table-borderless table-hover table-sm" id="table_frmt">
                                 <tbody>
 
                                     @foreach($cfps as $c)
@@ -63,12 +63,17 @@
                                         <td><a href="#" type="button" data-toggle="collapse" data-target="#cfp_pdp_{{$c->id}}"><i class="bx bxs-plus-circle actions" title="Details"></i></a></td>
 
                                         <td>
-                                            <form action="{{ route('create_etp_cfp') }}" method="POST">
-                                                @csrf
-                                                <input name="etp_id" type="hidden" value="{{ $entreprise_id }}">
-                                                <input name="cfp_id" type="hidden" value="{{ $c->id }}">
-                                                <button type="submit" class="btn btn-primary" id="demande"><i class="bx bx-layer-plus actions" title="Collaborer"></i></button>
-                                            </form>
+                                            @if ($c->collaboration == 1)
+                                                <strong> <h5><i class="bx bx-user-check"></i></h5> </strong>
+                                            @else
+                                                <form action="{{ route('create_etp_cfp') }}" method="POST">
+                                                    @csrf
+                                                    <input name="etp_id" type="hidden" value="{{ $entreprise_id }}">
+                                                    <input name="cfp_id" type="hidden" value="{{ $c->id }}">
+                                                    <button type="submit" class="btn btn-primary" id="demande"><i class="bx bx-layer-plus actions" title="Collaborer"></i></button>
+                                                </form>
+                                            @endif
+
                                         </td>
                                     </tr>
 

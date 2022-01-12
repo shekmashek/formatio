@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
 
 class Cfp extends Model
 {
@@ -10,16 +12,72 @@ class Cfp extends Model
     protected $fillable = [
         'Nom','Adresse','Email','Telephone','Domaine_de_formation','NIF','STAT','RCS','CIF','logo','user_id'
     ];
-    
-    public function getCfp($etp1,$etp2){
+
+
+
+    // ----------------------------------------
+    public function getCfpIdCollaborer($list){
         $tab = array();
-        for($i=0;$i<count($etp1);$i+=1){
-            $tab[]=$etp1[$i];
-        }
-        for($j=0;$j<count($etp2);$j+=1){
-            $tab[]=$etp2[$j];
+        for($i=0;$i<count($list);$i+=1){
+            $tab[$i]="".$list[$i]->cfp_id;
         }
 
         return $tab;
     }
+
+    public function getCfpIdNotCollaborer($list){
+        $tab = array();
+        for($i=0;$i<count($list);$i+=1){
+            $tab[$i]="".$list[$i]->id;
+        }
+
+        return $tab;
+    }
+
+    public function queryCfpCollaborer($list){
+        $query = "select * from cfps where ";
+        $para="";
+        $tab = $this->getCfpIdCollaborer($list);
+        for($i=0;$i<count($tab);$i+=1){
+            $para.=" id = '".$tab[$i]."'";
+            if($i+1 < count($tab)){
+                $para.=" OR ";
+            }
+        }
+        $query = $query." ".$para;
+        return $query;
+    }
+
+    public function queryCfpNotCollaborer($list){
+        $query = "select * from cfps where ";
+        $para="";
+        $tab = $this->getCfpIdNotCollaborer($list);
+        for($i=0;$i<count($tab);$i+=1){
+            $para.=$para." id != '".$tab[$i]."'";
+            if($i+1 < count($tab)){
+                $para.=" AND ";
+            }
+        }
+        $query = $query." ".$para;
+        return $query;
+    }
+
+    public function getCfpNotCollaborer($list){
+        $data = DB::select($this->queryCfpNotCollaborer($list));
+        for($i=0;$i<count($data);$i+=1){
+            $data[$i]->collaboration = "0";
+        }
+
+        return $data;
+    }
+    public function getCfpCollaborer($list){
+
+        $data = DB::select($this->queryCfpCollaborer($list));
+       for($i=0;$i<count($data);$i+=1){
+            $data[$i]->collaboration = "1";
+        }
+        return $data;
+    }
+// ------------------------------
+
 }
