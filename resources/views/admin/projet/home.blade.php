@@ -133,7 +133,7 @@
                                         @endcanany
                                         <th>Entreprise</th>
                                         @canany(['isCFP','isReferent'])
-                                        <th colspan="2">Rapport Finale</th>
+                                        <th colspan="2">status</th>
                                         @endcanany
                                         @canany(['isCFP'])
                                         <th colspan="4">Actions</th>
@@ -147,7 +147,13 @@
                                         <td>
 
                                             <a class="nav-link  {{ Route::currentRouteNamed('nouveau_groupe',$pj->projet_id) ? 'active' : '' }}" href="{{route('nouveau_groupe',$pj->projet_id)}}">
-                                                {{$pj->nom_projet}} ({{$pj->totale_session}})
+                                                <button type="button" class="btn btn-link position-relative">
+                                                {{$pj->nom_projet}}
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    {{$pj->totale_session}} session+
+                                                    <span class="visually-hidden">unread messages</span>
+                                                  </span>
+                                                </button>
                                             </a></td>
                                         @canany(['isAdmin','isManager','isReferent','isSuperAdmin'])
                                         <td><strong style="color: blue">{{$pj->nom_cfp}}</strong> </td>
@@ -156,24 +162,18 @@
                                             {{$pj->nom_etp}}</td>
                                         @canany(['isCFP'])
 
+
+
                                         <td>
-                                            {{-- <form action="{{ route('nouveauRapportFinale') }}" method="HEAD">
-                                            @csrf
-                                            <input name="projet_id" type="hidden" value="{{ $pj->projet_id }}">
-                                            <input name="entreprise_id" type="hidden" value="{{ $pj->entreprise_id }}">
-                                            <button type="submit" class="btn btn-dark">creer rapport finale</button>
-                                            </form> --}}
+                                            <strong style="color: blue">{{$pj->status}}</strong>
 
                                         </td>
                                         @endcanany
                                         @canany(['isCFP','isReferent'])
                                         <td>
-                                            {{-- <form action="{{ route('downRapportFinale') }}" method="HEAD">
-                                            @csrf
-                                            <input name="projet_id" type="hidden" value="{{ $pj->projet_id }}">
-                                            <input name="entreprise_id" type="hidden" value="{{ $pj->entreprise_id }}">
-                                            <button type="submit" class="btn btn-info">telecharger rapport finale</button>
-                                            </form> --}}
+                                            @canany(['isCFP'])
+                                            <button class="btn btn-success mb-2 payement"  data-toggle="modal" data-target="#edit_prj_{{ $pj->projet_id }}"><i class="fa fa-edit"></i></button>
+                                            @endcanany
                                         </td>
                                         @endcanany
                                         @canany(['isCFP'])
@@ -185,6 +185,67 @@
                                         </td>
                                         @endcanany
                                     </tr>
+
+
+                        {{-- debut modal edit projet --}}
+                        <div id="edit_prj_{{ $pj->projet_id }}"  class="modal fade" data-backdrop="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="modal-title text-md"><h5>Modification Projet</h5></div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card p-3 cardPayement">
+                                            <form action="{{ route('update_projet',$pj->projet_id) }}" id="zsxsq" method="POST">
+                                                @csrf
+                                                <strong>{{ $pj->nom_projet }}</strong>
+
+                                                <span>Status du projet</span>
+                                                <div class="inputbox inputboxP mt-3">
+                                                    <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status_projet" value="{{ $pj->status }}"  name="edit_status_projet"/>
+                                                        <datalist id="edit_status_projet">
+                                                                <option>En Cours</option>
+                                                                <option>Fini</option>
+                                                                <option>Stopper la formation</option>
+                                                        </datalist>
+
+                                                </div>
+
+
+                                                <div class="mt-4 mb-4">
+                                                    <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit"  class="btn btn-success btnP px-3">Valider</button> </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {{-- fin --}}
+
+
+                                        {{-- <td>
+                                             <form action="{{ route('nouveauRapportFinale') }}" method="HEAD">
+                                            @csrf
+                                            <input name="projet_id" type="hidden" value="{{ $pj->projet_id }}">
+                                            <input name="entreprise_id" type="hidden" value="{{ $pj->entreprise_id }}">
+                                            <button type="submit" class="btn btn-dark">creer rapport finale</button>
+                                            </form>
+
+                                        </td>
+                                        @endcanany
+                                        @canany(['isCFP','isReferent'])
+                                        <td>
+
+                                            <form action="{{ route('downRapportFinale') }}" method="HEAD">
+                                            @csrf
+                                            <input name="projet_id" type="hidden" value="{{ $pj->projet_id }}">
+                                            <input name="entreprise_id" type="hidden" value="{{ $pj->entreprise_id }}">
+                                            <button type="submit" class="btn btn-info">telecharger rapport finale</button>
+                                            </form>
+                                        </td> --}}
 
 
                                     <!-- Modal delete -->
@@ -202,7 +263,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                    <form action="{{ route('destroy_projet',) }}" method="GET">
+                                                    <form action="{{ route('destroy_projet') }}" method="POST">
                                                         @csrf
                                                         <button type="submit" class="btn btn-secondary"> Oui </button>
                                                         <input type="text" name="id_get" value="{{ $pj->projet_id }}" hidden>

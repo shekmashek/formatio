@@ -46,7 +46,7 @@
                                 <tbody>
                                     @foreach($formateur as $format)
                                     <tr>
-                                        <td><img src="{{asset('images/formateur/'.$format->photos)}}" class="logo">
+                                        <td><img src="{{asset('images/formateurs/'.$format->photos)}}" class="logo">
                                             <div id="pdp_formateur_{{$format->id}}" class="collapse">
                                                 <hr>
                                                 Niveau d'étude: {{$format->niveau}} <br>
@@ -112,7 +112,7 @@
 
                                     @foreach($entreprise as $etp)
                                     <tr>
-                                        <td><img src="{{asset('images/entreprise/'.$etp->logo)}}" class="logo">
+                                        <td><img src="{{asset('images/entreprises/'.$etp->logo)}}" class="logo">
                                             <div id="etp_pdp_{{$etp->id}}" class="collapse">
                                                 <hr>
 
@@ -180,7 +180,7 @@
                                     @foreach($demmande_formateur as $demmande_forma)
                                         <tr>
                                         <td><a href="" data-toggle="collapse" data-target="#plus_{{$demmande_forma->id}}">
-                                            <img src="{{asset('images/formateur/'.$demmande_forma->photo_formateur)}}" class="logo"><br>
+                                            <img src="{{asset('images/formateurs/'.$demmande_forma->photo_formateur)}}" class="logo"><br>
                                         </a>
                                             <div id="plus_{{$demmande_forma->id}}" class="collapse">
                                                 <hr>
@@ -216,7 +216,7 @@
                                     @foreach($demmande_etp as $demand)
                                         <tr>
                                         <td><a href="" data-toggle="collapse" data-target="#plus_{{$demand->id}}">
-                                            <img src="{{asset('images/entreprise/'.$demand->logo_etp)}}" class="logo"><br>
+                                            <img src="{{asset('images/entreprises/'.$demand->logo_etp)}}" class="logo"><br>
                                         </a>
                                         <div id="plus_{{$demand->id}}" class="collapse">
                                             <hr>
@@ -292,7 +292,7 @@
                                 <tbody>
                                     @foreach($invitation_etp as $invit)
                                         <tr>
-                                        <td><a href="" data-toggle="collapse" data-target="#info_{{$invit->id}}"><img src="{{asset('images/entreprise/'.$invit->logo_etp)}}" class="logo"></a>
+                                        <td><a href="" data-toggle="collapse" data-target="#info_{{$invit->id}}"><img src="{{asset('images/entreprises/'.$invit->logo_etp)}}" class="logo"></a>
                                             <div id="info_{{$invit->id}}" class="collapse">
                                             @csrf
                                             <hr>

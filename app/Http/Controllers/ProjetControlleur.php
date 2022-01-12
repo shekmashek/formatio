@@ -67,29 +67,25 @@ class ProjetControlleur extends Controller
         return response()->json($projet);
     }
 
-    public function update(Request $request)
+    public function update($id,Request $request)
     {
-        $id = $request->Id;
-        //modifier les données
-        $nom_projet = $request->Nom_projet;
-
         projet::where('id', $id)
             ->update([
-                'nom_projet' => $nom_projet
-
+                'status' => $request->edit_status_projet
             ]);
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data updated successfully',
-            ]
-        );
+        return back();
+        // return response()->json(
+        //     [
+        //         'success' => true,
+        //         'message' => 'Data updated successfully',
+        //     ]
+        // );
     }
 
     public function destroy(Request $request)
     {
         $id = $request->id_get;
-        $del = projet::where('id', $id)->delete();
+        $del = DB::delete('delete from projets where id = ?', [$id]);
         return back();
     }
 }
