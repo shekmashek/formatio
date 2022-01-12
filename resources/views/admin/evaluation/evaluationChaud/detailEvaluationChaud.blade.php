@@ -10,12 +10,8 @@
     <link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
    <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
     <title> formation.mg </title>
-
 </head>
 <body>
-
-
-
     <div class="container mt-4">
         <div class="row">
 
