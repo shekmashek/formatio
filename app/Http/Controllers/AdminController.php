@@ -45,6 +45,10 @@ class AdminController extends Controller
         $projet_a_venir_etp = DB::select('select count(*) as projet_a_venir FROM `projets` where entreprise_id = ? and status = ?',[$id_etp,'A venir'])[0]->projet_a_venir;
         $projet_etp = DB::select('select count(*) as all_projet from projets where entreprise_id =?',[$id_etp])[0]->all_projet;
 
-        return response()->json([$cfp, $projet_en_cours_etp,$projet_termime_etp,$projet_a_venir_etp,$projet_etp]);
+        $stagiaire = DB::select('select count(*) as stagiaire_dans_entreprise from stagiaires where entreprise_id = ?',[$id_etp])[0]->stagiaire_dans_entreprise;
+
+        $manager = DB::select('select count(*) as manager_entreprise from chef_departements where entreprise_id = ?',[$id_etp])[0]->manager_entreprise;
+
+        return response()->json([$cfp, $projet_en_cours_etp,$projet_termime_etp,$projet_a_venir_etp,$projet_etp,$stagiaire,$manager]);
     }
 }
