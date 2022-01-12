@@ -123,6 +123,7 @@ Route::get('/nouveau_formateur',function(){
 Route::get('/edit_formateur','ProfController@edit')->name('edit_formateur');
 Route::post('/update_formateur','ProfController@update')->name('update_formateur');
 Route::get('/destroy_formateur','ProfController@destroy')->name('destroy_formateur');
+Route::post('desactivation_formateur','ProfController@desactivation_formateur')->name('desactivation_formateur');
 //profil
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
 
