@@ -94,7 +94,17 @@ class CollaborationController extends Controller
 
         $demmande = $fonct->findWhere("v_demmande_etp_pour_cfp", ["demmandeur_etp_id"], [$entreprise_id]);
         $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
-        $cfps = $fonct->findAll("cfps");
+
+        $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["entreprise_id"],[$entreprise_id]);
+        $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["entreprise_id"],[$entreprise_id]);
+        $cfp_tmp = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
+        $cfp = new cfp();
+        $cfp1 = $cfp->getCfpCollaborer($cfp_tmp);
+        $cfp2 = $cfp->getCfpNotCollaborer($cfp1);
+
+        $cfps = $fonct->concatTwoList($cfp1,$cfp2);
+
+        // $cfps = $fonct->findAll("cfps");
         return view('collaboration.collaboration_etp', compact('cfps', 'demmande', 'invitation', 'entreprise_id'));
     }
 
@@ -109,7 +119,6 @@ class CollaborationController extends Controller
         $formateur_id = formateur::where('user_id', $id)->value('id');
         $demmande = $fonct->findWhere("v_demmande_formateur_pour_cfp", ["demmandeur_formateur_id"], [$formateur_id]);
         $invitation = $fonct->findWhere("v_invitation_formateur_pour_cfp", ["inviter_formateur_id"], [$formateur_id]);
-        // $cfps = $fonct->findAll("cfps");
 
           // ======== formateur collaborer
             $cfp1 = $fonct->findWhere("v_demmande_formateur_cfp", ["formateur_id"], [$formateur_id]);
@@ -143,7 +152,6 @@ class CollaborationController extends Controller
          // ======== formateur collaborer
         $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
         $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-        // $formateurCollaborer = $fonct->concatTwoList($formateur1,$formateur2);
         $formateur_tmp = $fonct->concatTwoList($formateur1,$formateur2);
         $format = new formateur();
         $forma_colab1 = $format->getCollaborer("formateurs",$formateur_tmp);
@@ -151,11 +159,10 @@ class CollaborationController extends Controller
 
         $formateur = $fonct->concatTwoList($forma_colab1,$forma_colab2);
 
-        // dd($formateurCollaborer);
+
         // ======== entreprise collaborer
         $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
         $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
-        // $entrepriseCollaborer = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
         $entreprise_tmp = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
         $etp = new entreprise();
         $entreprise1 = $etp->getCollaborer("entreprises",$entreprise_tmp);
