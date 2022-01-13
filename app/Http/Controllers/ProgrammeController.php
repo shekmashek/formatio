@@ -22,6 +22,12 @@ class ProgrammeController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id',$id_user)->value('id');
             $programmes = DB::select('select * from cfpcours where cfp_id = ?', [$cfp_id]);
+
+            if(count($programmes) <= 0){
+                return view('admin.programme.guide');
+            }else{
+                return view('admin.programme.programme',compact('programmes'));
+            }
         }
         if (Gate::allows('isSuperAdmin')) {
             $programmes = $programme->findAllProgramme();
