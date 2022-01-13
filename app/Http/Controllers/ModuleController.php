@@ -28,6 +28,11 @@ class ModuleController extends Controller
         if (Gate::allows('isCFP')) {
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             $categorie = formation::where('cfp_id', $cfp_id)->get();
+            if(count($infos) <= 0){
+                return view('admin.module.guide');
+            }else{
+                return view('admin.module.module', compact('infos', 'categorie'));
+            }
         }
         if (Gate::allows('isSuperAdmin')) {
             $infos = DB::select('select * from moduleformation');
