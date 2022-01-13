@@ -81,7 +81,10 @@ class HomeController extends Controller
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $data = $fonct->findWhere("v_projetentreprise", ["cfp_id"], [$cfp_id]);
             $entreprise = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-            return view('admin.projet.home', compact('data', 'entreprise', 'totale_invitation'));
+           
+            
+                return view('admin.projet.home', compact('data', 'entreprise', 'totale_invitation'));
+
         }
     }
 
