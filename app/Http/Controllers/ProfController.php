@@ -29,9 +29,16 @@ class ProfController extends Controller
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+            
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            
             $formateur = $forma->getFormateur($formateur1, $formateur2);
-            return view('admin.formateur.formateur', compact('formateur'));
+             if(count($formateur )<=0){
+                return view('admin.formateur.guide');
+              }
+            else{
+                return view('admin.formateur.formateur', compact('formateur'));
+                }
         } else {
             $formateur1 = $fonct->findAll("v_demmande_formateur_cfp");
             $formateur2 = $fonct->findAll("v_demmande_cfp_formateur");

@@ -31,7 +31,14 @@ class UtilisateurControlleur extends Controller
     }
     public function liste_formateur(){
         $datas = formateur::orderBy("nom_formateur")->get();
+         if(count($datas)<=0){
+                return view('admin.utilisateur.guide');
+
+            }
+            else{
         return view('admin.utilisateur.utilisateur_formateur',compact('datas'));
+
+            }
 
     }
 
