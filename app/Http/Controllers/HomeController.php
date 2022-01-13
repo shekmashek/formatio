@@ -62,10 +62,15 @@ class HomeController extends Controller
         if (Gate::allows('isReferent')) {
             //on récupère l'entreprise id de la personne connecté
 
+            // $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            // $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
+            // $cfp = $fonct->findAll("cfps");
+            // return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
-            $cfp = $fonct->findAll("cfps");
-            return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
+            $infos = DB::select('select * from v_detail_projet_groupe where entreprise_id = ?',[$entreprise_id]);
+            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?',[$entreprise_id]);
+            return view('projet_session.index',compact('data','infos','stagiaires'));
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté

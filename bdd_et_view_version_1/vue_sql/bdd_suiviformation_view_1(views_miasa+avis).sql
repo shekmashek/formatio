@@ -42,9 +42,11 @@ FROM
 GROUP BY
     projets.id;
 
-CREATE OR REPLACE VIEW v_projetentreprise AS SELECT
+CREATE OR REPLACE VIEW v_projetentreprise AS 
+SELECT
     p.id AS projet_id,
     p.nom_projet,
+    p.created_at as date_projet,
     t_se.totale_session,
     p.entreprise_id,
     p.cfp_id,

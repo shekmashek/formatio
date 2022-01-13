@@ -60,6 +60,7 @@ class ProjetControlleur extends Controller
         return view('admin.projet.home', compact('data', 'projet'));
     }
 
+
     public function edit(Request $request)
     {
         $id = $request->Id;
