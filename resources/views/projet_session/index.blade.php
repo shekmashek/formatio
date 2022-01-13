@@ -2,7 +2,7 @@
 @section('content')
 
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-<i class="far fa-caret-circle-down" data-toggle="collapse" href="#corps" role="button" aria-expanded="false"></i> Janvier 2022 <br><hr>
+<i class="far fa-caret-circle-down" data-toggle="collapse" href="#corps" role="button" aria-expanded="false"></i> <a href="#corps" role="button" aria-expanded="false" data-toggle="collapse"> Janvier 2022</a> <br><hr>
 <div class="container-fluid px-3 collapse" id="corps">
     <div class="d-flex">
         <div class="enfant_flex">
@@ -17,14 +17,14 @@
         <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Statut</b></p>   
         </div>
-        <div class="enfant_flex">
+        {{-- <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Progression</b></p>
-        </div>
+        </div> --}}
         <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Evaluation</b></p>
         </div>
         <div class="enfant_flex">
-            <p class="text-center my-2 text-white"><b>Detail</b></p>
+            <p class="text-center my-2 text-white"><b>Session</b></p>
         </div>
     </div>
 
@@ -47,13 +47,13 @@
                 <div class="enfant_flex_1">
                     <p class="statut_en_cours text-center mx-5 my-4">{{ $projet->status }}</p>  
                 </div>
-                <div class="enfant_flex_1">
+                {{-- <div class="enfant_flex_1">
                     
                         <div class="progress my-4">
                             <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 70%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                    
-                </div>
+                     
+                </div>--}}
                 <div class="enfant_flex_1">
                     <p class="text-center my-4">
                         <span class="fa fa-star checked"></span>
@@ -100,6 +100,9 @@
             </div>
         </div>
     @endforeach
+    <div class="ajouter_projet clignote">
+        <i class="fa fa-folder-plus ms-5 " style="font-size: 20px; color:blue;"></i>&nbsp; Ajouter un nouveau projet
+    </div>
     
 
 </div>
@@ -126,14 +129,14 @@
         <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Statut</b></p>   
         </div>
-        <div class="enfant_flex">
+        {{-- <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Progression</b></p>
-        </div>
+        </div> --}}
         <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Evaluation</b></p>
         </div>
         <div class="enfant_flex">
-            <p class="text-center my-2 text-white"><b>Detail</b></p>
+            <p class="text-center my-2 text-white"><b>Session</b></p>
         </div>
     </div>
 
@@ -156,13 +159,13 @@
             <div class="enfant_flex_1">
                 <p class="statut_en_cours text-center mx-5 my-4">En cours</p>  
             </div>
-            <div class="enfant_flex_1">
+            {{-- <div class="enfant_flex_1">
                 
                     <div class="progress my-4">
                         <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 
-            </div>
+            </div> --}}
             <div class="enfant_flex_1">
                 <p class="text-center my-4">
                     <span class="fa fa-star checked"></span>
@@ -183,235 +186,7 @@
         </div>
     </div>
 
-    {{-- duplication --}}
-    <div class="bg-projet my-2">
-        <div class="d-flex">
-            <div class="enfant_flex_1">
-                <p class="text-center my-4"><b>Projets 1</b></p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <img src="{{ asset('img/images/ok.png') }}" alt="" width="50px" height="50px" class="img-fluid image_logo_projet">
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <?php  echo date('l, j F Y '); ?>
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="statut_en_cours text-center mx-5 my-4">En cours</p>  
-            </div>
-            <div class="enfant_flex_1">
-                
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </p>
-            </div>
-            <div class="enfant_flex_1 my-4"> <center><i class="far fa-caret-circle-down" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"></i></center> </div>
-        </div>
     
-
-        <div class="collapse" id="collapseExample">
-            <div class="collapse_projet">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-        </div>
-    </div>
-
-
-    <div class="bg-projet my-2">
-        <div class="d-flex">
-            <div class="enfant_flex_1">
-                <p class="text-center my-4"><b>Projets 1</b></p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <img src="{{ asset('img/images/ok.png') }}" alt="" width="50px" height="50px" class="img-fluid image_logo_projet">
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <?php  echo date('l, j F Y '); ?>
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="statut_en_cours text-center mx-5 my-4">En cours</p>  
-            </div>
-            <div class="enfant_flex_1">
-                
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </p>
-            </div>
-            <div class="enfant_flex_1 my-4"> <center><i class="far fa-caret-circle-down" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"></i></center> </div>
-        </div>
-    
-
-        <div class="collapse" id="collapseExample">
-            <div class="collapse_projet">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-        </div>
-    </div>
-
-
-    <div class="bg-projet my-2">
-        <div class="d-flex">
-            <div class="enfant_flex_1">
-                <p class="text-center my-4"><b>Projets 1</b></p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <img src="{{ asset('img/images/ok.png') }}" alt="" width="50px" height="50px" class="img-fluid image_logo_projet">
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <?php  echo date('l, j F Y '); ?>
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="statut_en_cours text-center mx-5 my-4">En cours</p>  
-            </div>
-            <div class="enfant_flex_1">
-                
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </p>
-            </div>
-            <div class="enfant_flex_1 my-4"> <center><i class="far fa-caret-circle-down" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"></i></center> </div>
-        </div>
-    
-
-        <div class="collapse" id="collapseExample">
-            <div class="collapse_projet">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-projet my-2">
-        <div class="d-flex">
-            <div class="enfant_flex_1">
-                <p class="text-center my-4"><b>Projets 1</b></p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <img src="{{ asset('img/images/ok.png') }}" alt="" width="50px" height="50px" class="img-fluid image_logo_projet">
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <?php  echo date('l, j F Y '); ?>
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="statut_en_cours text-center mx-5 my-4">En cours</p>  
-            </div>
-            <div class="enfant_flex_1">
-                
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </p>
-            </div>
-            <div class="enfant_flex_1 my-4"> <center><i class="far fa-caret-circle-down" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"></i></center> </div>
-        </div>
-    
-
-        <div class="collapse" id="collapseExample">
-            <div class="collapse_projet">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-projet my-2">
-        <div class="d-flex">
-            <div class="enfant_flex_1">
-                <p class="text-center my-4"><b>Projets 1</b></p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <img src="{{ asset('img/images/ok.png') }}" alt="" width="50px" height="50px" class="img-fluid image_logo_projet">
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <?php  echo date('l, j F Y '); ?>
-                </p>
-            </div>
-            <div class="enfant_flex_1">
-                <p class="statut_en_cours text-center mx-5 my-4">En cours</p>  
-            </div>
-            <div class="enfant_flex_1">
-                
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                
-            </div>
-            <div class="enfant_flex_1">
-                <p class="text-center my-4">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </p>
-            </div>
-            <div class="enfant_flex_1 my-4"> <center><i class="far fa-caret-circle-down" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"></i></center> </div>
-        </div>
-    
-
-        <div class="collapse" id="collapseExample">
-            <div class="collapse_projet">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-        </div>
-    </div>
-
-    {{-- fin duplication --}}
 
 </div>
 
@@ -438,6 +213,11 @@
         padding: 4px auto;
         border-radius: 4px;
     }
+    .ajouter_projet{
+        border: solid 1px grey;
+        border-radius: 8px;
+        padding: 10px auto;
+    }
     .checked {
   color: orangered;
 }
@@ -459,7 +239,7 @@
     margin-left: -20px;;
 }
 .clignote {
-  color:green;
+  color:grey;
   animation: clignote 2s linear infinite;
 }
 @keyframes clignote {  
