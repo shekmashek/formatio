@@ -135,6 +135,7 @@ class PlanFormationController extends Controller
     }
     public function formation_demandee()
     {
+
         $liste_domaine = Domaine::all();
         $id =stagiaire::where('mail_stagiaire', Auth::user()->email)->value('id');
         $recueilInfo = recueil_information::with('formation')->where('stagiaire_id', $id)->get();

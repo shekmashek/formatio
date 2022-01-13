@@ -153,14 +153,19 @@
                                                     {{$pj->totale_session}} session+
                                                     <span class="visually-hidden">unread messages</span>
                                                   </span>
+
                                                 </button>
-                                            </a></td>
+
+
+                                            </a>
+
+                                        </td>
                                         @canany(['isAdmin','isManager','isReferent','isSuperAdmin'])
                                         <td><strong style="color: blue">{{$pj->nom_cfp}}</strong> </td>
                                         @endcanany
                                         <td>
                                             {{$pj->nom_etp}}</td>
-                                        @canany(['isCFP'])
+                                        @canany(['isCFP','isManager','isReferent'])
 
 
 

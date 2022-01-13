@@ -68,7 +68,7 @@
                                     <option value="{{$format->formateur_id}}">{{$format->nom_formateur}} {{$format->prenom_formateur}}</option>
                                     @endforeach
                                 </select>
-                                <p><strong style="color: red" id="err_formateur">Aucun formateur détecté! </strong></p>
+                                <p><strong style="color: red" id="err_formateur"></strong></p>
 
                             </div>
                             <div class="form-group">

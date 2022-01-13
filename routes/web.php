@@ -450,7 +450,7 @@ Route::get('enregistter','PlanFormationController@enregistrer_plan')->name('enre
 Route::get('listePlanFormation', 'PlanFormationController@liste_plan')->name('listePlanFormation');
 //profil
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->middleware('can:isFormateur')->name('profilFormateur');
-Route::get('liste_demande/{id}','PlanFormationController@formation_demandee')->name('liste_demande');
+Route::get('liste_demande','PlanFormationController@formation_demandee')->name('liste_demande');
 //modification profil formateur
 Route::get('/profile_formateur_set','ProfController@set_profile_formateur')->name('profile_formateur_set');
 Route::get('/modif_formateur/{id}','ProfController@modif')->name('modif_formateur');

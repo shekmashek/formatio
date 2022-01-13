@@ -173,14 +173,8 @@ class ProfController extends Controller
 
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            DB::beginTransaction();
-            try {
-                DB::delete('delete from demmande_formateur_cfp where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$id_formateur, $cfp_id]);
+            // dd("delete from demmande_cfp_formateur where demmandeur_cfp_id = ".$cfp_id." and inviter_formateur_id=".$id_formateur);
                 DB::delete('delete from demmande_cfp_formateur where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
-            } catch (Exception $e) {
-                DB::rollback();
-                echo $e->getMessage();
-            }
         }
 
         if (Gate::allows('isSuperAdmin','isAdmin')) {
@@ -199,7 +193,7 @@ class ProfController extends Controller
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $id_formateur = $req->id_get;
-            DB::update('update demmande_formateur_cfp set activiter = 0 where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$id_formateur, $cfp_id]);
+            // DB::update('update demmande_formateur_cfp set activiter = 0 where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$id_formateur, $cfp_id]);
             DB::update('update demmande_cfp_formateur set activiter = 0 where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
 
         return back();

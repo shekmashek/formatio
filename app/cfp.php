@@ -49,21 +49,29 @@ class Cfp extends Model
     }
 
     public function queryCfpNotCollaborer($list){
-        $query = "select * from cfps where ";
         $para="";
-        $tab = $this->getCfpIdNotCollaborer($list);
-        for($i=0;$i<count($tab);$i+=1){
-            $para.=$para." id != '".$tab[$i]."'";
-            if($i+1 < count($tab)){
-                $para.=" AND ";
+            $query = "select * from cfps where ";
+            $tab = $this->getCfpIdNotCollaborer($list);
+            for($i=0;$i<count($tab);$i+=1){
+                $para.=$para." id != '".$tab[$i]."'";
+                if($i+1 < count($tab)){
+                    $para.=" AND ";
+                }
             }
-        }
+
         $query = $query." ".$para;
         return $query;
     }
 
     public function getCfpNotCollaborer($list){
         $data = DB::select($this->queryCfpNotCollaborer($list));
+
+        if (count($list) > 0) {
+            $data = DB::select($this->queryCfpNotCollaborer($list));
+        } else {
+            $data = DB::select("select * from cfps");
+        }
+
         for($i=0;$i<count($data);$i+=1){
             $data[$i]->collaboration = "0";
         }
@@ -72,10 +80,19 @@ class Cfp extends Model
     }
     public function getCfpCollaborer($list){
 
-        $data = DB::select($this->queryCfpCollaborer($list));
-       for($i=0;$i<count($data);$i+=1){
-            $data[$i]->collaboration = "1";
+
+        if (count($list) > 0) {
+            $data = DB::select($this->queryCfpCollaborer($list));
+            for($i=0;$i<count($data);$i+=1){
+                $data[$i]->collaboration = "1";
+            }
+        } else {
+            $data = DB::select("select * from  cfps");
+            for ($i = 0; $i < count($data); $i += 1) {
+                $data[$i]->collaboration = "0";
+            }
         }
+
         return $data;
     }
 // ------------------------------

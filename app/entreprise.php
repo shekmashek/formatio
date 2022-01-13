@@ -63,21 +63,30 @@ class entreprise extends Model
     }
 
     public function queryNotCollaborer($nomTab,$list){
-        $query = "select * from ".$nomTab." where ";
+        $query = "select * from ".$nomTab;
         $para="";
-        $tab = $this->getIdNotCollaborer($list);
-        for($i=0;$i<count($tab);$i+=1){
-            $para.=$para." id != '".$tab[$i]."'";
-            if($i+1 < count($tab)){
-                $para.=" AND ";
+
+            $query = "select * from ".$nomTab." where ";
+            $tab = $this->getIdNotCollaborer($list);
+            for($i=0;$i<count($tab);$i+=1){
+                $para.=$para." id != '".$tab[$i]."'";
+                if($i+1 < count($tab)){
+                    $para.=" AND ";
+                }
             }
-        }
+
         $query = $query." ".$para;
         return $query;
     }
 
     public function getNotCollaborer($nomTab,$list){
-        $data = DB::select($this->queryNotCollaborer($nomTab,$list));
+
+        if (count($list) > 0) {
+            $data = DB::select($this->queryNotCollaborer($nomTab,$list));
+        } else {
+            $data = DB::select("select * from ".$nomTab);
+        }
+
         for($i=0;$i<count($data);$i+=1){
             $data[$i]->collaboration = "0";
         }
@@ -86,10 +95,18 @@ class entreprise extends Model
     }
     public function getCollaborer($nomTab,$list){
 
-        $data = DB::select($this->queryCollaborer($nomTab,$list));
-       for($i=0;$i<count($data);$i+=1){
-            $data[$i]->collaboration = "1";
+        if (count($list) > 0) {
+            $data = DB::select($this->queryCollaborer($nomTab,$list));
+            for($i=0;$i<count($data);$i+=1){
+                $data[$i]->collaboration = "1";
+            }
+        } else {
+            $data = DB::select("select * from ".$nomTab);
+            for ($i = 0; $i < count($data); $i += 1) {
+                $data[$i]->collaboration = "0";
+            }
         }
+
         return $data;
     }
 // ------------------------------

@@ -39,7 +39,7 @@
                             <div class="col-lg-6">
                                 <form action="{{route('planFormation.store')}}" method = "POST">
                                     @csrf
-                                    @can('isReferent')
+                                    @can('isReferent','isManager')
                                         <div class="form-group">
                                             <label for="plan">Collaborateur</label><br>
                                             <select class="form-control" id="plan" name = "stagiaire_id">

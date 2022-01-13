@@ -106,7 +106,7 @@ class FroidEvaluationController extends Controller
 
     public function tableauDeCompetence(Request $request)
     {
-        try {
+        // try {
             $detail = detail::where('projet_id', $request->id_projet)->where('groupe_id', $request->id_groupe)->get();
             $req = "select * from v_participantsession where ";
             for ($i = 0; $i < count($detail); $i++) {
@@ -117,15 +117,17 @@ class FroidEvaluationController extends Controller
                 }
             }
             $id_projet = $request->id_projet;
-            $projet = DB::select('select * from v_projetentreprise where projet_id = ?', [$id_projet])[0];
+            $projet_temp = DB::select('select * from v_projetentreprise where projet_id = ?', [$id_projet]);
+
+            $projet = $projet_temp[0];
             $stagiaire = DB::select('select * from v_participantsession');
             $programme = programme::where('module_id', $detail[0]->module_id)->get();
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$request->id_module]);
             $evaluation = DB::select('select * from v_froid_evaluations where projet_id = ?', [$id_projet]);
             $pourcentage = DB::select('select * from v_pourcentage_status where projet_id = ?', [$id_projet]);
             return view('admin.evaluation.evaluationFroid.tableau_de_competence', compact('stagiaire', 'programme', 'cours', 'id_projet', 'evaluation', 'projet', 'pourcentage'));
-        } catch (Exception $e) {
-            return back()->with('error', 'Il y a une erreur');
-        }
+        // } catch (Exception $e) {
+        //     return back()->with('error', 'Il y a une erreur');
+        // }
     }
 }

@@ -45,7 +45,7 @@ class Collaboration extends Model
 
     public function insert_collaboration_cfp_formateur($imput){
         $data = [$imput["cfp_id"],$imput["formateur_id"]];
-        DB::insert('insert into demmande_cfp_formateur (demmandeur_cfp_id,inviter_formateur_id,created_at,updated_at) values (?,?, NOW(), NOW())', $data);
+        DB::insert('insert into demmande_cfp_formateur (demmandeur_cfp_id,inviter_formateur_id,created_at,updated_at,activiter) values (?,?, NOW(), NOW(),1)', $data);
         DB::commit();
     }
 
