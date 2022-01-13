@@ -28,11 +28,14 @@ class ProfController extends Controller
         if (Gate::allows('isCFP')) {
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
             
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             
             $formateur = $forma->getFormateur($formateur1, $formateur2);
+
+           
+
              if(count($formateur )<=0){
                 return view('admin.formateur.guide');
               }
