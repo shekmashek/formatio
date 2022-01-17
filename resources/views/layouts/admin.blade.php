@@ -41,130 +41,10 @@
 
 </head>
 <body id="body-pd">
-    <header class="header row align-items-center g-0" id="header">
-        <div class="col-5">
-            <div class="header_toggle d-flex first_nav ">
-                <i class='bx bx-menu menu' id="header-toggle" style="color: white;"></i>
-                <div>
-                    @yield('title')
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-
-        </div>
-        <div class="col-3 header-right align-items-center d-flex flex-row">
-            <div class="notification-box">
-                <span class="count-notif">6</span>
-                <div class="notification-bell">
-                    <i class="bx bxs-bell bell_move" id="bell" style="color: white;"></i>
-                </div>
-            </div>
-            <div class="notifications" id="box_notif">
-                <h2>Notifications - <span>6</span></h2>
-                <a href="{{route('listes_notifs')}}">
-                    <div class="notifications-item">
-                        <h4>Vonjy Nomenjanahary,&nbsp;il y a 1h</h4>
-                        <p>Veut Collaborrer avec votre entreprise</p>
-                    </div>
-                </a>
-            </div>
-            @canany(['isCFP', 'isReferent'])
-
-
-            <div class="message-box">
-
-                <span class="count-message">
-                    @isset($totale_invitation)
-                    @if($totale_invitation>0)
-                    {{$totale_invitation}}
-                    @else
-                    0
-                    @endif
-                    @endisset
-                </span>
-                <div class="notification-bell">
-                    <i class='bx bxs-envelope ms-5 bell_move' id="envelope" style="color: white;"></i>
-                </div>
-            </div>
-            <div class="messages" id="box_message">
-                <h2>Messages - <span>5</span></h2>
-                <a href="{{route('collaboration')}}">
-                    <div class="notifications-item2">
-                        {{-- <h4>Nicole Raharifetra,&nbsp;il y a 1h</h4> --}}
-                        <h4>Collaboration <strong style="color:red">
-                                @isset($totale_invitation)
-                                @if($totale_invitation>0)
-                                ({{$totale_invitation}})
-                                @else
-                                0
-                                @endif
-                                @endisset
-                            </strong></h4>
-                        <p>voir mes invitations,demandes</p>
-                    </div>
-                </a>
-            </div>
-
-            @endcanany
-
-            <div class="header_img ms-5 mb-2"><a href=""><img src="" alt="" class="utilisateur" id="photo_profil"></a></div>
-            <div class="pdp_profil" id="box_profil">
-                <div class="container pdp_profil_card d-flex justify-content-center align-items-center">
-                    <div class="card">
-                        <div class="upper"></div>
-                        <div class="user text-center">
-                            <div class="profile"> <img src="{{asset('images/entreprises/TEST15-11-2021.png')}}" class="rounded-circle" width="80"> </div>
-                        </div>
-                        <div class="mt-5 text-center">
-                            <h4 class="mb-0">{{Auth::user()->name}}</h4>
-                            @if(Auth::user()->role_id == 1)
-                            <span class="text-muted d-block mb-2">Admin</span>
-                            @endif
-                            @if(Auth::user()->role_id == 2)
-                            <span class="text-muted d-block mb-2">Référent</span>
-                            @endif
-                            @if(Auth::user()->role_id == 3)
-                            <span class="text-muted d-block mb-2">Stagiaire</span>
-                            @endif
-                            @if(Auth::user()->role_id == 4)
-                            <span class="text-muted d-block mb-2">Formateur</span>
-                            @endif
-                            @if(Auth::user()->role_id == 5)
-                            <span class="text-muted d-block mb-2">Manager</span>
-                            @endif
-                            @if(Auth::user()->role_id == 6)
-                            <span class="text-muted d-block mb-2">Super Admin</span>
-                            @endif
-                            @if(Auth::user()->role_id == 7)
-                            <span class="text-muted d-block mb-2">Centre de Formation</span>
-                            @endif
-                            @can('isManager')
-                            <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                            @endcan
-                            @can('isStagiaire')
-                            <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                            @endcan
-                            @can('isReferent')
-                            <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                            @endcan
-
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"><span class="deconnexion_text">Déconnexion</span></a>
-                            <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <div class="l-navbar" id="nav-bar">
         <div class="container-fluid ">
             <nav class="nav">
-                <div class="d-flex align-items-center justify-content-space-between ms-3 img"><a href="{{ route('accueil_admin') }}" class="d-flex align-items-center"><img src="{{asset('img/images/logo_fmg.png')}}" id="img" class="img-fluid logo" alt="logo">&nbsp;<span class="d-flex textS">FORMATION.MG</span></a></div>
+                <div class="d-flex align-items-center justify-content-space-between ms-3 img"><a href="{{ route('accueil_admin') }}" class="d-flex align-items-center"><img src="{{asset('img/images/logo_fmg54Ko.png')}}" id="img" class="img-fluid logo" alt="logo">&nbsp;<span class="d-flex textS">FORMATION.MG</span></a></div>
                 <div class="nav_list">
                     <ul class="lisst-unstyled p-0">
                         {{-- categorie de formation --}}
@@ -468,9 +348,31 @@
                     {{-- <li class="my-1 sousMenu">
                                     <a href="{{route('liste_facture',3)}}">Facturation</a>
                     </li> --}}
-                    {{-- <li class="my-1 sousMenu">
-                                    <a href="">Encaissement</a>
-                                </li> --}}
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="{{route('liste_facture',3)}}">Total facture</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture en retard</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture paye</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture envoye</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture non envoye</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">347</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Brouillon</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+
                     </ul>
                     </li>
                     @endcanany
@@ -490,9 +392,7 @@
                     {{-- plan de formation --}}
                     @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
                     <li class="my-2">
-                        <a href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a> @canany(['isStagiaire','isReferent'])  &nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>@endcanany 
-                        {{-- <a  href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>@canany(['isManager']) &nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('planFormation.index') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>@endcanany  --}}
-
+                        <a @canany(['isStagiaire']) href="{{route('liste_demande_formation')}}" @endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="pdfrmSubMenu">
                             @canany(['isStagiaire','isManager','isReferent'])
                                 <li class="my-1 sousMenu">
@@ -502,11 +402,11 @@
                             <li class="my-1 sousMenu">
                                 <a href="{{ route('listePlanFormation') }}">Plans de Formations</a>
                             </li>
-                         
+
                         </ul>
                     </li>
                     @endcanany
-                    
+
 
                     {{-- abonemment --}}
                     @canany(['isSuperAdmin','isAdmin'])
@@ -532,14 +432,192 @@
                 </div>
                 <div>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i class='bx bx-log-out-circle nav_icon_logout mx-4' title="Déconnexion"></i></a>
+                    document.getElementById('logout-form').submit();"><i class='bx bx-log-out-circle nav_icon_logout mx-4' title="Déconnexion"></i><span class="nav_name">Déconnexion</span></a>
                 </div>
             </nav>
         </div>
     </div>
     <!--Container Main start-->
-    <div class="container-fluid height-100 bg-light" id="content" style="padding-top: 1rem">
+    <div class="container-fluid height-100 px-0 bg-light" id="content" style="padding-top: 1rem">
+        {{-- header --}}
+        <header class="header row align-items-center g-0" id="header">
+            <div class="col-5">
+                <div class="header_toggle d-flex first_nav ">
+                    <i class='bx bx-menu menu' id="header-toggle" style="color: #801D68;"></i>
+                    <div>
+                        @yield('title')
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-7 header-right align-items-center d-flex flex-row">
+                <div class="col">
+                    <div class="notification-box">
+                        <span class="count-notif">6</span>
+                        <div class="notification-bell">
+                            <i class="bx bxs-bell bell_move" id="bell" style="color: #801D68;"></i>
+                        </div>
+                    </div>
+                    <div class="notifications" id="box_notif">
+                        <h2>Notifications - <span>6</span></h2>
+                        <a href="{{route('listes_notifs')}}">
+                            <div class="notifications-item">
+                                <h4>Vonjy Nomenjanahary,&nbsp;il y a 1h</h4>
+                                <p>Veut Collaborrer avec votre entreprise</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="message-box">
+                        <span class="count-message">
+                            @isset($totale_invitation)
+                            @if($totale_invitation>0)
+                            {{$totale_invitation}}
+                            @else
+                            0
+                            @endif
+                            @endisset
+                        </span>
+                        <div class="notification-bell">
+                            <i class='bx bxs-envelope ms-5 bell_move' id="envelope" style="color: #801D68;"></i>
+                        </div>
+                    </div>
+                    <div class="messages" id="box_message">
+                        <h2>Messages - <span>5</span></h2>
+                        <a href="{{route('collaboration')}}">
+                            <div class="notifications-item2">
+                                {{-- <h4>Nicole Raharifetra,&nbsp;il y a 1h</h4> --}}
+                                <h4>Collaboration <strong style="color:red">
+                                        @isset($totale_invitation)
+                                        @if($totale_invitation>0)
+                                        ({{$totale_invitation}})
+                                        @else
+                                        0
+                                        @endif
+                                        @endisset
+                                    </strong></h4>
+                                <p>voir mes invitations,demandes</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"><i class='bx bx-log-out'></i><span class="deconnexion_text" style="color: #542356;">Déconnexion</span></a>
+                    <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+                {{-- <div class="header_img ms-5 mb-2"><a href=""><img src="" alt="" class="utilisateur" id="photo_profil"></a></div> --}}
+                {{-- <div class="pdp_profil" id="box_profil">
+                    <div class="container pdp_profil_card d-flex justify-content-center align-items-center">
+                        <div class="card">
+                            <div class="upper"></div>
+                            <div class="user text-center">
+                                <div class="profile"> <img src="{{asset('images/entreprises/TEST15-11-2021.png')}}" class="rounded-circle" width="80">
+            </div>
+    </div>
+    <div class="mt-5 text-center">
+        <h4 class="mb-0">{{Auth::user()->name}}</h4>
+        @if(Auth::user()->role_id == 1)
+        <span class="text-muted d-block mb-2">Admin</span>
+        @endif
+        @if(Auth::user()->role_id == 2)
+        <span class="text-muted d-block mb-2">Référent</span>
+        @endif
+        @if(Auth::user()->role_id == 3)
+        <span class="text-muted d-block mb-2">Stagiaire</span>
+        @endif
+        @if(Auth::user()->role_id == 4)
+        <span class="text-muted d-block mb-2">Formateur</span>
+        @endif
+        @if(Auth::user()->role_id == 5)
+        <span class="text-muted d-block mb-2">Manager</span>
+        @endif
+        @if(Auth::user()->role_id == 6)
+        <span class="text-muted d-block mb-2">Super Admin</span>
+        @endif
+        @if(Auth::user()->role_id == 7)
+        <span class="text-muted d-block mb-2">Centre de Formation</span>
+        @endif
+        @can('isManager')
+        <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+        @endcan
+        @can('isStagiaire')
+        <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+        @endcan
+        @can('isReferent')
+        <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+        @endcan
+
+        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"><span class="deconnexion_text">Déconnexion</span></a>
+        <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
+            @csrf
+        </form>
+    </div>
+    </div>
+    </div>
+    </div> --}}
+    </div>
+    </header>
+    {{-- header --}}
+    {{-- content --}}
+    <div class="container-fluid h-100">
         @yield('content')
+    </div>
+    {{-- content --}}
+    {{-- footer --}}
+    <div class="footer">
+        <div class="container-fluid footer_all">
+            <div class="row w-100">
+                <div class="col-12">
+                    <div class="container">
+                        <div class="d-flex w-auto footer_one">
+                            <div class="footer_list me-2">
+                                <a href="#" class="mx-auto">
+                                    <p>&copy;Copyright 2022 : Formation.mg</p>
+                                </a>
+                            </div>
+                            <div class="footer_list ms-2 me-2">
+                                <a href="#">
+                                    <p>Infomations légales</p>
+                                </a>
+                            </div>
+                            <div class="footer_list ms-2 me-2">
+                                <a href="#">
+                                    <p>Contactez-nous</p>
+                                </a>
+                            </div>
+                            <div class="footer_list ms-2 me-2">
+                                <a href="#">
+                                    <p>Politique de confidentialité</p>
+                                </a>
+                            </div>
+                            <div class="footer_list ms-2 me-2">
+                                <a href="#">
+                                    <p>Condition d'utilisation</p>
+                                </a>
+                            </div>
+                            <div class="footer_list ms-2 me-2">
+                                <a href="#">
+                                    <p>Tarifs</p>
+                                </a>
+                            </div>
+                            <div class="footer_list_end ms-2 me-2">
+                                <a href="#">
+                                    <p>Crédits</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- footer --}}
     </div>
 
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>

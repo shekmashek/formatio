@@ -1,28 +1,14 @@
-body {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-size: 100%;
-    width: 100%;
-    color: black;
+.img_top{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 3rem;
+    transition: all 0.5s ease;
 }
-body:before {
-    content: "";
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-image: url("../../img/background_login/pexels-oleg-magni-2058128.jpg");
-    background-size: cover;
-    z-index: -1;
-    filter: blur(5px);
-    background-size: cover;
+.img_top:hover{
+    transform: scale(1.2);
+    cursor: pointer;
 }
-
 .error {
     color: red;
     font-weight: 400;
@@ -45,12 +31,21 @@ body:before {
     padding-left: 50px;
 }
 .btn-login {
-    font-size: 20px;
+    font-size: 16px;
     background-color: #04803a;
     width: 300px;
     height: 48;
     color: white;
     border-radius: 5rem;
+}
+.btn_masquer{
+    border: none;
+}
+
+.btn_masquer:focus{
+    border: none;
+    box-shadow: none;
+    outline: none;
 }
 .btn-login:hover {
     color: white;
@@ -121,46 +116,48 @@ body:before {
 .formulaire {
     padding-left: 5rem;
 }
-.login-image {
-    border-radius: 2rem;
-    border-top-left-radius: 2rem;
-    border-bottom-left-radius: 2rem;
-}
+
 .libele {
     font-weight: bold;
     font-size: small;
 }
 .btn-login {
-    width: 100%;
+    width: 80%;
     border-radius: 0.5rem;
-    background-image: linear-gradient(60deg, #30cfeb, #2811f3);
+    background-color: #2811f3;
+    transition: all 0.5s ease;
+}
+
+.btn-login_creer{
+    width: 80%;
+    border-radius: 0.5rem;
+    background-color:  white;
+    transition: all 0.5s ease;
+    color: blue;
 }
 .btn-login:hover {
-    background-image: linear-gradient(60deg, #6908d8, #075bd8);
-    transition: 1s;
+    transform: scale(1.1);
 }
-.bienvenue {
-    background-image: linear-gradient(60deg, #3da7ee 10%, #2008f8 90%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-}
-.bienvenue:hover {
-    background-image: linear-gradient(60deg, #6908d8, #357de9);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+
+.btn-login_creer:hover {
+    background-color: blue;
+    transform: scale(1.1);
 }
 a {
     text-decoration: none;
 }
-.linear_gradient {
-    background: linear-gradient(blue, rgb(241, 44, 9));
-    background-size: contain;
-    border-radius: 30px;
+.input_design, .input-group {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    border-bottom: 1px solid blue;
+    border-radius: 0;
+    transition: all 0.5s ease;
 }
-input {
-    outline: #6908d8;
+.input-group:focus, .input_design:focus {
+    border-bottom: 1px solid blue;
+    transform: scale(1.1);
 }
 .forgot-login {
     padding: 0;
@@ -172,33 +169,33 @@ input {
 .forgot-login:hover {
     color: red;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    box-shadow: 0 0 0 30px white inset !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+input[type="password"], input[type="text"]{
+    border: none;
+}
+input[type="email"]{
+    border-radius: none;
+}
 
-.form_add_contact {
-    padding: 0;
+.background_transparent {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 50px 50px 100px 50px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    width: 500px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.background_transparent {
-    background-color: rgba(255, 255, 255, 0.4);
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    padding-top: 100px;
-    padding-bottom: 100px;
-    padding-left: 50px;
-    padding-right: 50px;
-    border-radius: 25px;
-    box-sizing: border-box;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-}
-
-.postion_login{
-    padding-top: 10%;
-}
-
-.centrer_img {
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
+hr{
+    width: 50%;
 }
 
 
