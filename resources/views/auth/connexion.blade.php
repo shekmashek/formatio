@@ -24,7 +24,7 @@
                     <div class="form-row background_transparent">
                         <div class="col-12" align="center">
                             <div class="img_top mt-4">
-                                <img src="{{ asset('img/images/logo_fmg.png') }}" alt="background" class="img-fluid">
+                                <img src="{{ asset('img/images/logo_fmg54Ko.png') }}" alt="background" class="img-fluid">
                             </div>
                             <div>
                                 <div class="form-group mt-4">
