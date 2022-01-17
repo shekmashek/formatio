@@ -5,20 +5,19 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                
                 <br>
                 <div class="text-center">
-                <i class="far fa-user-plus fa-5x" aria-hidden="true"></i>
+                <i class="far fa-object-group fa-5x" aria-hidden="true"></i>
                 </div>
-                <h1 class="text-center mt-5 "  style="font-weight:bold">Vous n'avez pas encore collaborer!</h1><br>
+                <h3 class="text-center mt-5 "  style="font-weight:bold">Vous devez avoir un projet!</h3><br>
             </div>
-
             <div class="text-center">
                 <div class="body">
-                  <h5 class="title">Veuillez collaborer avec une formateur</h5>
+                  <h5 class="title">Avoir session du goupe</h5>
+                  <h5 class="title">Et ajouter des stagiaires</h5>
                   <p class="text"></p>
                   <p class="text"></p>
-                  <a href="{{route('collaboration')}}" class="btn btn">Ajouter nouveau Collaborateur</a>
+                  <a href="{{route('ajout_participant')}}" class="btn btn">Ajout Stagiaire</a>
                 </div>
             </div>
         </div>

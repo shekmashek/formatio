@@ -1,13 +1,21 @@
 @extends('./layouts/admin')
+@section('title')
+<div class="container">
+<div class="row">
+    <div class="col-lg-12">
+    <p style="font-size: 20px; color:white">Recherche de Formation</p>
+</div>
+</div>
+</div>
+@endsection
 @section('content')
     <section class="formation">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="formation__categories">
-                        <div class="formation__categories__tous d-flex flex-row align-items-center">
-                            <div><i class="bx bxs-grid"></i></div>
-                            <div><span>Domaines de formation</span></div>
+          
+                    {{-- <div class="formation__categories"> --}}
+                        {{-- <div class="formation__categories__tous d-flex flex-row align-items-center"> --}}
+                            {{-- <div><i class="bx bxs-grid"></i></div> --}}
+                            {{-- <div><span>Domaines de formation</span></div>
                         </div>
                         <div class="formation__list__box">
                             <dl class="fl__item fl__item__bureatique dropdown">
@@ -17,8 +25,8 @@
                                             <a href="#" class="ms-2 domaine" data-toggle="dropdown" id="{{ $domaine->id }}" data-id="{{ $domaine->id }}" aria-haspopup="true" aria-expanded="false">{{ $domaine->nom_domaine }}</a>
                                         </span>
                                     </dt>
-                                @endforeach
-                                <div id="formation_resultat"></div>
+                                @endforeach --}}
+                                {{-- <div id="formation_resultat"></div>
                                  <dd class="sous-formation dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" data-path="f-bureatique-content" data-role="first-menu-main" style="display: none;">
                                     <div class="sous-formation-main">
                                         <div class="sous-formation-content d-flex flex-column flex-sm-row align-items-start">
@@ -30,20 +38,35 @@
                                 </dd>
                             </dl>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                    </div>
                 <div class="col-lg-9">
+                 
+                    <h3>Que voulez-vous apprendre?</h3>
                     <div class="formation__search">
                         <div class="formation__search__form">
                             <form class="" method="GET" action="{{route('result_formation')}}">
-                                <input type="text" id="reference_search" name="nom_formation" placeholder="Vous cherchez..." class="form-control" autocomplete="off">
+                           
+                                <input type="text" id="reference_search" name="nom_formation" placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
                                 <button type="submit" class="btn">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </form>
                         </div>
                     </div>
-                    <div class="formation__item set-bg" id>
+                    <button type="button" class="btn btn" style="border-radius: 15px">Excel</button>
+                    <button type="button" class="btn btn" style="border-radius: 15px">Management</button>
+                    <button type="button" class="btn btn" style="border-radius: 15px">Ressources Humaines</button>
+                    <button type="button" class="btn btn" style="border-radius: 15px">Développement Personnel</button>
+                    <style>
+                        .btn{background-color: #542356;color: white}
+                        .btn:hover{color:white}
+                    </style>
+                    
+                    {{-- <div class="formation__item set-bg" id>
                         <div class="row">
                             <div class="col-lg-4 col-md-6">
                                 <div class="formation-service">
@@ -84,7 +107,7 @@
                                         <p>Formation en développement personnel
                                     </p>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-lg-4 col-md-6">
                                 <div class="formation-service">
                                     <h4><span class="lnr lnr-bubble"></span>Des retours positives</h4>

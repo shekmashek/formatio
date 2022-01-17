@@ -116,7 +116,13 @@ public function index()
 
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
             $liste = $fonct->findWhere("v_entreprise_par_projet",["cfp_id"],[$cfp_id]);
+            if(count($datas)<=0){
+                return view('admin.detail.guide');
+              }
+              else{
             return view('admin.detail.detail', compact('datas', 'liste', 'projet'));
+
+              }
         }
         elseif (Gate::allows('isFormateur')) {
             $form_id = formateur::where('user_id', $users)->value('id');
