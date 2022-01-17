@@ -478,7 +478,7 @@
                     {{-- competence --}}
                     @canany(['isSuperAdmin','isReferent','isManager'])
                     <li class="my-2">
-                        <a href="#gstcpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-minus nav_icon'></i><span class="nav_name">Aptitude</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('demande_test_niveau')}}"><i class='bx bxs-plus-circle nouveau_icon' title="Demande test de niveau"></i></a>
+                        <a href="#gstcpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-minus nav_icon'></i><span class="nav_name">Aptitude</span></a>@canany(['isReferent'])&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('demande_test_niveau')}}"><i class='bx bxs-plus-circle nouveau_icon' title="Demande test de niveau"></i></a>@endcanany
                         <ul class="collapse lisst-unstyled submenuColor" id="gstcpSubMenu">
                             <li class="my-1 sousMenu">
                                 <a href="{{ route('liste_projet') }}">Tableau de compétence</a>
@@ -488,38 +488,25 @@
                     @endcanany
 
                     {{-- plan de formation --}}
-                    @canany(['isSuperAdmin','isStagiaire','isManager'])
+                    @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
                     <li class="my-2">
-                        <a @canany(['isStagiaire']) href="{{route('liste_demande')}}" @endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('liste_demande') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
-                        <a @canany(['isManager']) href="{{route('planFormation.index')}}" @endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('planFormation.index') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
+                        <a href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a> @canany(['isStagiaire','isReferent'])  &nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>@endcanany 
+                        {{-- <a  href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>@canany(['isManager']) &nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('planFormation.index') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>@endcanany  --}}
 
                         <ul class="collapse lisst-unstyled submenuColor" id="pdfrmSubMenu">
-                            @canany(['isSuperAdmin','isReferent','isManager'])
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('liste_demande_stagiaire')}}">Demandes</a>
-                            </li>
+                            @canany(['isStagiaire','isManager','isReferent'])
+                                <li class="my-1 sousMenu">
+                                    <a href="{{route('liste_demande_stagiaire')}}">Demandes</a>
+                                </li>
+                            @endcanany
                             <li class="my-1 sousMenu">
                                 <a href="{{ route('listePlanFormation') }}">Plans de Formations</a>
                             </li>
-                            @endcanany
+                         
                         </ul>
                     </li>
                     @endcanany
-                    {{-- @canany(['isSuperAdmin','isReferent','isManager','isStagiaire'])
-                    <li class="my-2">
-                        <a @canany(['isStagiaire']) href="{{route('liste_demande_formation')}}"@endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
-                    <ul class="collapse lisst-unstyled submenuColor" id="pdfrmSubMenu">
-                        @canany(['isSuperAdmin','isReferent','isManager'])
-                        <li class="my-1 sousMenu">
-                            <a href="{{route('liste_demande_stagiaire')}}">Demandes</a>
-                        </li>
-                        <li class="my-1 sousMenu">
-                            <a href="{{ route('listePlanFormation') }}">Plans de Formations</a>
-                        </li>
-                        @endcanany
-                    </ul>
-                    </li>
-                    @endcanany --}}
+                    
 
                     {{-- abonemment --}}
                     @canany(['isSuperAdmin','isAdmin'])

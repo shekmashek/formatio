@@ -187,7 +187,7 @@ class PlanFormationController extends Controller
         $formations = formation::with('domaine')->get();
         $stagiaire = stagiaire::all();
         $entreprise_id = responsable::where('email_resp', Auth::user()->email)->value('entreprise_id');
-        $liste_plan = PlanFormation::with('recueil_information')->where('entreprise_id', $entreprise_id)->get();
+        $liste_plan = PlanFormation::with('recueil_information','entreprise')->where('entreprise_id', $entreprise_id)->get();
         return view('referent.liste_planFormation', compact('liste_plan', 'formations', 'stagiaire'));
     }
 

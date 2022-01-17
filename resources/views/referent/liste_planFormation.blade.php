@@ -15,9 +15,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <ul class="nav nav-pills">
-                            <li class ="{{ Route::currentRouteNamed('liste_demande_stagiaire') ? 'active' : '' }}"><a href="{{route('liste_demande_stagiaire')}}" ><span class="fa fa-th-list"></span>  Liste des demandes</a></li>&nbsp;&nbsp;
-                            <li class ="{{ Route::currentRouteNamed('listePlanFormation') ? 'active' : '' }}"><a href="{{route('listePlanFormation')}}" ><span class="fa fa-th-list"></span>  Liste des Plan de formation</a></li>&nbsp;&nbsp;
-                            <li  class ="{{ Route::currentRouteNamed('ajout_plan') ? 'active' : '' }}" ><a href="{{route('ajout_plan')}}"><span class="fa fa-plus-sign"></span> Nouveau Plan de formation</a></li>
+                            @canany(['isReferent'])
+                                <li class ="{{ Route::currentRouteNamed('liste_demande_stagiaire') ? 'active' : '' }}"><a href="{{route('liste_demande_stagiaire')}}" ><span class="fa fa-th-list"></span>  Liste des demandes</a></li>&nbsp;&nbsp;
+                                <li class ="{{ Route::currentRouteNamed('listePlanFormation') ? 'active' : '' }}"><a href="{{route('listePlanFormation')}}" ><span class="fa fa-th-list"></span>  Liste des Plan de formation</a></li>&nbsp;&nbsp;
+                                <li  class ="{{ Route::currentRouteNamed('ajout_plan') ? 'active' : '' }}" ><a href="{{route('ajout_plan')}}"><span class="fa fa-plus-sign"></span> Nouveau Plan de formation</a></li>
+                            @endcanany    
                         </ul>
                     </div>
                     <div class="panel-body">
@@ -25,7 +27,10 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-
+                                    @canany(['isReferent','isManager','isSuperAdmin'])
+                                        @canany(['isSuperAdmin'])
+                                            <th>Entreprise</th>
+                                        @endcanany
                                         <th>Formation</th>
                                         <th>Collaborateurs</th>
                                         <th>Typologie</th>
@@ -33,14 +38,20 @@
                                         <th>Mode de financement</th>
                                         <th>Durée</th>
                                         <th>Date</th>
-                                        <th>Coût(en Ar)</th>
+                                        @canany(['isReferent'])
+                                            <th>Coût(en Ar)</th>
+                                        @endcanany
                                         <th colspan = "2">Actions</th>
+                                    @endcanany
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                 @foreach($liste_plan as $list)
                                     <tr>
+                                        @canany(['isSuperAdmin'])
+                                            <td>{{$list->entreprise->nom_etp}}</td>
+                                        @endcanany
                                         @foreach($formations as $form)
                                             @if($form->id ==  $list->recueil_information->formation_id   )
                                                 <td>{{$form->domaine->nom_domaine}} - <br>{{$form->nom_formation}}
