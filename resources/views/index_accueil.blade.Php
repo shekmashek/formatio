@@ -20,7 +20,7 @@
     <header>
         <nav class="navbar_accueil fixed-top d-flex justify-content-between">
             <div class="left_menu ms-2">
-                <img class="img-fluid" src="{{ asset('maquette/logo_rouge.jpg') }}" width="100px" height="100px">
+                <img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg
             </div>
             <div class="right_menu d-flex justify-content-end align-items-center">
                 <div class="child_right_menu">
@@ -46,8 +46,8 @@
                             incontournable et innovateur du milieu professionnel.</p><br>
                             <center><button class="btn btn_blue">Voir plus</button></center>
                     </div>
-                    <div class="col-md-6 py-5 px-5">
-                        <img class="img-fluid rounded-3" src="{{ asset('maquette/formation_2.png') }}" alt="">
+                    <div class="col-md-6 py-5 px-5" style="border-radius: 50%;">
+                        <img class="img-fluid rounded-3" src="{{ asset('maquette/collaboration.jpg') }}" alt="" style="border-radius: 50%;">
                     </div>
                 </div>
             </div>

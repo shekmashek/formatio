@@ -9,7 +9,7 @@ body{
     background-color: whitesmoke;
     width: 100%;
     margin-bottom: 10px;
-    box-shadow: 5px 5px 5px black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 li{
     list-style: none;
@@ -45,10 +45,12 @@ p{
     color: whitesmoke;
     font-weight: bold;
     margin: 0 auto;
+    transition: all 0.5s ease;
 }
 .btn_blue:hover{
     color: whitesmoke;
     background-color: rgb(101, 217, 221);
+    transform: scale(1.1);
 }
 .btn_blue:focus{
     outline: none;
@@ -57,10 +59,11 @@ p{
 .bouton_violet{
     background-color: rgb(130,33,100);
     color: white;
+    transition: all 0.5s ease;
 }
 .bouton_violet:hover{
     color: white; 
-    padding: 10px 14px;
+    transform: scale(1.1);
 }
 .bouton_violet:focus{
     outline: none;
@@ -68,9 +71,11 @@ p{
 }
 .btn_bordure_violet{
     border: 2px solid rgb(130,33,100);
+    transition: all 0.5s ease;
 }
 .btn_bordure_violet:hover{
-    padding: 10px 14px;
+    border: 2px solid rgb(130,33,100);
+    transform: scale(1.1);
 }
 .btn_bordure_violet:focus{
     outline: none;
