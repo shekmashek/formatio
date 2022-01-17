@@ -6,6 +6,8 @@ use App\Facture;
 use App\TypePayement;
 use App\responsable;
 use App\projet;
+use App\formation;
+use App\module;
 use App\Models\FonctionGenerique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -164,10 +166,21 @@ class FactureController extends Controller
             return view('admin.facture.liste_facture_inactif', compact('totale_invitation', 'facture_inactif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
         }
     }
-
+// eto no amboarina zao
     public function redirection_facture($id){
+
+        $id_user = Auth::user()->id;
         if (Gate::allows('isCFP')) {
-            return $this->listeFacture($id);
+            $cfp_id = cfp::where('user_id',$id_user)->value('id');
+            // $fact = Facture::where('cfp_id', $id)->get();
+            $formation = formation::with('Domaine')->where('cfp_id', $cfp_id)->orderBy('domaine_id')->value('id');
+            $module = module::where('formation_id', $formation)->get();
+            // dd($module);
+            if(count($module) <= 0){
+                return view('admin.facture.guide');
+            }else{
+                return $this->listeFacture($id);
+            }
         }
         if (Gate::allows('isReferent')) {
             return $this->listeFacture_referent($id);
@@ -178,7 +191,6 @@ class FactureController extends Controller
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
-
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
         $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
         $facture_avoir = $this->fonct->findWhere(

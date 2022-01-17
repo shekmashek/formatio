@@ -1,22 +1,30 @@
 @extends('./layouts/admin')
 @section('content')
-
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="row w-100">
         <div class="container">
             <div class="col-lg-12">
                 <br>
-                <h5 class="text-center mt-1" >Bienvenue ! Vous devriez avoir une module</h5><br>
+                <div class="text-center">
+                    <i class="far fa-address-book fa-5x"></i>
+                </div>
+                <h1 class="text-center mt-5" >Vous n'avez pas aucune programme</h1><br>
             </div>
-            <div class="card text-center col-lg-12">
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text"></p>
-                    <p class="card-text">
-                        nous invitons de vous créer une projet de formation veuillez ajouter votre nouvelle programme ici</p>
-                    <a href="{{route('nouvelle_programme')}}" class="btn btn-outline-warning">Créer maintenent</a>
+            <div class=" text-center col-lg-12">
+                <div class="body">
+                    <h5 class="title"></h5>
+                    <p class="text"></p>
+                    <p class="text">Nous invitons à créer votre premier programme en cliquant sur le bouton créer maintenant</p>
+                    <a href="{{route('nouvelle_programme')}}" class="btn btn">Créer maintenent</a>
+                    <style>
+                        .btn{ background-color: #801D68 ; color:white;}
+                        .btn:hover{color: white;}
+                    </style>
                 </div>
             </div>
         </div>
     </div>
 
 @endsection
+
