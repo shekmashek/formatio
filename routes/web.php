@@ -10,7 +10,7 @@ Route::get('sign-in', function () {
 })->name('sign-in');
 
 Route::get('/', function () {
-    return view('index');
+    return view('index_accueil');
 });
 
 Auth::routes();
