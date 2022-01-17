@@ -123,61 +123,48 @@
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="progressbar">
 
-
-                            <li class="nav-item">
-                                <div>
-                                    <a  href="#totale_invitations" id="totale_invitations"   class="new_list_nouvelle  ? 'active' : '' }}">
+                                <li class="active" id="personal">
+                                    <a  href="#totale_invitations" id="totale_invit" data-toggle="collapse" aria-expanded="false"  class="new_list_nouvelle {{ Route::currentRouteNamed('nouvelle_formation') ? 'active' : '' }}">
                                         <span>Totales des Invitations</span>
                                     </a>
-                                    {{-- <a  href="#totale_invitations" id="totale_invitations" data-toggle="collapse" aria-expanded="false"  class="new_list_nouvelle {{ Route::currentRouteNamed('nouvelle_formation') ? 'active' : '' }}">
+                                </li>
+                                <li id="account">
+                                    <a href="#invitations_refuser" id="totale_refuse" data-toggle="collapse" aria-expanded="false" class="new_list_nouvelle {{ Route::currentRouteNamed('nouvelle_formation') ? 'active' : '' }}" href="{{route('nouvelle_formation')}}">
+                                        <span>Invitations réfuser</span>
+                                    </a>
+                                </li>
+                                {{-- <li id="personal"><strong>dates</strong></li>
+                                <li id="payment"><strong>mode de paiement</strong></li>
+                                <li id="payment"><strong>frais</strong></li>
+                                <li id="confirm"><strong>sauvegarder</strong></li> --}}
+                            </ul>
+                            {{-- <li class="nav-item">
+                                <div>
+                                    <a  href="#totale_invitations" id="totale_invit" data-toggle="collapse" aria-expanded="false"  class="new_list_nouvelle {{ Route::currentRouteNamed('nouvelle_formation') ? 'active' : '' }}">
                                         <span>Totales des Invitations</span>
-                                    </a> --}}
+                                    </a>
                                 </div>
                             </li>
                             <li class="nav-item  mx-2">
                                 <div>
-                                    <a href="#invitations_refuser" id="invitations_refuser" data-toggle="collapse" aria-expanded="false" class="new_list_nouvelle {{ Route::currentRouteNamed('nouvelle_formation') ? 'active' : '' }}" href="{{route('nouvelle_formation')}}">
+                                    <a href="#invitations_refuser" id="totale_refuse" data-toggle="collapse" aria-expanded="false" class="new_list_nouvelle {{ Route::currentRouteNamed('nouvelle_formation') ? 'active' : '' }}" href="{{route('nouvelle_formation')}}">
                                         <span>Invitations réfuser</span>
                                     </a>
                                 </div>
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </div>
                 </div>
             </nav>
 
-            {{-- <div class="collapse lisst-unstyled " id="totale_invitations"> --}}
+            <div class="collapse lisst-unstyled " id="totale_invitations">
                 <div class="card my-5">
                     <div class="card-body">
                         <div class="table-responsive text-center">
-
                             <table class="table  table-borderless table-sm">
-                                <tbody id="data_collaboration">
-                                    {{-- <tr>
-                                        <td>
-                                            <div align="left">
-                                                <strong>ANTOENJARA Noam Francisco</strong>
-                                                <p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div align="rigth">
-                                                <a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div align="rigth">
-                                                <a href="#" style="color: green"><i class="bx bxs-check-circle actions" title="Details"></i>accepter </a>
-                                            </div>
-                                        </td>
-                                    </tr> --}}
-                                </tbody>
-                            </table>
-
-                            {{-- <table class="table  table-borderless table-sm">
                                 <tbody>
                                     <tr>
                                         <td>
@@ -198,13 +185,13 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table> --}}
+                            </table>
                         </div>
                     </div>
                 </div>
-            {{-- </div> --}}
+            </div>
 
-            {{-- <div class="collapse lisst-unstyled " id="invitations_refuser">
+            <div class="collapse lisst-unstyled " id="invitations_refuser">
                 <div class="card my-5">
                     <div class="card-body">
                         <div class="table-responsive text-center">
@@ -228,7 +215,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
                 </div>
             </div>
@@ -249,28 +236,9 @@
 <script type="text/javascript">
 
 
-    $("#totale_invitations").on('click', function(e) {
-        $('#data_collaboration').empty();
-
-                var html = '';
-                html +=' <tr>';
-                html += '<td><div align="left">';
-                html += '<strong>ANTOENJARA Noam Francisco</strong>';
-                html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
-                html += '</div></td>';
-
-                html += '<td><div align="rigth">';
-                html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
-                html += '</div></td>';
-
-                html += '<td><div align="rigth">';
-                html += '<a href="#" style="color: green"><i class="bx bxs-check-circle actions" title="Details"></i>accepter </a>';
-                html += '</div></td>';
-
-                $('#data_collaboration').append(html);
-
-
-
+    $("#totale_invit").on('click', function(e) {
+        var id = $(this).data("aria-expanded");
+        alert(JSON.stringify(id));
         // $.ajax({
         //     method: "GET"
         //     , url: "{{route('edit_projet')}}"
@@ -294,46 +262,6 @@
         // });
     });
 
-    $("#invitations_refuser").on('click', function(e) {
-        $('#data_collaboration').empty();
-
-            var html = '';
-            html +=' <tr>';
-            html += '<td><div align="left">';
-            html += '<strong>ANTOENJARA Noam Francisco</strong>';
-            html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
-            html += '</div></td>';
-
-            html += '<td><div align="rigth">';
-            html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
-            html += '</div></td>';
-
-            $('#data_collaboration').append(html);
-
-
-
-        // $.ajax({
-        //     method: "GET"
-        //     , url: "{{route('edit_projet')}}"
-        //     , data: {
-        //         Id: id
-        //     }
-        //     , dataType: "html"
-        //     , success: function(response) {
-
-        //         var userData = JSON.parse(response);
-        //         for (var $i = 0; $i < userData.length; $i++) {
-        //             $("#projetModif").val(userData[$i].nom_projet);
-
-        //             $('#id_value').val(userData[$i].id);
-
-        //         }
-        //     }
-        //     , error: function(error) {
-        //         console.log(error)
-        //     }
-        // });
-    });
 
 </script>
 @endsection
