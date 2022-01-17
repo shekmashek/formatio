@@ -6,8 +6,8 @@
         <img src="{{asset('img/images/logo_transparent_background.png')}}" alt="" class="img-fluid image_fond">
         <a href="#" class="text-center"><button class="btn btn-warning btnP my-5" type="">Voir plus</button></a>
     </div>
-    <?php 
-     echo date("l, j F  Y "); 
+    <?php
+     echo date("l, j F  Y ");
     ?>
 </div> --}}
 <div class="container-fluid mt-4">
@@ -15,9 +15,9 @@
         <div class="col-sm-7 pe-3">
             <p><h4 class="text-center text-danger text_formation">Formation.mg</h4></p>
             <div class="card essai">
-                
+
             </div>
-            
+
         </div>
         <div class="col-sm-5 ps-3">
             <div class="card" style="background: linear-gradient(45deg, rgb(251, 202, 50), rgb(245, 62, 57)); border-radius:20px;">

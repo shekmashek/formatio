@@ -41,120 +41,6 @@
 
 </head>
 <body id="body-pd">
-    <header class="header row align-items-center g-0" id="header">
-        <div class="col-5">
-            <div class="header_toggle d-flex first_nav ">
-                <i class='bx bx-menu menu' id="header-toggle" style="color: white;"></i>
-                <div>
-                    @yield('title')
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-
-        </div>
-        <div class="col-3 header-right align-items-center d-flex flex-row">
-            <div class="notification-box">
-                <span class="count-notif">6</span>
-                <div class="notification-bell">
-                    <i class="bx bxs-bell bell_move" id="bell" style="color: white;"></i>
-                </div>
-            </div>
-            <div class="notifications" id="box_notif">
-                <h2>Notifications - <span>6</span></h2>
-                <a href="{{route('listes_notifs')}}">
-                    <div class="notifications-item">
-                        <h4>Vonjy Nomenjanahary,&nbsp;il y a 1h</h4>
-                        <p>Veut Collaborrer avec votre entreprise</p>
-                    </div>
-                </a>
-            </div>
-            <div class="message-box">
-
-                <span class="count-message">
-                    @isset($totale_invitation)
-                    @if($totale_invitation>0)
-                    {{$totale_invitation}}
-                    @else
-                    0
-                    @endif
-                    @endisset
-                </span>
-                <div class="notification-bell">
-                    <i class='bx bxs-envelope ms-5 bell_move' id="envelope" style="color: white;"></i>
-                </div>
-            </div>
-            <div class="messages" id="box_message">
-                <h2>Messages - <span>5</span></h2>
-                <a href="{{route('collaboration')}}">
-                    <div class="notifications-item2">
-                        {{-- <h4>Nicole Raharifetra,&nbsp;il y a 1h</h4> --}}
-                        <h4>Collaboration <strong style="color:red">
-                                @isset($totale_invitation)
-                                @if($totale_invitation>0)
-                                ({{$totale_invitation}})
-                                @else
-                                0
-                                @endif
-                                @endisset
-                            </strong></h4>
-                        <p>voir mes invitations,demandes</p>
-                    </div>
-                </a>
-            </div>
-            <div class="header_img ms-5 mb-2"><a href=""><img src="" alt="" class="utilisateur" id="photo_profil"></a></div>
-            <div class="pdp_profil" id="box_profil">
-                <div class="container pdp_profil_card d-flex justify-content-center align-items-center">
-                    <div class="card">
-                        <div class="upper"></div>
-                        <div class="user text-center">
-                            <div class="profile"> <img src="{{asset('images/entreprises/TEST15-11-2021.png')}}" class="rounded-circle" width="80"> </div>
-                        </div>
-                        <div class="mt-5 text-center">
-                            <h4 class="mb-0">{{Auth::user()->name}}</h4>
-                            @if(Auth::user()->role_id == 1)
-                            <span class="text-muted d-block mb-2">Admin</span>
-                            @endif
-                            @if(Auth::user()->role_id == 2)
-                            <span class="text-muted d-block mb-2">Référent</span>
-                            @endif
-                            @if(Auth::user()->role_id == 3)
-                            <span class="text-muted d-block mb-2">Stagiaire</span>
-                            @endif
-                            @if(Auth::user()->role_id == 4)
-                            <span class="text-muted d-block mb-2">Formateur</span>
-                            @endif
-                            @if(Auth::user()->role_id == 5)
-                            <span class="text-muted d-block mb-2">Manager</span>
-                            @endif
-                            @if(Auth::user()->role_id == 6)
-                            <span class="text-muted d-block mb-2">Super Admin</span>
-                            @endif
-                            @if(Auth::user()->role_id == 7)
-                            <span class="text-muted d-block mb-2">Centre de Formation</span>
-                            @endif
-                            @can('isManager')
-                            <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                            @endcan
-                            @can('isStagiaire')
-                            <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                            @endcan
-                            @can('isReferent')
-                            <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                            @endcan
-
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"><span class="deconnexion_text">Déconnexion</span></a>
-                            <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <div class="l-navbar" id="nav-bar">
         <div class="container-fluid ">
             <nav class="nav">
@@ -232,159 +118,159 @@
                             <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
                                 <span class="sousMenu me-2 d-flex justify-content-between">
                                     <a href="{{route('liste_projet')}}">Projets</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_groupe')}}">Groupes</a>
-                                </li>
-                            </ul>
                         </li>
-                        @endcanany
-                        @canany(['isCFP'])
-                        <li class="my-2">
-                            <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('liste_projet')}}">Projets</a>
-                                    <p class="my-1" id="projets" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </span>
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a>Projets en cours</a>
-                                    <p class="my-1" id="projet_en_cours" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </span>
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a>Projets termine</a>
-                                    <p class="my-1" id="projet_terminer" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </span>
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a>Projets a venir</a>
-                                    <p class="my-1" id="projet_a_venir" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </span>
-                                {{-- <li class="my-1 sousMenu">
+                        <li class="my-1 sousMenu">
+                            <a href="{{route('liste_groupe')}}">Groupes</a>
+                        </li>
+                    </ul>
+                    </li>
+                    @endcanany
+                    @canany(['isCFP'])
+                    <li class="my-2">
+                        <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_projet')}}">Projets</a>
+                                <p class="my-1" id="projets" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets en cours</a>
+                                <p class="my-1" id="projet_en_cours" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets termine</a>
+                                <p class="my-1" id="projet_terminer" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets a venir</a>
+                                <p class="my-1" id="projet_a_venir" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                            {{-- <li class="my-1 sousMenu">
                                         <a href="{{route('liste_groupe')}}">Groupes</a>
-                        </li> --}}
-                        </ul>
-                        </li>
-                        @endcanany
-                        @canany(['isReferent'])
-                            <li class="my-2">
-                                <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>
-                                <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                                    <li class="sousMenu me-2 d-flex justify-content-between">
-                                        <a href="{{route('liste_projet')}}">Projets</a>
-                                        <p class="my-1" id="projets_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                    </li>
-                                    <span class="sousMenu me-2 d-flex justify-content-between">
-                                        <a>Projets en cours</a>
-                                        <p class="my-1" id="projet_en_cours_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                    </span>
-                                    <span class="sousMenu me-2 d-flex justify-content-between">
-                                        <a>Projets termine</a>
-                                        <p class="my-1" id="projet_terminer_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                    </span>
-                                    <span class="sousMenu me-2 d-flex justify-content-between">
-                                        <a>Projets a venir</a>
-                                        <p class="my-1" id="projet_a_venir_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                    </span>
-                                </ul>
+                    </li> --}}
+                    </ul>
+                    </li>
+                    @endcanany
+                    @canany(['isReferent'])
+                    <li class="my-2">
+                        <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_projet')}}">Projets</a>
+                                <p class="my-1" id="projets_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
                             </li>
-                        @endcanany
-                        {{-- utilisateurs --}}
-                        @canany(['isSuperAdmin','isAdmin'])
-                        <li class="my-2">
-                            <a href="#gsutSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Utilisateurs</span></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="gsutSubMenu">
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_utilisateur')}}">Responsables</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('utilisateur_stagiaire')}}">Stagiaires</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('utilisateur_formateur')}}">Formateurs</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endcanany
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets en cours</a>
+                                <p class="my-1" id="projet_en_cours_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets termine</a>
+                                <p class="my-1" id="projet_terminer_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a>Projets a venir</a>
+                                <p class="my-1" id="projet_a_venir_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                        </ul>
+                    </li>
+                    @endcanany
+                    {{-- utilisateurs --}}
+                    @canany(['isSuperAdmin','isAdmin'])
+                    <li class="my-2">
+                        <a href="#gsutSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Utilisateurs</span></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="gsutSubMenu">
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('liste_utilisateur')}}">Responsables</a>
+                            </li>
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('utilisateur_stagiaire')}}">Stagiaires</a>
+                            </li>
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('utilisateur_formateur')}}">Formateurs</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcanany
 
-                        {{-- formateurs --}}
-                        @canany(['isSuperAdmin','isAdmin'])
-                        <li class="my-2">
-                            <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_formateur')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau formateur"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="frmtSubMenu">
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_formateur')}}">Formateurs</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endcanany
-                        @canany(['isCFP'])
-                        <li class="my-2">
-                            <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_formateur')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau formateur"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="frmtSubMenu">
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('liste_formateur')}}">Formateur</a>
-                                    <p class="my-1" id="formateur" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </span>
-                            </ul>
-                        </li>
-                        @endcanany
+                    {{-- formateurs --}}
+                    @canany(['isSuperAdmin','isAdmin'])
+                    <li class="my-2">
+                        <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_formateur')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau formateur"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="frmtSubMenu">
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('liste_formateur')}}">Formateurs</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcanany
+                    @canany(['isCFP'])
+                    <li class="my-2">
+                        <a href="#frmtSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class="bx bx-user nav_icon"></i><span class="nav_name">Formateurs</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_formateur')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau formateur"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="frmtSubMenu">
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_formateur')}}">Formateur</a>
+                                <p class="my-1" id="formateur" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                        </ul>
+                    </li>
+                    @endcanany
 
-                        {{-- manager --}}
-                        @canany(['isSuperAdmin','isAdmin'])
-                        <li class="my-2" style="width: 100%;">
-                            <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_manager')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau chef departement"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="mngrSubMenu">
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_chefDepartement')}}">Chefs Départements</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endcanany
-                        @canany(['isReferent'])
-                        <li class="my-2" style="width: 100%;">
-                            <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_manager')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau chef departement"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="mngrSubMenu">
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('liste_chefDepartement')}}">Manager</a>
-                                    <p class="my-1" id="manager" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </span>
-                            </ul>
-                        </li>
-                        @endcanany
+                    {{-- manager --}}
+                    @canany(['isSuperAdmin','isAdmin'])
+                    <li class="my-2" style="width: 100%;">
+                        <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_manager')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau chef departement"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="mngrSubMenu">
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('liste_chefDepartement')}}">Chefs Départements</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcanany
+                    @canany(['isReferent'])
+                    <li class="my-2" style="width: 100%;">
+                        <a href="#mngrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-male nav_icon'></i><span class="nav_name">Manager</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_manager')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau chef departement"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="mngrSubMenu">
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_chefDepartement')}}">Manager</a>
+                                <p class="my-1" id="manager" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                        </ul>
+                    </li>
+                    @endcanany
 
-                        {{-- Referent --}}
-                        @canany(['isAdmin','isSuperAdmin'])
-                        <li class="my-2">
-                            <a href="#refSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Réferents</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_responsable')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau responsable"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="refSubMenu">
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_responsable')}}">Résponsables</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endcanany
-                        {{-- stagiares --}}
-                        @canany(['isSuperAdmin'])
-                        <li class="my-2">
-                            <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Participants</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_participant')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau stagiaire"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="stgrSubMenu">
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_participant')}}">Stagiaires</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endcanany
-                        @canany(['isReferent'])
-                        <li class="my-2">
-                            <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Participants</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_participant')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau stagiaire"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="stgrSubMenu">
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('liste_participant')}}">Stagiaires</a>
-                                    <p class="my-1" id="stagiaire" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </span>
-                            </ul>
-                        </li>
-                        @endcanany
+                    {{-- Referent --}}
+                    @canany(['isAdmin','isSuperAdmin'])
+                    <li class="my-2">
+                        <a href="#refSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Réferents</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_responsable')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau responsable"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="refSubMenu">
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('liste_responsable')}}">Résponsables</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcanany
+                    {{-- stagiares --}}
+                    @canany(['isSuperAdmin'])
+                    <li class="my-2">
+                        <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Participants</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_participant')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau stagiaire"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="stgrSubMenu">
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('liste_participant')}}">Stagiaires</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcanany
+                    @canany(['isReferent'])
+                    <li class="my-2">
+                        <a href="#stgrSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-group nav_icon'></i><span class="nav_name">Participants</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_participant')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau stagiaire"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="stgrSubMenu">
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_participant')}}">Stagiaires</a>
+                                <p class="my-1" id="stagiaire" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </span>
+                        </ul>
+                    </li>
+                    @endcanany
 
                     {{-- action de formations --}}
                     @canany(['isSuperAdmin','isCFP','isReferent','isFormateur','isStagiaire'])
@@ -434,37 +320,32 @@
                         <ul class="collapse lisst-unstyled submenuColor" id="gstfSubMenu">
                             {{-- <li class="my-1 sousMenu">
                                 <a href="{{route('liste_facture',3)}}">Facturation</a>
-                            </li> --}}
-                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
-                                <a href="{{route('liste_facture',3)}}">Total facture</a>
-                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
-                            </span>
-                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
-                                <a href="#">Facture en retard</a>
-                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
-                            </span>
-                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
-                                <a href="#">Facture paye</a>
-                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
-                            </span>
-                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
-                                <a href="#">Facture envoye</a>
-                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
-                            </span>
-                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
-                                <a href="#">Facture non envoye</a>
-                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">347</p>
-                            </span>
-                            <span class="sousMenu me-2 d-flex justify-content-between my-0">
-                                <a href="#">Brouillon</a>
-                                <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
-                            </span>
-                            {{-- <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_facture',3)}}">Facturation</a>
                     </li> --}}
-                    {{-- <li class="my-1 sousMenu">
-                                    <a href="">Encaissement</a>
-                                </li> --}}
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="{{route('liste_facture',3)}}">Total facture</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture en retard</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture paye</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture envoye</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Facture non envoye</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">347</p>
+                    </span>
+                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                        <a href="#">Brouillon</a>
+                        <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
+                    </span>
+
                     </ul>
                     </li>
                     @endcanany
@@ -484,7 +365,7 @@
                     {{-- plan de formation --}}
                     @canany(['isSuperAdmin','isReferent','isManager','isStagiaire'])
                     <li class="my-2">
-                        <a @canany(['isStagiaire']) href="{{route('liste_demande_formation')}}"@endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
+                        <a @canany(['isStagiaire']) href="{{route('liste_demande_formation')}}" @endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="pdfrmSubMenu">
                             @canany(['isSuperAdmin','isReferent','isManager'])
                             <li class="my-1 sousMenu">
@@ -522,14 +403,182 @@
                 </div>
                 <div>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i class='bx bx-log-out-circle nav_icon_logout mx-4' title="Déconnexion"></i></a>
+                    document.getElementById('logout-form').submit();"><i class='bx bx-log-out-circle nav_icon_logout mx-4' title="Déconnexion"></i><span class="nav_name">Déconnexion</span></a>
                 </div>
             </nav>
         </div>
     </div>
     <!--Container Main start-->
-    <div class="container-fluid height-100 bg-light" id="content" style="padding-top: 1rem">
-        @yield('content')
+    <div class="container-fluid height-100 px-0 bg-light" id="content" style="padding-top: 1rem">
+        {{-- header --}}
+        <header class="header row align-items-center g-0" id="header">
+            <div class="col-5">
+                <div class="header_toggle d-flex first_nav ">
+                    <i class='bx bx-menu menu' id="header-toggle" style="color: #801D68;"></i>
+                    <div>
+                        @yield('title')
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+
+            </div>
+            <div class="col-3 header-right align-items-center d-flex flex-row">
+                <div class="notification-box">
+                    <span class="count-notif">6</span>
+                    <div class="notification-bell">
+                        <i class="bx bxs-bell bell_move" id="bell" style="color: #801D68;"></i>
+                    </div>
+                </div>
+                <div class="notifications" id="box_notif">
+                    <h2>Notifications - <span>6</span></h2>
+                    <a href="{{route('listes_notifs')}}">
+                        <div class="notifications-item">
+                            <h4>Vonjy Nomenjanahary,&nbsp;il y a 1h</h4>
+                            <p>Veut Collaborrer avec votre entreprise</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="message-box">
+
+                    <span class="count-message">
+                        @isset($totale_invitation)
+                        @if($totale_invitation>0)
+                        {{$totale_invitation}}
+                        @else
+                        0
+                        @endif
+                        @endisset
+                    </span>
+                    <div class="notification-bell">
+                        <i class='bx bxs-envelope ms-5 bell_move' id="envelope" style="color: #801D68;"></i>
+                    </div>
+                </div>
+                <div class="messages" id="box_message">
+                    <h2>Messages - <span>5</span></h2>
+                    <a href="{{route('collaboration')}}">
+                        <div class="notifications-item2">
+                            {{-- <h4>Nicole Raharifetra,&nbsp;il y a 1h</h4> --}}
+                            <h4>Collaboration <strong style="color:red">
+                                    @isset($totale_invitation)
+                                    @if($totale_invitation>0)
+                                    ({{$totale_invitation}})
+                                    @else
+                                    0
+                                    @endif
+                                    @endisset
+                                </strong></h4>
+                            <p>voir mes invitations,demandes</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="header_img ms-5 mb-2"><a href=""><img src="" alt="" class="utilisateur" id="photo_profil"></a></div>
+                <div class="pdp_profil" id="box_profil">
+                    <div class="container pdp_profil_card d-flex justify-content-center align-items-center">
+                        <div class="card">
+                            <div class="upper"></div>
+                            <div class="user text-center">
+                                <div class="profile"> <img src="{{asset('images/entreprises/TEST15-11-2021.png')}}" class="rounded-circle" width="80"> </div>
+                            </div>
+                            <div class="mt-5 text-center">
+                                <h4 class="mb-0">{{Auth::user()->name}}</h4>
+                                @if(Auth::user()->role_id == 1)
+                                <span class="text-muted d-block mb-2">Admin</span>
+                                @endif
+                                @if(Auth::user()->role_id == 2)
+                                <span class="text-muted d-block mb-2">Référent</span>
+                                @endif
+                                @if(Auth::user()->role_id == 3)
+                                <span class="text-muted d-block mb-2">Stagiaire</span>
+                                @endif
+                                @if(Auth::user()->role_id == 4)
+                                <span class="text-muted d-block mb-2">Formateur</span>
+                                @endif
+                                @if(Auth::user()->role_id == 5)
+                                <span class="text-muted d-block mb-2">Manager</span>
+                                @endif
+                                @if(Auth::user()->role_id == 6)
+                                <span class="text-muted d-block mb-2">Super Admin</span>
+                                @endif
+                                @if(Auth::user()->role_id == 7)
+                                <span class="text-muted d-block mb-2">Centre de Formation</span>
+                                @endif
+                                @can('isManager')
+                                <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                @endcan
+                                @can('isStagiaire')
+                                <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                @endcan
+                                @can('isReferent')
+                                <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                @endcan
+
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"><span class="deconnexion_text">Déconnexion</span></a>
+                                <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {{-- header --}}
+        {{-- content --}}
+        <div class="container-fluid h-100">
+            @yield('content')
+        </div>
+        {{-- content --}}
+        {{-- footer --}}
+        <div class="footer">
+            <div class="container-fluid footer_all">
+                <div class="row w-100">
+                    <div class="col-12">
+                        <div class="container">
+                            <div class="d-flex w-auto footer_one">
+                                <div class="footer_list me-2">
+                                    <a href="#" class="mx-auto">
+                                        <p>&copy;Copyright 2022 : Formation.mg</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Infomations légales</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Contactez-nous</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Politique de confidentialité</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Condition d'utilisation</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Tarifs</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list_end ms-2 me-2">
+                                    <a href="#">
+                                        <p>Crédits</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- footer --}}
     </div>
 
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -696,6 +745,7 @@
             }
         });
     });
+
 </script>
 
 {{-- nombre dynamique dans la side-bar --}}
@@ -739,5 +789,6 @@
             }
         });
     });
+
 </script>
 </html>

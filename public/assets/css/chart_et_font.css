@@ -7,12 +7,15 @@
 :root {
   --header-height: 3rem;
   --nav-width: 80px;
-  --first-color: red;
+  --first-color: white;
   --first-color-light: #ffff;
   --white-color: #868282;
   --body-font: "Open Sans", sans-serif;
   --normal-font-size: 1rem;
   --z-fixed: 100;
+  --color-parent : #A55E8E;
+  --color-child : #801D68;
+  --color-child1 : #542356;
 }
 
 *,
@@ -23,11 +26,12 @@
 
 body {
   position: relative;
-  margin: var(--header-height) 0 0 0;
-  padding: 0;
+  margin: 0 0 0 0;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   transition: 0.5s;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .btn_nouveau_color {
@@ -145,6 +149,7 @@ select:invalid {
   z-index: var(--z-fixed);
   transition: 0.5s;
   padding: 0;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .header_toggle {
@@ -158,7 +163,7 @@ select:invalid {
   border: none;
   box-shadow: none;
   outline: none;
-  border-bottom: 1px solid orangered;
+  border-bottom: 1px solid #A55E8E;
 }
 
 .header_toggle .btn_search_icon {
@@ -220,8 +225,8 @@ select:invalid {
   line-height: 30px;
   font-size: 18px;
   border-radius: 50%;
-  background-color: yellow;
-  color: #000000;
+  background-color: red;
+  color: white;
   animation: zoom 5s 5s both infinite;
 }
 
@@ -299,8 +304,8 @@ select:invalid {
   line-height: 30px;
   font-size: 18px;
   border-radius: 50%;
-  background-color: yellow;
-  color: #000000;
+  background-color: red;
+  color: white;
   animation: zoom 5s 5s both infinite;
 }
 
@@ -388,7 +393,7 @@ select:invalid {
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  border: white 1px solid;
+  border: black 1px solid;
 }
 
 .header-right .header_img img {
@@ -484,8 +489,10 @@ select:invalid {
   height: 100vh;
   background-color: var(--first-color-light);
   transition: 0.5s;
-  z-index: var(--z-fixed);
+  z-index: 1000;
   overflow-x: hidden;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+
 }
 
 .nav {
@@ -494,13 +501,20 @@ select:invalid {
   display: flex;
   flex-direction: column;
 }
-.nav .nouveau_icon_lien{
-    display: none;
+.nav .nouveau_icon_lien {
+  display: none;
 }
 
 .l-navbar:hover,
-.nav:hover .nouveau_icon_lien{
-  width: var(--nav-width) + 150px;
+.nav:hover .nouveau_icon_lien {
+  width: var(--nav-width) + 170px;
+  background-color: var(--first-color-light);
+  display: inline-block;
+}
+
+.l-navbar:hover,
+.nav:hover {
+  width: var(--nav-width) + 170px;
   background-color: var(--first-color-light);
   display: inline-block;
 }
@@ -1611,30 +1625,29 @@ Détails Formation
   nouveau dropdown menu left
 -----------------------*/
 
-
 /*-----------------------------------
   nouveau design Version 1 Formation
 -------------------------------------*/
-.new_list{
+.new_list {
   border: none;
   background-color: rgba(146, 147, 148, 0.5);
   padding: 12px;
-  padding-top: 17px ;
+  padding-top: 17px;
   border-radius: 45px;
   color: #fff;
   box-shadow: rgba(247, 120, 120, 0.24) 0px 3px 8px;
 }
-.new_list:hover{
+.new_list:hover {
   background-color: rgba(238, 238, 231, 0.5);
   color: red;
 }
 
-.new_list:hover .new_icon{
+.new_list:hover .new_icon {
   background-color: rgba(0, 0, 0, 0.19);
   color: #ffff;
 }
 
-.new_icon{
+.new_icon {
   font-size: 24px;
   border: none;
   padding: 10px;
@@ -1645,28 +1658,28 @@ Détails Formation
   color: #ffff;
 }
 
-.new_list_nouvelle{
+.new_list_nouvelle {
   border: none;
   background-color: orangered;
   padding: 12px;
-  padding-top: 17px ;
+  padding-top: 17px;
   border-radius: 45px;
   color: #fff;
   right: 0;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.new_list_nouvelle:hover{
+.new_list_nouvelle:hover {
   background-color: #ffff;
   color: red;
 }
 
-.new_list_nouvelle:hover .new_icon_nouveau{
+.new_list_nouvelle:hover .new_icon_nouveau {
   background-color: rgba(0, 0, 0, 0.19);
   color: red;
 }
 
-.new_icon_nouveau{
+.new_icon_nouveau {
   font-size: 24px;
   border: none;
   padding: 10px;
@@ -1677,19 +1690,19 @@ Détails Formation
   color: grey;
 }
 
-.new_card_formation .card{
+.new_card_formation .card {
   width: 90%;
   height: 200px;
   margin-left: auto;
   margin-right: auto;
   box-shadow: rgba(247, 120, 120, 0.24) 0px 3px 8px;
   box-sizing: border-box;
-  transition: all .1s;
+  transition: all 0.1s;
   cursor: pointer;
   padding-right: 10px;
 }
 
-.new_card_formation .card img{
+.new_card_formation .card img {
   height: 300px;
 }
 
@@ -1699,34 +1712,33 @@ Détails Formation
   cursor: pointer;
 }
 
-.new_card_formation .card .card_row2{
+.new_card_formation .card .card_row2 {
   position: relative;
 }
 
-.new_card_formation .card .card_row3{
+.new_card_formation .card .card_row3 {
   position: absolute;
   bottom: 20px;
   border: none;
 }
-.new_card_formation .card .bx{
+.new_card_formation .card .bx {
   font-size: 20px;
 }
 
-.new_card_formation .card .new_bx{
+.new_card_formation .card .new_bx {
   font-size: 25px;
   background-color: transparent;
   padding: 10px;
 }
 
-.new_card_formation .card .new_bx:hover{
+.new_card_formation .card .new_bx:hover {
   background-color: white;
   padding: 10px;
   color: grey;
   border-radius: 50%;
   box-shadow: rgba(247, 120, 120, 0.24) 0px 3px 8px;
-
 }
-.new_list_card{
+.new_list_card {
   font-weight: bolder;
   border-bottom: none;
   padding: 6px;
@@ -1735,16 +1747,16 @@ Détails Formation
   right: 0;
 }
 
-.new_list_card:hover{
+.new_list_card:hover {
   border: none;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.new_list_card:hover .new_icon_card{
+.new_list_card:hover .new_icon_card {
   color: white;
 }
 
-.new_icon_card{
+.new_icon_card {
   font-size: 20px;
   border: none;
   padding: 6px;
@@ -1755,31 +1767,31 @@ Détails Formation
 }
 
 .card0 {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   border-radius: 8px;
-  z-index: 0
+  z-index: 0;
 }
 
 .card00 {
-  z-index: 0
+  z-index: 0;
 }
 
 .card2 {
-  display: none
+  display: none;
 }
 
 .card2.show {
-  display: block
+  display: block;
 }
 
-.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-  background-color: #E53935
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #e53935;
 }
 
 .form-group {
   position: relative;
   margin-bottom: 1.5rem;
-  width: 77%
+  width: 77%;
 }
 
 .form-control-placeholder {
@@ -1787,48 +1799,48 @@ Détails Formation
   top: 0px;
   padding: 12px 2px 0 2px;
   transition: all 300ms;
-  opacity: 0.5
+  opacity: 0.5;
 }
 
-.form-control:focus+.form-control-placeholder,
-.form-control:valid+.form-control-placeholder {
+.form-control:focus + .form-control-placeholder,
+.form-control:valid + .form-control-placeholder {
   font-size: 95%;
   top: 10px;
   transform: translate3d(0, -100%, 0);
   opacity: 1;
-  background-color: #fff
+  background-color: #fff;
 }
 
 .next-button {
   width: 18%;
   height: 50px;
-  background-color: #BDBDBD;
+  background-color: #bdbdbd;
   color: #fff;
   border-radius: 6px;
   padding: 10px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .next-button:hover {
-  background-color: #E53935;
-  color: #fff
+  background-color: #e53935;
+  color: #fff;
 }
 
 #progressbar {
   align-items: center;
   overflow: hidden;
-  color: #E53935;
+  color: #e53935;
 }
 
 #progressbar li {
   list-style-type: none;
   font-size: 8px;
   font-weight: 400;
-  margin-bottom: 36px
+  margin-bottom: 36px;
 }
 
 #progressbar li:nth-child(3) {
-  margin-bottom: 88px
+  margin-bottom: 88px;
 }
 
 #progressbar .step0:before {
@@ -1845,30 +1857,30 @@ Détails Formation
   display: block;
   font-size: 20px;
   background: #fff;
-  border: 2px solid #E53935;
+  border: 2px solid #e53935;
   border-radius: 50%;
-  margin: auto
+  margin: auto;
 }
 
 #progressbar li:after {
-  content: '';
+  content: "";
   width: 3px;
   height: 66px;
-  background: #BDBDBD;
+  background: #bdbdbd;
   position: absolute;
   left: 58px;
   top: 15px;
-  z-index: -1
+  z-index: -1;
 }
 
-.card1 ul{
+.card1 ul {
   padding: 0;
 }
 
 #progressbar li.active:before {
-  background: #E53935;
+  background: #e53935;
   font-family: FontAwesome;
-  content: "\f00c"
+  content: "\f00c";
 }
 
 #progressbar li:last-child:before {
@@ -1876,12 +1888,13 @@ Détails Formation
   height: 50px;
 }
 
-#progressbar li.active:before, #progressbar li.active:after {
+#progressbar li.active:before,
+#progressbar li.active:after {
   background: none;
 }
 
 #progressbar li.active:after {
-  background: #E53935;
+  background: #e53935;
 }
 
 .prev {
@@ -1889,54 +1902,80 @@ Détails Formation
   position: absolute;
   left: 40px;
   top: 20px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .prev:hover {
-  color: #D50000 !important
+  color: #d50000 !important;
 }
 
 @media screen and (max-width: 912px) {
   .card00 {
-      padding-top: 30px
+    padding-top: 30px;
   }
 
   .card1 {
-      border: none;
-      margin-left: 50px
+    border: none;
+    margin-left: 50px;
   }
 
   .card2 {
-      border-bottom: 1px solid #F5F5F5;
-      margin-bottom: 25px
+    border-bottom: 1px solid #f5f5f5;
+    margin-bottom: 25px;
   }
 
   .social {
-      height: 30px;
-      width: 30px;
-      font-size: 15px;
-      padding-top: 8px;
-      margin-top: 7px
+    height: 30px;
+    width: 30px;
+    font-size: 15px;
+    padding-top: 8px;
+    margin-top: 7px;
   }
 
   .get-bonus {
-      margin-top: 40px !important;
-      margin-left: 75px
+    margin-top: 40px !important;
+    margin-left: 75px;
   }
 
   #progressbar {
-      left: -25px
+    left: -25px;
   }
 }
 
+/* footer */
+.footer_all{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:50px;
+  background-color: white;
+  color: var(--color-child1);
+  padding: 5px;
+  font-size: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.footer_all a p:hover{
+  text-decoration-line: underline;
+  justify-content: center;
+}
 
+.footer_list{
+  border-right:1px solid var(--color-child1);
+  padding-right: 20px;
+  padding-top: 5px;
+  height: 30px;
+}
+.footer_list_end{
+  padding-right: 20px;
+  padding-top: 5px;
+  height: 30px;
+}
 
+/* footer */
 
 /*-----------------------------------
   nouveau design Version 1 Formation
 -------------------------------------*/
-
-
 
 @media screen and (min-width: 768px) {
   body {
@@ -1969,5 +2008,13 @@ Détails Formation
 
   .body-pd {
     padding-left: calc(var(--nav-width) + 220px);
+  }
+
+  .body-pd .nouveau_icon_lien {
+    display: none;
+  }
+
+  .body-pd:hover .nouveau_icon_lien {
+    display: inline-block;
   }
 }
