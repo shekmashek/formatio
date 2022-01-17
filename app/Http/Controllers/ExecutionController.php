@@ -187,6 +187,14 @@ class ExecutionController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id',$id_user)->value('id');
             $datas =DB::select('select * from v_detail_projet_groupe where cfp_id = ?', [$cfp_id]);
+            if(count($datas)<=0){
+                return view('admin.execution.guide');
+              }
+              else
+              {
+                return view('admin.execution.execution',compact('datas'));
+
+              }
         }
 
         if (Gate::allows('isFormateur')) {

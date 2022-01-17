@@ -43,7 +43,7 @@ class EntrepriseController extends Controller
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
 
             $entreprise = $entp->getEntreprise($etp2,$etp1);
-
+            
             // dd($entreprise);
 
             if ($id){
@@ -54,7 +54,13 @@ class EntrepriseController extends Controller
                 $datas = $entp->getEntreprise($etp2,$etp1);
             }
             // return view('admin.entreprise.entreprise',compact('datas','entreprise'));
+            if(count($entreprise  )<=0){
+                return view('cfp.guide');
+              }
+            else{
             return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
+
+            }
         }
         if (Gate::allows('isSuperAdmin')) {
             $entreprise =entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
