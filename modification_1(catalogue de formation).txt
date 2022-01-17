@@ -1,0 +1,45 @@
+1-> Page d'aceuil:
+    - ajout bandeau(comme sur page index connecter)
+    - ajout pied de page(footer):
+        . contact-nous
+        . respect de vie privé(confidenlité)
+        . tarif
+        .credit(les personnes qui ont créer le rpojet)
+    - effacer la recherche
+    - ajout menu dans le bandeau(header):
+        . contacter notre équipe commercial
+        . créer un compte pro
+        . connexion a l'espace pro
+    - ajout contenu (slade par menu dans contenu qui explique les avantages d'utilisation de app formation.mg):
+            . OF(Organisation Formation)
+            . formation
+            . employer
+            . creer un compte pro
+            . voulez-vous créer un compte pro
+            . demmander un démos
+
+2-> Page index(user connecter):
+    -sroll page, ajouter un boutton pour retourner en haut de page pendant le scroll page
+    - dans menu en haut:
+            . OF connecter(avec plan d'abonnement)   .  Nom et Prenom (on click avec affichage
+                                                        modal affiche les informations modifiable)
+                        . déconnexion(texte mais pas icon)
+3-> Pendant déconnexion:
+    - l'utilisateur devra se rediriger sur la page de connexion mais non pas sur la page acceuil
+
+4-> Catalogue:
+    -ajout reference sur caque module(avec un ID unique
+    ex: . si mod001 avec prix:100 ar avec aucun personne n'a encor fait de projet,alors c'est modifiable et supprimable avec un ID unique
+        . sinon mod001 est modifier avec prix:200 ,alors l'ancien est archiver avec son ID et le nouveau modifier avec un nouveau ID unique
+    )
+    -creation module(3 étapes):
+    - module anon activer
+    - module en cour ou activer
+    - module est publier et visible par tous
+
+    N.B: le module n'est pas publiable si les informations néccessaire ne sont pas complet
+
+
+    AVENIR:
+
+            -ajout des parametrage pendant la connexion de nouveau compte( CFP, ETP, Formateur, Stagiaire, Responsable, Manager)
