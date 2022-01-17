@@ -45,7 +45,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_cfp AS SELECT
 FROM
     type_abonnement_roles t
 JOIN abonnement_cfps a ON
-    t.id = a.type_abonnement_role_id
+    t.id = a.type_abonnement_role_id;
 
 
 -- CREATE OR REPLACE VIEW v_type_abonnement_role_cfp AS SELECT
