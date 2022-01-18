@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('maquette/style_maquette.css') }}">
     <script src="{{ asset('maquette/javascript.js') }}"></script>
     <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
-    <title> Formation.mg </title>
+    <title> Test Formation.mg </title>
 </head>
 <body>
     <header>
