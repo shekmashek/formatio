@@ -395,9 +395,9 @@
                         <a @canany(['isStagiaire']) href="{{route('liste_demande_formation')}}" @endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="pdfrmSubMenu">
                             @canany(['isStagiaire','isManager','isReferent'])
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_demande_stagiaire')}}">Demandes</a>
-                                </li>
+                            <li class="my-1 sousMenu">
+                                <a href="{{route('liste_demande_stagiaire')}}">Demandes</a>
+                            </li>
                             @endcanany
                             <li class="my-1 sousMenu">
                                 <a href="{{ route('listePlanFormation') }}">Plans de Formations</a>
@@ -502,10 +502,60 @@
                         </a>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="header_img ms-5 mb-2 text-right">
+                        <p style="text-transform: capitalize">{{Auth::user()->name}}</p>
+                    </div>
+                    <div class="pdp_profil" id="box_profil">
+                        <div class="container pdp_profil_card ">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4 class="mb-0 text-center">{{Auth::user()->name}}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        @if(Auth::user()->role_id == 1)
+                                        <span class="text-muted d-block mb-2">Admin</span>
+                                        @endif
+                                        @if(Auth::user()->role_id == 2)
+                                        <span class="text-muted d-block mb-2">Référent</span>
+                                        @endif
+                                        @if(Auth::user()->role_id == 3)
+                                        <span class="text-muted d-block mb-2">Stagiaire</span>
+                                        @endif
+                                        @if(Auth::user()->role_id == 4)
+                                        <span class="text-muted d-block mb-2">Formateur</span>
+                                        @endif
+                                        @if(Auth::user()->role_id == 5)
+                                        <span class="text-muted d-block mb-2">Manager</span>
+                                        @endif
+                                        @if(Auth::user()->role_id == 6)
+                                        <span class="text-muted d-block mb-2">Super Admin</span>
+                                        @endif
+                                        @if(Auth::user()->role_id == 7)
+                                        <span class="text-muted d-block mb-2">Centre de Formation</span>
+                                        @endif
 
-                <div>
+                                    </div>
+                                    <div class="text-center">
+                                        @can('isManager')
+                                        <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @endcan
+                                        @can('isStagiaire')
+                                        <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @endcan
+                                        @can('isReferent')
+                                        <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"><i class='bx bx-log-out'></i><span class="deconnexion_text" style="color: #542356;">Déconnexion</span></a>
+                                    document.getElementById('logout-form').submit();" class="deconnexion_text"><i class='bx bx-log-out' style="color: #542356;font-size:20px;"></i>&nbsp;&nbsp;<span>Déconnexion</span></a>
                     <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
                         @csrf
                     </form>
@@ -565,12 +615,12 @@
     </header>
     {{-- header --}}
     {{-- content --}}
-    <div class="container-fluid h-100">
+    <div class="container-fluid pb-5 h-100">
         @yield('content')
     </div>
     {{-- content --}}
     {{-- footer --}}
-    <div class="footer">
+    <div class="footer mt-5">
         <div class="container-fluid footer_all">
             <div class="row w-100">
                 <div class="col-12">
