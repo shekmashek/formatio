@@ -16,7 +16,14 @@ use Illuminate\Support\Facades\File;
 
 class ChefDepartementController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index()
     {
         //

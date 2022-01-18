@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\DB;
 
 class EvaluationChaudController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function formulaire()
     {
         $fonct = new FonctionGenerique();

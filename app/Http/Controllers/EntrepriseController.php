@@ -16,7 +16,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
 class EntrepriseController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index()
     {
         // $fonct = new FonctionGenerique();
@@ -43,7 +50,7 @@ class EntrepriseController extends Controller
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
 
             $entreprise = $entp->getEntreprise($etp2,$etp1);
-            
+
             // dd($entreprise);
 
             if ($id){

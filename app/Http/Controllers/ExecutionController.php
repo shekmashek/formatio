@@ -25,6 +25,14 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\FonctionGenerique;
 class ExecutionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index()
     {
         $liste_etp = entreprise::orderBy('nom_etp')->get();

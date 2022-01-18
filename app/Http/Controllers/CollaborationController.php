@@ -15,10 +15,16 @@ use App\responsable;
 
 class CollaborationController extends Controller
 {
+
     public function __construct()
     {
         $this->collaboration = new Collaboration();
         $this->fonct = new FonctionGenerique();
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
     }
 
     // =========================  insert cfp à etp et etp à cfp

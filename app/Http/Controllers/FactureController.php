@@ -25,6 +25,11 @@ class FactureController extends Controller
         $this->typePaye = new TypePayement();
         $this->fonct = new FonctionGenerique();
         $this->collaboration = new Collaboration();
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
     }
 
     public function fullFacture(Request $request)

@@ -30,17 +30,21 @@ class HomeController extends Controller
     {
         $this->collaboration = new Collaboration();
         $this->middleware('auth');
-        // parent::__construct();
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+
     }
 
 
     public function index(Request $request)
     {
-        $test = $request->session()->all();
-        dd($test);
-        $totale_invitation = $this->collaboration->count_invitation();
+        if (Auth::user()->exists) {
+            $totale_invitation = $this->collaboration->count_invitation();
+            return view('layouts.accueil_admin', compact('totale_invitation'));
+        }
 
-        return view('layouts.accueil_admin', compact('totale_invitation'));
     }
 
     public function liste_projet(Request $request, $id = null)

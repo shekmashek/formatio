@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Auth;
 
 class EncaissementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index(Request $request)
     {
         $id_etp = $request->entreprise_id;

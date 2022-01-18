@@ -19,7 +19,14 @@ use Excel;
 
 class ResponsableController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index($id = null)
     {
         $liste = entreprise::orderBy("nom_etp")->get();

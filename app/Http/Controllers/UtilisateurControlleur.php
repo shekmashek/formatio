@@ -10,10 +10,17 @@ use App\responsable;
 use App\formateur;
 use App\cfp;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 class UtilisateurControlleur extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index($id = null)
     {
         $liste =entreprise::orderBy('nom_etp')->get();
