@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('maquette/style_maquette.css') }}">
     <script src="{{ asset('maquette/javascript.js') }}"></script>
     <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
-    <title> Test Formation.mg </title>
+    <title> Formation.mg </title>
 </head>
 <body>
     <header>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </section>
         <section class="section_3">
             <div class="container-fluid conteneur">

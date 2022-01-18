@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{asset('css/profil_formateur.css')}}">
 
     <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
-    <title> formation.mg </title>
+    <title> cdrftgyhuijkformation.mg </title>
     {{-- catalogue --}}
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
