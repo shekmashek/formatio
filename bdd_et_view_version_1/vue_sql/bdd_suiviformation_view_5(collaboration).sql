@@ -44,6 +44,18 @@ CREATE OR REPLACE VIEW v_invitation_cfp_pour_etp AS SELECT
     demmande_etp_cfp.id,
     inviter_cfp_id,
     demmandeur_etp_id,
+    (cfps.nom) nom_cfp,
+    (cfps.adresse_lot) adresse_lot_cfp,
+    (cfps.adresse_ville) adresse_ville_cfp,
+    (cfps.adresse_region) adresse_region_cfp,
+    (cfps.email) mail_cfp,
+    (cfps.telephone) tel_cfp,
+    cfps.domaine_de_formation,
+    (cfps.nif) nif_cfp,
+    (cfps.stat) stat_cfp,
+    (cfps.rcs) rcs_cfp,
+    (cfps.cif) cif_cfp,
+    (cfps.logo) logo_cfp,
     entreprises.nom_etp,
     (entreprises.adresse) adresse_etp,
     (entreprises.logo) logo_etp,
@@ -74,10 +86,10 @@ CREATE OR REPLACE VIEW v_invitation_cfp_pour_etp AS SELECT
             (demmande_etp_cfp.created_at) date_demmande
         FROM
             demmande_etp_cfp,secteurs,
-            entreprises,responsables
+            entreprises,responsables,cfps
         WHERE
             demmandeur_etp_id = entreprises.id and secteur_id = secteurs.id  and
-            entreprises.id = responsables.entreprise_id
+            entreprises.id = responsables.entreprise_id and inviter_cfp_id = cfps.id
             and  demmande_etp_cfp.activiter = 0;
 
 
@@ -297,6 +309,14 @@ CREATE OR REPLACE VIEW v_invitation_etp_pour_cfp AS SELECT
     (cfps.cif) cif_cfp,
     (cfps.logo) logo_cfp,
     cfps.user_id,
+    (entreprises.adresse) adresse_etp,
+    (entreprises.logo) logo_etp,
+    (entreprises.nif) nif_etp,
+    (entreprises.stat) nif_stat,
+    (entreprises.rcs) nif_rcs,
+    (entreprises.cif) cif_rcs,
+    entreprises.telephone_etp,
+    entreprises.email_etp,
     (
         DATEDIFF(
             demmande_cfp_etp.created_at,
@@ -316,9 +336,9 @@ CREATE OR REPLACE VIEW v_invitation_etp_pour_cfp AS SELECT
             ) date_demmande
         FROM
             demmande_cfp_etp,
-            cfps
+            cfps,entreprises
         WHERE
-            demmandeur_cfp_id = cfps.id and  demmande_cfp_etp.activiter = 0;
+            demmandeur_cfp_id = cfps.id and inviter_etp_id = entreprises.id and  demmande_cfp_etp.activiter = 0;
 
 
 CREATE OR REPLACE VIEW v_demmande_formateur_cfp AS SELECT

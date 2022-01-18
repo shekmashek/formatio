@@ -505,7 +505,7 @@ Route::post('create_formateur_cfp','CollaborationController@create_formateur_cfp
 Route::post('create_cfp_formateur','CollaborationController@create_cfp_formateur')->name('create_cfp_formateur');
 
 Route::get('delete_cfp_etp/{id}','CollaborationController@delete_cfp_etp')->name('delete_cfp_etp');
-Route::get('delete_etp_cfp/{id}','CollaborationController@delete_etp_cfp')->name('delete_etp_cfp');
+Route::post('delete_etp_cfp','CollaborationController@delete_etp_cfp')->name('delete_etp_cfp');
 Route::get('delete_formateur_cfp/{id}','CollaborationController@delete_formateur_cfp')->name('delete_formateur_cfp');
 Route::get('delete_cfp_formateur/{id}','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
 
@@ -526,3 +526,7 @@ Route::get('module_formation','GroupeController@module_formation')->name('module
 
 // profil_user
 Route::get('profil_user','HomeController@profil_user')->name('profil_user');
+
+//list cfp
+
+Route::get('list_cfp','CfpController@index')->name('list_cfp');

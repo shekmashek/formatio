@@ -40,7 +40,6 @@ public function create_cfp_etp(Request $req)
     $user_id = Auth::user()->id;
     $cfp_id = cfp::where('user_id', $user_id)->value('id');
 
-    // $this->collaboration->validation_form_cfp_formateur($req->input());
     $responsable = $this->fonct->findWhereMulitOne("responsables",["email_resp"],[$req->email_resp]);
 
     if($responsable != null){
@@ -54,17 +53,38 @@ public function create_cfp_etp(Request $req)
             return back()->with('error', "une invitation a été déjà envoyer sur ce responsable!");
         }
     } else {
-        return back()->with('error', "mail est invalid");
+        return back()->with('error', "mail est invalid ou la personne responsable du mail n'appartient pas à cette plateforme");
     }
 }
 
-    public function create_etp_cfp(Request $req)
+    /*public function create_etp_cfp(Request $req)
     {
         $verify = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$req["etp_id"], $req["cfp_id"]]);
         if ($verify->id == 0) {
             return $this->collaboration->verify_collaboration_etp_cfp($req);
         } else {
             return back()->with('error', "une invitation a été déjà envoyer sur cette centre de formation !");
+        }
+    }*/
+
+    public function create_etp_cfp(Request $req)
+    {
+        $user_id = Auth::user()->id;
+        $responsable_id = responsable::where('user_id',$user_id)->value('id');
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["email"],[$req->email_cfp]);
+
+        if($cfp != null){
+            $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp->id,$responsable_id]);
+            $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$responsable_id,$cfp->id]);
+            $verify = $verify1->id+$verify2->id;
+
+            if ($verify<= 0) {
+                return $this->collaboration->verify_collaboration_etp_cfp($cfp->id, $responsable_id,$req->nom_cfp);
+            } else {
+                return back()->with('error', "une invitation a été déjà envoyer sur ce Centre de Formation Professionel!");
+            }
+        } else {
+            return back()->with('error', "mail est invalid ou la personne responsable du mail n'appartient pas à cette plateforme");
         }
     }
     // =========================  insert formateur à cfp et cfp à formateur
@@ -115,9 +135,9 @@ public function create_cfp_formateur(Request $req)
         return $this->collaboration->verify_annulation_collaboration_cfp_etp($id);
     }
 
-    public function delete_etp_cfp($id)
+    public function delete_etp_cfp(Request $req)
     {
-        return $this->collaboration->verify_annulation_collaboration_etp_cfp($id);
+        return $this->collaboration->verify_annulation_collaboration_etp_cfp($req->input());
     }
     // =========================  annule formateur à cfp et cfp à formateur
 

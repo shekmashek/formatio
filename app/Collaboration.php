@@ -31,8 +31,8 @@ class Collaboration extends Model
         DB::commit();
     }
 
-    public function insert_collaboration_etp_cfp($imput){
-        $data = [$imput["etp_id"],$imput["cfp_id"]];
+    public function insert_collaboration_etp_cfp($cfp_id,$etp_id){
+        $data = [$etp_id,$cfp_id];
         DB::insert('insert into demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at,updated_at) values (?,?, NOW(), NOW())', $data);
         DB::commit();
     }
@@ -54,8 +54,9 @@ class Collaboration extends Model
         DB::commit();
     }
 
-    public function suprime_collaboration_etp_cfp($id){
-        DB::delete('delete from demmande_etp_cfp where id = ?', [$id]);
+    public function suprime_collaboration_etp_cfp($etp_id,$cfp_id){
+        DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id', [$etp_id,$cfp_id]);
+        DB::delete('delete from demmande_cfp_etp where demmandeur_cfp_id = ? and inviter_etp_id', [$cfp_id,$etp_id]);
         DB::commit();
     }
 
@@ -183,18 +184,18 @@ class Collaboration extends Model
         return back()->with("success","une invitation de collaboration a été à ".$nom_resp);
     }
 
-    public function verify_collaboration_etp_cfp($imput){
+    public function verify_collaboration_etp_cfp($cfp_id,$etp_id,$nom_cfp){
         //  $this->validation_form($imput);
         DB::beginTransaction();
         try
         {
-            $this->insert_collaboration_etp_cfp($imput->input());
+            $this->insert_collaboration_etp_cfp($cfp_id,$etp_id);
         } catch(Exception $e){
             DB::rollback();
             echo $e->getMessage();
             return back()->with("error","une erreur s'est présenter,veuillez réssailler!");
         }
-        return back();
+        return back()->with("success","une invitation de collaboration a été à ".$nom_cfp);
     }
 
     public function verify_collaboration_formateur_cfp($imput){
@@ -241,11 +242,11 @@ class Collaboration extends Model
         return back();
     }
 
-    public function verify_annulation_collaboration_etp_cfp($id){
+    public function verify_annulation_collaboration_etp_cfp($input){
         DB::beginTransaction();
         try
         {
-            $this->suprime_collaboration_etp_cfp($id);
+            $this->suprime_collaboration_etp_cfp($input->etp_id,$input->cfp_id);
         } catch(Exception $e){
             DB::rollback();
             echo $e->getMessage();
