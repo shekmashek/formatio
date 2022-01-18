@@ -408,7 +408,7 @@ Route::get('/show_dep','DepartementController@show')->name('show_dep');
 Route::get('/edit_manager/{id?}','DepartementController@edit')->name('edit_manager');
 Route::post('/update_manager/{id?}','DepartementController@update')->name('update_manager');
 // =======================  PLAN DE FORMATION
-Route::get('test','PlanFormationController@index')->name('test');
+// Route::get('demande_formation','PlanFormationController@index')->name('demande_formation');
 Route::resource('planFormation', 'PlanFormationController');
 Route::get('liste_demande_stagiaire',"PlanFormationController@liste_demande_stagiaire")->name('liste_demande_stagiaire');
 Route::get('liste_demande_formation','PlanFormationController@formation_demandee')->name('liste_demande_formation');

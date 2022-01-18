@@ -392,15 +392,15 @@
                     {{-- plan de formation --}}
                     @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
                     <li class="my-2">
-                        <a @canany(['isStagiaire']) href="{{route('liste_demande_formation')}}" @endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('ajout_plan') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
+                        <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany href="#pdfrmSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-list-plus nav_icon'></i><span class="nav_name">Plan</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{ route('planFormation.index') }}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau plan de formation"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="pdfrmSubMenu">
-                            @canany(['isStagiaire','isManager','isReferent'])
+                            {{-- @canany(['isStagiaire','isManager','isReferent'])
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('liste_demande_stagiaire')}}">Demandes</a>
                                 </li>
-                            @endcanany
+                            @endcanany --}}
                             <li class="my-1 sousMenu">
-                                <a href="{{ route('listePlanFormation') }}">Plans de Formations</a>
+                                <a href="{{ route('listePlanFormation') }}">Liste</a>
                             </li>
 
                         </ul>

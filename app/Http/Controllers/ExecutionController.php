@@ -40,6 +40,7 @@ class ExecutionController extends Controller
         $id_groupe =detail::where('id', $id)->value('groupe_id');
         $id_projet =detail::where('id', $id)->value('projet_id');
         $id_etp = projet::where('id', $id_projet)->value('entreprise_id');
+
         $nom_etp = entreprise::where('id', $id_etp)->value('nom_etp');
         $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ' . $id_etp . ' and id not in(SELECT stagiaire_id from participant_groupe)');
 

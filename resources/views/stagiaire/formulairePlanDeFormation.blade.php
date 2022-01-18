@@ -13,8 +13,17 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_demande_formation') ? 'active' : '' }}" aria-current="page" href="{{route('liste_demande_formation')}}">
-                                    <i class="fa fa-list">Liste de demande</i></a>
+                                @can('isStagiaire')
+                                    <a class="nav-link  {{ Route::currentRouteNamed('liste_demande_formation') ? 'active' : '' }}" aria-current="page" href="{{route('liste_demande_formation')}}">
+                                        <i class="fa fa-list">Liste de demande</i>
+                                    </a>
+                                @endcan
+                                @can('isReferent')
+                                    <a class="nav-link  {{ Route::currentRouteNamed('liste_demande_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('liste_demande_stagiaire')}}">
+                                        <i class="fa fa-list">Liste de demande</i>
+                                    </a>
+                                @endcan
+
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteNamed('planFormation.index') ? 'active' : '' }}" aria-current="page" href="{{route('planFormation.index')}}">
