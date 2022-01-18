@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 
 class PDFController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     // generate PDF pour Catalogue de Formation
     public function pagePDF()
     {

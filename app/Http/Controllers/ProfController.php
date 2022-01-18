@@ -27,7 +27,6 @@ class ProfController extends Controller
             $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             $formateur = $forma->getFormateur($formateur1, $formateur2);
-
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
             return view('collaboration.collaboration_cfp', compact('formateur','demmande_formateur','invitation_formateur'));
@@ -38,19 +37,11 @@ class ProfController extends Controller
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $forma = new formateur();
-
-
         if (Gate::allows('isCFP')) {
-
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
-
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-
             $formateur = $forma->getFormateur($formateur1, $formateur2);
-
-
-
              if(count($formateur )<=0){
                 return view('admin.formateur.guide');
               }
@@ -64,7 +55,14 @@ class ProfController extends Controller
             return view('admin.formateur.formateur', compact('formateur'));
         }
     } */
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index($id = null)
     {
         $fonct = new FonctionGenerique();

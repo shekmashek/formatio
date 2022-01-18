@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\RapportFinale;
 use App\Models\FonctionGenerique;
 use PDF;
@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class RapportFinaleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
 
     public function index()
     {

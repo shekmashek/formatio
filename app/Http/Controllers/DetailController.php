@@ -21,6 +21,14 @@ use App\Models\FonctionGenerique;
 
 class DetailController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function listEvent()
     {
         $id_user = Auth::user()->id;

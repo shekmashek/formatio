@@ -6,10 +6,17 @@ use Illuminate\Http\Request;
 use App\EvaluationChaud;
 
 use App\Models\FonctionGenerique;
-
+use Illuminate\Support\Facades\Auth;
 class formulaireEvaluationChaudController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index()
     {
     }

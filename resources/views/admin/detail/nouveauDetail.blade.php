@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="row">
+                        <div class="row m-5">
                             <div class="col-lg-6">
                                 <form class="btn-submit" action="{{route('detail.store')}}" method="post">
                                     @csrf
