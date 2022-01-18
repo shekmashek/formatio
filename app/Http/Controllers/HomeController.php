@@ -21,6 +21,8 @@ use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
 
+use function Ramsey\Uuid\v1;
+
 class HomeController extends Controller
 {
 
@@ -34,6 +36,8 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        $test = $request->session()->all();
+        dd($test);
         $totale_invitation = $this->collaboration->count_invitation();
 
         return view('layouts.accueil_admin', compact('totale_invitation'));
@@ -86,8 +90,8 @@ class HomeController extends Controller
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $data = $fonct->findWhere("v_projetentreprise", ["cfp_id"], [$cfp_id]);
             $entreprise = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-           
-            
+
+
                 return view('admin.projet.home', compact('data', 'entreprise', 'totale_invitation'));
 
         }
