@@ -1,6 +1,11 @@
 *{
     font-family: 'Open Sans';
 }
+.titre_text{
+    font-family: 'Open Sans';
+    font-size: 24px;
+    font-weight: bold;
+}
 body{
     margin-top: 50px;
     padding: 0;
@@ -71,10 +76,12 @@ p{
 }
 .btn_bordure_violet{
     border: 2px solid rgb(130,33,100);
+    border-radius: 6px;
     transition: all 0.5s ease;
 }
 .btn_bordure_violet:hover{
     border: 2px solid rgb(130,33,100);
+    border-radius: 6px;
     transform: scale(1.1);
 }
 .btn_bordure_violet:focus{
@@ -97,9 +104,6 @@ p{
 .conteneur{
     width: 60%;
     margin: 0 auto;
-}
-.pied{
-    width: auto;
 }
 a{
     text-decoration: none;
