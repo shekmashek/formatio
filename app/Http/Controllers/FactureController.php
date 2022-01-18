@@ -64,6 +64,10 @@ class FactureController extends Controller
         $facture_actif = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
 
+        if(count($facture_inactif) <= 0){
+            return view('admin.facture.guide');
+        }else{
+
         if ($this->fonct->findWhere("v_compte_facture_actif_cfp", ["cfp_id"], [$cfp_id]) == null) {
             $compte_facture_actif = null;
         } else {
@@ -106,6 +110,7 @@ class FactureController extends Controller
 
             return view('admin.facture.liste_facture_inactif', compact('totale_invitation', 'facture_inactif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
         }
+            }
     }
 
 
@@ -160,7 +165,6 @@ class FactureController extends Controller
                 return view('admin.facture.liste_facture', compact('totale_invitation', 'entreprise', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
             }
         } else {
-
             return view('admin.facture.liste_facture_inactif', compact('totale_invitation', 'facture_inactif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
         }
     }

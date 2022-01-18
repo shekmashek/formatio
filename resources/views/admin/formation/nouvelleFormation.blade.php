@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text-white ms-5">Nouvelle Formation</h3>
+<p class="text-white ms-5" style="font-size: 20px;">Nouveau formation</p>
 @endsection
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">

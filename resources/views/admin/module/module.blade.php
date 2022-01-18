@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+<p class="text-white ms-5" style="font-size: 20px;">Votre module de formation</p>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">

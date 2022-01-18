@@ -1,19 +1,29 @@
 @extends('./layouts/admin')
+@section('title')
+<p style="color: white; "> &nbsp; Votre catalogue de formation</p>
+@endsection
 @section('content')
-
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="row w-100">
         <div class="container">
             <div class="col-lg-12">
                 <br>
-                <h1 class="text-center mt-5" >Bienvenue ! Vous devriez avoir une formation</h1><br>
+                <div class="text-center">
+                    <i class="far fa-book fa-5x"></i>
+                </div>
+                <h1 class="text-center mt-5" >   Bienvenue ! Vous devriez avoir une formation </h1><br>
             </div>
             <div class=" text-center col-lg-12">
                 <div class="body">
                     <h5 class="title"></h5>
-                    <p class="text">Si votre liste n'a pas encore dans les listes ci-dessous, </p>
-                    <p class="text">
-                        nous invitons de vous créer une projet de formation veuillez ajouter votre nouvelle formation ici</p>
-                    <a href="{{route('nouvelle_formation')}}" class="btn btn-outline-warning">Créer maintenent</a>
+                    <p class="text">Nous invitons à vous créer une formation en cliquant sur le bouton créer maintenant</p>
+                    <a href="{{route('nouvelle_formation')}}" class="btn btn" style="text-color:#801D68;" >Créer maintenent</a>
+                    <style>
+                        .btn{ background-color: #801D68 ; color:white;}
+                        .btn:hover{color: white;}
+                        
+                    </style>
                 </div>
             </div>
         </div>
