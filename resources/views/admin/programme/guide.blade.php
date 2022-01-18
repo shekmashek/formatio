@@ -7,7 +7,7 @@ integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg
             <div class="col-lg-12">
                 <br>
                 <div class="text-center">
-                    <i class="far fa-address-book fa-5x"></i>
+                    <i class="far fa-list-alt fa-5x"></i>
                 </div>
                 <h1 class="text-center mt-5" >Vous n'avez pas aucune programme</h1><br>
             </div>
