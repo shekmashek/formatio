@@ -78,7 +78,7 @@ Rapprochez-vous de vos clients, envoyez leurs des évaluations digitalisées et 
                 <div class="row">
                     <div class="col-md-6 py-5">
                         <h2>Vous êtes employeur ?</h2>
-                        <p>Accès facile, sécurisé et instantané. <br> 
+                        <p>Accès facile, sécurisé et instantané. <br>
 Accédez facilement au marché des formations professionnelles et trouvez ce dont vous avez besoin sans vous déplacer.<br>
 Solution ergonomique à vos problèmes quotidiens ! <br>
 Gérez votre entreprise ( dépenses, budgets, personnel, factures, données, évaluations du personnel,...) n'importe où, à n'importe quel moment via formation.mg et dites adieu à vos tâches administratives redondantes et ennuyeuses, les archives en paperasse volumineuses,...</P>
@@ -108,7 +108,7 @@ Gérez votre entreprise ( dépenses, budgets, personnel, factures, données, év
         </section>
     </main>
     <footer class="footer_container">
-        
+
                 <div class="d-flex justify-content-center pt-3">
                     <div class="bordure">&copy; Copyright 2022</div>
                     <div class="bordure">Informations légales</div>
