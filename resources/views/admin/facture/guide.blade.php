@@ -18,15 +18,13 @@
                             <p class="title"> Vous devriez avoir :</p>
                         </div>
                         <div class="col text-left">
-                            <p>- une collaboration avec une entreprise,</p>
-                            <p>- une collaboration avec une entreprise,</p>
+                            <p>- une formation</p>
+                            <p>- un module de formation</p>
+                            <p>- une collaboration avec une entreprise</p>
+                            <p>- une collaboration avec un formateur</p>
+                            <p>- au moins un projet de formation</p>
                         </div>
                     </div>
-                    {{-- <a href="{{route('liste_facture',3)}}" class="btn btn">Créer maintenent</a>
-                    <style>
-                        .btn{ background-color: #801D68 ; color:white;}
-                        .btn:hover{color: white;}
-                    </style> --}}
                 </div>
             </div>
         </div>
