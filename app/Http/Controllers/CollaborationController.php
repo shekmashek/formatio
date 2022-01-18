@@ -133,11 +133,25 @@ class CollaborationController extends Controller
         return view('collaboration.collaboration_frmt', compact('cfps', 'demmande', 'invitation', 'formateur_id'));
     }
 
-    public function collaboration_cfp_etp_et_formateur()
+
+    public function collaboration_cfp_etp_et_formateur(){
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+        $forma = new formateur();
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
+            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            $formateur = $forma->getFormateur($formateur1, $formateur2);
+
+            $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
+            $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
+            return view('collaboration.collaboration_cfp', compact('formateur','demmande_formateur','invitation_formateur'));
+        }
+    }
+   /* public function collaboration_cfp_etp_et_formateur()
     {
         $fonct = new FonctionGenerique();
-
-
 
         $id = Auth::id();
         $cfp_id =cfp::where('user_id', $id)->value('id');
@@ -174,11 +188,10 @@ class CollaborationController extends Controller
         $entreprise2 = $etp->getNotCollaborer("entreprises",$entreprise1);
 
         $entreprise = $fonct->concatTwoList($entreprise1,$entreprise2);
-        // dd($entrepriseCollaborer);
 
         return view('collaboration.collaboration_cfp', compact('listeFormateur','listeEntreprise','entreprise', 'formateur', 'demmande_etp', 'invitation_etp', 'demmande_formateur', 'invitation_formateur', 'cfp_id'));
     }
-
+*/
 /*
  public function collaboration_cfp_etp_et_formateur()
     {
