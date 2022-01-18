@@ -1,100 +1,95 @@
 @extends('./layouts/admin')
 @section('content')
-<div id="page-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <br>
-                <h3>FORMATEUR</h3>
-            </div>
-            <a href="{{ route('collaboration')}}">
-                <button class="btn btn-success mb-2 payement"><i class="fa fa-plus"></i> collaborer</button></a>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+<div class="container-fluid justify-content-center pb-3">
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                            <li class="nav-item">
-
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_formateur') || Route::currentRouteNamed('liste_formateur') ? 'active' : '' }}" href="{{route('liste_formateur')}}">
-                                    <i class="fa fa-list">Formateurs</i></a>
-                            </li>
-
-                            {{-- <li class="nav-item">
-
-                        <a class="nav-link  {{ Route::currentRouteNamed('nouveau_formateur') ? 'active' : '' }}" aria-current="page" href="{{route('nouveau_formateur')}}">
-                            <i class="fa fa-plus">Nouveau Formateur</i></a>
-
-                            </li> --}}
-
-                        </ul>
-
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    Tout <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{route('liste_formateur',5)}}">5</a></li>
-                                    <li><a href="{{route('liste_formateur',10)}}">10</a></li>
-                                    <li><a href="{{route('liste_formateur',25)}}">25</a></li>
-                                    <li><a href="{{route('liste_formateur',50)}}">50</a></li>
-                                    <li><a href="{{route('liste_formateur',100)}}">100</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="{{route('liste_formateur')}}">Tout</a></li>
-                                </ul>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </nav>
+    <div class="row">
+        @if(Session::has('error'))
+        <div class="alert alert-danger">
+            {{Session::get('error')}}
         </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-
-                    <div class="panel-body">
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                <thead>
-                                    <tr>
-                                        <th>Photo</th>
-                                        <th>Nom</th>
-                                        <th>Prénom</th>
-                                        @canany(['isAdmin','isManager','isReferent','isSuperAdmin'])
-                                        <th>CFP</th>
-                                        @endcanany
-
-                                        <th>E-mail</th>
-                                        <th>Numéro</th>
-                                        <th>Spécialité</th>
+        @endif
+    </div>
 
 
-                                        <th colspan="3">Actions</th>
+    <style type="text/css">
+        /* h1 {
+
+            font-size: 80%;
+            }
+            h2 {
+
+            font-size: 80%;
+            } */
+        button,
+        value {
+            font-size: 12px;
+        }
+
+        strong {
+            font-size: 12px;
+        }
+
+        li {
+            font-size: 12px;
+        }
+
+        h3 {
+
+            font-size: 12px;
+        }
+
+        h4 {
+
+            /* font-size: 90%; */
+            font-size: 13px;
+        }
+
+        h5 {
+
+            font-size: 10px;
+        }
+
+        h6 {
+
+            font-size: 10px;
+        }
+
+        p {
+
+            font-size: 12px;
+        }
+
+    </style>
+
+
+    <div class="row w-100">
+
+        <div class="col-md-4">
+            <div class="card my-5">
+                <div class="card-body">
+                    <h4>Formateurs déjà collaborer</h4>
+
+                    <div class="table-responsive text-center">
+
+                        <table class="table  table-borderless table-sm">
+                            <tbody id="data_collaboration">
+
+                                @if (count($formateur)<=0) <tr>
+                                    <td> Aucun formateur collaborer</td>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    @else
                                     @foreach($formateur as $frm)
                                     <tr>
-
                                         <td>
-                                            <img src="{{asset('images/formateurs/'.$frm->photos)}}" width="100" height="100" class="rounded-circle"></a>
-
+                                            <div align="left">
+                                                <strong>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</strong>
+                                                <p style="color: rgb(238, 150, 18)">{{$frm->mail_formateur}}</p>
+                                        </div>
+                                        <td>
+                                            <div align="rigth">
+                                                <strong><i class="bx bx-user-check"></i></strong>
+                                            </div>
                                         </td>
-
-
-                                        <td>{{$frm->nom_formateur}}</td>
-                                        <td>{{$frm->prenom_formateur}}</td>
-                                        @canany(['isAdmin','isManager','isReferent','isSuperAdmin'])
-                                        <td> <strong style="color: blue">{{$frm->nom}}</strong></td>
-                                        @endcanany
-                                        <td>{{$frm->mail_formateur}}</td>
-                                        <td>{{$frm->numero_formateur}}</td>
-                                        <td>{{$frm->specialite}}</td>
-
                                         <td>
                                             <div class=" btn-group dropend">
                                                 <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -106,16 +101,10 @@
 
                                                     <li style="font-size:15px"><a href="{{route('profilFormateur',[$frm->formateur_id])}}" class="voir" title="Voir Profile"><i class="fa fa-user" aria-hidden="true" style="font-size:15px"></i>&nbsp;&nbsp;CV</a></li>
                                                     @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                                    <li style="font-size:15px"><a href="" class=" modifier" title="Modifier" id="{{$frm->formateur_id}}" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil fa-xs" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
-                                                    @canany(['isCFP'])
-                                                    <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_desactivation_{{$frm->formateur_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp;Désactivation</a></li>
-
-                                                    @endcanany
-
                                                     <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Rétirer définitivement</strong></a></li>
                                                     @endcanany
                                                 </div>
-
+                                        </td>
                                     </tr>
 
 
@@ -231,107 +220,277 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @endforeach
-                                </tbody>
-                            </table>
 
-                        </div>
+                                    @endforeach
+                                    @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+
+            <div class="card my-5">
+                <div class="card-body">
+
+                    <h4>Inviter un Formateur</h4>
+                    <p>
+                        Pour travailler avec un formateur,il suffit simplement de se collaborer.
+                        La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail</strong>".
+                    </p>
+
+                    <form class="form" action="{{ route('create_cfp_formateur') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col">
+                                <label class="sr-only" for="inlineFormInput">Nom <strong style="color: red">*</strong></label>
+                                <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_format" placeholder="Nom*" required />
+                            </div>
+                            <div class="col">
+                                <label class="sr-only" for="inlineFormInput">Email</label>
+                                <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_format" placeholder="Adresse mail*" required />
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mt-3">envoyer l'invitation</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    @if(Session::has('success'))
+                    <div class="alert alert-success">
+                        {{Session::get('success')}}
+                    </div>
+                    @endif
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{Session::get('error')}}
+                    </div>
+                    @endif
+
+
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="nav nav-tabs navbar-nav" id="myTab" role="tablist">
+                                    <li class="nav-link" role="presentation">
+                                        <a href="#" class=" active" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                            Invitations en attentes
+                                        </a>
+                                    </li>
+                                    <li class="nav-link" role="presentation">
+                                        <a href="#" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                            Invitations réfuser
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </nav>
+
+
+                    <div class="tab-content" id="myTabContent">
+
+                        <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="card my-5">
+                                <div class="card-body">
+                                    <div class="table-responsive text-center">
+
+                                        <table class="table  table-borderless table-sm">
+                                            <tbody id="data_collaboration">
+
+                                                @if (count($invitation_formateur)<=0) <tr>
+                                                    <td> Aucun invitations en attente</td>
+                                                    </tr>
+                                                    @else
+                                                    @foreach($invitation_formateur as $invit_forma)
+                                                    <tr>
+                                                        <td>
+                                                            <div align="left">
+                                                                <strong>{{$invit_forma->nom_formateur.' '.$invit_forma->prenom_formateur}}</strong>
+                                                                <p style="color: rgb(238, 150, 18)">{{$invit_forma->mail_formateur}}</p>
+                                                        </div>
+                                                        <td>
+                                                            <a href="{{ route('accept_cfp_formateur',$invit_forma->id) }}">
+                                                                <strong>
+                                                                    <h5><i class="bx bxs-check-circle actions" title="Accepter"></i></h5>
+                                                                </strong>
+                                                            </a>
+                                                            <a href="{{ route('annulation_cfp_formateur',$invit_forma->id) }}">
+                                                                <strong>
+                                                                    <h5><i class="bx bxs-x-circle actions" title="Refuser"></i></h5>
+                                                                </strong>
+                                                            </a>
+                                                    </tr>
+                                                    @endforeach
+                                                    @endif
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                            <div class="card my-5">
+                                <div class="card-body">
+                                    <div class="table-responsive text-center">
+                                        <table class="table  table-borderless table-sm">
+                                            <tbody>
+                                                @if (count($invitation_formateur)<=0) <tr>
+                                                    <td> Aucun invitations réfuser</td>
+                                                    </tr>
+                                                    @else
+                                                    @foreach($demmande_formateur as $format)
+                                                    <tr>
+                                                        <td>
+                                                            <div align="left">
+                                                                <strong>{{$format->nom_formateur.' '.$format->prenom_formateur}}</strong>
+                                                                <p style="color: rgb(238, 150, 18)">{{$format->mail_formateur}}</p>
+                                                        </td>
+                                                        <td>
+                                                            <strong>
+                                                                <h5><i class="bx bx-user-check"></i></h5>
+                                                            </strong>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                    @endif
+
+                                                    {{-- <tr>
+                                                    <td>
+                                                        <div align="left">
+                                                            <strong>ANTOENJARA Noam Francisco</strong>
+                                                            <p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div align="rigth">
+                                                            <a href="#" style="color: red"><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>
+                                                        </div>
+                                                    </td>
+                                                </tr> --}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
     </div>
+
+
+
+
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
-    var id_formateur;
-    //===================== ajout information a modifier
-    $(".modifierFrm").on('click', function(e) {
-        var id = e.target.id;
-        $.ajax({
-            type: "GET"
-            , url: "{{route('edit_formateur')}}"
-            , data: {
-                Id: id
-            }
-            , dataType: "html"
-            , success: function(response) {
-                var userData = JSON.parse(response);
-                for (var $i = 0; $i < userData.length; $i++) {
-                    $("#nomModif").val(userData[$i].nom_formateur);
-                    $("#prenomModif").val(userData[$i].prenom_formateur);
-                    $("#emailModif").val(userData[$i].mail_formateur);
-                    $("#phoneModif").val(userData[$i].numero_formateur);
-                    $("#adresseModif").val(userData[$i].adresse);
-                    $('#id_formateur').val(userData[$i].id);
-                }
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
+    $("#totale_invitations").on('click', function(e) {
+        $('#data_collaboration').empty();
+
+        var html = '';
+        html += ' <tr>';
+        html += '<td><div align="left">';
+        html += '<strong>ANTOENJARA Noam Francisco</strong>';
+        html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
+        html += '</div></td>';
+
+        html += '<td><div align="rigth">';
+        html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
+        html += '</div></td>';
+
+        html += '<td><div align="rigth">';
+        html += '<a href="#" style="color: green"><i class="bx bxs-check-circle actions" title="Details"></i>accepter </a>';
+        html += '</div></td>';
+
+        $('#data_collaboration').append(html);
+
+
+
+        // $.ajax({
+        //     method: "GET"
+        //     , url: "{{route('edit_projet')}}"
+        //     , data: {
+        //         Id: id
+        //     }
+        //     , dataType: "html"
+        //     , success: function(response) {
+
+        //         var userData = JSON.parse(response);
+        //         for (var $i = 0; $i < userData.length; $i++) {
+        //             $("#projetModif").val(userData[$i].nom_projet);
+
+        //             $('#id_value').val(userData[$i].id);
+
+        //         }
+        //     }
+        //     , error: function(error) {
+        //         console.log(error)
+        //     }
+        // });
     });
 
+    $("#invitations_refuser").on('click', function(e) {
+        $('#data_collaboration').empty();
 
-    $(".supprimer").on('click', function(e) {
-        alert("eto");
-        var id = e.target.id;
-        $.ajax({
-            type: "GET"
-            , url: "{{route('destroy_formateur')}}"
-            , data: {
-                Id: id
-            }
-            , success: function(response) {
-                if (response.success) {
-                    window.location.reload();
-                } else {
-                    alert("Error")
-                }
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
-        alert(id);
-    });
-    $("#action1").click(function(e) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        });
+        var html = '';
+        html += ' <tr>';
+        html += '<td><div align="left">';
+        html += '<strong>ANTOENJARA Noam Francisco</strong>';
+        html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
+        html += '</div></td>';
 
-        var nom = $("#nomModif").val();
-        var prenom = $("#prenomModif").val();
-        var email = $('#emailModif').val();
-        var adresse = $('#adresseModif').val();
-        var phone = $('#phoneModif').val();
-        var id_formateur = $('#id_formateur').val();
+        html += '<td><div align="rigth">';
+        html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
+        html += '</div></td>';
 
-        $.ajax({
-            url: "{{route('update_formateur')}}"
-            , type: 'get'
-            , data: {
-                Id: id_formateur
-                , Nom: nom
-                , Prenom: prenom
-                , Email: email
-                , Adresse: adresse
-                , Phone: phone
-            }
-            , success: function(response) {
-                if (response.success) {
-                    window.location.reload();
-                } else {
-                    alert("Error")
-                }
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
+        $('#data_collaboration').append(html);
+
+
+
+        // $.ajax({
+        //     method: "GET"
+        //     , url: "{{route('edit_projet')}}"
+        //     , data: {
+        //         Id: id
+        //     }
+        //     , dataType: "html"
+        //     , success: function(response) {
+
+        //         var userData = JSON.parse(response);
+        //         for (var $i = 0; $i < userData.length; $i++) {
+        //             $("#projetModif").val(userData[$i].nom_projet);
+
+        //             $('#id_value').val(userData[$i].id);
+
+        //         }
+        //     }
+        //     , error: function(error) {
+        //         console.log(error)
+        //     }
+        // });
     });
 
 </script>

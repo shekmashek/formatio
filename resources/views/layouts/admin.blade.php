@@ -104,7 +104,7 @@
                             <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Centre</span></a>
                             <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
                                 <li class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('utilisateur_cfp')}}">Centre</a>
+                                    <a href="{{route('list_cfp')}}">Centre</a>
                                     <p class="my-1" id="cfp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
                                 </li>
                             </ul>

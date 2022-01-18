@@ -10,7 +10,7 @@ class Cfp extends Model
 {
     protected $table="cfps";
     protected $fillable = [
-        'Nom','Adresse','Email','Telephone','Domaine_de_formation','NIF','STAT','RCS','CIF','logo','user_id'
+       'id', 'Nom','Adresse','Email','Telephone','Domaine_de_formation','NIF','STAT','RCS','CIF','logo','user_id'
     ];
 
 

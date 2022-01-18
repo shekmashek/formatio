@@ -31,20 +31,46 @@ class EntrepriseController extends Controller
     }
 
 
+
     public function create($id = null)
+    {
+        $user_id = Auth::id();
+        $fonct = new FonctionGenerique();
+        $entp = new entreprise();
+
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id =  cfp::where('user_id', $user_id)->value('id');
+            $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
+            $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+
+                $demmande_etp = $fonct->findWhere("v_demmande_cfp_pour_etp", ["demmandeur_cfp_id"], [$cfp_id]);
+                $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+                $entreprise = $entp->getEntreprise($etp2,$etp1);
+
+            return view('cfp.profile_entreprise', compact('entreprise','demmande_etp','invitation_etp'));
+        }
+        if (Gate::allows('isSuperAdmin')) {
+            $entreprise =entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
+            if ($id) $datas = entreprise::orderBy('nom_etp')->take($id)->get();
+            else  $datas = entreprise::orderBy("nom_etp")->get();
+            // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
+            return view('admin.entreprise.entreprise',compact('datas','entreprise'));
+        }
+    }
+
+
+  /*  public function create($id = null)
     {
         if (Gate::allows('isCFP')) {
             $user_id = Auth::id();
             $fonct = new FonctionGenerique();
             $cfp_id =  cfp::where('user_id', $user_id)->value('id');
-
             $entp = new entreprise();
+
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
-
             $entreprise = $entp->getEntreprise($etp2,$etp1);
-            
-            // dd($entreprise);
 
             if ($id){
                 $datas1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id","entreprise_id"],[$cfp_id,$id]);
@@ -70,7 +96,7 @@ class EntrepriseController extends Controller
             return view('admin.entreprise.entreprise',compact('datas','entreprise'));
         }
     }
-
+*/
     public function listeProjet(Request $request)
     {
         $id_etp = $request->entreprise_id;

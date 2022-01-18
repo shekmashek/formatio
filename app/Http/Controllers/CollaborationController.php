@@ -23,7 +23,7 @@ class CollaborationController extends Controller
 
     // =========================  insert cfp à etp et etp à cfp
 
-    public function create_cfp_etp(Request $req)
+  /*  public function create_cfp_etp(Request $req)
     {
         $verify = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$req["cfp_id"], $req["etp_id"]]);
         if ($verify->id == 0) {
@@ -32,14 +32,59 @@ class CollaborationController extends Controller
             return back()->with('error', "une invitation a été déjà envoyer sur cette entreprise !");
         }
     }
+*/
 
-    public function create_etp_cfp(Request $req)
+public function create_cfp_etp(Request $req)
+{
+
+    $user_id = Auth::user()->id;
+    $cfp_id = cfp::where('user_id', $user_id)->value('id');
+
+    $responsable = $this->fonct->findWhereMulitOne("responsables",["email_resp"],[$req->email_resp]);
+
+    if($responsable != null){
+        $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp_id, $responsable->id]);
+        $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$responsable->id,$cfp_id]);
+        $verify = $verify1->id+$verify2->id;
+
+        if ($verify<= 0) {
+            return $this->collaboration->verify_collaboration_cfp_etp($cfp_id, $responsable->entreprise_id,$req->nom_format);
+        } else {
+            return back()->with('error', "une invitation a été déjà envoyer sur ce responsable!");
+        }
+    } else {
+        return back()->with('error', "mail est invalid ou la personne responsable du mail n'appartient pas à cette plateforme");
+    }
+}
+
+    /*public function create_etp_cfp(Request $req)
     {
         $verify = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$req["etp_id"], $req["cfp_id"]]);
         if ($verify->id == 0) {
             return $this->collaboration->verify_collaboration_etp_cfp($req);
         } else {
             return back()->with('error', "une invitation a été déjà envoyer sur cette centre de formation !");
+        }
+    }*/
+
+    public function create_etp_cfp(Request $req)
+    {
+        $user_id = Auth::user()->id;
+        $responsable_id = responsable::where('user_id',$user_id)->value('id');
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["email"],[$req->email_cfp]);
+
+        if($cfp != null){
+            $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp->id,$responsable_id]);
+            $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$responsable_id,$cfp->id]);
+            $verify = $verify1->id+$verify2->id;
+
+            if ($verify<= 0) {
+                return $this->collaboration->verify_collaboration_etp_cfp($cfp->id, $responsable_id,$req->nom_cfp);
+            } else {
+                return back()->with('error', "une invitation a été déjà envoyer sur ce Centre de Formation Professionel!");
+            }
+        } else {
+            return back()->with('error', "mail est invalid ou la personne responsable du mail n'appartient pas à cette plateforme");
         }
     }
     // =========================  insert formateur à cfp et cfp à formateur
@@ -54,7 +99,7 @@ class CollaborationController extends Controller
         }
     }
 
-    public function create_cfp_formateur(Request $req)
+  /*  public function create_cfp_formateur(Request $req)
     {
         $verify = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$req["cfp_id"], $req["formateur_id"]]);
         if ($verify->id == 0) {
@@ -63,6 +108,26 @@ class CollaborationController extends Controller
             return back()->with('error', "une invitation a été déjà envoyer sur formateur!");
         }
     }
+*/
+
+public function create_cfp_formateur(Request $req)
+{
+    $user_id = Auth::user()->id;
+    $cfp_id = cfp::where('user_id', $user_id)->value('id');
+
+    $formateur = $this->fonct->findWhereMulitOne("formateurs",["mail_formateur"],[$req->email_format]);
+    if($formateur != null){
+        $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp_id, $formateur->id]);
+        $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id,$cfp_id]);
+        $verify = $verify1->id+$verify2->id;
+        if ($verify<= 0) {
+            return $this->collaboration->verify_collaboration_cfp_formateur($cfp_id, $formateur->id,$req->nom_format);
+        } else {
+            return back()->with('error', "une invitation a été déjà envoyer sur formateur!");
+        }
+    }
+}
+
     // =========================  annule cfp à etp et etp à cfp
 
     public function delete_cfp_etp($id)
@@ -70,9 +135,9 @@ class CollaborationController extends Controller
         return $this->collaboration->verify_annulation_collaboration_cfp_etp($id);
     }
 
-    public function delete_etp_cfp($id)
+    public function delete_etp_cfp(Request $req)
     {
-        return $this->collaboration->verify_annulation_collaboration_etp_cfp($id);
+        return $this->collaboration->verify_annulation_collaboration_etp_cfp($req->input());
     }
     // =========================  annule formateur à cfp et cfp à formateur
 
@@ -133,11 +198,25 @@ class CollaborationController extends Controller
         return view('collaboration.collaboration_frmt', compact('cfps', 'demmande', 'invitation', 'formateur_id'));
     }
 
-    public function collaboration_cfp_etp_et_formateur()
+
+    public function collaboration_cfp_etp_et_formateur(){
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+        $forma = new formateur();
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
+            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            $formateur = $forma->getFormateur($formateur1, $formateur2);
+
+            $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
+            $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
+            return view('collaboration.collaboration_cfp', compact('formateur','demmande_formateur','invitation_formateur'));
+        }
+    }
+   /* public function collaboration_cfp_etp_et_formateur()
     {
         $fonct = new FonctionGenerique();
-
-
 
         $id = Auth::id();
         $cfp_id =cfp::where('user_id', $id)->value('id');
@@ -153,6 +232,8 @@ class CollaborationController extends Controller
         $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
         $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
         $formateur_tmp = $fonct->concatTwoList($formateur1,$formateur2);
+        $listeFormateur = $formateur_tmp;
+
         $format = new formateur();
         $forma_colab1 = $format->getCollaborer("formateurs",$formateur_tmp);
         $forma_colab2 = $format->getNotCollaborer("formateurs",$forma_colab1);
@@ -164,16 +245,18 @@ class CollaborationController extends Controller
         $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
         $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
         $entreprise_tmp = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
+
+        $listeEntreprise = $entreprise_tmp;
+
         $etp = new entreprise();
         $entreprise1 = $etp->getCollaborer("entreprises",$entreprise_tmp);
         $entreprise2 = $etp->getNotCollaborer("entreprises",$entreprise1);
 
         $entreprise = $fonct->concatTwoList($entreprise1,$entreprise2);
-        // dd($entrepriseCollaborer);
 
-        return view('collaboration.collaboration_cfp', compact('entreprise', 'formateur', 'demmande_etp', 'invitation_etp', 'demmande_formateur', 'invitation_formateur', 'cfp_id'));
+        return view('collaboration.collaboration_cfp', compact('listeFormateur','listeEntreprise','entreprise', 'formateur', 'demmande_etp', 'invitation_etp', 'demmande_formateur', 'invitation_formateur', 'cfp_id'));
     }
-
+*/
 /*
  public function collaboration_cfp_etp_et_formateur()
     {

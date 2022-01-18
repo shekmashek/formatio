@@ -9,6 +9,7 @@ use App\stagiaire;
 use App\responsable;
 use App\formateur;
 use App\cfp;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UtilisateurControlleur extends Controller
@@ -93,8 +94,9 @@ class UtilisateurControlleur extends Controller
     }
     public function profil_cfp($id)
     {
-        $liste_cfps = cfp::findOrFail($id)->get();
-        return view('admin/utilisateur/profil_cfp',compact('liste_cfps'));
+        // $liste_cfps = cfp::findOrFail($id)->get();
+        $liste_cfps = DB::select('select * from cfps where id = '.$id);
+        return view('admin.utilisateur.profil_cfp',compact('liste_cfps'));
     }
     public function register_cfp(Request $request)
     {

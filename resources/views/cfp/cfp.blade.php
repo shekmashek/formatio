@@ -58,24 +58,24 @@
         <div class="col-md-4">
             <div class="card my-5">
                 <div class="card-body">
-                    <h4>Entreprise déjà collaborer</h4>
+                    <h4>Centre de Formation Professionel déjà collaborer</h4>
 
                     <div class="table-responsive text-center">
 
                         <table class="table  table-borderless table-sm">
                             <tbody id="data_collaboration">
 
-                                @if (count($entreprise)<=0) <tr>
-                                    <td> Aucun entreprise collaborer</td>
+                                @if (count($cfp)<=0) <tr>
+                                    <td> Aucun centre de formation collaborer</td>
                                     </tr>
                                     @else
-                                    @foreach($entreprise as $etp)
+                                    @foreach($cfp as $centre)
                                     <tr>
                                         <td>
                                             <div align="left">
-                                                <strong>{{$etp->nom_etp}}</strong>
-                                                <p style="color: rgb(238, 150, 18)">{{$etp->email_etp}}</p>
-                                                <h6>{{$etp->domaine_de_formation}}</h6>
+                                                <strong>{{$centre->nom}}</strong>
+                                                <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
+                                                <h6>{{$centre->domaine_de_formation}}</h6>
                                             </div>
                                         <td>
                                             <div align="rigth">
@@ -83,20 +83,21 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class=" btn-group dropend">
-                                                <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <div class="btn-group dropleft">
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fa fa-ellipsis-v"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <li style="font-size:15px"><a href="{{route('profile_entreprise',$etp->entreprise_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>Afficher</a></li>
-                                                    <li style="font-size:15px"><a href="#" data-toggle="modal" data-target="#exampleModal_{{$etp->entreprise_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i><strong style="color: red">Rétirer définitivement</strong></a></li>
+                                                    <a class="dropdown-item" href="{{ route('profil_cfp',$centre->cfp_id) }}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
+                                                    <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_{{$centre->cfp_id}}"><i class="fa fa-trash"></i> &nbsp; Supprimer</a>
                                                 </div>
+                                            </div>
                                         </td>
                                     </tr>
 
 
                                     {{-- modal delete  --}}
-                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
@@ -108,10 +109,11 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                    <form action="{{ route('destroy_entreprise') }}" method="post">
+                                                    <form action="{{route('delete_etp_cfp')}}" method="post">
                                                         @csrf
                                                         <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                        <input name="id" type="text" value="{{$etp->entreprise_id}}" hidden>
+                                                        <input name="etp_id" type="text" value="{{$centre->entreprise_id}}" hidden>
+                                                        <input name="cfp_id" type="text" value="{{$centre->cfp_id}}" hidden>
                                                     </form>
                                                 </div>
                                             </div>
@@ -136,22 +138,22 @@
             <div class="card my-5">
                 <div class="card-body">
 
-                    <h4>Inviter une entreprise à partir de son responsable</h4>
+                    <h4>Inviter un Centre de Formation Professionel(CFP) à partir de son responsable</h4>
                     <p>
-                        Pour travailler avec une entreprise,il suffit simplement de se collaborer.
+                        Pour travailler avec une Centre de Formation Professionel(CFP),il suffit simplement de se collaborer.
                         La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail vers son responsable</strong>".
                     </p>
 
-                    <form class="form" action="{{ route('create_cfp_etp') }}" method="POST">
+                    <form class="form" action="{{ route('create_etp_cfp') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col">
                                 <label class="sr-only" for="inlineFormInput">Nom <strong style="color: red">*</strong></label>
-                                <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_resp" placeholder="Nom*" required />
+                                <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_cfp" placeholder="Nom*" required />
                             </div>
                             <div class="col">
                                 <label class="sr-only" for="inlineFormInput">Email</label>
-                                <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_resp" placeholder="Adresse mail*" required />
+                                <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_cfp" placeholder="Adresse mail*" required />
                             </div>
                             <div class="col">
                                 <div class="form-group">
@@ -205,33 +207,28 @@
                                         <table class="table  table-borderless table-sm">
                                             <tbody id="data_collaboration">
 
-                                                @if (count($invitation_etp)<=0) <tr>
+                                                @if (count($invitation)<=0) <tr>
                                                     <td> Aucun invitations en attente</td>
                                                     </tr>
                                                     @else
-                                                    @foreach($invitation_etp as $invit_etp)
+                                                    @foreach($invitation as $invit_cfp)
                                                     <tr>
                                                         <td>
                                                             <div align="left">
-                                                                <strong>{{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}</strong>
-                                                                <p style="color: rgb(238, 150, 18)">{{$invit_etp->email_resp}}</p>
+                                                                <strong>{{$invit_cfp->nom_cfp}}</strong>
+                                                                <p style="color: rgb(238, 150, 18)">{{$invit_cfp->mail_cfp}}</p>
+                                                                <h6>{{$invit_cfp->domaine_de_formation}}</h6>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div align="left">
-                                                                <strong>{{$invit_etp->nom_etp}}</strong>
-                                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$invit_etp->nom_secteur}})</strong></p>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ route('accept_cfp_etp',$invit_etp->id) }}">
+                                                            <a href="{{ route('accept_etp_cfp',$invit_cfp->id) }}">
                                                                 <strong>
                                                                     <h5><i class="bx bxs-check-circle actions" title="Accepter"></i> accepter</h5>
                                                                 </strong>
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('annulation_cfp_etp',$invit_etp->id) }}">
+                                                            <a href="{{ route('annulation_etp_cfp',$invit_cfp->id) }}">
                                                                 <strong>
                                                                     <h5><i class="bx bxs-x-circle actions" title="Refuser"></i> réfuser</h5>
                                                                 </strong>
@@ -255,27 +252,22 @@
                                     <div class="table-responsive text-center">
                                         <table class="table  table-borderless table-sm">
                                             <tbody>
-                                                @if (count($demmande_etp)<=0) <tr>
+                                                @if (count($demmande)<=0) <tr>
                                                     <td> Aucun demmande en attente</td>
                                                     </tr>
                                                     @else
-                                                    @foreach($demmande_etp as $demand_format)
+                                                    @foreach($demmande as $demand_cfp)
                                                     <tr>
                                                         <td>
                                                             <div align="left">
-                                                                <strong>{{$demand_format->nom_resp.' '.$demand_format->prenom_resp}}</strong>
-                                                                <p style="color: rgb(238, 150, 18)">{{$demand_format->email_resp}}</p>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div align="left">
-                                                                <strong>{{$demand_format->nom_etp}}</strong>
-                                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$demand_format->nom_secteur}})</strong></p>
+                                                                <strong>{{$demand_cfp->nom_cfp}}</strong>
+                                                                <p style="color: rgb(238, 150, 18)">{{$demand_cfp->mail_cfp}}</p>
+                                                                <h6>{{$demand_cfp->domaine_de_formation}}</h6>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <strong>
-                                                                <h5><i class="bx bxs-x-circle"></i> annuler</h5>
+                                                                <h5><i class="bx bxs-x-circle"></i> en attente</h5>
                                                             </strong>
                                                         </td>
                                                     </tr>
@@ -320,94 +312,4 @@
 
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-<script type="text/javascript">
-    $("#totale_invitations").on('click', function(e) {
-        $('#data_collaboration').empty();
-
-        var html = '';
-        html += ' <tr>';
-        html += '<td><div align="left">';
-        html += '<strong>ANTOENJARA Noam Francisco</strong>';
-        html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
-        html += '</div></td>';
-
-        html += '<td><div align="rigth">';
-        html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
-        html += '</div></td>';
-
-        html += '<td><div align="rigth">';
-        html += '<a href="#" style="color: green"><i class="bx bxs-check-circle actions" title="Details"></i>accepter </a>';
-        html += '</div></td>';
-
-        $('#data_collaboration').append(html);
-
-
-
-        // $.ajax({
-        //     method: "GET"
-        //     , url: "{{route('edit_projet')}}"
-        //     , data: {
-        //         Id: id
-        //     }
-        //     , dataType: "html"
-        //     , success: function(response) {
-
-        //         var userData = JSON.parse(response);
-        //         for (var $i = 0; $i < userData.length; $i++) {
-        //             $("#projetModif").val(userData[$i].nom_projet);
-
-        //             $('#id_value').val(userData[$i].id);
-
-        //         }
-        //     }
-        //     , error: function(error) {
-        //         console.log(error)
-        //     }
-        // });
-    });
-
-    $("#invitations_refuser").on('click', function(e) {
-        $('#data_collaboration').empty();
-
-        var html = '';
-        html += ' <tr>';
-        html += '<td><div align="left">';
-        html += '<strong>ANTOENJARA Noam Francisco</strong>';
-        html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
-        html += '</div></td>';
-
-        html += '<td><div align="rigth">';
-        html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
-        html += '</div></td>';
-
-        $('#data_collaboration').append(html);
-
-
-
-        // $.ajax({
-        //     method: "GET"
-        //     , url: "{{route('edit_projet')}}"
-        //     , data: {
-        //         Id: id
-        //     }
-        //     , dataType: "html"
-        //     , success: function(response) {
-
-        //         var userData = JSON.parse(response);
-        //         for (var $i = 0; $i < userData.length; $i++) {
-        //             $("#projetModif").val(userData[$i].nom_projet);
-
-        //             $('#id_value').val(userData[$i].id);
-
-        //         }
-        //     }
-        //     , error: function(error) {
-        //         console.log(error)
-        //     }
-        // });
-    });
-
-</script>
 @endsection
