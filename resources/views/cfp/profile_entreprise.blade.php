@@ -1,191 +1,413 @@
 @extends('./layouts/admin')
 @section('content')
-<link rel="stylesheet" href="{{ asset('design_entreprise/index.css') }}">
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-<div class="d-flex justify-content-between pt-3">
-    <h5 class="mx-5">Entreprise</h5>
-    
-    <div>
-        <i class="fa fa-search"></i>
-        <input type="search" class="recherche" id="categorie_search" name="categorie" placeholder="Rechercher entreprise">
+<div class="container-fluid justify-content-center pb-3">
+
+    <style type="text/css">
+        /* h1 {
+
+            font-size: 80%;
+            }
+            h2 {
+
+            font-size: 80%;
+            } */
+        button,
+        value {
+            font-size: 12px;
+        }
+
+        strong {
+            font-size: 12px;
+        }
+
+        li {
+            font-size: 12px;
+        }
+
+        h3 {
+
+            font-size: 12px;
+        }
+
+        h4 {
+
+            /* font-size: 90%; */
+            font-size: 13px;
+        }
+
+        h5 {
+
+            font-size: 10px;
+        }
+
+        h6 {
+
+            font-size: 10px;
+        }
+
+        p {
+
+            font-size: 12px;
+        }
+
+    </style>
+
+
+    <div class="row w-100">
+
+        <div class="col-md-4">
+            <div class="card my-5">
+                <div class="card-body">
+                    <h4>Entreprise déjà collaborer</h4>
+
+                    <div class="table-responsive text-center">
+
+                        <table class="table  table-borderless table-sm">
+                            <tbody id="data_collaboration">
+
+                                @if (count($entreprise)<=0) <tr>
+                                    <td> Aucun entreprise collaborer</td>
+                                    </tr>
+                                    @else
+                                    @foreach($entreprise as $etp)
+                                    <tr>
+                                        <td>
+                                            <div align="left">
+                                                <strong>{{$etp->nom_etp}}</strong>
+                                                <p style="color: rgb(238, 150, 18)">{{$etp->email_etp}}</p>
+                                                {{-- <h6>{{$etp->nom_secteur}}</h6> --}}
+                                            </div>
+                                        <td>
+                                            <div align="rigth">
+                                                <strong><i class="bx bx-user-check"></i></strong>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" btn-group dropend">
+                                                <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <li style="font-size:15px"><a href="{{route('profile_entreprise',$etp->entreprise_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>Afficher</a></li>
+                                                    <li style="font-size:15px"><a href="#" data-toggle="modal" data-target="#exampleModal_{{$etp->entreprise_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i><strong style="color: red">Rétirer définitivement</strong></a></li>
+                                                </div>
+                                        </td>
+                                    </tr>
+
+
+                                    {{-- modal delete  --}}
+                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                                    <h6 class="modal-title text-white">Avertissement !</h6>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                                    <form action="{{ route('destroy_entreprise') }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                        <input name="id" type="text" value="{{$etp->entreprise_id}}" hidden>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- fin  --}}
+
+
+
+                                    @endforeach
+                                    @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+
+            <div class="card my-5">
+                <div class="card-body">
+
+                    <h4>Inviter une entreprise à partir de son responsable</h4>
+                    <p>
+                        Pour travailler avec une entreprise,il suffit simplement de se collaborer.
+                        La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail vers son responsable</strong>".
+                    </p>
+
+                    <form class="form" action="{{ route('create_cfp_etp') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col">
+                                <label class="sr-only" for="inlineFormInput">Nom <strong style="color: red">*</strong></label>
+                                <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_resp" placeholder="Nom*" required />
+                            </div>
+                            <div class="col">
+                                <label class="sr-only" for="inlineFormInput">Email</label>
+                                <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_resp" placeholder="Adresse mail*" required />
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mt-3">envoyer l'invitation</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    @if(Session::has('success'))
+                    <div class="alert alert-success">
+                        {{Session::get('success')}}
+                    </div>
+                    @endif
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{Session::get('error')}}
+                    </div>
+                    @endif
+
+
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="nav nav-tabs navbar-nav" id="myTab" role="tablist">
+                                    <li class="nav-link" role="presentation">
+                                        <a href="#" class=" active" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                            Invitations en attentes
+                                        </a>
+                                    </li>
+                                    <li class="nav-link" role="presentation">
+                                        <a href="#" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                            Demmande en attente
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </nav>
+
+
+                    <div class="tab-content" id="myTabContent">
+
+                        <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="card my-5">
+                                <div class="card-body">
+                                    <div class="table-responsive text-center">
+
+                                        <table class="table  table-borderless table-sm">
+                                            <tbody id="data_collaboration">
+
+                                                @if (count($invitation_etp)<=0) <tr>
+                                                    <td> Aucun invitations en attente</td>
+                                                    </tr>
+                                                    @else
+                                                    @foreach($invitation_etp as $invit_etp)
+                                                    <tr>
+                                                        <td>
+                                                            <div align="left">
+                                                                <strong>{{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}</strong>
+                                                                <p style="color: rgb(238, 150, 18)">{{$invit_etp->email_resp}}</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div align="left">
+                                                                <strong>{{$invit_etp->nom_etp}}</strong>
+                                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$invit_etp->nom_secteur}})</strong></p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('accept_cfp_etp',$invit_etp->id) }}">
+                                                                <strong>
+                                                                    <h5><i class="bx bxs-check-circle actions" title="Accepter"></i> accepter</h5>
+                                                                </strong>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('annulation_cfp_etp',$invit_etp->id) }}">
+                                                                <strong>
+                                                                    <h5><i class="bx bxs-x-circle actions" title="Refuser"></i> réfuser</h5>
+                                                                </strong>
+                                                            </a>
+                                                    </tr>
+                                                    @endforeach
+                                                    @endif
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                            <div class="card my-5">
+                                <div class="card-body">
+                                    <div class="table-responsive text-center">
+                                        <table class="table  table-borderless table-sm">
+                                            <tbody>
+                                                @if (count($demmande_etp)<=0) <tr>
+                                                    <td> Aucun demmande en attente</td>
+                                                    </tr>
+                                                    @else
+                                                    @foreach($demmande_etp as $demand_format)
+                                                    <tr>
+                                                        <td>
+                                                            <div align="left">
+                                                                <strong>{{$demand_format->nom_resp.' '.$demand_format->prenom_resp}}</strong>
+                                                                <p style="color: rgb(238, 150, 18)">{{$demand_format->email_resp}}</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div align="left">
+                                                                <strong>{{$demand_format->nom_etp}}</strong>
+                                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$demand_format->nom_secteur}})</strong></p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <strong>
+                                                                <h5><i class="bx bxs-x-circle"></i> annuler</h5>
+                                                            </strong>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                    @endif
+
+                                                    {{-- <tr>
+                                                    <td>
+                                                        <div align="left">
+                                                            <strong>ANTOENJARA Noam Francisco</strong>
+                                                            <p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div align="rigth">
+                                                            <a href="#" style="color: red"><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>
+                                                        </div>
+                                                    </td>
+                                                </tr> --}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
     </div>
+
+
+
+
 </div>
-<hr>
-<a href="{{ route('collaboration')}}">
-        <button class="btn btn-success mb-2 payement"><i class="fa fa-plus"></i> collaborer</button></a>
 
-
-@canany(['isCFP'])
-{{-- corps --}}
-
-@foreach($datas as $etp)
-<div class="card rounded-3 pe-3 ps-3">
-    <div class="row pt-3">
-        <div class="col-md-2">
-            <img class="img-fluid" src="{{ asset('images/entreprises/'.$etp->logo_etp) }}">
-        </div>
-        <div class="col-md-4 pt-2">
-            <h5 class="nom_entreprise"><b>{{$etp->nom_etp}}</b></h5>
-            <p class="adresse">
-                {{$etp->adresse}}
-        </div>
-        <div class="col-md-3 pt-2">
-            <small><b>Secteur d'activités</b></small>
-            <p class="adresse">{{$etp->nom_secteur}}</p>
-        </div>
-        <div class="col-md-3 pt-2">
-            <small class="d-flex justify-content-between">
-                <b>Contact</b>
-                <a href="{{route('profile_entreprise',$etp->entreprise_id)}}" class="voir mx-4" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i></a>
-            </small>
-
-            <p class="adresse">{{$etp->telephone_etp}}</p>
-            <small><b>E-mail</b></small>
-            <p class="adresse">{{$etp->email_etp}}</p>
-        </div>
-
-    </div>
-
-
-    {{-- dropdown collapse --}}
-    <div data-toggle="collapse" class="bg-light d-flex justify-content-between mx-2 my-2 rounded-3 pt-3" href="#collapseExample_{{ $etp->entreprise_id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-        <p class="px-2"><b>
-                <font color="blue"><u>Informations légales</u></font>
-            </b></p>
-        <i class="fa fa-chevron-down px-3"></i>
-    </div>
-    <div class="collapse" id="collapseExample_{{ $etp->entreprise_id }}">
-        <div class="d-flex justify-content-between mx-5">
-            <div>
-                <small><b>NIF</b></small>
-                <P class="adresse">{{$etp->nif_etp}}</P>
-            </div>
-            <div>
-                <small><b>STAT</b></small>
-                <P class="adresse">{{$etp->stat_etp}}</P>
-            </div>
-            <div>
-                <small><b>RCS</b></small>
-                <P class="adresse">{{$etp->rcs_etp}}</P>
-            </div>
-            <div>
-                <small><b>CIF</b></small>
-                <P class="adresse">{{$etp->cif_etp}}</P>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-@endforeach
-<br><br><br>
-
-@endcanany
-
-
-
-
-
-
-@canany(['isSuperAdmin','isAdmin'])
-{{-- corps --}}
-@foreach($datas as $etp)
-<div class="card rounded-3 pe-3 ps-3">
-    <div class="row pt-3">
-        <div class="col-md-2">
-            <img class="img-fluid" src="{{ asset('images/entreprises/'.$etp->logo) }}">
-        </div>
-        <div class="col-md-4 pt-2">
-            <h5 class="nom_entreprise"><b>{{$etp->nom_etp}}</b></h5>
-            <p class="adresse">
-                {{$etp->adresse}}
-        </div>
-        <div class="col-md-3 pt-2">
-            <small><b>Secteur d'activités</b></small>
-            <p class="adresse">{{$etp->secteur->nom_secteur}}</p>
-        </div>
-        <div class="col-md-3 pt-2">
-            <small class="d-flex justify-content-between">
-                <b>Contact</b>
-                <a href="{{route('profile_entreprise',$etp)}}" class="voir mx-4" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i></a>
-            </small>
-            <p class="adresse">{{$etp->telephone_etp}}</p>
-            <small><b>E-mail</b></small>
-            <p class="adresse">{{$etp->email_etp}}</p>
-
-        </div>
-
-    </div>
-
-    {{-- dropdown collapse --}}
-    <div data-toggle="collapse" class="bg-light d-flex justify-content-between mx-2 my-2 rounded-3 pt-3" href="#collapseExample_{{ $etp->id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-        <p class="px-2"><b>
-                <font color="blue"><u>Informations légales</u></font>
-            </b></p>
-        <i class="fa fa-chevron-down px-3"></i>
-    </div>
-    <div class="collapse" id="collapseExample_{{ $etp->id }}">
-        <div class="d-flex justify-content-between mx-5">
-            <div>
-                <small><b>NIF</b></small>
-                <P class="adresse">{{$etp->nif}}</P>
-            </div>
-            <div>
-                <small><b>STAT</b></small>
-                <P class="adresse">{{$etp->stat}}</P>
-            </div>
-            <div>
-                <small><b>RCS</b></small>
-                <P class="adresse">{{$etp->rcs}}</P>
-            </div>
-            <div>
-                <small><b>CIF</b></small>
-                <P class="adresse">{{$etp->cif}}</P>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-@endforeach
-<br><br><br>
-
-@endcanany
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
-    // CSRF Token
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $(document).ready(function() {
-        $("#categorie_search").autocomplete({
-            source: function(request, response) {
-                // Fetch data
-                $.ajax({
-                    url: "{{route('searchCategorie')}}"
-                    , type: 'get'
-                    , dataType: "json"
-                    , data: {
-                        //    _token: CSRF_TOKEN,
-                        recheche: request.term
-                    }
-                    , success: function(data) {
-                        // alert("eto");
-                        response(data);
-                    }
-                    , error: function(data) {
-                        alert("error");
-                        //alert(JSON.stringify(data));
-                    }
-                });
-            }
-            , select: function(event, ui) {
-                // Set selection
-                $('#categorie_search').val(ui.item.label); // display the selected text
-                $('#stagiaireid').val(ui.item.value); // save selected id to input
-                return false;
-            }
-        });
+    $("#totale_invitations").on('click', function(e) {
+        $('#data_collaboration').empty();
+
+        var html = '';
+        html += ' <tr>';
+        html += '<td><div align="left">';
+        html += '<strong>ANTOENJARA Noam Francisco</strong>';
+        html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
+        html += '</div></td>';
+
+        html += '<td><div align="rigth">';
+        html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
+        html += '</div></td>';
+
+        html += '<td><div align="rigth">';
+        html += '<a href="#" style="color: green"><i class="bx bxs-check-circle actions" title="Details"></i>accepter </a>';
+        html += '</div></td>';
+
+        $('#data_collaboration').append(html);
+
+
+
+        // $.ajax({
+        //     method: "GET"
+        //     , url: "{{route('edit_projet')}}"
+        //     , data: {
+        //         Id: id
+        //     }
+        //     , dataType: "html"
+        //     , success: function(response) {
+
+        //         var userData = JSON.parse(response);
+        //         for (var $i = 0; $i < userData.length; $i++) {
+        //             $("#projetModif").val(userData[$i].nom_projet);
+
+        //             $('#id_value').val(userData[$i].id);
+
+        //         }
+        //     }
+        //     , error: function(error) {
+        //         console.log(error)
+        //     }
+        // });
+    });
+
+    $("#invitations_refuser").on('click', function(e) {
+        $('#data_collaboration').empty();
+
+        var html = '';
+        html += ' <tr>';
+        html += '<td><div align="left">';
+        html += '<strong>ANTOENJARA Noam Francisco</strong>';
+        html += '<p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>';
+        html += '</div></td>';
+
+        html += '<td><div align="rigth">';
+        html += '<a href="#" style="color: red" ><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>';
+        html += '</div></td>';
+
+        $('#data_collaboration').append(html);
+
+
+
+        // $.ajax({
+        //     method: "GET"
+        //     , url: "{{route('edit_projet')}}"
+        //     , data: {
+        //         Id: id
+        //     }
+        //     , dataType: "html"
+        //     , success: function(response) {
+
+        //         var userData = JSON.parse(response);
+        //         for (var $i = 0; $i < userData.length; $i++) {
+        //             $("#projetModif").val(userData[$i].nom_projet);
+
+        //             $('#id_value').val(userData[$i].id);
+
+        //         }
+        //     }
+        //     , error: function(error) {
+        //         console.log(error)
+        //     }
+        // });
     });
 
 </script>
-
 @endsection

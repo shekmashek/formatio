@@ -25,8 +25,8 @@ class Collaboration extends Model
         DB::commit();
     }
 */
-  public function insert_collaboration_cfp_etp($imput){
-        $data = [$imput["cfp_id"],$imput["etp_id"]];
+  public function insert_collaboration_cfp_etp($cfp_id,$etp_id){
+        $data = [$cfp_id,$etp_id];
         DB::insert('insert into demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at,updated_at) values (?,?, NOW(), NOW())', $data);
         DB::commit();
     }
@@ -43,8 +43,8 @@ class Collaboration extends Model
         DB::commit();
     }
 
-    public function insert_collaboration_cfp_formateur($imput){
-        $data = [$imput["cfp_id"],$imput["formateur_id"]];
+    public function insert_collaboration_cfp_formateur($cfp_id,$formateur_id){
+        $data = [$cfp_id,$formateur_id];
         DB::insert('insert into demmande_cfp_formateur (demmandeur_cfp_id,inviter_formateur_id,created_at,updated_at,activiter) values (?,?, NOW(), NOW(),1)', $data);
         DB::commit();
     }
@@ -156,23 +156,31 @@ class Collaboration extends Model
         $imput->validate($critereForm, $rules);
     }
 
+    public function validation_form_cfp_formateur($imput){
+        $rules=[
+            'nom_format.required' => 'veuillez remplir le champs,merci!',
+            'email_format.required' => "veuillez remplir le champs,merci!",
+            'email_format.email' => 'votre mail est invalid',
+        ];
+        $critereForm=[
+            'nom_format' => 'required',
+            'email_format' => 'required|email'
+        ];
+        $imput->validate($critereForm, $rules);
+    }
 
 
-    public function verify_collaboration_cfp_etp($imput){
-        // $this->validation_form_cfp_etp($imput);
-        // $user_id = Auth::id();
-        //$cfp_id = CFP::where('user_id',$user_id)->value('id');
-      //  dd($user_id);
+    public function verify_collaboration_cfp_etp($cfp_id,$etp_id,$nom_resp){
         DB::beginTransaction();
         try
         {
-            $this->insert_collaboration_cfp_etp($imput->input());
+            $this->insert_collaboration_cfp_etp($cfp_id,$etp_id);
         } catch(Exception $e){
             DB::rollback();
             echo $e->getMessage();
             return back()->with("error","une erreur s'est présenter,veuillez réssailler!");
         }
-        return back();
+        return back()->with("success","une invitation de collaboration a été à ".$nom_resp);
     }
 
     public function verify_collaboration_etp_cfp($imput){
@@ -203,18 +211,18 @@ class Collaboration extends Model
         return back();
     }
 
-    public function verify_collaboration_cfp_formateur($imput){
+    public function verify_collaboration_cfp_formateur($cfp_id,$formateur_id,$nom_forma){
         // $this->validation_form($imput);
         DB::beginTransaction();
         try
         {
-            $this->insert_collaboration_cfp_formateur($imput->input());
+            $this->insert_collaboration_cfp_formateur($cfp_id,$formateur_id);
         } catch(Exception $e){
             DB::rollback();
             echo $e->getMessage();
             return back()->with("error","une erreur s'est présenter,veuillez réssailler!");
         }
-        return back();
+        return back()->with("success","une invitation de collaboration a été à ".$nom_forma);
     }
 
 

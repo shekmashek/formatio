@@ -13,7 +13,10 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_etp AS SELECT
     (entreprises.rcs) nif_rcs,
     (entreprises.cif) cif_rcs,
     secteur_id,
-    (secteurs.nom_secteur) secteur_activite,
+    responsables.nom_resp,
+    responsables.prenom_resp,
+    responsables.email_resp,
+    secteurs.nom_secteur,
     (
         DATEDIFF(
             NOW(), demmande_cfp_etp.created_at)
@@ -30,9 +33,10 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_etp AS SELECT
             (demmande_cfp_etp.created_at) date_demmande
         FROM
             demmande_cfp_etp,secteurs,
-            entreprises
+            entreprises,responsables
         WHERE
-            inviter_etp_id = entreprises.id and secteur_id = secteurs.id  and  demmande_cfp_etp.activiter = 0;
+            inviter_etp_id = entreprises.id and secteur_id = secteurs.id  and
+            entreprises.id = responsables.entreprise_id and demmande_cfp_etp.activiter = 0;
 
 
 
@@ -50,7 +54,10 @@ CREATE OR REPLACE VIEW v_invitation_cfp_pour_etp AS SELECT
     entreprises.telephone_etp,
     entreprises.email_etp,
     secteur_id,
-    (secteurs.nom_secteur) secteur_activite,
+    responsables.nom_resp,
+    responsables.prenom_resp,
+    responsables.email_resp,
+    secteurs.nom_secteur,
     (
         DATEDIFF(
             NOW(), demmande_etp_cfp.created_at)
@@ -67,9 +74,11 @@ CREATE OR REPLACE VIEW v_invitation_cfp_pour_etp AS SELECT
             (demmande_etp_cfp.created_at) date_demmande
         FROM
             demmande_etp_cfp,secteurs,
-            entreprises
+            entreprises,responsables
         WHERE
-            demmandeur_etp_id = entreprises.id and secteur_id = secteurs.id and  demmande_etp_cfp.activiter = 0;
+            demmandeur_etp_id = entreprises.id and secteur_id = secteurs.id  and
+            entreprises.id = responsables.entreprise_id
+            and  demmande_etp_cfp.activiter = 0;
 
 
 CREATE OR REPLACE VIEW v_demmande_cfp_pour_formateur AS SELECT

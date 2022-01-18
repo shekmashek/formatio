@@ -71,50 +71,44 @@
 
                     <div class="table-responsive text-center">
 
-                            <table class="table  table-borderless table-sm">
-                                <tbody id="data_collaboration">
+                        <table class="table  table-borderless table-sm">
+                            <tbody id="data_collaboration">
 
-                                    @if (count($formateur)<=0)
-                                        <tr>
-                                            <td> Aucun formateur collaborer</td>
-                                        </tr>
+                                @if (count($formateur)<=0) <tr>
+                                    <td> Aucun formateur collaborer</td>
+                                    </tr>
                                     @else
-                                        @foreach($formateur as $frm)
-                                            <tr>
-                                                <td><div align="left">
-                                                    <strong>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</strong>
-                                                    <p style="color: rgb(238, 150, 18)">{{$frm->mail_formateur}}</p>
-                                                </td>
-                                                <td>
-                                                    <div align="rigth">
-                                                        <strong><i class="bx bx-user-check"></i></strong>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class=" btn-group dropend">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v"></i>
-                                                        </button>
+                                    @foreach($formateur as $frm)
+                                    <tr>
+                                        <td>
+                                            <div align="left">
+                                                <strong>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</strong>
+                                                <p style="color: rgb(238, 150, 18)">{{$frm->mail_formateur}}</p>
+                                        </div>
+                                        <td>
+                                            <div align="rigth">
+                                                <strong><i class="bx bx-user-check"></i></strong>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" btn-group dropend">
+                                                <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </button>
 
-                                                        <div class="dropdown-menu">
-                                                            <li style="font-size:15px"><a href="{{route('profile_formateur',$frm->formateur_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profile</a></li>
+                                                <div class="dropdown-menu">
+                                                    <li style="font-size:15px"><a href="{{route('profile_formateur',$frm->formateur_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profile</a></li>
 
-                                                            <li style="font-size:15px"><a href="{{route('profilFormateur',[$frm->formateur_id])}}" class="voir" title="Voir Profile"><i class="fa fa-user" aria-hidden="true" style="font-size:15px"></i>&nbsp;&nbsp;CV</a></li>
-                                                            @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                                            <li style="font-size:15px"><a href="" class=" modifier" title="Modifier" id="{{$frm->formateur_id}}" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil fa-xs" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
-                                                            @canany(['isCFP'])
-                                                            <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_desactivation_{{$frm->formateur_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp;Désactivation</a></li>
-
-                                                            @endcanany
-
-                                                            <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Rétirer définitivement</strong></a></li>
-                                                            @endcanany
-                                                        </div>
-                                                </td>
-                                            </tr>
+                                                    <li style="font-size:15px"><a href="{{route('profilFormateur',[$frm->formateur_id])}}" class="voir" title="Voir Profile"><i class="fa fa-user" aria-hidden="true" style="font-size:15px"></i>&nbsp;&nbsp;CV</a></li>
+                                                    @canany(['isCFP','isAdmin','isSuperAdmin'])
+                                                    <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Rétirer définitivement</strong></a></li>
+                                                    @endcanany
+                                                </div>
+                                        </td>
+                                    </tr>
 
 
-                                            <!-- Modal desactivation -->
+                                    <!-- Modal desactivation -->
                                     <div class="modal fade" id="exampleModal_desactivation_{{$frm->formateur_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -227,10 +221,10 @@
                                         </div>
                                     </div>
 
-                                        @endforeach
+                                    @endforeach
                                     @endif
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -248,16 +242,16 @@
                         La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail</strong>".
                     </p>
 
-                    <form class="form">
-
+                    <form class="form" action="{{ route('create_cfp_formateur') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col">
                                 <label class="sr-only" for="inlineFormInput">Nom <strong style="color: red">*</strong></label>
-                                <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Nom" />
+                                <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_format" placeholder="Nom*" required />
                             </div>
                             <div class="col">
                                 <label class="sr-only" for="inlineFormInput">Email</label>
-                                <input type="email" class="form-control  mb-2" id="inlineFormInput" placeholder="Adresse mail" />
+                                <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_format" placeholder="Adresse mail*" required />
                             </div>
                             <div class="col">
                                 <div class="form-group">
@@ -266,6 +260,17 @@
                             </div>
                         </div>
                     </form>
+
+                    @if(Session::has('success'))
+                    <div class="alert alert-success">
+                        {{Session::get('success')}}
+                    </div>
+                    @endif
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{Session::get('error')}}
+                    </div>
+                    @endif
 
 
                     <nav class="navbar navbar-expand-lg">
@@ -300,27 +305,31 @@
                                         <table class="table  table-borderless table-sm">
                                             <tbody id="data_collaboration">
 
-                                                @if (count($invitation_formateur)<=0)
-                                                    <tr>
-                                                        <td> Aucun invitations en attente</td>
+                                                @if (count($invitation_formateur)<=0) <tr>
+                                                    <td> Aucun invitations en attente</td>
                                                     </tr>
-                                                @else
-                                                    @foreach($invitation_formateur as $format)
-                                                        <tr>
-                                                            <td><div align="left">
-                                                                <strong>{{$format->nom_formateur.' '.$format->prenom_formateur}}</strong>
-                                                                <p style="color: rgb(238, 150, 18)">{{$format->mail_formateur}}</p>
-                                                            </td>
-                                                            <td>
-                                                                <a href="{{ route('accept_cfp_formateur',$invit_forma->id) }}">
-                                                                    <strong><h5><i class="bx bxs-check-circle actions" title="Accepter"></i></h5> </strong>
-                                                                </a>
-                                                                <a href="{{ route('annulation_cfp_formateur',$invit_forma->id) }}">
-                                                                    <strong> <h5><i class="bx bxs-x-circle actions" title="Refuser"></i></h5> </strong>
-                                                                </a>
-                                                        </tr>
+                                                    @else
+                                                    @foreach($invitation_formateur as $invit_forma)
+                                                    <tr>
+                                                        <td>
+                                                            <div align="left">
+                                                                <strong>{{$invit_forma->nom_formateur.' '.$invit_forma->prenom_formateur}}</strong>
+                                                                <p style="color: rgb(238, 150, 18)">{{$invit_forma->mail_formateur}}</p>
+                                                        </div>
+                                                        <td>
+                                                            <a href="{{ route('accept_cfp_formateur',$invit_forma->id) }}">
+                                                                <strong>
+                                                                    <h5><i class="bx bxs-check-circle actions" title="Accepter"></i></h5>
+                                                                </strong>
+                                                            </a>
+                                                            <a href="{{ route('annulation_cfp_formateur',$invit_forma->id) }}">
+                                                                <strong>
+                                                                    <h5><i class="bx bxs-x-circle actions" title="Refuser"></i></h5>
+                                                                </strong>
+                                                            </a>
+                                                    </tr>
                                                     @endforeach
-                                                @endif
+                                                    @endif
                                             </tbody>
                                         </table>
 
@@ -337,25 +346,27 @@
                                     <div class="table-responsive text-center">
                                         <table class="table  table-borderless table-sm">
                                             <tbody>
-                                                @if (count($invitation_formateur)<=0)
-                                                    <tr>
-                                                        <td> Aucun invitations réfuser</td>
+                                                @if (count($invitation_formateur)<=0) <tr>
+                                                    <td> Aucun invitations réfuser</td>
                                                     </tr>
-                                                @else
+                                                    @else
                                                     @foreach($demmande_formateur as $format)
-                                                        <tr>
-                                                            <td><div align="left">
+                                                    <tr>
+                                                        <td>
+                                                            <div align="left">
                                                                 <strong>{{$format->nom_formateur.' '.$format->prenom_formateur}}</strong>
                                                                 <p style="color: rgb(238, 150, 18)">{{$format->mail_formateur}}</p>
-                                                            </td>
-                                                            <td>
-                                                                <strong> <h5><i class="bx bx-user-check"></i></h5> </strong>
-                                                            </td>
-                                                        </tr>
+                                                        </td>
+                                                        <td>
+                                                            <strong>
+                                                                <h5><i class="bx bx-user-check"></i></h5>
+                                                            </strong>
+                                                        </td>
+                                                    </tr>
                                                     @endforeach
-                                                @endif
+                                                    @endif
 
-                                                {{-- <tr>
+                                                    {{-- <tr>
                                                     <td>
                                                         <div align="left">
                                                             <strong>ANTOENJARA Noam Francisco</strong>
