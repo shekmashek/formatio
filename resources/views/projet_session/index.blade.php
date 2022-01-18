@@ -84,11 +84,13 @@
                                     <td class="text-center">{{ $info->lieu }}</td>
                                     <td class="text-center">{{ $info->date_debut }}/{{ $info->date_fin }}</td>
                                     <td width="40%" class="px-3">
+                                        <center>
                                         @foreach ($stagiaires as $stg)
                                             @if ($info->groupe_id == $stg->groupe_id)
                                                 <img class="image_session" src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="">
                                             @endif  
                                         @endforeach
+                                        </center>
                                     </td>
                                     <td><p class="statut_en_cours text-center mx-5 my-4 px-2">{{ $info->status_groupe }}</p></td>
                                 </tr>
@@ -236,7 +238,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-left: -20px;;
+    margin-left: -20px;
 }
 .clignote {
   color:grey;

@@ -12,6 +12,9 @@ Route::get('sign-in', function () {
 Route::get('/', function () {
     return view('index_accueil');
 });
+Route::get('/projet_session', function () {
+    return view('projet_session/index2');
+});
 
 Auth::routes();
 
