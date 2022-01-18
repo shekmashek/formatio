@@ -75,7 +75,7 @@
                                             <div align="left">
                                                 <strong>{{$etp->nom_etp}}</strong>
                                                 <p style="color: rgb(238, 150, 18)">{{$etp->email_etp}}</p>
-                                                {{-- <h6>{{$etp->nom_secteur}}</h6> --}}
+                                                <h6>{{$etp->domaine_de_formation}}</h6>
                                             </div>
                                         <td>
                                             <div align="rigth">
