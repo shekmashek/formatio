@@ -433,7 +433,7 @@
                         <a href="#gstfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-money nav_icon'></i><span class="nav_name">Facture</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('facture')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="gstfSubMenu">
                             {{-- <li class="my-1 sousMenu">
-                                <a href="{{route('liste_facture',3)}}">Facturation</a>
+                                {{-- <a href="{{route('liste_facture',3)}}">Facturation</a> --}}
                             </li> --}}
                             <span class="sousMenu me-2 d-flex justify-content-between my-0">
                                 <a href="{{route('liste_facture',3)}}">Total facture</a>
