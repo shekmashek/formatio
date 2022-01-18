@@ -1,14 +1,17 @@
 @extends('./layouts/admin')
+@section('title')
+<p class="text-white ms-5" style="font-size: 20px;">Nouveau programme</p>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
                 <br>
                 <h3 style>Programmes</h3>
             </div>
 
-        </div>
+        </div> --}}
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">

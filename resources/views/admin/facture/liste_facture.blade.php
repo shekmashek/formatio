@@ -1,4 +1,5 @@
 @extends('./layouts/admin')
+
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/payementCSS.css') }}">
 <div id="page-wrapper">

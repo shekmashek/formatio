@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text-white ms-5">Formation</h3>
+<p class="text-white ms-5" style="font-size: 20px;">Votre catalogue de formation</p>
 @endsection
 @section('content')
 <div class="container-fluid">
