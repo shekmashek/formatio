@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\chefDepartement;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 use PDF;
 use App\Departement;
 use App\DepartementEntreprise;
@@ -71,7 +72,9 @@ class ParticipantController extends Controller
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-            $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
+            $datas = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = '.$entreprise_id);
+
+            // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }
         if (Gate::allows('isManager')) {
             $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
@@ -253,11 +256,38 @@ class ParticipantController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id_get;
-        $stag = stagiaire::findOrFail($id);
-        $user_id = stagiaire::where('id', $id)->value('user_id');
-        $del_stagiaire = stagiaire::where('id', $id)->delete();
-        $del_user = User::where('id', $user_id)->delete();
-        File::delete("images/stagiaires/".$stag->photos);
+        //on récupère le matricule , l'activité,entreprise id, du stagiaire
+        $resultat = DB::select('SELECT matricule,entreprise_id,departement_id,activiter FROM stagiaires WHERE id = '.$id);
+        $matricule = $resultat[0]->matricule;
+        $entreprise_id = $resultat[0]->entreprise_id;
+        $departement_id = $resultat[0]->departement_id;
+        $activite = $resultat[0]->activiter;
+        if($activite == 1) {
+            $date_depart = $dt = Carbon::today()->toDateString();
+            //on insère dans l'historique stagiaire l'entreprise id, le matricule et le stagiaire id
+            DB::insert('INSERT INTO historique_stagiaires
+                        (`stagiaire_id`, `ancien_entreprise_id`,`ancien_departement_id` ,`nouveau_entreprise_id`,`nouveau_departement_id`, `ancien_matricule`, `nouveau_matricule`, `date_depart`, `date_arrivee`)
+                        Values (?,?,?,?,?,?,?,?,?)',[$id,$entreprise_id,$departement_id,0,0,$matricule,0,$date_depart,0]);
+
+           //on modifie l'entreprise id du stagiaire par 0
+            DB::update('update stagiaires set activiter = 0  where id = '.$id);
+        }
+        if($activite == 0) {
+            $date_depart = $dt = Carbon::today()->toDateString();
+            //on insère dans l'historique stagiaire l'entreprise id, le matricule et le stagiaire id
+            DB::insert('INSERT INTO historique_stagiaires
+                        (`stagiaire_id`, `ancien_entreprise_id`,`ancien_departement_id` ,`nouveau_entreprise_id`,`nouveau_departement_id`, `ancien_matricule`, `nouveau_matricule`, `date_depart`, `date_arrivee`)
+                        Values (?,?,?,?,?,?,?,?,?)',[$id,$entreprise_id,$departement_id,$entreprise_id,$departement_id,$matricule,$matricule,$date_depart,$date_depart]);
+
+           //on modifie l'entreprise id du stagiaire par 0
+            DB::update('update stagiaires set activiter = 1 where id = '.$id);
+        }
+
+        // $stag = stagiaire::findOrFail($id);
+        // $user_id = stagiaire::where('id', $id)->value('user_id');
+        // $del_stagiaire = stagiaire::where('id', $id)->delete();
+        // $del_user = User::where('id', $user_id)->delete();
+        // File::delete("images/stagiaires/".$stag->photos);
         return back();
     }
 
@@ -414,4 +444,17 @@ class ParticipantController extends Controller
         ]);
         return redirect()->route('profile_stagiaire', $id);
     }
+    public function last_record(){
+        $last_record_historique = DB::select(' SELECT *
+        FROM (
+          SELECT *
+          FROM stagiaires
+          ORDER BY id DESC
+          LIMIT 1
+        ) tmp
+        ORDER BY id ASC
+        LIMIT 1');
+        dd($last_record_historique);
+    }
+
 }

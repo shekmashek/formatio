@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('sign-in', function () {
-    return view('auth/connexion');
+    return view('auth.connexion');
 })->name('sign-in');
 
 Route::get('/', function () {

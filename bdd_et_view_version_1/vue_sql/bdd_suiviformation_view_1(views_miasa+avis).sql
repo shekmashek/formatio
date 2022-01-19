@@ -42,7 +42,7 @@ FROM
 GROUP BY
     projets.id;
 
-CREATE OR REPLACE VIEW v_projetentreprise AS 
+CREATE OR REPLACE VIEW v_projetentreprise AS
 SELECT
     p.id AS projet_id,
     p.nom_projet,
@@ -369,3 +369,34 @@ from
 groupes,modules,formations,domaines,projets,entreprises
 where groupes.module_id = modules.id and formation_id = formations.id and domaine_id = domaines.id
 and projet_id = projets.id and entreprise_id = entreprises.id;
+
+CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
+    stg.id AS stagiaire_id,
+    stg.matricule,
+    stg.nom_stagiaire,
+    stg.prenom_stagiaire,
+    stg.genre_stagiaire,
+    stg.fonction_stagiaire,
+    stg.mail_stagiaire,
+    stg.telephone_stagiaire,
+    stg.entreprise_id,
+    stg.user_id,
+    stg.photos,
+    stg.departement_id,
+    stg.cin,
+    stg.date_naissance,
+    stg.adresse,
+    stg.lieu_travail,
+    stg.niveau_etude,
+    stg.activiter,
+    etp.nom_etp,
+    dept.nom_departement
+FROM
+    stagiaires as stg,
+    entreprises as etp,
+    departements as dept
+WHERE
+    stg.entreprise_id = etp.id and
+    stg.departement_id = dept.id;
+
+

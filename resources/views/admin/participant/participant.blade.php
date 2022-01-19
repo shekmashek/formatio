@@ -129,7 +129,7 @@
                                             <th>Entreprise</th>
                                         @endcan
                                         <th>Fonction</th>
-
+                                        <th>Statut</th>
                                         <th colspan = "4">Actions</th>
                                     </tr>
                                 </thead>
@@ -138,7 +138,7 @@
                                     		<tr>
 
                                                 <td>
-                                                    <a href="{{route('profile_stagiaire',$part)}}"> <img src="{{asset('images/stagiaires/'.$part->photos)}}" style="width: 80px"></a>
+                                                    <a href="{{route('profile_stagiaire',$part->stagiaire_id)}}"> <img src="{{asset('images/stagiaires/'.$part->photos)}}" style="width: 80px"></a>
                                                 </td>
                                                 <td>{{$part->matricule}}</td>
                                                 <td>{{$part->nom_stagiaire}}<br>
@@ -157,7 +157,12 @@
 
                                                 @endcan
                                                 <td>{{$part->fonction_stagiaire}}</td>
-
+                                                @if ($part->activiter == 1)
+                                                    <td><span style="background-color: green;padding:8px;color:white"> Actif</span></td>
+                                                @endif
+                                                @if ($part->activiter == 0)
+                                                    <td><span style="background-color: red;padding:8px;color:white"> Inactif</span></td>
+                                                @endif
                                                 <td>
                                                     <div class=" btn-group dropend" >
                                                         <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -165,10 +170,10 @@
                                                         </button>
 
                                                     <div class="dropdown-menu">
-                                                        <li style="font-size:15px"><a href="{{route('profile_stagiaire',$part)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>&nbsp;Profile</a></li>
+                                                        <li style="font-size:15px"><a href="{{route('profile_stagiaire',$part->stagiaire_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>&nbsp;Profile</a></li>
                                                                 @canany(['isReferent','isManager'])
-                                                        <li style="font-size:15px"><a href=""   class=" modifier" title="Modifier" id="{{$part->id}}" data-toggle="modal" data-target="#myModal_{{$part->id}}"><i class="fa fa-pencil fa-xs" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
-                                                        <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_{{$part->id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp;Supprimer</a></li>
+                                                        <li style="font-size:15px"><a href=""   class=" modifier" title="Modifier" id="{{$part->stagiaire_id}}" data-toggle="modal" data-target="#myModal_{{$part->stagiaire_id}}"><i class="fa fa-pencil fa-xs" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
+                                                        <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_{{$part->stagiaire_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp;Supprimer</a></li>
                                                                 @endcanany
                                                     </div>
                                                 </td>
@@ -176,31 +181,46 @@
 
 
                                              <!-- Modal delete -->
-                                             <div class="modal fade"  id="exampleModal_{{$part->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                             <div class="modal fade"  id="exampleModal_{{$part->stagiaire_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                   <div class="modal-content">
                                                     <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
                                                       <h6 class="modal-title"><font color="white">Avertissement !</font></h6>
 
                                                     </div>
-                                                    <div class="modal-body">
-                                                      <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                      <form action="{{ route('destroy_participant') }}" method="GET">
-                                                              @csrf
-                                                          <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                          <input type="text" name="id_get" value="{{ $part->id }}" hidden>
-                                                      </form>
-                                                    </div>
+                                                    @if ($part->activiter == 0)
+                                                        <div class="modal-body">
+                                                            <small>Vous êtes sur le point d'activer le stagiaire, continuer?</small>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                                            <form action="{{ route('destroy_participant') }}" method="GET">
+                                                                    @csrf
+                                                                <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                                <input type="text" name="id_get" value="{{ $part->stagiaire_id }}" hidden>
+                                                            </form>
+                                                        </div>
+                                                    @endif
+                                                    @if ($part->activiter == 1)
+                                                        <div class="modal-body">
+                                                        <small>Vous êtes sur le point de désactiver le stagiaire, continuer?</small>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                                        <form action="{{ route('destroy_participant') }}" method="GET">
+                                                                @csrf
+                                                            <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                            <input type="text" name="id_get" value="{{ $part->stagiaire_id }}" hidden>
+                                                        </form>
+                                                        </div>
+                                                    @endif
                                                   </div>
                                                 </div>
                                               </div>
                                               {{-- fin modal delete --}}
 
 
-                            <div class="modal fade" id = "myModal_{{$part->id}}">
+                            <div class="modal fade" id = "myModal_{{$part->stagiaire_id}}">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header d-flex justify-content-center" style="background-color:rgb(96,167,134);">
@@ -260,7 +280,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>&nbsp;
                                             <button class="btn btn-success modification " id="action1"><span class = "glyphicon glyphicon-pencil"></span> Modifier</button>
-                                            <input type="text" name="id_get" value="{{ $part->id }}" hidden>
+                                            <input type="text" name="id_get" value="{{ $part->stagiaire_id }}" hidden>
                                         </form>
                                         </div>
                                     </div>

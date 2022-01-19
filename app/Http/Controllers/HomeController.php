@@ -31,7 +31,7 @@ class HomeController extends Controller
         $this->collaboration = new Collaboration();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if(Auth::user()->exists == false) return view('auth.connexion');
             return $next($request);
         });
 
@@ -40,6 +40,18 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        if(Gate::allows('isStagiaire')){
+            $activiter = DB::select('select activiter from stagiaires where user_id = '.Auth::id());
+            if($activiter == 1){
+                if (Auth::user()->exists) {
+                    $totale_invitation = $this->collaboration->count_invitation();
+                    return view('layouts.accueil_admin', compact('totale_invitation'));
+                }
+            }
+            if($activiter == 0){
+                return redirect()->back()->with('message', 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre e-mail personnelle');
+            }
+        }
         if (Auth::user()->exists) {
             $totale_invitation = $this->collaboration->count_invitation();
             return view('layouts.accueil_admin', compact('totale_invitation'));

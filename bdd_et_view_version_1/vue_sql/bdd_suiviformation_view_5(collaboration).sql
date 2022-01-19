@@ -556,4 +556,47 @@ JOIN stagiaires s ON
     p.stagiaire_id = s.id;
 
 
-
+CREATE OR REPLACE VIEW v_demande_etp_stg AS SELECT
+    dem.activiter AS activiter_demande,
+    dem.demmandeur_etp_id as demandeur,
+    dem.inviter_stg_id as inviter,
+    etp.id AS entreprise_id,
+    etp.nom_etp,
+    etp.adresse as adresse_entreprise,
+    etp.logo,
+    etp.nif,
+    etp.stat,
+    etp.rcs,
+    etp.cif,
+    etp.secteur_id,
+    sect.nom_secteur,
+    etp.email_etp,
+    etp.site_etp,
+    etp.telephone_etp,
+    stg.id AS stagiaire_id,
+    stg.matricule,
+    stg.nom_stagiaire,
+    stg.prenom_stagiaire,
+    stg.genre_stagiaire,
+    stg.fonction_stagiaire,
+    stg.mail_stagiaire,
+    stg.telephone_stagiaire,
+    stg.user_id,
+    stg.photos,
+    stg.departement_id,
+    stg.cin,
+    stg.date_naissance,
+    stg.adresse as adresse_stagiaire,
+    stg.lieu_travail,
+    stg.niveau_etude
+FROM
+    demmande_etp_stg dem,
+    entreprises etp,
+    secteurs sect,
+    stagiaires stg
+WHERE
+    dem.demmandeur_etp_id = etp.id
+AND
+    dem.inviter_stg_id = stg.id
+AND
+    dem.activiter = 1;
