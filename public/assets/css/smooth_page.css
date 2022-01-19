@@ -1,0 +1,11 @@
+.fa-arrow-up{
+    color: white;
+}
+#btn-back-to-top {
+    position: fixed;
+    bottom: 55px;
+    right: 20px;
+    display: none;
+    padding: 5px 10px 5px 10px;
+    background-color: #801D68;
+}
