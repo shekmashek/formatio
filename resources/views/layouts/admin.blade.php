@@ -611,7 +611,7 @@
                 <div class="col text-right d-flex flex-row" style="align-items: left; text-align:center" >
                     <div class="header_etp_cfp mt-3 d-flex flex-row">
                         <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68; font-size: 24px"></i></p>
-                        <p style="text-transform: capitalize; text-align: center;">&nbsp;Numerika</p>&nbsp;&nbsp;&nbsp;
+                        <p style="text-transform: capitalize; text-align: center;color: #801D68">&nbsp;Numerika</p>&nbsp;&nbsp;&nbsp;
                         <div class="d-flex pro_plan"><p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
                         <p class="" style="text-transform: capitalize">&nbsp;&nbsp;rubi</p></div>
                     </div>
@@ -632,7 +632,7 @@
                 <div class="col">
                     <div class="header_img ms-5 mb-2 text-center d-flex flex-row" style="text-align: center">
                         <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p>
-                        <p style="text-transform: capitalize">&nbsp;Raharifetra nicole</p>
+                        <p style="text-transform: capitalize;color:#801D68">&nbsp;{{Auth::user()->name}}</p>
                     </div>
                     <div class="pdp_profil" id="box_profil">
                         <div class="container pdp_profil_card ">
