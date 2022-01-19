@@ -146,7 +146,7 @@ Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
 
-//route participant
+//route----------------- STAGIAIRE
 Route::resource('participant','ParticipantController')->except([
     'create','edit','destroy','update'
 ]);
@@ -168,6 +168,10 @@ Route::get('/search','ParticipantController@getStagiaires')->name('search');
 // route recherche par fonction
 Route::get('rechercheFonction/{matricule?}','ParticipantController@rechercheFonction')->name('rechercheFonction');
 Route::get('/searchFonction','ParticipantController@getStagiairesFonction')->name('searchFonction');
+
+Route::post('update_mail_stagiaire',function(){
+    return view('index_accueil');
+})->name('update_mail_stagiaire');
 
 
 //route formation

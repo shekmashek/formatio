@@ -41,7 +41,9 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if(Gate::allows('isStagiaire')){
-            $activiter = DB::select('select activiter from stagiaires where user_id = '.Auth::id());
+            $valeur = DB::select('select activiter,id from stagiaires where user_id = '.Auth::id());
+            $activiter = $valeur[0]->activiter;
+            $stg_id =  $valeur[0]->id;
             if($activiter == 1){
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
@@ -49,7 +51,9 @@ class HomeController extends Controller
                 }
             }
             if($activiter == 0){
-                return redirect()->back()->with('message', 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre e-mail personnelle');
+
+                $msg = 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre adresse e-mail personnelle';
+                return view('auth.email_nouveau',compact('msg'));
             }
         }
         if (Auth::user()->exists) {
