@@ -202,10 +202,8 @@ select:invalid {
 }
 /* icon notifications */
 .header-right .notification-box {
-  position: fixed;
+  position: relative;
   z-index: 99;
-  top: 15px;
-  right: 600px;
   width: 50px;
   height: 50px;
   text-align: center;
@@ -236,8 +234,8 @@ select:invalid {
   height: 0px;
   opacity: 0;
   position: absolute;
-  top: 10px;
-  right: 90px;
+  top: 20px;
+  right: 180px;
   border-radius: 5px 0px 5px 5px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 #00000033, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -281,10 +279,8 @@ select:invalid {
 }
 
 .header-right .message-box {
-  position: fixed;
+  position: relative;
   z-index: 99;
-  top: 15px;
-  right: 550px;
   width: 50px;
   height: 50px;
   text-align: center;
@@ -315,8 +311,8 @@ select:invalid {
   height: 0px;
   opacity: 0;
   position: absolute;
-  top: 10px;
-  right: 395px;
+  top: 20px;
+  right: 95px;
   border-radius: 5px 0px 5px 5px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -365,7 +361,26 @@ select:invalid {
   color: #542356;
 }
 
+.text_resp a:hover{
+  color: red;
+}
+
 .deconnexion_text:hover{
+  color: red;
+}
+
+.pro_plan{
+  padding: 0;
+  margin: 0;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  padding-left: 6px;
+  padding-top: 2px;
+  padding: auto;
+  background-color: rgb(219, 215, 215);
+  border-radius: 10px;
+  height: 25px;
+  width: auto;
   color: red;
 }
 @keyframes zoom {
@@ -404,7 +419,7 @@ select:invalid {
 }
 
 .header-right .header_img p:hover {
-  color: var(--color-child);
+  color: red;
 }
 
 .header-right .pdp_profil {
@@ -468,6 +483,73 @@ select:invalid {
 
 .header-right .pdp_profil_card .card .deconnexion_text:hover {
   text-decoration: underline;
+}
+
+/* entreprise cfp */
+.header-right .pdp_etp_cfp {
+  display: none;
+  height: 0px;
+  opacity: 0;
+  position: absolute;
+  top: 40px;
+  right: 25px;
+  border-radius: 5px 0px 5px 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.header-right .pdp_etp_cfp .container {
+  padding: 0;
+}
+
+.header-right .pdp_etp_cfp_card .card {
+  width: auto;
+  border: none;
+  border-radius: 15px;
+  padding: 8px;
+  background-color: #fff;
+  position: relative;
+  margin: 0;
+  height: auto;
+}
+
+.header-right .pdp_etp_cfp_card .card .user {
+  position: relative;
+}
+
+.header-right .pdp_etp_cfp_card .card .user .profile {
+  position: absolute;
+  top: -50px;
+  left: 35%;
+  height: 90px;
+  width: 90px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+}
+
+.header-right .pdp_etp_cfp_card .card .user .profile img {
+  height: 80px;
+  width: 80px;
+  margin-top: 2px;
+}
+
+.header-right .pdp_etp_cfp_card .card .profil_btn {
+  width: auto;
+  border-radius: 25px;
+  height: 35px;
+  background-color: blue;
+}
+
+.header-right .pdp_etp_cfp_card .card .profil_btn:hover {
+  color: blue;
+  background-color: white;
+}
+
+
+.header-right .pdp_etp_cfp_card .card .deconnexion_text:hover {
+  text-decoration: underline;
+}
+.header-right .header_etp_cfp p:hover {
+  color: red;
 }
 
 /* bulle  profile */
@@ -1978,6 +2060,7 @@ Détails Formation
   padding-right: 20px;
   padding-top: 5px;
   height: 30px;
+  font-size: 5px;
 }
 
 /* footer */

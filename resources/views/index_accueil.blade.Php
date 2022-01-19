@@ -20,17 +20,17 @@
     <header>
         <nav class="navbar_accueil fixed-top d-flex justify-content-between">
             <div class="left_menu ms-2">
-                <img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg
+                <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg</p>
             </div>
             <div class="right_menu d-flex justify-content-end align-items-center">
                 <div class="child_right_menu">
-                    <button class="btn btn_bordure_violet mx-2"><i class="fa fa-phone-alt"></i>&nbsp; Contactez notre équipe commercial</button>
+                    <button class="btn_bordure_violet mx-2"><i class="fa fa-phone-alt"></i>&nbsp; Contactez-nous</button>
                 </div>
                 <div class="child_right_menu">
-                    <button class="btn btn_bordure_violet mx-2"><i class="fa fa-layer-plus"></i>&nbsp; Créer un compte pro</button>
+                    <button class="btn_bordure_violet mx-2"><i class="fa fa-layer-plus"></i>&nbsp; Créer un compte</button>
                 </div>
                 <div class="child_right_menu">
-                    <button class="btn bouton_violet mx-2"><a href="{{ route('sign-in') }}"><i class="fa fa-sign-in-alt"></i>&nbsp; Connexion à l'espace pro </a></button>
+                    <button class="btn bouton_violet mx-2"><a href="{{ route('sign-in') }}"><i class="fa fa-sign-in-alt"></i>&nbsp; Connexion </a></button>
                 </div>
             </div>
         </nav>
@@ -59,35 +59,30 @@
                         <img class="img-fluid rounded-3" src="{{ asset('maquette/formation_1.jpg') }}" alt="">
                     </div>
                     <div class="col-md-6 py-5">
-                        <h2>Vous êtes une organisme de formation ?</h2>
-                        <h4>Voici vos avantages</h4>
-                        <ul>
-                            <li>Avantage 1</li>
-                            <li>Avantage 2</li>
-                            <li>Avantage 3</li>
-                            <li>Avantage 4</li>
-                            <li>Avantage 5</li>
-                        </ul>
+                        <h2>Vous êtes un organisme de formation ?</h2><br>
+
+<p>Disposez d’une base de données centralisée, gagnez en temps et en économie.<br>
+Retrouvez  tout ce dont vous avez besoin dans un seul et unique endroit : la gestion de vos formations (session , exécution ...), vos facturations, vos devis, votre espace professionnel ( dressage et modification de vos catalogues).<br>
+Investissez dans le futur ! &nbsp;Digitalisez votre activité et ayez une longueur d’avance sur les autres.<br>
+Améliorez votre communication et votre suivi commercial.<br>
+Rapprochez-vous de vos clients, envoyez leurs des évaluations digitalisées et personnalisables et obtenez des feedbacks instantanés</p>
+<br>
                         <center><button class="btn btn_blue">Creer un compte pro</button></center>
                     </div>
                 </div>
             </div>
-            
+
         </section>
         <section class="section_3">
             <div class="container-fluid conteneur">
                 <div class="row">
                     <div class="col-md-6 py-5">
                         <h2>Vous êtes employeur ?</h2>
-                        <h4>Voici vos avantages</h4>
-                        <ul>
-                            <li>Avantage 1</li>
-                            <li>Avantage 2</li>
-                            <li>Avantage 3</li>
-                            <li>Avantage 4</li>
-                            <li>Avantage 5</li>
-                        </ul>
-                        <center><button class="btn btn_blue">Creer un compte pro</button></center>
+                        <p>Accès facile, sécurisé et instantané. <br>
+Accédez facilement au marché des formations professionnelles et trouvez ce dont vous avez besoin sans vous déplacer.<br>
+Solution ergonomique à vos problèmes quotidiens ! <br>
+Gérez votre entreprise ( dépenses, budgets, personnel, factures, données, évaluations du personnel,...) n'importe où, à n'importe quel moment via formation.mg et dites adieu à vos tâches administratives redondantes et ennuyeuses, les archives en paperasse volumineuses,...</P>
+                        <br><center><button class="btn btn_blue">Creer un compte pro</button></center>
                     </div>
                     <div class="col-md-6 py-5 px-5 rounded-3">
                        <img class="img-fluid" src="{{ asset('maquette/formation.jpg') }}" alt="">
@@ -103,37 +98,27 @@
                     </div>
                     <div class="col-md-6 py-5">
                         <h2>Demander une demonstration</h2>
-                        <h4>Voici vos avantages</h4>
-                        <ul>
-                            <li>Avantage 1</li>
-                            <li>Avantage 2</li>
-                            <li>Avantage 3</li>
-                            <li>Avantage 4</li>
-                            <li>Avantage 5</li>
-                        </ul>
-                        <center><button class="btn btn_blue">Demander une demo</button></center>
+                       <p> Envie de tester les fonctionnalités de Formation.mg?
+    Contactez notre équipe commerciale et prenez rendez-vous.
+    Nous serons ravis de vous faire découvrir les horizons de notre logiciel et en quoi il vous est indispensable.</p>
+                        <br><center><button class="btn btn_blue">Demander une demo</button></center>
                     </div>
                 </div>
             </div>
         </section>
     </main>
     <footer class="footer_container">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <div class="d-flex pied pt-3">
+
+                <div class="d-flex justify-content-center pt-3">
                     <div class="bordure">&copy; Copyright 2022</div>
                     <div class="bordure">Informations légales</div>
                     <div class="bordure">Contactez-nous</div>
                     <div class="bordure">Politique de confidentialités</div>
                     <div class="bordure">Condition d'utilisation</div>
                     <div class="bordure">Tarifs</div>
-                    <div> &nbsp; Crédits</div>
+                    <div class="bordure">Crédits</div>
+                    <div> &nbsp; Version 0.9</div>
                 </div>
-
-            </div>
-            <div class="col-md-3"></div>
-        </div>
     </footer>
 </body>
 </html>
