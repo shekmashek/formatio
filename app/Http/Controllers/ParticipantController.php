@@ -67,11 +67,11 @@ class ParticipantController extends Controller
         $user_id = Auth::user()->id;
         $liste_etp = entreprise::orderBy('nom_etp')->get();
         if (Gate::allows('isSuperAdmin')) {
-            $datas = stagiaire::with('entreprise', 'User')->get();
+            $datas = stagiaire::with('entreprise', 'User')->where('activiter',[true])->get();
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-            $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
+            $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->where('activiter',[true])->get();
         }
         if (Gate::allows('isManager')) {
             $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
@@ -80,7 +80,7 @@ class ParticipantController extends Controller
             ["entreprise_id","user_id_chef_departement"],
             [$entreprise_id,$user_id]);
 
-            $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->where('departement_id',[$chef->departement_id])->get();
+            $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->where('departement_id',[$chef->departement_id])->where('activiter',[true])->get();
         }
 
 

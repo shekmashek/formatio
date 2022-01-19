@@ -91,34 +91,33 @@
                                                     <li style="font-size:15px"><a href="{{route('profile_entreprise',$etp->entreprise_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>Afficher</a></li>
                                                     <li style="font-size:15px"><a href="#" data-toggle="modal" data-target="#exampleModal_{{$etp->entreprise_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i><strong style="color: red">Rétirer définitivement</strong></a></li>
                                                 </div>
+
                                         </td>
-                                    </tr>
+                                          {{-- modal delete  --}}
+                                          <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title text-white">Avertissement !</h6>
 
-
-                                    {{-- modal delete  --}}
-                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                    <h6 class="modal-title text-white">Avertissement !</h6>
-
-                                                </div>
-                                                <div class="modal-body">
-                                                    <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                    <form action="{{ route('destroy_entreprise') }}" method="post">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                        <input name="id" type="text" value="{{$etp->entreprise_id}}" hidden>
-                                                    </form>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                                        <form action="{{ route('destroy_entreprise') }}" method="post">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                            <input name="id" type="text" value="{{$etp->entreprise_id}}" hidden>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- fin  --}}
+                                        {{-- fin  --}}
 
+                                    </tr>
 
 
                                     @endforeach
@@ -281,20 +280,6 @@
                                                     </tr>
                                                     @endforeach
                                                     @endif
-
-                                                    {{-- <tr>
-                                                    <td>
-                                                        <div align="left">
-                                                            <strong>ANTOENJARA Noam Francisco</strong>
-                                                            <p style="color: rgb(238, 150, 18)">antoenjara@gmail.com</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div align="rigth">
-                                                            <a href="#" style="color: red"><i class="bx bxs-x-circle actions" title="Details"></i>réfuser </a>
-                                                        </div>
-                                                    </td>
-                                                </tr> --}}
                                             </tbody>
                                         </table>
                                     </div>
