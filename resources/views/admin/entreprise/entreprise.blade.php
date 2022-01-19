@@ -122,7 +122,18 @@
                                                 <td>{{$etp->cif}}</td>
                                                 <td>{{$etp->secteur->nom_secteur}}</td>
                                                 <td>
+
                                                     <div class=" btn-group dropend" >
+                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fa fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                        <li style="font-size:15px"><a href="#"   class=" modifierEtp lien" title="Modifier" id="0" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
+                                                        <li style="font-size:15px"><a href="{{route('profile_entreprise',0)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>Afficher</a></li>
+                                                        <li style="font-size:15px"><a href="#" data-toggle="modal"  data-target="#exampleModal_0"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li>
+                                                    </div>
+
+                                                    {{-- <div class=" btn-group dropend" >
                                                         <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
@@ -130,7 +141,7 @@
                                                         <li style="font-size:15px"><a href="#"   class=" modifierEtp lien" title="Modifier" id="{{$etp->id}}" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
                                                         <li style="font-size:15px"><a href="{{route('profile_entreprise',$etp->id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>Afficher</a></li>
                                                         <li style="font-size:15px"><a href="#" data-toggle="modal"  data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li>
-                                                    </div>
+                                                    </div> --}}
                                                 </td>
                                             </tr>
 
