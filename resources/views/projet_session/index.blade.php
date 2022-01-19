@@ -15,7 +15,7 @@
             <p class="text-center my-2 text-white"><b>Date</b></p>
         </div>
         <div class="enfant_flex">
-            <p class="text-center my-2 text-white"><b>Statut</b></p>   
+            <p class="text-center my-2 text-white"><b>Statut</b></p>
         </div>
         {{-- <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Progression</b></p>
@@ -45,14 +45,14 @@
                     </p>
                 </div>
                 <div class="enfant_flex_1">
-                    <p class="statut_en_cours text-center mx-5 my-4">{{ $projet->status }}</p>  
+                    <p class="statut_en_cours text-center mx-5 my-4">{{ $projet->status }}</p>
                 </div>
                 {{-- <div class="enfant_flex_1">
-                    
+
                         <div class="progress my-4">
                             <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 70%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                     
+
                 </div>--}}
                 <div class="enfant_flex_1">
                     <p class="text-center my-4">
@@ -65,7 +65,7 @@
                 </div>
                 <div class="enfant_flex_1 my-4"> <center><i class="far fa-caret-circle-down" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"></i></center> </div>
             </div>
-        
+
 
             <div class="collapse" id="collapseExample">
                 <div class="collapse_projet">
@@ -88,14 +88,14 @@
                                         @foreach ($stagiaires as $stg)
                                             @if ($info->groupe_id == $stg->groupe_id)
                                                 <img class="image_session" src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="">
-                                            @endif  
+                                            @endif
                                         @endforeach
                                         </center>
                                     </td>
                                     <td><p class="statut_en_cours text-center mx-5 my-4 px-2">{{ $info->status_groupe }}</p></td>
                                 </tr>
                             @endforeach
-                            
+
                         </tbody>
                     </table><br>
                 </div>
@@ -105,7 +105,7 @@
     <div class="ajouter_projet clignote">
         <i class="fa fa-folder-plus ms-5 " style="font-size: 20px; color:blue;"></i>&nbsp; Ajouter un nouveau projet
     </div>
-    
+
 
 </div>
 <br>
@@ -129,7 +129,7 @@
             <p class="text-center my-2 text-white"><b>Date</b></p>
         </div>
         <div class="enfant_flex">
-            <p class="text-center my-2 text-white"><b>Statut</b></p>   
+            <p class="text-center my-2 text-white"><b>Statut</b></p>
         </div>
         {{-- <div class="enfant_flex">
             <p class="text-center my-2 text-white"><b>Progression</b></p>
@@ -159,14 +159,14 @@
                 </p>
             </div>
             <div class="enfant_flex_1">
-                <p class="statut_en_cours text-center mx-5 my-4">En cours</p>  
+                <p class="statut_en_cours text-center mx-5 my-4">En cours</p>
             </div>
             {{-- <div class="enfant_flex_1">
-                
+
                     <div class="progress my-4">
                         <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                
+
             </div> --}}
             <div class="enfant_flex_1">
                 <p class="text-center my-4">
@@ -179,7 +179,7 @@
             </div>
             <div class="enfant_flex_1 my-4"> <center><i class="far fa-caret-circle-down" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"></i></center> </div>
         </div>
-    
+
 
         <div class="collapse" id="collapseExample">
             <div class="collapse_projet">
@@ -188,7 +188,7 @@
         </div>
     </div>
 
-    
+
 
 </div>
 
@@ -244,7 +244,7 @@
   color:grey;
   animation: clignote 2s linear infinite;
 }
-@keyframes clignote {  
+@keyframes clignote {
   50% { opacity: 0; }
 }
 </style>
