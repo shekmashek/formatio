@@ -103,7 +103,8 @@ class ParticipantController extends Controller
             'id' => null,
             'nom_entreprise' => 'Tout'
         ];
-        return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression','id_etp'));
+        // return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression','id_etp'));
+        return view('admin.participant.stagiaire_entreprise', compact('liste_etp', 'datas', 'info_impression','id_etp'));
     }
 
     public function store(Request $request)
@@ -362,41 +363,64 @@ class ParticipantController extends Controller
     }
 
     //recherche par CIN
+
     public function rechercheCIN(Request $request){
         $cin = $request->cin;
         $id = stagiaire::where('cin',$cin)->value('id');
-
         $etp_id = stagiaire::where('cin',$cin)->value('entreprise_id');
-
         $etp_id_referent = responsable::where('user_id',Auth::id())->value('entreprise_id');
-        $liste_etp = entreprise::orderBy('nom_etp')->get();
-        $info_impression = [
-            'id' => null,
-            'nom_entreprise' => 'Tout'
-        ];
-        if ($cin == '') {
-            $datas = stagiaire::get();
-            return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression'));
-        } else {
-            if ($etp_id != $etp_id_referent) {
-                $existe = db::select('select * from historique_stagiaires where stagiaire_id ='.$id);
-                if($existe == null ) return redirect()->route('liste_participant');
-                else{
-                    $stg = db::select('select particulier from historique_stagiaires where stagiaire_id ='.$id);
-                    $stg_particulier = $stg[0]->particulier;
-                    $datas = stagiaire::where('cin', $cin)->get();
-                    return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression','stg_particulier','etp_id_referent'));
-                }
 
-            }
-            else{
+        if ($etp_id != $etp_id_referent) {
+
+                $stg = db::select('select particulier from historique_stagiaires where stagiaire_id ='.$id);
+                $stg_particulier = $stg[0]->particulier;
                 $datas = stagiaire::where('cin', $cin)->get();
-                return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression'));
-            }
+                return response()->json($datas);
 
         }
+        else{
+            $datas = "Cette personne est déjà dans votre entreprise";
+            return response()->json($datas);
+        }
+
+
 
      }
+    // public function rechercheCIN(Request $request){
+    //     $cin = $request->cin;
+    //     $id = stagiaire::where('cin',$cin)->value('id');
+
+    //     $etp_id = stagiaire::where('cin',$cin)->value('entreprise_id');
+
+    //     $etp_id_referent = responsable::where('user_id',Auth::id())->value('entreprise_id');
+    //     $liste_etp = entreprise::orderBy('nom_etp')->get();
+    //     $info_impression = [
+    //         'id' => null,
+    //         'nom_entreprise' => 'Tout'
+    //     ];
+    //     if ($cin == '') {
+    //         $datas = stagiaire::get();
+    //         return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression'));
+    //     } else {
+    //         if ($etp_id != $etp_id_referent) {
+    //             $existe = db::select('select * from historique_stagiaires where stagiaire_id ='.$id);
+    //             if($existe == null ) return redirect()->route('liste_participant');
+    //             else{
+    //                 $stg = db::select('select particulier from historique_stagiaires where stagiaire_id ='.$id);
+    //                 $stg_particulier = $stg[0]->particulier;
+    //                 $datas = stagiaire::where('cin', $cin)->get();
+    //                 return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression','stg_particulier','etp_id_referent'));
+    //             }
+
+    //         }
+    //         else{
+    //             $datas = stagiaire::where('cin', $cin)->get();
+    //             return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression'));
+    //         }
+
+    //     }
+
+    //  }
 
     public function rechercheFonction(Request $request)
     {

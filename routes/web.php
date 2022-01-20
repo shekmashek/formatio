@@ -171,7 +171,7 @@ Route::get('/searchFonction','ParticipantController@getStagiairesFonction')->nam
 Route::get('/searchCIN','ParticipantController@getStagiairesCIN')->name('searchCIN');
 
 Route::post('update_mail_stagiaire','HomeController@update_email' )->name('update_mail_stagiaire');
-Route::get('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
+Route::post('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
 //route formation
 Route::resource('formation','FormationController')->except([
     'index','destroy','show'
