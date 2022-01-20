@@ -44,16 +44,34 @@ class HomeController extends Controller
             $valeur = DB::select('select activiter,id from stagiaires where user_id = '.Auth::id());
             $activiter = $valeur[0]->activiter;
             $stg_id =  $valeur[0]->id;
+            $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = '.$stg_id);
+            $etp_nouveau_id = $value_etp[0]->nouveau_entreprise_id;
+            $particulier = $value_etp[0]->particulier;
+            //si le compte stagiaire est actif 
             if($activiter == 1){
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
                     return view('layouts.accueil_admin', compact('totale_invitation'));
                 }
             }
+            //si le compte est inactif, on vérifie d'abord si le stagiaire est déjà dans une autre entreprise
             if($activiter == 0){
-
-                $msg = 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre adresse e-mail personnelle';
-                return view('auth.email_nouveau',compact('msg'));
+                if ($etp_nouveau_id == 0 && $particulier == 0){
+                    $msg = 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre adresse e-mail personnelle';
+                    return view('auth.email_nouveau',compact('msg'));
+                }
+                if ($etp_nouveau_id == 0  && $particulier == 1){
+                    if (Auth::user()->exists) {
+                        $totale_invitation = $this->collaboration->count_invitation();
+                        return view('layouts.accueil_admin', compact('totale_invitation'));
+                    }
+                }
+                if ($etp_nouveau_id == 1){
+                    if (Auth::user()->exists) {
+                        $totale_invitation = $this->collaboration->count_invitation();
+                        return view('layouts.accueil_admin', compact('totale_invitation'));
+                    }
+                }
             }
         }
         if (Auth::user()->exists) {
@@ -268,5 +286,17 @@ class HomeController extends Controller
             $profil_user = 'images/chefDepartement/' . $photo_manager;
         }
         return response()->json($profil_user);
+    }
+    //modification e-mail stagiaire en cas de changement d'entreprise
+    public function update_email(Request $request){
+        $email = $request->email;
+        $user_id = Auth::id();
+        $val =db::select('select id from stagiaires where user_id = '.$user_id);
+        $id_stg = $val[0]->id;
+        DB::update('update stagiaires set mail_stagiaire = ? where user_id = ?',[$email,$user_id]);
+        DB::update("update users set email = ? where id = ?",[$email,$user_id]);
+        DB::update("update historique_stagiaire set particulier = ? where stagiaire_id = ?",[1,$id_stg]);
+        $totale_invitation = $this->collaboration->count_invitation();
+        return view('layouts.accueil_admin', compact('totale_invitation'));
     }
 }

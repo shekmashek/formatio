@@ -133,7 +133,8 @@ CREATE TABLE `historique_stagiaires` (
   foreign key(ancien_entreprise_id) references entreprises(id) on delete cascade,
   foreign key(ancien_departement_id) references departements(id) on delete cascade,
   `date_depart` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `particulier` boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

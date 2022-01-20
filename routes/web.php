@@ -169,9 +169,7 @@ Route::get('/search','ParticipantController@getStagiaires')->name('search');
 Route::get('rechercheFonction/{matricule?}','ParticipantController@rechercheFonction')->name('rechercheFonction');
 Route::get('/searchFonction','ParticipantController@getStagiairesFonction')->name('searchFonction');
 
-Route::post('update_mail_stagiaire',function(){
-    return view('index_accueil');
-})->name('update_mail_stagiaire');
+Route::post('update_mail_stagiaire','HomeController@update_email' )->name('update_mail_stagiaire');
 
 
 //route formation

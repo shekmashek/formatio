@@ -266,8 +266,8 @@ class ParticipantController extends Controller
             $date_depart = $dt = Carbon::today()->toDateString();
             //on insère dans l'historique stagiaire l'entreprise id, le matricule et le stagiaire id
             DB::insert('INSERT INTO historique_stagiaires
-                        (`stagiaire_id`, `ancien_entreprise_id`,`ancien_departement_id` ,`nouveau_entreprise_id`,`nouveau_departement_id`, `ancien_matricule`, `nouveau_matricule`, `date_depart`, `date_arrivee`)
-                        Values (?,?,?,?,?,?,?,?,?)',[$id,$entreprise_id,$departement_id,0,0,$matricule,0,$date_depart,0]);
+                        (`stagiaire_id`, `ancien_entreprise_id`,`ancien_departement_id` ,`nouveau_entreprise_id`,`nouveau_departement_id`, `ancien_matricule`, `nouveau_matricule`, `date_depart`, `date_arrivee`,`particulier`)
+                        Values (?,?,?,?,?,?,?,?,?)',[$id,$entreprise_id,$departement_id,0,0,$matricule,0,$date_depart,0,0]);
 
            //on modifie l'entreprise id du stagiaire par 0
             DB::update('update stagiaires set activiter = 0  where id = '.$id);
