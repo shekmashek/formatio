@@ -168,10 +168,10 @@ Route::get('/search','ParticipantController@getStagiaires')->name('search');
 // route recherche par fonction
 Route::get('rechercheFonction/{matricule?}','ParticipantController@rechercheFonction')->name('rechercheFonction');
 Route::get('/searchFonction','ParticipantController@getStagiairesFonction')->name('searchFonction');
+Route::get('/searchCIN','ParticipantController@getStagiairesCIN')->name('searchCIN');
 
 Route::post('update_mail_stagiaire','HomeController@update_email' )->name('update_mail_stagiaire');
-
-
+Route::get('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
 //route formation
 Route::resource('formation','FormationController')->except([
     'index','destroy','show'

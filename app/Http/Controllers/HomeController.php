@@ -47,7 +47,7 @@ class HomeController extends Controller
             $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = '.$stg_id);
             $etp_nouveau_id = $value_etp[0]->nouveau_entreprise_id;
             $particulier = $value_etp[0]->particulier;
-            //si le compte stagiaire est actif 
+            //si le compte stagiaire est actif
             if($activiter == 1){
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
@@ -295,7 +295,7 @@ class HomeController extends Controller
         $id_stg = $val[0]->id;
         DB::update('update stagiaires set mail_stagiaire = ? where user_id = ?',[$email,$user_id]);
         DB::update("update users set email = ? where id = ?",[$email,$user_id]);
-        DB::update("update historique_stagiaire set particulier = ? where stagiaire_id = ?",[1,$id_stg]);
+        DB::update("update historique_stagiaires set particulier = ? where stagiaire_id = ?",[1,$id_stg]);
         $totale_invitation = $this->collaboration->count_invitation();
         return view('layouts.accueil_admin', compact('totale_invitation'));
     }

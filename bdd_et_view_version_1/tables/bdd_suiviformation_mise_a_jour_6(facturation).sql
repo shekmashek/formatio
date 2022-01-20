@@ -23,7 +23,8 @@ insert into frais_annexes(description) values
 ('frais de deplacement'),
 ("frais d'hebergement"),
 ('frais de restauration'),
-('frais de logistique');
+('frais de logistique'),
+('frais de location de salle');
 
 
 CREATE TABLE `factures` (
