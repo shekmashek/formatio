@@ -35,38 +35,12 @@
                     
                 </td>
                 <td> 
-                    {{-- <i class="far fa-plus pb-3 i_carret" data-toggle="collapse" href="#session_id" role="button" aria-expanded="false" aria-controls="collapseExample"></i> --}}
                     <i class="far fa-plus pb-3 i_carret"></i>
                 </td>
             </tr>
         </tbody> 
     </table>
-            {{-- <div class="collapse mx-1" id="session_id">
-                    <table class="table">
-                        <thead>
-                            <th> Session </th>
-                            <th> Lieu </th>
-                            <th> Heure </th>
-                            <th> Date </th>
-                            <th> Participants </th>
-                            <th> Status </th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>SES01</td>
-                                <td> Ampandrana </td>
-                                <td> 09 H à 11 H</td>
-                                <td> 11 janv </td>
-                                <td>  </td>
-                                <td> <p class="en_cours m-0 p-0">En cours</p> </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="shadow_personnel col-3">
-                        <i class="fa fa-folder-plus ms-2" style="font-size: 20px; color:blue;">&nbsp;<a class="m-0 p-0" style="font-size: 12px;"> Ajouter une nouvelle session </a></i>
-                    </div>
-                </div>     --}}
-            
+
     </div>
      
 </div><br>

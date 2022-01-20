@@ -15,6 +15,9 @@ Route::get('/', function () {
 Route::get('/projet_session', function () {
     return view('projet_session/index2');
 });
+Route::get('/detail_session', function () {
+    return view('projet_session/session');
+});
 
 Auth::routes();
 
