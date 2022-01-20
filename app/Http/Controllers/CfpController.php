@@ -17,7 +17,14 @@ use App\Models\FonctionGenerique;
 
 class CfpController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+        });
+    }
+
     public function index(){
         $user_id = Auth::id();
         $fonct = new FonctionGenerique();
