@@ -76,16 +76,16 @@ public function create_cfp_etp(Request $req)
     public function create_etp_cfp(Request $req)
     {
         $user_id = Auth::user()->id;
-        $responsable_id = responsable::where('user_id',$user_id)->value('id');
+        $entreprise_id = responsable::where('user_id',$user_id)->value('entreprise_id');
         $cfp = $this->fonct->findWhereMulitOne("cfps",["email"],[$req->email_cfp]);
 
         if($cfp != null){
-            $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp->id,$responsable_id]);
-            $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$responsable_id,$cfp->id]);
+            $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp->id,$entreprise_id]);
+            $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$entreprise_id,$cfp->id]);
             $verify = $verify1->id+$verify2->id;
 
             if ($verify<= 0) {
-                return $this->collaboration->verify_collaboration_etp_cfp($cfp->id, $responsable_id,$req->nom_cfp);
+                return $this->collaboration->verify_collaboration_etp_cfp($cfp->id, $entreprise_id,$req->nom_cfp);
             } else {
                 return back()->with('error', "une invitation a été déjà envoyer sur ce Centre de Formation Professionel!");
             }
@@ -141,13 +141,31 @@ public function create_cfp_formateur(Request $req)
         return $this->collaboration->verify_annulation_collaboration_cfp_etp($id);
     }
 
-    public function delete_etp_cfp(Request $req)
+    public function mettre_fin_cfp_etp(Request $req)
     {
-        return $this->collaboration->verify_annulation_collaboration_etp_cfp($req->input());
+        $user_id = Auth::user()->id;
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            return $this->collaboration->verify_annulation_collaboration_etp_cfp($cfp_id,$req->etp_id);
+        }
+        if(Gate::allows('isReferent')){
+            $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            return $this->collaboration->verify_annulation_collaboration_etp_cfp($req->cfp_id,$etp_id);
+        }
     }
+
     // =========================  annule formateur à cfp et cfp à formateur
 
-    public function delete_formateur_cfp($id)
+    public function mettre_fin_cfp_formateur(Request $req)
+    {
+        $user_id = Auth::user()->id;
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            return $this->collaboration->verify_annulation_collaboration_cfp_formateur($cfp_id,$req->formateur_id);
+        }
+    }
+    /*
+       public function delete_formateur_cfp($id)
     {
         return $this->collaboration->verify_annulation_collaboration_formateur_cfp($id);
     }
@@ -156,6 +174,7 @@ public function create_cfp_formateur(Request $req)
     {
         return $this->collaboration->verify_annulation_collaboration_cfp_formateur($id);
     }
+    */
     // ======================== affichage cfp etp =========================================
     public function collaboration_etp_cfp()
     {

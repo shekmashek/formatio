@@ -15,13 +15,17 @@ use App\Mail\entrepriseMail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
 
+
+
 class CfpController extends Controller
 {
     public function __construct()
     {
+
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
         });
     }
 
