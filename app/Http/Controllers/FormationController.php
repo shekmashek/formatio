@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Domaine;
 use Illuminate\Http\Request;
 use App\formation;
+use App\module;
+use App\categories_formations;
 use App\cfp;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -12,28 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class FormationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
-            return $next($request);
-        });
-    }
+
     public function index($id = null)
 
     {
         $id_user = Auth::user()->id;
-
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
             $formation = formation::with('Domaine')->where('cfp_id', $cfp_id)->orderBy('domaine_id')->get();
-
-            if(count($formation) <= 0){
-                return view('admin.formation.guide');
-            }else{
-                return view('admin.formation.formation', compact('formation'));
-            }
+            return view('admin.formation.formation', compact('formation'));
         }
         if (Gate::allows('isSuperAdmin')) {
             $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
@@ -44,11 +33,14 @@ class FormationController extends Controller
             $domaines = Domaine::all();
             return view('referent.catalogue.formation', compact('domaines', 'categorie'));
         }
-        if (Gate::allows('isReferent') || Gate::allows('isStagiaire')) {
+        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             //liste formation
-            $categorie = formation::orderBy('nom_formation')->get();
-            $domaines = Domaine::all();
-            return view('referent.catalogue.formation', compact('domaines', 'categorie'));
+            // $categorie = formation::orderBy('nom_formation')->get();
+            // $domaines = Domaine::all();
+        // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
+
+            $categorie= DB::select('select * from formations where status = 1');
+            return view('referent.catalogue.formation', compact( 'categorie'));
         }
     }
 
@@ -127,18 +119,38 @@ class FormationController extends Controller
     ///--------------CATALOGUE DE FORMATION ------------------------ //////////////
     public function rechercheParModule(Request $request)
     {
+        $categorie= DB::select('select * from formations where status = 1');
         $nom_formation = $request->nom_formation;
+        // $nom_formation = $request->input('nom_formation');
         if ($nom_formation == null) {
-            $infos = DB::select('select * from moduleFormation');
+            // $infos = DB::select('select * from moduleFormation');
+            $infos= DB::select('select * from moduleFormation');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
-            return view('referent.catalogue.liste_formation',compact('infos','liste_avis'));
+            // $infos= module::query()
+            //                          ->where('nom_formation', ' ', "%{$nom_fomation}%")
+            //                         ->get();
+
+            return view('referent.catalogue.liste_formation',compact('infos','liste_avis','categorie'));
         }else{
-            $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
-            $infos = DB::select('select * from moduleFormation where formation_id = ?', [$id_formation]);
+            // $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
+            $infos = DB::select('select * from moduleFormation where nom_formation like "%'.$nom_formation.'%"');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
-            return view('referent.catalogue.liste_formation',compact('infos','liste_avis'));
+            return view('referent.catalogue.liste_formation',compact('infos','liste_avis','categorie'));
         }
     }
+    //recheche formation
+    // public function search(Request $request){
+    //     $search = $request->input('search');
+
+    //     $categorie= formation::query()
+    //                             ->where('nom_formation', 'LIKE', "%{$search}%")
+    //                             ->get();
+    //     $domaines= Domaine::query()
+    //                         ->where('nom_domaine','LIKE',"%{$search}%")
+    //                         ->orwhere('sous_titre','LIKE',"%{$search}%")
+    //                         ->get();
+    // return view('referent.catalogue.resultat_formation', compact('domaines', 'categorie'));
+    // }
     public function getModulesParReference(Request $request)
     {
 
@@ -147,7 +159,7 @@ class FormationController extends Controller
         if ($search == '') {
             $formation = formation::orderby('nom_formation', 'asc')->select('id', 'nom_formation')->limit(5)->get();
         } else {
-            $formation = formation::orderby('nom_formation', 'asc')->select('id', 'nom_formation')->where('nom_formation', 'like', $search . '%')->limit(5)->get();
+            $formation = DB::select('select id,nom_formation from formations where nom_formation like "%'.$search.'%" limit 0,5');
         }
 
         $response = array();
@@ -169,12 +181,56 @@ class FormationController extends Controller
         return view('referent.catalogue.liste_formation', compact('infos'));
     }
     public function affichageParModule($id){
-        $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
-        $nb_avis = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.module_id = ? group by mf.module_id',[$id])[0]->nb_avis;
-        $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
-        $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
-        $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
-        $statistiques = DB::select('select * from v_statistique_avis where module_id = ? order by nombre desc',[$id]);
-        return view('referent.catalogue.detail_formation',compact('infos','cours','programmes','nb_avis','liste_avis','statistiques'));
+        $id = request('id');
+
+        $categorie= DB::select('select * from formations where status = 1');
+        $test =  DB::select('select exists(select * from moduleformation where formation_id = '.$id.') as moduleExiste');
+      //on verifie si moduleformation contient le module_id
+        if ($test[0]->moduleExiste == 1){
+            $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
+
+            $nb = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.formation_id = ? group by mf.formation_id',[$id]);
+
+            $nb_avis = $nb[0]->nb_avis;
+            $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
+            $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
+            $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
+            // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
+            return view('referent.catalogue.detail_formation',compact('infos','cours','programmes','nb_avis','liste_avis','categorie'));
+        }
+        else return redirect()->route('liste_formation');
+       }
+    public function categorie_formations()
+    {
+
+        $categorie= formation::all();
+       return view('superadmin.catalogue.categories_formations',compact('categorie'));
+
     }
+    public function ajout_categorie(Request $request){
+        $ids = $request->status;
+        $nombre_1 = 1;
+        $nombre_0 = 0;
+        formation::where('status', 1)->update([
+            'status' => $nombre_0
+        ]);
+        foreach ($ids as $id) {
+
+            formation::where('id', $id)->update([
+                'status' => $nombre_1
+                ]);
+            }
+        return back();
+        }
+        public function affiche_categorie()
+        {
+            $categorie= DB::select('select formations.nom_formation
+                    FROM
+                    formations,
+                    WHERE
+                   status = 1;
+                    ');
+        return view('referent.catalogue.liste_formation', compact('categorie'));
+
+        }
 }
