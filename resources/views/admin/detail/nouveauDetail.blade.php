@@ -69,7 +69,6 @@
                                     @endforeach
                                 </select>
                                 <p><strong style="color: red" id="err_formateur"></strong></p>
-
                             </div>
                             <div class="form-group">
                                 <label for="lieu">Lieu</label>

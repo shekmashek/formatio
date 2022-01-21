@@ -133,6 +133,10 @@
                                 <a href="{{route('liste_projet')}}">Projets</a>
                                 <p class="my-1" id="projets" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
                             </span>
+                            <li class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{url('detail_session')}}">Sessions</a>
+                                <p class="my-1" id="projets_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </li>
                             <span class="sousMenu me-2 d-flex justify-content-between">
                                 <a>Projets en cours</a>
                                 <p class="my-1" id="projet_en_cours" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
@@ -159,6 +163,7 @@
                                 <a href="{{route('liste_projet')}}">Projets</a>
                                 <p class="my-1" id="projets_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
                             </li>
+                            
                             <span class="sousMenu me-2 d-flex justify-content-between">
                                 <a>Projets en cours</a>
                                 <p class="my-1" id="projet_en_cours_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>

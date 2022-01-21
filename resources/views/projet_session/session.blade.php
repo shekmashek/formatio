@@ -5,19 +5,19 @@
 <div class="card">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
-            <h5>Session - Titre du session</h5> 
+            <h5>Session </h5> 
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0"> Session  &nbsp; &nbsp; </p>
-                <p class="numero_session text-dark"> <strong>n°: SES0001</strong>  </p>
-                <p class="m-0">&nbsp; &nbsp; du 15 / 01 / 2022 au 21 / 01 / 2022 </p>
+                <p class="numero_session text-dark mt-3"> <strong>n°: {{ $projet->nom_groupe }}</strong>  </p>
+                <p class="m-0">&nbsp; &nbsp; du {{ $projet->date_debut }} au {{ $projet->date_fin }} </p>
                 <p class="m-0">&nbsp; appartenant au projet &nbsp;</p>
-                <p class="numero_session text-dark"> <strong>Projet 1</strong> </p>
+                <p class="numero_session text-dark mt-3"> <strong>{{ $projet->nom_projet }}</strong> </p>
             </div>
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                <p class="numero_session text-dark"> <strong>7 000 000 Ar</strong>  </p>
+                <p class="numero_session text-dark mt-3"> <strong>7 000 000 Ar</strong>  </p>
                 <p class="m-0">&nbsp;; apprenants inscrits : &nbsp;</p>
-                <p class="numero_session text-dark"> <strong>10</strong>  </p>
+                <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
             </div>
         </div>
         <div>
@@ -70,10 +70,10 @@
             <div class="col-md-3 py-3 ps-4">
                 <div class="corps_planning m-0 bg-light">
                     <div >
-                        <button class="planning d-flex justify-content-between py-1" onload="loadContent()" onclick="openCity(event, 'planning')" style="width: 100%" id="on_load">
+                        <button class="planning d-flex justify-content-between py-1 active" onload="loadContent()" onclick="openCity(event, 'planning')" style="width: 100%" id="on_load">
                             <p class="m-0 p-0">PLANNING</p>
                             {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
-                            <i class="fal fa-check-circle me-2" style="color: chartreuse"></i>
+                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                         </button>
                     </div>
                     <div>
@@ -98,7 +98,7 @@
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
                             <p class="m-0 p-0">DOCUMENT</p>
                             {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
-                            <i class="fal fa-check-circle me-2" style="color: chartreuse"></i>
+                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                         </button>
                     </div>
                     <div>
@@ -153,6 +153,8 @@
                             <label for="" class="bg-light form-control"> Formation 1 </label>
                             <span>Commentaire du client</span>
                             <textarea for="" class="bg-light form-control"> Je souhaite avoir les factures dans 3 jours, s'il vous plait. </textarea>
+                            <span>Commentaire du client</span>
+                            <textarea for="" class="bg-light form-control"> Je souhaite avoir les factures dans 3 jours, s'il vous plait. </textarea>
                       </div>
                       <div id="apprenant" class="tabcontent">
                         Apprenant
@@ -196,8 +198,20 @@
 <style>
 *{
     font-family: 'Open Sans';
-    font-size: 14px;
+    font-size: .9rem;
 }
+.body_nav p{
+    font-size: 0.9rem;
+}
+
+.chiffre_d_affaire p{
+    font-size: 0.9rem;
+}
+
+.corps_planning{
+    font-size: 0.9rem;
+}
+
 .body_nav{
     background-color: rgb(130,33,100);
     color: whitesmoke;
@@ -225,6 +239,8 @@ strong{
 }
 .height_default{
     height: 27px;
+    align-items: center
+    
 }
 a{
     font-size: 12px;
@@ -263,7 +279,7 @@ p{
     font-weight: bold;
     height: 50%;
     border-radius: 1rem;
-    background-color: rgb(187, 183, 183);
+    background-color: rgb(150, 144, 144);
     color: white;
 }
 .status_annule{
@@ -273,7 +289,7 @@ p{
     font-weight: bold;
     height: 50%;
     border-radius: 1rem;
-    background-color: red;
+    background-color: rgb(184, 3, 3);
     color: white;
 }
 .status_termine{
@@ -293,7 +309,7 @@ p{
     font-weight: bold;
     height: 50%;
     border-radius: 1rem;
-    background-color: rgb(49, 225, 238);
+    background-color: #801D68;
     color: white;
 }
 .status_archive{
@@ -303,7 +319,7 @@ p{
     font-weight: bold;
     height: 50%;
     border-radius: 1rem;
-    background-color: orange;
+    background-color: orangered;
     color: white;
 }
 .statut_active{
