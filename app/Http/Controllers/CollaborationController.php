@@ -59,7 +59,8 @@ public function create_cfp_etp(Request $req)
             return back()->with('error', "une invitation a été déjà envoyer sur ce responsable!");
         }
     } else {
-        return back()->with('error', "mail est invalid ou la personne responsable du mail n'appartient pas à cette plateforme");
+        // envoyer email avec creer un nouveau compte ou utiliser compte existant
+        return back()->with('success', "une invitation est envoye sur l'adresse mail en démandant!");
     }
 }
 
@@ -90,7 +91,9 @@ public function create_cfp_etp(Request $req)
                 return back()->with('error', "une invitation a été déjà envoyer sur ce Centre de Formation Professionel!");
             }
         } else {
-            return back()->with('error', "mail est invalid ou la personne responsable du mail n'appartient pas à cette plateforme");
+                // envoyer email avec creer un nouveau compte ou utiliser compte existant
+                return back()->with('success', "une invitation est envoye sur l'adresse mail en démandant!");
+
         }
     }
     // =========================  insert formateur à cfp et cfp à formateur
@@ -122,6 +125,7 @@ public function create_cfp_formateur(Request $req)
     $cfp_id = cfp::where('user_id', $user_id)->value('id');
 
     $formateur = $this->fonct->findWhereMulitOne("formateurs",["mail_formateur"],[$req->email_format]);
+
     if($formateur != null){
         $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp_id, $formateur->id]);
         $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id,$cfp_id]);
@@ -131,6 +135,9 @@ public function create_cfp_formateur(Request $req)
         } else {
             return back()->with('error', "une invitation a été déjà envoyer sur formateur!");
         }
+    } else {
+        // envoyer email avec creer un nouveau compte ou utiliser compte existant
+        return back()->with('success', "une invitation est envoye sur l'adresse mail en démandant!");
     }
 }
 
