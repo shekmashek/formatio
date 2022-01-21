@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Cfp;
+use App\cfp;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -95,7 +95,7 @@ class SessionController extends Controller
 
     public function detail_session(){
         $user_id = Auth::user()->id;
-        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $id = request()->id_session;
         $fonct = new FonctionGenerique();
         $forma = new formateur();

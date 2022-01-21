@@ -42,12 +42,12 @@
                     {{-- <td> Ampandrana </td>
                     <td> 09 h à 10 H </td> --}}
                     <td> <p class="en_cours m-0 p-0">{{ $pj->status }}</p> </td>
-                    <td> 
+                    <td>
                         <i class="far fa-plus pb-3 i_carret"></i>
                     </td>
                 </tr>
             @endforeach
-        </tbody> 
+        </tbody>
     </table>
 
     </div>
