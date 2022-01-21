@@ -419,10 +419,10 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.niveau_etude,
     stg.activiter,
     etp.nom_etp,
-    historique.stagiaire_id AS histo_stagiaire_id
+    historique.stagiaire_id AS histo_stagiaire_id,
     historique.ancien_entreprise_id AS ancien_entreprise_id,
-    historique.nouveau_entreprise_id AS nouveau_entreprise_id
-    historique.date_depart
+    historique.nouveau_entreprise_id AS nouveau_entreprise_id,
+    historique.date_depart,
     historique.date_arrivee
 FROM
     stagiaires as stg,
