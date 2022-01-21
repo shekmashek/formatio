@@ -74,7 +74,7 @@ class ParticipantController extends Controller
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
             $datas = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = '.$entreprise_id);
-
+            $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id ='.$entreprise_id);
             // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }
         if (Gate::allows('isManager')) {
@@ -104,7 +104,7 @@ class ParticipantController extends Controller
             'nom_entreprise' => 'Tout'
         ];
         // return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression','id_etp'));
-        return view('admin.participant.stagiaire_entreprise', compact('liste_etp', 'datas', 'info_impression','id_etp'));
+        return view('admin.participant.stagiaire_entreprise', compact('ancien','liste_etp', 'datas', 'info_impression','id_etp'));
     }
 
     public function store(Request $request)

@@ -60,64 +60,101 @@
         <div class="col-md-5">
             <div class="shadow p-3 mb-5 bg-body rounded ">
 
-                <h4>Liste des stagiaires</h4>
+                <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
+                    <li class="nav-item">
+                        <a href="#" class=" active" id="home-tab" data-toggle="tab" data-target="#actif" type="button" role="tab" aria-controls="actif" aria-selected="true">
+                            <span style="color: yellowgreen">Stagiaire(Actif)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-5">
+                        <a href="#" class="" id="inactif-tab" data-toggle="tab" data-target="#inactif" type="button" role="tab" aria-controls="inactif" aria-selected="false">
+                            <span style="color: red">Stagiaire(Inactif)</span>
+                        </a>
+                    </li>
 
-                <div class="table-responsive text-center">
+                </ul>
+                <div class="tab-content" id="myTabContent">
 
-                    <table class="table  table-borderless table-sm">
-                        <tbody id="data_collaboration">
+                    <div class="tab-pane fade show active" id="actif" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="table-responsive text-center">
 
-                            @if (count($datas)<=0) <tr>
-                                <td> Aucun stagiaire</td>
-                                </tr>
-                                @else
-                                @foreach($datas as $frm)
-                                <tr>
-                                    <td>
-                                        <div align="left">
-                                            <strong>{{$frm->nom_stagiaire.' '.$frm->prenom_stagiaire}}</strong>
-                                            @if($frm->activiter == 0)
-                                                <strong style="background-color: red;color:white;padding:5px">Inactif </strong>
-                                            @else
-                                                <strong style="background-color: green;color:white;padding:5px">Actif </strong>
-                                            @endif
-                                            <p style="color: rgb(238, 150, 18)">{{$frm->mail_stagiaire}}</p>
+                            <table class="table  table-borderless table-sm">
+                                <tbody id="data_collaboration">
 
-
-                                        </div>
-                                    <td>
-                                        <div align="rigth">
-                                            <strong><i class="bx bx-user-check"></i></strong>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class=" btn-group dropleft">
-                                            <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </button>
-
-                                            <div class="dropdown-menu">
-                                                <a href="{{route('profile_stagiaire',$frm->stagiaire_id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
-
-                                                @canany(['isReferent'])
-                                                <a href="{{route('destroy_participant',['id'=>$frm->stagiaire_id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
-                                                @endcanany
-                                            </div>
-                                        </div>
+                                    @if (count($datas)<=0) <tr>
+                                        <td> Aucun stagiaire</td>
+                                        </tr>
+                                        @else
+                                        @foreach($datas as $frm)
+                                        <tr>
+                                            <td>
+                                                <div align="left">
+                                                    <strong>{{$frm->nom_stagiaire.' '.$frm->prenom_stagiaire}}</strong>
+                                                    {{-- @if($frm->activiter == 0)
+                                                        <strong style="background-color: red;color:white;padding:5px">Inactif </strong>
+                                                    @else
+                                                        <strong style="background-color: green;color:white;padding:5px">Actif </strong>
+                                                    @endif --}}
+                                                    <p style="color: rgb(238, 150, 18)">{{$frm->mail_stagiaire}}</p>
 
 
+                                                </div>
+                                            <td>
+                                                <div align="rigth">
+                                                    <strong><i class="bx bx-user-check"></i></strong>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class=" btn-group dropleft">
+                                                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </button>
 
-                                    </td>
-                                </tr>
+                                                    <div class="dropdown-menu">
+                                                        <a href="{{route('profile_stagiaire',$frm->stagiaire_id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
+                                                        @canany(['isReferent'])
+                                                        <a href="{{route('destroy_participant',['id'=>$frm->stagiaire_id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
+                                                        @endcanany
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" id="inactif" role="tabpanel" aria-labelledby="inactif-tab">
+                        <div class="table-responsive text-center">
 
+                            <table class="table  table-borderless table-sm">
+                                <tbody id="data_collaboration">
 
+                                    @if (count($datas)<=0) <tr>
+                                        <td> Aucun stagiaire</td>
+                                        </tr>
+                                        @else
+                                        @foreach($ancien as $frm)
+                                        <tr>
+                                            <td>
+                                                <div align="left">
+                                                    <strong>{{$frm->nom_stagiaire.' '.$frm->prenom_stagiaire}}</strong>
+                                                    <strong style="color: rgb(238, 150, 18)">Depart: {{$frm->date_depart}}</strong>
+                                                    <strong style="color: rgb(238, 150, 18)">Contact : {{$frm->telephone_stagiaire}}</strong>
+                                                </div>
 
-                                @endforeach
-                                @endif
-                        </tbody>
-                    </table>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
 

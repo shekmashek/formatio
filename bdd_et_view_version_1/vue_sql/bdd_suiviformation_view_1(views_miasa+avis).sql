@@ -399,4 +399,37 @@ WHERE
     stg.entreprise_id = etp.id and
     stg.departement_id = dept.id;
 
+CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
+    stg.id AS stagiaire_id,
+    stg.matricule,
+    stg.nom_stagiaire,
+    stg.prenom_stagiaire,
+    stg.genre_stagiaire,
+    stg.fonction_stagiaire,
+    stg.mail_stagiaire,
+    stg.telephone_stagiaire,
+    stg.entreprise_id,
+    stg.user_id,
+    stg.photos,
+    stg.departement_id,
+    stg.cin,
+    stg.date_naissance,
+    stg.adresse,
+    stg.lieu_travail,
+    stg.niveau_etude,
+    stg.activiter,
+    etp.nom_etp,
+    historique.stagiaire_id AS histo_stagiaire_id
+    historique.ancien_entreprise_id AS ancien_entreprise_id,
+    historique.nouveau_entreprise_id AS nouveau_entreprise_id
+    historique.date_depart
+    historique.date_arrivee
+FROM
+    stagiaires as stg,
+    entreprises as etp,
+    historique_stagiaires as historique
+WHERE
+    stg.entreprise_id = etp.id and
+    historique.stagiaire_id = stg.id;
+
 
