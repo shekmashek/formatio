@@ -51,11 +51,11 @@ class EntrepriseController extends Controller
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
 
-                $demmande_etp = $fonct->findWhere("v_demmande_cfp_pour_etp", ["demmandeur_cfp_id"], [$cfp_id]);
+                $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
                 $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
                 $entreprise = $entp->getEntreprise($etp2,$etp1);
 
-            return view('cfp.profile_entreprise', compact('entreprise','demmande_etp','invitation_etp'));
+            return view('cfp.profile_entreprise', compact('entreprise','refuse_demmande_etp','invitation_etp'));
         }
         if (Gate::allows('isSuperAdmin')) {
             $entreprise =entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');

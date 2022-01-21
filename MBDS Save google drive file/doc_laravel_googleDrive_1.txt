@@ -1,0 +1,7 @@
+API:
+
+https://robindirksen.com/blog/google-drive-storage-as-filesystem-in-laravel
+
+Youtube:
+
+https://www.youtube.com/watch?v=dVUGVmJdJ1A

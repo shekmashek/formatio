@@ -514,10 +514,16 @@ Route::post('create_etp_cfp','CollaborationController@create_etp_cfp')->name('cr
 Route::post('create_formateur_cfp','CollaborationController@create_formateur_cfp')->name('create_formateur_cfp');
 Route::post('create_cfp_formateur','CollaborationController@create_cfp_formateur')->name('create_cfp_formateur');
 
-Route::get('delete_cfp_etp/{id}','CollaborationController@delete_cfp_etp')->name('delete_cfp_etp');
-Route::post('delete_etp_cfp','CollaborationController@delete_etp_cfp')->name('delete_etp_cfp');
-Route::get('delete_formateur_cfp/{id}','CollaborationController@delete_formateur_cfp')->name('delete_formateur_cfp');
-Route::get('delete_cfp_formateur/{id}','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
+
+Route::post('mettre_fin_cfp_etp','CollaborationController@mettre_fin_cfp_etp')->name('mettre_fin_cfp_etp');
+
+// Route::get('delete_cfp_etp','CollaborationController@delete_cfp_etp')->name('delete_cfp_etp');
+// Route::post('delete_etp_cfp','CollaborationController@delete_etp_cfp')->name('delete_etp_cfp');
+
+Route::post('mettre_fin_cfp_formateur','CollaborationController@mettre_fin_cfp_formateur')->name('mettre_fin_cfp_formateur');
+
+// Route::get('delete_formateur_cfp','CollaborationController@delete_formateur_cfp')->name('delete_formateur_cfp');
+// Route::get('delete_cfp_formateur','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
 
 Route::get('annulation_cfp_etp/{id}','CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
 Route::get('annulation_etp_cfp/{id}','CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');
@@ -540,3 +546,14 @@ Route::get('profil_user','HomeController@profil_user')->name('profil_user');
 //list cfp
 
 Route::get('list_cfp','CfpController@index')->name('list_cfp');
+
+
+//============================= page creation nouveau compte CFP et Formateur
+
+Route::get('create+compte+formateur',function(){
+    return view('create_compte.create_compte_formateur');
+})->name('create+compte+formateur');
+
+Route::get('create+compte+CFP',function(){
+    return view('create_compte.create_compte_cfp');
+})->name('create+compte+CFP');

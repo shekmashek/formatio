@@ -55,8 +55,8 @@ class Collaboration extends Model
     }
 
     public function suprime_collaboration_etp_cfp($etp_id,$cfp_id){
-        DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id', [$etp_id,$cfp_id]);
-        DB::delete('delete from demmande_cfp_etp where demmandeur_cfp_id = ? and inviter_etp_id', [$cfp_id,$etp_id]);
+        DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id=?', [$etp_id,$cfp_id]);
+        DB::delete('delete from demmande_cfp_etp where demmandeur_cfp_id = ? and inviter_etp_id=?', [$cfp_id,$etp_id]);
         DB::commit();
     }
 
@@ -65,20 +65,33 @@ class Collaboration extends Model
         DB::commit();
     }
 
-    public function suprime_collaboration_cfp_formateur($id){
-        DB::delete('delete from demmande_cfp_formateur where id = ?', [$id]);
+    public function suprime_collaboration_cfp_formateur($cfp_id,$formateur_id){
+        DB::delete('delete from demmande_formateur_cfp where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$formateur_id,$cfp_id]);
+        DB::delete('delete from demmande_cfp_formateur where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id,$formateur_id]);
+
         DB::commit();
     }
 
     // ========================= invitation refuse
 
+    // ----------------------------------------------------------------------
+    public function insert_invitation_refuser_etp_cfp($cfp_id,$etp_id){
+        $data=[$etp_id,$cfp_id];
+        DB::insert('insert into refuse_demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at) values (?,?, NOW())', $data);
+        DB::commit();
+    }
     public function suprime_invitation_collaboration_etp_cfp($id){
         DB::delete('delete from demmande_cfp_etp where id = ?', [$id]);
         DB::commit();
 
         return back();
     }
-
+    // -----------------------------------------
+    public function insert_invitation_refuser_cfp_etp($cfp_id,$etp_id){
+        $data=[$cfp_id,$etp_id];
+        DB::insert('insert into refuse_demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at) values (?,?, NOW())', $data);
+        DB::commit();
+    }
     public function suprime_invitation_collaboration_cfp_etp($id){
         DB::delete('delete from demmande_etp_cfp where id = ?', [$id]);
         DB::commit();
@@ -86,6 +99,8 @@ class Collaboration extends Model
         return back();
     }
 
+
+// --------------------------------------------
     public function suprime_invitation_collaboration_cfp_formateur($id){
         DB::delete('delete from demmande_formateur_cfp where id = ?', [$id]);
         DB::commit();
@@ -228,7 +243,13 @@ class Collaboration extends Model
 
 
 
+    public function verify_annulation_collaboration_etp_cfp($cfp_id,$etp_id){
+            $this->suprime_collaboration_etp_cfp($etp_id,$cfp_id);
+        return back();
+    }
 
+
+/*
     public function verify_annulation_collaboration_cfp_etp($id){
         DB::beginTransaction();
         try
@@ -255,6 +276,8 @@ class Collaboration extends Model
         return back();
     }
 
+    */
+
     public function verify_annulation_collaboration_formateur_cfp($id){
         DB::beginTransaction();
         try
@@ -268,16 +291,8 @@ class Collaboration extends Model
         return back();
     }
 
-    public function verify_annulation_collaboration_cfp_formateur($id){
-        DB::beginTransaction();
-        try
-        {
-            $this->suprime_collaboration_cfp_formateur($id);
-        } catch(Exception $e){
-            DB::rollback();
-            echo $e->getMessage();
-            return back()->with("error","une erreur s'est présenter,veuillez réssailler!");
-        }
+    public function verify_annulation_collaboration_cfp_formateur($cfp_id,$formateur_id){
+            $this->suprime_collaboration_cfp_formateur($cfp_id,$formateur_id);
         return back();
     }
 
