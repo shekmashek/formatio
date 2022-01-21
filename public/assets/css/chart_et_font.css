@@ -1243,7 +1243,8 @@ Détails Formation
 }
 .detail__prix__main__ref2 {
   text-align: right;
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: bolder;
 }
 .detail__prix__main__ref2 p {
   margin-top: 10px;
@@ -1263,8 +1264,8 @@ Détails Formation
   margin-bottom: 0;
 }
 .detail__prix__main__prix2 p {
-  margin-top: 8px;
-  font-size: 25px;
+  margin-top: 12px;
+  font-size: 18px;
   margin-bottom: 0;
 }
 .detail__prix__main__btn button {
@@ -1304,7 +1305,7 @@ Détails Formation
   color: red;
 }
 .detail__formation__item__left__adresse .adresse__text {
-  font-size: 25px;
+  font-size: 18px;
   color: black;
 }
 .detail__formation__item__left__prerequis {
@@ -1431,6 +1432,9 @@ Détails Formation
   padding-bottom: 10px;
 }
 
+.Stars{
+  color: orangered;
+}
 .rating-star .checked {
   color: orangered;
   margin-top: 10px;
@@ -1893,7 +1897,7 @@ Détails Formation
 .form-group {
   position: relative;
   margin-bottom: 1.5rem;
-  width: 77%;
+  width: 100%;
 }
 
 .form-control-placeholder {
@@ -2107,71 +2111,12 @@ Détails Formation
 
 /* nouveau module */
 
-.form_new_module .form_row_1{
-  background-color: var(--color-child);
-  color: white;
+.live_preview{
+  background-color: rgb(211, 210, 210);
+  padding: 2rem 3rem 2rem 3rem;
 }
 
-.form_row_1 .form_row_icon{
-  font-size: 7rem;
-}
-
-.form_row_1 .form_row_icon_1{
-  font-size: 2rem;
-  margin-top: 1rem;
-  margin-right: 1rem;
-}
-
-.form_row_1 select{
-  background-color: none;
-}
-.custom-select:focus{
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-
-.custom-select{
-  background-color: var(--color-child);
-  border: none;
-  border-bottom: 1px solid white;
-  border-radius: 0;
-  color: white;
-
-}
-.custom-select1:focus,
-.form_row_input:focus{
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-
-.custom-select1{
-  background-color: var(--color-child);
-  border: none;
-  border-bottom: 1px solid white;
-  border-radius: 0;
-  color: white;
-  font-size: 1.5rem;
-  padding: 0;
-  padding-left: 1rem;
-}
-
-.form_row_1 .form_row_input{
-  background-color: var(--color-child);
-  border: none;
-  border-bottom: 1px solid white;
-  border-radius: 0;
-  color: white;
-  width: 50%;
-}
-.form_row_1 .form_row_input::placeholder{
-  color: white;
-}
-
-.form_row_1 label{
-  padding-top: 1.5rem;
-}
+/* nouveau module */
 
 /* footer */
 
