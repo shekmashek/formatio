@@ -154,7 +154,7 @@ Route::get('/nouveau_participant','ParticipantController@index')->name('nouveau_
 Route::get('/liste_participant/{id?}','ParticipantController@create')->name('liste_participant');
 Route::get('/edit_participant/{id?}','ParticipantController@edit')->name('edit_participant');
 
-Route::get('/destroy_participant','ParticipantController@destroy')->name('destroy_participant');
+Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('destroy_participant');
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::get('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
@@ -171,7 +171,9 @@ Route::get('/searchFonction','ParticipantController@getStagiairesFonction')->nam
 Route::get('/searchCIN','ParticipantController@getStagiairesCIN')->name('searchCIN');
 
 Route::post('update_mail_stagiaire','HomeController@update_email' )->name('update_mail_stagiaire');
-Route::post('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
+Route::get('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
+//ajout d'un stagiaire existant dans une nouvelle entreprise
+Route::post('enregistrer_nouveau_etp_stagiaire','ParticipantController@nouvelle_entreprise_stagiaire')->name('enregistrer_nouveau_etp_stagiaire');
 //route formation
 Route::resource('formation','FormationController')->except([
     'index','destroy','show'

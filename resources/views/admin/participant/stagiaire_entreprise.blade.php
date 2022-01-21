@@ -76,7 +76,14 @@
                                     <td>
                                         <div align="left">
                                             <strong>{{$frm->nom_stagiaire.' '.$frm->prenom_stagiaire}}</strong>
+                                            @if($frm->activiter == 0)
+                                                <strong style="background-color: red;color:white;padding:5px">Inactif </strong>
+                                            @else
+                                                <strong style="background-color: green;color:white;padding:5px">Actif </strong>
+                                            @endif
                                             <p style="color: rgb(238, 150, 18)">{{$frm->mail_stagiaire}}</p>
+
+
                                         </div>
                                     <td>
                                         <div align="rigth">
@@ -93,7 +100,7 @@
                                                 <a href="{{route('profile_stagiaire',$frm->stagiaire_id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
 
                                                 @canany(['isReferent'])
-                                                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModal_{{$frm->stagiaire_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                                <a href="{{route('destroy_participant',['id'=>$frm->stagiaire_id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
                                                 @endcanany
                                             </div>
                                         </div>
@@ -104,58 +111,6 @@
                                 </tr>
 
 
-                                {{-- <!-- Modal desactivation -->
-                                <div class="modal fade" id="exampleModal_{{$frm->formateur_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                <h6 class="modal-title">
-                                                    <font color="white">Avertissement !</font>
-                                                </h6>
-
-                                            </div>
-                                            <div class="modal-body">
-                                                <small>Vous êtes sur le point désactiver un utilisateur, cet action est réversible . Continuer ?</small>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                <form action="{{ route('mettre_fin_cfp_formateur') }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-secondary">Oui </button>
-                                                    <input type="text" value="{{$frm->formateur_id}}" hidden name="formateur_id">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                fin modal desactivation --}}
-
-
-                                <!-- Modal delete -->
-                                {{-- <div class="modal fade" id="exampleModal_{{$frm->formateur_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                <h6 class="modal-title">
-                                                    <font color="white">Avertissement !</font>
-                                                </h6>
-
-                                            </div>
-                                            <div class="modal-body">
-                                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                <form action="{{ route('destroy_formateur') }}" method="GET">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-secondary">Oui </button>
-                                                    <input type="text" value="{{$frm->formateur_id}}" hidden name="formateur_id">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- fin modal delete --}}
 
                                 @endforeach
                                 @endif
@@ -174,16 +129,16 @@
             </p>
 
             {{-- <form class="form form_colab" action="{{ route('rechercheCIN') }}" method="POST">
-                @csrf --}}
-                <div class="form-row d-flex">
-                    <div class="col">
-                        <input type="text" class="form-control mb-2 cin" id="inlineFormInput" name="cin" placeholder="CIN*" required />
-                    </div>
-
-                    <div class="col ms-2">
-                        <button type="submit" class="btn btn-primary mt-2" id="ajouter"><span class="fa fa-search"></span></button>
-                    </div>
+            @csrf --}}
+            <div class="form-row d-flex">
+                <div class="col">
+                    <input type="text" class="form-control mb-2 cin" id="inlineFormInput" name="cin" placeholder="CIN*" required />
                 </div>
+
+                <div class="col ms-2">
+                    <button type="submit" class="btn btn-primary mt-2" id="ajouter"><span class="fa fa-search"></span></button>
+                </div>
+            </div>
             {{-- </form> --}}
 
             @if(Session::has('success'))
@@ -220,72 +175,62 @@
                         <table class="table  table-borderless table-sm">
                             <tbody id="resultat">
 
-                                {{-- @if (count($invitation_formateur)<=0) <tr>
-                                    <td> Aucun invitations en attente</td>
-                                    </tr>
-                                    @else
-                                    @foreach($invitation_formateur as $invit_forma)
-                                    <tr>
-                                        <td>
-                                            <div align="left">
-                                                <strong>{{$invit_forma->nom_formateur.' '.$invit_forma->prenom_formateur}}</strong>
-                                                <p style="color: rgb(238, 150, 18)">{{$invit_forma->mail_formateur}}</p>
-                                            </div>
-                                        <td>
-                                            <a href="{{ route('accept_cfp_formateur',$invit_forma->id) }}">
-                                                <strong>
-                                                    <h5><i class="bx bxs-check-circle actions" title="Accepter"></i></h5>
-                                                </strong>
-                                            </a>
-                                            <a href="{{ route('annulation_cfp_formateur',$invit_forma->id) }}">
-                                                <strong>
-                                                    <h5><i class="bx bxs-x-circle actions" title="Refuser"></i></h5>
-                                                </strong>
-                                            </a>
-                                    </tr>
-                                    @endforeach
-                                    @endif --}}
-                            </tbody>
-                        </table>
 
-                    </div>
+                        </tbody>
+                        </table>
 
                 </div>
 
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                    <div class="table-responsive text-center">
-                        <table class="table  table-borderless table-sm">
-
-                            {{-- @if (count($invitation_formateur)<=0) <tr>
-                                <td> Aucun demmande réfuser</td>
-                                </tr>
-                                @else
-                                @foreach($demmande_formateur as $format)
-                                <tr>
-                                    <td>
-                                        <div align="left">
-                                            <strong>{{$format->nom_formateur.' '.$format->prenom_formateur}}</strong>
-                                            <p style="color: rgb(238, 150, 18)">{{$format->mail_formateur}}</p>
-                                    </td>
-                                    <td>
-                                        <strong>
-                                            <h5><i class="bx bx-user-check"></i></h5>
-                                        </strong>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @endif
-                                </tbody> --}}
-                        </table>
-                    </div>
-                </div>
             </div>
 
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                <div class="table-responsive text-center">
+                    <table class="table  table-borderless table-sm">
+                        <tr>
+                            <td></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
         </div>
 
-
     </div>
+
+    {{-- <a class="dropdown-item" href="" data-toggle="modal" data-target="#bb"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a> --}}
+
+    {{-- modal ajouter stagiaire   --}}
+    <div class="modal fade" id="modal_ajouter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center" style="background-color:green;">
+                    <h6 class="modal-title text-white">Remplissez ces informations</h6>
+
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('enregistrer_nouveau_etp_stagiaire')}}" method="post">
+                        @csrf
+                        <input class="form-control" name="stg" id="stg" value="" hidden><br>
+                        <label><small><b>Matricule</b></small></label>
+                        <input class="form-control" name="matricule" value=""><br>
+                        <label><small><b>Adresse e-mail professionnelle</b></small></label>
+                        <input class="form-control" name="mail_prof" value=""><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Retour </button>
+
+                    <button type="submit" class="btn btn-success"> Enregistrer </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- fin modal delete --}}
+
+    {{-- </strong>&nbsp;&nbsp;<button class='btn btn-success dropdown-item' data-toggle='modal' data-target='#ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button> --}}
+
+</div>
 
 
 </div>
@@ -298,38 +243,41 @@
         var cin = $('.cin').val();
 
         $.ajax({
-           url:"{{route('rechercheCIN')}}",
-           type:'get',
-           data:{
-                  cin:cin
-                },
-           success:function(response){
-              if(response.success){
-                $res = JSON.parse(response);
-
+            url: "{{route('rechercheCIN')}}"
+            , type: 'get'
+            , data: {
+                cin: cin
+            }
+            , success: function(response) {
                 var html = '';
-                for (var $i = 0; $i < res.length; $i++){
-                    html += ' <tr>';
-                    html += '<td><div align="left">';
-                    html += '<strong>'.res[$i].nom_stagiaire.'</strong>';
-                    html += '<strong>'.res[$i].prenom_stagiaire.'</strong>';
-                    html += '<p style="color: rgb(238, 150, 18)">'.res[$i].cin.'</p>';
-                    html += '</div></td>';
-                    html += '<td><div align="rigth">';
-                    html += '<td><div align="rigth">';
-                    html += '<a href="#" style="color: green"><i class="bx bxs-check-circle actions" title="Details"></i>Ajouter </a>';
-                    html += '</div></td>';
-                    $('#resultat').append(html);
+                // console.log(JSON.stringify(response.exist));
+                if (JSON.stringify(response.exist) == 1) {
+                    var res = response.stg;
+                    for (var i = 0; i < res.length; i++) {
+                        $('#stg').val(res[i].id);
+                        $('#resultat').append(
+                            "<tr><td><div align='left'><strong>" + res[i].nom_stagiaire +
+                            "</strong><strong>&nbsp;&nbsp;" + res[i].prenom_stagiaire +
+                            "</strong><strong>&nbsp;&nbsp;" + res[i].cin +
+                            "</strong>&nbsp;&nbsp;<button class='btn btn-success' data-toggle='modal' data-target='#modal_ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button>"
+                        );
+
+                    }
+                } else {
+                    var res = response.msg;
+                    $('#resultat').append(
+                        "<tr><td><div align='left'><strong>" + res + "</strong><strong>"
+                    );
                 }
-              }else{
-                  alert("Error")
-              }
-           },
-           error:function(error){
-              console.log(error)
-           }
+
+
+            }
+            , error: function(error) {
+                console.log(error)
+            }
         });
 
     });
+
 </script>
 @endsection

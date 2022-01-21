@@ -257,7 +257,7 @@ class ParticipantController extends Controller
 
     public function destroy(Request $request)
     {
-        $id = $request->id_get;
+        $id = request()->id;
         //on récupère le matricule , l'activité,entreprise id, du stagiaire
         $resultat = DB::select('SELECT matricule,entreprise_id,departement_id,activiter FROM stagiaires WHERE id = '.$id);
         $matricule = $resultat[0]->matricule;
@@ -367,24 +367,43 @@ class ParticipantController extends Controller
     public function rechercheCIN(Request $request){
         $cin = $request->cin;
         $id = stagiaire::where('cin',$cin)->value('id');
+        if ($id == null) {
+            $datas["exist"]=0;
+            $datas["msg"] = "Verifier le CIN";
+            return response()->json($datas);
+        }
         $etp_id = stagiaire::where('cin',$cin)->value('entreprise_id');
         $etp_id_referent = responsable::where('user_id',Auth::id())->value('entreprise_id');
 
         if ($etp_id != $etp_id_referent) {
-
-                $stg = db::select('select particulier from historique_stagiaires where stagiaire_id ='.$id);
-                $stg_particulier = $stg[0]->particulier;
-                $datas = stagiaire::where('cin', $cin)->get();
-                return response()->json($datas);
+                $stg = db::select('select * from historique_stagiaires where stagiaire_id ='.$id);
+                if($stg!=null)  {
+                    if($stg[0]->nouveau_entreprise_id == $etp_id_referent) {
+                        $datas["exist"]=0;
+                        $datas["msg"] = "Cette personne est déjà dans votre entreprise";
+                        return response()->json($datas);
+                    }
+                    else{
+                        $stg_particulier = $stg[0]->particulier;
+                        $datas["stg"] = stagiaire::where('cin', $cin)->get();
+                        $datas["exist"]=1;
+                        return response()->json($datas);
+                    }
+                }
+                if($stg==null) {
+                    $datas["exist"]=0;
+                    $datas["msg"] = "Aucun résultat";
+                    return response()->json($datas);
+                }
+                // return response()->json($datas);
 
         }
         else{
-            $datas = "Cette personne est déjà dans votre entreprise";
+            $datas["exist"]=0;
+            $datas["msg"] = "Cette personne est déjà dans votre entreprise";
             return response()->json($datas);
+
         }
-
-
-
      }
     // public function rechercheCIN(Request $request){
     //     $cin = $request->cin;
@@ -421,7 +440,18 @@ class ParticipantController extends Controller
     //     }
 
     //  }
-
+    //ajout stagiaire dans une nouvelle entreprise
+    public function nouvelle_entreprise_stagiaire(Request $request){
+        //on récupère l'id entreprise du référent connecté
+        $etp_id = responsable::where('user_id',Auth::id())->value('entreprise_id');
+        $id = $request->stg;
+        $matricule = $request->matricule;
+        $email_nouveau = $request->mail_prof;
+        //on met à jour le nouveau entreprise du stagiaire dans historique et remplacer la valeur particulier par 0
+        db::update('update historique_stagiaires set nouveau_entreprise_id = ?, nouveau_matricule = ? , particulier = ?',[$etp_id,$matricule,0]);
+        db::update('update stagiaires set entreprise_id = ?, matricule = ? ,mail_stagiaire = ? ,activiter = ? where id = ?',[$etp_id,$matricule,$email_nouveau,1,$id]);
+        return redirect()->route('liste_participant');
+    }
     public function rechercheFonction(Request $request)
     {
         $fonction = $request->fonction;
