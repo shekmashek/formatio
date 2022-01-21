@@ -38,7 +38,7 @@ class FormationController extends Controller
             // $categorie = formation::orderBy('nom_formation')->get();
             // $domaines = Domaine::all();
         // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
-            
+
             $categorie= DB::select('select * from formations where status = 1');
             return view('referent.catalogue.formation', compact( 'categorie'));
         }
@@ -129,7 +129,7 @@ class FormationController extends Controller
             // $infos= module::query()
             //                          ->where('nom_formation', ' ', "%{$nom_fomation}%")
             //                         ->get();
-          
+
             return view('referent.catalogue.liste_formation',compact('infos','liste_avis','categorie'));
         }else{
             // $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
@@ -141,7 +141,7 @@ class FormationController extends Controller
     //recheche formation
     // public function search(Request $request){
     //     $search = $request->input('search');
-      
+
     //     $categorie= formation::query()
     //                             ->where('nom_formation', 'LIKE', "%{$search}%")
     //                             ->get();
@@ -182,21 +182,30 @@ class FormationController extends Controller
     }
     public function affichageParModule($id){
         $id = request('id');
+
         $categorie= DB::select('select * from formations where status = 1');
-        $infos = DB::select('select * from moduleformation where module_id = ?',[$id])[0];
-        $nb_avis = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.module_id = ? group by mf.module_id',[$id])[0]->nb_avis;
-        $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
-        $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
-        $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
-        $statistiques = DB::select('select * from v_statistique_avis where module_id = ? order by nombre desc',[$id]);
-        return view('referent.catalogue.detail_formation',compact('infos','cours','programmes','nb_avis','liste_avis','statistiques','categorie'));
-    }
+        $test =  DB::select('select exists(select * from moduleformation where formation_id = '.$id.') as moduleExiste');
+      //on verifie si moduleformation contient le module_id
+        if ($test[0]->moduleExiste == 1){
+            $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
+
+            $nb = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.formation_id = ? group by mf.formation_id',[$id]);
+
+            $nb_avis = $nb[0]->nb_avis;
+            $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
+            $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
+            $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
+            // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
+            return view('referent.catalogue.detail_formation',compact('infos','cours','programmes','nb_avis','liste_avis','categorie'));
+        }
+        else return redirect()->route('liste_formation');
+       }
     public function categorie_formations()
     {
-       
+
         $categorie= formation::all();
        return view('superadmin.catalogue.categories_formations',compact('categorie'));
-       
+
     }
     public function ajout_categorie(Request $request){
         $ids = $request->status;
@@ -210,7 +219,7 @@ class FormationController extends Controller
             formation::where('id', $id)->update([
                 'status' => $nombre_1
                 ]);
-            }        
+            }
         return back();
         }
         public function affiche_categorie()

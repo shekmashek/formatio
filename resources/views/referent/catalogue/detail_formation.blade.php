@@ -4,7 +4,7 @@
     <div class="col-lg-3">
     </div>
 <div class="col-lg-9">
- 
+
 <div class="formation__search">
     <div class="formation__search__form">
         <form class="" method="GET" action="{{route('result_formation')}}">
@@ -25,42 +25,45 @@
     .btn{background-color: #801D68;color: white}
     .btn:hover{color:white}
 </style>
-   </div>   
+   </div>
 </div>
 <section class="detail__formation">
     <div class="container py-4">
         <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5">
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                 <div class="detail__formation__result__item">
-                    <h4 class="py-4">{{$infos->nom_formation}} - {{$infos->nom_module}}</h4>
-                    <p>{{$infos->description}}</p>
+                    @foreach ($infos as $res)
+                    <h4 class="py-4">{{$res->nom_formation}} - {{$res->nom_module}}</h4>
+                    <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis">
-                        <div class="Stars" style="--note: {{ $infos->pourcentage }};"></div>
-                        <span><strong>{{ $infos->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
+                        <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
+                        <span><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
                     </div>
+
+
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                 <div class="detail__formation__result__item2">
-                    <a href="#"><h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$infos->nom}}</span></h6></a>
-                    <div class="text-center"><img src="{{asset('images/CFP/'.$infos->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;"></div>
+                    <a href="#"><h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6></a>
+                    <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;"></div>
                 </div>
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
                     <div class="col"><i class="bx bxs-alarm bx_icon"></i>
                         <span>
-                            @isset($infos->duree_jour)
-                                {{$infos->duree_jour}} jours
+                            @isset($res->duree_jour)
+                                {{$res->duree_jour}} jours
                             @endisset
                         </span>
                         <span>
-                            @isset($infos->duree)
-                                /{{$infos->duree}} h
+                            @isset($res->duree)
+                                /{{$res->duree}} h
                             @endisset
                         </span> </p>
                     </div>
-                    <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$infos->modalite_formation}}</span></div>
-                    <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$infos->niveau}}</span></div>
+                    <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span></div>
+                    <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
@@ -70,7 +73,7 @@
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
                         <h3 class="pb-3">Objectifs</h3>
-                        <p>{{$infos->objectif}}</p>
+                        <p>{{$res->objectif}}</p>
                         <a href="#programme__formation"><button type="button" class="btn btn-warning">Consulter le programme de cette formation</button></a>
                     </div>
                 </div>
@@ -82,7 +85,7 @@
                             <div class="row d-flex flex-row">
                                 <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?</span>
                                 <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                                <div class="col-11"><p>{{$infos->cible}}</p></div>
+                                <div class="col-11"><p>{{$res->cible}}</p></div>
                             </div>
                         </div>
 
@@ -90,7 +93,7 @@
                             <div class="row d-flex flex-row">
                                 <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
                                 <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                                <div class="col-11"><p>{{$infos->prerequis}}</p></div>
+                                <div class="col-11"><p>{{$res->prerequis}}</p></div>
                             </div>
                             <div class="row d-flex flex-row">
                                 <div class="col-1"><i class="bx bx-chevron-right"></i></div>
@@ -99,6 +102,7 @@
                         </div>
                         <div id="programme__formation"></div>
                     </div>
+                    @endforeach
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__item__left">
@@ -138,10 +142,10 @@
                             <div class="row detail__formation__programme__avis__rated d-flex">
                                 <div class="col-md-4 text-center d-flex flex-column">
                                     <div class="rating-box">
-                                        <h1 class="pt-4">{{ $infos->pourcentage }}</h1>
+                                        <h1 class="pt-4">{{ $res->pourcentage }}</h1>
                                         <p class="">sur 5</p>
                                     </div>
-                                    <div class="Stars" style="--note: {{ $infos->pourcentage }};"></div>
+                                    <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                                 </div>
                                 <div class="col-md-8 pt-2">
                                     <div class="table-rating-bar justify-content-center">
@@ -150,46 +154,46 @@
                                                 <td class="rating-label">Excellent</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        <div class="bar-5" style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;"></div>
+                                                        {{-- <div class="bar-5" style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;"></div> --}}
                                                     </div>
                                                 </td>
-                                                <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%</td>
+                                                {{-- <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%</td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Bien</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        <div class="bar-4" style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;"></div>
+                                                        {{-- <div class="bar-4" style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;"></div> --}}
                                                     </div>
                                                 </td>
-                                                <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%</td>
+                                                {{-- <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%</td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Moyenne</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        <div class="bar-3" style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;"></div>
+                                                        {{-- <div class="bar-3" style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;"></div> --}}
                                                     </div>
                                                 </td>
-                                                <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%</td>
+                                                {{-- <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%</td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Normal</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        <div class="bar-2" style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;"></div>
+                                                        {{-- <div class="bar-2" style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;"></div> --}}
                                                     </div>
                                                 </td>
-                                                <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%</td>
+                                                {{-- <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%</td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Terrible</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        <div class="bar-1" style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;"></div>
+                                                        {{-- <div class="bar-1" style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;"></div> --}}
                                                     </div>
                                                 </td>
-                                                <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%</td>
+                                                {{-- <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%</td> --}}
                                             </tr>
                                         </table>
                                     </div>
@@ -229,7 +233,7 @@
                 <div class="row detail__formation__item__main">
                     <div class="detail__prix__main__presentiel pt-3">
                         <div>
-                            <p class="text-uppercase">{{$infos->modalite_formation}}</p>
+                            <p class="text-uppercase">{{$res->modalite_formation}}</p>
                         </div>
                     </div>
                 </div>
@@ -241,7 +245,7 @@
                     </div>
                     <div class="col-lg-6 detail__prix__main__ref2">
                         <div>
-                            <p>{{ $infos->reference }}</p>
+                            <p>{{ $res->reference }}</p>
                         </div>
                     </div>
                 </div>
@@ -256,13 +260,13 @@
                         <div>
                             <p>
                                 <span>
-                                    @isset($infos->duree_jour)
-                                        {{$infos->duree_jour}} jours
+                                    @isset($res->duree_jour)
+                                        {{$res->duree_jour}} jours
                                     @endisset
                                 </span>
                                 <span>
-                                    @isset($infos->duree)
-                                        /{{$infos->duree}} h
+                                    @isset($res->duree)
+                                        /{{$res->duree}} h
                                     @endisset
                                 </span> </p>
                         </div>
@@ -277,7 +281,7 @@
                     </div>
                     <div class="col-lg-8 detail__prix__main__prix2">
                         <div>
-                            <p><span>{{number_format($infos->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+                            <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
 
                         </div>
                     </div>

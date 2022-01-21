@@ -19,7 +19,8 @@ CREATE TABLE `formations` (
   `domaine_id` int(11) NOT NULL REFERENCES domaines(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `status` boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `formations` (`id`, `nom_formation`, `domaine_id`, `created_at`, `updated_at`, `cfp_id`) VALUES
