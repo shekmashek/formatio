@@ -58,7 +58,7 @@
                 <div class="d-flex align-items-center justify-content-space-between ms-3 img"><a
                         href="{{ route('accueil_admin') }}" class="d-flex align-items-center"><img
                             src="{{asset('img/images/logo_fmg54Ko.png')}}" id="img" class="img-fluid logo"
-                            alt="logo">&nbsp;<span class="d-flex textS">FORMATION.MG</span></a></div>
+                            alt="logo">&nbsp;<span class="d-flex textS">Tableau de bord</span></a></div>
                 <div class="nav_list">
                     <ul class="lisst-unstyled p-0">
                         {{-- categorie de formation --}}
@@ -548,7 +548,7 @@
         </div>
     </div>
     <!--Container Main start-->
-    <div class="container-fluid height-100 px-0 bg-light" id="content" style="padding-top: 1rem">
+    <div class="container-fluid ps-0 height-100 bg-light" id="content" style="padding-top: 1rem">
         {{-- header --}}
         <header class="header row align-items-center g-0" id="header">
             <div class="col-5">
@@ -614,7 +614,7 @@
 
                 {{-- entreprise --}}
                 <div class="col text-right d-flex flex-row" style="align-items: left; text-align:center" >
-                    <div class="header_etp_cfp mt-3 d-flex flex-row">
+                    <div class="header_etp_cfp mt-2 pt-1 d-flex flex-row" style="">
                         <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68; font-size: 24px"></i></p>
                         <p style="text-transform: capitalize; text-align: center;color: #801D68">&nbsp;Numerika</p>&nbsp;&nbsp;&nbsp;
                         <div class="d-flex pro_plan"><p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
@@ -691,7 +691,7 @@
                 </div>
                 {{-- logout --}}
                 <div class="col">
-                    <div class="text_resp ms-5 mt-2 text-right d-flex flex-row">
+                    <div class="text_resp ms-5 mt-2 pt-1 text-right d-flex flex-row">
                         <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
                         class="deconnexion_text"><i class='bx bx-log-out' style="color :#801D68;font-size:24px;"></i></a></p>
@@ -726,7 +726,7 @@
                                 </div>
                                 <div class="footer_list ms-2 me-2">
                                     <a href="#">
-                                        <p>Infomations légales</p>
+                                        <p>Informations légales</p>
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
