@@ -92,7 +92,9 @@ class HomeController extends Controller
             return view('layouts.accueil_admin');
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
+
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
+
             $entreprise = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation'));
         }
