@@ -14,58 +14,41 @@
         <thead class="thead_projet">
             <th class="th_top_left" style="border-top: none;"> Projet </th>
             <th> Session </th>
-            <th> Centre de formation </th>
-            <th> Date </th>
-            <th> Lieu </th>
-            <th> Heure </th>
+            @can('isCFP')
+                <th> Entreprise </th>
+            @endcan
+            @can('isReferent')
+                <th> Centre de formation </th>
+            @endcan
+            <th> Date du projet</th>
+            {{-- <th> Lieu </th>
+            <th> Heure </th> --}}
             <th> Statut </th>
-            <th> Participants </th>
+            {{-- <th> Participants </th> --}}
             <th class="th_top_right" style="border-top: none; border-right: none;"> Nouveau session </th>
         </thead>
         <tbody>
-            <tr>
-                <td> Projet 1 </td>
-                <td> SES01 </td>
-                <td> Numerika </td>
-                <td> 11 janv au 25 janv </td>
-                <td> Ampandrana </td>
-                <td> 09 h à 10 H </td>
-                <td> <p class="en_cours m-0 p-0">En cours</p> </td>
-                <td>
-
-                </td>
-                <td>
-                    {{-- <i class="far fa-plus pb-3 i_carret" data-toggle="collapse" href="#session_id" role="button" aria-expanded="false" aria-controls="collapseExample"></i> --}}
-                    <i class="far fa-plus pb-3 i_carret"></i>
-                </td>
-            </tr>
-        </tbody>
+            @foreach ($data as $pj)
+                <tr>
+                    <td> {{ $pj->nom_projet }} </td>
+                    <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
+                    @can('isCFP')
+                        <td> {{ $pj->nom_etp }} </td>
+                    @endcan
+                    @can('isReferent')
+                        <td> {{ $pj->nom_cfp }} </td>
+                    @endcan
+                    <td> {{ $pj->date_projet }} </td>
+                    {{-- <td> Ampandrana </td>
+                    <td> 09 h à 10 H </td> --}}
+                    <td> <p class="en_cours m-0 p-0">{{ $pj->status }}</p> </td>
+                    <td> 
+                        <i class="far fa-plus pb-3 i_carret"></i>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody> 
     </table>
-            {{-- <div class="collapse mx-1" id="session_id">
-                    <table class="table">
-                        <thead>
-                            <th> Session </th>
-                            <th> Lieu </th>
-                            <th> Heure </th>
-                            <th> Date </th>
-                            <th> Participants </th>
-                            <th> Status </th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>SES01</td>
-                                <td> Ampandrana </td>
-                                <td> 09 H à 11 H</td>
-                                <td> 11 janv </td>
-                                <td>  </td>
-                                <td> <p class="en_cours m-0 p-0">En cours</p> </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="shadow_personnel col-3">
-                        <i class="fa fa-folder-plus ms-2" style="font-size: 20px; color:blue;">&nbsp;<a class="m-0 p-0" style="font-size: 12px;"> Ajouter une nouvelle session </a></i>
-                    </div>
-                </div>     --}}
 
     </div>
 

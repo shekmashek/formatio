@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Cfp;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -13,6 +15,7 @@ use App\groupe;
 use App\formation;
 use App\module;
 use App\formateur;
+use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
@@ -88,5 +91,23 @@ class SessionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function detail_session(){
+        $user_id = Auth::user()->id;
+        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        $id = request()->id_session;
+        $fonct = new FonctionGenerique();
+        $forma = new formateur();
+
+        // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+        $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+        // $formateur = $forma->getFormateur($formateur1,$formateur2);
+        // $formation = $fonct->findWhere("formations",["cfp_id"],[$cfp_id]);
+        $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
+        $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+        $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
+        $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
+        return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas'));
     }
 }

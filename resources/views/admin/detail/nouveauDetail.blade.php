@@ -1,14 +1,5 @@
-@extends('./layouts/admin')
-@section('content')
-<div id="page-wrapper">
+<div>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <br>
-                <h3>DETAILS DES PROJETS</h3>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
@@ -30,7 +21,7 @@
                                     <input type="text" name="sess_id" value="{{$id}}" style="display:none">
                                     {{-- <label name = "date_session_debut">Session : {{$session_debut}} </label> - <label name="date_session_fin"> {{$session_fin}} </label> --}}
                                     <br>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="projet">Entreprise</label><br>
                                         <select class="form-control" id="etp" name="etp">
                                             <option onselected>Choisissez une entreprise....</option>
@@ -44,21 +35,12 @@
                                         <select class="form-control" id="liste_pj" name="projet">
                                             <option onselected>Choisissez un projet....</option>
                                             @foreach($projet as $pj)
-                                            <option value="{{$pj->id}}">{{$pj->nom_projet}}</option>
+                                            <option value="{{$pj->projet_id}}">{{$pj->nom_projet}}</option>
                                             @endforeach
                                         </select>
                                         <span style = "color:#ff0000;" id="projet_id_err">Aucun projet  détecté! veuillez choisir l'entreprise</span>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="groupe">Groupe</label><br>
-                                        <select class="form-control" id="groupe" name="groupe">
-                                            {{-- @foreach($groupe as $gp)
-                                            <option value="{{$gp->id}}">{{$gp->nom_groupe}}</option>
-                                            @endforeach --}}
-                                        </select>
-                                        <p><strong style="color: red" id="err_session">Aucune session détectée! Veuillez choisir un projet pour avoir une session</strong></p>
-                                    </div>
+                                    </div> --}}
 
 
                             <div class="form-group">
@@ -69,7 +51,6 @@
                                     @endforeach
                                 </select>
                                 <p><strong style="color: red" id="err_formateur"></strong></p>
-
                             </div>
                             <div class="form-group">
                                 <label for="lieu">Lieu</label>
@@ -107,8 +88,9 @@
 </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <script>
     $('#liste_pj').on('change', function(e) {
         $('#groupe').empty();
@@ -274,6 +256,4 @@
 
     });
 
-
 </script>
-@endsection
