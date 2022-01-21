@@ -1,12 +1,8 @@
 @extends('./layouts/admin')
 @section('title')
-<div class="container">
-<div class="row">
-    <div class="col-lg-12">
-    <p style="font-size: 20px; color:white">Recherche de Formation</p>
-</div>
-</div>
-</div>
+
+    <p style="font-size: 20px; color:white" class="ms-5">Recherche de Formation</p>
+
 @endsection
 @section('content')
     <section class="formation">
@@ -31,7 +27,6 @@
                                     <div class="sous-formation-main">
                                         <div class="sous-formation-content d-flex flex-column flex-sm-row align-items-start">
                                                 <div class="sous-formation-row dropdown-item ">
-
                                                 </div>
                                         </div>
                                     </div>
@@ -49,7 +44,9 @@
                     <div class="formation__search">
                         <div class="formation__search__form">
                             <form class="" method="GET" action="{{route('result_formation')}}">
-                           
+                                {{-- <form action="{{ route('search') }}" method="GET">
+                                    <input type="text" name="search" class="form-control" required/>: --}}
+                           @csrf
                                 <input type="text" id="reference_search" name="nom_formation" placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
                                 <button type="submit" class="btn">
                                     <i class="fa fa-search"></i>
@@ -57,65 +54,33 @@
                             </form>
                         </div>
                     </div>
-                    <button type="button" class="btn btn" style="border-radius: 15px">Excel</button>
-                    <button type="button" class="btn btn" style="border-radius: 15px">Management</button>
-                    <button type="button" class="btn btn" style="border-radius: 15px">Ressources Humaines</button>
-                    <button type="button" class="btn btn" style="border-radius: 15px">Développement Personnel</button>
+                  
+ 
+                    @foreach ($categorie as $ctg )
+                    <a href="{{route('select_par_module',$ctg->id)}}"><button type="button" class="btn btn" style="border-radius: 15px">{{$ctg->nom_formation}}</button></a>
+                    @endforeach
                     <style>
-                        .btn{background-color: #542356;color: white}
+                    
+                        .btn{background-color: #801D68;color: white}
                         .btn:hover{color:white}
                     </style>
-                    
-                    {{-- <div class="formation__item set-bg" id>
+                       </div>   
+                    </div>
+                    <br>
+                    <br>
+                    <div class="container">
                         <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="formation-service">
-                                    <h4><span class="lnr lnr-user"></span>Formateurs Experts</h4>
-                                    <p>
-                                        Nos consultants-formateurs sont des experts dans leurs univers d'intervention en conseil et en formation. Leur expérience fait leur force. Ils évoluent avec les besoins de l'apprenant et les enjeux de l'entreprise. Ils sont sélectionnés selon un processus qualité strict.        </p>
-                                </div>
+                            <div class="col-lg-3">
                             </div>
-                            <div class="col-lg-4 col-md-2">
-                                <div class="formation-service">
-                                    <h4><span class="lnr lnr-license"></span>Services Professionnels</h4>
-                                    <p>
-                                        Avec Formation.mg, vous pouvez compter sur une expertise de pointe.
-                                </div>
+                        <div class="col-lg-9">
+                    <div class="formation__item set-bg" id>
+                        <h3>Les formations les plus recherchées </h3><br>
+                    </div>
+                     </div>
+                     
+                      
                             </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="formation-service">
-                                    <h4><span class="lnr lnr-phone"></span>Support de Formation</h4>
-                                    <p>
-                                        Nous mettons à la disposition des formateurs,  des supports de formation téléchargeables immédiatement.        </p>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="formation-service">
-                                    <h4><span class="lnr lnr-rocket"></span>Compétence Téchnique</h4>
-                                    <p>
-                                        Les compétences techniques ont leur part d’importance pour décrocher un emploi. Nous vous disons pourquoi et comment les mettre en avant.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="formation-service">
-                                    <h4><span class="lnr lnr-diamond"></span>Récommander </h4>
-                                    <p>
-                                        Formation en bureautique</p>
-                                        <p>Formation en Langue</p>
-                                        <p>Formation en développement personnel
-                                    </p>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-lg-4 col-md-6">
-                                <div class="formation-service">
-                                    <h4><span class="lnr lnr-bubble"></span>Des retours positives</h4>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, doloremque. Neque asperiores enim dicta sapiente distinctio assumenda illum sit sunt commodi, cum vero optio adipisci soluta laboriosam nobis nemo nihil!                                    </p>
-                                    </p>
-                                </div>
-                            </div> --}}
+                        </div> 
                         </div>
                     </div>
                 </div>
@@ -126,11 +91,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script type="text/javascript">
         // CSRF Token
-
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function(){
           $( "#reference_search" ).autocomplete({
-
             source: function( request, response ) {
               // Fetch data
               $.ajax({
@@ -144,7 +107,6 @@
                 success: function( data ) {
                     // alert("eto");
                    response( data );
-
                 },error:function(data){
                     alert("error");
                     //alert(JSON.stringify(data));
@@ -158,7 +120,6 @@
         }
           });
         });
-
     $(".domaine").on('mouseover',function(e){
         var id = $(this).data("id");
         $.ajax({
@@ -175,9 +136,7 @@
             var html = '';
              for (let i = 0; i < formations.length; i++) {
                 var url_formation = '{{ route("select_par_formation", ":id") }}';
-
                 url_formation = url_formation.replace(':id', formations[i].id);
-
                 html += '<dl class="sous-formation-items" data-role="two-menu">';
                 html += '<dt><a href="'+url_formation+'">'+formations[i].nom_formation+'</a></dt>';
                 html += '<dd class="d-flex flex-column">';
@@ -202,7 +161,6 @@
             $(".dropdown>.dropdown-menu").css("display", "none");
         });
     });
-
 </script>
 
 @endsection

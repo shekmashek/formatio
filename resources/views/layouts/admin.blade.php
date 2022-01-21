@@ -427,7 +427,12 @@
                         <a href="{{route('ListeAbonnement')}}" class="nav_linke liste"><i class='bx bxl-sketch nav_icon'></i><span class="nav_name">Abonnement</span></a>
                     </li>
                     @endcan
-
+                    @can('isSuperAdmin')
+                    <li class="my-2">
+                        <a href="{{route('categorie')}}" class="nav_linke liste"><i class='bx bxl-sketch nav_icon'></i><span class="nav_name">Categorie Formation</span></a>
+                    </li>
+                    @endcan
+                    
                     </ul>
                 </div>
                 <div>
@@ -658,6 +663,19 @@
 
     <script src="{{asset('js/qcmStep.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/qcmStep.css')}}">
+      <!--Manomboka eto ny chat-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/61e7c1aab84f7301d32bc41c/1fpokp17j';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 
 <script>

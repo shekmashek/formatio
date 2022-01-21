@@ -178,7 +178,10 @@ Route::post('/delete_formation/{id}','FormationController@destroy')->name('destr
 Route::post('/show_formation/{id}','FormationController@show')->name('show_formation');
 Route::get('/liste_formation/{id?}','FormationController@index')->name('liste_formation');
 Route::get('/nouvelle_formation','FormationController@nouvelle_formation')->name('nouvelle_formation');
-
+//route categorie_formation
+Route::get('/categorie','FormationController@categorie_formations')->name('categorie');
+//route ajout_categorie_formation
+Route::get('/ajout_categorie','FormationController@ajout_categorie')->name('ajout_categorie');
 //route catalogue de formation
 Route::get('result__formation','FormationController@rechercheParModule')->name('result_formation');
 Route::get('search__formation','FormationController@getModulesParReference')->name('search__formation');
