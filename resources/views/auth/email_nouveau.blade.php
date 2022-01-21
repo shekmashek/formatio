@@ -19,59 +19,34 @@
     <div class="container postion_login login h-100">
         <div class="col-12">
             <div class="container mt-5 h-100">
-                <form id="form_add_contact" method="POST" action="{{ route('login') }}" class="h-50">
+
+
+
+                <form id="form_add_contact" method="POST" action="{{ route('update_mail_stagiaire') }}" class="h-50">
                     @csrf
                     <div class="form-row background_transparent">
                         <div class="col-12" align="center">
+
                             <div class="img_top mt-4">
                                 <img src="{{ asset('img/images/logo_fmg54Ko.png') }}" alt="background" class="img-fluid">
                             </div>
+                            <span>
+                                <strong>{{$msg}}</strong>
+                            </span>
                             <div>
                                 <div class="form-group mt-4">
                                     <input type="email" name="email" placeholder="E-mail" class="form-control input_design @error('email') is-invalid @enderror" autocomplete="off">
-                                    @error('email')
-                                    <span class=" invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-
                                 </div>
                             </div>
                             <div>
-                                <div class="form-group mt-4">
-                                    <div class="input-group">
-                                        <input placeholder="Mot de passe" class="form-control input_design @error('password') is-invalid @enderror" type="password" name="password" id="password" autocomplete="off">
-                                        <div class="input-group-append">
-                                            <button class="btn btn_masquer" onclick="Afficher()" type="button"><span id="eye_icon" style="cursor: pointer" class="ms-2">Afficher</span></button>
-                                        </div>
-                                    </div>
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="text-center">
-                                    @if (Route::has('password.request'))
-                                    <label><a href="{{ route('password.request') }}" class="forgot-login">{{ __('Mot de passe oublié?') }}</a></label>
-                                    @endif
-                                </div>
+
                             </div>
                             <div>
                                 <div class="form-group mt-3 mb-4" align="center">
-                                    <button type="submit" class="btn btn-primary btn-center btn-login ">{{__('Se connecter à votre compte pro')}}</button>
+                                    <button type="submit" class="btn btn-primary btn-center btn-login ">{{__('Modifier mon e-mail')}}</button>
                                 </div>
                             </div>
-                            <div class="d-flex flex-row">
-                                <hr>
-                                <div class="mx-3"><p>ou</p></div>
-                                <hr>
-                            </div>
-                            <div>
-                                <div class="form-group mt-4 mb-2" align="center">
-                                    <button type="submit" class="btn btn-primary btn-center btn-login_creer ">{{__('Creer votre compte pro')}}</button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </form>

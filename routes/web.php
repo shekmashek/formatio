@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('sign-in', function () {
-    return view('auth/connexion');
+    return view('auth.connexion');
 })->name('sign-in');
 
 Route::get('/', function () {
@@ -146,7 +146,7 @@ Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
 
-//route participant
+//route----------------- STAGIAIRE
 Route::resource('participant','ParticipantController')->except([
     'create','edit','destroy','update'
 ]);
@@ -154,7 +154,7 @@ Route::get('/nouveau_participant','ParticipantController@index')->name('nouveau_
 Route::get('/liste_participant/{id?}','ParticipantController@create')->name('liste_participant');
 Route::get('/edit_participant/{id?}','ParticipantController@edit')->name('edit_participant');
 
-Route::get('/destroy_participant','ParticipantController@destroy')->name('destroy_participant');
+Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('destroy_participant');
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::get('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
@@ -168,8 +168,12 @@ Route::get('/search','ParticipantController@getStagiaires')->name('search');
 // route recherche par fonction
 Route::get('rechercheFonction/{matricule?}','ParticipantController@rechercheFonction')->name('rechercheFonction');
 Route::get('/searchFonction','ParticipantController@getStagiairesFonction')->name('searchFonction');
+Route::get('/searchCIN','ParticipantController@getStagiairesCIN')->name('searchCIN');
 
-
+Route::post('update_mail_stagiaire','HomeController@update_email' )->name('update_mail_stagiaire');
+Route::get('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
+//ajout d'un stagiaire existant dans une nouvelle entreprise
+Route::post('enregistrer_nouveau_etp_stagiaire','ParticipantController@nouvelle_entreprise_stagiaire')->name('enregistrer_nouveau_etp_stagiaire');
 //route formation
 Route::resource('formation','FormationController')->except([
     'index','destroy','show'

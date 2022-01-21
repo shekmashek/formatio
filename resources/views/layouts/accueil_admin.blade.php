@@ -56,7 +56,7 @@
     <div class="ribbon">
         <p>
             <strong class="ribbonData clignote">Guide d'utilisation</strong>
-        </p> 
+        </p>
     </div>
     <section>
         <ul>
@@ -73,7 +73,7 @@
     <div class="ribbon">
         <p>
             <strong class="ribbonData clignote">Creation de projet</strong>
-        </p> 
+        </p>
     </div>
     <section>
         <ul>
@@ -90,7 +90,7 @@
     <div class="ribbon">
         <p>
             <strong class="ribbonData clignote">Facture et encaissement</strong>
-        </p> 
+        </p>
     </div>
     <section>
         <ul>
@@ -107,7 +107,7 @@
     <div class="ribbon my-3">
         <p>
             <strong class="ribbonData clignote">Collaboration avec d'autres utilisateurs</strong>
-        </p> 
+        </p>
     </div>
     <section>
         <ul>
@@ -124,7 +124,7 @@
     <div class="ribbon">
         <p>
             <strong class="ribbonData clignote">Abonnement</strong>
-        </p> 
+        </p>
     </div>
     <section>
         <ul>
@@ -162,60 +162,60 @@
       font-size: 20px;
       animation: clignote 2s linear infinite;
     }
-    @keyframes clignote {  
+    @keyframes clignote {
       50% { opacity: 0; }
     }
-    
 
-    .ribbon { 
-        position: relative; 
-        z-index:99; 
-        padding:0 2em; 
-    } 
-    .ribbon p { 
+
+    .ribbon {
+        position: relative;
+        z-index:99;
+        padding:0 2em;
+    }
+    .ribbon p {
         /* background: #037cd5;  */
         background: orangered;
-        color: #fff; 
-        font-size: 18px; 
-        text-align: center; 
-        padding: 1em 2em; 
-        margin: 0 0 3em; 
-        position: relative; 
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        padding: 1em 2em;
+        margin: 0 0 3em;
+        position: relative;
     }
-    .ribbon p:before, 
-    .ribbon p:after { 
-        content: ""; 
-        position: absolute; 
-        display: block; 
-        bottom: -1em; 
-        border: 1.5em solid #0361a7 ; 
-        z-index: -1; 
+    .ribbon p:before,
+    .ribbon p:after {
+        content: "";
+        position: absolute;
+        display: block;
+        bottom: -1em;
+        border: 1.5em solid #0361a7 ;
+        z-index: -1;
     }
-    .ribbon p:before { 
-        left: -2em; 
-        border-right-width: 1.5em; 
-        border-left-color: transparent; 
+    .ribbon p:before {
+        left: -2em;
+        border-right-width: 1.5em;
+        border-left-color: transparent;
     }
-    .ribbon p:after { 
-        right: -2em; 
-        border-left-width: 1.5em; 
-        border-right-color: transparent; 
+    .ribbon p:after {
+        right: -2em;
+        border-left-width: 1.5em;
+        border-right-color: transparent;
     }
-    .ribbon .ribbonData:before, 
-    .ribbon .ribbonData:after { 
-        content: ""; 
-        position: absolute; 
-        display: block; 
-        border-style: solid; 
-        border-color: #014679 transparent transparent transparent; 
-        bottom: -1em; 
+    .ribbon .ribbonData:before,
+    .ribbon .ribbonData:after {
+        content: "";
+        position: absolute;
+        display: block;
+        border-style: solid;
+        border-color: #014679 transparent transparent transparent;
+        bottom: -1em;
     }
-    .ribbon .ribbonData:before { 
-        left: 0; 
-        border-width: 1em 0 0 1em; 
+    .ribbon .ribbonData:before {
+        left: 0;
+        border-width: 1em 0 0 1em;
     }
-    .ribbon .ribbonData:after { 
-        right: 0; 
+    .ribbon .ribbonData:after {
+        right: 0;
         border-width: 1em 1em 0 0; ]
     }
 </style>
