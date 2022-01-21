@@ -74,13 +74,24 @@ class Collaboration extends Model
 
     // ========================= invitation refuse
 
+    // ----------------------------------------------------------------------
+    public function insert_invitation_refuser_etp_cfp($cfp_id,$etp_id){
+        $data=[$cfp_id,$etp_id];
+        DB::insert('insert into refuse_demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at) values (?,?, NOW())', $data);
+        DB::commit();
+    }
     public function suprime_invitation_collaboration_etp_cfp($id){
         DB::delete('delete from demmande_cfp_etp where id = ?', [$id]);
         DB::commit();
 
         return back();
     }
-
+    // -----------------------------------------
+    public function insert_invitation_refuser_cfp_etp($cfp_id,$etp_id){
+        $data=[$cfp_id,$etp_id];
+        DB::insert('insert into refuse_demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at) values (?,?, NOW())', $data);
+        DB::commit();
+    }
     public function suprime_invitation_collaboration_cfp_etp($id){
         DB::delete('delete from demmande_etp_cfp where id = ?', [$id]);
         DB::commit();
@@ -88,6 +99,8 @@ class Collaboration extends Model
         return back();
     }
 
+
+// --------------------------------------------
     public function suprime_invitation_collaboration_cfp_formateur($id){
         DB::delete('delete from demmande_formateur_cfp where id = ?', [$id]);
         DB::commit();

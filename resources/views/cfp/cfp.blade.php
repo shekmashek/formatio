@@ -73,7 +73,7 @@
                                         </div>
                                     <td>
                                         <div align="rigth">
-                                            <strong><i class="bx bx-user-check"></i></strong>
+                                            <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                                         </div>
                                     </td>
                                     <td>
@@ -150,36 +150,14 @@
 
             @if(Session::has('success'))
             <div class="alert alert-success">
-                {{Session::get('success')}}
+                <strong>{{Session::get('success')}}</strong>
             </div>
             @endif
             @if(Session::has('error'))
             <div class="alert alert-danger">
-                {{Session::get('error')}}
+                <strong>{{Session::get('error')}}</strong>
             </div>
             @endif
-
-
-            {{-- <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav nav-tabs navbar-nav" id="myTab" role="tablist">
-                            <li class="nav-link" role="presentation">
-                                <a href="#" class=" active" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
-                                    Invitations en attentes
-                                </a>
-                            </li>
-                            <li class="nav-link" role="presentation">
-                                <a href="#" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                    Demmande en attente
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-                </div>
-            </nav> --}}
 
             <div class="container mt-5">
                 <div class="row">
@@ -192,7 +170,7 @@
                             </li>
                             <li class="nav-item ms-5">
                                 <a href="#" class="" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                    Demmande en attente
+                                    Invitations réfuser
                                 </a>
                             </li>
 
@@ -211,37 +189,37 @@
                         <table class="table  table-borderless table-sm">
                             <tbody id="data_collaboration">
 
-                                        @if (count($invitation)<=0) <tr>
-                                            <td> Aucun invitations en attente</td>
-                                            </tr>
-                                            @else
-                                            @foreach($invitation as $invit_cfp)
-                                            <tr>
-                                                <td>
-                                                    <div align="left">
-                                                        <strong>{{$invit_cfp->nom_cfp}}</strong>
-                                                        <p style="color: rgb(238, 150, 18)">{{$invit_cfp->mail_cfp}}</p>
-                                                        <h6>{{$invit_cfp->domaine_de_formation}}</h6>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('accept_etp_cfp',$invit_cfp->id) }}">
-                                                        <strong>
-                                                            <h5><i class="bx bxs-check-circle actions" title="Accepter"></i> accepter</h5>
-                                                        </strong>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('annulation_etp_cfp',$invit_cfp->id) }}">
-                                                        <strong>
-                                                            <h5><i class="bx bxs-x-circle actions" title="Refuser"></i> réfuser</h5>
-                                                        </strong>
-                                                    </a>
-                                            </tr>
-                                            @endforeach
-                                            @endif
-                                    </tbody>
-                                </table>
+                                @if (count($invitation)<=0) <tr>
+                                    <td> Aucun invitations en attente</td>
+                                    </tr>
+                                    @else
+                                    @foreach($invitation as $invit_cfp)
+                                    <tr>
+                                        <td>
+                                            <div align="left">
+                                                <strong>{{$invit_cfp->nom_cfp}}</strong>
+                                                <p style="color: rgb(238, 150, 18)">{{$invit_cfp->mail_cfp}}</p>
+                                                <h6>{{$invit_cfp->domaine_de_formation}}</h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('accept_etp_cfp',$invit_cfp->id) }}">
+                                                <strong>
+                                                    <h5><i class="bx bxs-check-circle actions" title="Accepter"></i> accepter</h5>
+                                                </strong>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('annulation_etp_cfp',$invit_cfp->id) }}">
+                                                <strong>
+                                                    <h5><i class="bx bxs-x-circle actions" title="Refuser"></i> réfuser</h5>
+                                                </strong>
+                                            </a>
+                                    </tr>
+                                    @endforeach
+                                    @endif
+                            </tbody>
+                        </table>
 
                     </div>
 
@@ -249,40 +227,65 @@
 
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-                            <div class="table-responsive text-center">
+                    <div class="table-responsive text-center">
 
-                                <table class="table  table-borderless table-sm">
-                                    <tbody>
-                                        @if (count($demmande)<=0) <tr>
-                                            <td> Aucun demmande en attente</td>
-                                            </tr>
-                                            @else
-                                            @foreach($demmande as $demand_cfp)
-                                            <tr>
+                        <table class="table  table-borderless table-sm">
+                            <tbody>
+                                @if (count($refuse_demmande_cfp)<=0) <tr>
+                                    <td> Aucun invitations réfuser</td>
+                                    </tr>
+                                    @else
+                                    @foreach($refuse_demmande_cfp as $refuse_invit)
+
+                                    <tr>
+                                        <td>
+                                            <div align="left">
+                                                <strong>{{$refuse_invit->nom}}</strong>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="left">
+                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$refuse_invit->domaine_de_formation}})</strong></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                le {{$refuse_invit->date_refuse}}
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <strong style="color: rgb(242, 121, 9)">
+                                                <i class="bx bxs-x-circle"></i> invitation réfuser
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+                                    {{-- <tr>
                                                 <td>
                                                     <div align="left">
-                                                        <strong>{{$demand_cfp->nom_cfp}}</strong>
-                                                        <p style="color: rgb(238, 150, 18)">{{$demand_cfp->mail_cfp}}</p>
-                                                        <h6>{{$demand_cfp->domaine_de_formation}}</h6>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <strong>
-                                                        <h5><i class="bx bxs-x-circle"></i> en attente</h5>
-                                                    </strong>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                            @endif
-                                    </tbody>
-                                </table>
-
+                                                        <strong>{{$refus->nom}}</strong>
+                                    <p style="color: rgb(238, 150, 18)">{{$refus->mail_cfp}}</p>
+                                    <h6>{{$refus->domaine_de_formation}}</h6>
                     </div>
+                    </td>
+                    <td>
+                        <strong>
+                            <h5><i class="bx bxs-x-circle"></i> en attente</h5>
+                        </strong>
+                    </td>
+                    </tr> --}}
+                    @endforeach
+                    @endif
+                    </tbody>
+                    </table>
+
                 </div>
             </div>
-
         </div>
+
     </div>
+</div>
 
 </div>
 

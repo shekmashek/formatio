@@ -328,11 +328,15 @@ public function create_cfp_formateur(Request $req)
 
     public function annulation_invitation_etp_cfp($id)
     {
+        $data = $this->fonct->findWhereMulitOne("demmande_cfp_etp",["id"],[$id]);
+        $this->collaboration->insert_invitation_refuser_cfp_etp($data->demmandeur_cfp_id,$data->inviter_etp_id);
         return $this->collaboration->suprime_invitation_collaboration_etp_cfp($id);
     }
 
     public function annulation_invitation_cfp_etp($id)
     {
+        $data = $this->fonct->findWhereMulitOne("demmande_etp_cfp",["id"],[$id]);
+        $this->collaboration->insert_invitation_refuser_etp_cfp($data->inviter_cfp_id,$data->demmandeur_etp_id);
         return $this->collaboration->suprime_invitation_collaboration_cfp_etp($id);
     }
 

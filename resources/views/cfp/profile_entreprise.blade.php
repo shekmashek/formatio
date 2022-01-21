@@ -72,19 +72,10 @@
                                     </div>
                                 <td>
                                     <div align="rigth">
-                                        <strong><i class="bx bx-user-check"></i></strong>
+                                        <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                                     </div>
                                 </td>
                                 <td>
-                                    {{-- <div class=" btn-group dropend">
-                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <li style="font-size:15px"><a href="{{route('profile_entreprise',$etp->entreprise_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>Afficher</a></li>
-                                            <li style="font-size:15px"><a href="#" data-toggle="modal" data-target="#exampleModal_{{$etp->entreprise_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i><strong style="color: red">Mettre fin à la collaboration</strong></a></li>
-                                        </div>
-                                    </div> --}}
 
                                     <div class="btn-group dropleft">
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -161,12 +152,12 @@
 
             @if(Session::has('success'))
             <div class="alert alert-success">
-                {{Session::get('success')}}
+                <strong> {{Session::get('success')}}</strong>
             </div>
             @endif
             @if(Session::has('error'))
             <div class="alert alert-danger">
-                {{Session::get('error')}}
+                <strong> {{Session::get('error')}}</strong>
             </div>
             @endif
 
@@ -181,7 +172,7 @@
                             </li>
                             <li class="nav-item ms-5">
                                 <a href="#" class="" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                    Demmande en attente
+                                    Invitations réfuser
                                 </a>
                             </li>
 
@@ -244,27 +235,31 @@
                     <div class="table-responsive text-center">
                         <table class="table  table-borderless table-sm">
                             <tbody>
-                                @if (count($demmande_etp)<=0) <tr>
-                                    <td> Aucun demmande en attente</td>
+                                @if (count($refuse_demmande_etp)<=0) <tr>
+                                    <td> Aucun invitation réfuser</td>
                                     </tr>
                                     @else
-                                    @foreach($demmande_etp as $demand_format)
+                                    @foreach($refuse_demmande_etp as $refuse_invit)
                                     <tr>
                                         <td>
                                             <div align="left">
-                                                <strong>{{$demand_format->nom_resp.' '.$demand_format->prenom_resp}}</strong>
-                                                <p style="color: rgb(238, 150, 18)">{{$demand_format->email_resp}}</p>
+                                                <strong>{{$refuse_invit->nom_etp}}</strong>
+
                                             </div>
                                         </td>
                                         <td>
                                             <div align="left">
-                                                <strong>{{$demand_format->nom_etp}}</strong>
-                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$demand_format->nom_secteur}})</strong></p>
+                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$refuse_invit->nom_secteur}})</strong></p>
                                             </div>
                                         </td>
                                         <td>
                                             <strong>
-                                                <h5><i class="bx bxs-x-circle"></i> annuler</h5>
+                                                le {{$refuse_invit->date_refuse}}
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <strong style="color: rgb(242, 121, 9)">
+                                                <i class="bx bxs-x-circle"></i> invitation réfuser
                                             </strong>
                                         </td>
                                     </tr>
