@@ -1,8 +1,7 @@
-@extends('./layouts/admin')
-@section('content')
-<div id="page-wrapper">
-    <div class="container-fluid">
-        <div class="row">
+
+
+<div>
+        {{-- <div class="row">
             <div class="col-lg-12">
                 <br>
                 <h3>DETAILS DES PROJETS</h3>
@@ -44,7 +43,7 @@
                                 </form>
                             </li>
 
-                            @canany(['isCFP'])
+                            {{-- @canany(['isCFP'])
                             <li class="nav-item">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                     Rechercher par entreprise <span class="caret"></span>
@@ -57,25 +56,42 @@
                                     <li><a href="{{route('liste_detail')}}">Tout</a></li>
                                 </ul>
                             </li>
-                            @endcanany
+                            @endcanany --}}
 
-                        </ul>
+                        {{-- </ul>
 
                     </div>
                 </div>
-            </nav>
+            </nav> --}}
 
 
-        </div>
+        {{-- </div> --}}
         <!-- /.row -->
+
+        <style>
+            .icon_plus{
+                font-size: 1.2rem;
+            }
+            .nouveau_detail{
+                background-color: #822164;
+                border-radius: 20px;
+                color: #fff;
+                padding: 0 8; 
+            }
+            .nouveau_detail:hover{
+                background-color: #b8368f;
+                color: #fff;
+            }
+        </style>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
 
                     <div class="panel-body">
-
-                        <br>
-                        <br>
+                        <nav class="d-flex justify-content-end mb-1">
+                                <a class="nouveau_detail btn"  aria-current="page"  data-toggle="modal" data-target="#modal_nouveau_detail">
+                                    <span class="icon_plus m-0 p-0"> + </span> Nouveau détail</a>
+                        </nav>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -83,8 +99,7 @@
                                         @canany(['isReferent','isManager','isFormateur'])
                                         <th>CFP</th>
                                         @endcanany
-                                        <th>Projet</th>
-                                        <th>Groupe</th>
+                                        <th>Module</th>
                                         <th>Lieu</th>
                                         <th>Date</th>
                                         <th>Début</th>
@@ -99,8 +114,7 @@
                                         @canany(['isReferent','isManager','isFormateur'])
                                         <td> <strong style="color: blue">{{$d->nom_cfp }}</strong></td>
                                         @endcanany
-                                        <td>{{$d->nom_projet }}</td>
-                                        <td>{{$d->nom_groupe}}</td>
+                                        <td>{{$d->nom_module}}</td>
                                         <td>{{$d->lieu}}</td>
                                         <td>{{$d->date_detail}}</td>
                                         <td>{{$d->h_debut}} h</td>
@@ -119,6 +133,54 @@
 
                                 </tbody>
                             </table>
+                            <div class="modal fade" id="modal_nouveau_detail">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-title pt-3" style="height: 50px; align-items: center;">
+                                            <h5 class="text-center my-auto">Nouveau detail</h5>
+                                        </div>
+                                        <form class="btn-submit" action="{{route('detail.store')}}" method="post">
+                                            @csrf
+                                                <div class="form-group mx-auto">
+                                                    <label for="formateur">Formateur</label><br>
+                                                    <select class="form-control" id="formateur" name="formateur">
+                                                        @foreach($formateur as $format)
+                                                        <option value="{{$format->formateur_id}}">{{$format->nom_formateur}} {{$format->prenom_formateur}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p><strong style="color: red" id="err_formateur"></strong></p>
+                                                </div>
+                                                <div class="form-group mx-auto">
+                                                    <label for="lieu">Lieu</label>
+                                                    <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu">
+                                                    {{-- @error('lieu')
+                                                    <div class="col-sm-6">
+                                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                                    </div>
+                                                    @enderror --}}
+                                                </div>
+                                                <div class="form-group mx-auto">
+                                                    <label for="date">Date</label>
+                                                    <input type="date" class="form-control" id="date_detail" name="date" min="" max="">
+                                                </div>
+                                                <div class="form-group mx-auto">
+                                                    <label for="debut">Heure début</label>
+                                                    <input type="time" class="form-control" id="debut" name="debut" min="07:00" max="17:00">
+                                                </div>
+                                                <div class="form-group mx-auto">
+                                                    <label for="fin">Heure fin</label>
+                                                    <input type="time" class="form-control" id="fin" name="fin" min="08:00" max="18:08">
+                                                </div>
+                                                <div class="d-flex justify-content-center mb-3">
+                                                <input type="submit" id="ajouter" class="btn btn-primary" value="Ajouter">
+                                                </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                              
+                              <!-- Modal -->
                             <div class="modal fade" id="myModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -158,13 +220,14 @@
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
@@ -245,4 +308,3 @@
     });
 
 </script>
-@endsection

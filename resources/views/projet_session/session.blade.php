@@ -1,17 +1,16 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-
-<div class="card">
+<div class="shadow p-3 mb-5 bg-body rounded">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
             <h5>Session </h5> 
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0"> Session  &nbsp; &nbsp; </p>
-                <p class="numero_session text-dark mt-3"> <strong>n°: {{ $projet->nom_groupe }}</strong>  </p>
-                <p class="m-0">&nbsp; &nbsp; du {{ $projet->date_debut }} au {{ $projet->date_fin }} </p>
+                <p class="numero_session text-dark mt-3"> <strong>n°: {{ $projet[0]->nom_groupe }}</strong>  </p>
+                <p class="m-0">&nbsp; &nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
                 <p class="m-0">&nbsp; appartenant au projet &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>{{ $projet->nom_projet }}</strong> </p>
+                <p class="numero_session text-dark mt-3"> <strong>{{ $projet[0]->nom_projet }}</strong> </p>
             </div>
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
@@ -29,18 +28,18 @@
             <div class="d-flex flex-wrap">
                 <div class="chiffre_d_affaire">
                     <p class="p-0 m-0 text-center"> Referent entreprise </p>
-                    <p class="p-0 m-0 text-center"> <strong>Nom responsable</strong></p>
-                    <p class="p-0 m-0 text-center"> <strong>034 02 015 36</strong></p>
+                    <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                    <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
                 </div>
                 <div class="chiffre_d_affaire">
                     <p class="p-0 m-0 text-center"> Organisme de formation </p>
                     <div class="d-flex">
                         <div>
-                            <img src="{{ asset('images/CFP/Numerika_Center23-12-2021.png') }}" alt="" width="50px" height="50px" class="img-fluid">
+                            <img src="{{ asset('images/CFP/'.$projet[0]->logo_cfp) }}" alt="" width="50px" height="50px" class="img-fluid">
                         </div>
                         <div>
-                            <p class="p-0 m-0 text-center"> <strong>Nom responsable</strong></p>
-                            <p class="p-0 m-0 text-center"> <strong>032 52 641 89</strong></p>
+                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>
+                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_cfp }}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -124,7 +123,7 @@
 
             <div class="col-md-9 pe-4 pt-3">
                 {{-- commentaire --}}
-                <div class="d-flex justify-content-end">
+                {{-- <div class="d-flex justify-content-end">
                     <img src="{{ asset('maquette/cac.png') }}" alt="" class="img_commentaire" onclick="myFunction_commentaire()">
                 </div>
                 
@@ -135,7 +134,7 @@
                          <div class="card-body">
                              <p>Ici votre commentaire !</p>
                          </div>
-                     </div>
+                     </div> --}}
                 
                 {{-- commentaire --}}
 
@@ -143,18 +142,7 @@
                     {{-- div absolute planning --}}
                     
                     <div id="planning" class="tabcontent" style="display: block;">
-                            <span>Formation</span>
-                            <label for="" class="bg-light form-control"> Formation 1 </label>
-                            <span>Modalité</span>
-                            <label for="" class="bg-light form-control"> Présentielle </label>
-                            <span>Formation</span>
-                            <label for="" class="bg-light form-control"> Formation 1 </label>
-                            <span>Formation</span>
-                            <label for="" class="bg-light form-control"> Formation 1 </label>
-                            <span>Commentaire du client</span>
-                            <textarea for="" class="bg-light form-control"> Je souhaite avoir les factures dans 3 jours, s'il vous plait. </textarea>
-                            <span>Commentaire du client</span>
-                            <textarea for="" class="bg-light form-control"> Je souhaite avoir les factures dans 3 jours, s'il vous plait. </textarea>
+                            @include('admin.detail.detail')
                       </div>
                       <div id="apprenant" class="tabcontent">
                         Apprenant
