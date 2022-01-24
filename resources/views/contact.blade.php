@@ -18,13 +18,27 @@
         <h1>Contact-nous</h1>
         <br>
         <br>
-
+        <p>Hi, This is {{ $data['name'] }}</p>
+        <p>I have some query like {{ $data['message'] }}.</p>
         <div class="row">
 
             <div class="col-lg-4">
-                Adresse
-                <i class="fa fa-envelope-o" aria-hidden="true"></i>
-
+                <h3> Adresse</h3>
+                <br>
+                <br>
+                <i class="fa fa-map-marker" aria-hidden="true">
+                    II N 60 A Analamahitsy 101 Antananarivo Madagascar.
+                </i>
+                <br>
+                <br>
+               <i class="fa fa-envelope" aria-hidden="true">
+                contact@formation.mg
+               </i>
+               <br>
+               <br>
+               <i class="fa fa-phone" aria-hidden="true">
+                (261) 033 23 135 63
+               </i>
             </div>
             <div class="col-lg-8">
                 <h3>Pour nous contacter Veuillez remplir les formulaires ci-dessous</h3>
@@ -33,31 +47,31 @@
                
                 <div class="row">
                     <div class="col-lg-6">
-            <form method="post" action="">
+                <form method="post" action="">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Votre nom">
+                        <input type="text" class="form-control" placeholder="Votre nom" name="name">
                      </div>
                      <br>
                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Entreprise">
+                        <input type="text" class="form-control" placeholder="Entreprise" name="entreprise">
                      </div>
                       <br>
                     </div>
                     <div class="col-lg-6">
                     
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Email">
+                        <input type="text" class="form-control" placeholder="Email" name="email">
                      </div>
                       <br>
                       <div class="form-group">
-                         <input type="text" class="form-control" placeholder="Objet">
+                         <input type="text" class="form-control" placeholder="Objet" name="objet">
                       </div>
                     </div>
                 </div>
                
                  <br>
                  <div class="form-group">
-                    <textarea type="text" class="form-control" placeholder="Votre message" height:400px></textarea>
+                    <textarea type="text" class="form-control" placeholder="Votre message" style="height: 200px" name="message"></textarea>
                  </div>
                  <br>
                 
