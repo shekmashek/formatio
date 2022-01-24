@@ -67,7 +67,7 @@
                                 class="nav_linke active dropdown-toggle liste"><i
                                     class='bx bx-home-smile nav_icon'></i><span
                                     class="nav_name">Catalogue</span></a>@canany(['isCFP','isFormateur'])&nbsp;&nbsp;<a
-                                class='nouveau_icon_lien' href="{{route('nouvelle_formation')}}"><i
+                                class='nouveau_icon_lien' href="{{route('nouveau_module')}}"><i
                                     class='bx bxs-plus-circle nouveau_icon' title="nouveau formation"></i></a>@endcanany
                             <ul class="collapse lisst-unstyled submenuColor" id="categSubmenu">
                                 <li class="my-2 sousMenu">
@@ -211,7 +211,7 @@
                                 <p class="my-1" id="projets_etp"
                                     style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
                             </li>
-                            
+
                             <span class="sousMenu me-2 d-flex justify-content-between">
                                 <a>Projets en cours</a>
                                 <p class="my-1" id="projet_en_cours_etp"
@@ -761,7 +761,6 @@
                                 </div>
                                 <div class="footer_list_end ms-2 me-2 mt-1 text-muted">
                                         <p style="font-size: 13px">1.01</p>
-
                                 </div>
                             </div>
                         </div>
@@ -839,6 +838,7 @@
         document.documentElement.scrollTop > 300
     ) {
         mybutton.style.display = "block";
+        mybutton.style.bottom = "90px";
     } else {
         mybutton.style.display = "none";
     }

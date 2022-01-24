@@ -1286,14 +1286,20 @@ Détails Formation
   font-size: 16px;
   font-weight: bolder;
 }
-.detail__formation__item__left__objectif .chevron {
-  text-align: right;
-  color: red;
-}
+
 .detail__formation__item__left__objectif button {
   color: white;
   background-color: orangered;
 }
+.detail__formation__item__left__objectif .adresse__icon{
+    color: red;
+}
+
+.detail__formation__item__left__objectif .adresse__text{
+  font-size: 18px;
+  color: black;
+}
+
 /* section 1 */
 .detail__formation__item__left__adresse {
   border: 1px solid rgb(226, 222, 222);
@@ -1301,10 +1307,10 @@ Détails Formation
   margin-right: 15px;
   margin-bottom: 30px;
 }
-.detail__formation__item__left__adresse .adresse__icon {
+.detail__formation__item__left__adresse .adresse__icon{
   color: red;
 }
-.detail__formation__item__left__adresse .adresse__text {
+.detail__formation__item__left__adresse .adresse__text{
   font-size: 18px;
   color: black;
 }
@@ -1774,8 +1780,11 @@ Détails Formation
   padding-top: 8px;
   border-radius: 5px;
   color: #fff;
-  right: 0;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.new_list_nouvelle span{
+  align-items: end;
 }
 
 .new_list_nouvelle:hover {
@@ -2114,6 +2123,44 @@ Détails Formation
 .live_preview{
   background-color: rgb(211, 210, 210);
   padding: 2rem 3rem 2rem 3rem;
+  color: #939BA0;
+}
+
+.postion_fixe_form{
+  position: sticky;
+  top: 5rem;
+  height: 15rem;
+}
+
+.postion_fixe{
+  position: sticky;
+  top: 5rem;
+  height: 15rem;
+}
+
+.btn_change_form{
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: all .2s ease;
+  border-radius: 3px;
+}
+
+.btn_change_form:hover{
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transform: scale(1.1);
+}
+
+#border_premier{
+  color: #939BA0;
+}
+
+.apres_preview{
+  display: none;
+}
+
+.apres_preview .btn{
+  background-color: var(--color-child);
 }
 
 /* nouveau module */

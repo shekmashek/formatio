@@ -25,7 +25,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col text-right">
+                        <div class="col" align="right">
                             <a class="new_list_nouvelle {{ Route::currentRouteNamed('nouveau_module') ? 'active' : '' }}"
                                 href="{{route('nouveau_module')}}">
                                 <span><span style="font-size: 20px">+</span>&nbsp;Nouvelle

@@ -1,7 +1,4 @@
 @extends('./layouts/admin')
-@section('title')
-<p class="text-white ms-5" style="font-size: 20px;">Nouveau module</p>
-@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -26,7 +23,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col text-right">
+                            <div class="col" align="right">
                                 <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
                                     href="{{route('liste_formation')}}">
                                     <span><span style="font-size: 20px">
@@ -43,13 +40,49 @@
         <hr>
         <div class="panel-body">
             <div class="row">
-                <form action="{{route('module.store')}}" method="POST">
+                <form action="{{route('module.store')}}" method="POST" id="frm_new_module">
                     @csrf
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-lg-4 pe-5" style="align-items: center">
-                                <div class="form-row ">
-                                    <div class="form-group">
+                            <div class="col-lg-1 postion_fixe">
+                                <div class="row">
+                                    <div class="col text-left ps-0 me-3">
+                                        <p onclick="changer_module();" role="button"
+                                            class="text-center btn_change_form mb-1"><a href="#preview_haut"><i
+                                                    class='bx bxs-cube-alt'
+                                                    style="color: #801d68; font-size:2rem"></i><br><span>Module</span></a>
+                                        </p>
+                                        <p onclick="changer_objectif();" role="button"
+                                            class="text-center btn_change_form mb-1"><a href="#preview_haut2"><i
+                                                    class='bx bx-radio-circle-marked'
+                                                    style="color: #801d68; font-size:3rem"></i><br><span>Objectif</span></a>
+                                        </p>
+                                        <p onclick="changer_cible();" role="button"
+                                            class="text-center btn_change_form mb-1"><a href="#preview_objectif"><i
+                                                    class='bx bx-user'
+                                                    style="color: #801d68; font-size:3rem"></i><br><span>Cible</span></a>
+                                        </p>
+                                        <p onclick="changer_reference();" role="button"
+                                            class="text-center btn_change_form mb-1"><a href="#preview_reference"><i
+                                                    class='bx bx-clipboard'
+                                                    style="color: #801d68; font-size:3rem"></i><br><span>Reference</span></a>
+                                        </p>
+                                        <p onclick="changer_equipement();" role="button"
+                                            class="text-center btn_change_form mb-1"><a href="#preview_equipement"><i
+                                                    class='bx bxs-cog'
+                                                    style="color: #801d68; font-size:3rem"></i><br><span>Equipement</span></a>
+                                        </p>
+                                        <p onclick="changer_prestation();" role="button"
+                                            class="text-center btn_change_form mb-1"><a href="#preview_prestation"><i
+                                                    class='bx bx-hive'
+                                                    style="color: #801d68; font-size:3rem"></i><br><span>prestation</span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 pe-5 postion_fixe_form" style="align-items: center">
+                                <div class="form-row">
+                                    <div class="form-group" id="premier_vue">
                                         <div class="acf-field acf-field-text acf-field-nom_module is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -66,7 +99,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" id="premier_vue2">
                                         <div class="acf-field acf-field-text acf-field-categorie is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -84,7 +117,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" id="premier_vue3">
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -101,33 +134,42 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="acf-field acf-field-text acf-field-jour is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control jour jour" id="acf-jour"
-                                                        name="acf[jour]" min="1" max="365"
-                                                        placeholder="Durée en Jours (J)" onfocus="(this.type='number')"
-                                                        title="entrer une durée en jours" required>
+
+                                    <div class="form-row d-flex">
+                                        <div class="col me-1">
+                                            <div class="form-group" id="premier_vue4">
+                                                <div class="acf-field acf-field-text acf-field-jour is-required">
+                                                    <div class="acf-input">
+                                                        <div class="acf-input-wrap">
+                                                            <input type="text" class="form-control jour jour"
+                                                                id="acf-jour" name="acf[jour]" min="1" max="365"
+                                                                placeholder="Durée en Jours (J)"
+                                                                onfocus="(this.type='number')"
+                                                                title="entrer une durée en jours" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group" id="premier_vue5">
+                                                <div class="acf-field acf-field-text acf-field-heur is-required">
+                                                    <div class="acf-input">
+                                                        <div class="acf-input-wrap">
+                                                            <input type="text" class="form-control heur heur"
+                                                                id="acf-heur" name="acf[heur]" min="1" max="8760"
+                                                                placeholder="Durée en Heure (H)"
+                                                                onfocus="(this.type='number')"
+                                                                title="entrer une durée en heure" required>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="acf-field acf-field-text acf-field-heur is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control heur heur" id="acf-heur"
-                                                        name="acf[heur]" min="1" max="8760"
-                                                        placeholder="Durée en Heure (H)" onfocus="(this.type='number')"
-                                                        title="entrer une durée en heure" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" id="premier_vue6">
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -144,7 +186,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" id="premier_vue7">
                                         <div class="acf-field acf-field-text acf-field-niveau is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -162,16 +204,16 @@
                                         </div>
                                     </div>
 
-                                    <Span> Ajouter un nouveau Niveau de formation : &nbsp;</Span><i
-                                        class="bx bxs-edit close" onclick="myFunction()"></i>
+                                    <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i
+                                        class="bx bxs-edit close" onclick="myFunction()"></i></span>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="second_vue">
                                         <div class="acf-field acf-field-text acf-field-objectif is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control objectif objectif" id="acf-objectif"
-                                                        name="acf[objectif]" placeholder="Objectifs" rows=3
-                                                        required></textarea>
+                                                        name="acf[objectif]" placeholder="Objectifs"
+                                                        required style="height: 200px"></textarea>
                                                     @error('acf[objectif]')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -182,13 +224,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="troisiem_vue">
                                         <div class="acf-field acf-field-text acf-field-cible is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control cible cible" id="acf-cible"
                                                         name="acf[cible]" placeholder="Public cible" rows=3
-                                                        required></textarea>
+                                                        required style="height: 200px"></textarea>
                                                     @error('acf[cible]')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -199,13 +241,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="troisiem_vue2">
                                         <div class="acf-field acf-field-text acf-field-prerequis is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control prerequis prerequis"
                                                         id="acf-prerequis" name="acf[prerequis]" placeholder="Prerequis"
-                                                        rows=3 required></textarea>
+                                                        rows=3 required style="height: 200px"></textarea>
                                                     @error('acf[prerequis]')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -216,7 +258,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="quatriem_vue">
                                         <div class="acf-field acf-field-text acf-field-reference is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -233,7 +275,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="quatriem_vue2">
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -250,7 +292,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="cinquiem_vue">
                                         <div class="acf-field acf-field-text acf-field-materiel is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
@@ -267,13 +309,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="cinquiem_vue2">
                                         <div class="acf-field acf-field-text acf-field-bon_a_savoir is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control bon_a_savoir bon_a_savoir"
                                                         id="acf-bon_a_savoir" name="acf[bon_a_savoir]"
-                                                        placeholder="Bon a savoir" rows=3 required></textarea>
+                                                        placeholder="Bon a savoir" required style="height: 200px"></textarea>
                                                     @error('acf[bon_a_savoir]')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -284,14 +326,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group apres_preview" id="sixieme_vue">
                                         <div class="acf-field acf-field-text acf-field-prestation is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control prestation prestation"
                                                         id="acf-prestation" name="acf[prestation]"
-                                                        placeholder="Prestations pedagogiques" rows=3
-                                                        required></textarea>
+                                                        placeholder="Prestations pedagogiques"
+                                                        required style="height: 200px"></textarea>
                                                     @error('acf[prestation]')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -302,26 +344,37 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group mb-5" align="center">
-                                        <button type="submit" class="btn btn-secondary w-100"><i
+                                    <div class="form-group mb-5 apres_preview" align="center" id="sixieme_vue2">
+                                        <div class="form-row d-flex">
+                                            <div class="col me-1">
+                                                <button type="submit" class="btn btn-secondary w-100"><i
                                                 class="bx bxs-plus-circle"></i> Ajouter</button>
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="btn btn-secondary w-100" onclick="resetForm();"><i class="bx bx-x"></i>
+                                                    Annuler</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-8 live_preview">
+                            <div class="col-lg-7 live_preview" id="preview_haut">
                                 <div class="container py-4 bg-light">
-                                    <div
-                                        class="row detail__formation__result bg-light justify-content-space-between py-3 px-5">
+                                    <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5"
+                                        id="border_premier">
                                         <div class="col-lg-6 col-md-6 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4><span id="preview_categ"><span class="py-4 acf-categorie">Ms
-                                                            Excel</span></span>&nbsp;-&nbsp;<span></span>
+                                                            Excel</span></span><span
+                                                        style="color: black !important;">&nbsp;-&nbsp;</span>
+                                                    <span></span>
                                                     <span id="preview_module"><span class="acf-nom_module">Excel
                                                             avancee</span></span>
                                                 </h4>
                                                 <p id="preview_descript"><span class="acf-description">Optimiser et
                                                         automatiser vos tableaux sans programmer</span></p>
-                                                <div class="detail__formation__result__avis">
+                                                <div class="detail__formation__result__avis"
+                                                    style="color: black !important;">
                                                     <div class="Stars" style="--note: 4.5;">
                                                         <i class='bx bxs-star'></i>
                                                         <i class='bx bxs-star'></i>
@@ -335,18 +388,15 @@
                                         </div>
                                         <div class="col-lg-6 col-md-6 detail__formation__result__content">
                                             <div class="detail__formation__result__item2">
-                                                <a href="#">
-                                                    <h6 class="py-4 text-center">Formation Proposée
-                                                        par&nbsp;<span>Numerika Center</span></h6>
-                                                </a>
                                                 <div class="text-center"><img
                                                         src="{{asset('images/CFP/Votre-logo-1.png')}}" alt="logo"
-                                                        class="img-fluid" style="width: 200px; height:100px;"></div>
+                                                        class="img-fluid" style="width: 200px; height: 100px;"></div>
                                             </div>
                                         </div>
                                         <div
                                             class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col"><i class="bx bxs-alarm bx_icon"></i>
+                                            <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon"
+                                                    style="color: black !important;"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         4
                                                     </span>j</span>
@@ -354,13 +404,14 @@
                                                         28
                                                     </span>h</span>
                                             </div>
-                                            <div class="col" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"></i>&nbsp;<span
+                                            <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
+                                                    style="color: black !important;"></i>&nbsp;<span
                                                     class="acf-modalite">Presentiel et a
                                                     distance</span>
                                             </div>
                                             <div class="col" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'></i>&nbsp;<span
+                                                <i class='bx bx-equalizer bx_icon'
+                                                    style="color: black !important;"></i>&nbsp;<span
                                                     class="acf-niveau">Debutant</span>
                                             </div>
                                         </div>
@@ -368,9 +419,11 @@
                                     <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
                                         <div class="col-lg-8 detail__formation__content">
 
-                                            <div class="row detail__formation__item__left__objectif">
+                                            <div class="row detail__formation__item__left__objectif" id="border_objectif">
                                                 <div class="col-lg-12" id="preview_objectif">
-                                                    <h5 class="pb-3">Objectifs</h5>
+                                                    <span class="adresse__text">
+                                                        <i
+                                                            class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
                                                     <p><span>>&nbsp;</span><span class="acf-objectif"> Suite logique de
                                                             la formation "Excel - Intermédiaire", cette
                                                             formation vous permet, au travers d'études de cas et
@@ -379,14 +432,13 @@
                                                 </div>
                                             </div>
 
-                                            <h5 class="pt-3 pb-3">Public concerne</h5>
-                                            <div class="row detail__formation__item__left__adresse">
+                                            <div class="row detail__formation__item__left__adresse" id="border_cible">
                                                 <div class="col-lg-6 d-flex flex-row">
                                                     <div class="row d-flex flex-row">
                                                         <span class="adresse__text"><i
                                                                 class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
                                                             qui ?</span>
-                                                        <div class="col-12" id="preview_cible">
+                                                        <div class="col-12 px-2" id="preview_cible">
                                                             <p><span>>&nbsp;</span><span class="acf-cible">Contrôleur de
                                                                     gestion, financier, RH, toute personne
                                                                     ayant à exploiter des résultats chiffrés dans Excel
@@ -411,7 +463,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row detail__formation__item__left__adresse">
+                                            <div class="row detail__formation__item__left__adresse" id="border_equipement">
                                                 <div class="col-lg-6 d-flex flex-row">
                                                     <div class="row d-flex flex-row">
                                                         <span class="adresse__text"><i
@@ -440,11 +492,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row detail__formation__item__left__adresse">
+                                            <div class="row detail__formation__item__left__adresse" id="border_prestation">
                                                 <div class="col-lg-12 d-flex flex-row">
                                                     <div class="row d-flex flex-row">
                                                         <span class="adresse__text"><i
-                                                                class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
+                                                                class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
                                                             pedagogiques</span>
                                                         <div class="col-12" id="preview_prestation">
                                                             <p><span>>&nbsp;</span><span class="acf-prestation">Package
@@ -457,7 +509,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 detail__formation__item__right">
+                                        <div class="col-lg-4 detail__formation__item__right" id="border_reference">
                                             <div class="row detail__formation__item__main__head align-items-center">
                                                 <div class="detail__prix__head">
                                                     <div class="detail__prix__text">
@@ -606,81 +658,96 @@
     $(".module").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_module').css('color','black');
     });
 
     $(".descript").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_descript').css('color','black');
     });
 
     $(".categ").change(function() {
         var $this = $(this);
         var value2 = $('select.categ option[value="' + $(this).val() + '"]').data('value');
         $('.' + $this.attr("id") + '').html(value2);
+        $('#preview_categ').css('color','black');
     });
 
     $(".jour").change(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_jour').css('color','black');
     });
 
     $(".heur").change(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_heur').css('color','black');
     });
 
     $(".modalite").change(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_modalite').css('color','black');
     });
 
     $(".niveau").change(function() {
         var $this = $(this);
         var valueniveau = $('select.niveau option[value="' + $(this).val() + '"]').data('value');
         $('.' + $this.attr("id") + '').html(valueniveau);
+        $('#preview_niveau').css('color','black');
     });
 
     $(".objectif").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_objectif').css('color','black');
     });
 
     $(".cible").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_cible').css('color','black');
     });
 
     $(".prerequis").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_prerequis').css('color','black');
     });
 
     $(".reference").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_reference').css('color','black');
     });
 
     $(".prix").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_prix').css('color','black');
     });
 
     $(".materiel").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_materiel').css('color','black');
     });
 
     $(".bon_a_savoir").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_bon_a_savoir').css('color','black');
     });
 
     $(".prestation").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
+        $('#preview_presentation').css('color','black');
     });
 
-function myFunction() {
+    function myFunction() {
         var x = document.getElementById("myDIV");
         if (x.style.display === "none") {
             x.style.display = "block";
@@ -701,6 +768,381 @@ function myFunction() {
             $('#ouvrir_flottant').modal('hide');
         }
     }
+
+    function changer_module() {
+        var mod = document.getElementById("premier_vue");
+        var mod2 = document.getElementById("premier_vue2");
+        var mod3 = document.getElementById("premier_vue3");
+        var mod4 = document.getElementById("premier_vue4");
+        var mod5 = document.getElementById("premier_vue5");
+        var mod6 = document.getElementById("premier_vue6");
+        var mod7 = document.getElementById("premier_vue7");
+        var mod8 = document.getElementById("premier_vue8");
+        var bouttons = document.getElementById("sixieme_vue2");
+        var prestation = document.getElementById("sixieme_vue");
+        var objectif = document.getElementById("second_vue");
+        var mod_preview = document.getElementById("border_premier");
+        $('#border_premier').css('border','4px solid #801d68');
+        $('#border_objectif').css('border','none');
+        $('#border_cible').css('border','none');
+        $('#border_equipement').css('border','none');
+        $('#border_prestation').css('border','none');
+        $('#border_reference').css('border','none');
+        if (mod.style.display === "none") {
+            mod.style.display = "block";
+            mod2.style.display = "block";
+            mod3.style.display = "block";
+            mod4.style.display = "block";
+            mod5.style.display = "block";
+            mod6.style.display = "block";
+            mod7.style.display = "block";
+            mod8.style.display = "block";
+            objectif.style.display = "none";
+            bouttons.style.display = "none";
+            prestation.style.display = "none";
+            mod_preview.style.color = "#939BA0";
+        } else {
+            mod.style.display = "block";
+            mod2.style.display = "block";
+            mod3.style.display = "block";
+            mod4.style.display = "block";
+            mod5.style.display = "block";
+            mod6.style.display = "block";
+            mod7.style.display = "block";
+            mod8.style.display = "block";
+            objectif.style.display = "none";
+            bouttons.style.display = "none";
+            prestation.style.display = "none";
+            mod_preview.style.color = "#939BA0";
+        }
+    }
+
+    function changer_objectif() {
+        var mod = document.getElementById("premier_vue");
+        var mod2 = document.getElementById("premier_vue2");
+        var mod3 = document.getElementById("premier_vue3");
+        var mod4 = document.getElementById("premier_vue4");
+        var mod5 = document.getElementById("premier_vue5");
+        var mod6 = document.getElementById("premier_vue6");
+        var mod7 = document.getElementById("premier_vue7");
+        var mod8 = document.getElementById("premier_vue8");
+        var objectif = document.getElementById("second_vue");
+        var public = document.getElementById("troisiem_vue");
+        var prerequis = document.getElementById("troisiem_vue2");
+        var reference = document.getElementById("quatriem_vue");
+        var prix = document.getElementById("quatriem_vue2");
+        var bon_a_savoir = document.getElementById("cinquiem_vue");
+        var prestation = document.getElementById("cinquiem_vue2");
+        var prestation = document.getElementById("sixieme_vue");
+        var bouttons = document.getElementById("sixieme_vue2");
+        $('#border_objectif').css('border','4px solid #801d68');
+        $('#border_premier').css('border','none');
+        $('#border_cible').css('border','none');
+        $('#border_equipement').css('border','none');
+        $('#border_prestation').css('border','none');
+        $('#border_reference').css('border','none');
+        if (objectif.style.display === "none") {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "block";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            prestation.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+            objectif_preview.style.color = "#939BA0";
+
+        } else {
+            objectif.style.display = "block";
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            prestation.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+            objectif_preview.style.color = "#939BA0";
+        }
+    }
+
+    function changer_cible() {
+        var mod = document.getElementById("premier_vue");
+        var mod2 = document.getElementById("premier_vue2");
+        var mod3 = document.getElementById("premier_vue3");
+        var mod4 = document.getElementById("premier_vue4");
+        var mod5 = document.getElementById("premier_vue5");
+        var mod6 = document.getElementById("premier_vue6");
+        var mod7 = document.getElementById("premier_vue7");
+        var mod8 = document.getElementById("premier_vue8");
+        var objectif = document.getElementById("second_vue");
+        var public = document.getElementById("troisiem_vue");
+        var prerequis = document.getElementById("troisiem_vue2");
+        var reference = document.getElementById("quatriem_vue");
+        var prix = document.getElementById("quatriem_vue2");
+        var bon_a_savoir = document.getElementById("cinquiem_vue");
+        var prestation = document.getElementById("cinquiem_vue2");
+        var prestation = document.getElementById("sixieme_vue");
+        var bouttons = document.getElementById("sixieme_vue2");
+        $('#border_cible').css('border','4px solid #801d68');
+        $('#border_premier').css('border','none');
+        $('#border_objectif').css('border','none');
+        $('#border_equipement').css('border','none');
+        $('#border_prestation').css('border','none');
+        $('#border_reference').css('border','none');
+        if (objectif.style.display === "none") {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "block";
+            prerequis.style.display = "block";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            prestation.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+        } else {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "block";
+            prerequis.style.display = "block";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            prestation.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+        }
+    }
+
+    function changer_reference() {
+        var mod = document.getElementById("premier_vue");
+        var mod2 = document.getElementById("premier_vue2");
+        var mod3 = document.getElementById("premier_vue3");
+        var mod4 = document.getElementById("premier_vue4");
+        var mod5 = document.getElementById("premier_vue5");
+        var mod6 = document.getElementById("premier_vue6");
+        var mod7 = document.getElementById("premier_vue7");
+        var mod8 = document.getElementById("premier_vue8");
+        var objectif = document.getElementById("second_vue");
+        var public = document.getElementById("troisiem_vue");
+        var prerequis = document.getElementById("troisiem_vue2");
+        var reference = document.getElementById("quatriem_vue");
+        var prix = document.getElementById("quatriem_vue2");
+        var bon_a_savoir = document.getElementById("cinquiem_vue");
+        var materiel = document.getElementById("cinquiem_vue2");
+        var prestation = document.getElementById("sixieme_vue");
+        var bouttons = document.getElementById("sixieme_vue2");
+        $('#border_reference').css('border','4px solid #801d68');
+        $('#border_premier').css('border','none');
+        $('#border_cible').css('border','none');
+        $('#border_equipement').css('border','none');
+        $('#border_prestation').css('border','none');
+        $('#border_objectif').css('border','none');
+        if (objectif.style.display === "none") {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "block";
+            prix.style.display = "block";
+            bon_a_savoir.style.display = "none";
+            materiel.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+
+        } else {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "block";
+            prix.style.display = "block";
+            bon_a_savoir.style.display = "none";
+            materiel.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+        }
+    }
+
+    function changer_equipement() {
+        var mod = document.getElementById("premier_vue");
+        var mod2 = document.getElementById("premier_vue2");
+        var mod3 = document.getElementById("premier_vue3");
+        var mod4 = document.getElementById("premier_vue4");
+        var mod5 = document.getElementById("premier_vue5");
+        var mod6 = document.getElementById("premier_vue6");
+        var mod7 = document.getElementById("premier_vue7");
+        var mod8 = document.getElementById("premier_vue8");
+        var objectif = document.getElementById("second_vue");
+        var public = document.getElementById("troisiem_vue");
+        var prerequis = document.getElementById("troisiem_vue2");
+        var reference = document.getElementById("quatriem_vue");
+        var prix = document.getElementById("quatriem_vue2");
+        var bon_a_savoir = document.getElementById("cinquiem_vue");
+        var materiel = document.getElementById("cinquiem_vue2");
+        var prestation = document.getElementById("sixieme_vue");
+        var bouttons = document.getElementById("sixieme_vue2");
+        $('#border_equipement').css('border','4px solid #801d68');
+        $('#border_premier').css('border','none');
+        $('#border_cible').css('border','none');
+        $('#border_reference').css('border','none');
+        $('#border_prestation').css('border','none');
+        $('#border_objectif').css('border','none');
+        if (objectif.style.display === "none") {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "block";
+            materiel.style.display = "block";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+
+        } else {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "block";
+            materiel.style.display = "block";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+        }
+    }
+
+    function changer_prestation() {
+        var mod = document.getElementById("premier_vue");
+        var mod2 = document.getElementById("premier_vue2");
+        var mod3 = document.getElementById("premier_vue3");
+        var mod4 = document.getElementById("premier_vue4");
+        var mod5 = document.getElementById("premier_vue5");
+        var mod6 = document.getElementById("premier_vue6");
+        var mod7 = document.getElementById("premier_vue7");
+        var mod8 = document.getElementById("premier_vue8");
+        var objectif = document.getElementById("second_vue");
+        var public = document.getElementById("troisiem_vue");
+        var prerequis = document.getElementById("troisiem_vue2");
+        var reference = document.getElementById("quatriem_vue");
+        var prix = document.getElementById("quatriem_vue2");
+        var bon_a_savoir = document.getElementById("cinquiem_vue");
+        var materiel = document.getElementById("cinquiem_vue2");
+        var prestation = document.getElementById("sixieme_vue");
+        var bouttons = document.getElementById("sixieme_vue2");
+        $('#border_prestation').css('border','4px solid #801d68');
+        $('#border_premier').css('border','none');
+        $('#border_cible').css('border','none');
+        $('#border_equipement').css('border','none');
+        $('#border_reference').css('border','none');
+        $('#border_objectif').css('border','none');
+        if (objectif.style.display === "none") {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            materiel.style.display = "none";
+            prestation.style.display = "block";
+            bouttons.style.display = "block";
+        } else {
+            mod.style.display = "none";
+            mod2.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            materiel.style.display = "none";
+            prestation.style.display = "block";
+            bouttons.style.display = "block";
+        }
+    }
+
+    function resetForm() {
+         document.getElementById("frm_new_module").reset();
+         document.load();
+         changer_module();
+       }
+
 
 </script>
 @endsection
