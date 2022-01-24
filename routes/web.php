@@ -557,10 +557,17 @@ Route::get('list_cfp','CfpController@index')->name('list_cfp');
 
 //============================= page creation nouveau compte CFP et Formateur
 
-Route::get('create+compte+formateur',function(){
-    return view('create_compte.create_compte_formateur');
-})->name('create+compte+formateur');
 
-Route::get('create+compte+CFP',function(){
-    return view('create_compte.create_compte_cfp');
-})->name('create+compte+CFP');
+Route::get('create+compte+client',function(){
+    return view('create_compte.create_compte_client');
+})->name('create+compte+client');
+
+Route::post('create_compte_client','NouveauCompteController@create')->name('create_compte_client');
+
+// Route::get('create+compte+formateur',function(){
+//     return view('create_compte.create_compte_formateur');
+// })->name('create+compte+formateur');
+
+// Route::get('create+compte+CFP',function(){
+//     return view('create_compte.create_compte_cfp');
+// })->name('create+compte+CFP');
