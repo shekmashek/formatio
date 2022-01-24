@@ -3,11 +3,12 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
             	<br>
                 <h3>ACTION DE FORMATION</h3>
-            </div>
+            </div> --}}
             <!-- /.col-lg-12 -->
+            <br>
         </div>
             <!-- /.row -->
         <div class="row">
@@ -23,7 +24,6 @@
                                     @foreach ($detail as $d)
                                         @csrf
                                         <input type = "text" value="{{$d->session->id}}" id ="sessionId" style='display:none'>
-
                                         <input type = "text" value="{{$d->id}}" id ="detailId" style='display:none'>
                                         <div class="form-group">
                                         <label for="projet">Projet : {{$d->projet->nom_projet}}</label><br>
@@ -88,12 +88,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
+                                {{-- <div class="panel-heading">
                                     <ul class="nav nav-pills">
                                         <li class ="{{ Route::currentRouteNamed('ajout_participant') ? 'active' : '' }}"><a href="{{route('ajout_participant',['id_detail' => $detail[0]->id])}}" ><span class="glyphicon glyphicon-plus-sign"></span>  Ajouter des stagiaires</a></li>
                                         <li  class ="{{ Route::currentRouteNamed('liste_stagiaire') ? 'active' : '' }}" ><a href="{{route('liste_stagiaire',['id_detail'=>$detail[0]->id])}}"><span class="glyphicon glyphicon-th-list"></span></span> Liste des stagiaires  </a></li>
                                     </ul>
-                                </div>
+                                </div> --}}
                                 <div class="panel-body">
 
                                     <form  action="{{ route('insert_detailStagiaire') }}">
@@ -104,7 +104,8 @@
                                             <label class="form-check-label" for="exampleCheck">{{ $stg->matricule."  :  ".$stg->nom_stagiaire." ".$stg->prenom_stagiaire}}</label>
                                           </div>
                                         @endforeach
-                                        <input type="hidden" name="groupe_id" value="{{ $id_groupe }}">
+                                        
+                                        <input type="hidden" name="groupe_id" value="{{ $projet[0]->groupe_id }}">
                                         @if(count($stagiaire)>0)
                                             <button type="submit" class="btn btn-primary">Ajouter les stagiaires</button>
                                         @else

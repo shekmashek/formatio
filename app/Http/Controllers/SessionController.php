@@ -107,6 +107,6 @@ class SessionController extends Controller
         // ---apprenants
         $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ' . $entreprise[0]->entreprise_id);
         // dd($stagiaire);
-        return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas'));
+        return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
     }
 }
