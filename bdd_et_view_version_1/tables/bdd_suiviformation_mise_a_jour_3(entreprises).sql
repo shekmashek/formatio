@@ -120,23 +120,6 @@ CREATE TABLE `responsables` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `historique_stagiaires` (
-  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
-  stagiaire_id bigint(20) unsigned not null,
-  ancien_entreprise_id bigint(20) unsigned not null,
-  ancien_departement_id bigint(20) unsigned not null,
-  nouveau_entreprise_id bigint(20) unsigned not null,
-  nouveau_departement_id bigint(20) unsigned not null,
-  `ancien_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-   `nouveau_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  foreign key(stagiaire_id) references stagiaires(id) on delete cascade,
-  foreign key(ancien_entreprise_id) references entreprises(id) on delete cascade,
-  foreign key(ancien_departement_id) references departements(id) on delete cascade,
-  `date_depart` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `particulier` boolean not null default true
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 create table objectif_globaux(
     id bigint(20) unsigned primary key not null auto_increment,
@@ -171,4 +154,21 @@ CREATE TABLE `stagiaires` (
   `lieu_travail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `niveau_etude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `activiter` boolean not null default true
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `historique_stagiaires` (
+  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  stagiaire_id bigint(20) unsigned not null,
+  ancien_entreprise_id bigint(20) unsigned not null,
+  ancien_departement_id bigint(20) unsigned not null,
+  nouveau_entreprise_id bigint(20) unsigned not null,
+  nouveau_departement_id bigint(20) unsigned not null,
+  `ancien_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+   `nouveau_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  foreign key(stagiaire_id) references stagiaires(id) on delete cascade,
+  foreign key(ancien_entreprise_id) references entreprises(id) on delete cascade,
+  foreign key(ancien_departement_id) references departements(id) on delete cascade,
+  `date_depart` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `particulier` boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
