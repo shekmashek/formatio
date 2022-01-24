@@ -1,6 +1,120 @@
+<style>
+    .icon_plus{
+        font-size: 1.2rem;
+    }
+    .nouveau_detail{
+        background-color: #822164;
+        border-radius: 20px;
+        color: #fff;
+        padding: 0 8; 
+    }
+    .nouveau_detail:hover{
+        background-color: #b8368f;
+        color: #fff;
+    }
+    .outline{
+        outline: none;
+        box-shadow: none;
+    }
+    .th_sans_donnee{
+        font-weight: bold;
+        text-align: center;
+    }
+    .form_control_time{
+        height: .5rem;
+    }
+    input[type="text"],
+    input[type="date"]{
+        height: auto !important ;
+    }
+    .intervention{
+        background-color: rgb(241, 241, 242);
+        padding: 2px 8px;
+        border-radius: 1rem;
+        text-align: center;
+    }
+    .icon_plus{
+        color: #b8368f;
+        margin-top:  -1rem;
+        font-size: 3rem;
+        position: sticky;
+        margin-left: 90%;
+    }
+    .icon_plus:hover{
+        cursor: pointer;
+    }
+</style>
+   <script type="text/javascript">
+   function cloner() {
+    for (var i=0; i<1; i++) {
+      var clone=document.querySelector("div.fils").cloneNode(true);
+      document.getElementById("conteneur").appendChild(clone);
+    }  
+   }
+   </script>
 
+{{-- donnee non existante --}}
+<i class="far fa-plus-circle icon_plus" onclick="cloner()"></i>
 
-<div>
+<form action="{{route('detail.store')}}" method="post">
+    @csrf
+    <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
+    <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+<div id="conteneur">
+    @for($i=1 ; $i<=3 ; $i++)
+    <div class="fils m-0">
+        <p class="intervention col-2">Intervention {{ $i }}</p>
+        <table class="table">
+            <thead>
+                <th class="th_sans_donnee"> Date </th>
+                <th class="th_sans_donnee"> Heure debut </th>
+                <th class="th_sans_donnee"> Heure fin </th>
+                <th class="th_sans_donnee"> Formateur </th>
+                <th class="th_sans_donnee"> Lieu </th>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><input type="date" name="date[]" class="form-control col m-0"></td>
+                    <td><input type="time" name="debut[]" class="form-control"></td>
+                    <td><input type="time" name="fin[]" class="form-control"></td>
+                    <td>
+                        <div class="input-group">  
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-user"></i></div>
+                            </div>
+                            <select name="formateur[]" id="" class="form-control m-0">
+                                <option value="" selected hidden> Choisissez un formateur </option>
+                                @foreach($formateur as $format)
+                                    <option value="{{$format->formateur_id}}">{{$format->nom_formateur}} {{$format->prenom_formateur}}</option>
+                                @endforeach
+                            </select>
+                            
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">  
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
+                            </div>
+                            <input type="text" name="lieu[]" class="form-control m-0">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+@endfor
+</div>
+{{-- <div class="d-flex justify-content-end mr-2">
+    <button class="btn btn-success ">Valider</button>
+</div> --}}
+
+</form>
+
+{{-- donnee non exiatante --}}
+
+{{-- <div> --}}
         {{-- <div class="row">
             <div class="col-lg-12">
                 <br>
@@ -68,22 +182,8 @@
         {{-- </div> --}}
         <!-- /.row -->
 
-        <style>
-            .icon_plus{
-                font-size: 1.2rem;
-            }
-            .nouveau_detail{
-                background-color: #822164;
-                border-radius: 20px;
-                color: #fff;
-                padding: 0 8; 
-            }
-            .nouveau_detail:hover{
-                background-color: #b8368f;
-                color: #fff;
-            }
-        </style>
-        <div class="row">
+        
+        {{-- <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
 
@@ -121,20 +221,13 @@
                                         <td>{{$d->h_fin}} h</td>
 
                                         <td>{{$d->nom_formateur." ".$d->prenom_formateur}}</td>
-                                        {{-- <td >
-                                                <a href="{{route('execution',[$d->detail_id])}}" class ="btn btn-info" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
-                                        </td>
-                                        <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
-                                        <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td>
-                                        --}}
+                                        
                                     </tr>
 
                                     @endforeach
 
                                 </tbody>
                             </table>
-
-                            {{-- Nouveau detail --}}
                             <div class="modal fade" id="modal_nouveau_detail">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -157,11 +250,7 @@
                                                 <div class="form-group mx-auto">
                                                     <label for="lieu">Lieu</label>
                                                     <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu">
-                                                    {{-- @error('lieu')
-                                                    <div class="col-sm-6">
-                                                        <span style="color:#ff0000;"> {{$message}} </span>
-                                                    </div>
-                                                    @enderror --}}
+                                                    
                                                 </div>
                                                 <div class="form-group mx-auto">
                                                     <label for="date">Date</label>
@@ -182,9 +271,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- fin nouveau detail --}}
-                              
-                              <!-- Modal -->
+                            
                             <div class="modal fade" id="myModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -231,7 +318,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>

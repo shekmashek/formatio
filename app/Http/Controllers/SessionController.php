@@ -105,7 +105,8 @@ class SessionController extends Controller
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
 
         // ---apprenants
-        $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ' . $entreprise[0]->entreprise_id);
+        // $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ' . $entreprise[0]->entreprise_id);
+        $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ? and (id,?) not in(SELECT stagiaire_id,groupe_id from participant_groupe)',[$entreprise[0]->entreprise_id,$projet[0]->groupe_id]);
         // dd($stagiaire);
         return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
     }

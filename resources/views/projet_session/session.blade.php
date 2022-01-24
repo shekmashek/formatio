@@ -145,7 +145,7 @@
                             @include('admin.detail.detail')
                       </div>
                       <div id="apprenant" class="tabcontent">
-                        @include('admin.stagiaire/ajout_stagiaire')
+                        @include('admin.stagiaire.ajout_stagiaire')
                       </div>
                       <div id="ressource" class="tabcontent">
                         Ressource
@@ -157,7 +157,7 @@
                         Document
                       </div>
                       <div id="chaud" class="tabcontent">
-                        Evaluation
+                        @include('projet_session.index_evaluation')
                       </div>
                       <div id="emargement" class="tabcontent">
                         Emargement 
