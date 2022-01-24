@@ -26,6 +26,8 @@ create or replace view v_groupe_projet_entreprise as
 
 
 
+-- create or replace view v_apprenants as 
+--     select 
 
 -- create or REPLACE view v_projet_entreprise_cfp as
 --     select

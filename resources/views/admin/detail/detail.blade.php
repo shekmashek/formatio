@@ -133,6 +133,8 @@
 
                                 </tbody>
                             </table>
+
+                            {{-- Nouveau detail --}}
                             <div class="modal fade" id="modal_nouveau_detail">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -141,6 +143,8 @@
                                         </div>
                                         <form class="btn-submit" action="{{route('detail.store')}}" method="post">
                                             @csrf
+                                                <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
+                                                <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
                                                 <div class="form-group mx-auto">
                                                     <label for="formateur">Formateur</label><br>
                                                     <select class="form-control" id="formateur" name="formateur">
@@ -178,7 +182,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            {{-- fin nouveau detail --}}
                               
                               <!-- Modal -->
                             <div class="modal fade" id="myModal">

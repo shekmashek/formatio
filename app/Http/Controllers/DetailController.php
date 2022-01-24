@@ -192,7 +192,7 @@ public function index()
         $detail->cfp_id = $cfp_id;
         $detail->formateur_id = $request->formateur;
         $detail->save();
-        return redirect()->route('liste_detail');
+        return back();
     }
 
     public function show_detail($id)

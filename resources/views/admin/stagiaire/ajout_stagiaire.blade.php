@@ -1,5 +1,5 @@
-@extends('./layouts/admin')
-@section('content')
+{{-- @extends('./layouts/admin')
+@section('content') --}}
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    {{-- <div class="panel-heading">
                         Details du projet
                     </div>
                     <div class="panel-body">
@@ -22,7 +22,7 @@
                                 <form   class="btn-submit" >
                                     @foreach ($detail as $d)
                                         @csrf
-                                        {{-- <input type = "text" value="{{$d->session->id}}" id ="sessionId" style='display:none'> --}}
+                                        <input type = "text" value="{{$d->session->id}}" id ="sessionId" style='display:none'>
 
                                         <input type = "text" value="{{$d->id}}" id ="detailId" style='display:none'>
                                         <div class="form-group">
@@ -39,7 +39,7 @@
                                         </div>
                                         {{-- <div class="form-group">
                                         <label for="session">Session : {{$d->session->date_debut}} - {{$d->session->date_fin}}</label>
-                                        </div> --}}
+                                        </div> 
                                         <div class="form-group">
                                         <label for="lieu">Lieu : {{$d->lieu}}</label>
                                         </div>
@@ -79,12 +79,12 @@
 
                                         {{-- <div class="form-group">
                                         <label for="module">Module : {{$d->module->nom_module}}</label><br>
-                                        </div> --}}
+                                        </div> 
                                     @endforeach
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -203,4 +203,4 @@
     //    });
     // });
 </script>
-@endsection
+{{-- @endsection --}}
