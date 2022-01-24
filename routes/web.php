@@ -4,7 +4,7 @@ use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -564,3 +564,7 @@ Route::get('create+compte+formateur',function(){
 Route::get('create+compte+CFP',function(){
     return view('create_compte.create_compte_cfp');
 })->name('create+compte+CFP');
+
+Route::get('test', function() {
+    Storage::disk('google')->put('test.txt', 'Hello World');
+});
