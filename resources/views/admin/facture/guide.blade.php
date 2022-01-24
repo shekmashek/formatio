@@ -23,6 +23,8 @@
                             <p>- une collaboration avec une entreprise</p>
                             <p>- une collaboration avec un formateur</p>
                             <p>- au moins un projet de formation</p>
+                            <p>- au moins une session dans le projet</p>
+                            <a href="{{route('facture')}}" class="btn btn-success">commencer</a>
                         </div>
                     </div>
                 </div>
