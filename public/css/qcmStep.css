@@ -173,6 +173,23 @@ select.list-dt:focus {
     content: "\f007"
 }
 
+#progressbar #etape1:before {
+    font-family: FontAwesome;
+    content: "1"
+}
+#progressbar #etape2:before {
+    font-family: FontAwesome;
+    content: "2"
+}
+#progressbar #etape3:before {
+    font-family: FontAwesome;
+    content: "3"
+}
+#progressbar #etape4:before {
+    font-family: FontAwesome;
+    content: "4"
+}
+
 #progressbar #payment:before {
     font-family: FontAwesome;
     content: "\f09d"

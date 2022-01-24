@@ -61,10 +61,10 @@
 
                             <div class="row">
                                 <div class="col">
-                                    <select class="form-select" aria-label="Default select example" name="entreprise_id" id="type_inscription">
+                                    <select class="form-select" aria-label="Default select example" name="entreprise_id" id="entreprise_id">
                                         <option value="null" disabled selected hidden>Veuillez Sélectionner</option>
-                                        <option value="1">Organisation de Formation (OF)</option>
-                                        <option value="2">Employeur (responsable de l'entreprise)</option>
+                                        <option value="">Organisation de Formation (OF)</option>
+                                        <option value="">Employeur (responsable de l'entreprise)</option>
                                     </select>
                                 </div>
                             </div>
@@ -87,9 +87,8 @@
                         <fieldset class="shadow p-3 mb-5 bg-body rounded">
                             <h3 class="">Veuillez certifier que vous etes la responsable de <strong>Cotona</strong></h3>
                             <p>veuillez renseigner:</p>
-                            <div class="row" id="changeCham">
-
-                                {{-- <div class="form-ground">
+                            <div class="row">
+                                <div class="form-ground">
                                     <label for="exampleFormControlInput1" class="form-label " align="left">Non<strong style="color:#ff0000;">*</strong></label>
                                     <input type="text" name="num_facture" class="form-control" id="num_facture" />
                                     <span style="color:#ff0000;" id="num_facture_err"></span>
@@ -113,7 +112,7 @@
                                     <label for="exampleFormControlInput1" class="form-label" align="left">Télephone<strong style="color:#ff0000;">*</strong></label>
                                     <input type="text" name="num_facture" class="form-control" id="num_facture" />
                                     <span style="color:#ff0000;" id="num_facture_err"></span>
-                                </div> --}}
+                                </div>
 
                             </div>
 
@@ -160,53 +159,6 @@
     <script src="{{asset('assets/jqueryui/jquery-ui.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('function js/programme/edit_programme.js') }}"></script>
     <script src="{{asset('js/qcmStep.js')}}"></script>
-
-
-    <script type="text/javascript">
-        // ============ select type inscription cfp ou responsables
-
-                $(document).on('change', '#type_inscription', function() {
-                    var id = $(this).val();
-
-                    alert(JSON.stringify(id));
-
-                    if (id == 1) { // ====== inscription de type CFP ou OF
-                        $('#changeCham').empty();
-                    }
-
-                    if (id == 2) { // ====== inscription de type responsable de l'entreprise
-
-                        $('#changeCham').empty();
-
-                        var html = '';
-
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label " align="left">Non<strong style="color:#ff0000;">*</strong></label>';
-                        html += '<input type="text" name="num_facture" class="form-control" id="num_facture" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Prénom<strong style="color:#ff0000;">*</strong></label>';
-                        html += '<input type="text" name="num_facture" class="form-control" id="num_facture" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" name="num_facture" class="form-control" id="num_facture" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" name="num_facture" class="form-control" id="num_facture" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" name="num_facture" class="form-control" id="num_facture" /></div>';
-                        html += '';
-
-
-
-                        $('#changeCham').append(html);
-                    }
-
-                });
-
-
-
-    </script>
 
 </body>
 </html>
