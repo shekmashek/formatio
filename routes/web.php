@@ -16,6 +16,9 @@ Route::get('/', function () {
 Route::get('contact',function(){
     return view('contact');
 });
+//Rout send email
+Route::post('/envoyer', 'SendEmailController@sendMail')->name('contact');
+
 Route::get('/projet_session', function () {
     return view('projet_session/index2');
 });

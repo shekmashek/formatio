@@ -18,8 +18,7 @@
         <h1>Contact-nous</h1>
         <br>
         <br>
-        <p>Hi, This is {{ $data['name'] }}</p>
-        <p>I have some query like {{ $data['message'] }}.</p>
+        
         <div class="row">
 
             <div class="col-lg-4">
@@ -47,7 +46,8 @@
                
                 <div class="row">
                     <div class="col-lg-6">
-                <form method="post" action="">
+                <form method="POST" action="{{route('contact')}}" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Votre nom" name="name">
                      </div>
@@ -76,7 +76,7 @@
                  <br>
                 
                       <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button">Envoyer</button>
+                        <button class="btn btn-primary" type="submit">Envoyer</button>
                       
                       </div>
             </div>

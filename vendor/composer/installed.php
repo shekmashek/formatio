@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '3af7c0f03247f82346afe6c43e3f8baf241b6f99',
+        'reference' => 'f2994d79dd9d2793cb699664cc4d8f6917f8ceec',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -17,6 +17,15 @@
             'install_path' => __DIR__ . '/../asm89/stack-cors',
             'aliases' => array(),
             'reference' => 'b9c31def6a83f84b4d4a40d35996d375755f0e08',
+            'dev_requirement' => false,
+        ),
+        'barryvdh/laravel-debugbar' => array(
+            'pretty_version' => 'v3.6.4',
+            'version' => '3.6.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../barryvdh/laravel-debugbar',
+            'aliases' => array(),
+            'reference' => '3c2d678269ba60e178bcd93e36f6a91c36b727f1',
             'dev_requirement' => false,
         ),
         'barryvdh/laravel-dompdf' => array(
@@ -37,6 +46,15 @@
             'reference' => 'dff976c2f3487d42c1db75a3b180e2b9f0e72ce0',
             'dev_requirement' => false,
         ),
+        'chartisan/php' => array(
+            'pretty_version' => '1.2.1',
+            'version' => '1.2.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../chartisan/php',
+            'aliases' => array(),
+            'reference' => '85d2352077800e9bcb411aec1ff7e4d23eef93a1',
+            'dev_requirement' => false,
+        ),
         'composer/package-versions-deprecated' => array(
             'pretty_version' => '1.11.99.2',
             'version' => '1.11.99.2',
@@ -44,6 +62,15 @@
             'install_path' => __DIR__ . '/./package-versions-deprecated',
             'aliases' => array(),
             'reference' => 'c6522afe5540d5fc46675043d3ed5a45a740b27c',
+            'dev_requirement' => false,
+        ),
+        'consoletvs/charts' => array(
+            'pretty_version' => '7.2.0',
+            'version' => '7.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../consoletvs/charts',
+            'aliases' => array(),
+            'reference' => 'cc820595e9bec13fbaf4cf552128860830a0f9e2',
             'dev_requirement' => false,
         ),
         'cordoval/hamcrest-php' => array(
@@ -446,12 +473,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '3af7c0f03247f82346afe6c43e3f8baf241b6f99',
+            'reference' => 'f2994d79dd9d2793cb699664cc4d8f6917f8ceec',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -524,6 +551,15 @@
             'install_path' => __DIR__ . '/../markbaker/matrix',
             'aliases' => array(),
             'reference' => '174395a901b5ba0925f1d790fa91bab531074b61',
+            'dev_requirement' => false,
+        ),
+        'maximebf/debugbar' => array(
+            'pretty_version' => 'v1.17.2',
+            'version' => '1.17.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../maximebf/debugbar',
+            'aliases' => array(),
+            'reference' => '3541f09f09c003c4a9ff7ddb0eb3361a7f14d418',
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(
@@ -826,8 +862,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '1.0.0',
+                0 => '1.0.0',
+                1 => '1.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -1023,6 +1059,15 @@
             'install_path' => __DIR__ . '/../symfony/css-selector',
             'aliases' => array(),
             'reference' => 'fcd0b29a7a0b1bb5bfbedc6231583d77fea04814',
+            'dev_requirement' => false,
+        ),
+        'symfony/debug' => array(
+            'pretty_version' => 'v4.4.31',
+            'version' => '4.4.31.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/debug',
+            'aliases' => array(),
+            'reference' => '43ede438d4cb52cd589ae5dc070e9323866ba8e0',
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(

@@ -1,34 +1,45 @@
 <?php
 
 namespace App\Http\Controllers;
-
+namespace App\Mail;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Mail\Contact;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\Contact;
+use Mail; 
 
 class SendEmailController extends Controller
 {
-    function send(Request $request)
+    // public function saveContact(Request $request) { 
+    //     Mail::send('contact_email',[
+            
+    //                     'name' => $request->name,
+    //                      'email' => $request->email,
+    //                       'objet' => $request->objet,
+    //                       'entreprise' => $request->entreprise,
+    //                      'msg' => $request->msg,
+    //     ],function($mail) use ($request){
+    //         $mail->from(env('MAIL_FROM_ADDRESS'),$request->name);
+    //         $mail->to('eodielorinah08@gmail.com')->subject('contact us mail');
+    //     });
+    //     return "message a ete bien envoyer";
+        
+    // }
+    public function sendMail(Request $request)
     {
-     $this->validate($request, [
-      'name'     =>  'required',
-      'email'  =>  'required|email',
-      'message' =>  'required',
-      'entreprise'  =>  'required|entreprise',
-      'objet' =>  'required|objet'
-     ]);
 
-        $data = array(
-            'name'      =>  $request->name,
-            'message'   =>   $request->message,
-            'objet'   =>   $request->objet,
-            'entreprise'   =>   $request->entreprise
+        $name=$request->name;
+        $email = $request->email;
+        $objet= $request->objet;
+        $entreprise = $request->entreprise;
+        $message = $request->message;
 
-        );
-
-     Mail::to('eodielorinah08@gmail.com')->send(new Contact($data));
-     return back()->with('success', 'Thanks for contacting us!');
-
+            Mail::to('eodielorinah08@gmail.com')->send(new Contact($name, $objet, $entreprise, $message, $email));
+        return back();
     }
 }
