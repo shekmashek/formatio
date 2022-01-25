@@ -1,24 +1,29 @@
 <?php
 
 namespace App\Providers;
-// use Google\Client;
-// use Google\Service\Drive;
-// use Google_Client;
-// use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
-// use League\Flysystem\Filesystem;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
 class GoogleDriveServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap the application services.
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap services.
      *
      * @return void
      */
     public function boot()
     {
-
-        Storage::extend('google', function($app, $config) {
+        \Storage::extend('google', function ($app, $config) {
             $client = new \Google_Client();
             $client->setClientId($config['clientId']);
             $client->setClientSecret($config['clientSecret']);
@@ -28,15 +33,5 @@ class GoogleDriveServiceProvider extends ServiceProvider
 
             return new \League\Flysystem\Filesystem($adapter);
         });
-    }
-
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }
