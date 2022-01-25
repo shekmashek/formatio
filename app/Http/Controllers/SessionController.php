@@ -110,4 +110,12 @@ class SessionController extends Controller
         // dd($stagiaire);
         return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
     }
+
+    public function all_formateur(){
+        $user_id = Auth::user()->id;
+        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $data = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+        return response()->json($data);
+    }
 }

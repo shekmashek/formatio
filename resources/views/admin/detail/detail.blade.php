@@ -43,6 +43,16 @@
     .icon_plus:hover{
         cursor: pointer;
     }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    margin: 0;
+    }
+    input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    }
+    p{
+        text-align: center !important;
+    }
 </style>
    <script type="text/javascript">
    function cloner() {
@@ -51,65 +61,102 @@
       document.getElementById("conteneur").appendChild(clone);
     }  
    }
+
+   function enlever(){
+    // var list = document.querySelector("div.fils");   // Get the <ul> element with id="myList"
+    // list.removeChild(list.childNodes[0]); 
+    // alert(list);
+    var clone=document.querySelector("div.fils");
+    document.getElementById("conteneur").removeChild(clone);
+   }
+
+   $(document).on('click', '#removeRow', function () {
+       alert('eto');
+        $(this).closest('#fils').remove();
+    });
+
+//    var node = document.createElement("LI");                 
+//     var textnode = document.createTextNode("Water");         
+//     node.appendChild(textnode);                              
+//     document.getElementById("myList").appendChild(node); 
+
+
+//     var list = document.getElementById("myList");   
+//     list.removeChild(list.childNodes[0]); 
    </script>
 
 {{-- donnee non existante --}}
-<i class="far fa-plus-circle icon_plus" onclick="cloner()"></i>
+<i class="far fa-plus-circle icon_plus" onclick="cloner()"><a href="#nouveau"></a></i>
 
 <form action="{{route('detail.store')}}" method="post">
     @csrf
     <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
     <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
-<div id="conteneur">
-    @for($i=1 ; $i<=3 ; $i++)
-    <div class="fils m-0">
-        <p class="intervention col-2">Intervention {{ $i }}</p>
-        <table class="table">
-            <thead>
-                <th class="th_sans_donnee"> Date </th>
-                <th class="th_sans_donnee"> Heure debut </th>
-                <th class="th_sans_donnee"> Heure fin </th>
-                <th class="th_sans_donnee"> Formateur </th>
-                <th class="th_sans_donnee"> Lieu </th>
-            </thead>
-            <tbody>
-                
-                <tr>
-                    <td><input type="date" name="date[]" class="form-control col m-0"></td>
-                    <td><input type="time" name="debut[]" class="form-control"></td>
-                    <td><input type="time" name="fin[]" class="form-control"></td>
-                    <td>
-                        <div class="input-group">  
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fa fa-user"></i></div>
-                            </div>
-                            <select name="formateur[]" id="" class="form-control m-0">
-                                <option value="" selected hidden> Choisissez un formateur </option>
-                                @foreach($formateur as $format)
-                                    <option value="{{$format->formateur_id}}">{{$format->nom_formateur}} {{$format->prenom_formateur}}</option>
-                                @endforeach
-                            </select>
-                            
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">  
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
-                            </div>
-                            <input type="text" name="lieu[]" class="form-control m-0">
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <div class="row">
+                <div class="col-md-4 ps-2">
+                    <p> Date </p>
+                </div>
+                <div class="col-md-8 p-0 d-flex justify-content-around">
+                    <p> Heure début </p>
+                    <p> Heure fin </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-3"><p> Formateur </p></div>
+                <div class="col-md-9"><p> Lieu </p></div>
+            </div>
+        </div>
     </div>
-@endfor
-</div>
-{{-- <div class="d-flex justify-content-end mr-2">
-    <button class="btn btn-success ">Valider</button>
-</div> --}}
+    <div id="conteneur">
+        <div class="fils m-0">
+            <div class="row">
+                <div class="col-md-4 p-0">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <input type="date" name="date[]" placeholder="" class="form-control m-1">
+                        </div>
+                        <div class="col-md-8 ps-1 d-flex">
+                                <input type="time" name="debut[]" class="form-control my-1 mx-2">
+                                <input type="time" name="fin[]" class="form-control my-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-3 px-2">
+                            <div class="input-group">  
+                                {{-- <div class="input-group-prepend my-1">
+                                    <div class="input-group-text"><i class="fa fa-user"></i></div>
+                                </div> --}}
+                                <select name="formateur[]" id="" class="form-control  my-1">
+                                    <option value="" selected hidden> Choisir formateur </option>
+                                    @foreach($formateur as $format)
+                                        <option value="{{$format->formateur_id}}">{{$format->prenom_formateur}}</option>
+                                    @endforeach
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-9 px-0">
+                            <div class="input-group">
+                                <input type="text" name="lieu[]" class="form-control my-1">
+                                <i class="far fa-minus-circle mx-1 my-3" onclick="enlever()"></i>
+                                {{-- <button type="button" id="removeRow"><i class="far fa-minus-circle mx-1 my-3"></i></button> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    
 </form>
 
 {{-- donnee non exiatante --}}
@@ -321,6 +368,7 @@
     </div> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <script>
     var id_detail;
     $(".modifier").on('click', function(e) {
@@ -398,4 +446,56 @@
         });
     });
 
+
+    $(document).on('click','#addRow',function () {
+        $('#frais').empty();
+        $.ajax({
+            url:"{{route('frais_annexe')}}",
+            type:'get',
+            success:function(response){
+                var userData=response;
+                var html = '';
+                html += '<div class="row">';
+
+                    html += '<div class="col-md-4 p-0">';
+                    html += '<div class="row">'  ; 
+                    html += '<div class="col-md-4 p-0">' ;       
+                    html += '<input type="date" name="date[]" placeholder="" class="form-control m-1">';            
+                    html += '</div>'  ;      
+                    html += ' <div class="col-md-8 ps-1 d-flex">';       
+                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-2">';                
+                    html += '<input type="time" name="fin[]" class="form-control my-1">';                
+                    html += '</div>' ;      
+                    html += '</div>';    
+                    html += '</div>';
+
+                    html += '<div class="col-md-8">';
+                    html += '<div class="row">';
+                        html += '<div class="col-md-3 px-2">';
+                        html += '<div class="input-group">';      
+                        html += '<select name="formateur[]" id="" class="form-control  my-1">'  ;      
+                        html += '<option value="" selected hidden> Choisir formateur </option>' ;       
+                        for(var $i = 0; $i < userData.length; $i++){
+                            html += '<option value="'+userData[$i].formateur_id+'">'+userData[$i].prenom_formateur+'</option>';
+                        }                
+                        html += '</select>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="col-md-9 px-0">';
+                        html += '<div class="input-group">' ;   
+                        html += '<input type="text" name="lieu[]" class="form-control my-1">';        
+                        html +=  '<button type="button" id="removeRow"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
+                        html += '</div>';        
+                        html += '</div>';    
+                        
+
+                    html +='</div>';
+                    html +='</div>';
+                html +='</div>';
+            },
+            error:function(error){
+                console.log(error);
+            }
+        });
+    });
 </script>
