@@ -565,6 +565,7 @@ Route::get('create+compte+CFP',function(){
     return view('create_compte.create_compte_cfp');
 })->name('create+compte+CFP');
 
-Route::get('test', function() {
-    Storage::disk('google')->put('test.txt', 'Hello World');
+Route::get('/put', function() {
+    Storage::cloud()->put('test.txt', 'Hello World');
+    return 'File was saved to Google Drive';
 });
