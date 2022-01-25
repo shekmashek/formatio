@@ -18,7 +18,7 @@
         <h1>Contact-nous</h1>
         <br>
         <br>
-        
+
         <div class="row">
 
             <div class="col-lg-4">
@@ -31,7 +31,7 @@
                 <br>
                 <br>
                <i class="fa fa-envelope" aria-hidden="true">
-                contact@formation.mg
+                contact@numerika.center
                </i>
                <br>
                <br>
@@ -43,7 +43,7 @@
                 <h3>Pour nous contacter Veuillez remplir les formulaires ci-dessous</h3>
                 <br>
                 <br>
-               
+
                 <div class="row">
                     <div class="col-lg-6">
                 <form method="POST" action="{{route('contact')}}" enctype="multipart/form-data">
@@ -58,9 +58,9 @@
                       <br>
                     </div>
                     <div class="col-lg-6">
-                    
+
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Email" name="email">
+                        <input type="text" class="form-control" placeholder="Email" name="mail">
                      </div>
                       <br>
                       <div class="form-group">
@@ -68,22 +68,22 @@
                       </div>
                     </div>
                 </div>
-               
+
                  <br>
                  <div class="form-group">
                     <textarea type="text" class="form-control" placeholder="Votre message" style="height: 200px" name="message"></textarea>
                  </div>
                  <br>
-                
+
                       <div class="d-grid gap-2">
                         <button class="btn btn-primary" type="submit">Envoyer</button>
-                      
+
                       </div>
             </div>
             </div>
         </form>
         </div>
-    </div>     
+    </div>
     {{-- <footer class="footer_container">
 
         <div class="d-flex justify-content-center pt-3">

@@ -11,10 +11,10 @@
 Mail vient de : {{ $name }}
 Here are the details:
 <b>Name:</b> {{ $name }}
-<b>Email:</b> {{ $email }}
+<b>Email:</b> {{ $mail }}
 <b>objet:</b> {{ $objet }}
 <b>entreprise:</b> {{ $entreprise }}
-<b>Message:</b> {{ $message}}
+<b>Message:</b> {{ $msg}}
 Thank You
 </body>
 </html>

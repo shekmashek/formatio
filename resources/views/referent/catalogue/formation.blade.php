@@ -7,7 +7,7 @@
 @section('content')
     <section class="formation">
         <div class="container-fluid">
-          
+
                     {{-- <div class="formation__categories"> --}}
                         {{-- <div class="formation__categories__tous d-flex flex-row align-items-center"> --}}
                             {{-- <div><i class="bx bxs-grid"></i></div> --}}
@@ -39,7 +39,7 @@
                     <div class="col-lg-3">
                     </div>
                 <div class="col-lg-9">
-                 
+
                     <h3>Que voulez-vous apprendre?</h3>
                     <div class="formation__search">
                         <div class="formation__search__form">
@@ -54,17 +54,17 @@
                             </form>
                         </div>
                     </div>
-                  
- 
+
+
                     @foreach ($categorie as $ctg )
                     <a href="{{route('select_par_module',$ctg->id)}}"><button type="button" class="btn btn" style="border-radius: 15px">{{$ctg->nom_formation}}</button></a>
                     @endforeach
                     <style>
-                    
+
                         .btn{background-color: #801D68;color: white}
                         .btn:hover{color:white}
                     </style>
-                       </div>   
+                       </div>
                     </div>
                     <br>
                     <br>
@@ -77,10 +77,10 @@
                         <h3>Les formations les plus recherchées </h3><br>
                     </div>
                      </div>
-                     
-                      
+
+
                             </div>
-                        </div> 
+                        </div>
                         </div>
                     </div>
                 </div>

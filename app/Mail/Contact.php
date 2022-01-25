@@ -16,32 +16,31 @@ class Contact extends Mailable
      *
      * @return void
      */
-    public function __construct($name,$objet,$message,$entreprise,$email)
+    public function __construct($name,$objet,$msg,$entreprise,$mail)
     {
         $this->name = $name;
         $this->objet = $objet;
-        $this->message = $message;
+        $this->msg = $msg;
         $this->entreprise = $entreprise;
-        $this->email = $email;
+        $this->mail = $mail;
     }
 
     /**
-     * Build the message.
+     * Build the msg.
      *
      * @return $this
      */
     public function build()
     {
-        return $this->from('contact@formation.mg')
+        return $this->from('contact@numerika.center')
         ->subject('Message du site formation.mg')
         ->view('emails.contact_email')
         ->with([
             'name' => $this->name,
             'objet' => $this->objet,
-            'email' => $this->email,
+            'mail' => $this->mail,
             'entreprise' => $this->entreprise,
-            'message' => $this->message
-
+            'msg' => $this->msg
         ]);
     }
 }
