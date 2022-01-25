@@ -25,8 +25,7 @@ class SendEmailController extends Controller
         $objet= $request->objet;
         $entreprise = $request->entreprise;
         $msg = $request->msg;
-
-            Mail::to($email)->send(new Contact($name, $objet, $entreprise, $msg, $email));
+        Mail::to($email)->send(new Contact($name, $objet, $entreprise, $msg, $email));
         return back()->with('message', 'Votre message a été bien envoyé');
     }
 }

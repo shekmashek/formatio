@@ -13,8 +13,9 @@
 <b>Nom:</b> {{ $name }}<br>
 <b>Email:</b> {{ $email }}<br>
 <b>objet:</b> {{ $objet }}<br>
-<b>entreprise:</b> {{ $msg }}<br>
-<b>Message:</b>{{$entreprise}} 
+<b>entreprise:</b>{{ $msg }}<br>
+<b>Message:</b>{{$entreprise}}  <br>
+
 
 </body>
 </html>
