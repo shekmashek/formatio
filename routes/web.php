@@ -559,10 +559,15 @@ Route::get('list_cfp','CfpController@index')->name('list_cfp');
 
 
 Route::get('create+compte+client',function(){
-    return view('create_compte.create_compte_client');
+    return view('create_compte.choix_creation_compte');
 })->name('create+compte+client');
 
+Route::get('create+compte+client/OF',function(){
+    return view('create_compte.create_compte_client');
+})->name('create+compte+client/OF');
+
 Route::post('create_compte_client','NouveauCompteController@create')->name('create_compte_client');
+Route::get('search_entreprise_referent','NouveauCompteController@search_entreprise_referent')->name('search_entreprise_referent');
 
 // Route::get('create+compte+formateur',function(){
 //     return view('create_compte.create_compte_formateur');

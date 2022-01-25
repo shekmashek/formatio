@@ -29,6 +29,19 @@
 </head>
 <body>
 
+    {{-- <input type="text" name="searchname" class="form-control" id="name_entreprise_search" placeholder="search" /> --}}
+
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+        {{Session::get('success')}}
+    </div>
+    @endif
+    @if(Session::has('error'))
+    <div class="alert alert-danger">
+        {{Session::get('error')}}
+    </div>
+    @endif
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3"></div>
@@ -73,11 +86,14 @@
                         </fieldset>
 
                         <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                            <h3 class="">Veuillez entrer le nom de votre entreprise</strong></h3>
-
-
+                            {{-- <h3 class="" id="desc_nom_cfp">Veuillez entrer le nom de votre entreprise</h3>
                             <label for="exampleFormControlInput1" class="form-label">Non de l'entreprise<strong style="color:#ff0000;">*</strong></label>
-                            <input type="text" name="name_entreprise" class="form-control" id="name_entreprise" />
+                            <input type="text" name="name_entreprise" class="form-control" id="name_entreprise_search" /> --}}
+
+                            <div id="info_nom_cfp">
+
+                            </div>
+
                             <span style="color:#ff0000;" id="num_facture_err"></span>
                             <div id="info_legale_cfp"></div>
 
@@ -141,91 +157,191 @@
 
 
     <script type="text/javascript">
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
         // ============ select type inscription cfp ou responsables
 
-                $(document).on('change', '#type_inscription', function() {
-                    var id = $(this).val();
+        $(document).on('change', '#type_inscription', function() {
+            var id = $(this).val();
 
-                    if (id == 1) { // ====== inscription de type CFP ou OF
-                        $('#changeCham').empty();
-                        $('#info_legale_cfp').empty();
+            if (id == 1) { // ====== inscription de type CFP ou OF
+                $('#changeCham').empty();
+                $('#info_legale_cfp').empty();
+                $('#info_nom_cfp').empty();
 
-                        document.getElementById('phrase_inscription').innerHTML='Veuillez certifier vos domaine et information';
+                var html3 = '';
+                var html = '';
+                var html2 = '';
 
-                        var html = '';
-                        var html2 = '';
+                html3 += '<h3>Veuillez entrer le nom de votre organisation de formation</strong></h3>';
+                html3 += '<label for="exampleFormControlInput1" class="form-label">Non<strong style="color:#ff0000;">*</strong></label>';
+                html3 += '<input type="text" name="name_cfp" class="form-control" id="name_cfp_search" />';
 
-                        html2+='<label for="exampleFormControlInput1" class="form-label">NIF<strong style="color:#ff0000;">*</strong></label>';
-                        html2+='<input type="text" name="nif" required class="form-control" id="name_entreprise" />';
-                        html2+=' <label for="exampleFormControlInput1" required class="form-label">STAT<strong style="color:#ff0000;">*</strong></label>';
-                        html2+='<input type="text" name="stat" required class="form-control" id="name_entreprise" />';
-                        html2+=' <label for="exampleFormControlInput1" required class="form-label">RCS<strong style="color:#ff0000;">*</strong></label>';
-                        html2+='<input type="text" name="rcs" required class="form-control" id="name_entreprise" />';
-                        html2+='<label for="exampleFormControlInput1" required class="form-label">CIF<strong style="color:#ff0000;">*</strong></label>';
-                        html2+='<input type="text" name="cif" required class="form-control" id="name_entreprise" />';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Domaine<strong style="color:#ff0000;">*</strong></label>';
-                        html += '<input type="text" required name="domaine_cfp" class="form-control" id="domaine_cfp" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Lot<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" required name="lot" class="form-control" id="lot" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Ville<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" required name="ville" class="form-control" id="ville" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Région<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" required name="region" class="form-control" id="region" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="email" required name="email_cfp" class="form-control" id="email_cfp" /></div>';
+                document.getElementById('phrase_inscription').innerHTML = 'Veuillez certifier vos domaine et information';
 
 
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>';
-                        html += '<input type="text" max=10 required name="tel_cfp" class="form-control" id="tel_cfp"/></div>';
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Web</label>';
-                        html += ' <input type="text"  name="web_cfp" class="form-control" id="web_cfp" /></div>';
+                html2 += '<label for="exampleFormControlInput1" class="form-label">NIF<strong style="color:#ff0000;">*</strong></label>';
+                html2 += '<input type="text" name="nif" required class="form-control" id="name_entreprise" />';
+                html2 += ' <label for="exampleFormControlInput1" required class="form-label">STAT<strong style="color:#ff0000;">*</strong></label>';
+                html2 += '<input type="text" name="stat" required class="form-control" id="name_entreprise" />';
+                html2 += ' <label for="exampleFormControlInput1" required class="form-label">RCS<strong style="color:#ff0000;">*</strong></label>';
+                html2 += '<input type="text" name="rcs" required class="form-control" id="name_entreprise" />';
+                html2 += '<label for="exampleFormControlInput1" required class="form-label">CIF<strong style="color:#ff0000;">*</strong></label>';
+                html2 += '<input type="text" name="cif" required class="form-control" id="name_entreprise" />';
 
-                        $('#info_legale_cfp').append(html2);
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Domaine<strong style="color:#ff0000;">*</strong></label>';
+                html += '<input type="text" required name="domaine_cfp" class="form-control" id="domaine_cfp" /></div>';
 
-                        $('#changeCham').append(html);
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Lot<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="text" required name="lot" class="form-control" id="lot" /></div>';
 
-                    }
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Ville<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="text" required name="ville" class="form-control" id="ville" /></div>';
 
-                    if (id == 2) { // ====== inscription de type responsable de l'entreprise
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Région<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="text" required name="region" class="form-control" id="region" /></div>';
 
-                        $('#changeCham').empty();
-                        $('#info_legale_cfp').empty();
-
-                        document.getElementById('phrase_inscription').innerHTML='Veuillez certifier que vous etes le responsable de <strong id="name_entreprise_desc"></strong>';
-                        var html = '';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label " align="left">Non<strong style="color:#ff0000;">*</strong></label>';
-                        html += '<input type="text" required name="nom_resp" class="form-control" id="nom_resp" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Prénom<strong style="color:#ff0000;">*</strong></label>';
-                        html += '<input type="text" required name="prenom_resp" class="form-control" id="prenom_resp" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" required name="function_resp" class="form-control" id="function_resp" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="email" required name="email_resp" class="form-control" id="email_resp" /></div>';
-
-                        html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>';
-                        html += ' <input type="text" max=10 required name="tel_resp" class="form-control" id="tel_resp" /></div>';
-                        $('#changeCham').append(html);
-                    }
-
-                });
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="email" required name="email_cfp" class="form-control" id="email_cfp" /></div>';
 
 
-                $(document).on('change', '#name_entreprise', function() {
-                    var id = $(this).val();
-                    document.getElementById('name_entreprise_desc').value = id;
-                    document.getElementById('name_entreprise_desc').innerHTML = id;
-                });
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>';
+                html += '<input type="text" max=10 required name="tel_cfp" class="form-control" id="tel_cfp"/></div>';
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Web</label>';
+                html += ' <input type="text"  name="web_cfp" class="form-control" id="web_cfp" /></div>';
+
+                $('#info_nom_cfp').append(html3);
+                $('#info_legale_cfp').append(html2);
+                $('#changeCham').append(html);
+
+            }
+
+            if (id == 2) { // ====== inscription de type responsable de l'entreprise
+
+                $('#changeCham').empty();
+                $('#info_legale_cfp').empty();
+                $('#info_nom_cfp').empty();
+
+                document.getElementById('phrase_inscription').innerHTML = 'Veuillez certifier que vous etes le responsable de <strong id="name_entreprise_desc"></strong>';
+                var html = '';
+                var html3 = '';
+
+                html3 += '<h3>Veuillez entrer le nom de votre entreprise</strong></h3>';
+                html3 += '<label for="exampleFormControlInput1" class="form-label">Non<strong style="color:#ff0000;">*</strong></label>';
+                html3 += '<input type="text" name="name_entreprise" class="form-control" id="name_entreprise_search" />';
+                html3 += '<div id="teste_e"></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label " align="left">Non<strong style="color:#ff0000;">*</strong></label>';
+                html += '<input type="text" required name="nom_resp" class="form-control" id="nom_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Prénom<strong style="color:#ff0000;">*</strong></label>';
+                html += '<input type="text" required name="prenom_resp" class="form-control" id="prenom_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="text" required name="function_resp" class="form-control" id="function_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="email" required name="email_resp" class="form-control" id="email_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="text" max=10 required name="tel_resp" class="form-control" id="tel_resp" /></div>';
+
+                $('#info_nom_cfp').append(html3);
+                $('#changeCham').append(html);
+            }
+
+        });
+
+
+        $(document).on('change', '#name_entreprise', function() {
+            var id = $(this).val();
+            document.getElementById('name_entreprise_desc').value = id;
+            document.getElementById('name_entreprise_desc').innerHTML = id;
+        });
+
+        // ====== autoComplet Champs search nom entreprise
+
+        $(document).ready(function() {
+
+
+            $('#name_entreprise_search').autocomplete({
+
+
+                source: function(request, response) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                        , type: 'GET'
+                        , url: "{{route('search_entreprise_referent')}}"
+                        , data: {
+                            search: request.term
+                        }
+                        , success: function(data) {
+                            response(data);
+                        }
+                    });
+                }
+                , minlength: 1
+                , autoFocus: true
+                , select: function(e, ui) {
+                    $('#name_entreprise_search').val(ui.item.nom_resp);
+                }
+
+            });
+
+
+        });
+
+
+        /*     $(document).on('change', '#name_entreprise_search', function() {
+            var id = $(this).val();
+            $.ajax({
+            method: "GET"
+            , url: "{{route('search_entreprise_referent')}}"
+            , data: {
+                Id: id
+            }
+            , dataType: "html"
+            , success: function(response) {
+
+                var userData = JSON.parse(response);
+                if(userData.length>=0){
+
+                    $('#teste_e').empty();
+                    var html='';
+                    html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label " align="left">Non<strong style="color:#ff0000;">*</strong></label>';
+                html += '<input type="text" required name="nom_resp" class="form-control" id="nom_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Prénom<strong style="color:#ff0000;">*</strong></label>';
+                html += '<input type="text" required name="prenom_resp" class="form-control" id="prenom_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="text" required name="function_resp" class="form-control" id="function_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="email" required name="email_resp" class="form-control" id="email_resp" /></div>';
+
+                html += '<div class="form-ground"><label for="exampleFormControlInput1" class="form-label" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>';
+                html += ' <input type="text" max=10 required name="tel_resp" class="form-control" id="tel_resp" /></div>';
+
+                $('#teste_e').append(html);
+                } else {
+
+                }
+
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+
+        });
+*/
 
     </script>
+
+
 
 </body>
 </html>
