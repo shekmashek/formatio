@@ -50,6 +50,8 @@ class HomeController extends Controller
      public function index(Request $request)
     {
         if (Auth::user()->exists) {
+
+
             // $totale_invitation = $this->collaboration->count_invitation();
             // return view('layouts.dashboard',compact('totale_invitation'));
             return view('layouts.dashboard');

@@ -2,7 +2,7 @@
 @section('content')
 
 {{-- 2 --}}
-<div class="row">
+<div class="row mt-2">
     <div class="col-lg-4">
         <div id="top_x_div"></div>
     </div>
@@ -10,10 +10,27 @@
         <div id="chart_div"></div>
     </div>
     <div class="col-lg-4">
-        <div id="columnchart_values"></div>
+        <div id="top_x_div_3"></div>
     </div>
 </div>
 {{-- fin 2 --}}
+
+
+{{-- ------------------------------- nar composé --}}
+
+<div class="row mt-3">
+    <div class="col-lg-4">
+        <div id="barchart_material"></div>
+    </div>
+    <div class="col-lg-4">
+        <div id="chart_div_2"></div>
+    </div>
+    <div class="col-lg-4">
+        <div id="columnchart_material"></div>
+    </div>
+</div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -56,7 +73,7 @@
       chart.draw(data, options);
     };
   </script>
-  {{-- fin 1 --}}
+{{-- fin 1 --}}
 
 
 
@@ -96,39 +113,130 @@
       chart.draw(data, options);
     }
   </script>
-  {{-- fin 2 --}}
+{{-- fin 2 --}}
 
 {{-- 3 --}}
 <script type="text/javascript">
-    google.charts.load("current", {packages:['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ["Element", "Density", { role: "style" } ],
-        ["Copper", 8.94, "#b87333"],
-        ["Silver", 10.49, "silver"],
-        ["Gold", 19.30, "gold"],
-        ["Platinum", 21.45, "color: #e5e4e2"]
-      ]);
+       google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
 
-      var view = new google.visualization.DataView(data);
-      view.setColumns([0, 1,
-                       { calc: "stringify",
-                         sourceColumn: 1,
-                         type: "string",
-                         role: "annotation" },
-                       2]);
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Move', 'Percentage'],
+          ["Janv", 44],
+          ["Fev", 31],
+          ["Ma", 12],
+          ["Avr", 10],
+          ['Mai', 3]
+        ]);
 
-      var options = {
-        title: "Density of Precious Metals, in g/cm^3",
-        width: 400,
-        height: 200,
-        bar: {groupWidth: "95%"},
-        legend: { position: "none" },
+        var options = {
+          width: 400,
+          height:200,
+          legend: { position: 'none' },
+          chart: {
+            title: '',
+            subtitle: '' },
+          axes: {
+            x: {
+              0: { side: 'top', label: ''} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div_3'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, google.charts.Bar.convertOptions(options));
       };
-      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-      chart.draw(view, options);
-  }
   </script>
 {{-- fin 3 --}}
+
+{{-- --------------------------------------------------------------------------------------- bar composé --}}
+
+
+{{-- 1 composé --}}
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Year', 'Sales', 'Expenses', 'Profit'],
+        ['2014', 1000, 400, 200],
+        ['2015', 1170, 460, 250],
+        ['2016', 660, 1120, 300],
+        ['2017', 1030, 540, 350]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Company Performance',
+          subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+        },
+        bars: 'horizontal' // Required for Material Bar Charts.
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script>
+{{-- fin 1 composé  --}}
+
+
+{{-- 2 composé --}}
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Year', 'Sales', 'Expenses'],
+        ['2013',  1000,      400],
+        ['2014',  1170,      460],
+        ['2015',  660,       1120],
+        ['2016',  1030,      540]
+      ]);
+
+      var options = {
+        title: 'Company Performance',
+        hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+        vAxis: {minValue: 0}
+      };
+
+      var chart = new google.visualization.AreaChart(document.getElementById('chart_div_2'));
+      chart.draw(data, options);
+    }
+</script>
+{{-- fin 2 composé --}}
+
+
+{{-- 3 composé --}}
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Year', 'Sales', 'Expenses', 'Profit'],
+        ['2014', 1000, 400, 200],
+        ['2015', 1170, 460, 250],
+        ['2016', 660, 1120, 300],
+        ['2017', 1030, 540, 350]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Company Performance',
+          subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+        }
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script>
+{{-- fin 3 composé --}}
 @endsection
