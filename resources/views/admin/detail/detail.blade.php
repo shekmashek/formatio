@@ -153,6 +153,9 @@
                 </div>
             </div>
         </div>
+
+        <div id="newRowMontant"></div>
+        
     </div>
 
 
@@ -492,6 +495,8 @@
                     html +='</div>';
                     html +='</div>';
                 html +='</div>';
+
+                $('#newRow').append(html);
             },
             error:function(error){
                 console.log(error);
