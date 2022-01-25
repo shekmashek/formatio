@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Contact-nous</h1>
+        <h1>Contacte-nous</h1>
         <br>
         <br>
         
@@ -31,7 +31,7 @@
                 <br>
                 <br>
                <i class="fa fa-envelope" aria-hidden="true">
-                contact@formation.mg
+                contact@numerika.center
                </i>
                <br>
                <br>
@@ -43,11 +43,16 @@
                 <h3>Pour nous contacter Veuillez remplir les formulaires ci-dessous</h3>
                 <br>
                 <br>
-               
+                @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
                 <div class="row">
                     <div class="col-lg-6">
                 <form method="POST" action="{{route('contact')}}" enctype="multipart/form-data">
                     @csrf
+                    
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Votre nom" name="name">
                      </div>
@@ -71,7 +76,7 @@
                
                  <br>
                  <div class="form-group">
-                    <textarea type="text" class="form-control" placeholder="Votre message" style="height: 200px" name="message"></textarea>
+                    <textarea type="text" class="form-control" placeholder="Votre message" style="height: 200px" name="msg"></textarea>
                  </div>
                  <br>
                 

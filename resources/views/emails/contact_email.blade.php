@@ -7,14 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Contact Form</h2>
-Mail vient de : {{ $name }}
-Here are the details:
-<b>Name:</b> {{ $name }}
-<b>Email:</b> {{ $email }}
-<b>objet:</b> {{ $objet }}
-<b>entreprise:</b> {{ $entreprise }}
-<b>Message:</b> {{ $message}}
-Thank You
+    <h2>Formation.mg</h2>
+
+
+<b>Nom:</b> {{ $name }}<br>
+<b>Email:</b> {{ $email }}<br>
+<b>objet:</b> {{ $objet }}<br>
+<b>entreprise:</b> {{ $msg }}<br>
+<b>Message:</b>{{$entreprise}} 
+
 </body>
 </html>
