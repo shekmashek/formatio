@@ -66,7 +66,7 @@
     </section>
     <section>
         <div class="row p-0">
-            <div class="col-md-3 py-3 ps-4">
+            <div class="col-md-2 py-3 pe-4">
                 <div class="corps_planning m-0 bg-light">
                     <div >
                         <button class="planning d-flex justify-content-between py-1 active" onload="loadContent()" onclick="openCity(event, 'planning')" style="width: 100%" id="on_load">
@@ -114,14 +114,14 @@
                     </div>
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'rapport')" style="width: 100%">
-                            <p class="m-0 p-0">RAPPORT DE FORMATION</p>
+                            <p class="m-0 p-0">RAPPORT</p>
                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-9 pe-4 pt-3">
+            <div class="col-md-10 pt-3">
                 {{-- commentaire --}}
                 {{-- <div class="d-flex justify-content-end">
                     <img src="{{ asset('maquette/cac.png') }}" alt="" class="img_commentaire" onclick="myFunction_commentaire()">

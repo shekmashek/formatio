@@ -63,7 +63,7 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         //enregistrer les projets dans la bdd
-        $session = new Session;
+        $session = new session;
         $session->date_debut = $request->date_debut;
         $session->date_fin = $request->date_fin;
         $num = DB::select('select max(id)+1 as numero from sessions')[0]->numero;
@@ -111,7 +111,7 @@ class SessionController extends Controller
         return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
     }
 
-    public function all_formateur(){
+    public function getFormateur(){
         $user_id = Auth::user()->id;
         $cfp_id = Cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();

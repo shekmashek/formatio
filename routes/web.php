@@ -19,6 +19,8 @@ Route::get('/projet_session', function () {
 
 // nouvelle session
 Route::get('detail_session/{id_session?}','SessionController@detail_session')->name('detail_session');
+
+Route::get('all_formateurs','SessionController@getFormateur')->name('all_formateurs');
 // end
 
 
@@ -485,7 +487,6 @@ Route::get('notification','AutoEvaluationController@index')->name('notification'
 Route::get('notification_stagiaire','AutoEvaluationController@notifiaction')->name('notification_stagiaire');
 
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
-
 
 // ================= Route abonnement ================= //
 Route::resource('abonnement', 'AbonnementController')->except('show');

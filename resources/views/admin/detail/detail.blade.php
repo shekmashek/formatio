@@ -44,15 +44,17 @@
         cursor: pointer;
     }
     input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
+    /* display: none; */
     margin: 0;
+    text-align: center;
     }
     input[type="time"]::-webkit-calendar-picker-indicator {
-    display: none;
+    /* display: none; */
     }
     p{
         text-align: center !important;
     }
+
 </style>
    <script type="text/javascript">
    function cloner() {
@@ -75,18 +77,7 @@
         $(this).closest('#fils').remove();
     });
 
-//    var node = document.createElement("LI");                 
-//     var textnode = document.createTextNode("Water");         
-//     node.appendChild(textnode);                              
-//     document.getElementById("myList").appendChild(node); 
-
-
-//     var list = document.getElementById("myList");   
-//     list.removeChild(list.childNodes[0]); 
    </script>
-
-{{-- donnee non existante --}}
-<i class="far fa-plus-circle icon_plus" onclick="cloner()"><a href="#nouveau"></a></i>
 
 <form action="{{route('detail.store')}}" method="post">
     @csrf
@@ -96,39 +87,43 @@
     <div class="row">
         <div class="col-md-4 p-0">
             <div class="row">
-                <div class="col-md-4 ps-2">
-                    <p> Date </p>
+                <div class="col-md-5 ps-2">
+                    <p><i class="fa fa-calendar-day entete"></i>&nbsp;Date </p>
                 </div>
-                <div class="col-md-8 p-0 d-flex justify-content-around">
-                    <p> Heure début </p>
-                    <p> Heure fin </p>
+                <div class="col-md-7 p-0 d-flex justify-content-around entete">
+                    <p><i class="fa fa-clock"></i>&nbsp;Heure début </p>
+                    <p><i class="fa fa-clock"></i>&nbsp;Heure fin </p>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-3"><p> Formateur </p></div>
-                <div class="col-md-9"><p> Lieu </p></div>
+            <div class="row entete">
+                <div class="col-md-4"><p> <i class="fa fa-user"></i>&nbsp;Formateur </p></div>
+                <div class="col-md-8"><p><i class="fa fa-map-marker-alt"></i>&nbsp;Lieu </p></div>
             </div>
         </div>
     </div>
     <div id="conteneur">
         <div class="fils m-0">
-            <div class="row">
+            @php
+                $i=0;
+            @endphp
+            @while ($i<3)
+            <div class="row" id="inputFormRow">
                 <div class="col-md-4 p-0">
                     <div class="row">
-                        <div class="col-md-4 p-0">
+                        <div class="col-md-5 p-0">
                             <input type="date" name="date[]" placeholder="" class="form-control m-1">
                         </div>
-                        <div class="col-md-8 ps-1 d-flex">
-                                <input type="time" name="debut[]" class="form-control my-1 mx-2">
-                                <input type="time" name="fin[]" class="form-control my-1">
+                        <div class="col-md-7 ps-1 d-flex">
+                                <input type="time" name="debut[]" class="form-control my-1 ms-1">
+                                <input type="time" name="fin[]" class="form-control my-1 ms-1">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="row">
-                        <div class="col-md-3 px-2">
+                        <div class="col-md-5 px-2">
                             <div class="input-group">  
                                 {{-- <div class="input-group-prepend my-1">
                                     <div class="input-group-text"><i class="fa fa-user"></i></div>
@@ -142,24 +137,31 @@
                                 
                             </div>
                         </div>
-                        <div class="col-md-9 px-0">
+                        <div class="col-md-7 px-0 pe-2">
                             <div class="input-group">
                                 <input type="text" name="lieu[]" class="form-control my-1">
-                                <i class="far fa-minus-circle mx-1 my-3" onclick="enlever()"></i>
-                                {{-- <button type="button" id="removeRow"><i class="far fa-minus-circle mx-1 my-3"></i></button> --}}
+                                <button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @php
+                $i++;
+            @endphp
+            @endwhile
         </div>
 
-        <div id="newRowMontant"></div>
+        <div id="newRow"></div>
+        <div class="text-end ms-4">
+            <button id="addRow" type="button"><i class="far fa-plus-circle"></i></button>
+        </div>
         
+
     </div>
-
-
-    
+    <div class="enregistrer">
+        <button type="submit" class="btn btn-success"><i class="far fa-save"></i>&nbsp;Enregistrer</button>
+    </div>
 </form>
 
 {{-- donnee non exiatante --}}
@@ -449,24 +451,27 @@
         });
     });
 
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
 
     $(document).on('click','#addRow',function () {
         $('#frais').empty();
         $.ajax({
-            url:"{{route('frais_annexe')}}",
+            url:"{{route('all_formateurs')}}",
             type:'get',
             success:function(response){
                 var userData=response;
                 var html = '';
-                html += '<div class="row">';
+                html += '<div class="row" id ="inputFormRow">';
 
                     html += '<div class="col-md-4 p-0">';
                     html += '<div class="row">'  ; 
-                    html += '<div class="col-md-4 p-0">' ;       
+                    html += '<div class="col-md-5 p-0">' ;       
                     html += '<input type="date" name="date[]" placeholder="" class="form-control m-1">';            
                     html += '</div>'  ;      
-                    html += ' <div class="col-md-8 ps-1 d-flex">';       
-                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-2">';                
+                    html += ' <div class="col-md-7 ps-1 d-flex">';       
+                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-1">';                
                     html += '<input type="time" name="fin[]" class="form-control my-1">';                
                     html += '</div>' ;      
                     html += '</div>';    
@@ -474,7 +479,7 @@
 
                     html += '<div class="col-md-8">';
                     html += '<div class="row">';
-                        html += '<div class="col-md-3 px-2">';
+                        html += '<div class="col-md-5 px-2">';
                         html += '<div class="input-group">';      
                         html += '<select name="formateur[]" id="" class="form-control  my-1">'  ;      
                         html += '<option value="" selected hidden> Choisir formateur </option>' ;       
@@ -484,10 +489,10 @@
                         html += '</select>';
                         html += '</div>';
                         html += '</div>';
-                        html += '<div class="col-md-9 px-0">';
+                        html += '<div class="col-md-7 px-0 pe-2">';
                         html += '<div class="input-group">' ;   
                         html += '<input type="text" name="lieu[]" class="form-control my-1">';        
-                        html +=  '<button type="button" id="removeRow"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
+                        html +=  '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
                         html += '</div>';        
                         html += '</div>';    
                         
