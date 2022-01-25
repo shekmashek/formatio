@@ -2163,6 +2163,37 @@ Détails Formation
   background-color: var(--color-child);
 }
 
+/* .actions_buttons{
+  position: fixed;
+  bottom: 5rem;
+} */
+input[type="time" i] {
+  align-items: center;
+  display: inline-flex;
+  display: -webkit-inline-flex;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-inline-start: 20px;
+  cursor: default;
+  overflow: hidden;
+  padding-left: 50px;
+}
+
+.actions_buttons .btn-success{
+  background-color: #198907;
+  transition: all .5s ease;
+}
+
+.actions_buttons .btn-danger{
+  background-color: #FF0000;
+  transition: all .5s ease;
+}
+
+.actions_buttons .btn-success:hover,
+.actions_buttons .btn-danger:hover{
+  transform: scale(0.9);
+}
+
+
 /* nouveau module */
 
 /* footer */
