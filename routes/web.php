@@ -28,6 +28,8 @@ Auth::routes();
 Route::get('/user',function(){
     return view('suivi/user');
 });
+
+
 Route::get('/home/{id?}','HomeController@index')->name('home');
 
 Route::get('/liste_projet/{id?}', 'HomeController@liste_projet')->name('liste_projet');

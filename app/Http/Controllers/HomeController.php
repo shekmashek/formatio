@@ -38,7 +38,16 @@ class HomeController extends Controller
     }
 
 
-    public function index(Request $request)
+    // public function index(Request $request)
+    // {
+    //     if (Auth::user()->exists) {
+    //         $totale_invitation = $this->collaboration->count_invitation();
+    //         return view('layouts.accueil_admin', compact('totale_invitation'));
+    //     }
+
+    // }
+
+     public function index(Request $request)
     {
         if(Gate::allows('isStagiaire')){
             $valeur = DB::select('select activiter,id from stagiaires where user_id = '.Auth::id());
@@ -75,11 +84,15 @@ class HomeController extends Controller
             }
         }
         if (Auth::user()->exists) {
-            $totale_invitation = $this->collaboration->count_invitation();
-            return view('layouts.accueil_admin', compact('totale_invitation'));
+
+
+            // $totale_invitation = $this->collaboration->count_invitation();
+            // return view('layouts.dashboard',compact('totale_invitation'));
+            return view('layouts.dashboard');
         }
 
     }
+
 
     public function liste_projet(Request $request, $id = null)
     {
