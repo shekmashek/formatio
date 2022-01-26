@@ -718,7 +718,6 @@ class ComposerStaticInit41e76e38416101257a8b99ac239bf0c3
         'App\\Site' => __DIR__ . '/../..' . '/app/Site.php',
         'App\\TypePayement' => __DIR__ . '/../..' . '/app/TypePayement.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
-        'App\\categories_formations' => __DIR__ . '/../..' . '/app/categories_formations.php',
         'App\\entreprise' => __DIR__ . '/../..' . '/app/entreprise.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',

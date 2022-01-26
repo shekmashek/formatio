@@ -96,7 +96,6 @@ return array(
     'App\\Site' => $baseDir . '/app/Site.php',
     'App\\TypePayement' => $baseDir . '/app/TypePayement.php',
     'App\\User' => $baseDir . '/app/User.php',
-    'App\\categories_formations' => $baseDir . '/app/categories_formations.php',
     'App\\entreprise' => $baseDir . '/app/entreprise.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
     'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',

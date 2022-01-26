@@ -136,6 +136,9 @@ class ParticipantController extends Controller
                 'adresse.required' => 'Entrez l\'adresse',
             ]
         );
+
+
+
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
         }

@@ -2163,6 +2163,127 @@ Détails Formation
   background-color: var(--color-child);
 }
 
+/* .actions_buttons{
+  position: fixed;
+  bottom: 5rem;
+} */
+
+.actions_buttons .btn-success{
+  background-color: #198907;
+  transition: all .5s ease;
+}
+
+.actions_buttons .btn-danger{
+  background-color: #FF0000;
+  transition: all .5s ease;
+}
+
+.actions_buttons .btn-success:hover,
+.actions_buttons .btn-danger:hover{
+  transform: scale(0.9);
+}
+
+.new_card_module{
+  border-top: 2px solid #801d68;
+  background-image: linear-gradient(120deg,rgba(247, 247, 247, 0.7) 60%, white 40%);
+}
+
+#preview_categ,
+#preview_module{
+  color: #801d68;
+  font-weight: bolder;
+}
+
+#preview_descript,
+#preview_haut2,
+#preview_modalite,
+#preview_niveau{
+  color: black;
+}
+.list_module{
+  color: red;
+
+}
+
+.pading_bas{
+  padding-bottom: 8rem;
+}
+
+.new_duree {
+  color:black;
+  background: transparent;
+  padding: 10px 20px 10px 20px;
+  position: relative;
+  border: #801d68 1px solid;
+  border-radius: 0;
+}
+
+.new_duree:hover{
+  background-color: #801d68;
+  color: white;
+  border-color: white;
+}
+
+.new_duree::before {
+  content:'';
+  border-top: 3.5rem solid white; /*couleur du fond derrière le bouton*/
+  border-right: 2rem solid transparent;
+  position: absolute;
+  left:0;
+  bottom: 0
+}
+
+.new_duree::after {
+  content:'';
+  border-bottom: 3.5rem solid white; /*couleur du fond derrière le bouton*/
+  border-left: 2rem solid transparent;
+  position: absolute;
+  right:0;
+  top: 0
+}
+
+.new_btn_programme .btn{
+  color:white;
+  background: #801d68;
+  padding: 10px 20px 10px 20px;
+  position: relative;
+  border-radius: 0;
+  transition: all .2s ease;
+}
+
+.new_btn_programme .btn:hover{
+  transform: scale(1.1);
+  border-color: white;
+  background-color: white;
+  color: #801d68;
+}
+
+.new_btn_programme .btn::before {
+  content:'';
+  border-top: 3.5rem solid rgba(247, 247, 247); /*couleur du fond derrière le bouton*/
+  border-right: 2rem solid transparent;
+  position: absolute;
+  left:0;
+  bottom: 0
+}
+
+.new_btn_programme .btn::after {
+  content:'';
+  border-bottom: 3.5rem solid white; /*couleur du fond derrière le bouton*/
+  border-left: 2rem solid transparent;
+  position: absolute;
+  right:0;
+  top: 0
+}
+
+.new_module_prix{
+  font-size: 2rem;
+  letter-spacing: 0;
+  font-weight: bolder;
+  margin: 0;
+  color: #801d68;
+}
+
 /* nouveau module */
 
 /* footer */
