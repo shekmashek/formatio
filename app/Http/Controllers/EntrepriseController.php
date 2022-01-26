@@ -42,6 +42,8 @@ class EntrepriseController extends Controller
 
     public function create($id = null)
     {
+
+
         $user_id = Auth::id();
         $fonct = new FonctionGenerique();
         $entp = new entreprise();
@@ -62,7 +64,6 @@ class EntrepriseController extends Controller
             $entreprise =entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
             if ($id) $datas = entreprise::orderBy('nom_etp')->take($id)->get();
             else  $datas = entreprise::orderBy("nom_etp")->get();
-
 
 
             // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
@@ -166,7 +167,14 @@ class EntrepriseController extends Controller
 
         $str = 'images/entreprises/';
         //stocker logo dans google drive
-        Storage::cloud()->put($nom_image, $request->file('image')->getContent());
+        $folder = 'entreprise';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+         $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
+        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('image')->getContent());
 
         $entreprise->logo = $nom_image;
 
@@ -246,14 +254,27 @@ class EntrepriseController extends Controller
         $nb = count($data_entreprise);
 
         //recuperer les photos dans google drive
-        $content = collect(Storage::cloud()->listContents());
-        $file = $content
+        // $content = collect(Storage::cloud()->listContents());
+        // $file = $content
+        // ->where('type', '=', 'file')
+        // ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
+        // ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
+        // ->first(); // there can be duplicate file names!
+
+        $folder = 'entreprise';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+         $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
+
+        $files = collect(Storage::cloud()->listContents($dir['path'], false))
         ->where('type', '=', 'file')
         ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
         ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
-        ->first(); // there can be duplicate file names!
-
-        $rawData = Storage::cloud()->get($file['path']);
+        ->first();
+        $rawData = Storage::cloud()->get($files['path']);
         return response($rawData)->header('Content-Type','image.png');
     }
 }

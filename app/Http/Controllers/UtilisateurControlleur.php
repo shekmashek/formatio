@@ -12,6 +12,7 @@ use App\cfp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 class UtilisateurControlleur extends Controller
 {
     public function __construct()
@@ -138,7 +139,17 @@ class UtilisateurControlleur extends Controller
         $nom_image = str_replace(' ', '_', $request->nom.''.$date.'.'.$request->logo->extension());
 
         $str = 'images/CFP';
-        $request->logo->move(public_path($str), $nom_image);
+
+        //stocker logo dans google drive
+        $folder = 'entreprise';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+        $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
+        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('logo')->getContent());
+        // $request->logo->move(public_path($str), $nom_image);
 
         $new_cfp->logo = $nom_image;
         $new_cfp->user_id = $user_id;

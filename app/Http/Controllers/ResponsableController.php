@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Mail\ReferentMail;
 use PDF;
 use App\responsable;
@@ -83,8 +84,16 @@ class ResponsableController extends Controller
         //insertion image
         $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom .  '' . $request->phone . '.' . $request->photos->extension());
         $str = 'images/responsables/';
-        // $str = 'public/images/responsables/';
-        $request->photos->move(public_path($str), $nom_image);
+         //stocker logo dans google drive
+        $folder = 'responsable';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+        $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
+        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('photos')->getContent());
+        // $request->photos->move(public_path($str), $nom_image);
         $resp->photos = $nom_image;
         //enregistrer les emails , name et mot de passe dans user
         $user = new User();
