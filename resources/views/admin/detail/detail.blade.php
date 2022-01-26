@@ -121,13 +121,15 @@
                                         <td>{{$d->h_fin}} h</td>
 
                                         <td>{{$d->nom_formateur." ".$d->prenom_formateur}}</td>
+                                     
                                         {{-- <td >
                                                 <a href="{{route('execution',[$d->detail_id])}}" class ="btn btn-info" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </td>
                                         <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
                                         <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td>
                                         --}}
-                                    </tr>
+                                       
+                                     </tr>
 
                                     @endforeach
 
@@ -157,11 +159,7 @@
                                                 <div class="form-group mx-auto">
                                                     <label for="lieu">Lieu</label>
                                                     <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu">
-                                                    {{-- @error('lieu')
-                                                    <div class="col-sm-6">
-                                                        <span style="color:#ff0000;"> {{$message}} </span>
-                                                    </div>
-                                                    @enderror --}}
+                                                   
                                                 </div>
                                                 <div class="form-group mx-auto">
                                                     <label for="date">Date</label>

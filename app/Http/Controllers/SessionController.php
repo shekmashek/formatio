@@ -96,17 +96,18 @@ class SessionController extends Controller
     public function detail_session(){
         $user_id = Auth::user()->id;
         $cfp_id = Cfp::where('user_id', $user_id)->value('id');
-        $id = request()->id_session;
-        $fonct = new FonctionGenerique();
-        $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-        $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
-        $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-        $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
-        $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
+        // $id = request()->id_session;
+        // $fonct = new FonctionGenerique();
+        // $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+        // $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
+        // $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+        // $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
+        // $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
 
         // ---apprenants
-        $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ' . $entreprise[0]->entreprise_id);
+        // $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ' . $entreprise[0]->entreprise_id);
         // dd($stagiaire);
-        return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
+        // return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
+        return view('projet_session.session');
     }
 }
