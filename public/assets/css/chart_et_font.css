@@ -102,9 +102,7 @@ input[type="tel"]:valid,
 input[type="email"]:valid,
 input[type="file"]:valid,
 textarea:valid,
-select:valid {
-  border-left: 2px solid rgb(63, 248, 63);
-}
+
 input[type="text"]:invalid,
 input[type="password"]:invalid,
 input[type="date"]:invalid,
@@ -113,9 +111,7 @@ input[type="tel"]:invalid,
 input[type="email"]:invalid,
 input[type="file"]:invalid,
 textarea:invalid,
-select:invalid {
-  border-right: 1px solid orangered;
-}
+
 /* input form */
 
 /* animations icons */
@@ -995,9 +991,7 @@ select {
   height: auto;
 }
 .form_insert_formateur input:valid,
-select:valid {
-  border-left: 2px solid rgb(63, 248, 63);
-}
+
 .form_insert_formateur input:invalid {
   border-right: 1px solid orangered;
 }

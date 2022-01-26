@@ -63,7 +63,7 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         //enregistrer les projets dans la bdd
-        $session = new Session;
+        $session = new session;
         $session->date_debut = $request->date_debut;
         $session->date_fin = $request->date_fin;
         $num = DB::select('select max(id)+1 as numero from sessions')[0]->numero;
@@ -96,18 +96,61 @@ class SessionController extends Controller
     public function detail_session(){
         $user_id = Auth::user()->id;
         $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $id = request()->id_session;
         $fonct = new FonctionGenerique();
-        $forma = new formateur();
-
-        // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
         $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-        // $formateur = $forma->getFormateur($formateur1,$formateur2);
-        // $formation = $fonct->findWhere("formations",["cfp_id"],[$cfp_id]);
         $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
         $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-        $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
+        $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id","projet_id"], [$cfp_id,$projet[0]->projet_id]);
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
-        return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas'));
+
+        // ---apprenants
+        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$projet[0]->groupe_id]);
+        
+        return view('projet_session.session', compact('id', 'test', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
     }
+
+    public function getFormateur(){
+        $user_id = Auth::user()->id;
+        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $data = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+        return response()->json($data);
+    }
+
+    public function getStagiaires(Request $request){
+        $search = $request->search;
+        $etp_id = $request->etp_id;
+        $user_id = Auth::user()->id;
+        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        if ($search == '') {
+            $stagiaire = stagiaire::orderby('matricule', 'asc')->select('id', 'matricule')->limit(5)->get();
+        } else {
+            $stagiaire = DB::select('select id,matricule from stagiaires where entreprise_id = '.$etp_id.' and matricule like "%'.$search.'%" limit 0,5');
+        }
+
+        $response = array();
+        foreach ($stagiaire as $stg) {
+            $response[] = array("value" => $stg->id, "label" => $stg->matricule);
+        }
+        return response()->json($response);
+    }
+
+    public function getOneStagiaire(Request $request)
+    {
+        $id = $request->Id;
+        $stg = DB::select('select * from v_stagiaire_entreprise where matricule = ?',[$id]);
+        return response()->json($stg);
+    }
+
+    public function addParticipantGroupe(Request $request){
+        $matricule = $request->Id;
+        $id_groupe = $request->groupe;
+        $id_stg = stagiaire::where('matricule',$matricule)->value('id');
+        DB::insert('insert into participant_groupe(stagiaire_id,groupe_id) values(?,?)',[$id_stg,$id_groupe]);
+        $stg = DB::select('select * from v_participant_groupe where groupe_id = ?',[$id_groupe]);
+        return response()->json($stg);
+    }
+
 }
