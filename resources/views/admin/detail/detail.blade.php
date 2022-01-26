@@ -1,6 +1,143 @@
+<style>
+    .icon_plus{
+        font-size: 1.2rem;
+    }
+    .nouveau_detail{
+        background-color: #822164;
+        border-radius: 20px;
+        color: #fff;
+        padding: 0 8; 
+    }
+    .nouveau_detail:hover{
+        background-color: #b8368f;
+        color: #fff;
+    }
+    .outline{
+        outline: none;
+        box-shadow: none;
+    }
+    .th_sans_donnee{
+        font-weight: bold;
+        text-align: center;
+    }
+    .form_control_time{
+        height: .5rem;
+    }
+    input[type="text"],
+    input[type="date"]{
+        height: auto !important ;
+    }
+    .intervention{
+        background-color: rgb(241, 241, 242);
+        padding: 2px 8px;
+        border-radius: 1rem;
+        text-align: center;
+    }
+    .icon_plus{
+        color: #b8368f;
+        margin-top:  -1rem;
+        font-size: 3rem;
+        position: sticky;
+        margin-left: 90%;
+    }
+    .icon_plus:hover{
+        cursor: pointer;
+    }
+    p{
+        text-align: center !important;
+    }
 
+</style>
+ 
 
-<div>
+<form action="{{route('detail.store')}}" method="post">
+    @csrf
+    <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
+    <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+        
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <div class="row">
+                <div class="col-md-5 ps-2">
+                    <p><i class="fa fa-calendar-day entete"></i>&nbsp;Date </p>
+                </div>
+                <div class="col-md-7 p-0 d-flex justify-content-around entete">
+                    <p><i class="fa fa-clock"></i>&nbsp;Heure début </p>
+                    <p><i class="fa fa-clock"></i>&nbsp;Heure fin </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row entete">
+                <div class="col-md-4"><p> <i class="fa fa-user"></i>&nbsp;Formateur </p></div>
+                <div class="col-md-8"><p><i class="fa fa-map-marker-alt"></i>&nbsp;Lieu </p></div>
+            </div>
+        </div>
+    </div>
+    <div id="conteneur">
+        <div class="fils m-0">
+            @php
+                $i=0;
+            @endphp
+            @while ($i<3)
+            <div class="row" id="inputFormRow">
+                <div class="col-md-4 p-0">
+                    <div class="row">
+                        <div class="col-md-5 p-0">
+                            <input type="date" name="date[]" placeholder="" class="form-control m-1" required>
+                        </div>
+                        <div class="col-md-7 ps-1 d-flex">
+                                <input type="time" name="debut[]" class="form-control my-1 ms-1" required>
+                                <input type="time" name="fin[]" class="form-control my-1 ms-1" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-5 px-2">
+                            <div class="input-group">  
+                                {{-- <div class="input-group-prepend my-1">
+                                    <div class="input-group-text"><i class="fa fa-user"></i></div>
+                                </div> --}}
+                                <select name="formateur[]" id="" class="form-control  my-1" required>
+                                    <option value="" selected hidden> Choisir formateur </option>
+                                    @foreach($formateur as $format)
+                                        <option value="{{$format->formateur_id}}">{{$format->prenom_formateur}}</option>
+                                    @endforeach
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-7 px-0 pe-2">
+                            <div class="input-group">
+                                <input type="text" name="lieu[]" class="form-control my-1" required>
+                                <button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @php
+                $i++;
+            @endphp
+            @endwhile
+        </div>
+
+        <div id="newRow"></div>
+        <div class="text-end ms-4">
+            <button id="addRow" type="button"><i class="far fa-plus-circle"></i></button>
+        </div>
+        
+
+    </div>
+    <div class="enregistrer">
+        <button type="submit" class="btn btn-success"><i class="far fa-save"></i>&nbsp;Enregistrer</button>
+    </div>
+</form>
+
+{{-- donnee non exiatante --}}
+
+<div style="display:none;">
         {{-- <div class="row">
             <div class="col-lg-12">
                 <br>
@@ -68,21 +205,7 @@
         {{-- </div> --}}
         <!-- /.row -->
 
-        <style>
-            .icon_plus{
-                font-size: 1.2rem;
-            }
-            .nouveau_detail{
-                background-color: #822164;
-                border-radius: 20px;
-                color: #fff;
-                padding: 0 8; 
-            }
-            .nouveau_detail:hover{
-                background-color: #b8368f;
-                color: #fff;
-            }
-        </style>
+        
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -126,17 +249,17 @@
                                                 <a href="{{route('execution',[$d->detail_id])}}" class ="btn btn-info" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </td>
                                         <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
-                                        <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td>
-                                        --}}
+                                        <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
+                                       
                                        
                                      </tr>
+                                        
+                                    </tr>
 
                                     @endforeach
 
                                 </tbody>
                             </table>
-
-                            {{-- Nouveau detail --}}
                             <div class="modal fade" id="modal_nouveau_detail">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -159,7 +282,11 @@
                                                 <div class="form-group mx-auto">
                                                     <label for="lieu">Lieu</label>
                                                     <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu">
+<<<<<<< HEAD
                                                    
+=======
+                                                    
+>>>>>>> f886534125afa25c2310d77bcf6d151e30b4f4c1
                                                 </div>
                                                 <div class="form-group mx-auto">
                                                     <label for="date">Date</label>
@@ -180,9 +307,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- fin nouveau detail --}}
-                              
-                              <!-- Modal -->
+                            
                             <div class="modal fade" id="myModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -229,9 +354,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <script>
     var id_detail;
     $(".modifier").on('click', function(e) {
@@ -309,4 +435,61 @@
         });
     });
 
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+
+    $(document).on('click','#addRow',function () {
+        $('#frais').empty();
+        $.ajax({
+            url:"{{route('all_formateurs')}}",
+            type:'get',
+            success:function(response){
+                var userData=response;
+                var html = '';
+                html += '<div class="row" id ="inputFormRow">';
+
+                    html += '<div class="col-md-4 p-0">';
+                    html += '<div class="row">'  ; 
+                    html += '<div class="col-md-5 p-0">' ;       
+                    html += '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';            
+                    html += '</div>'  ;      
+                    html += ' <div class="col-md-7 ps-1 d-flex">';       
+                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';                
+                    html += '<input type="time" name="fin[]" class="form-control my-1" required>';                
+                    html += '</div>' ;      
+                    html += '</div>';    
+                    html += '</div>';
+
+                    html += '<div class="col-md-8">';
+                    html += '<div class="row">';
+                        html += '<div class="col-md-5 px-2">';
+                        html += '<div class="input-group">';      
+                        html += '<select name="formateur[]" id="" class="form-control  my-1" required>'  ;      
+                        html += '<option value="" selected hidden> Choisir formateur </option>' ;       
+                        for(var $i = 0; $i < userData.length; $i++){
+                            html += '<option value="'+userData[$i].formateur_id+'">'+userData[$i].prenom_formateur+'</option>';
+                        }                
+                        html += '</select>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="col-md-7 px-0 pe-2">';
+                        html += '<div class="input-group">' ;   
+                        html += '<input type="text" name="lieu[]" class="form-control my-1" required>';        
+                        html +=  '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
+                        html += '</div>';        
+                        html += '</div>';    
+                        
+
+                    html +='</div>';
+                    html +='</div>';
+                html +='</div>';
+
+                $('#newRow').append(html);
+            },
+            error:function(error){
+                console.log(error);
+            }
+        });
+    });
 </script>
