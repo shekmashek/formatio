@@ -4,7 +4,7 @@
 <div class="shadow p-3 mb-5 bg-body rounded">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
-            <h5>Session </h5> 
+            <h5>Session </h5>
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0"> Session  &nbsp; &nbsp; </p>
                 <p class="numero_session text-dark mt-3"> <strong>n°: {{ $projet[0]->nom_groupe }}</strong>  </p>
@@ -47,9 +47,9 @@
                     <p class="p-0 m-0 text-center"> Formateur(s) </p>
                     <p class="p-0 m-0 text-center"> <strong>
                        <div class="pad_img">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">    
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">    
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">    
+                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
                        </div>
                     </strong></p>
                 </div>
@@ -126,7 +126,7 @@
                 {{-- <div class="d-flex justify-content-end">
                     <img src="{{ asset('maquette/cac.png') }}" alt="" class="img_commentaire" onclick="myFunction_commentaire()">
                 </div>
-                
+
                     <div id="myDIV" class="card col-4">
                         <div class="titre_card align-middle py-1">
                          <p class="text-center m-0 p-0">COMMENTAIRE</p>
@@ -135,12 +135,12 @@
                              <p>Ici votre commentaire !</p>
                          </div>
                      </div> --}}
-                
+
                 {{-- commentaire --}}
 
 
                     {{-- div absolute planning --}}
-                    
+
                     <div id="planning" class="tabcontent" style="display: block;">
                             @include('admin.detail.detail')
                       </div>
@@ -160,12 +160,12 @@
                         @include('projet_session.index_evaluation')
                       </div>
                       <div id="emargement" class="tabcontent">
-                        Emargement 
+                        Emargement
                       </div>
                       <div id="rapport" class="tabcontent">
                         Rapport de formation
                       </div>
-                      
+
                    {{-- fin div absolute planning --}}
 
                         {{-- <div class="card col-4">
@@ -176,7 +176,7 @@
                                 <p>Ici votre commentaire !</p>
                             </div>
                         </div> --}}
-                    
+
             </div>
         </div>
     </section>
@@ -228,7 +228,7 @@ strong{
 .height_default{
     height: 27px;
     align-items: center
-    
+
 }
 a{
     font-size: 12px;
@@ -322,7 +322,7 @@ p{
 }
 .planning{
     text-align: left;
-    padding-left: 6px; 
+    padding-left: 6px;
     height: 100%;
     font-size: 12px;
     background-color: rgba(230, 228, 228, 0.39);
@@ -330,7 +330,7 @@ p{
 }
 .dernier_planning{
     text-align: left;
-    padding-left: 6px; 
+    padding-left: 6px;
     height: 100%;
     font-size: 12px;
     background-color: rgba(230, 228, 228, 0.39);
