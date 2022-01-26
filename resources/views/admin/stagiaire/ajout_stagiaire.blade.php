@@ -43,14 +43,20 @@
     <section class="section_recherche m-0 p-2">
         <div class="d-flex py-1 align-items-center align-content-center">
             <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
-            <input type="text" placeholder="Entrez le matricule ici . . ." class="form-control col-3">
+            <input type="text" id="matricule_search" data-id="{{ $projet[0]->entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control col-3">
+            <input type="hidden" id="id_entreprise" value="{{ $projet[0]->entreprise_id }}">
+            <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
+                <i class="fa fa-search"></i>
+            </button>
         </div>
         <div class="d-flex mb-3">
-            <span class="span_name"> <input type="text" class="label_text" disabled value="" placeholder="Nom"> </span>
-            <span class="span_name"> <input type="text" class="label_text" disabled value="" placeholder="Prénom"> </span>
-            <span class="span_name"> <input type="text" class="label_text" disabled value="" placeholder="Département"> </span>
-            <span class="span_matricule"> <input type="text" class="label_text" disabled value="" placeholder="Matricule"> </span>
-            <span class="span_ajout"> <input type="text" class="label_text" disabled value="" placeholder="Ajouter"> </span>
+            <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
+            <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
+            <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
+            <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span>
+            <span class="span_ajout"> 
+                <i class="boutton fa fa-plus-circle" id="ajouter_participant"></i>
+             </span>
         </div>
     </section><br><hr><br>
     {{-- fin nouveau apprenant --}}
@@ -74,55 +80,31 @@
                 <th>Département</th>
                 <th></th>
             </thead>
-            <tbody>
+            <tbody id="participant_groupe">
+                @foreach ($stagiaire as  $stg)
                 <tr>
-                    <td>0001</td>
-                    <td>RAKOTO</td>
-                    <td>Ketaka</td>
-                    <td>H</td>
-                    <td>032 45 567 89</td>
-                    <td>rakotoketaka@gmail.com</td>
-                    <td>Developer</td>
-                    <td>Logistique</td>
-                    <td><box-icon type='solid' name='trash' class="icon_box" style="font-size: 8px;"></box-icon></td>
+                    <td>{{ $stg->matricule }}</td>
+                    <td>{{ $stg->nom_stagiaire }}</td>
+                    <td>{{ $stg->prenom_stagiaire }}</td>
+                    <td>{{ $stg->genre_stagiaire }}</td>
+                    <td>{{ $stg->telephone_stagiaire }}</td>
+                    <td>{{ $stg->mail_stagiaire }}</td>
+                    <td>{{ $stg->fonction_stagiaire }}</td>
+                    <td>{{ $stg->departement_id }}</td>
+                    <td><i class="fa fa-trash-alt"></i></td>
                 </tr>
-                <tr>
-                    <td>0001</td>
-                    <td>RAKOTO</td>
-                    <td>Ketaka</td>
-                    <td>H</td>
-                    <td>032 45 567 89</td>
-                    <td>rakotoketaka@gmail.com</td>
-                    <td>Developer</td>
-                    <td>Logistique</td>
-                    <td><box-icon type='solid' name='trash' class="icon_box" style="font-size: 8px;"></box-icon></td>
-                </tr>
-                <tr>
-                    <td>0001</td>
-                    <td>RAKOTO</td>
-                    <td>Ketaka</td>
-                    <td>H</td>
-                    <td>032 45 567 89</td>
-                    <td>rakotoketaka@gmail.com</td>
-                    <td>Developer</td>
-                    <td>Logistique</td>
-                    <td><box-icon type='solid' name='trash' class="icon_box" style="font-size: 8px;"></box-icon></td>
-                </tr>
-                <tr>
-                    <td>0001</td>
-                    <td>RAKOTO</td>
-                    <td>Ketaka</td>
-                    <td>H</td>
-                    <td>032 45 567 89</td>
-                    <td>rakotoketaka@gmail.com</td>
-                    <td>Developer</td>
-                    <td>Logistique</td>
-                    <td><box-icon type='solid' name='trash' class="icon_box" style="font-size: 8px;"></box-icon></td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
 </div>
 <style>
+.boutton{
+    font-size: 2rem;
+}
+.boutton:hover{
+    cursor: pointer;
+}
+
 .table-straped > tbody > tr:nth-child(2n+1) > td, .table-stroped > tbody > tr:nth-child(2n+1) > th {
    background-color: rgb(255,249,224);
 }
@@ -251,4 +233,87 @@ td{
     //        }
     //    });
     // });
+
+    $(".rechercher").on('click',function(e){
+        var id = $("#matricule_search").val();
+        $.ajax({
+            type: "GET",
+            url: "{{route('one_stagiaire')}}",
+            data:{Id:id},
+            dataType: "html",
+            success:function(response){
+                var userData=JSON.parse(response);
+                $("#matricule").val(userData[0].matricule);
+                $("#nom").val(userData[0].nom_stagiaire);
+                $("#prenom").val(userData[0].prenom_stagiaire);
+                $("#departement").val(userData[0].nom_departement);
+                // id_detail = userData[$i].id;
+                // $('#action1').val('Modifier');
+           },
+           error:function(error){
+              console.log(error)
+           }
+        });
+	});
+
+
+    $("#ajouter_participant").on('click',function(e){
+        var id = $("#matricule").val();
+        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+        $.ajax({
+            type: "GET",
+            url: "{{route('add_participant_groupe')}}",
+            data:{
+                Id:id,
+                groupe:groupe_id
+            },
+            dataType: "html",
+            success:function(response){
+                var userData=JSON.parse(response);
+                alert(userData);
+           },
+           error:function(error){
+              console.log(error)
+           }
+        });
+	});
+</script>
+<script type="text/javascript">
+    // CSRF Token
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    var etp_id = $("#id_entreprise").val();
+    $(document).ready(function() {
+        $("#matricule_search").autocomplete({
+            source: function(request, response) {
+                // Fetch data
+                $.ajax({
+                    url: "{{route('search_matricule')}}"
+                    , type: 'get'
+                    , dataType: "json"
+                    , data: {
+                        //    _token: CSRF_TOKEN,
+                        search: request.term,
+                        etp_id : etp_id
+                    }
+                    , success: function(data) {
+                        // alert("eto");
+                        response(data);
+                    }
+                    , error: function(data) {
+                        alert("error");
+                        //alert(JSON.stringify(data));
+                    }
+                });
+            }
+            , select: function(event, ui) {
+                // Set selection
+                $('#matricule_search').val(ui.item.label); // display the selected text
+                $('#stagiaireid').val(ui.item.value); // save selected id to input
+                return false;
+            }
+        });
+    });
+
+    
+
 </script>
