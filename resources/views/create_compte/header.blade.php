@@ -40,4 +40,19 @@
 </head>
 <body>
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="col-12">
+                    <div class="img_top mt-4 text-center">
+                        <img src="{{ asset('img/images/logo_fmg54Ko.png') }}" alt="background" class="img-fluid" style="width: 8rem; height: 8rem;">
+                    </div>
+                </div>
+                <h2>Inscrivez gratuitement vos information sur <strong>formation.mg</strong></h2>
+                <p>Si vous voulez créer un compte,cliquer <a href="{{route('create+compte+client')}}" style="color: blue">ICI.  </a>Si vous voulez vous connectez,cliquer <a href="{{route('sign-in')}}" style="color: blue">ICI</a></p>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
     @yield('content')

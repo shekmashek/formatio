@@ -1,270 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('create_compte.header')
+@section('content')
 
-    <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
-    <title> formation.mg </title>
+@if(Session::has('success'))
+<div class="alert alert-success">
+    {{Session::get('success')}}
+</div>
+@endif
+@if(Session::has('error'))
+<div class="alert alert-danger">
+    {{Session::get('error')}}
+</div>
+@endif
 
-    <link rel="stylesheet" href="{{asset('css/profil_formateur.css')}}">
-    <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
-    <link href="{{asset('assets/css/boxicons.min.css')}} " rel="stylesheet">
-    <link href="{{asset('assets/css/chart_et_font.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{{asset('../assets/css/smooth_page.css')}}">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{asset('../assets/css/smooth_page.css')}}">
-    <link rel="stylesheet" href="{{ asset('maquette/style_maquette.css') }}">
-    <script src="{{ asset('maquette/javascript.js') }}"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
 
-</head>
-<body>
-    <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
-        <i class="far fa-arrow-up"></i>
-    </button>
-    <header>
-        <nav class="navbar_accueil fixed-top d-flex justify-content-between">
-            <div class="left_menu ms-2">
-                <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg</p>
-            </div>
-            <div class="right_menu d-flex justify-content-end align-items-center">
-                <div class="child_right_menu">
-                    <button class="btn_bordure_violet mx-2"><i class="fa fa-phone-alt"></i>&nbsp; Contactez-nous</button>
-                </div>
-                <div class="child_right_menu">
-                    <button class="btn_bordure_violet mx-2"><i class="fa fa-layer-plus"></i>&nbsp; Créer un compte</button>
-                </div>
-                <div class="child_right_menu">
-                    <button class="btn bouton_violet mx-2"><a href="{{ route('sign-in') }}"><i class="fa fa-sign-in-alt"></i>&nbsp; Connexion </a></button>
-                </div>
-            </div>
-        </nav>
-    </header>
+            <form action="{{route('create_compte_cfp')}}" id="msform" method="POST" enctype="multipart/form-data">
+                @csrf
+                <!-- progressbar -->
+                <ul id="progressbar" class="mb-1">
+                    <li class="active" id="etape1"></li>
+                    <li id="etape2"></li>
+                    <li id="etape3"></li>
+                    <li id="etape4"></li>
+                </ul> <!-- fieldsets -->
 
+                <div id="formulaire">
 
-    {{-- <div id="page-wrapper"> --}}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 mt-5">
-                <h2>Creation de nouveau compte de Centre de Formation Professionel (CFP)</h2>
-            </div>
+                    <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                        <h3 class="">Veuillez entrer le nom de votre entreprise</strong></h3>
 
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-
-                @canany(['isCFP'])
-                @if(Session::has('success'))
-                <div class="alert alert-success">
-                    {{Session::get('success')}}
-                </div>
-                @endif
-                @endcanany
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="container-lg">
-                            <div class="row bg-light">
-                                <form action="{{ route('utilisateur_register_cfp') }}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for=""> Logo </label><p></p><p></p>
-                                        <input type="file" name="logo"><br><br>
-                                        <label for=""> Nom </label><br>
-                                        <input type="text" class="form-control" name="nom" autocomplete="off" required><br>
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <label for=""> Lot </label><br>
-                                                <input type="text" class="form-control" name="adresse_lot" autocomplete="off" required><br>
-                                            </div>
-                                            <div>
-                                                <label for=""> Ville </label><br>
-                                                <input type="text" class="form-control" name="adresse_ville" autocomplete="off" required><br>
-                                            </div>
-                                            <div>
-                                                <label for=""> Région </label><br>
-                                                <input type="text" class="form-control" name="adresse_region" autocomplete="off" required><br>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-row">
-                                            <div>
-                                                <label for=""> E-mail </label><br>
-                                                <input type="text" class="form-control" name="email" autocomplete="off" required><br>
-                                            </div>
-                                            <div>
-                                                <label for=""> Site web </label><br>
-                                                <input type="text" class="form-control" name="site" autocomplete="off" required><br>
-                                            </div>
-                                        </div>
-                                        <label for=""> Téléphone(une seule numero) </label><br>
-                                        <input type="text" class="form-control" name="telephone" autocomplete="off" required><br>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for=""> Domaine </label><br>
-                                        <input type="text" class="form-control" name="domaine" autocomplete="off" required><br>
-                                        <label for=""> NIF </label><br>
-                                        <input type="text" class="form-control" name="nif" autocomplete="off" required><br>
-                                        <label for=""> STAT </label><br>
-                                        <input type="text" class="form-control" name="stat" autocomplete="off" required><br>
-                                        <label for=""> RCS</label><br>
-                                        <input type="text" class="form-control" name="rcs" autocomplete="off" required><br>
-                                        <label for=""> CIF </label><br>
-                                        <input type="text" class="form-control sm-3" name="cif" autocomplete="off" required><br>
-                                    </div>
-                                </div>
-                                <br><br>
-                                    <div style="display: flex; justify-content: flex-end;">
-                                        <button type="submit" class="btn btn-success">&nbsp; Enregistrer </button>
-                                    </div>
-                                </form>
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label">Non<strong style="color:#ff0000;">*</strong></label>
+                                <input type="text" name="name_cfp" class="form-control" id="name_cfp" />
+                                <span style="color:#ff0000;" id="num_facture_err"></span>
                             </div>
                         </div>
 
-                    </div>
+                        <input type="button" name="next" class="next action-button" style="background-color: red" value="Suivant" />
+                    </fieldset>
+
+                    <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                        <h3 class="">Veuillez entrer vos information l'egale</strong></h3>
+
+                        <label for="exampleFormControlInput1" class="form-label">NIF<strong style="color:#ff0000;">*</strong></label>
+                        <input type="text" name="nif" required class="form-control" id="name_entreprise" />
+                        <label for="exampleFormControlInput1" required class="form-label">STAT<strong style="color:#ff0000;">*</strong></label>
+                        <input type="text" name="stat" required class="form-control" id="name_entreprise" />
+                        <label for="exampleFormControlInput1" required class="form-label">RCS<strong style="color:#ff0000;">*</strong></label>
+                        <input type="text" name="rcs" required class="form-control" id="name_entreprise" />
+                        <label for="exampleFormControlInput1" required class="form-label">CIF<strong style="color:#ff0000;">*</strong></label>
+                        <input type="text" name="cif" required class="form-control" id="name_entreprise" />
+
+                        <input type="button" name="previous" class="previous action-button-previous" style="background-color: red" value="Précedent" />
+                        <input type="button" name="next" class="next action-button" style="background-color: red" value="Suivant" />
+
+                    </fieldset>
+
+                    <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                        <h3 class="">Veuillez entrer vos information personnel</strong></h3>
+
+                        <div class="form-ground">
+                            <label for="exampleFormControlInput1" class="form-label" align="left">Domaine<strong style="color:#ff0000;">*</strong></label>
+                            <input type="text" required name="domaine_cfp" class="form-control" id="domaine_cfp" />
+                        </div>
+
+                        <div class="form-ground">
+                            <label for="exampleFormControlInput1" class="form-label" align="left">Lot<strong style="color:#ff0000;">*</strong></label>
+                            <input type="text" required name="lot" class="form-control" id="lot" />
+                        </div>
+
+                        <div class="form-ground">
+                            <label for="exampleFormControlInput1" class="form-label" align="left">Ville<strong style="color:#ff0000;">*</strong></label>
+                            <input type="text" required name="ville" class="form-control" id="ville" />
+                        </div>
+
+                        <div class="form-ground">
+                            <label for="exampleFormControlInput1" class="form-label" align="left">Région<strong style="color:#ff0000;">*</strong></label>
+                            <input type="text" required name="region" class="form-control" id="region" />
+                        </div>
+
+                        <div class="form-ground">
+                            <label for="exampleFormControlInput1" class="form-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>
+                            <input type="email" required name="email_cfp" class="form-control" id="email_cfp" />
+                        </div>
+                        <div class="form-ground">
+                            <label for="exampleFormControlInput1" class="form-label" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>
+                            <input type="text" max=10 required name="tel_cfp" class="form-control" id="tel_cfp" />
+                        </div>
+                        <div class="form-ground">
+                            <label for="exampleFormControlInput1" class="form-label" align="left">Web</label>
+                            <input type="text" name="web_cfp" class="form-control" id="web_cfp" />
+                        </div>
+
+                        <input type="button" name="previous" class="previous action-button-previous" style="background-color: red" value="Précendent" />
+                        <input type="button" name="make_payment" class="next action-button" style="background-color: red" value="Suivant" />
+                    </fieldset>
+
+                    <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                        <h5 class="">Après avoir remplir notre condition,vous pouvez maitenant activier votre.</strong></h5>
+                        <h6>Avant d'activer votre,veuillez bien revérifier votre données!</h6>
+                        <input type="button" name="previous" class="previous action-button-previous" style="background-color: red" value="Précendent" />
+                        <button type="submit" class="btn btn-danger">Activation</button>
+                    </fieldset>
+
                 </div>
-            </div>
+
+
+            </form>
+
         </div>
+
+        <div class="col-md-3"></div>
     </div>
-    </div>
-    {{-- </div> --}}
+</div>
 
-
-    <footer class="footer_container">
-
-        <div class="d-flex justify-content-center pt-3">
-            <div class="bordure">&copy; Copyright 2022</div>
-            <div class="bordure">Informations légales</div>
-            <div class="bordure">Contactez-nous</div>
-            <div class="bordure">Politique de confidentialités</div>
-            <div class="bordure">Condition d'utilisation</div>
-            <div class="bordure">Tarifs</div>
-            <div class="bordure">Crédits</div>
-            <div> &nbsp; Version 0.9</div>
-        </div>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-    {{-- <script src="{{asset('assets/js/bootstrap.min.js')}}"></script> --}}
-    <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-
-    <script type="text/javascript">
-        let mybutton = document.getElementById("btn-back-to-top");
-        window.onscroll = function() {
-            scrollFunction();
-        };
-
-        function scrollFunction() {
-            if (
-                document.body.scrollTop > 300 ||
-                document.documentElement.scrollTop > 300
-            ) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-        mybutton.addEventListener("click", backToTop);
-
-        function backToTop() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-
-
-        //add row1
-        $(document).on('click', '#addRow1', function() {
-            var html = '';
-            html += '<div class="row" id="inputFormRow1">';
-            html += '<div class="col-lg-5">';
-            html += '<div class="form-group">';
-            html += '<input type="text" class="form-control" name="domaine[]" id="domaine" title="5 à 50 caractères" placeholder="Domaine" class="domaine" required>';
-            html += '</div>';
-            html += '</div>';
-            html += '<div class="col-lg-5">';
-            html += '<div class="form-group">';
-            html += '<input type="text" class="form-control" name="competences[]" id="competences" title="5 à 255 caractères" placeholder="competences" class="domaine" required>';
-            html += '</div>';
-            html += '</div>';
-            html += '<div class="col-lg-2 mt-3" align="center">';
-            html += '<button id="removeRow1" type="button" class="btn btn-danger envoyer"><i class="fa fa-close style="font-size: 15px;"></i></button>';
-            html += '</div>';
-            html += '</div>';
-
-            $('#newRow1').append(html);
-        });
-
-        // remove row1
-        $(document).on('click', '#removeRow1', function() {
-            $(this).closest('#inputFormRow1').remove();
-        });
-
-        //add row2
-
-        $(document).on('click', '#addRow2', function() {
-            var html2 = '';
-            html2 += '<div class="row"id="inputFormRow2">';
-            html2 += '<div class="col-lg-12">';
-
-            html2 += '<div class="row">';
-            html2 += '<div class="col-lg-4">';
-            html2 += '<div class="form-group">';
-            html2 += '<input type="text" class="form-control" name="entreprise[]" id="entreprise" title="5 à 50 caractères" placeholder="Nom entreprise" class="domaine" required>';
-            html2 += '</div>';
-            html2 += '</div>';
-            html2 += '<div class="col-lg-4">';
-            html2 += '<div class="form-group">';
-            html2 += '<input type="text" class="form-control" name="poste[]" id="poste" title="5 à 100 caractères" placeholder="Poste occupé" class="domaine" required>';
-            html2 += '</div>';
-            html2 += '</div>';
-            html2 += '<div class="col-lg-4">';
-            html2 += '<div class="form-group">';
-            html2 += '<input type="text" class="form-control"name="taches[]" id="taches" title="5 à 100 caractères" placeholder="Tâches effectuer dans l&apos;entreprise" class="domaine" required>';
-            html2 += '</div>';
-            html2 += '</div>';
-            html2 += '</div>';
-
-            html2 += '<div class="row">';
-            html2 += '<div class="col-lg-4">';
-            html2 += '<div class="form-group">';
-            html2 += '<input type="date" class="form-control" name="date_debut[]" id="date_debut" class="domaine" placeholder="Date de début du travail" required>';
-            html2 += '</div>';
-            html2 += '</div>';
-            html2 += '<div class="col-lg-4">';
-            html2 += '<div class="form-group">';
-            html2 += '<input type="date" class="form-control" name="date_fin[]" id="date_fin" class="domaine" placeholder="Date de fin du travail" required>';
-            html2 += '</div>';
-            html2 += '</div>';
-            html2 += '<div class="col-lg-4 mt-3" align="center">';
-            html2 += '<div class="form-group">';
-            html2 += '<button id="removeRow2" type="button" class="btn btn-danger envoyer"><i class="fa fa-close style="font-size: 15px;" ></i></button>';
-            html2 += '</div>';
-            html2 += '</div>';
-            html2 += '</div>';
-
-            html2 += '</div>';
-            html2 += '</div>';
-
-            $('#newRow2').append(html2);
-        });
-
-        // remove row1
-        $(document).on('click', '#removeRow2', function() {
-            $(this).closest('#inputFormRow2').remove();
-        });
-
-    </script>
-
-</body>
-</html>
+@endsection
+@extends('create_compte.footer')
