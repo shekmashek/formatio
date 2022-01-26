@@ -96,6 +96,7 @@ class SessionController extends Controller
     public function detail_session(){
         $user_id = Auth::user()->id;
         $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $id = request()->id_session;
         $fonct = new FonctionGenerique();
         $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
@@ -110,7 +111,8 @@ class SessionController extends Controller
         $stagiaire = DB::select('select * from stagiaires WHERE entreprise_id = ? and (id,?) not in(SELECT stagiaire_id,groupe_id from participant_groupe)',[$entreprise[0]->entreprise_id,$projet[0]->groupe_id]);
 
         // dd($stagiaire);
-        return view('projet_session.session', compact('id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
+        // dd($test);
+        return view('projet_session.session', compact('test','id', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
     }
 
     public function getFormateur(){

@@ -1,6 +1,7 @@
 <style>
     .icon_plus{
-        font-size: 1.2rem;
+        border: 2px solid whitesmoke;
+        font-size: 0.5rem;
     }
     .nouveau_detail{
         background-color: #822164;
@@ -49,8 +50,8 @@
 
 </style>
  
-
-<form action="{{route('detail.store')}}" method="post">
+@if($test === 0)
+<form onsubmit="change_active()" id="non_existante" action="{{route('detail.store')}}" method="post">
     @csrf
     <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
     <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
@@ -134,10 +135,12 @@
         <button type="submit" class="btn btn-success"><i class="far fa-save"></i>&nbsp;Enregistrer</button>
     </div>
 </form>
+@endif
 
 {{-- donnee non exiatante --}}
 
-<div style="display:none;">
+@if($test != 0)
+    <div id="existante">
         {{-- <div class="row">
             <div class="col-lg-12">
                 <br>
@@ -213,26 +216,25 @@
                     <div class="panel-body">
                         <nav class="d-flex justify-content-end mb-1">
                                 <a class="nouveau_detail btn"  aria-current="page"  data-toggle="modal" data-target="#modal_nouveau_detail">
-                                    <span class="icon_plus m-0 p-0"> + </span> Nouveau détail</a>
+                                    <i class="far fa-plus-circle p-1" style="background-color: white; border-radius: 50%; font-weight: bold;"></i>
+                                     <small class="text-white">Nouveau détail</small class="text-white"></a>
                         </nav>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
-                                    <tr>
                                         @canany(['isReferent','isManager','isFormateur'])
                                         <th>CFP</th>
                                         @endcanany
                                         <th>Module</th>
-                                        <th>Lieu</th>
+                                        <th width="30%">Lieu</th>
                                         <th>Date</th>
                                         <th>Début</th>
                                         <th>Fin</th>
                                         <th>Formateur</th>
-                                    </tr>
+                                        <th>Action</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($datas as $d)
-
                                     <tr>
                                         @canany(['isReferent','isManager','isFormateur'])
                                         <td> <strong style="color: blue">{{$d->nom_cfp }}</strong></td>
@@ -244,20 +246,15 @@
                                         <td>{{$d->h_fin}} h</td>
 
                                         <td>{{$d->nom_formateur." ".$d->prenom_formateur}}</td>
-                                     
+                                        <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
                                         {{-- <td >
                                                 <a href="{{route('execution',[$d->detail_id])}}" class ="btn btn-info" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </td>
                                         <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
                                         <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
                                        
-                                       
                                      </tr>
-                                        
-                                    </tr>
-
                                     @endforeach
-
                                 </tbody>
                             </table>
                             <div class="modal fade" id="modal_nouveau_detail">
@@ -282,11 +279,7 @@
                                                 <div class="form-group mx-auto">
                                                     <label for="lieu">Lieu</label>
                                                     <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu">
-<<<<<<< HEAD
-                                                   
-=======
-                                                    
->>>>>>> f886534125afa25c2310d77bcf6d151e30b4f4c1
+
                                                 </div>
                                                 <div class="form-group mx-auto">
                                                     <label for="date">Date</label>
@@ -354,11 +347,32 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
+@endif
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+<script></script>
 <script>
+    $("#non_existante").on('submit', function() {
+        document.getElementById('#non_existante').onsubmit = function (){
+         document.querySelector('#non_existante').style.display = "none";
+        document.querySelector('#existante').style.display = "block";
+    }
+    });
+    function change_active(){
+         document.querySelector('#non_existante').style.display = "none";
+        document.querySelector('#existante').style.display = "block";
+    };
+    // document.getElementById('#non_existante').onsubmit = function (){
+    //      document.querySelector('#non_existante').style.display = "none";
+    //     document.querySelector('#existante').style.display = "block";
+    // }
+    // function change_active(){
+    //     document.querySelector('#non_existante').style.display = "none";
+    //     document.querySelector('#existante').style.display = "block";
+    // }
+
+
     var id_detail;
     $(".modifier").on('click', function(e) {
         var id = e.target.id;

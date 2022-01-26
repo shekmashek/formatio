@@ -71,8 +71,12 @@
                     <div >
                         <button class="planning d-flex justify-content-between py-1 active" onload="loadContent()" onclick="openCity(event, 'planning')" style="width: 100%" id="on_load">
                             <p class="m-0 p-0">PLANNING</p>
-                            {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
+                            @if($test == 0)
+                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                            @endif
+                            @if($test != 0)
                             <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                            @endif
                         </button>
                     </div>
                     <div>
