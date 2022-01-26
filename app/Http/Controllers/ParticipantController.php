@@ -49,7 +49,6 @@ class ParticipantController extends Controller
             $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
             return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
         }
-
         if (Gate::allows('isManager')) {
 
             $entreprise_id =chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
@@ -57,7 +56,6 @@ class ParticipantController extends Controller
             $chef = $fonct->findWhereMulitOne("v_chef_departement_entreprise",
             ["entreprise_id","user_id_chef_departement"],
             [$entreprise_id,$user_id]);
-
             $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->where('departement_id',[$chef->departement_id])->get();
             return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
         }
@@ -65,6 +63,7 @@ class ParticipantController extends Controller
 
     public function create($id = null)
     {
+        
         $user_id = Auth::user()->id;
         $id_etp = responsable::where('id',$user_id)->value('entreprise_id');
         $liste_etp = entreprise::orderBy('nom_etp')->get();
@@ -115,6 +114,12 @@ class ParticipantController extends Controller
                 'matricule' => ["required"],
                 'nom' => ["required"],
                 'prenom' =>  ["required"],
+                'rue' =>  ["required"],
+                'quartier' =>  ["required"],
+                'code_postal' =>  ["required"],
+                'ville' =>  ["required"],
+                'region' =>  ["required"],
+                'lot' =>  ["required"],
                 'fonction' => ["required"],
                 'mail' => ["required", "email"],
                 'phone' => ["required"],
@@ -130,6 +135,12 @@ class ParticipantController extends Controller
                 'fonction.required' =>  'Veuillez remplir le champ',
                 'mail.required' =>  'Veuillez remplir le champ',
                 'mail.email' => 'Addresse mail non valide',
+                'rue.required' => 'Veuillez remplir le champ',
+                'quartier.required' => 'Veuillez remplir le champ',
+                'ville.required' => 'Veuillez remplir le champ',
+                'code_postal.required' => 'Veuillez remplir le champ',
+                'lot.required' => 'Veuillez remplir le champ',
+                'region.required' => 'Veuillez remplir le champ',
                 'phone.required' => 'Veuillez remplir le champ',
                 'image.required' => "Veuillez importer une photo",
                 'cin.required' => 'Entrer le CIN',
@@ -169,8 +180,15 @@ class ParticipantController extends Controller
             $participant->matricule = $request->matricule;
             $participant->nom_stagiaire = $request->nom;
             $participant->lieu_travail = $request->lieu;
+            $participant->code_postal = $request->code_postal;
+            $participant->region = $request->region;
+            $participant->rue = $request->rue;
+            $participant->ville = $request->ville;
+            $participant->lot = $request->lot;
+            $participant->quartier = $request->quartier;
             $participant->prenom_stagiaire = $request->prenom;
             $participant->genre_stagiaire = $request->genre;
+            $participant->titre = $request->titre;
             $participant->fonction_stagiaire = $request->fonction;
             $participant->mail_stagiaire = $request->mail;
             $participant->telephone_stagiaire = $request->phone;
@@ -192,7 +210,6 @@ class ParticipantController extends Controller
             //get user id
             $user_id = User::where('email', $request->mail)->value('id');
             $participant->user_id = $user_id;
-
             $participant->departement_id = $request->liste_dep;
             $participant->CIN = $request->cin;
             $participant->date_naissance = $request->naissance;
@@ -225,8 +242,14 @@ class ParticipantController extends Controller
             $user_id =  $users = Auth::user()->id;
             $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
             $stagiaire = stagiaire::findOrFail($id);
-
+            if(Gate::allows('isReferent') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
+            {
+                return view('admin.participant.updateok', compact('stagiaire'));
+            }
+            else{
             return view('admin.participant.update', compact('stagiaire'));
+
+            }
         } else {
 
 
@@ -238,7 +261,13 @@ class ParticipantController extends Controller
 
     public function update(Request $request)
     {
+        $participant = new stagiaire();
         $id = $request->id_get;
+        $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom . '' . $request->matricule . '.' . $request->image->extension());
+
+        $str = 'images/stagiaires';
+        $participant->photos = $nom_image;
+       
         stagiaire::where('id', $id)->update([
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
@@ -248,10 +277,20 @@ class ParticipantController extends Controller
             'fonction_stagiaire' => $request->fonction,
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
+            'photos' => $request->image,
             'cin' => $request->cin,
             'adresse' => $request->adresse,
-            'niveau_etude' => $request->niveau
+            'niveau_etude' => $request->niveau,
+            'titre'=>$request->titre,
+            'ville'=>$request->ville,
+            'quartier'=>$request->quartier,
+            'code_postal'=>$request->code_postal,
+            'lot'=>$request->lot,
+            'rue'=>$request->rue
         ]);
+        $participant->save();
+        $request->image->move(public_path($str), $nom_image);
+
         return back();
     }
 
@@ -538,7 +577,7 @@ class ParticipantController extends Controller
             'prenom_stagiaire' => $request->prenom,
             'date_naissance' => $request->date,
             'fonction_stagiaire' => $request->fonction,
-
+            'cin' => $request->cin,
             'niveau_etude' => $request->niv,
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,

@@ -32,7 +32,7 @@ class Contact extends Mailable
      */
     public function build()
     {
-        return $this->from('contact@numerika.center')
+        return $this->from($this->email)
         ->subject('formation.mg')
         ->view('emails.contact_email')
         ->with([
