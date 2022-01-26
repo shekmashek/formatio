@@ -113,11 +113,11 @@
                 <div class="col-md-4 p-0">
                     <div class="row">
                         <div class="col-md-5 p-0">
-                            <input type="date" name="date[]" placeholder="" class="form-control m-1">
+                            <input type="date" name="date[]" placeholder="" class="form-control m-1" required>
                         </div>
                         <div class="col-md-7 ps-1 d-flex">
-                                <input type="time" name="debut[]" class="form-control my-1 ms-1">
-                                <input type="time" name="fin[]" class="form-control my-1 ms-1">
+                                <input type="time" name="debut[]" class="form-control my-1 ms-1" required>
+                                <input type="time" name="fin[]" class="form-control my-1 ms-1" required>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                                 {{-- <div class="input-group-prepend my-1">
                                     <div class="input-group-text"><i class="fa fa-user"></i></div>
                                 </div> --}}
-                                <select name="formateur[]" id="" class="form-control  my-1">
+                                <select name="formateur[]" id="" class="form-control  my-1" required>
                                     <option value="" selected hidden> Choisir formateur </option>
                                     @foreach($formateur as $format)
                                         <option value="{{$format->formateur_id}}">{{$format->prenom_formateur}}</option>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="col-md-7 px-0 pe-2">
                             <div class="input-group">
-                                <input type="text" name="lieu[]" class="form-control my-1">
+                                <input type="text" name="lieu[]" class="form-control my-1" required>
                                 <button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button>
                             </div>
                         </div>
@@ -468,11 +468,11 @@
                     html += '<div class="col-md-4 p-0">';
                     html += '<div class="row">'  ; 
                     html += '<div class="col-md-5 p-0">' ;       
-                    html += '<input type="date" name="date[]" placeholder="" class="form-control m-1">';            
+                    html += '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';            
                     html += '</div>'  ;      
                     html += ' <div class="col-md-7 ps-1 d-flex">';       
-                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-1">';                
-                    html += '<input type="time" name="fin[]" class="form-control my-1">';                
+                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';                
+                    html += '<input type="time" name="fin[]" class="form-control my-1" required>';                
                     html += '</div>' ;      
                     html += '</div>';    
                     html += '</div>';
@@ -481,7 +481,7 @@
                     html += '<div class="row">';
                         html += '<div class="col-md-5 px-2">';
                         html += '<div class="input-group">';      
-                        html += '<select name="formateur[]" id="" class="form-control  my-1">'  ;      
+                        html += '<select name="formateur[]" id="" class="form-control  my-1" required>'  ;      
                         html += '<option value="" selected hidden> Choisir formateur </option>' ;       
                         for(var $i = 0; $i < userData.length; $i++){
                             html += '<option value="'+userData[$i].formateur_id+'">'+userData[$i].prenom_formateur+'</option>';
@@ -491,7 +491,7 @@
                         html += '</div>';
                         html += '<div class="col-md-7 px-0 pe-2">';
                         html += '<div class="input-group">' ;   
-                        html += '<input type="text" name="lieu[]" class="form-control my-1">';        
+                        html += '<input type="text" name="lieu[]" class="form-control my-1" required>';        
                         html +=  '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
                         html += '</div>';        
                         html += '</div>';    
