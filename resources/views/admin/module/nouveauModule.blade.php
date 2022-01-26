@@ -88,7 +88,7 @@
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control module module"
                                                         id="acf-nom_module" name="nom_module"
-                                                        placeholder="Nom du module" required>
+                                                        placeholder="Nom du module" >
                                                     @error('nom_module')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -123,7 +123,7 @@
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control descript descript"
                                                         id="acf-description" name="description"
-                                                        placeholder="Déscription" required>
+                                                        placeholder="Déscription" >
                                                     @error('description')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -145,7 +145,7 @@
                                                                 id="acf-jour" name="jour" min="1" max="365"
                                                                 placeholder="Durée en Jours (J)"
                                                                 onfocus="(this.type='number')"
-                                                                title="entrer une durée en jours" required>
+                                                                title="entrer une durée en jours" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -160,7 +160,7 @@
                                                                 id="acf-heur" name="heure" min="1" max="8760"
                                                                 placeholder="Durée en Heure (H)"
                                                                 onfocus="(this.type='number')"
-                                                                title="entrer une durée en heure" required>
+                                                                title="entrer une durée en heure" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -209,7 +209,7 @@
                                         <br>
                                         <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                 class="new_list_nouvelle px-5"
-                                                onclick="suivant_objectif();">Suivant</button></p>
+                                                onclick="suivant_objectif();"><a href="#preview_haut2">Suivant</a></button></p>
                                     </span>
 
 
@@ -219,7 +219,7 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control objectif objectif" id="acf-objectif"
-                                                        name="objectif" placeholder="Objectifs" required
+                                                        name="objectif" placeholder="Objectifs"
                                                         style="height: 200px"></textarea>
                                                     @error('objectif')
                                                     <div class="col-sm-6">
@@ -233,10 +233,10 @@
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="retour_module();">Retour</button></p>
+                                                    onclick="retour_module();"><a href="#preview_haut">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="suivant_cible();">Suivant</button></p>
+                                                    onclick="suivant_cible();"><a href="#preview_objectif">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -245,7 +245,7 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control cible cible" id="acf-cible"
-                                                        name="cible" placeholder="Public cible" rows=3 required
+                                                        name="cible" placeholder="Public cible" rows=3
                                                         style="height: 200px"></textarea>
                                                     @error('cible')
                                                     <div class="col-sm-6">
@@ -263,7 +263,7 @@
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control prerequis prerequis"
                                                         id="acf-prerequis" name="prerequis" placeholder="Prerequis"
-                                                        rows=3 required style="height: 200px"></textarea>
+                                                        rows=3  style="height: 200px"></textarea>
                                                     @error('prerequis')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -276,10 +276,10 @@
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="retour_objectif();">Retour</button></p>
+                                                    onclick="retour_objectif();"><a href="#preview_haut2">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="suivant_reference();">Suivant</button></p>
+                                                    onclick="suivant_reference();"><a href="#preview_reference">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -289,7 +289,7 @@
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control reference reference"
                                                         id="acf-reference" name="reference" placeholder="Reference"
-                                                        required>
+                                                        >
                                                     @error('reference')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -306,7 +306,7 @@
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control prix prix" id="acf-prix"
                                                         name="prix" minlength="1" maxlength="7"
-                                                        pattern="[0-9]{1,7}" placeholder="Prix en AR" required>
+                                                        pattern="[0-9]{1,7}" placeholder="Prix en AR" >
                                                     @error('prix')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -319,10 +319,10 @@
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="retour_cible();">Retour</button></p>
+                                                    onclick="retour_cible();"><a href="#preview_objectif">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="suivant_equipement();">Suivant</button></p>
+                                                    onclick="suivant_equipement();"><a href="#changer_equipement">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -332,7 +332,7 @@
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control materiel materiel"
                                                         id="acf-materiel" name="materiel"
-                                                        placeholder="Equipement necessaire" required>
+                                                        placeholder="Equipement necessaire" >
                                                     @error('materiel')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -349,7 +349,7 @@
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control bon_a_savoir bon_a_savoir"
                                                         id="acf-bon_a_savoir" name="bon_a_savoir"
-                                                        placeholder="Bon a savoir" required
+                                                        placeholder="Bon a savoir"
                                                         style="height: 200px"></textarea>
                                                     @error('bon_a_savoir')
                                                     <div class="col-sm-6">
@@ -363,10 +363,10 @@
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="retour_reference();">Retour</button></p>
+                                                    onclick="retour_reference();"><a href="#changer_reference">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="suivant_prestation();">Suivant</button></p>
+                                                    onclick="suivant_prestation();"><a href="#changer_prestation">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -376,7 +376,7 @@
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control prestation prestation"
                                                         id="acf-prestation" name="prestation"
-                                                        placeholder="Prestations pedagogiques" required
+                                                        placeholder="Prestations pedagogiques"
                                                         style="height: 200px" onkeyup='estComplet();'></textarea>
                                                     @error('prestation')
                                                     <div class="col-sm-6">
@@ -389,10 +389,43 @@
                                     </div>
 
                                     <div class="form-group mb-5 apres_preview" id="sixieme_vue2">
+
+                                        <div class="form-row d-flex">
+                                            <div class="col me-1">
+                                                <div class="form-group" id="premier_">
+                                                    <div class="acf-field acf-field-text acf-field-max is-required">
+                                                        <div class="acf-input">
+                                                            <div class="acf-input-wrap">
+                                                                <input type="text" class="form-control max max"
+                                                                    id="acf-max" name="max_pers" min="1" max="100"
+                                                                    placeholder="Nombre personne max "
+                                                                    onfocus="(this.type='number')"
+                                                                    title="entrer le nombre de personne maximale" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group" id="premier_">
+                                                    <div class="acf-field acf-field-text acf-field-min is-required">
+                                                        <div class="acf-input">
+                                                            <div class="acf-input-wrap">
+                                                                <input type="text" class="form-control min min"
+                                                                    id="acf-min" name="min_pers" min="1" max="100"
+                                                                    placeholder="Nombre personne min"
+                                                                    onfocus="(this.type='number')"
+                                                                    title="entrer le nombre de personne maximale" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col text-center">
                                             <p class="mt-3" style="font-size: 16px;"><button type="button"
                                                     class="new_list_nouvelle px-5"
-                                                    onclick="retour_equipement();">Retour</button></p>
+                                                    onclick="retour_equipement();"><a href="#changer_equipement">Retour</a></button></p>
                                         </div>
                                     </div>
 
@@ -417,7 +450,7 @@
                     <div class="container py-4 bg-light">
                         <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5"
                             id="border_premier">
-                            <div class="col-lg-6 col-md-6 detail__formation__result__content">
+                            <div class="col-lg-6 col-md-6 detail__formation__result__content new_back">
                                 <div class="detail__formation__result__item ">
                                     <h4><span id="preview_categ"><span class="py-4 acf-categorie">Ms
                                                 Excel</span></span><span
