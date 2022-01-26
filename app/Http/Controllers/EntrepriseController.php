@@ -162,7 +162,9 @@ class EntrepriseController extends Controller
         $nom_image = str_replace(' ', '_', $request->nom.' '.$request->phone. '' . $date . '.' . $request->image->extension());
 
         $str = 'images/entreprises/';
-        $request->image->move(public_path($str), $nom_image);
+        // $request->image->move(public_path($str), $nom_image);
+        Storage::cloud()->put($nom_image, $request->image);
+
         $entreprise->logo = $nom_image;
 
         $entreprise->save();
