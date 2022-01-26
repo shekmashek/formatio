@@ -63,23 +63,7 @@ class EntrepriseController extends Controller
             if ($id) $datas = entreprise::orderBy('nom_etp')->take($id)->get();
             else  $datas = entreprise::orderBy("nom_etp")->get();
 
-            $logo_entreprise = entreprise::get('logo');
-            $nb = entreprise::count();
-            // for ($i=0; $i < $nb; $i++) {
-            //     echo $logo_entreprise[$i];
-            // }
-            //recuperer les photos dans google drive
-            $content = collect(Storage::cloud()->listContents());
 
-            for ($i=0; $i < $nb; $i++) {
-                $file = $content
-                ->where('type', '=', 'file')
-                ->where('filename', '=', pathinfo($logo_entreprise[$i], PATHINFO_FILENAME))
-                ->where('extension', '=', pathinfo($logo_entreprise[$i], PATHINFO_EXTENSION))
-                ->all(); // there can be duplicate file names!
-                dd($logo_entreprise[$i]);
-            }
-            // $rawData = Storage::cloud()->get($file['path']);
 
             // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
             return view('admin.entreprise.entreprise',compact('datas','entreprise'));
@@ -249,37 +233,27 @@ class EntrepriseController extends Controller
 
     public function profile_entreprise($id)
     {
+
         $entreprise = entreprise::with('Secteur')->findOrFail($id);
         $departement = DepartementEntreprise::with('Departement')->where('entreprise_id', $id)->get();
-        // $logo = entreprise::where('id',$id)->value('logo');
-        // $logo_contet = Storage::cloud()->get($logo);
         return view('admin.entreprise.profile_entreprise', compact('entreprise', 'departement'));
     }
+
     public function getImage($path){
         $logo_entreprise = entreprise::get('logo');
-        $nb = entreprise::count();
-        // for ($i=0; $i < $nb; $i++) {
-        //     echo $logo_entreprise[$i];
-        // }
+        $data_entreprise = db::select('select * from entreprises');
+
+        $nb = count($data_entreprise);
+
         //recuperer les photos dans google drive
         $content = collect(Storage::cloud()->listContents());
+        $file = $content
+        ->where('type', '=', 'file')
+        ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
+        ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
+        ->first(); // there can be duplicate file names!
 
-        for ($i=0; $i < $nb; $i++) {
-            $file = $content
-            ->where('type', '=', 'file')
-            ->where('filename', '=', pathinfo($logo_entreprise[$i], PATHINFO_FILENAME))
-            ->where('extension', '=', pathinfo($logo_entreprise[$i], PATHINFO_EXTENSION))
-            ->all(); // there can be duplicate file names!
-
-        }
         $rawData = Storage::cloud()->get($file['path']);
         return response($rawData)->header('Content-Type','image.png');
-        // $file = $content
-        //     ->where('type', '=', 'file')
-        //     ->where('filename', '=', pathinfo('BMOI_032542340026-01-2022.jpg', PATHINFO_FILENAME))
-        //     ->where('extension', '=', pathinfo('BMOI_032542340026-01-2022.jpg', PATHINFO_EXTENSION))
-        //     ->first(); // there can be duplicate file names!
-
-
     }
 }
