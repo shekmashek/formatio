@@ -19,6 +19,8 @@ Route::get('/projet_session', function () {
 
 // nouvelle session
 Route::get('detail_session/{id_session?}','SessionController@detail_session')->name('detail_session');
+
+Route::get('all_formateurs','SessionController@getFormateur')->name('all_formateurs');
 // end
 
 
@@ -495,7 +497,6 @@ Route::get('notification_stagiaire','AutoEvaluationController@notifiaction')->na
 
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
 
-
 // ================= Route abonnement ================= //
 Route::resource('abonnement', 'AbonnementController')->except('show');
 Route::get('show_role','AbonnementController@show')->name('show_role');
@@ -566,3 +567,7 @@ Route::get('create+compte+formateur',function(){
 Route::get('create+compte+CFP',function(){
     return view('create_compte.create_compte_cfp');
 })->name('create+compte+CFP');
+//
+Route::get('search_matricule','SessionController@getStagiaires')->name('search_matricule');
+Route::get('one_stagiaire','SessionController@getOneStagiaire')->name('one_stagiaire');
+Route::get('add_participant_groupe','SessionController@addParticipantGroupe')->name('add_participant_groupe');

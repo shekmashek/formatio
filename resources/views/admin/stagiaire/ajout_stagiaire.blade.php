@@ -1,99 +1,14 @@
-@extends('./layouts/admin')
-@section('content')
-<div id="page-wrapper">
+
+{{-- <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-            	<br>
-                <h3>ACTION DE FORMATION</h3>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-            <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Details du projet
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <form   class="btn-submit" >
-                                    @foreach ($detail as $d)
-                                        @csrf
-                                        {{-- <input type = "text" value="{{$d->session->id}}" id ="sessionId" style='display:none'> --}}
 
-                                        <input type = "text" value="{{$d->id}}" id ="detailId" style='display:none'>
-                                        <div class="form-group">
-                                        <label for="projet">Projet : {{$d->projet->nom_projet}}</label><br>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for ="entreprise">Entreprise : {{$nom_etp}}</label>
-                                        </div>
-                                        <div class="form-group">
-                                        <label for="groupe">Groupe : {{$d->groupe->nom_groupe}}</label><br>
-                                        </div>
-                                        <div class="form-group">
-                                        <label for="formateur">Formateur : {{$d->formateur->nom_formateur}} {{$d->formateur->prenom_formateur}}</label><br>
-                                        </div>
-                                        {{-- <div class="form-group">
-                                        <label for="session">Session : {{$d->session->date_debut}} - {{$d->session->date_fin}}</label>
-                                        </div> --}}
-                                        <div class="form-group">
-                                        <label for="lieu">Lieu : {{$d->lieu}}</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="session">Horaire :
-                                                @php $i = 0; @endphp
-                                                @foreach($date_horaire_formation as $det)
-                                                    @php $i += 1; @endphp
-                                                    @if ( $i == $nb_meme_horaire)
-                                                        {{$det->h_debut}} h - {{$det->h_fin}} h
-                                                    @else {{$det->h_debut}} h - {{$det->h_fin}} h /
-                                                    @endif
-                                                @endforeach
-                                            </label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="date">Date de formation:
-                                                @php $i = 0; @endphp
-                                                @foreach($date_horaire_formation as $det)
-                                                    @php $i += 1; @endphp
-                                                    @if ( $i == $nb_meme_horaire)
-                                                        {{$det->date_detail}}
-                                                    @else {{$det->date_detail}}  /
-                                                    @endif
-                                                @endforeach
-                                            </label>
-                                        </div>
-                                        {{-- @if ($d->module->formation_id == 1)
-                                            <div class="form-group">
-                                                <label for="formation">Formation : MS Excel</label><br>
-                                            </div>
-                                        @else
-                                            <div class="form-group">
-                                                <label for="formation">Formation : Ms Power BI</label><br>
-                                            </div>
-                                        @endif --}}
-
-                                        {{-- <div class="form-group">
-                                        <label for="module">Module : {{$d->module->nom_module}}</label><br>
-                                        </div> --}}
-                                    @endforeach
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <ul class="nav nav-pills">
-                                        <li class ="{{ Route::currentRouteNamed('ajout_participant') ? 'active' : '' }}"><a href="{{route('ajout_participant',['id_detail' => $detail[0]->id])}}" ><span class="glyphicon glyphicon-plus-sign"></span>  Ajouter des stagiaires</a></li>
-                                        <li  class ="{{ Route::currentRouteNamed('liste_stagiaire') ? 'active' : '' }}" ><a href="{{route('liste_stagiaire',['id_detail'=>$detail[0]->id])}}"><span class="glyphicon glyphicon-th-list"></span></span> Liste des stagiaires  </a></li>
-                                    </ul>
-                                </div>
+
                                 <div class="panel-body">
 
                                     <form  action="{{ route('insert_detailStagiaire') }}">
@@ -104,7 +19,8 @@
                                             <label class="form-check-label" for="exampleCheck">{{ $stg->matricule."  :  ".$stg->nom_stagiaire." ".$stg->prenom_stagiaire}}</label>
                                           </div>
                                         @endforeach
-                                        <input type="hidden" name="groupe_id" value="{{ $id_groupe }}">
+
+                                        <input type="hidden" name="groupe_id" value="{{ $projet[0]->groupe_id }}">
                                         @if(count($stagiaire)>0)
                                             <button type="submit" class="btn btn-primary">Ajouter les stagiaires</button>
                                         @else
@@ -115,14 +31,129 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>
+</div> --}}
+
+    {{-- nouveau desgin apprenant --}}
+<div class="conteneur">
+    {{-- Nouveau apreanant --}}
+    <section class="section_recherche m-0 p-2">
+        <div class="d-flex py-1 align-items-center align-content-center">
+            <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
+            <input type="text" id="matricule_search" data-id="{{ $projet[0]->entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control col-3">
+            <input type="hidden" id="id_entreprise" value="{{ $projet[0]->entreprise_id }}">
+            <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <div class="d-flex mb-3">
+            <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
+            <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
+            <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
+            <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span>
+            <span class="span_ajout"> 
+                <i class="boutton fa fa-plus-circle" id="ajouter_participant"></i>
+             </span>
+        </div>
+    </section><br><hr><br>
+    {{-- fin nouveau apprenant --}}
+    <div class="d-flex justify-content-between">
+        <h5>Liste des apprenants inscrits(es) au projet</h5>
+        <div class="d-flex">
+            <button class="btn btn-secondary mx-1 align-items-center"><i class="far fa-file-pdf"></i>&nbsp; Exporter en PDF</button>
+            <button class="btn btn-secondary"><i class="far fa-file-excel"></i>&nbsp; Exporter en Excel</button>
+        </div>
+    </div>
+    <br>
+        <table class="table table-striped">
+            <thead>
+                <th>Matricule</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Sexe</th>
+                <th>Téléphone</th>
+                <th>E-mail</th>
+                <th>Fonction</th>
+                <th>Département</th>
+                <th></th>
+            </thead>
+            <tbody id="participant_groupe">
+                @foreach ($stagiaire as  $stg)
+                <tr>
+                    <td>{{ $stg->matricule }}</td>
+                    <td>{{ $stg->nom_stagiaire }}</td>
+                    <td>{{ $stg->prenom_stagiaire }}</td>
+                    <td>{{ $stg->genre_stagiaire }}</td>
+                    <td>{{ $stg->telephone_stagiaire }}</td>
+                    <td>{{ $stg->mail_stagiaire }}</td>
+                    <td>{{ $stg->fonction_stagiaire }}</td>
+                    <td>{{ $stg->departement_id }}</td>
+                    <td><i class="fa fa-trash-alt"></i></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 </div>
+<style>
+.boutton{
+    font-size: 2rem;
+}
+.boutton:hover{
+    cursor: pointer;
+}
+
+.table-straped > tbody > tr:nth-child(2n+1) > td, .table-stroped > tbody > tr:nth-child(2n+1) > th {
+   background-color: rgb(255,249,224);
+}
+.titre_ajout_apprenant{
+    font-size: 14px;
+    text-align: left !important;
+}
+.label_text{
+    background-color: #fff;
+    border: none;
+}
+.span_name{
+    width: 100%;
+    border-bottom: 1px solid grey;
+    padding-bottom: .8rem;
+    margin: 0 1rem;
+    color: grey;
+}
+.span_ajout{
+    width: 20%;
+    border-bottom: 1px solid grey;
+    padding-bottom: .8rem;
+    margin: 0 1rem;
+    color: grey;
+}
+.span_matricule{
+    width: 50%;
+    border-bottom: 1px solid grey;
+    padding-bottom: .8rem;
+    margin: 0 1rem;
+    color: grey;
+}
+.section_recherche{
+    border: 3px solid rgba(230, 228, 228, 0.39);
+    border-radius: .5rem;
+}
+.icon_box{
+    font-size: 8PX;
+}
+th{
+    text-align: center;
+}
+td{
+    text-align: center;
+}
+</style>
+
+
+
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -202,5 +233,87 @@
     //        }
     //    });
     // });
+
+    $(".rechercher").on('click',function(e){
+        var id = $("#matricule_search").val();
+        $.ajax({
+            type: "GET",
+            url: "{{route('one_stagiaire')}}",
+            data:{Id:id},
+            dataType: "html",
+            success:function(response){
+                var userData=JSON.parse(response);
+                $("#matricule").val(userData[0].matricule);
+                $("#nom").val(userData[0].nom_stagiaire);
+                $("#prenom").val(userData[0].prenom_stagiaire);
+                $("#departement").val(userData[0].nom_departement);
+                // id_detail = userData[$i].id;
+                // $('#action1').val('Modifier');
+           },
+           error:function(error){
+              console.log(error)
+           }
+        });
+	});
+
+
+    $("#ajouter_participant").on('click',function(e){
+        var id = $("#matricule").val();
+        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+        $.ajax({
+            type: "GET",
+            url: "{{route('add_participant_groupe')}}",
+            data:{
+                Id:id,
+                groupe:groupe_id
+            },
+            dataType: "html",
+            success:function(response){
+                var userData=JSON.parse(response);
+                alert(userData);
+           },
+           error:function(error){
+              console.log(error)
+           }
+        });
+	});
 </script>
-@endsection
+<script type="text/javascript">
+    // CSRF Token
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    var etp_id = $("#id_entreprise").val();
+    $(document).ready(function() {
+        $("#matricule_search").autocomplete({
+            source: function(request, response) {
+                // Fetch data
+                $.ajax({
+                    url: "{{route('search_matricule')}}"
+                    , type: 'get'
+                    , dataType: "json"
+                    , data: {
+                        //    _token: CSRF_TOKEN,
+                        search: request.term,
+                        etp_id : etp_id
+                    }
+                    , success: function(data) {
+                        // alert("eto");
+                        response(data);
+                    }
+                    , error: function(data) {
+                        alert("error");
+                        //alert(JSON.stringify(data));
+                    }
+                });
+            }
+            , select: function(event, ui) {
+                // Set selection
+                $('#matricule_search').val(ui.item.label); // display the selected text
+                $('#stagiaireid').val(ui.item.value); // save selected id to input
+                return false;
+            }
+        });
+    });
+
+    
+
+</script>
