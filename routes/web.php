@@ -555,20 +555,14 @@ Route::get('profil_user','HomeController@profil_user')->name('profil_user');
 Route::get('list_cfp','CfpController@index')->name('list_cfp');
 
 
-//============================= page creation nouveau compte CFP et Formateur
-
+//============================= page creation nouveau compte CFP et Entreprise
 
 Route::get('create+compte+client',function(){
     return view('create_compte.choix_creation_compte');
 })->name('create+compte+client');
 
-Route::get('create+compte+client/OF',function(){
-    return view('create_compte.create_compte_cfp');
-})->name('create+compte+client/OF');
-
-Route::get('create+compte+client/employeur',function(){
-    return view('create_compte.create_compte_client');
-})->name('create+compte+client/employeur');
+Route::get('create+compte+client/OF','NouveauCompteController@index_create_compte_cfp')->name('create+compte+client/OF');
+Route::get('create+compte+client/employeur','NouveauCompteController@index_create_compte_employeur')->name('create+compte+client/employeur');
 
 Route::get('inscription_save',function(){
     return view('create_compte.create_sauvegarder');
@@ -587,3 +581,7 @@ Route::get('search_entreprise_referent','NouveauCompteController@search_entrepri
 // Route::get('create+compte+CFP',function(){
 //     return view('create_compte.create_compte_cfp');
 // })->name('create+compte+CFP');
+
+// Route::get('create+compte+client/employeur',function(){
+//     return view('create_compte.create_compte_client');
+// })->name('create+compte+client/employeur');
