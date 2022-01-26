@@ -569,3 +569,5 @@ Route::get('create+compte+CFP',function(){
 //     Storage::cloud()->put('test.txt', 'Hello World');
 //     return 'File was saved to Google Drive';
 // });
+//route logo entreprise -- display image
+Route::get('/dynamic-image/{path}', 'EntrepriseController@getImage');
