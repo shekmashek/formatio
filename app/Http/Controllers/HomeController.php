@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\Facture;
 use App\detail;
 use App\entreprise;
 use App\formation;
@@ -85,10 +86,10 @@ class HomeController extends Controller
         }
         if (Auth::user()->exists) {
 
+            $GChart = DB::select('SELECT SUM(hors_taxe) as prix , YEAR(invoice_date) as annee from factures group by YEAR(invoice_date) order by (YEAR( invoice_date) ) ASC');
 
-            // $totale_invitation = $this->collaboration->count_invitation();
-            // return view('layouts.dashboard',compact('totale_invitation'));
-            return view('layouts.dashboard');
+
+            return view('layouts.dashboard',compact('GChart'));
         }
 
     }
