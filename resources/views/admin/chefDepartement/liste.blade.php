@@ -35,7 +35,7 @@
                                 @foreach($chef as $chefs)
                                 <tr>
                                     <td>
-                                        <img src="{{asset('images/chefDepartement/'.$chefs->photos)}}" width="100" height="100"></td>
+                                        <img src="/stagiaire-image/{{$chefs->photos}}" width="100" height="100"></td>
                                     <td>{{$chefs->nom_chef}}</td>
                                     <td>{{$chefs->prenom_chef}}</td>
                                     @if( $chefs->genre_chef == "femme")

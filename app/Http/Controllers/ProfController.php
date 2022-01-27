@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
 
 class ProfController extends Controller
@@ -138,7 +139,17 @@ class ProfController extends Controller
         $date = date('d-m-Y');
         $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom . '' . $date . '.png');
         $str = 'images/formateurs';
-        $request->image->move(public_path($str), $nom_image);
+
+         //stocker logo dans google drive
+        $folder = 'formateur';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+        $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
+        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('image')->getContent());
+        // $request->image->move(public_path($str), $nom_image);
 
         $frm->photos = $nom_image;
 

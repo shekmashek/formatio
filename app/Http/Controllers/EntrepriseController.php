@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\entreprise;
 use App\DepartementEntreprise;
 use App\User;
@@ -41,6 +42,8 @@ class EntrepriseController extends Controller
 
     public function create($id = null)
     {
+
+
         $user_id = Auth::id();
         $fonct = new FonctionGenerique();
         $entp = new entreprise();
@@ -61,6 +64,8 @@ class EntrepriseController extends Controller
             $entreprise =entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
             if ($id) $datas = entreprise::orderBy('nom_etp')->take($id)->get();
             else  $datas = entreprise::orderBy("nom_etp")->get();
+
+
             // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
             return view('admin.entreprise.entreprise',compact('datas','entreprise'));
         }
@@ -161,7 +166,16 @@ class EntrepriseController extends Controller
         $nom_image = str_replace(' ', '_', $request->nom.' '.$request->phone. '' . $date . '.' . $request->image->extension());
 
         $str = 'images/entreprises/';
-        $request->image->move(public_path($str), $nom_image);
+        //stocker logo dans google drive
+        $folder = 'entreprise';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+         $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
+        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('image')->getContent());
+
         $entreprise->logo = $nom_image;
 
         $entreprise->save();
@@ -227,8 +241,36 @@ class EntrepriseController extends Controller
 
     public function profile_entreprise($id)
     {
+
         $entreprise = entreprise::with('Secteur')->findOrFail($id);
         $departement = DepartementEntreprise::with('Departement')->where('entreprise_id', $id)->get();
         return view('admin.entreprise.profile_entreprise', compact('entreprise', 'departement'));
+    }
+
+    public function getImage($path){
+
+        //recuperer les photos dans google drive
+        // $content = collect(Storage::cloud()->listContents());
+        // $file = $content
+        // ->where('type', '=', 'file')
+        // ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
+        // ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
+        // ->first(); // there can be duplicate file names!
+
+        $folder = 'entreprise';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+         $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
+
+        $files = collect(Storage::cloud()->listContents($dir['path'], false))
+        ->where('type', '=', 'file')
+        ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
+        ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
+        ->first();
+        $rawData = Storage::cloud()->get($files['path']);
+        return response($rawData)->header('Content-Type','image.png');
     }
 }

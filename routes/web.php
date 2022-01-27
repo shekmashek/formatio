@@ -4,7 +4,7 @@ use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -595,3 +595,10 @@ Route::get('search_entreprise_referent','NouveauCompteController@search_entrepri
 // Route::get('create+compte+client/employeur',function(){
 //     return view('create_compte.create_compte_client');
 // })->name('create+compte+client/employeur');
+
+///--------AFFICHAGE IMAGE DEPUIS GOOGLE DRIVE -------------- //////////////
+
+//route logo entreprise -- display image
+Route::get('/dynamic-image/{path}', 'EntrepriseController@getImage');
+//route image stagiaire et manager
+Route::get('/stagiaire-image/{path}', 'ParticipantController@getImage');

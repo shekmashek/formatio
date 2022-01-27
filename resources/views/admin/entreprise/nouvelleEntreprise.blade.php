@@ -83,8 +83,8 @@
                                             <div class="col m-0">
                                                 <div class="form-group">
                                                     <label for="boutton_fichier" class="bg-secondary">Logo</label>
-                                                    <span id="file-chosen">Pas de fichier choisie</span>
-                                                    <input type="file" class="form-control-file" id="boutton_fichier" name="image" hidden>
+
+                                                    <input type="file" class="form-control-file" id="boutton_fichier" name="image" >
                                                     @error('image')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>

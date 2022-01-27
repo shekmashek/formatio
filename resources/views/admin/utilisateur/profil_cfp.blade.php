@@ -11,7 +11,7 @@
                         <div class="row m-l-2 m-r-2">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="{{ asset('images/CFP/'.$cfp->logo) }}" width="30%" height="30%">
+                                    <div class="m-b-25"> <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%">
 
                                     </div>
                                     <h6 class="f-w-600">{{ $cfp->nom }}</h6>

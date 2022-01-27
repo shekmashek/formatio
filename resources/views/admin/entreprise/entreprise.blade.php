@@ -109,7 +109,7 @@
                                         @foreach($datas as $etp)
                                     		<tr>
                                                 <td>
-                                                    <img src="{{asset('images/entreprises/'.$etp->logo)}}" width="100" height="100">
+                                                    <img src="/dynamic-image/{{$etp->logo}}" width="100" height="100">
                                                 </td>
                                     			<td width = "200px">{{$etp->nom_etp}}</td>
                                     			<td>{{$etp->adresse}}</td>
