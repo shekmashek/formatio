@@ -8,7 +8,7 @@
 </head>
 <body>
     <p>
-        Bonjour {{$nom_resp_cfp}} {{$prenom_resp_cfp}}, <br>
+        Bonjour {{$nom_resp_cfp}}, <br>
         <strong>{{$nom_etp}}</strong> souhaite collaborer avec vous en tant que partenaire commerciale . <br>
         <a href="{{route('sign-in')}}"><button style="background-color: rgb(19, 223, 80)">accepter</button></a>
 

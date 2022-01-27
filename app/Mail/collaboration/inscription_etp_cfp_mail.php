@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\collaboration;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Inscription_etp_cfp_mail extends Mailable
+class inscription_etp_cfp_mail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,12 +16,11 @@ class Inscription_etp_cfp_mail extends Mailable
      *
      * @return void
      */
-    public function __construct($nom_etp,$responsables_etp,$nom_resp_cfp,$prenom_resp_cfp)
+    public function __construct($nom_etp, $responsables_etp, $nom_resp_cfp)
     {
         $this->nom_etp = $nom_etp;
-       $this->responsables_etp = $responsables_etp;
-       $this->nom_resp_cfp = $nom_resp_cfp;
-       $this->prenom_resp_cfp = $prenom_resp_cfp;
+        $this->responsables_etp = $responsables_etp;
+        $this->nom_resp_cfp = $nom_resp_cfp;
     }
 
     /**
@@ -33,12 +32,11 @@ class Inscription_etp_cfp_mail extends Mailable
     {
         return $this->from('contact@formation.mg')
             ->subject('Invitation de collaboration')
-            ->view('collaboration.mail.invitation_collaborer_etp_cfp_mail')
+            ->view('collaboration.mail.invitation_create_new_compte_etp_cfp_mail')
             ->with([
                 'nom_etp' => $this->nom_etp,
                 'responsables_etp' => $this->responsables_etp,
-                'nom_resp_cfp' => $this->nom_resp_cfp,
-                'prenom_resp_cfp' => $this->prenom_resp_cfp
+                'nom_resp_cfp' => $this->nom_resp_cfp
             ]);
     }
 }

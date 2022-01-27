@@ -8,7 +8,7 @@
 </head>
 <body>
     <p>
-        Bonjour {{$nom_resp_cfp}} {{$prenom_resp_cfp}}, <br>
+        Bonjour {{$nom_resp_cfp}}, <br>
         <strong>{{$nom_etp}}</strong> souhaite collaborer avec vous en tant que partenaire commerciale . <br>
     </p>
     Si vous n'avez pas compte, vous pouvez créer un compte pro sur le plateforme <strong>formation.mg</strong><a href="{{route('create+compte+client/employeur')}}"><button style="background-color: rgb(19, 223, 80)">créer un compte pro</button></a>

@@ -8,7 +8,7 @@
 </head>
 <body>
     <p>
-        Bonjour {{$nom_resp_etp}} {{$prenom_resp_etp}}, <br>
+        Bonjour {{$nom_resp_etp}}, <br>
         <strong>{{$nom_cfp}}</strong> souhaite collaborer avec vous en tant que partenaire commerciale . <br>
 
     </p>

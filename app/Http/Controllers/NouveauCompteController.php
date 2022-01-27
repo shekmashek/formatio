@@ -100,6 +100,7 @@ class NouveauCompteController extends Controller
 
             $this->new_compte->insert_CFP($data, $user_id);
             $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp])->id;
+            $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$cfp_id]);
             $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
 
             //============= save image
