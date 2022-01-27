@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\cfp;
 use Illuminate\Support\Facades\Auth;
 use App\Collaboration;
+use App\Models\getImageModel;
 use Monolog\Handler\IFTTTHandler;
 
 class FactureController extends Controller
@@ -293,14 +295,14 @@ class FactureController extends Controller
         $contat_pathBC = '';
         $contat_pathFA = '';
         $contat_file = '';
-        dd($groupe_id);
-        $type_fact = $this->fonct->findWhereMultiOne("type_facture",["id"],[$imput["type_facture"]]);
-        $prj_id = $this->fonct->findWhereMultiOne("groupes",["id"],[$groupe_id[0]])->projet_id;
-        $prj_araika = $this->fonct->findWhereMultiOne( "projets",["id"],[$prj_id]);
-        $cfp_araika = $this->fonct->findWhereMultiOne( "cfps",["id"],[$prj_araika->cfp_id]);
+
+        $type_fact = $this->fonct->findWhereMulitOne("type_facture",["id"],[$imput["type_facture"]]);
+        $prj_id = $this->fonct->findWhereMulitOne("groupes",["id"],[$groupe_id[0]])->projet_id;
+        $un_projet = $this->fonct->findWhereMulitOne( "projets",["id"],[$prj_id]);
+        $un_cfp = $this->fonct->findWhereMulitOne( "cfps",["id"],[$un_projet->cfp_id]);
 
         for ($i = 0; $i < count($groupe_id); $i++) {
-            $groupe_araika = $this->fonct->findWhereMultiOne(
+            $groupe_araika = $this->fonct->findWhereMulitOne(
                 "groupes",
                 ["id"],
                 [$groupe_id[$i]]
@@ -315,6 +317,13 @@ class FactureController extends Controller
                 $contat_file .= '_et_';
             }
         }
+        //creation sous dossier Facture/BonCommande/Nom_du_cfp
+        $sous_dossier = 'facture';
+        $dossier_cfp = $un_cfp->nom.$un_cfp->id;
+        $projet_folder = $un_projet->nom_projet.$un_projet->id;
+        $bc = new getImageModel();
+        $bc->create_sub_directory($sous_dossier,'bc',$dossier_cfp,$projet_folder);
+
         $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);
         return $res;
     }
@@ -469,4 +478,6 @@ class FactureController extends Controller
     {
         $this->fact->lectureFileProjet($path_file);
     }
+
+
 }

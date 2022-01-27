@@ -35,16 +35,51 @@ class getImageModel extends Model
         ->first();
         Storage::cloud()->put($dir['path'].'/'.$nom_image, $photos);
     }
-    //fonction qui crée un sous - dossier dans drive
-    public function create_sub_directory($folder,$sub_folder){
+    //fonction qui crée un sous - dossier dans drive / de la forme parent/facture/bc/nom_cfp/sous_dossier_a_creer
+    public function create_sub_directory($sub_folder1,$sub_folder2,$cfp_folder,$projet_folder){
         $contents = collect(Storage::cloud()->listContents('/', false));
-        $dir = $contents->where('type', '=', 'dir')
-            ->where('filename', '=', $folder)
-            ->first(); // There could be duplicate directory names!
-        if ( ! $dir) {
-            return 'Directory does not exist!';
+        //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == $sub_folder1)
+                $root = $value['path'];
         }
-        // Create sub dir
-        Storage::cloud()->makeDirectory($dir['path'].'/'.$sub_folder);
+
+        $dir = '/'.$root;
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        foreach ($sub_directory as $key => $value) {
+            if($value['name'] == $sub_folder2)
+                $root2 = $value['path'];
+        }
+
+        $dir2 = $dir.'/'.$root2;
+        $recursive = true; // Get subdirectories also?
+        $sub_directory2 = collect(Storage::cloud()->listContents($dir2, $recursive));
+
+        //on teste si le dossier du CFP existe déjà
+        $existe = $sub_directory2->where('type', '=', 'dir')
+        ->where('filename', '=', $cfp_folder)
+        ->first();
+        if (!$existe) {
+            Storage::cloud()->makeDirectory($dir2['path'].'/'.$cfp_folder);
+        }
+
+        foreach ($sub_directory2 as $key => $value) {
+            if($value['name'] == $cfp_folder)
+                $root3= $value['path'];
+        }
+        $dir3 = $dir2.'/'.$root3;
+        $recursive = true; // Get subdirectories also?
+
+        $sub_directory3 = collect(Storage::cloud()->listContents($dir3, $recursive));
+        //on teste si le dossier projet du CFP existe déjà
+        $existeProjet = $sub_directory3->where('type', '=', 'dir')
+        ->where('filename', '=', $projet_folder)
+        ->first();
+        if (!$existeProjet) {
+             // Create sub dir pour projet
+            Storage::cloud()->makeDirectory($dir3['path'].'/'.$projet_folder);
+        }
+
     }
 }
