@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\DB;
 class entreprise extends Model
 {
     protected $table = "entreprises";
+
     protected $fillable = [
-        'nom_etp','adresse','logo','nif','stat','rcs','cif','secteur_id','email_etp','site_etp','telephone_etp'
+        'nom_etp', 'adresse', 'logo', 'nif', 'stat', 'rcs', 'cif', 'secteur_id', 'email_etp', 'site_etp', 'telephone_etp',
+        'adresse_rue', 'adresse_quartier', 'adresse_code_postal', 'adresse_ville', 'adresse_region'
     ];
 
     public function secteur()
@@ -17,91 +19,98 @@ class entreprise extends Model
         return $this->belongsTo('App\Secteur');
     }
 
-    public function getEntreprise($etp1,$etp2){
+    public function getEntreprise($etp1, $etp2)
+    {
         $tab = array();
-        for($i=0;$i<count($etp1);$i+=1){
-            $tab[]=$etp1[$i];
+        for ($i = 0; $i < count($etp1); $i += 1) {
+            $tab[] = $etp1[$i];
         }
-        for($j=0;$j<count($etp2);$j+=1){
-            $tab[]=$etp2[$j];
+        for ($j = 0; $j < count($etp2); $j += 1) {
+            $tab[] = $etp2[$j];
         }
 
         return $tab;
     }
 
     // ----------------------------------------
-    public function getIdCollaborer($list){
+    public function getIdCollaborer($list)
+    {
         $tab = array();
-        for($i=0;$i<count($list);$i+=1){
-            $tab[$i]="".$list[$i]->entreprise_id;
+        for ($i = 0; $i < count($list); $i += 1) {
+            $tab[$i] = "" . $list[$i]->entreprise_id;
         }
 
         return $tab;
     }
 
-    public function getIdNotCollaborer($list){
+    public function getIdNotCollaborer($list)
+    {
         $tab = array();
-        for($i=0;$i<count($list);$i+=1){
-            $tab[$i]="".$list[$i]->id;
+        for ($i = 0; $i < count($list); $i += 1) {
+            $tab[$i] = "" . $list[$i]->id;
         }
 
         return $tab;
     }
 
-    public function queryCollaborer($nomTab,$list){
-        $query = "select * from ".$nomTab." where ";
-        $para="";
+    public function queryCollaborer($nomTab, $list)
+    {
+        $query = "select * from " . $nomTab . " where ";
+        $para = "";
         $tab = $this->getIdCollaborer($list);
-        for($i=0;$i<count($tab);$i+=1){
-            $para.=" id = '".$tab[$i]."'";
-            if($i+1 < count($tab)){
-                $para.=" OR ";
+        for ($i = 0; $i < count($tab); $i += 1) {
+            $para .= " id = '" . $tab[$i] . "'";
+            if ($i + 1 < count($tab)) {
+                $para .= " OR ";
             }
         }
-        $query = $query." ".$para;
+        $query = $query . " " . $para;
         return $query;
     }
 
-    public function queryNotCollaborer($nomTab,$list){
-        $query = "select * from ".$nomTab;
-        $para="";
+    public function queryNotCollaborer($nomTab, $list)
+    {
+        $query = "select * from " . $nomTab;
+        $para = "";
 
-            $query = "select * from ".$nomTab." where ";
-            $tab = $this->getIdNotCollaborer($list);
-            for($i=0;$i<count($tab);$i+=1){
-                $para.=$para." id != '".$tab[$i]."'";
-                if($i+1 < count($tab)){
-                    $para.=" AND ";
-                }
+        $query = "select * from " . $nomTab . " where ";
+        $tab = $this->getIdNotCollaborer($list);
+        for ($i = 0; $i < count($tab); $i += 1) {
+            $para .= $para . " id != '" . $tab[$i] . "'";
+            if ($i + 1 < count($tab)) {
+                $para .= " AND ";
             }
+        }
 
-        $query = $query." ".$para;
+        $query = $query . " " . $para;
         return $query;
     }
 
-    public function getNotCollaborer($nomTab,$list){
+    public function getNotCollaborer($nomTab, $list)
+    {
 
         if (count($list) > 0) {
-            $data = DB::select($this->queryNotCollaborer($nomTab,$list));
+            $data = DB::select($this->queryNotCollaborer($nomTab, $list));
         } else {
-            $data = DB::select("select * from ".$nomTab);
+            $data = DB::select("select * from " . $nomTab);
         }
 
-        for($i=0;$i<count($data);$i+=1){
+        for ($i = 0; $i < count($data); $i += 1) {
             $data[$i]->collaboration = "0";
         }
 
         return $data;
     }
-    public function getCollaborer($nomTab,$list){
+    public function getCollaborer($nomTab, $list)
+    {
 
         if (count($list) > 0) {
-            $data = DB::select($this->queryCollaborer($nomTab,$list));
-            for($i=0;$i<count($data);$i+=1){
+            $data = DB::select($this->queryCollaborer($nomTab, $list));
+            for ($i = 0; $i < count($data); $i += 1) {
                 $data[$i]->collaboration = "1";
             }
         } else {
-            $data = DB::select("select * from ".$nomTab);
+            $data = DB::select("select * from " . $nomTab);
             for ($i = 0; $i < count($data); $i += 1) {
                 $data[$i]->collaboration = "0";
             }
@@ -109,5 +118,5 @@ class entreprise extends Model
 
         return $data;
     }
-// ------------------------------
+    // ------------------------------
 }

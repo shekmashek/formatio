@@ -38,6 +38,11 @@ CREATE TABLE `entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_etp` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `adresse` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_rue` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_quartier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_code_postal` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_ville` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_region` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -105,36 +110,29 @@ CREATE TABLE `chef_dep_entreprises` (
 
 
 CREATE TABLE `responsables` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nom_resp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom_resp` varchar(255) COLLATE utf8mb4_unicode_ci,
-  `fonction_resp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_resp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cin_resp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telephone_resp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  `photos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  `activiter` boolean not null default true,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `historique_stagiaires` (
-  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
-  stagiaire_id bigint(20) unsigned not null,
-  ancien_entreprise_id bigint(20) unsigned not null,
-  ancien_departement_id bigint(20) unsigned not null,
-  nouveau_entreprise_id bigint(20) unsigned not null,
-  nouveau_departement_id bigint(20) unsigned not null,
-  `ancien_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-   `nouveau_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  foreign key(stagiaire_id) references stagiaires(id) on delete cascade,
-  foreign key(ancien_entreprise_id) references entreprises(id) on delete cascade,
-  foreign key(ancien_departement_id) references departements(id) on delete cascade,
-  `date_depart` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `particulier` boolean not null default true
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nom_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  prenom_resp varchar(255) COLLATE utf8mb4_unicode_ci,
+  sexe_resp varchar(255) COLLATE utf8mb4_unicode_ci,
+  date_naissance_resp date NOT NULL,
+  cin_resp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  email_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  fonction_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  poste_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  departement_id bigint(20) UNSIGNED NOT NULL REFERENCES departements(id) ON DELETE CASCADE,
+  adresse_rue varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_code_postal varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_region varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  photos varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
+  activiter boolean not null default true,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -171,4 +169,21 @@ CREATE TABLE `stagiaires` (
   `lieu_travail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `niveau_etude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `activiter` boolean not null default true
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `historique_stagiaires` (
+  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  stagiaire_id bigint(20) unsigned not null,
+  ancien_entreprise_id bigint(20) unsigned not null,
+  ancien_departement_id bigint(20) unsigned not null,
+  nouveau_entreprise_id bigint(20) unsigned not null,
+  nouveau_departement_id bigint(20) unsigned not null,
+  `ancien_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+   `nouveau_matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  foreign key(stagiaire_id) references stagiaires(id) on delete cascade,
+  foreign key(ancien_entreprise_id) references entreprises(id) on delete cascade,
+  foreign key(ancien_departement_id) references departements(id) on delete cascade,
+  `date_depart` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `particulier` boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
