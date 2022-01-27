@@ -25,7 +25,7 @@
 
     M Jean Randrianarivony  Responsable pédagogique , <br>
     Tél : 034 81 135 63 <br>
-    jean@numerika.mg <br>   
+    jean@numerika.mg <br>
 
     Ou encore <br>
 
