@@ -13,8 +13,10 @@ use App\User;
 use App\cfp;
 use App\Secteur;
 use App\Mail\entrepriseMail;
+use App\Models\getImageModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
+
 class EntrepriseController extends Controller
 {
     public function __construct()
@@ -165,22 +167,14 @@ class EntrepriseController extends Controller
         $date = date('d-m-Y');
         $nom_image = str_replace(' ', '_', $request->nom.' '.$request->phone. '' . $date . '.' . $request->image->extension());
 
-        $str = 'images/entreprises/';
+
         //stocker logo dans google drive
-        $folder = 'entreprise';
-        //liste des contenues dans drive
-        $contents = collect(Storage::cloud()->listContents('/', false));
-        //recuperer dossier "entreprise
-         $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first();
-        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('image')->getContent());
+        $dossier = 'entreprise';
+        $stock_etp = new getImageModel();
+        $stock_etp->store_image($dossier,$nom_image,$request->file('image')->getContent());
 
         $entreprise->logo = $nom_image;
-
         $entreprise->save();
-
-
         //envoyer un mail de notification à tous les utilisateurs admin
         $emails = User::where('role_id', '1')->get();
         foreach ($emails as $email) {
@@ -248,29 +242,8 @@ class EntrepriseController extends Controller
     }
 
     public function getImage($path){
-
-        //recuperer les photos dans google drive
-        // $content = collect(Storage::cloud()->listContents());
-        // $file = $content
-        // ->where('type', '=', 'file')
-        // ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
-        // ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
-        // ->first(); // there can be duplicate file names!
-
-        $folder = 'entreprise';
-        //liste des contenues dans drive
-        $contents = collect(Storage::cloud()->listContents('/', false));
-        //recuperer dossier "entreprise
-         $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first();
-
-        $files = collect(Storage::cloud()->listContents($dir['path'], false))
-        ->where('type', '=', 'file')
-        ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
-        ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
-        ->first();
-        $rawData = Storage::cloud()->get($files['path']);
-        return response($rawData)->header('Content-Type','image.png');
+        $dossier = 'entreprise';
+        $etp = new getImageModel();
+        return $etp->get_image($path,$dossier);
     }
 }

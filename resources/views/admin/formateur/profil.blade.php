@@ -4,7 +4,7 @@
     <!-- partie haut du cv -->
     <div class="row pt-5 pb-5 cv_theque" id="en_tete">
         <div class="col-lg-4">
-            <img src="{{asset('images/formateurs/'.$formateur[0]->photos)}}" class="img-fluid img">
+            <img src="/formateur-image/{{$formateur[0]->photos}}" class="img-fluid img">
         </div>
 
         <div class="col-lg-8">

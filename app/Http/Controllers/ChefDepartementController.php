@@ -8,6 +8,7 @@ use App\chefDepartementEntreprise;
 use App\DepartementEntreprise;
 use App\responsable;
 use App\User;
+use App\Models\getImageModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
@@ -69,18 +70,13 @@ class ChefDepartementController extends Controller
 
             $date = date('d-m-Y');
             $user_id = User::where('email', $request->mail)->value('id');
-            $nom_image = str_replace(' ', '_', $request->nom . '' . $date . '.' . $request->photos->extension());
+            $nom_image = str_replace(' ', '_', $request->nom . '' .$request->phone.''. $date . '.' . $request->photos->extension());
             $str = 'images/chefDepartement';
 
             //stocker logo dans google drive
-            $folder = 'stagiaire';
-            //liste des contenues dans drive
-            $contents = collect(Storage::cloud()->listContents('/', false));
-            //recuperer dossier "entreprise
-            $dir = $contents->where('type', '=', 'dir')
-            ->where('filename', '=', $folder)
-            ->first();
-            Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('photos')->getContent());
+            $dossier = 'stagiaire';
+            $stock_chef= new getImageModel();
+            $stock_chef->store_image($dossier,$nom_image,$request->file('photos')->getContent());
 
             $chefDepart->photos = $nom_image;
             $chefDepart->user_id = $user_id;
