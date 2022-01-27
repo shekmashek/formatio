@@ -27,7 +27,7 @@ class FactureController extends Controller
         $this->collaboration = new Collaboration();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -69,53 +69,53 @@ class FactureController extends Controller
         $facture_actif = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
 
-        if(count($facture_inactif) <= 0){
+        if (count($facture_inactif) <= 0) {
             return view('admin.facture.guide');
-        }else{
+        } else {
 
-        if ($this->fonct->findWhere("v_compte_facture_actif_cfp", ["cfp_id"], [$cfp_id]) == null) {
-            $compte_facture_actif = null;
-        } else {
-            $compte_facture_actif = $this->fonct->findWhere("v_compte_facture_actif_cfp", ["cfp_id"], [$cfp_id])[0];
-        }
-        if ($this->fonct->findWhere("v_compte_facture_inactif_cfp", ["cfp_id"], [$cfp_id]) == null) {
-            $compte_facture_inactif = null;
-        } else {
-            $compte_facture_inactif = $this->fonct->findWhere("v_compte_facture_inactif_cfp", ["cfp_id"], [$cfp_id])[0];
-        }
-        if ($this->fonct->findWhere("v_compte_facture_en_cour_cfp", ["cfp_id"], [$cfp_id]) == null) {
-            $compte_facture_en_cour = null;
-        } else {
-            $compte_facture_en_cour = $this->fonct->findWhere("v_compte_facture_en_cour_cfp", ["cfp_id"], [$cfp_id])[0];
-        }
-        if ($this->fonct->findWhere("v_compte_facture_payer_cfp", ["cfp_id"], [$cfp_id]) == null) {
-            $compte_facture_payer = null;
-        } else {
-            $compte_facture_payer = $this->fonct->findWhere("v_compte_facture_payer_cfp", ["cfp_id"], [$cfp_id])[0];
-        }
-
-
-        if ($id == 0) {
-            $facture = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id]);
-            return view('admin.facture.liste_facture_payer', compact('totale_invitation', 'facture', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
-        } else if ($id == 1) {
-            $facture = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id]);
-            return view('admin.facture.liste_facture_en_cour', compact('totale_invitation', 'mode_payement', 'facture', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
-        } else if ($id == 2) {
-            $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            $entreprise = responsable::where('user_id', $user_id)->exists();
-            if ($entreprise) {
-                $projet = projet::where('entreprise_id', $entreprise_id)->get();
-                return view('admin.facture.liste_facture', compact('totale_invitation', 'entreprise', 'projet', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+            if ($this->fonct->findWhere("v_compte_facture_actif_cfp", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_actif = null;
             } else {
-                $entreprise = null;
-                return view('admin.facture.liste_facture', compact('totale_invitation', 'entreprise', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+                $compte_facture_actif = $this->fonct->findWhere("v_compte_facture_actif_cfp", ["cfp_id"], [$cfp_id])[0];
             }
-        } else {
+            if ($this->fonct->findWhere("v_compte_facture_inactif_cfp", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_inactif = null;
+            } else {
+                $compte_facture_inactif = $this->fonct->findWhere("v_compte_facture_inactif_cfp", ["cfp_id"], [$cfp_id])[0];
+            }
+            if ($this->fonct->findWhere("v_compte_facture_en_cour_cfp", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_en_cour = null;
+            } else {
+                $compte_facture_en_cour = $this->fonct->findWhere("v_compte_facture_en_cour_cfp", ["cfp_id"], [$cfp_id])[0];
+            }
+            if ($this->fonct->findWhere("v_compte_facture_payer_cfp", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_payer = null;
+            } else {
+                $compte_facture_payer = $this->fonct->findWhere("v_compte_facture_payer_cfp", ["cfp_id"], [$cfp_id])[0];
+            }
 
-            return view('admin.facture.liste_facture_inactif', compact('totale_invitation', 'facture_inactif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
-        }
+
+            if ($id == 0) {
+                $facture = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id]);
+                return view('admin.facture.liste_facture_payer', compact('totale_invitation', 'facture', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+            } else if ($id == 1) {
+                $facture = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id]);
+                return view('admin.facture.liste_facture_en_cour', compact('totale_invitation', 'mode_payement', 'facture', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+            } else if ($id == 2) {
+                $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+                $entreprise = responsable::where('user_id', $user_id)->exists();
+                if ($entreprise) {
+                    $projet = projet::where('entreprise_id', $entreprise_id)->get();
+                    return view('admin.facture.liste_facture', compact('totale_invitation', 'entreprise', 'projet', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+                } else {
+                    $entreprise = null;
+                    return view('admin.facture.liste_facture', compact('totale_invitation', 'entreprise', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+                }
+            } else {
+
+                return view('admin.facture.liste_facture_inactif', compact('totale_invitation', 'facture_inactif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
             }
+        }
     }
 
 
@@ -174,7 +174,8 @@ class FactureController extends Controller
         }
     }
 
-    public function redirection_facture($id){
+    public function redirection_facture($id)
+    {
         if (Gate::allows('isCFP')) {
             return $this->listeFacture($id);
         }
@@ -292,7 +293,18 @@ class FactureController extends Controller
         $contat_pathBC = '';
         $contat_pathFA = '';
         $contat_file = '';
+        dd($groupe_id);
+        $type_fact = $this->fonct->findWhereMultiOne("type_facture",["id"],[$imput["type_facture"]]);
+        $prj_id = $this->fonct->findWhereMultiOne("groupes",["id"],[$groupe_id[0]])->projet_id;
+        $prj_araika = $this->fonct->findWhereMultiOne( "projets",["id"],[$prj_id]);
+        $cfp_araika = $this->fonct->findWhereMultiOne( "cfps",["id"],[$prj_araika->cfp_id]);
+
         for ($i = 0; $i < count($groupe_id); $i++) {
+            $groupe_araika = $this->fonct->findWhereMultiOne(
+                "groupes",
+                ["id"],
+                [$groupe_id[$i]]
+            );
 
             $contat_pathBC .= '' . $groupe_id[$i] . '_' . $imput["type_facture"];
             $contat_pathFA .= '' . $groupe_id[$i] . '_' . $imput["type_facture"];

@@ -35,4 +35,16 @@ class getImageModel extends Model
         ->first();
         Storage::cloud()->put($dir['path'].'/'.$nom_image, $photos);
     }
+    //fonction qui crée un sous - dossier dans drive
+    public function create_sub_directory($folder,$sub_folder){
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        $dir = $contents->where('type', '=', 'dir')
+            ->where('filename', '=', $folder)
+            ->first(); // There could be duplicate directory names!
+        if ( ! $dir) {
+            return 'Directory does not exist!';
+        }
+        // Create sub dir
+        Storage::cloud()->makeDirectory($dir['path'].'/'.$sub_folder);
+    }
 }
