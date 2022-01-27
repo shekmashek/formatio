@@ -4,31 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>formation.mg</title>
 </head>
 <body>
     <p>
-        Bonjour {{$nom_resp_cfp}}, <br>
-        <strong>{{$nom_etp}}</strong> souhaite collaborer avec vous en tant que partenaire commerciale . <br>
+        {{$nom_resp.'('.$email_resp.') responsable de '}} <strong>{{$nom_etp}}</strong>, vous invite à utiliser <a href="{{route('sign-in')}}">formation.mg</a> <br>
     </p>
-    Si vous n'avez pas compte, vous pouvez créer un compte pro sur le plateforme <strong>formation.mg</strong><a href="{{route('create+compte+client/employeur')}}"><button style="background-color: rgb(19, 223, 80)">créer un compte pro</button></a>
+    <a href="{{route('create+compte+client/employeur')}}">Accepter l'invitation</a>
     <p>
-        Pour tout demande d’information et assistance concernant <strong>{{$nom_etp}}</strong>,<br>
-        Merci de prendre contact avec : <br>
-
-        @foreach ($responsables_etp as $rep)
-        <p>
-            <strong>{{$rep->nom_resp.' '.$rep->prenom_resp}}</strong> responsable {{$rep->fonction_resp}}<br>
-            tél: {{$rep->telephone_resp}}<br>
-            {{$rep->email_resp}}
-        </p>
-
-        @endforeach
-
-        Bonne continuation, <br><br>
-
-        Cordialement <br>
-        <strong>L’équipe de {{$nom_etp}}</strong> <br>
+        <strong>formation.mg</strong> est un moyen flexible et envivial pour vous de gérer vos projets,collaborations commerciales, vos formations et plus encore<br>
+        C'est comme une feuille de calcul, mais beaucoup plus intelligent . Commencez en <strong>10 secondes</strong> ou <strong>moins</strong> et profiter d'une utilisation complète .
     </p>
+    <p>Bienvenue et merci ! <br><br>
+        L'équipe de <strong>formation.mg</strong>
+    </p>
+    <a href="{{route('/')}}">visiter notre page d'aide</a>
+
 </body>
 </html>

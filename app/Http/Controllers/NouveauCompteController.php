@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
+use App\Mail\create_new_compte\save_new_compte_cfp_Mail;
+use App\Mail\create_new_compte\save_new_compte_etp_Mail;
+
 use App\Models\FonctionGenerique;
 use App\NouveauCompte;
 use App\User;
@@ -119,6 +122,7 @@ class NouveauCompteController extends Controller
             Storage::cloud()->put($dir['path'] . '/' . $data["logo_cfp"], $req->file('logo_cfp')->getContent());
             Storage::cloud()->put($dir2['path'] . '/' . $resp["photo_resp"], $req->file('photo_resp_cfp')->getContent());
 
+            Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp.' '.$req->prenom_resp_cfp,$req->email_resp_cfp));
             return redirect()->route('inscription_save');
         } else {
             return back()->with('error', 'Organisation de Formation existe déjà!');
@@ -204,6 +208,7 @@ class NouveauCompteController extends Controller
                 ->first();
             Storage::cloud()->put($dir['path'] . '/' . $data["logo_etp"], $req->file('logo_etp')->getContent());
             Storage::cloud()->put($dir2['path'] . '/' . $resp["photo_resp"], $req->file('photo_resp')->getContent());
+            Mail::to($req->email_resp)->send(new save_new_compte_etp_Mail($req->nom_resp.' '.$req->prenom_resp,$req->email_resp));
 
             return redirect()->route('inscription_save');
         } else {
