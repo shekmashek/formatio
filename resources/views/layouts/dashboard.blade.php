@@ -10,7 +10,7 @@
         <div id="chart_div"></div>
     </div>
     <div class="col-lg-4">
-        <div id="top_x_div_3"></div>
+      <div id=""></div>
     </div>
 </div>
 {{-- fin 2 --}}
@@ -35,23 +35,22 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script> --}}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
- {{-- 1 --}}
+
  <script type="text/javascript">
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawStuff);
 
     function drawStuff() {
       var data = new google.visualization.arrayToDataTable([
-        ['Opening Move', ''],
-        ["King's pawn (e4)", 44],
-        ["Queen's pawn (d4)", 31],
-        ["Knight to King 3 (Nf3)", 12],
-        ["Queen's bishop pawn (c4)", 10],
-        ['Other', 3]
+        ['annee','prix'],
+            @php
+                foreach($GChart as $product) {
+                  $val = "['".$product->annee."', ".$product->prix."]";
+                  echo $val.",";
+                }
+            @endphp
       ]);
 
       var options = {
@@ -73,85 +72,76 @@
       chart.draw(data, options);
     };
   </script>
-{{-- fin 1 --}}
 
 
-
-{{-- 2 --}}
 <script type="text/javascript">
 
-    // Load the Visualization API and the corechart package.
-    google.charts.load('current', {'packages':['corechart']});
+      google.charts.load('current', {'packages':['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawStuff);
 
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
+      function drawStuff() {
 
-    // Callback that creates and populates a data table,
-    // instantiates the pie chart, passes in the data and
-    // draws it.
-    function drawChart() {
+        var button = document.getElementById('change-chart');
+        var chartDiv = document.getElementById('chart_div');
 
-      // Create the data table.
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Topping');
-      data.addColumn('number', 'Slices');
-      data.addRows([
-        ['Mushrooms', 3],
-        ['Onions', 1],
-        ['Olives', 1],
-        ['Zucchini', 1],
-        ['Pepperoni', 2]
-      ]);
+        var data = google.visualization.arrayToDataTable([
+          ['Galaxy', 'Distance', 'Brightness'],
+          ['Canis Major Dwarf', 8000, 23.3],
+          ['Sagittarius Dwarf', 24000, 4.5],
+          ['Ursa Major II Dwarf', 30000, 14.3],
+          ['Lg. Magellanic Cloud', 50000, 0.9],
+          ['Bootes I', 60000, 13.1]
+        ]);
 
-      // Set chart options
-      var options = {'title':'How Much Pizza I Ate Last Night',
-                     'width':400,
-                     'height':200};
+        var materialOptions = {
+          width: 400,
+          chart: {
+            title: 'Nearby galaxies',
+            subtitle: 'distance on the left, brightness on the right'
+          },
+          series: {
+            0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+            1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+          },
+          axes: {
+            y: {
+              distance: {label: 'parsecs'}, // Left y-axis.
+              brightness: {side: 'right', label: 'apparent magnitude'} // Right y-axis.
+            }
+          }
+        };
 
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
-  </script>
-{{-- fin 2 --}}
+        var classicOptions = {
+          width: 400,
+          series: {
+            0: {targetAxisIndex: 0},
+            1: {targetAxisIndex: 1}
+          },
+          title: 'Nearby galaxies - distance on the left, brightness on the right',
+          vAxes: {
+            // Adds titles to each axis.
+            0: {title: 'parsecs'},
+            1: {title: 'apparent magnitude'}
+          }
+        };
 
-
-{{-- 3 --}}
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['bar']});
-  google.charts.setOnLoadCallback(drawStuff);
-
-  function drawStuff() {
-    var data = new google.visualization.arrayToDataTable([
-      ['Move', 'Percentage'],
-      ["King's pawn (e4)", 44],
-      ["Queen's pawn (d4)", 31],
-      ["Knight to King 3 (Nf3)", 12],
-      ["Queen's bishop pawn (c4)", 10],
-      ['Other', 3]
-    ]);
-
-    var options = {
-      width: 400,
-      height: 200,
-      legend: { position: 'none' },
-      chart: {
-        title: 'Chess opening moves',
-        subtitle: 'popularity by percentage' },
-      axes: {
-        x: {
-          0: { side: 'top', label: 'White to move'} // Top x-axis.
+        function drawMaterialChart() {
+          var materialChart = new google.charts.Bar(chartDiv);
+          materialChart.draw(data, google.charts.Bar.convertOptions(materialOptions));
+          button.innerText = 'Change to Classic';
+          button.onclick = drawClassicChart;
         }
-      },
-      bar: { groupWidth: "90%" }
-    };
 
-    var chart = new google.charts.Bar(document.getElementById('top_x_div_3'));
-    // Convert the Classic options to Material options.
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-  };
-</script>
-{{-- fin 3 --}}
+        function drawClassicChart() {
+          var classicChart = new google.visualization.ColumnChart(chartDiv);
+          classicChart.draw(data, classicOptions);
+          button.innerText = 'Change to Material';
+          button.onclick = drawMaterialChart;
+        }
+
+        drawMaterialChart();
+    };
+    </script>
 
 
 {{-- --------------------------------------------------------------------------------------- bar composé --}}
