@@ -91,13 +91,33 @@
                     <td>{{ $stg->mail_stagiaire }}</td>
                     <td>{{ $stg->fonction_stagiaire }}</td>
                     <td>{{ $stg->departement_id }}</td>
-                    <td><i class="fa fa-trash-alt"></i></td>
+                    <td><button class="supprimer" data-toggle="modal" data-target="#exampleModal_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
                 </tr>
+                <div class="modal fade" id="exampleModal_{{$stg->stagiaire_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header  d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                <h6 class="modal-title">Avertissement !</h6>
+                            </div>
+                            <div class="modal-body">
+                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                <button type="button" class="btn btn-secondary supprimer_stg" id="{{$stg->stagiaire_id}}"> Oui </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </tbody>
         </table>
 </div>
 <style>
+.supprimer:hover{
+    cursor: pointer;
+}
+
 .boutton{
     font-size: 2rem;
 }
@@ -184,6 +204,9 @@ td{
            }
         });
 	});
+
+
+
     //recuperer id stagiaire
     var id_stagiaire = $('#stagiaire').val();
     var id_session = $('#sessionId').val();
@@ -277,6 +300,52 @@ td{
            }
         });
 	});
+
+
+    $(".rechercher").on('click',function(e){
+        var id = $("#matricule_search").val();
+        $.ajax({
+            type: "GET",
+            url: "{{route('one_stagiaire')}}",
+            data:{Id:id},
+            dataType: "html",
+            success:function(response){
+                var userData=JSON.parse(response);
+                $("#matricule").val(userData[0].matricule);
+                $("#nom").val(userData[0].nom_stagiaire);
+                $("#prenom").val(userData[0].prenom_stagiaire);
+                $("#departement").val(userData[0].nom_departement);
+                // id_detail = userData[$i].id;
+                // $('#action1').val('Modifier');
+           },
+           error:function(error){
+              console.log(error)
+           }
+        });
+	});
+
+    $(".supprimer_stg").on('click', function(e) {
+        var id = e.target.id;
+        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+        $.ajax({
+            type: "GET"
+            , url: "{{route('destroy_module')}}"
+            , data: {
+                Id: id,
+                groupe:groupe_id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert("Error")
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
 </script>
 <script type="text/javascript">
     // CSRF Token

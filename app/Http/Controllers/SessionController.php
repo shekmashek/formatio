@@ -153,4 +153,17 @@ class SessionController extends Controller
         return response()->json($stg);
     }
 
+    public function supprimmer_stagiaire(Request $request)
+    {
+        $id = $request->Id;
+        $groupe_id = $request->groupe_id;
+        DB::delete('delete from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$id,$groupe_id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
+
 }
