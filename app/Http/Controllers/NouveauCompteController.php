@@ -84,7 +84,7 @@ class NouveauCompteController extends Controller
 
             $this->user->name = $req->nom_resp_cfp;
             $this->user->email = $req->email_resp_cfp;
-            $ch1 = $req->name_resp_cfp;
+            $ch1 = $req->nom_resp_cfp;
             $ch2 = substr($req->tel_resp_cfp, 8, 2);
             $this->user->password = Hash::make($ch1 . $ch2);
             $this->user->role_id = '7';
@@ -154,7 +154,7 @@ class NouveauCompteController extends Controller
 
             $this->user->name = $req->nom_resp;
             $this->user->email = $req->email_resp;
-            $ch1 = $req->name_resp;
+            $ch1 = $req->nom_resp;
             $ch2 = substr($req->tel_resp, 8, 2);
             $this->user->password = Hash::make($ch1 . $ch2);
             $this->user->role_id = '2';
