@@ -9,6 +9,7 @@ use App\stagiaire;
 use App\responsable;
 use App\formateur;
 use App\cfp;
+use App\Models\getImageModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +82,7 @@ class UtilisateurControlleur extends Controller
     {
         $liste = entreprise::orderBy('nom_etp')->get();
         $cfps = cfp::all();
-        return view('admin/utilisateur/cfp', compact('liste', 'cfps'));
+        return view('admin.utilisateur.cfp', compact('liste', 'cfps'));
     }
     public function superAdmin()
     {
@@ -141,14 +142,10 @@ class UtilisateurControlleur extends Controller
         $str = 'images/CFP';
 
         //stocker logo dans google drive
-        $folder = 'entreprise';
-        //liste des contenues dans drive
-        $contents = collect(Storage::cloud()->listContents('/', false));
-        //recuperer dossier "entreprise
-        $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first();
-        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('logo')->getContent());
+
+        $dossier = 'entreprise';
+        $stock_cfp = new getImageModel();
+        $stock_cfp->store_image($dossier,$nom_image,$request->file('logo')->getContent());
         // $request->logo->move(public_path($str), $nom_image);
 
         $new_cfp->logo = $nom_image;

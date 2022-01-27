@@ -11,7 +11,7 @@
                                 <div class="card-block text-center text-white">
                                     @foreach ($formateur as $formateur)
 
-                                    <div class="m-b-25"> <img src="{{asset('images/formateurs/'.$formateur->photos)}}" width="150px" height="150px" class="rounded-circle">
+                                    <div class="m-b-25"> <img src="/formateur-image/{{$formateur->photos}}" width="150px" height="150px" class="rounded-circle">
 
                                     </div>
                                     <h6 class="f-w-600">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} </h6>

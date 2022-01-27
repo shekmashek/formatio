@@ -15,6 +15,7 @@ use App\entreprise;
 use App\stagiaire;
 use App\User;
 use App\responsable;
+use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
 
@@ -175,19 +176,17 @@ class ParticipantController extends Controller
             $participant->fonction_stagiaire = $request->fonction;
             $participant->mail_stagiaire = $request->mail;
             $participant->telephone_stagiaire = $request->phone;
-            $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom . '' . $request->matricule . '.' . $request->image->extension());
+
+            $date = date('d-m-Y');
+            $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.' . $request->image->extension());
 
             $str = 'images/stagiaires';
 
              //stocker logo dans google drive
-            $folder = 'stagiaire';
-            //liste des contenues dans drive
-            $contents = collect(Storage::cloud()->listContents('/', false));
-            //recuperer dossier "entreprise
-            $dir = $contents->where('type', '=', 'dir')
-            ->where('filename', '=', $folder)
-            ->first();
-            Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('image')->getContent());
+            //stocker logo dans google drive
+            $dossier = 'stagiaire';
+            $stock_stg = new getImageModel();
+            $stock_stg->store_image($dossier,$nom_image,$request->file('image')->getContent());
 
             $participant->photos = $nom_image;
 
@@ -578,20 +577,8 @@ class ParticipantController extends Controller
     }
     //fonction récupération photos depuis google drive
     public function getImage($path){
-        $folder = 'stagiaire';
-        //liste des contenues dans drive
-        $contents = collect(Storage::cloud()->listContents('/', false));
-        //recuperer dossier "entreprise
-         $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first();
-
-        $files = collect(Storage::cloud()->listContents($dir['path'], false))
-        ->where('type', '=', 'file')
-        ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
-        ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
-        ->first();
-        $rawData = Storage::cloud()->get($files['path']);
-        return response($rawData)->header('Content-Type','image.png');
+        $dossier = 'stagiaire';
+        $etp = new getImageModel();
+        return $etp->get_image($path,$dossier);
     }
 }

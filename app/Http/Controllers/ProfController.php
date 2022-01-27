@@ -9,6 +9,7 @@ use App\formateur;
 use App\responsable;
 use App\User;
 use App\cfp;
+use App\Models\getImageModel;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -137,18 +138,13 @@ class ProfController extends Controller
         $frm->niveau = $request->niveau;
 
         $date = date('d-m-Y');
-        $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom . '' . $date . '.png');
+        $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
         $str = 'images/formateurs';
 
-         //stocker logo dans google drive
-        $folder = 'formateur';
-        //liste des contenues dans drive
-        $contents = collect(Storage::cloud()->listContents('/', false));
-        //recuperer dossier "entreprise
-        $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first();
-        Storage::cloud()->put($dir['path'].'/'.$nom_image, $request->file('image')->getContent());
+        //stocker logo dans google drive
+        $dossier = 'formateur';
+        $stock_formateur = new getImageModel();
+        $stock_formateur->store_image($dossier,$nom_image,$request->file('image')->getContent());
         // $request->image->move(public_path($str), $nom_image);
 
         $frm->photos = $nom_image;
@@ -345,5 +341,11 @@ class ProfController extends Controller
         $formateur = formateur::where('user_id', $user)->get();
 
         return view('admin.formateur.profile_formateurs', compact('formateur'));
+    }
+      //fonction récupération photos depuis google drive
+    public function getImage($path){
+        $dossier = 'formateur';
+        $etp = new getImageModel();
+        return $etp->get_image($path,$dossier);
     }
 }

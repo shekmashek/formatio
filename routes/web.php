@@ -571,3 +571,7 @@ Route::get('create+compte+CFP',function(){
 Route::get('/dynamic-image/{path}', 'EntrepriseController@getImage');
 //route image stagiaire et manager
 Route::get('/stagiaire-image/{path}', 'ParticipantController@getImage');
+//route image responsable
+Route::get('/responsable-image/{path}', 'ResponsableController@getImage');
+//route image formateur
+Route::get('/formateur-image/{path}', 'ProfController@getImage');
