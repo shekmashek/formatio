@@ -202,10 +202,11 @@ class ModuleController extends Controller
     public function affichage(Request $request)
     {
         $id = $request->Id;
-        $mod = programme::where('module_id', $id)->with('Module')->get();
-        $id_formation = module::where('id', $id)->value('formation_id');
-        $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
-        return response()->json([$mod, $nom_formation]);
+        $module = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        // $mod = programme::where('module_id', $id)->with('Module')->get();
+        // $id_formation = module::where('id', $id)->value('formation_id');
+        // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
+        return response()->json($module);
     }
 
     public function update(Request $request)

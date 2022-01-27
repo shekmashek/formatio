@@ -285,6 +285,8 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.materiel_necessaire,
     m.cible,
     m.niveau_id,
+    m.prestation,
+    m.bon_a_savoir,
     ifnull(m.max,0) as max_pers,
     ifnull(m.min,0) as min_pers,
     n.niveau,

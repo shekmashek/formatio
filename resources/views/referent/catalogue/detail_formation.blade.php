@@ -3,29 +3,37 @@
 <div class="row">
     <div class="col-lg-3">
     </div>
-<div class="col-lg-9">
+    <div class="col-lg-9">
 
-<div class="formation__search">
-    <div class="formation__search__form">
-        <form class="" method="GET" action="{{route('result_formation')}}">
-            {{-- <form action="{{ route('search') }}" method="GET">
-                <input type="text" name="search" class="form-control" required/>: --}}
-       @csrf
-            <input type="text" id="reference_search" name="nom_formation" placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
-            <button type="submit" class="btn">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
+        <div class="formation__search">
+            <div class="formation__search__form">
+                <form class="" method="GET" action="{{route('result_formation')}}">
+                    {{-- <form action="{{ route('search') }}" method="GET">
+                        <input type="text" name="search" class="form-control" required />: --}}
+                        @csrf
+                        <input type="text" id="reference_search" name="nom_formation"
+                            placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
+                        <button type="submit" class="btn">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+            </div>
+        </div>
+        @foreach ($categorie as $ctg )
+        <button type="button" class="btn btn" style="border-radius: 15px"><a
+                href="{{route('select_par_module',$ctg->id)}}">{{$ctg->nom_formation}}</a></button>
+        @endforeach
+        <style>
+            .btn {
+                background-color: #801D68;
+                color: white
+            }
+
+            .btn:hover {
+                color: white
+            }
+        </style>
     </div>
-</div>
-@foreach ($categorie as $ctg )
-<button type="button" class="btn btn" style="border-radius: 15px"><a href="{{route('select_par_module',$ctg->id)}}">{{$ctg->nom_formation}}</a></button>
-@endforeach
-<style>
-    .btn{background-color: #801D68;color: white}
-    .btn:hover{color:white}
-</style>
-   </div>
 </div>
 <section class="detail__formation">
     <div class="container py-4">
@@ -45,25 +53,29 @@
             </div>
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                 <div class="detail__formation__result__item2">
-                    <a href="#"><h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6></a>
-                    <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;"></div>
+                    <a href="#">
+                        <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
+                    </a>
+                    <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
+                            style="width: 200px; height:100px;"></div>
                 </div>
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                    <div class="col"><i class="bx bxs-alarm bx_icon"></i>
-                        <span>
-                            @isset($res->duree_jour)
-                                {{$res->duree_jour}} jours
-                            @endisset
-                        </span>
-                        <span>
-                            @isset($res->duree)
-                                /{{$res->duree}} h
-                            @endisset
-                        </span> </p>
-                    </div>
-                    <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span></div>
-                    <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
+                <div class="col"><i class="bx bxs-alarm bx_icon"></i>
+                    <span>
+                        @isset($res->duree_jour)
+                        {{$res->duree_jour}} jours
+                        @endisset
+                    </span>
+                    <span>
+                        @isset($res->duree)
+                        /{{$res->duree}} h
+                        @endisset
+                    </span> </p>
+                </div>
+                <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
+                </div>
+                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
@@ -74,61 +86,166 @@
                     <div class="col-lg-12">
                         <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
-                        <a href="#programme__formation"><button type="button" class="btn btn-warning">Consulter le programme de cette formation</button></a>
+                        <a href="#programme__formation"><button type="button" class="btn btn-warning">Consulter le
+                                programme de cette formation</button></a>
                     </div>
                 </div>
                 {{-- section 1 --}}
                 {{-- FIXME:mise en forme de design --}}
-                    <h3 class="pt-3 pb-3">A qui s'adresse cette formation?</h3>
-                    <div class="row detail__formation__item__left__adresse">
-                        <div class="col-lg-5 d-flex flex-row">
-                            <div class="row d-flex flex-row">
-                                <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?</span>
-                                <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                                <div class="col-11"><p>{{$res->cible}}</p></div>
+                <h3 class="pt-3 pb-3">A qui s'adresse cette formation?</h3>
+                <div class="row detail__formation__item__left__adresse">
+                    <div class="col-lg-5 d-flex flex-row">
+                        <div class="row d-flex flex-row">
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui
+                                ?</span>
+                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
+                            <div class="col-11">
+                                <p>{{$res->cible}}</p>
                             </div>
                         </div>
-
-                        <div class="col-lg-5">
-                            <div class="row d-flex flex-row">
-                                <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
-                                <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                                <div class="col-11"><p>{{$res->prerequis}}</p></div>
-                            </div>
-                            <div class="row d-flex flex-row">
-                                <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                                <div class="col-11"><p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p></div>
-                            </div>
-                        </div>
-                        <div id="programme__formation"></div>
                     </div>
-                    @endforeach
+
+                    <div class="col-lg-5">
+                        <div class="row d-flex flex-row w-100">
+                            <span class="adresse__text"><i
+                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
+                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
+                            <div class="col-11">
+                                <p>{{$res->prerequis}}</p>
+                            </div>
+                        </div>
+                        <div class="row d-flex flex-row">
+                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
+                            <div class="col-11">
+                                <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="programme__formation"></div>
+                </div>
+
+                <div class="row detail__formation__item__left__adresse">
+                    <div class="col-lg-5 d-flex flex-row">
+                        <div class="row d-flex flex-row">
+                            <span class="adresse__text"><i
+                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
+                                necessaire</span>
+                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
+                            <div class="col-11">
+                                <p>{{$res->materiel_necessaire}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="row d-flex flex-row">
+                            <span class="adresse__text"><i
+                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
+                                a savoir</span>
+                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
+                            <div class="col-11">
+                                <p>{{$res->bon_a_savoir}}</p>
+                            </div>
+                        </div>
+                        <div class="row d-flex flex-row">
+                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
+                            <div class="col-11">
+                                <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="programme__formation"></div>
+                </div>
+
+                <div class="row detail__formation__item__left__adresse">
+                    <div class="col-lg-12 d-flex flex-row">
+                        <div class="row d-flex flex-row">
+                            <span class="adresse__text"><i
+                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
+                                pedagogiques</span>
+                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
+                            <div class="col-11">
+                                <p>{{$res->prestation}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="programme__formation"></div>
+                </div>
+                @endforeach
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__item__left">
                     <h3 class="pt-3 pb-3">Programme de la formation</h3>
                     <div></div>
                     <div class="col-lg-12">
-                        <div class="row detail__formation__item__left__accordion">
+                        {{-- <div class="row detail__formation__item__left__accordion">
                             <div class="accordion" id="accordion__program">
-                                <?php $i=1 ?>
+                                <?php //$i=1 ?>
                                 @foreach ($programmes as $prgc)
-                                    <div class="card">
-                                        <div class="card-header" id="heading1">
-                                            <h2 class="mb-0"><button class="btn btn-block text-left"  type="button" data-toggle="collapse" data-target="#collapse{{$i}}" aria-expanded="true" id="icon" aria-controls="collapse1"><i class="bx bxs-plus-circle icon-prog-list" id="icon"></i>&nbsp;&nbsp;{{$i}} - {{$prgc->titre}}</button></h2>
-                                        </div>
-                                            @foreach ($cours as $c)
-                                                @if($c->programme_id == $prgc->id)
-                                                    <div id="collapse{{$i}}" class="collapse show" aria-labelledby="heading1" data-parent="#accordion__program">
-                                                        <div class="card-body"> <i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}</div>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        <?php $i++ ?>
+                                <div class="card">
+                                    <div class="card-header" id="heading1">
+                                        <h2 class="mb-0"><button class="btn btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="#collapse{{$i}}"
+                                                aria-expanded="true" id="icon" aria-controls="collapse1"><i
+                                                    class="bx bxs-plus-circle icon-prog-list"
+                                                    id="icon"></i>&nbsp;&nbsp;{{$i}} - {{$prgc->titre}}</button></h2>
                                     </div>
+                                    @foreach ($cours as $c)
+                                    @if($c->programme_id == $prgc->id)
+                                    <div id="collapse{{$i}}" class="collapse show" aria-labelledby="heading1"
+                                        data-parent="#accordion__program">
+                                        <div class="card-body"> <i
+                                                class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}</div>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    <?php //$i++ ?>
+                                </div>
                                 @endforeach
                             </div>
-                        </div>
+                        </div> --}}
+                        <form action="" class="w-100">
+                            <div class="row detail__formation__item__left__accordion">
+                                <div class="accordion" id="accordion__program">
+                                    <div class="card">
+                                        <div class="card-header" id="heading1">
+                                            <h2 class="mb-0 d-flex">
+                                                <button class="btn text-left" type="button" data-toggle="collapse"
+                                                    data-target="#collapse" aria-expanded="true" id="icon"
+                                                    aria-controls="collapse1"><i
+                                                        class="bx bxs-plus-circle icon-prog-list"
+                                                        id="icon"></i></button>
+
+                                                <input type="text" class="form-control">&nbsp;&nbsp;<i id="addRowProg"
+                                                    class="fa fa-plus pt-4" style="font-size: 15px" role="button"></i>
+                                            </h2>
+                                        </div>
+                                        <div id="collapse" class="collapse show" aria-labelledby="heading1"
+                                            data-parent="#accordion__program">
+                                            <div class="card-body"><span class="d-flex" id="headingcours"><i
+                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                                        class="form-control">
+                                                </span>
+                                                <span class="d-flex" id="headingcours"><i
+                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                                        class="form-control">
+                                                </span>
+                                                <span class="d-flex" id="headingcours"><i
+                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                                        class="form-control">&nbsp;<i id="addRowCours"
+                                                        class="fa fa-plus pt-4" style="font-size: 15px"
+                                                        role="button"></i>
+                                                </span>
+                                                <div class="card-body" id="newRowCours"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div id="newRowProg"></div>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -136,7 +253,9 @@
                 {{-- section 5 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__programme__avis">
-                    <div><h3 class="pt-5 pb-0">Avis sur la formation</h3></div>
+                    <div>
+                        <h3 class="pt-5 pb-0">Avis sur la formation</h3>
+                    </div>
                     <div class="col-12 mb-5">
                         <div class="card p-2 pt-1">
                             <div class="row detail__formation__programme__avis__rated d-flex">
@@ -154,46 +273,61 @@
                                                 <td class="rating-label">Excellent</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        {{-- <div class="bar-5" style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;"></div> --}}
+                                                        {{-- <div class="bar-5"
+                                                            style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;">
+                                                        </div> --}}
                                                     </div>
                                                 </td>
-                                                {{-- <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%</td> --}}
+                                                {{-- <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%
+                                                </td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Bien</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        {{-- <div class="bar-4" style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;"></div> --}}
+                                                        {{-- <div class="bar-4"
+                                                            style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;">
+                                                        </div> --}}
                                                     </div>
                                                 </td>
-                                                {{-- <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%</td> --}}
+                                                {{-- <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%
+                                                </td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Moyenne</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        {{-- <div class="bar-3" style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;"></div> --}}
+                                                        {{-- <div class="bar-3"
+                                                            style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;">
+                                                        </div> --}}
                                                     </div>
                                                 </td>
-                                                {{-- <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%</td> --}}
+                                                {{-- <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%
+                                                </td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Normal</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        {{-- <div class="bar-2" style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;"></div> --}}
+                                                        {{-- <div class="bar-2"
+                                                            style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;">
+                                                        </div> --}}
                                                     </div>
                                                 </td>
-                                                {{-- <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%</td> --}}
+                                                {{-- <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%
+                                                </td> --}}
                                             </tr>
                                             <tr>
                                                 <td class="rating-label">Terrible</td>
                                                 <td class="rating-bar">
                                                     <div class="bar-container">
-                                                        {{-- <div class="bar-1" style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;"></div> --}}
+                                                        {{-- <div class="bar-1"
+                                                            style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;">
+                                                        </div> --}}
                                                     </div>
                                                 </td>
-                                                {{-- <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%</td> --}}
+                                                {{-- <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%
+                                                </td> --}}
                                             </tr>
                                         </table>
                                     </div>
@@ -202,19 +336,26 @@
                         </div>
                         <div class="detail__formation__programme__avis__donnes">
                             @foreach ($liste_avis as $avis)
-                                <div class="row">
-                                    <div class="d-flex flex-row">
-                                        <div class="col"><h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }} {{ $avis->prenom_stagiaire }}</h5></div>
-                                        <div class="col"><p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p></div>
-                                        <div class="col">
-                                            <p class="text-left d-flex flex-row"><div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span class="text-muted">{{ $avis->note }}</span></p>
-                                        </div>
+                            <div class="row">
+                                <div class="d-flex flex-row">
+                                    <div class="col">
+                                        <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }} {{ $avis->prenom_stagiaire }}
+                                        </h5>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-left d-flex flex-row">
+                                        <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span
+                                            class="text-muted">{{ $avis->note }}</span></p>
                                     </div>
                                 </div>
-                                <div class="row ms-1">
-                                    <p>{{ $avis->commentaire }}</p>
-                                </div>
-                                <hr>
+                            </div>
+                            <div class="row ms-1">
+                                <p>{{ $avis->commentaire }}</p>
+                            </div>
+                            <hr>
                             @endforeach
                         </div>
                     </div>
@@ -261,14 +402,15 @@
                             <p>
                                 <span>
                                     @isset($res->duree_jour)
-                                        {{$res->duree_jour}} jours
+                                    {{$res->duree_jour}} jours
                                     @endisset
                                 </span>
                                 <span>
                                     @isset($res->duree)
-                                        /{{$res->duree}} h
+                                    /{{$res->duree}} h
                                     @endisset
-                                </span> </p>
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -280,7 +422,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8 detail__prix__main__prix2">
-                        <div>
+                        <div class="text-end">
                             <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
 
                         </div>
@@ -296,10 +438,10 @@
         </div>
     </div>
 </section>
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script type="text/javascript">
-        // CSRF Token
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script type="text/javascript">
+    // CSRF Token
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function(){
           $( "#reference_search" ).autocomplete({
@@ -370,5 +512,80 @@
             $(".dropdown>.dropdown-menu").css("display", "none");
         });
     });
+
+    $(document).on('click','#addRowCours', function() {
+        var html = '';
+        html += '<span class="d-flex" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">&nbsp;';
+        html += '</i>';
+        html += '<input type="text" class="form-control">&nbsp;';
+        html += '<i id="removeCours" class="fa fa-minus pt-4" style="font-size: 15px" role="button">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newRowCours').append(html);
+    });
+
+    // remove row2
+    $(document).on('click', '#removeCours', function() {
+        $(this).closest('#headingcours').remove();
+    });
+
+    $(document).on('click', '#addRowProg', function() {
+        var html = '';
+        html += '<div class="row detail__formation__item__left__accordion">'
+        html += '<div class="accordion" id="accordion__program">';
+        html += '<?php $i=1 ?>';
+        html += '<div class="card">';
+
+        html += '<div class="card-header mt-3" id="heading1">';
+        html += '<h2 class="mb-0 d-flex">';
+        html += '<button class="btn text-left" type="button" data-toggle="collapse" data-target="#collapse{{$i}}" aria-expanded="true" id="icon" aria-controls="collapse1" >';
+        html += '<i class="bx bxs-plus-circle icon-prog-list" id="icon">';
+        html += '</i>';
+        html += '</button>';
+        html += '<input type="text" class="form-control">';
+        html += '<i id="removeProg" class="fa fa-minus pt-4 ms-3" style="font-size: 15px;" role="button">';
+        html += '</i>';
+        html += '</h2>';
+        html += '</div>';
+
+        html += '<div id="collapse{{$i}}" class="collapse show" aria-labelledby="heading1" data-parent="#accordion__program">';
+
+        html += '<span class="d-flex">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>';
+        html += '<input type="text" class="form-control">';
+        html += '</span>';
+
+        html += '<span class="d-flex">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>';
+        html += '<input type="text" class="form-control">';
+        html += '</span>';
+
+        html += '<span class="d-flex">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>';
+        html += '<input type="text" class="form-control">';
+        html += '<i id="addRowCours" class="fa fa-plus pt-4" style="font-size: 15px" role="button">';
+        html += '</i>';
+        html += '</span>';
+
+        html += '</div>';
+
+        html += '</div>';
+        html += '<?php $i++ ?>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRowCours').append(html);
+    });
+
+    // remove row1
+    $(document).on('click', '#removeProg', function() {
+        $(this).closest('#accordion__program').remove();
+    });
+
 </script>
 @endsection

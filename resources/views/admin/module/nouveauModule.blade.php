@@ -86,6 +86,10 @@
                                         <div class="acf-field acf-field-text acf-field-nom_module is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
+                                                    {{-- test input top --}}
+                                                    {{-- <div class="row px-3 mt-4">
+                                                        <div class="form-group mt-1 mb-1"> <input type="text" id="email" class="form-control test" required> <label class="ml-3 form-control-placeholder" for="email">Email</label> </div>
+                                                    </div> --}}
                                                     <input type="text" class="form-control module module"
                                                         id="acf-nom_module" name="nom_module"
                                                         placeholder="Nom du module" >
