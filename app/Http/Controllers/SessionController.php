@@ -107,8 +107,10 @@ class SessionController extends Controller
 
         // ---apprenants
         $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$projet[0]->groupe_id]);
+        // ---ressources
+        $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         
-        return view('projet_session.session', compact('id', 'test', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
+        return view('projet_session.session', compact('id', 'test', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource'));
     }
 
     public function getFormateur(){

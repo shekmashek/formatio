@@ -93,7 +93,12 @@
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'ressource')" style="width: 100%">
                             <p class="m-0 p-0">RESSOURCES</p>
+                            @if(count($ressource) == 0)
                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                            @endif
+                            @if(count($ressource) != 0)
+                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                            @endif
                         </button>
                     </div>
                     <div>

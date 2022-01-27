@@ -18,15 +18,15 @@
   
 {{-- @if(count($stagiaire) != 0) --}}
   <div class="shadow mb-3 col-12 pb-5">
+      @foreach ($ressource as $r)
+          
+      @endforeach
         <div class="row">
             <div class="col-md-6">
                 <span> <h5>Matériel nécessaire</h5> </span>
                     <section>
                         <ul>
-                            <li><i class="far fa-check-circle"></i>&nbsp; Un ordinateur portable chacun. </li>
-                            <li><i class="far fa-check-circle"></i>&nbsp; Un cahier. </li>
-                            <li><i class="far fa-check-circle"></i>&nbsp; Un stylo.  </li>
-                            <li><i class="far fa-check-circle"></i>&nbsp; Un classeur. </li>
+                            <li><i class="far fa-check-circle"></i>&nbsp; {{ $r->description }} </li>
                         </ul>
                     </section>
             </div>
@@ -34,10 +34,7 @@
                 <span><h5>Demandé(e) par :</h5></span>
                     <section>
                         <ul>
-                            <li>{{ count($stagiaire) }}</li>
-                            <li>Numerika</li>
-                            <li>Numerika</li>
-                            <li>Numerika</li>
+                            <li>{{ $r->demandeur }}</li>
                         </ul>
                     </section>
             </div>
