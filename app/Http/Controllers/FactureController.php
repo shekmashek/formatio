@@ -478,6 +478,59 @@ class FactureController extends Controller
     {
         $this->fact->lectureFileProjet($path_file);
     }
+    public function test(){
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == 'facture')
+                $root = $value['path'];
+        }
 
+        $dir = '/'.$root;
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        foreach ($sub_directory as $key => $value) {
+            if($value['name'] == 'bc')
+                $root2 = $value['path'];
+        }
+
+        $dir2 = $dir.'/'.$root2;
+
+        $recursive = true; // Get subdirectories also?
+        $sub_directory2 = collect(Storage::cloud()->listContents($dir2, $recursive));
+        dd($sub_directory2);
+        //on teste si le dossier du CFP existe déjà
+        $existe = $sub_directory2->where('type', '=', 'dir')
+        ->where('filename', '=', 'Ambatovy-01')
+        ->first();
+
+        if ($existe == null) {
+            Storage::cloud()->makeDirectory($dir2.'/'.'Ambatovy-01');
+        }
+
+        foreach ($sub_directory2 as $key => $value) {
+            if($value['name'] == 'Ambatovy-01')
+                $root3= $value['path'];
+        }
+        $dir3 = $dir2.'/'.$root3;
+        $recursive = true; // Get subdirectories also?
+
+        $sub_directory3 = collect(Storage::cloud()->listContents($dir3, $recursive));
+
+        //on teste si le dossier projet du CFP existe déjà
+        $existeProjet = $sub_directory3->where('type', '=', 'dir')
+        ->where('filename', '=', 'BI-01')
+        ->first();
+        if (!$existeProjet) {
+             // Create sub dir pour projet
+            Storage::cloud()->makeDirectory($dir3['path'].'/'.'BI-01');
+        }
+
+        // $sous_dossier = 'facture';
+        // $dossier_cfp = 'Ambatovy-01';
+        // $projet_folder = 'BI-01';
+        // $bc = new getImageModel();
+        // $bc->create_sub_directory($sous_dossier,'bc',$dossier_cfp,$projet_folder);
+    }
 
 }
