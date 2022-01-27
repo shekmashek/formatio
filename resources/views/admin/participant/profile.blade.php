@@ -10,9 +10,7 @@
 
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-
-                                     <div class="m-b-25"> <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" width="30%" height="30%" class="rounded-circle">
-
+                                     <div class="m-b-25"> <img src="/stagiaire-image/{{$stagiaire->photos}}" width="30%" height="30%" class="rounded-circle">
                                     </div>
                                     <h6 class="f-w-600">{{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}</h6>
                                     <p>{{$stagiaire->fonction_stagiaire}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>

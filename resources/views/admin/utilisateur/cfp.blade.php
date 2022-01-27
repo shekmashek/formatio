@@ -112,7 +112,7 @@
                 <tbody>
                     @foreach ($cfps as $cfp)
                     <tr>
-                        <td colspan="3" style="width: 40px;"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{ asset('images/CFP/'.$cfp->logo) }}" style="cellapading=0;" cellspacing="0"> </td>
+                        <td colspan="3" style="width: 40px;"> <img class="img-fluid rounded-3" alt="Responsive image" src="/dynamic-image/{{$cfp->logo}}" style="cellapading=0;" cellspacing="0"> </td>
                         <td>{{ $cfp->nom }}</td>
                         <td>{{ $cfp->adresse_lot }}, {{ $cfp->adresse_ville }}, {{ $cfp->adresse_region }}</td>
                         <td>{{ $cfp->email }}</td>

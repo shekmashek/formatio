@@ -8,7 +8,7 @@
                         <div class="row m-l-2 m-r-2">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="25%" height="25%" class="img-radius">
+                                    <div class="m-b-25"> <img src="/dynamic-image/{{$entreprise->logo}}" width="25%" height="25%" class="img-radius">
 
                                     </div>
                                     <h6 class="f-w-600">{{$entreprise->nom_etp}}</h6>

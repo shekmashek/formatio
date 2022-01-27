@@ -50,26 +50,29 @@ CREATE TABLE `modules` (
   `prix` int(11) NOT NULL,
   `duree` int(11) NOT NULL,
   `duree_jour` int(11) NOT NULL,
-  `prerequis` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `objectif` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prerequis` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `objectif` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
   `modalite_formation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
   `niveau_id` bigint(20) NOT NULL REFERENCES niveaux(id) ON DELETE CASCADE,
   `materiel_necessaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cible` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-
+  `cible` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `min` int(11) NOT NULL,
+  `max` int(11) NOT NULL,
+  `bon_a_savoir` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prestation` TEXT COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-INSERT INTO `modules` (`id`, `reference`, `nom_module`, `formation_id`, `created_at`, `updated_at`, `prix`, `duree`,`duree_jour`,`prerequis`, `objectif`, `modalite_formation`, `description` ,`niveau_id`,`materiel_necessaire`,`cible`) VALUES
-(2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH'),
-(3, 'MOD_EX03', 'NIII.Organisation et gestion des données', 1, NULL, NULL, 300000, 12, 4,'', '', '','',1,'pc','RH'),
-(4, 'MOD_EX04', 'NIV.Business Intelligence', 1, NULL, NULL, 350000, 12, 4,'', '', '','',1,'pc','RH'),
-(5, 'MOD_EX05', 'NV.VBA', 1, NULL, NULL, 450000, 18,4,'', '', '','',1,'pc','RH'),
-(6, 'MOD_BI01', 'NI.Fondamentaux', 2, NULL, '2021-08-31 09:07:56', 450000, 18,5, '', '', '','',1,'pc','RH'),
-(7, 'MOD_BI02', 'NII.Perfectionnement Dax', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH'),
-(8, 'MOD_BI03', 'NIII.Dataviz et analytics', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH'),
-(9, 'MOD_EX01', 'NI.Fondamentaux', 1, '2021-09-01 03:25:44', '2021-09-01 03:25:44', 300000, 12,4, '', '', '','',1,'pc','RH');
+INSERT INTO `modules` (`id`, `reference`, `nom_module`, `formation_id`, `created_at`, `updated_at`, `prix`, `duree`,`duree_jour`,`prerequis`, `objectif`, `modalite_formation`, `description` ,`niveau_id`,`materiel_necessaire`,`cible`,`min`,`max`,`bon_a_savoir`,`prestation`) VALUES
+(2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'',''),
+(3, 'MOD_EX03', 'NIII.Organisation et gestion des données', 1, NULL, NULL, 300000, 12, 4,'', '', '','',1,'pc','RH',0,0,'',''),
+(4, 'MOD_EX04', 'NIV.Business Intelligence', 1, NULL, NULL, 350000, 12, 4,'', '', '','',1,'pc','RH',0,0,'',''),
+(5, 'MOD_EX05', 'NV.VBA', 1, NULL, NULL, 450000, 18,4,'', '', '','',1,'pc','RH',0,0,'',''),
+(6, 'MOD_BI01', 'NI.Fondamentaux', 2, NULL, '2021-08-31 09:07:56', 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'',''),
+(7, 'MOD_BI02', 'NII.Perfectionnement Dax', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'',''),
+(8, 'MOD_BI03', 'NIII.Dataviz et analytics', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'',''),
+(9, 'MOD_EX01', 'NI.Fondamentaux', 1, '2021-09-01 03:25:44', '2021-09-01 03:25:44', 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','');
 
 
 CREATE TABLE `programmes` (

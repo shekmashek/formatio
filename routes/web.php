@@ -4,7 +4,7 @@ use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -19,6 +19,8 @@ Route::get('/projet_session', function () {
 
 // nouvelle session
 Route::get('detail_session/{id_session?}','SessionController@detail_session')->name('detail_session');
+
+Route::get('all_formateurs','SessionController@getFormateur')->name('all_formateurs');
 // end
 
 
@@ -495,7 +497,6 @@ Route::get('notification_stagiaire','AutoEvaluationController@notifiaction')->na
 
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
 
-
 // ================= Route abonnement ================= //
 Route::resource('abonnement', 'AbonnementController')->except('show');
 Route::get('show_role','AbonnementController@show')->name('show_role');
@@ -557,12 +558,51 @@ Route::get('profil_user','HomeController@profil_user')->name('profil_user');
 Route::get('list_cfp','CfpController@index')->name('list_cfp');
 
 
-//============================= page creation nouveau compte CFP et Formateur
+//============================= page creation nouveau compte CFP et Entreprise
 
-Route::get('create+compte+formateur',function(){
-    return view('create_compte.create_compte_formateur');
-})->name('create+compte+formateur');
+Route::get('create+compte+client',function(){
+    return view('create_compte.choix_creation_compte');
+})->name('create+compte+client');
 
 Route::get('create+compte+CFP',function(){
     return view('create_compte.create_compte_cfp');
 })->name('create+compte+CFP');
+//
+Route::get('search_matricule','SessionController@getStagiaires')->name('search_matricule');
+Route::get('one_stagiaire','SessionController@getOneStagiaire')->name('one_stagiaire');
+Route::get('add_participant_groupe','SessionController@addParticipantGroupe')->name('add_participant_groupe');
+Route::get('create+compte+client/OF','NouveauCompteController@index_create_compte_cfp')->name('create+compte+client/OF');
+Route::get('create+compte+client/employeur','NouveauCompteController@index_create_compte_employeur')->name('create+compte+client/employeur');
+
+Route::get('inscription_save',function(){
+    return view('create_compte.create_sauvegarder');
+})->name('inscription_save');
+
+
+Route::post('create_compte_cfp','NouveauCompteController@create_compte_cfp')->name('create_compte_cfp');
+Route::post('create_compte_employeur','NouveauCompteController@create_compte_employeur')->name('create_compte_employeur');
+
+Route::get('search_entreprise_referent','NouveauCompteController@search_entreprise_referent')->name('search_entreprise_referent');
+
+// Route::get('create+compte+formateur',function(){
+//     return view('create_compte.create_compte_formateur');
+// })->name('create+compte+formateur');
+
+// Route::get('create+compte+CFP',function(){
+//     return view('create_compte.create_compte_cfp');
+// })->name('create+compte+CFP');
+
+// Route::get('create+compte+client/employeur',function(){
+//     return view('create_compte.create_compte_client');
+// })->name('create+compte+client/employeur');
+
+///--------AFFICHAGE IMAGE DEPUIS GOOGLE DRIVE -------------- //////////////
+
+//route logo entreprise -- display image
+Route::get('/dynamic-image/{path}', 'EntrepriseController@getImage');
+//route image stagiaire et manager
+Route::get('/stagiaire-image/{path}', 'ParticipantController@getImage');
+//route image responsable
+Route::get('/responsable-image/{path}', 'ResponsableController@getImage');
+//route image formateur
+Route::get('/formateur-image/{path}', 'ProfController@getImage');

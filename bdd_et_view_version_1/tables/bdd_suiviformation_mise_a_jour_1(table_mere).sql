@@ -86,7 +86,7 @@ INSERT INTO `mode_financements` (`id`, `description`, `created_at`, `updated_at`
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -145,16 +145,19 @@ CREATE TABLE `tarif_categories` (
 CREATE TABLE `cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_rue` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_quartier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adresse_code_postal` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `adresse_lot` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `adresse_ville` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `adresse_region` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `domaine_de_formation` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nif` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `stat` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rcs` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cif` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nif` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'XXXXXXXXXXXXX',
+  `stat` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL  DEFAULT 'XXXXXXXXXXXXX',
+  `rcs` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL  DEFAULT 'XXXXXXXXXXXXX',
+  `cif` varchar(191) COLLATE utf8mb4_unicode_ci  DEFAULT 'XXXXXXXXXXXXX',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `logo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -162,7 +165,6 @@ CREATE TABLE `cfps` (
   `site_cfp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 
 CREATE TABLE `abonnement_cfps` (
@@ -180,3 +182,28 @@ CREATE TABLE `abonnement_cfps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+CREATE TABLE responsables_cfp(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
+  sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
+  date_naissance_resp_cfp date NOT NULL,
+  cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  email_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  poste_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  departement_id bigint(20) UNSIGNED NOT NULL REFERENCES departements(id) ON DELETE CASCADE,
+  adresse_rue varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_code_postal varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_region varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  activiter boolean not null default true,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

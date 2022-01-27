@@ -145,7 +145,7 @@
                                     		<tr>
 
                                                 <td>
-                                                    <a href="{{route('profile_stagiaire',$part->stagiaire_id)}}"> <img src="{{asset('images/stagiaires/'.$part->photos)}}" style="width: 80px"></a>
+                                                    <a href="{{route('profile_stagiaire',$part->stagiaire_id)}}"> <img src="/stagiaire-image/{{$part->photos}}" style="width: 80px"></a>
                                                 </td>
                                                 <td>{{$part->matricule}}</td>
                                                 <td>{{$part->nom_stagiaire}}<br>

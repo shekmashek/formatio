@@ -8,12 +8,13 @@ use App\chefDepartementEntreprise;
 use App\DepartementEntreprise;
 use App\responsable;
 use App\User;
+use App\Models\getImageModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Facades\Storage;
 class ChefDepartementController extends Controller
 {
     public function __construct()
@@ -69,8 +70,13 @@ class ChefDepartementController extends Controller
 
             $date = date('d-m-Y');
             $user_id = User::where('email', $request->mail)->value('id');
-            $nom_image = str_replace(' ', '_', $request->nom . '' . $date . '.' . $request->photos->extension());
+            $nom_image = str_replace(' ', '_', $request->nom . '' .$request->phone.''. $date . '.' . $request->photos->extension());
             $str = 'images/chefDepartement';
+
+            //stocker logo dans google drive
+            $dossier = 'stagiaire';
+            $stock_chef= new getImageModel();
+            $stock_chef->store_image($dossier,$nom_image,$request->file('photos')->getContent());
 
             $chefDepart->photos = $nom_image;
             $chefDepart->user_id = $user_id;
@@ -87,7 +93,7 @@ class ChefDepartementController extends Controller
             $chefParEtp->chef_departement_id = $chef_id;
             DB::insert("insert into chef_dep_entreprises(departement_entreprise_id,chef_departement_id) values(?,?)", [$departement_entreprise_id, $chef_id]);
         //      DB::insert("insert into chef_dep_entreprises(departement_entreprise_id,chef_departement_id,departement_id) values(?,?,?)", [$departement_entreprise_id, $chef_id, $request->liste_dep]);
-            $request->photos->move(public_path($str), $nom_image);
+            // $request->photos->move(public_path($str), $nom_image);
             return redirect()->route('liste_chefDepartement');
         }
     }

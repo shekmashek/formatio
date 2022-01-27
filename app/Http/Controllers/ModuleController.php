@@ -11,7 +11,7 @@ use App\cfp;
 use PDF;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
 /*================ importation class Export et import ======================*/
 use App\Exports\FormationExport;
 use App\Imports\FormationImport;
@@ -108,46 +108,80 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         //condition de validation de formulaire
-        $request->validate(
-            [
-                'reference' => ["required"],
-                'nom_module' => ["required"],
-                'prix' =>  ["required"],
-                'prerequis' => ["required"],
-                'jour' => ["required"],
-                'objectifs' => ["required"],
-                'description' => ["required"],
-                'materiel' => ["required"]
-            ],
-            [
-                'reference.required' => 'Veuillez remplir le champ',
-                'nom_module.required' => 'Veuillez remplir le champ',
+        // $request->validate(
+        //     [
+        //         'reference' => ["required"],
+        //         'nom_module' => ["required"],
+        //         'prix' =>  ["required"],
+        //         'heure' => ["required"],
+        //         'jour' => ["required"],
+        //         'prerequis' => ["required"],
+        //         'objectifs' => ["required"],
+        //         'description' => ["required"],
+        //         'materiel' => ["required"],
+        //         'bon_a_savoir' => ["required"],
+        //         'cible' => ["required"],
+        //         'prestation' => ["required"],
+        //         'min_pers' => ["required"],
+        //         'max_pers' => ["required"]
+        //     ],
+        //     [
+        //         'reference.required' => 'Veuillez remplir le champ',
+        //         'nom_module.required' => 'Veuillez remplir le champ',
+        //         'prix.required' => 'Veuillez remplir le champ',
+        //         'heure.required' => ["Veuillez remplir le champ"],
+        //         'jour.required' => 'Veuillez remplir le champ',
+        //         'prerequis.required' => 'Veuillez remplir le champ',
+        //         'objectifs.requires' => 'Veuillez remplir le champ',
+        //         'description.required' => 'Veuillez remplir le champ',
+        //         'materiel.required' => 'Veuillez remplir le champ',
+        //         'bon_a_savoir.required' => 'Veuillez remplir le champ',
+        //         'cible.required' => 'Veuillez remplir le champ',
+        //         'prestation.required' => 'Veuillez remplir le champ',
+        //         'min_pers.required' => 'Veuillez remplir le champ',
+        //         'max_pers.required' => 'Veuillez remplir le champ'
+        //     ]
+        // );
+        $validator = Validator::make($request->all(), [
+            'reference' => 'required',
+                'nom_module' => 'required',
+                'prix' =>  'required',
+                'heure' => 'required',
+                'jour' => 'required',
+                'prerequis' => 'required',
+                'objectif' => 'required',
+                'description' => 'required',
+                'materiel' => 'required',
+                'bon_a_savoir' => 'required',
+                'cible' => 'required',
+                'prestation' => 'required',
+                'min_pers' => 'required',
+                'max_pers' => 'required'
+        ],
+        ['reference.required' => 'Veuillez remplir le champ',
+        'nom_module.required' => 'Veuillez remplir le champ',
                 'prix.required' => 'Veuillez remplir le champ',
-                'prerequis.required' => 'Veuillez remplir le champ',
+                'heure.required' => ["Veuillez remplir le champ"],
                 'jour.required' => 'Veuillez remplir le champ',
-                'objectifs.requires' => 'Veuillez remplir le champ',
-                'materiel.required' => 'Veuillez remplir le champ',
+                'prerequis.required' => 'Veuillez remplir le champ',
+                'objectif.requires' => 'Veuillez remplir le champ',
                 'description.required' => 'Veuillez remplir le champ',
+                'materiel.required' => 'Veuillez remplir le champ',
+                'bon_a_savoir.required' => 'Veuillez remplir le champ',
+                'cible.required' => 'Veuillez remplir le champ',
+                'prestation.required' => 'Veuillez remplir le champ',
+                'min_pers.required' => 'Veuillez remplir le champ',
+                'max_pers.required' => 'Veuillez remplir le champ'
+                ]
 
-            ]
-        );
-        //enregistrer les projets dans la bdd
-        $module = new module();
-        $module->reference = $request->reference;
-        $module->nom_module = $request->nom_module;
-        $module->formation_id = $request->categorie;
-        $module->prix = $request->prix;
-        $module->duree = $request->duree;
-        $module->duree_jour = $request->jour;
-        $module->prerequis = $request->prerequis;
-        $module->objectif = $request->objectifs;
-        $module->description = $request->description;
-        $module->modalite_formation = $request->modalite;
-        $module->materiel_necessaire = $request->materiel;
-        $module->niveau_id = $request->niveau;
-        $module->cible = $request->cible;
-        $module->save();
-        return redirect()->route('liste_module');
+    );
+        if ($validator->fails()) {
+            return back();
+        } else {
+            DB::insert('insert into modules(reference,nom_module,formation_id,prix,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?)',[$request->reference,$request->nom_module,$request->categorie,$request->prix,$request->heure,$request->jour,$request->prerequis,$request->objectif,$request->description,$request->modalite,$request->materiel,$request->niveau,$request->cible,$request->bon_a_savoir,$request->prestation,$request->min_pers,$request->max_pers]);
+            return redirect()->route('liste_module');
+        }
+
     }
 
 
@@ -216,7 +250,6 @@ class ModuleController extends Controller
             [
                 'success' => true,
                 'message' => 'Data deleted successfully',
-
             ]
         );
     }

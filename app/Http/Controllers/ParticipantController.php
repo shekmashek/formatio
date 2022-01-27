@@ -6,6 +6,7 @@ use App\chefDepartement;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use PDF;
 use App\Departement;
@@ -14,6 +15,7 @@ use App\entreprise;
 use App\stagiaire;
 use App\User;
 use App\responsable;
+use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
 
@@ -136,6 +138,9 @@ class ParticipantController extends Controller
                 'adresse.required' => 'Entrez l\'adresse',
             ]
         );
+
+
+
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
         }
@@ -174,9 +179,17 @@ class ParticipantController extends Controller
             $participant->fonction_stagiaire = $request->fonction;
             $participant->mail_stagiaire = $request->mail;
             $participant->telephone_stagiaire = $request->phone;
-            $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom . '' . $request->matricule . '.' . $request->image->extension());
+
+            $date = date('d-m-Y');
+            $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.' . $request->image->extension());
 
             $str = 'images/stagiaires';
+
+             //stocker logo dans google drive
+            //stocker logo dans google drive
+            $dossier = 'stagiaire';
+            $stock_stg = new getImageModel();
+            $stock_stg->store_image($dossier,$nom_image,$request->file('image')->getContent());
 
             $participant->photos = $nom_image;
 
@@ -200,7 +213,7 @@ class ParticipantController extends Controller
             $participant->niveau_etude = $request->niveau;
             $participant->entreprise_id = $entreprise_id;
             $participant->save();
-            $request->image->move(public_path($str), $nom_image);
+            // $request->image->move(public_path($str), $nom_image);
 
             return redirect()->route('liste_participant');
         }
@@ -565,5 +578,10 @@ class ParticipantController extends Controller
         LIMIT 1');
         dd($last_record_historique);
     }
-
+    //fonction récupération photos depuis google drive
+    public function getImage($path){
+        $dossier = 'stagiaire';
+        $etp = new getImageModel();
+        return $etp->get_image($path,$dossier);
+    }
 }

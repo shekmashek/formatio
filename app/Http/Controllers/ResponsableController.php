@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Mail\ReferentMail;
+use App\Models\getImageModel;
 use PDF;
 use App\responsable;
 use App\entreprise;
@@ -83,8 +85,13 @@ class ResponsableController extends Controller
         //insertion image
         $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom .  '' . $request->phone . '.' . $request->photos->extension());
         $str = 'images/responsables/';
-        // $str = 'public/images/responsables/';
-        $request->photos->move(public_path($str), $nom_image);
+         //stocker logo dans google drive
+
+        $dossier = 'responsable';
+        $stock_resp = new getImageModel();
+        $stock_resp->store_image($dossier,$nom_image,$request->file('photos')->getContent());
+
+        // $request->photos->move(public_path($str), $nom_image);
         $resp->photos = $nom_image;
         //enregistrer les emails , name et mot de passe dans user
         $user = new User();
@@ -275,5 +282,11 @@ class ResponsableController extends Controller
         $id = responsable::where('user_id', Auth::user()->id)->value('id');
         $ref = responsable::findOrFail($id);
         return view('admin.responsable.updateResponsable', compact('ref'));
+    }
+      //fonction récupération photos depuis google drive
+    public function getImage($path){
+        $dossier = 'responsable';
+        $etp = new getImageModel();
+        return $etp->get_image($path,$dossier);
     }
 }

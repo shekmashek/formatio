@@ -9,7 +9,7 @@
                         <div class="row m-l-2 m-r-2">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="{{asset('images/formateurs/'.$formateur->photos)}}" width="30%" height="30%" class="rounded-circle">
+                                    <div class="m-b-25"> <img src="/formateur-image/{{$formateur->photos}}" width="30%" height="30%" class="rounded-circle">
 
                                     </div>
                                     <h6 class="f-w-600">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} </h6>

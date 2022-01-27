@@ -7,7 +7,7 @@
             	<br>
                 <h3>RESPONSABLE</h3>
             </div>
-           
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
@@ -116,7 +116,7 @@
                                        @foreach($datas as $d)
                                         <tr>
                                             <td>
-                                         <img src="{{asset('images/responsables/'.$d->photos)}}" width="100" height="100">
+                                         <img src="/responsable-image/{{$d->photos}}" width="100" height="100">
                                             </td>
                                             <td>{{$d->nom_resp}}</td>
                                             <td>{{$d->prenom_resp}}</td>

@@ -180,19 +180,11 @@ public function index()
             ]
         );
 
-
-        //enregistrer les projets dans la bdd
-        $detail = new detail();
-        $detail->lieu = $request->lieu;
-        $detail->h_debut = $request->debut;
-        $detail->h_fin = $request->fin;
-        $detail->date_detail = $request->date;
-        $detail->projet_id = $request->projet;
-        $detail->groupe_id = $request->groupe;
-        $detail->cfp_id = $cfp_id;
-        $detail->formateur_id = $request->formateur;
-        $detail->save();
-        return redirect()->route('liste_detail');
+        for($i = 0; $i < count($request['lieu']); $i++){
+            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)',[$request['lieu'][$i],$request['debut'][$i],$request['fin'][$i],$request['date'][$i],$request['formateur'][$i],$request->groupe,$request->projet,$cfp_id]);           
+           
+        }
+        return back();
     }
 
     public function show_detail($id)
