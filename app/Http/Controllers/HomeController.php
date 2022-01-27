@@ -88,6 +88,7 @@ class HomeController extends Controller
 
             $GChart = DB::select('SELECT SUM(hors_taxe) as prix , YEAR(invoice_date) as annee from factures group by YEAR(invoice_date) order by (YEAR( invoice_date) ) ASC');
 
+
             return view('layouts.dashboard',compact('GChart'));
         }
 

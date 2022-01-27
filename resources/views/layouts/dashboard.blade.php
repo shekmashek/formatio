@@ -1,35 +1,30 @@
 @extends('./layouts/admin')
 @section('content')
 
-{{-- 2 --}}
 <div class="row mt-2">
     <div class="col-lg-4">
-        <div id="top_x_div"></div>
+        <div class="form-control">
+            <h5 class="text-center"> <b> TDB finance</b></h5>
+            <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">C.A actuel: 200.000.000 Ar TTC</p>
+            <p class="p-2 m-0" style="font-size: 13px;">C.A précedent: 52.000.000 Ar TTC</p><hr>
+            <div id="chart_div"></div>
+        </div>
     </div>
     <div class="col-lg-4">
-        <div id="chart_div"></div>
+        <div class="form-control">
+          <h5 class="text-center"><b>CA par module</b></h5>
+          <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 module</p><hr>
+          <div id="barchart_material"></div>
+        </div>
     </div>
     <div class="col-lg-4">
-      <div id=""></div>
+        <div class="form-control">
+          <h5 class="text-center"><b>CA par Client</b></h5>
+          <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 client</p><hr>
+          <div id="barchart_material_2"></div>
+        </div>
     </div>
 </div>
-{{-- fin 2 --}}
-
-
-{{-- ------------------------------- nar composé --}}
-
-<div class="row mt-3">
-    <div class="col-lg-4">
-        <div id="barchart_material"></div>
-    </div>
-    <div class="col-lg-4">
-        <div id="chart_div_2"></div>
-    </div>
-    <div class="col-lg-4">
-        <div id="columnchart_material"></div>
-    </div>
-</div>
-
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -38,7 +33,7 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
- <script type="text/javascript">
+ {{-- <script type="text/javascript">
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawStuff);
 
@@ -68,10 +63,10 @@
         bar: { groupWidth: "90%" }
       };
 
-      var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+      var chart = new google.charts.Bar(document.getElementById('one'));
       chart.draw(data, options);
     };
-  </script>
+  </script> --}}
 
 
 <script type="text/javascript">
@@ -85,39 +80,39 @@
         var chartDiv = document.getElementById('chart_div');
 
         var data = google.visualization.arrayToDataTable([
-          ['Galaxy', 'Distance', 'Brightness'],
-          ['Canis Major Dwarf', 8000, 23.3],
-          ['Sagittarius Dwarf', 24000, 4.5],
-          ['Ursa Major II Dwarf', 30000, 14.3],
-          ['Lg. Magellanic Cloud', 50000, 0.9],
+          ['Galaxy', 'Actuel', 'précédent'],
+          ['Canis Major Dwarf', 100, 23.3],
+          ['Sagittarius Dwarf', 24000, 24.5],
+          ['Ursa Major II Dwarf', 30000, 34.3],
+          ['Lg. Magellanic Cloud', 50000, 20.9],
           ['Bootes I', 60000, 13.1]
         ]);
 
         var materialOptions = {
-          width: 400,
+          width: 350,
           chart: {
-            title: 'Nearby galaxies',
-            subtitle: 'distance on the left, brightness on the right'
+            title: '',
+            subtitle: ''
           },
           series: {
-            0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
-            1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+            0: { axis: 'Actuel' },
+            1: { axis: 'précédent' }
           },
           axes: {
             y: {
-              distance: {label: 'parsecs'}, // Left y-axis.
-              brightness: {side: 'right', label: 'apparent magnitude'} // Right y-axis.
+              distance: {label: 'C.A'}, // Left y-axis.
+              brightness: {side: 'right', label: ''}
             }
           }
         };
 
         var classicOptions = {
-          width: 400,
+          width: 350,
           series: {
             0: {targetAxisIndex: 0},
             1: {targetAxisIndex: 1}
           },
-          title: 'Nearby galaxies - distance on the left, brightness on the right',
+          title: '',
           vAxes: {
             // Adds titles to each axis.
             0: {title: 'parsecs'},
@@ -146,7 +141,6 @@
 
 {{-- --------------------------------------------------------------------------------------- bar composé --}}
 
-{{-- 1 composé --}}
 <script type="text/javascript">
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawChart);
@@ -162,10 +156,10 @@
 
       var options = {
         chart: {
-          title: 'Company Performance',
-          subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          title: '',
+          subtitle: '',
         },
-        bars: 'horizontal' // Required for Material Bar Charts.
+        bars: 'horizontal'
       };
 
       var chart = new google.charts.Bar(document.getElementById('barchart_material'));
@@ -176,34 +170,8 @@
 {{-- fin 1 composé  --}}
 
 
+
 {{-- 2 composé --}}
-<script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['Year', 'Sales', 'Expenses'],
-        ['2013',  1000,      400],
-        ['2014',  1170,      460],
-        ['2015',  660,       1120],
-        ['2016',  1030,      540]
-      ]);
-
-      var options = {
-        title: 'Company Performance',
-        hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-        vAxis: {minValue: 0}
-      };
-
-      var chart = new google.visualization.AreaChart(document.getElementById('chart_div_2'));
-      chart.draw(data, options);
-    }
-</script>
-{{-- fin 2 composé --}}
-
-
-{{-- 3 composé --}}
 <script type="text/javascript">
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawChart);
@@ -219,15 +187,18 @@
 
       var options = {
         chart: {
-          title: 'Company Performance',
-          subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-        }
+          title: '',
+          subtitle: '',
+        },
+        bars: 'horizontal'
       };
 
-      var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+      var chart = new google.charts.Bar(document.getElementById('barchart_material_2'));
 
       chart.draw(data, google.charts.Bar.convertOptions(options));
     }
 </script>
-{{-- fin 3 composé --}}
+{{-- fin 1 composé  --}}
+
+
 @endsection
