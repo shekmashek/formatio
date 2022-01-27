@@ -82,7 +82,12 @@
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
                             <p class="m-0 p-0">APPRENANTS</p>
+                            @if(count($stagiaire) == 0)
                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                            @endif
+                            @if(count($stagiaire) != 0)
+                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                            @endif
                         </button>
                     </div>
                     <div>
@@ -152,13 +157,13 @@
                         @include('admin.stagiaire.ajout_stagiaire')
                       </div>
                       <div id="ressource" class="tabcontent">
-                        Ressource
+                        @include('projet_session.ressource')
                       </div>
                       <div id="frais" class="tabcontent">
-                        Frais annexe
+                        @include('projet_session.frais_annexe')
                       </div>
                       <div id="document" class="tabcontent">
-                        Document
+                        @include('projet_session.document')
                       </div>
                       <div id="chaud" class="tabcontent">
                         @include('projet_session.index_evaluation')
