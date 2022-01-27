@@ -565,9 +565,9 @@ Route::get('create+compte+CFP',function(){
     return view('create_compte.create_compte_cfp');
 })->name('create+compte+CFP');
 
-// Route::get('/put', function() {
-//     Storage::cloud()->put('test.txt', 'Hello World');
-//     return 'File was saved to Google Drive';
-// });
+///--------AFFICHAGE IMAGE DEPUIS GOOGLE DRIVE -------------- //////////////
+
 //route logo entreprise -- display image
 Route::get('/dynamic-image/{path}', 'EntrepriseController@getImage');
+//route image stagiaire et manager
+Route::get('/stagiaire-image/{path}', 'ParticipantController@getImage');

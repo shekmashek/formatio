@@ -10,7 +10,7 @@
                                 <div class="card-block text-center text-white">
                                     @foreach ($vars  as $var)
 
-                                    <div class="m-b-25"> <img src="{{asset('images/chefDepartement/'.$var->photos)}}" width="25%" height="25%" class="img-radius">
+                                    <div class="m-b-25"> <img src="/stagiaire-image/{{$var->photos}}" width="25%" height="25%" class="img-radius">
 
                                     </div>
                                     <h6 class="f-w-600">{{$var->nom_chef}} {{$var->prenom_chef}}</h6>

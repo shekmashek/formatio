@@ -248,10 +248,6 @@ class EntrepriseController extends Controller
     }
 
     public function getImage($path){
-        $logo_entreprise = entreprise::get('logo');
-        $data_entreprise = db::select('select * from entreprises');
-
-        $nb = count($data_entreprise);
 
         //recuperer les photos dans google drive
         // $content = collect(Storage::cloud()->listContents());

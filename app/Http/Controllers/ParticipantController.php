@@ -576,5 +576,22 @@ class ParticipantController extends Controller
         LIMIT 1');
         dd($last_record_historique);
     }
+    //fonction récupération photos depuis google drive
+    public function getImage($path){
+        $folder = 'stagiaire';
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+         $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', $folder)
+        ->first();
 
+        $files = collect(Storage::cloud()->listContents($dir['path'], false))
+        ->where('type', '=', 'file')
+        ->where('filename', '=', pathinfo($path, PATHINFO_FILENAME))
+        ->where('extension', '=', pathinfo($path, PATHINFO_EXTENSION))
+        ->first();
+        $rawData = Storage::cloud()->get($files['path']);
+        return response($rawData)->header('Content-Type','image.png');
+    }
 }
