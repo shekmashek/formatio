@@ -17,9 +17,12 @@
         Merci de prendre contact avec : <br>
 
         @foreach ($responsables_etp as $rep)
-        {{'<strong>'.$rep->nom_resp.'</strong> '.$rep->prenom_resp.' responsable '.$rep->fonction_resp.', <br>
-        Tél:'.$rep->telephone_resp.'<br> '.$rep->email_resp.'<br>'
-        }}
+        <p>
+            <strong>{{$rep->nom_resp.' '.$rep->prenom_resp}}</strong> responsable {{$rep->fonction_resp}}<br>
+            tél: {{$rep->telephone_resp}}<br>
+            {{$rep->email_resp}}
+        </p>
+
         @endforeach
 
         Bonne continuation, <br><br>

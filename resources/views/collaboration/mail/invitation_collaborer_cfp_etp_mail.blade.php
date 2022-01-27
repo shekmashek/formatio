@@ -20,9 +20,11 @@
         Merci de prendre contact avec : <br>
 
         @foreach ($responsables_cfp as $rep)
-        {{'<strong>'.$rep->nom_resp_cfp.'</strong> '.$rep->prenom_resp_cfp.' responsable '.$rep->fonction_resp_cfp.', <br>
-        Tél:'.$rep->telephone_resp_cfp.'<br> '.$rep->email_resp_cfp.'<br>'
-        }}
+        <p>
+            <strong>{{$rep->nom_resp_cfp.' '.$rep->prenom_resp_cfp}}</strong> responsable {{$rep->fonction_resp_cfp}}<br>
+            tél: {{$rep->telephone_resp_cfp}}<br>
+            {{$rep->email_resp_cfp}}
+        </p>
         @endforeach
 
         Bonne continuation, <br><br>
