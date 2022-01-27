@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\FonctionGenerique;
 use App\NouveauCompte;
 use App\User;
@@ -30,13 +33,16 @@ class NouveauCompteController extends Controller
     {
         $departements =  $this->fonct->findAll("departements");
         $secteurs =  $this->fonct->findAll("secteurs");
-        return view('create_compte.create_compte_client', compact('departements','secteurs'));
+        return view('create_compte.create_compte_client', compact('departements', 'secteurs'));
     }
 
     public function create_compte_cfp(Request $req)
     {
         // ======== cfp
         // $data["logo_cfp"] = $req->logo_cfp;
+        $date = date('d-m-y');
+        $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->logo_cfp->extension());
+
         $data["logo_cfp"] = "noam_cfp";
         $data["domaine_cfp"] = $req->domaine_cfp;
         $data["nom_cfp"] = $req->name_cfp;
@@ -57,7 +63,7 @@ class NouveauCompteController extends Controller
 
         // ======= responsable
         // $resp["photo_resp"] = $req->photo_resp_cfp;
-        $resp["photo_resp"] = "nom_sary";
+        $resp["photo_resp"]  = str_replace(' ', '_', $req->nom_resp_cfp .  '' . $req->tel_resp_cfp . '' . $date . '.' . $req->photo_resp_cfp->extension());
         $resp["sexe_resp"] = $req->sexe_resp_cfp;
 
         $resp["nom_resp"] = $req->nom_resp_cfp;
@@ -80,23 +86,39 @@ class NouveauCompteController extends Controller
 
         $verify = $this->new_compte->verify_cfp($req->name_entreprise, $req->email_cfp);
 
+         //============= save image
+         $folder = 'entreprise';
+         $folder2 = 'responsable';
+        dd(Storage::cloud());
+         //liste des contenues dans drive
+         $contents = collect(Storage::cloud()->listContents('/', false));
+
+         //recuperer dossier "entreprise
+         $dir = $contents->where('type', '=', 'dir')
+             ->where('filename', '=', $folder)
+             ->first();
+        //  $dir2 = $contents->where('type', '=', 'dir')
+        //      ->where('filename', '=', $folder2)
+        //      ->first();
+         Storage::cloud()->put($dir['path'] . '/' . $data["logo_cfp"], $req->file('logo_cfp')->getContent());
+        //  Storage::cloud()->put($dir2['path'] . '/' . $resp["photo_resp"], $req->file('photo_resp_cfp')->getContent());
+
         if (count($verify) <= 0) { // cfp n'existe pas
 
             $this->user->name = $req->nom_resp_cfp;
             $this->user->email = $req->email_resp_cfp;
-            $ch1 = $req->nom_resp_cfp;
-            $ch2 = substr($req->tel_resp_cfp, 8, 2);
-            $this->user->password = Hash::make($ch1 . $ch2);
+            $ch1 = "0000";
+            $this->user->password = Hash::make($ch1);
             $this->user->role_id = '7';
 
-            $this->user->save();
+      //      $this->user->save();
 
             $user_id = User::where('email', $req->email_resp_cfp)->value('id');
 
-            $this->new_compte->insert_CFP($data, $user_id);
-
+       //     $this->new_compte->insert_CFP($data, $user_id);
             $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp])->id;
-            $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
+       //     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
+
 
             return redirect()->route('inscription_save');
         } else {
@@ -107,9 +129,11 @@ class NouveauCompteController extends Controller
 
     public function create_compte_employeur(Request $req)
     {
-       // ======== ETP
+        // ======== ETP
         // $data["logo_etp"] = $req->logo_etp;
-        $data["logo_etp"] = "noam_etp";
+        $date = date('d-m-y');
+        $data["logo_etp"]  = str_replace(' ', '_', $req->name_etp .  '' . $req->tel_etp . '' . $date . '.' . $req->logo_etp->extension());
+
         $data["domaine_etp"] = $req->domaine_etp;
         $data["nom_etp"] = $req->name_etp;
         $data["lot"] = $req->lot_etp;
@@ -127,12 +151,12 @@ class NouveauCompteController extends Controller
         $data["quartier"] = $req->quartier_etp;
         $data["code_postal"] = $req->code_postal_etp;
 
+        // ============== responsable
+        $resp["photo_resp"]  = str_replace(' ', '_', $req->nom_resp .  '' . $req->tel_resp . '' . $date . '.' . $req->photo_resp->extension());
+
         $resp["nom_resp"] = $req->nom_resp;
         $resp["prenom_resp"] = $req->prenom_resp;
-
-        $resp["photo_resp"] = "nom_sary";
         $resp["sexe_resp"] = $req->sexe_resp;
-
         $resp["dte_naissance_resp"] = $req->dte_resp;
         $resp["cin_resp"] = $req->cin_resp_etp;
         $resp["email_resp"] = $req->email_resp;
@@ -154,9 +178,8 @@ class NouveauCompteController extends Controller
 
             $this->user->name = $req->nom_resp;
             $this->user->email = $req->email_resp;
-            $ch1 = $req->nom_resp;
-            $ch2 = substr($req->tel_resp, 8, 2);
-            $this->user->password = Hash::make($ch1 . $ch2);
+            $ch1 = "0000";
+            $this->user->password = Hash::make($ch1);
             $this->user->role_id = '2';
 
             $this->user->save();
@@ -167,6 +190,21 @@ class NouveauCompteController extends Controller
 
             $entreprise_id = $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_etp])->id;
             $this->new_compte->insert_resp_ETP($resp, $entreprise_id, $user_id);
+
+            //============= save image
+            $folder = 'entreprise';
+            $folder2 = 'responsable';
+            //liste des contenues dans drive
+            $contents = collect(Storage::cloud()->listContents('/', false));
+            //recuperer dossier "entreprise
+            $dir = $contents->where('type', '=', 'dir')
+                ->where('filename', '=', $folder)
+                ->first();
+            $dir2 = $contents->where('type', '=', 'dir')
+                ->where('filename', '=', $folder2)
+                ->first();
+            Storage::cloud()->put($dir['path'] . '/' . $data["logo_etp"], $req->file('logo_etp')->getContent());
+            Storage::cloud()->put($dir2['path'] . '/' . $resp["photo_resp"], $req->file('photo_resp')->getContent());
 
             return redirect()->route('inscription_save');
         } else {

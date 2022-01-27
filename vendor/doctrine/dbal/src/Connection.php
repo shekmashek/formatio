@@ -6,12 +6,14 @@ use Closure;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Cache\ArrayResult;
 use Doctrine\DBAL\Cache\CacheException;
-use Doctrine\DBAL\Cache\CachingResult;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Driver\API\ExceptionConverter;
 use Doctrine\DBAL\Driver\Connection as DriverConnection;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Driver\Statement as DriverStatement;
+use Doctrine\DBAL\Event\TransactionBeginEventArgs;
+use Doctrine\DBAL\Event\TransactionCommitEventArgs;
+use Doctrine\DBAL\Event\TransactionRollBackEventArgs;
 use Doctrine\DBAL\Exception\ConnectionLost;
 use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\DBAL\Exception\InvalidArgumentException;
@@ -22,22 +24,26 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\SQL\Parser;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Deprecations\Deprecation;
+use LogicException;
 use Throwable;
 use Traversable;
 
-use function array_key_exists;
 use function assert;
 use function count;
+use function get_class;
 use function implode;
 use function is_int;
 use function is_string;
 use function key;
+use function method_exists;
+use function sprintf;
 
 /**
  * A database abstraction-level connection that implements features like events, transaction isolation levels,
  * configuration, emulated transaction nesting, lazy connecting and more.
  *
  * @psalm-import-type Params from DriverManager
+ * @psalm-consistent-constructor
  */
 class Connection
 {
@@ -50,6 +56,11 @@ class Connection
      * Represents an array of strings to be expanded by Doctrine SQL parsing.
      */
     public const PARAM_STR_ARRAY = ParameterType::STRING + self::ARRAY_PARAM_OFFSET;
+
+    /**
+     * Represents an array of ascii strings to be expanded by Doctrine SQL parsing.
+     */
+    public const PARAM_ASCII_STR_ARRAY = ParameterType::ASCII + self::ARRAY_PARAM_OFFSET;
 
     /**
      * Offset by which PARAM_* constants are detected as arrays of the param type.
@@ -70,7 +81,7 @@ class Connection
     protected $_eventManager;
 
     /**
-     * @deprecated Use {@link createExpressionBuilder()} instead.
+     * @deprecated Use {@see createExpressionBuilder()} instead.
      *
      * @var ExpressionBuilder
      */
@@ -129,7 +140,7 @@ class Connection
     /**
      * The schema manager.
      *
-     * @deprecated Use {@link createSchemaManager()} instead.
+     * @deprecated Use {@see createSchemaManager()} instead.
      *
      * @var AbstractSchemaManager|null
      */
@@ -289,7 +300,7 @@ class Connection
     /**
      * Gets the ExpressionBuilder for the connection.
      *
-     * @deprecated Use {@link createExpressionBuilder()} instead.
+     * @deprecated Use {@see createExpressionBuilder()} instead.
      *
      * @return ExpressionBuilder
      */
@@ -308,6 +319,8 @@ class Connection
     /**
      * Establishes the connection with the database.
      *
+     * @internal This method will be made protected in DBAL 4.0.
+     *
      * @return bool TRUE if the connection was successfully established, FALSE if
      *              the connection is already open.
      *
@@ -315,6 +328,12 @@ class Connection
      */
     public function connect()
     {
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4966',
+            'Public access to Connection::connect() is deprecated.'
+        );
+
         if ($this->_conn !== null) {
             return false;
         }
@@ -324,8 +343,6 @@ class Connection
         } catch (Driver\Exception $e) {
             throw $this->convertException($e);
         }
-
-        $this->transactionNestingLevel = 0;
 
         if ($this->autoCommit === false) {
             $this->beginTransaction();
@@ -440,6 +457,13 @@ class Connection
             }
         }
 
+        Deprecation::trigger(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/pulls/4750',
+            'Not implementing the ServerInfoAwareConnection interface in %s is deprecated',
+            get_class($connection)
+        );
+
         // Unable to detect platform version.
         return null;
     }
@@ -505,11 +529,7 @@ class Connection
      */
     public function fetchAssociative(string $query, array $params = [], array $types = [])
     {
-        try {
-            return $this->executeQuery($query, $params, $types)->fetchAssociative();
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->fetchAssociative();
     }
 
     /**
@@ -526,11 +546,7 @@ class Connection
      */
     public function fetchNumeric(string $query, array $params = [], array $types = [])
     {
-        try {
-            return $this->executeQuery($query, $params, $types)->fetchNumeric();
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->fetchNumeric();
     }
 
     /**
@@ -547,11 +563,7 @@ class Connection
      */
     public function fetchOne(string $query, array $params = [], array $types = [])
     {
-        try {
-            return $this->executeQuery($query, $params, $types)->fetchOne();
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->fetchOne();
     }
 
     /**
@@ -641,7 +653,8 @@ class Connection
      */
     public function close()
     {
-        $this->_conn = null;
+        $this->_conn                   = null;
+        $this->transactionNestingLevel = 0;
     }
 
     /**
@@ -757,11 +770,11 @@ class Connection
      *
      * @return array<int, int|string|Type|null>|array<string, int|string|Type|null>
      */
-    private function extractTypeValues(array $columnList, array $types)
+    private function extractTypeValues(array $columnList, array $types): array
     {
         $typeValues = [];
 
-        foreach ($columnList as $columnIndex => $columnName) {
+        foreach ($columnList as $columnName) {
             $typeValues[] = $types[$columnName] ?? ParameterType::STRING;
         }
 
@@ -788,6 +801,9 @@ class Connection
     }
 
     /**
+     * The usage of this method is discouraged. Use prepared statements
+     * or {@see AbstractPlatform::quoteStringLiteral()} instead.
+     *
      * @param mixed                $value
      * @param int|string|Type|null $type
      *
@@ -815,11 +831,7 @@ class Connection
      */
     public function fetchAllNumeric(string $query, array $params = [], array $types = []): array
     {
-        try {
-            return $this->executeQuery($query, $params, $types)->fetchAllNumeric();
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->fetchAllNumeric();
     }
 
     /**
@@ -835,11 +847,7 @@ class Connection
      */
     public function fetchAllAssociative(string $query, array $params = [], array $types = []): array
     {
-        try {
-            return $this->executeQuery($query, $params, $types)->fetchAllAssociative();
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->fetchAllAssociative();
     }
 
     /**
@@ -890,11 +898,7 @@ class Connection
      */
     public function fetchFirstColumn(string $query, array $params = [], array $types = []): array
     {
-        try {
-            return $this->executeQuery($query, $params, $types)->fetchFirstColumn();
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->fetchFirstColumn();
     }
 
     /**
@@ -910,15 +914,7 @@ class Connection
      */
     public function iterateNumeric(string $query, array $params = [], array $types = []): Traversable
     {
-        try {
-            $result = $this->executeQuery($query, $params, $types);
-
-            while (($row = $result->fetchNumeric()) !== false) {
-                yield $row;
-            }
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->iterateNumeric();
     }
 
     /**
@@ -935,15 +931,7 @@ class Connection
      */
     public function iterateAssociative(string $query, array $params = [], array $types = []): Traversable
     {
-        try {
-            $result = $this->executeQuery($query, $params, $types);
-
-            while (($row = $result->fetchAssociative()) !== false) {
-                yield $row;
-            }
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->iterateAssociative();
     }
 
     /**
@@ -994,15 +982,7 @@ class Connection
      */
     public function iterateColumn(string $query, array $params = [], array $types = []): Traversable
     {
-        try {
-            $result = $this->executeQuery($query, $params, $types);
-
-            while (($value = $result->fetchOne()) !== false) {
-                yield $value;
-            }
-        } catch (Driver\Exception $e) {
-            throw $this->convertExceptionDuringQuery($e, $query, $params, $types);
-        }
+        return $this->executeQuery($query, $params, $types)->iterateColumn();
     }
 
     /**
@@ -1014,7 +994,15 @@ class Connection
      */
     public function prepare(string $sql): Statement
     {
-        return new Statement($sql, $this);
+        $connection = $this->getWrappedConnection();
+
+        try {
+            $statement = $connection->prepare($sql);
+        } catch (Driver\Exception $e) {
+            throw $this->convertExceptionDuringQuery($e, $sql);
+        }
+
+        return new Statement($this, $statement, $sql);
     }
 
     /**
@@ -1085,7 +1073,7 @@ class Connection
      */
     public function executeCacheQuery($sql, $params, $types, QueryCacheProfile $qcp): Result
     {
-        $resultCache = $qcp->getResultCacheDriver() ?? $this->_config->getResultCacheImpl();
+        $resultCache = $qcp->getResultCache() ?? $this->_config->getResultCache();
 
         if ($resultCache === null) {
             throw CacheException::noResultDriverConfigured();
@@ -1096,29 +1084,31 @@ class Connection
 
         [$cacheKey, $realKey] = $qcp->generateCacheKeys($sql, $params, $types, $connectionParams);
 
-        // fetch the row pointers entry
-        $data = $resultCache->fetch($cacheKey);
+        $item = $resultCache->getItem($cacheKey);
 
-        if ($data !== false) {
-            // is the real key part of this row pointers map or is the cache only pointing to other cache keys?
-            if (isset($data[$realKey])) {
-                $result = new ArrayResult($data[$realKey]);
-            } elseif (array_key_exists($realKey, $data)) {
-                $result = new ArrayResult([]);
+        if ($item->isHit()) {
+            $value = $item->get();
+            if (isset($value[$realKey])) {
+                return new Result(new ArrayResult($value[$realKey]), $this);
             }
+        } else {
+            $value = [];
         }
 
-        if (! isset($result)) {
-            $result = new CachingResult(
-                $this->executeQuery($sql, $params, $types),
-                $resultCache,
-                $cacheKey,
-                $realKey,
-                $qcp->getLifetime()
-            );
+        $data = $this->fetchAllAssociative($sql, $params, $types);
+
+        $value[$realKey] = $data;
+
+        $item->set($value);
+
+        $lifetime = $qcp->getLifetime();
+        if ($lifetime > 0) {
+            $item->expiresAfter($lifetime);
         }
 
-        return new Result($result, $this);
+        $resultCache->save($item);
+
+        return new Result(new ArrayResult($data), $this);
     }
 
     /**
@@ -1199,12 +1189,20 @@ class Connection
      *
      * @param string|null $name Name of the sequence object from which the ID should be returned.
      *
-     * @return string A string representation of the last inserted ID.
+     * @return string|int|false A string representation of the last inserted ID.
      *
      * @throws Exception
      */
     public function lastInsertId($name = null)
     {
+        if ($name !== null) {
+            Deprecation::trigger(
+                'doctrine/dbal',
+                'https://github.com/doctrine/dbal/issues/4687',
+                'The usage of Connection::lastInsertId() with a sequence name is deprecated.'
+            );
+        }
+
         try {
             return $this->getWrappedConnection()->lastInsertId($name);
         } catch (Driver\Exception $e) {
@@ -1274,10 +1272,9 @@ class Connection
     }
 
     /**
-     * Returns the savepoint name to use for nested transactions are false if they are not supported
-     * "savepointFormat" parameter is not set
+     * Returns the savepoint name to use for nested transactions.
      *
-     * @return mixed A string with the savepoint name or false.
+     * @return string
      */
     protected function _getNestedTransactionSavePointName()
     {
@@ -1317,6 +1314,8 @@ class Connection
                 $logger->stopQuery();
             }
         }
+
+        $this->getEventManager()->dispatchEvent(Events::onTransactionBegin, new TransactionBeginEventArgs($this));
 
         return true;
     }
@@ -1364,6 +1363,8 @@ class Connection
         }
 
         --$this->transactionNestingLevel;
+
+        $this->getEventManager()->dispatchEvent(Events::onTransactionCommit, new TransactionCommitEventArgs($this));
 
         if ($this->autoCommit !== false || $this->transactionNestingLevel !== 0) {
             return $result;
@@ -1441,6 +1442,8 @@ class Connection
             --$this->transactionNestingLevel;
         }
 
+        $this->getEventManager()->dispatchEvent(Events::onTransactionRollBack, new TransactionRollBackEventArgs($this));
+
         return true;
     }
 
@@ -1511,17 +1514,44 @@ class Connection
     /**
      * Gets the wrapped driver connection.
      *
+     * @deprecated Use {@link getNativeConnection()} to access the native connection.
+     *
      * @return DriverConnection
      *
      * @throws Exception
      */
     public function getWrappedConnection()
     {
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4966',
+            'Connection::getWrappedConnection() is deprecated.'
+                . ' Use Connection::getNativeConnection() to access the native connection.'
+        );
+
         $this->connect();
 
         assert($this->_conn !== null);
 
         return $this->_conn;
+    }
+
+    /**
+     * @return resource|object
+     */
+    public function getNativeConnection()
+    {
+        $this->connect();
+
+        assert($this->_conn !== null);
+        if (! method_exists($this->_conn, 'getNativeConnection')) {
+            throw new LogicException(sprintf(
+                'The driver connection %s does not support accessing the native connection.',
+                get_class($this->_conn)
+            ));
+        }
+
+        return $this->_conn->getNativeConnection();
     }
 
     /**
@@ -1542,7 +1572,7 @@ class Connection
      * Gets the SchemaManager that can be used to inspect or change the
      * database schema through the connection.
      *
-     * @deprecated Use {@link createSchemaManager()} instead.
+     * @deprecated Use {@see createSchemaManager()} instead.
      *
      * @return AbstractSchemaManager
      *
@@ -1675,11 +1705,11 @@ class Connection
      * @param mixed                $value The value to bind.
      * @param int|string|Type|null $type  The type to bind (PDO or DBAL).
      *
-     * @return mixed[] [0] => the (escaped) value, [1] => the binding type.
+     * @return array{mixed, int} [0] => the (escaped) value, [1] => the binding type.
      *
      * @throws Exception
      */
-    private function getBindingInfo($value, $type)
+    private function getBindingInfo($value, $type): array
     {
         if (is_string($type)) {
             $type = Type::getType($type);
@@ -1689,7 +1719,7 @@ class Connection
             $value       = $type->convertToDatabaseValue($value, $this->getDatabasePlatform());
             $bindingType = $type->getBindingType();
         } else {
-            $bindingType = $type;
+            $bindingType = $type ?? ParameterType::STRING;
         }
 
         return [$value, $bindingType];
@@ -1762,7 +1792,11 @@ class Connection
         }
 
         foreach ($types as $type) {
-            if ($type === self::PARAM_INT_ARRAY || $type === self::PARAM_STR_ARRAY) {
+            if (
+                $type === self::PARAM_INT_ARRAY
+                || $type === self::PARAM_STR_ARRAY
+                || $type === self::PARAM_ASCII_STR_ARRAY
+            ) {
                 return true;
             }
         }
