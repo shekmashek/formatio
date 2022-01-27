@@ -37,7 +37,7 @@
                                             <h6 class="text-muted f-w-400">{{$stagiaire->date_naissance}}</h6>
 
                                             <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
-                                            <h6 class="text-muted f-w-400">{{$stagiaire->adresse}}</h6>
+                                            <h6 class="text-muted f-w-400">{{$stagiaire->lot}} &nbsp;{{$stagiaire->quartier}} &nbsp;{{$stagiaire->ville}} &nbsp;{{$stagiaire->code_postal}}&nbsp;{{$stagiaire->region}}</h6>
 
                                             <p class="m-b-10 f-w-600"><i class="bx bx-envelope"></i>&nbsp;E-mail</p>
                                             <h6 class="text-muted f-w-400">{{$stagiaire->mail_stagiaire}}</h6>

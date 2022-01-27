@@ -4,18 +4,22 @@
 
 <div class="shadow p-3 mb-5 bg-body rounded">
   <div class="formation__item set-bg" id>
-    <form  class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
+    <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
       @csrf
     <div class="row">
       <div class="col-lg-4 col-md-6">
         <div class="formation-service">
     <p style="font-size: 20px;" class="ms-5">Profiles</p>
 
-              <div class="form-group">
-                <label for="sary">Photo</label>
-                 <input type="file" class="form-control-file" id="photo" name="image">
-                                      
-                              </div><br>
+    <div class="image-upload">
+      <label for="file-input">
+        <div class="upload-icon">
+          <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" width="50%" height="50%" class="rounded-circle">
+          <input type="text" id = 'vartemp'>
+       </div>
+       </label>
+      <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
+      </div>
                       <div class="form-group">
                         <label for="name">Nom</label>
                           <input type="text" value="{{ $stagiaire->nom_stagiaire }}" class="form-control"  name="nom" placeholder="Nom">
@@ -26,16 +30,18 @@
                         <input type="text" class="form-control" value="{{ $stagiaire->prenom_stagiaire }}"  name="prenom" placeholder="Prénom">
                       </div>
                       <div class="form-group">
+                  
                         <label for="genre">Genre</label>
-                        <select name="genre" class="form-control" id="genre" onchange="" >
-                          <option value="Homme" {{ ($stagiaire->genre_stagiaire == 1) ? 'selected' : '' }}>Homme</option>
-                          <option value="Femme" {{ ($stagiaire->genre_stagiaire == 0) ? 'selected' : '' }}>Femme</option>
-                          
+                        <select value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select" id="genre" >
+                       
+                          <option value="Homme"  selected >Homme</option>
+                          <option value="Femme">Femme</option>
+                      
                         </select>
                       </div>
                       <div class="form-group">
                         <label for="titre">Titre</label>
-                        <select name="titre" class="form-control" id="titre">
+                        <select value="{{$stagiaire->titre}}"  name="titre" class="form-control" id="titre">
                             <option value="Monsieur">Mr</option>
                             <option value="Mme">Mme</option>
                             <option value="Mlle">Mlle</option>
@@ -54,26 +60,30 @@
                         <label for="cin">CIN</label>
                           <input type="text" value="{{ $stagiaire->cin}}" class="form-control"  name="cin" >
                       </div> 
-                      
+                      <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" class="form-control"  name="mail" value="{{ $stagiaire->mail_stagiaire }}" >
+                      </div>
+                         <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="text" class="form-control"  name="phone" value="{{ $stagiaire->telephone_stagiaire }}">
+                         </div>
+                        <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" class="form-control" value=""  name="password" placeholder="">
+                      </div>
                     </div>
                   </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="formation-service">
-    <p style="font-size: 20px;" class="ms-5">Informations Personnelles</p>
-                        <div class="form-group">
-                          <label for="adresse">Adresse</label>
-                          <input type="adresse" class="form-control"  name="adresse" value="{{ $stagiaire->adresse }}">
-                        </div>
+                <div class="col-lg-4 col-md-6">
+                   <div class="formation-service">
+                <p style="font-size: 20px;" class="ms-5">Informations Personnelles</p>
+                        
                         <div class="form-group">
                           <label for="lot">Lot</label>
                           <input type="text" class="form-control" id="lot" name="lot" placeholder="Lot" value="{{ $stagiaire->lot}}">
                           
-                      </div>
-                      <div class="form-group">
-                          <label for="rue">Rue</label>
-                          <input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" value="{{ $stagiaire->rue}}">
-                         
-                      </div>
+                      </div> 
+                    
                       <div class="form-group">
                           <label for="quartier">Quartier</label>
                           <input type="text" class="form-control" id="quartier" name="quartier" placeholder="Quartier" value="{{ $stagiaire->quartier}}">
@@ -92,22 +102,13 @@
                           <label for="region">Region</label>
                           <input type="text" class="form-control" id="region" name="region" placeholder="Region" value="{{ $stagiaire->region}}">
                       </div>
-                <div class="form-group">
-                  <label for="email">E-mail</label>
-                  <input type="email" class="form-control"  name="mail" value="{{ $stagiaire->mail_stagiaire }}" >
-                </div>
-                <div class="form-group">
-                  <label for="phone">Téléphone</label>
-                  <input type="text" class="form-control"  name="phone" value="{{ $stagiaire->telephone_stagiaire }}">
-                </div>
+                
+                
                 <div class="form-group">
                   <label for="niv_etude">Niveau d'étude</label>
-                  <input type="text" class="form-control"  name="niv" value="{{ $stagiaire->niveau_etude }}">
+                  <input type="text" class="form-control"  name="niveau" value="{{ $stagiaire->niveau_etude }}">
                 </div>
-                <div class="form-group">
-                  <label for="password">Mot de passe</label>
-                  <input type="password" class="form-control" value=""  name="password" placeholder="">
-                </div>
+                
               </div>
              </div>
           <div class="col-lg-4 col-md-6">
@@ -116,7 +117,7 @@
                 <p>
                   <div class="form-group">
                     <label for="matr">Matricule</label>
-                    <input type="text" value="{{ $stagiaire->matricule }}"  class="form-control"  name="matricule" placeholder="Matricule" readonly>
+                    <input type="text" value="{{ $stagiaire->matricule}}"  class="form-control"  name="matricule" placeholder="Matricule" readonly>
                 </div>
                   <div class="form-group">
                     <label for="fonction">Fonction</label>
@@ -154,8 +155,31 @@
     <button style="background-color: #801D68;color:white" class="btn modification "> Enregister</button>
         </form>
   </div>
+  <style>
 
 
+.image-upload > input
+{
+    display: none;
+}
+  </style>
+ 
+  
+  
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  
+  // $(document).ready(function(){
+  //   alert("Bien venu");
+  // });
+  $('#file-input').change( function(event) {
+    $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
+    $("img.icon").parents('.upload-icon').addClass('has-img');
+});
+
+});
+</script>
         {{-- <form  class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
             @csrf
             <div class="row">
