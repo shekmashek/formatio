@@ -18,7 +18,7 @@
     <p>Bienvenue et merci ! <br><br>
         L'équipe de <strong>formation.mg</strong>
     </p>
-    <a href="{{route('/')}}">visiter notre page d'aide</a>
+    <a href="#">visiter notre page d'aide</a>
 
 </body>
 </html>
