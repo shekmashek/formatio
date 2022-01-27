@@ -546,3 +546,4 @@ Route::get('list_cfp','CfpController@index')->name('list_cfp');
 Route::get('search_matricule','SessionController@getStagiaires')->name('search_matricule');
 Route::get('one_stagiaire','SessionController@getOneStagiaire')->name('one_stagiaire');
 Route::get('add_participant_groupe','SessionController@addParticipantGroupe')->name('add_participant_groupe');
+Route::get('supprimer_participant_groupe','SessionController@supprimmer_stagiaire')->name('supprimer_participant_groupe');

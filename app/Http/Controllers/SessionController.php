@@ -149,14 +149,14 @@ class SessionController extends Controller
         $id_groupe = $request->groupe;
         $id_stg = stagiaire::where('matricule',$matricule)->value('id');
         DB::insert('insert into participant_groupe(stagiaire_id,groupe_id) values(?,?)',[$id_stg,$id_groupe]);
-        $stg = DB::select('select * from v_participant_groupe where groupe_id = ?',[$id_groupe]);
+        $stg = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$id_groupe]);
         return response()->json($stg);
     }
 
     public function supprimmer_stagiaire(Request $request)
     {
         $id = $request->Id;
-        $groupe_id = $request->groupe_id;
+        $groupe_id = $request->groupe;
         DB::delete('delete from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$id,$groupe_id]);
         return response()->json(
             [
