@@ -94,6 +94,10 @@ class HomeController extends Controller
 
             return view('layouts.dashboard',compact('GChart'));
         }
+        if (Gate::allows('isReferent')) {
+                    $totale_invitation = $this->collaboration->count_invitation();
+                    return view('layouts.accueil_admin', compact('totale_invitation'));
+                }
 
     }
 
