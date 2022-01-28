@@ -16,7 +16,9 @@ use App\formation;
 use App\module;
 use App\formateur;
 use App\Models\FonctionGenerique;
+use App\responsable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class SessionController extends Controller
 {
@@ -95,20 +97,32 @@ class SessionController extends Controller
 
     public function detail_session(){
         $user_id = Auth::user()->id;
-        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
-        $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $id = request()->id_session;
-        $fonct = new FonctionGenerique();
-        $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-        $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
-        $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-        $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id","projet_id"], [$cfp_id,$projet[0]->projet_id]);
+        // ???--mbola tsy mety 
+        $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
-
+        // ???--
+        $fonct = new FonctionGenerique();
+        if(Gate::allows('isCFP')){
+            $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+            $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
+            $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+        }      
+        if(Gate::allows('isReferent')){
+            $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            $formateur = NULL;
+            $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$etp_id]);
+            $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
+        }
+        // public
         // ---apprenants
         $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$projet[0]->groupe_id]);
-        
-        return view('projet_session.session', compact('id', 'test', 'entreprise', 'projet', 'formateur', 'nombre_stg','datas','stagiaire'));
+        // ---ressources
+        $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
+        // end public
+
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource'));
     }
 
     public function getFormateur(){
@@ -149,8 +163,51 @@ class SessionController extends Controller
         $id_groupe = $request->groupe;
         $id_stg = stagiaire::where('matricule',$matricule)->value('id');
         DB::insert('insert into participant_groupe(stagiaire_id,groupe_id) values(?,?)',[$id_stg,$id_groupe]);
-        $stg = DB::select('select * from v_participant_groupe where groupe_id = ?',[$id_groupe]);
+        $stg = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$id_groupe]);
         return response()->json($stg);
     }
 
+    public function supprimmer_stagiaire(Request $request)
+    {
+        $id = $request->Id;
+        $groupe_id = $request->groupe;
+        DB::delete('delete from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$id,$groupe_id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
+    public function ajout_ressource(Request $request){
+        $ressource = $request->ressource;
+        $groupe_id = $request->groupe;
+        $id_user = Auth::user()->id;
+        $demandeur = '';
+        if (Gate::allows('isCFP')){
+            $demandeur = Auth::user()->name;
+        } 
+        if(Gate::allows('isFormateur')){
+            $demandeur = DB::select('select nom_cfp from v_demmande_cfp_formateur where user_id_formateur = ?',[$id_user])[0]->nom_cfp;
+        }
+        if(Gate::allows('isReferent')){
+            $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id_responsable = ?',[$id_user])[0]->nom_etp;
+        }
+        DB::insert('insert into ressources(description,demandeur,groupe_id) values(?,?,?)',[$ressource,$demandeur,$groupe_id]);
+        $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
+        return response()->json($all_ressources);
+    }
+
+    public function supprimer_ressource(Request $request)
+    {
+        $id = $request->Id;
+        $groupe_id = $request->groupe;
+        DB::delete('delete from ressources where id = ? and groupe_id = ?',[$id,$groupe_id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
 }
