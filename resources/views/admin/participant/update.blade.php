@@ -1,7 +1,13 @@
 @extends('./layouts/admin')
 @section('content')
 <style>
-
+    .image-ronde{
+  width : 120px; height : 120px;
+  border: none;
+  -moz-border-radius : 75px;
+  -webkit-border-radius : 75px;
+  border-radius : 75px;
+}
   .test {
       padding: 2px;
       border-radius: 5px;
@@ -62,12 +68,11 @@
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                      <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id="photo_stg" width="50%" height="50%" class="rounded-circle">
+                      <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde">
                       {{-- <input type="text" id = 'vartemp'> --}}
                   </div>
                   </label>
-
-                  <input id="file-input" type="file" name="image"   onchange="javascript:updateList()"/>
+                     <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
                   </div>
             </center>
                 <div class="row px-3 mt-4">
@@ -101,7 +106,7 @@
                     <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                         <select value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
-                            <option value="Monsieur">Mr</option>
+                            <option value="Mr">Mr</option>
                             <option value="Mme">Mme</option>
                             <option value="Mlle">Mlle</option>
                             <option value="Dr">Dr</option>
@@ -269,7 +274,6 @@
   //   alert("Bien venu");
   // });
   $('#file-input').change( function(event) {
-    $("#vartemp").val()
     $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
     $("img.icon").parents('.upload-icon').addClass('has-img');
     readURL(this);
@@ -287,6 +291,8 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+
 </script>
         {{-- <form  class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
             @csrf
