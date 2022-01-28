@@ -1,5 +1,91 @@
 @extends('./layouts/admin')
 @section('content')
+<style>
+    .accordion {
+        background-color: rgba(236, 235, 235, 0.521);
+        color: black;
+        cursor: pointer;
+        height: 3rem;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+    .accordion_prog input {
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        height: inherit;
+        width: 90%;
+        margin-top: 0;
+        margin-left: 1rem;
+        color: #542356;
+    }
+
+    .accordion_prog input:focus {
+        background-color: transparent;
+        border-bottom: 2px solid #801D68;
+    }
+
+    .input_cours input {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(155, 155, 155, 0.801);
+        border-radius: 0;
+        height: inherit;
+        width: 90%;
+        margin-top: 0;
+        margin-left: 1rem;
+        color: black;
+    }
+
+    .input_cours input:focus {
+        background-color: transparent;
+        border-bottom: 2px solid #801D68;
+        font-size: 14px
+    }
+
+    .active,
+    .accordion:hover {
+        background-color: #ccc;
+    }
+
+    .plus_prog {
+        color: #801D68;
+        float: right;
+        position: relative;
+        bottom: 3rem;
+        padding-right: 1rem;
+        padding-left: .5rem;
+    }
+
+    .accordion:after {
+        content: '\002B';
+        color: #801D68;
+        font-weight: bold;
+        float: left;
+        position: relative;
+        bottom: 2.5rem;
+        font-size: 24px;
+        padding-right: 1rem;
+        padding-left: .5rem;
+    }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .panel {
+        padding: 0 18px;
+        background-color: rgba(255, 255, 255, 0.548);
+        max-height: auto;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+</style>
 <div class="row">
     <div class="col-lg-3">
     </div>
@@ -206,7 +292,7 @@
                         </div> --}}
                         <form action="" class="w-100">
                             <div class="row detail__formation__item__left__accordion">
-                                <div class="accordion" id="accordion__program">
+                                {{-- <div class="accordion" id="accordion__program">
                                     <div class="card">
                                         <div class="card-header" id="heading1">
                                             <h2 class="mb-0 d-flex">
@@ -240,11 +326,37 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <br>
-                                <div id="newRowProg"></div>
+                                </div> --}}
 
+                                <span role="button" class="accordion accordion_prog"><input type="text"
+                                        class="form-control" name="titre_prog[]"
+                                        placeholder="Titre de votre programme"><i id="addProg"
+                                        class="bx bxs-plus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px"
+                                        role="button" title="ajouter un nouveau programme"></i></span>
+                                <div class="panel" id="heading2">
+                                    <span class="d-flex input_cours"><i
+                                            class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                            class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                            id="addCours" class="bx bx-plus-circle pt-3 ms-3 ps-2"
+                                            style="font-size: 24px; color: #801D68" role="button"
+                                            title="ajouter un nouveau cours"></i></span>
+                                    <span class="d-flex input_cours" id="headingcours"><i
+                                            class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                            class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                            id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2"
+                                            style="font-size: 24px; color: #801D68" role="button"
+                                            title="ajouter un nouveau cours"></i></span>
+                                    <span class="d-flex input_cours" id="headingcours"><i
+                                            class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                            class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                            id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2"
+                                            style="font-size: 24px; color: #801D68" role="button"
+                                            title="ajouter un nouveau cours"></i></span>
+                                    <span id="newCours"></span>
+                                </div>
                             </div>
+                            <br>
+                            <div id="newProg"></div>
                         </form>
                     </div>
                 </div>
@@ -513,79 +625,324 @@
         });
     });
 
-    $(document).on('click','#addRowCours', function() {
+    $(document).on('click','#addCours', function() {
         var html = '';
-        html += '<span class="d-flex" id="headingcours">';
-        html += '<i class="bx bx-chevron-right pt-4">&nbsp;';
-        html += '</i>';
-        html += '<input type="text" class="form-control">&nbsp;';
-        html += '<i id="removeCours" class="fa fa-minus pt-4" style="font-size: 15px" role="button">';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
 
-        $('#newRowCours').append(html);
+        $('#newCours').append(html);
+    });
+
+        $(document).on('click','#addCours1', function() {
+            var html = '';
+            html += '<span class="d-flex input_cours" id="headingcours">';
+            html += '<i class="bx bx-chevron-right pt-4">';
+            html += '</i>&nbsp;';
+            html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+            html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+            html += '</i>';
+            html += '</span>';
+
+            $('#newCours1').append(html);
+        });
+
+    $(document).on('click','#addCours2', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours2').append(html);
+    });
+
+    $(document).on('click','#addCours3', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours3').append(html);
+    });
+
+    $(document).on('click','#addCours4', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours4').append(html);
+    });
+
+    $(document).on('click','#addCours5', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours5').append(html);
+    });
+
+    $(document).on('click','#addCours6', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours6').append(html);
+    });
+
+    $(document).on('click','#addCours7', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours7').append(html);
+    });
+
+    $(document).on('click','#addCours8', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours8').append(html);
+    });
+
+    $(document).on('click','#addCours9', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours9').append(html);
+    });
+
+    $(document).on('click','#addCours10', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours10').append(html);
+    });
+
+
+    $(document).on('click','#addCours11', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours11').append(html);
+    });
+
+    $(document).on('click','#addCours12', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours12').append(html);
+    });
+
+    $(document).on('click','#addCours13', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours13').append(html);
+    });
+
+    $(document).on('click','#addCours14', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours14').append(html);
+    });
+
+    $(document).on('click','#addCours15', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours15').append(html);
+    });
+
+    $(document).on('click','#addCours16', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours17').append(html);
+    });
+
+    $(document).on('click','#addCours18', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours18').append(html);
+    });
+
+    $(document).on('click','#addCours19', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours19').append(html);
     });
 
     // remove row2
     $(document).on('click', '#removeCours', function() {
         $(this).closest('#headingcours').remove();
     });
+    var i = 0;
 
-    $(document).on('click', '#addRowProg', function() {
+    $(document).on('click','#addProg', function() {
+
         var html = '';
-        html += '<div class="row detail__formation__item__left__accordion">'
-        html += '<div class="accordion" id="accordion__program">';
-        html += '<?php $i=1 ?>';
-        html += '<div class="card">';
+        html += '<div class="row detail__formation__item__left__accordion" id="heading1">';
 
-        html += '<div class="card-header mt-3" id="heading1">';
-        html += '<h2 class="mb-0 d-flex">';
-        html += '<button class="btn text-left" type="button" data-toggle="collapse" data-target="#collapse{{$i}}" aria-expanded="true" id="icon" aria-controls="collapse1" >';
-        html += '<i class="bx bxs-plus-circle icon-prog-list" id="icon">';
-        html += '</i>';
-        html += '</button>';
-        html += '<input type="text" class="form-control">';
-        html += '<i id="removeProg" class="fa fa-minus pt-4 ms-3" style="font-size: 15px;" role="button">';
-        html += '</i>';
-        html += '</h2>';
-        html += '</div>';
-
-        html += '<div id="collapse{{$i}}" class="collapse show" aria-labelledby="heading1" data-parent="#accordion__program">';
-
-        html += '<span class="d-flex">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>';
-        html += '<input type="text" class="form-control">';
-        html += '</span>';
-
-        html += '<span class="d-flex">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>';
-        html += '<input type="text" class="form-control">';
-        html += '</span>';
-
-        html += '<span class="d-flex">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>';
-        html += '<input type="text" class="form-control">';
-        html += '<i id="addRowCours" class="fa fa-plus pt-4" style="font-size: 15px" role="button">';
+        html += '<span role="button" class="accordion accordion_prog active">';
+        html += '<input type="text" class="form-control" name="titre_prog[]" placeholder="Titre de votre programme">';
+        html += '<i id="removeProg" class="bx bxs-minus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button" title="ajouter un nouveau programme">';
         html += '</i>';
         html += '</span>';
 
+        html += '<div class="panel">';
+        html += '<span class="d-flex input_cours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="addCours'+i+'" class="bx bx-plus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+        html += '<span id="newCours'+i+'">';
+        html += '</span>';
         html += '</div>';
 
         html += '</div>';
-        html += '<?php $i++ ?>';
-        html += '</div>';
-        html += '</div>';
 
-        $('#newRowCours').append(html);
+        $('#newProg').append(html);
+        i = i+1;
+
     });
 
     // remove row1
     $(document).on('click', '#removeProg', function() {
-        $(this).closest('#accordion__program').remove();
+        $(this).closest('#heading1').remove();
     });
+
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
 
 </script>
 @endsection
