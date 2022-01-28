@@ -1032,7 +1032,9 @@
             }
         });
     });
-
+    $(document).ready(function() {
+        $('.ui-helper-hidden-accessible').hide();
+    });
 </script>
 
 </html>
