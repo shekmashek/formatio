@@ -250,7 +250,7 @@
                                         <td>{{$d->date_detail}}</td>
                                         <td>{{$d->h_debut}} h</td>
                                         <td>{{$d->h_fin}} h</td>
-
+                                        {{--test commit--}}
                                         <td>{{$d->nom_formateur." ".$d->prenom_formateur}}</td>
                                         @canany(['isCFP'])
                                             <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
