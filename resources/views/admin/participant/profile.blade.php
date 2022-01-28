@@ -19,7 +19,6 @@
                                     @can('isStagiaire')
                                         <a href="{{route('edit_participant',$stagiaire->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
                                     @endcan
-
                                 </div>
                             </div>
                             <div class="col-sm-8">

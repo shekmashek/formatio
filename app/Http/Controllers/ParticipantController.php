@@ -241,7 +241,7 @@ class ParticipantController extends Controller
             $stagiaire = stagiaire::findOrFail($id);
             if(Gate::allows('isReferent') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
             {
-                return view('admin.participant.updateok', compact('stagiaire'));
+                return view('admin.participant.updates', compact('stagiaire'));
             }
             else{
             return view('admin.participant.update', compact('stagiaire'));
@@ -277,6 +277,7 @@ class ParticipantController extends Controller
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
             'date_naissance' => $request->date,
+            'lieu_travail' => $request->lieu,
             'genre_stagiaire' => $request->genre,
             'fonction_stagiaire' => $request->fonction,
             'telephone_stagiaire' => $request->phone,
@@ -590,6 +591,7 @@ class ParticipantController extends Controller
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
             'photos'=>$input,
+            'lieu_travail' => $request->lieu,
             'cin' => $request->cin,
             'niveau_etude' => $request->niveau,
             'titre'=>$request->titre,
@@ -600,7 +602,27 @@ class ParticipantController extends Controller
             
         ]);
         }
-        
+        else{
+        stagiaire::where('id', $id)->update([
+            'matricule' => $request->matricule,
+            'nom_stagiaire' => $request->nom,
+            'prenom_stagiaire' => $request->prenom,
+            'date_naissance' => $request->date,
+            'genre_stagiaire' => $request->genre,
+            'fonction_stagiaire' => $request->fonction,
+            'telephone_stagiaire' => $request->phone,
+            'mail_stagiaire' => $request->mail,
+            'lieu_travail' => $request->lieu,
+            'cin' => $request->cin,
+            'niveau_etude' => $request->niveau,
+            'titre'=>$request->titre,
+            'ville'=>$request->ville,
+            'quartier'=>$request->quartier,
+            'code_postal'=>$request->code_postal,
+            'lot'=>$request->lot,
+            
+        ]);
+    }
         $password = $request->password;
         $nom = $request->nom;
         $mail = $request->mail;

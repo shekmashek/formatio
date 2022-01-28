@@ -69,14 +69,7 @@
                                         </div>
                                         @enderror
                                     </div><br>
-                                      <div class="form-group">
-                                        <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse">
-                                        @error('adresse')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                                          </div>
-                                          @enderror
+                                     
                                     </div><br>
                                     <div class="form-group">
                                         <label for="lot">Lot</label>
@@ -87,15 +80,7 @@
                                           </div>
                                           @enderror
                                     </div><br>
-                                    <div class="form-group">
-                                        <label for="rue">Rue</label>
-                                        <input type="text" class="form-control" id="rue" name="rue" placeholder="Rue">
-                                        @error('rue')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                                          </div>
-                                          @enderror
-                                    </div><br>
+                                   
                                     <div class="form-group">
                                         <label for="quartier">Quartier</label>
                                         <input type="text" class="form-control" id="quartier" name="quartier" placeholder="Quartier">
@@ -257,28 +242,7 @@
                                         @enderror
                                     </div><br>
 
-                                    {{-- <div class="form-group">
-                                        <label for="CIN">CIN</label>
-                                        <input type="text" class="form-control" id="cin" name="cin" placeholder="Numero CIN">
-                                        @error('cin')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                                          </div>
-                                          @enderror
-                                    </div><br>
-                                    <div class="form-group">
-                                        <label for="naissance">Date de naissance</label>
-                                        <input type="date" class="form-control" name="naissance">
-                                    </div><br>
-                                    <div class="form-group">
-                                        <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse">
-                                        @error('adresse')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                                          </div>
-                                          @enderror
-                                    </div><br> --}}
+                                    
                                     <div class="form-group">
                                         <label for="lieu">Lieu de travail</label>
                                         <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu de travail">

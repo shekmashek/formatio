@@ -71,6 +71,7 @@
             </center>
                 <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
+                        
                         <input type="text" value="{{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
                         <label class="ml-3 form-control-placeholder">Nom</label>
                       </div> 
@@ -152,7 +153,7 @@
                     </div>
                   </div>
                 </div>
-              
+
                 <div class="col-lg-4 col-md-6">
                    <div class="formation-service">
                 <p style="font-size: 20px;" class="ms-5">Informations Personnelles</p>
@@ -204,31 +205,47 @@
                 
               </div>
              </div>
-
           <div class="col-lg-4 col-md-6">
             <div class="formation-service">
               <p style="font-size: 20px;" class="ms-5">Informations Professionnelles</p>
                 <p>
-                      <div class="form-group">
-                    <label for="matr">Matricule</label>
-                    <input type="text" value="{{ $stagiaire->matricule}}"  class="form-control"  name="matricule" placeholder="Matricule" readonly>
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" value="{{ $stagiaire->matricule}}"  class="form-control test"  name="matricule" >
+                    <label class="ml-3 form-control-placeholder">Matricule</label>
+                  </div>
+                  </div>
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" class="form-control test"  name="fonction" placeholder="Fonction" value="{{ $stagiaire->fonction_stagiaire }}">
+                    <label class="ml-3 form-control-placeholder" >Fonction</label>
+                  
+                  </div>
                 </div>
-                      <div class="form-group ">
-                    <label for="fonction">Fonction</label>
-                    <input type="text" class="form-control"  name="fonction" placeholder="Fonction" value="{{ $stagiaire->fonction_stagiaire }}" readonly>
+
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" class="form-control test"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
+                    <label class="ml-3 form-control-placeholder"  >Entreprise</label>
+                  
                   </div>
-                      <div class="form-group ">
-                    <label for="fonction">Entreprise</label>
-                    <input type="text" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
-                  </div>
-                      <div class="form-group ">
-                    <label for="matr">Branche</label>
-                    <input type="text" value="{{ $stagiaire->lieu_travail }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
                 </div>
-                      <div class="form-group ">
-                    <label for="fonction">Departement</label>
-                    <input type="text" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>
+
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" value="{{ $stagiaire->lieu_travail }}"  class="form-control test"  name="lieu" placeholder="Matricule">
+                    <label class="ml-3 form-control-placeholder">Branche</label>
                   </div>
+
+                  </div>
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" class="form-control test"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}">
+                    <label class="ml-3 form-control-placeholder" >Departement</label>
+                
+                  </div>
+                </div>
+
             </div>
         </div>
             <div class="col-lg-1 col-md-6">
