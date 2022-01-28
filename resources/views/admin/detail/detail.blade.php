@@ -75,6 +75,7 @@
             </div>
         </div>
     </div>
+    @canany(['isCFP'])
     <div id="conteneur">
         <div class="fils m-0">
             @php
@@ -134,6 +135,7 @@
     <div class="enregistrer">
         <button type="submit" class="btn btn-success"><i class="far fa-save"></i>&nbsp;Enregistrer</button>
     </div>
+    @endcanany
 </form>
 @endif
 
