@@ -606,3 +606,6 @@ Route::get('/stagiaire-image/{path}', 'ParticipantController@getImage');
 Route::get('/responsable-image/{path}', 'ResponsableController@getImage');
 //route image formateur
 Route::get('/formateur-image/{path}', 'ProfController@getImage');
+
+//test creation sous dossier
+Route::get('test','FactureController@test')->name('test');
