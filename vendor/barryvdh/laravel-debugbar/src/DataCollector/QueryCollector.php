@@ -23,9 +23,10 @@ class QueryCollector extends PDOCollector
     protected $showCopyButton = false;
     protected $reflection = [];
     protected $backtraceExcludePaths = [
-        '/vendor/laravel/framework/src/Illuminate/Support/HigherOrderTapProxy',
+        '/vendor/laravel/framework/src/Illuminate/Support',
         '/vendor/laravel/framework/src/Illuminate/Database',
         '/vendor/laravel/framework/src/Illuminate/Events',
+        '/vendor/october/rain',
         '/vendor/barryvdh/laravel-debugbar',
     ];
 
@@ -158,7 +159,11 @@ class QueryCollector extends PDOCollector
                 // Mimic bindValue and only quote non-integer and non-float data types
                 if (!is_int($binding) && !is_float($binding)) {
                     if ($pdo) {
-                        $binding = $pdo->quote($binding);
+                        try {
+                            $binding = $pdo->quote($binding);
+                        } catch (\Exception $e) {
+                            $binding = $this->emulateQuote($binding);
+                        }
                     } else {
                         $binding = $this->emulateQuote($binding);
                     }

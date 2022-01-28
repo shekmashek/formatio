@@ -210,7 +210,7 @@ class Collaboration extends Model
             echo $e->getMessage();
             return back()->with("error","une erreur s'est présenter,veuillez réssailler!");
         }
-        return back()->with("success","une invitation de collaboration a été à ".$nom_cfp);
+        return back()->with("success","une invitation de collaboration a été envoyé à ".$nom_cfp);
     }
 
     public function verify_collaboration_formateur_cfp($imput){
