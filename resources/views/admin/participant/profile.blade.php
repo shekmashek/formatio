@@ -1,26 +1,29 @@
 @extends('./layouts/admin')
 @section('content')
-    <div class="page-content page-container" id="page-content">
-        <div class="padding">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-xl-12 col-md-12">
-                    <div class="card user-card-full">
-                        <div class="row m-l-2 m-r-2">
+    
+            <div class="col-lg-4 col-md-6">
+                <div class="formation-service">
+            
                             @foreach ($stagiaires as $stagiaire)
 
-                            <div class="col-sm-4 bg-c-lite-green user-profile">
-                                <div class="card-block text-center text-white">
-
+                            <div class="col-lg-4 bg-c-lite-green form-control user-profile">
+                                    <center>
                                      <div class="m-b-25"> <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" width="30%" height="30%" class="rounded-circle">
 
                                     </div>
-                                    <h6 class="f-w-600">{{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}</h6>
-                                    <p>{{$stagiaire->fonction_stagiaire}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     @can('isStagiaire')
-                                        <a href="{{route('edit_participant',$stagiaire->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
-                                    @endcan
+                                    <a href="{{route('edit_participant',$stagiaire->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
+                                @endcan
+                                    </center>
+                                   
+                                    <h6 class="p-2 f-w-900 text-white">{{$stagiaire->titre}} {{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}} &nbsp;{{$stagiaire->fonction_stagiaire}}</h6>
+                                    <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
                             <div class="col-sm-8">
                                 <div class="card-block">
                                     <div class="row">
