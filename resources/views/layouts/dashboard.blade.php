@@ -4,7 +4,7 @@
 <div class="row mt-2">
     <div class="col-lg-4">
         <div class="form-control">
-            <h5 class="text-center"> <b> TDB finance</b></h5>
+            <h5 class="text-center"><b>TDB finance</b></h5>
             <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">C.A actuel: 200.000.000 Ar TTC</p>
             <p class="p-2 m-0" style="font-size: 13px;">C.A précedent: 52.000.000 Ar TTC</p><hr>
             <div id="chart_div"></div>
@@ -80,12 +80,13 @@
         var chartDiv = document.getElementById('chart_div');
 
         var data = google.visualization.arrayToDataTable([
-          ['Galaxy', 'Actuel', 'précédent'],
-          ['Canis Major Dwarf', 100, 23.3],
-          ['Sagittarius Dwarf', 24000, 24.5],
-          ['Ursa Major II Dwarf', 30000, 34.3],
-          ['Lg. Magellanic Cloud', 50000, 20.9],
-          ['Bootes I', 60000, 13.1]
+          ['année','prix','mois'],
+            @php
+                foreach($GChart as $product) {
+                  $val = "['".$product->annee."', ".$product->prix.", ".$product->mois."]";
+                  echo $val.",";
+                }
+            @endphp
         ]);
 
         var materialOptions = {
@@ -115,8 +116,8 @@
           title: '',
           vAxes: {
             // Adds titles to each axis.
-            0: {title: 'parsecs'},
-            1: {title: 'apparent magnitude'}
+            0: {title: ''},
+            1: {title: ' '}
           }
         };
 

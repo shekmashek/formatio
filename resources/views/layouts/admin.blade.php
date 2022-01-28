@@ -56,7 +56,7 @@
         <div class="container-fluid ">
             <nav class="nav">
                 <div class="d-flex align-items-center justify-content-space-between ms-3 img"><a
-                        href="{{ route('accueil_admin') }}" class="d-flex align-items-center"><img
+                        href="{{ route('home') }}" class="d-flex align-items-center"><img
                             src="{{asset('img/images/logo_fmg54Ko.png')}}" id="img" class="img-fluid logo"
                             alt="logo">&nbsp;<span class="d-flex textS">Tableau de bord</span></a></div>
                 <div class="nav_list">
