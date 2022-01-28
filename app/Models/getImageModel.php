@@ -35,8 +35,8 @@ class getImageModel extends Model
         ->first();
         Storage::cloud()->put($dir['path'].'/'.$nom_image, $photos);
     }
-    //fonction qui crée un sous - dossier dans drive / de la forme parent/facture/bc/nom_cfp/sous_dossier_a_creer
-    public function create_sub_directory($sub_folder1,$sub_folder2,$cfp_folder,$projet_folder){
+    //fonction qui crée un sous - dossier et enregistre un fichier dans drive / de la forme parent/facture/bc/nom_cfp/sous_dossier_a_creer
+    public function create_sub_directory($sub_folder1,$sub_folder2,$cfp_folder,$projet_folder,$namefile,$contentfile){
         $contents = collect(Storage::cloud()->listContents('/', false));
         //parcourir sous dossier:facture par exemple
         foreach ($contents as $key => $value) {
@@ -53,6 +53,7 @@ class getImageModel extends Model
         }
 
         $dir2 = $dir.'/'.$root2;
+
         $recursive = true; // Get subdirectories also?
         $sub_directory2 = collect(Storage::cloud()->listContents($dir2, $recursive));
 
@@ -60,8 +61,9 @@ class getImageModel extends Model
         $existe = $sub_directory2->where('type', '=', 'dir')
         ->where('filename', '=', $cfp_folder)
         ->first();
-        if (!$existe) {
-            Storage::cloud()->makeDirectory($dir2['path'].'/'.$cfp_folder);
+
+        if ($existe == null) {
+            Storage::cloud()->makeDirectory($dir2.'/'.$cfp_folder);
         }
 
         foreach ($sub_directory2 as $key => $value) {
@@ -78,8 +80,16 @@ class getImageModel extends Model
         ->first();
         if (!$existeProjet) {
              // Create sub dir pour projet
-            Storage::cloud()->makeDirectory($dir3['path'].'/'.$projet_folder);
+            Storage::cloud()->makeDirectory($dir3.'/'.$projet_folder);
         }
-
+        foreach ($sub_directory2 as $key => $value) {
+            if($value['name'] == $projet_folder)
+                $root4= $value['path'];
+        }
+        $dir4 = $dir3.'/'.$root4;
+        $recursive = true; // Get subdirectories also?
+        $sub_directory4  = collect(Storage::cloud()->listContents($dir4, $recursive));
+        //enregistrer les factures de session dans le dossier projet correspondant
+        Storage::cloud()->put($dir4.'/'.$namefile, $contentfile);
     }
 }
