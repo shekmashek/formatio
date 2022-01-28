@@ -12,7 +12,7 @@
       letter-spacing: 1px;
       height: 50px !important
   }
-
+  
   .test:focus{
       -moz-box-shadow: none !important;
       -webkit-box-shadow: none !important;
@@ -20,7 +20,7 @@
       border: 2px solid #E53935 !important;
       outline-width: 0 !important;
   }
-
+  
   .form-control-placeholder {
     position: absolute;
     top: 1rem;
@@ -32,7 +32,7 @@
     opacity: 0.5;
     left: 2rem;
   }
-
+  
   .test:focus+.form-control-placeholder,
   .test:valid+.form-control-placeholder {
     font-size: 95%;
@@ -42,7 +42,7 @@
     opacity: 1;
     background-color: white;
   }
-
+  
 </style>
 <br>
 
@@ -50,7 +50,7 @@
   <center>
   <p style="font-size: 30px;font-weight:bold" >Mon compte</p>
   </center>
-
+  
   <div class="formation__item set-bg" id>
     <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
       @csrf
@@ -62,36 +62,36 @@
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                      <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id="photo_stg" width="50%" height="50%" class="rounded-circle">
+                      <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" width="50%" height="50%" class="rounded-circle">
                       {{-- <input type="text" id = 'vartemp'> --}}
                   </div>
                   </label>
-
-                  <input id="file-input" type="file" name="image"   onchange="javascript:updateList()"/>
+                  <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
                   </div>
             </center>
                 <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
+                        
                         <input type="text" value="{{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
                         <label class="ml-3 form-control-placeholder">Nom</label>
-                      </div>
-                </div>
-
+                      </div> 
+                </div> 
+                  
                 <div class="row px-3 mt-4">
                   <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test" value="{{ $stagiaire->prenom_stagiaire }}"  name="prenom">
                         <label class="ml-3 form-control-placeholder" >Prénom</label>
-
+                     
                       </div>
-                </div>
+                </div> 
                 <div class="row px-3 mt-4">
                   <div class="form-group mt-1 mb-1">
-
+                  
                         <select value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre" >
-
+                       
                           <option value="Homme"  selected >Homme</option>
                           <option value="Femme">Femme</option>
-
+                      
                         </select>
                         <label class="ml-3 form-control-placeholder" >Genre</label>
 
@@ -113,29 +113,29 @@
 
                       </div>
                     </div>
-
+                    
                     <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                         <input type="date" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
                         <label class="ml-3 form-control-placeholder" >Date de Naissance</label>
-
+                      
                       </div>
                     </div>
                     <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" value="{{ $stagiaire->cin}}" class="form-control test"  name="cin" >
                           <label  class="ml-3 form-control-placeholder" >CIN</label>
-
-                        </div>
-                    </div>
+                      
+                        </div> 
+                    </div> 
 
                      <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                         <input type="email" class="form-control test"  name="mail" value="{{ $stagiaire->mail_stagiaire }}" >
                         <label class="ml-3 form-control-placeholder" >E-mail</label>
-
+                      
                       </div>
-                    </div>
+                    </div> 
 
                         <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
@@ -148,7 +148,7 @@
                       <div class="form-group mt-1 mb-1">
                         <input type="password" class="form-control test" value=""  name="password" placeholder="">
                         <label class="ml-3 form-control-placeholder"  >Mot de passe</label>
-
+                      
                       </div>
                     </div>
                   </div>
@@ -157,15 +157,15 @@
                 <div class="col-lg-4 col-md-6">
                    <div class="formation-service">
                 <p style="font-size: 20px;" class="ms-5">Informations Personnelles</p>
-
+                        
                        <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="lot" name="lot" placeholder="Lot" value="{{ $stagiaire->lot}}">
                           <label  class="ml-3 form-control-placeholder">Lot</label>
-
-                      </div>
-                    </div>
-
+                          
+                      </div> 
+                    </div> 
+                    
                      <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="quartier" name="quartier" placeholder="Quartier" value="{{ $stagiaire->quartier}}">
@@ -183,7 +183,7 @@
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="ville" name="ville" placeholder="Ville" value="{{ $stagiaire->ville}}">
                           <label class="ml-3 form-control-placeholder">Ville</label>
-
+                      
                         </div>
                     </div>
 
@@ -193,43 +193,59 @@
                           <label  class="ml-3 form-control-placeholder" >Region</label>
                         </div>
                     </div>
-
-
+                
+                
                <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                   <input type="text" class="form-control test"  name="niveau" value="{{ $stagiaire->niveau_etude }}">
                   <label class="ml-3 form-control-placeholder">Niveau d'étude</label>
-
+                
                 </div>
               </div>
-
+                
               </div>
              </div>
-
           <div class="col-lg-4 col-md-6">
             <div class="formation-service">
               <p style="font-size: 20px;" class="ms-5">Informations Professionnelles</p>
                 <p>
-                      <div class="form-group">
-                    <label for="matr">Matricule</label>
-                    <input type="text" value="{{ $stagiaire->matricule}}"  class="form-control"  name="matricule" placeholder="Matricule" readonly>
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" value="{{ $stagiaire->matricule}}"  class="form-control test"  name="matricule" >
+                    <label class="ml-3 form-control-placeholder">Matricule</label>
+                  </div>
+                  </div>
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" class="form-control test"  name="fonction" placeholder="Fonction" value="{{ $stagiaire->fonction_stagiaire }}">
+                    <label class="ml-3 form-control-placeholder" >Fonction</label>
+                  
+                  </div>
                 </div>
-                      <div class="form-group ">
-                    <label for="fonction">Fonction</label>
-                    <input type="text" class="form-control"  name="fonction" placeholder="Fonction" value="{{ $stagiaire->fonction_stagiaire }}" readonly>
+
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" class="form-control test"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
+                    <label class="ml-3 form-control-placeholder"  >Entreprise</label>
+                  
                   </div>
-                      <div class="form-group ">
-                    <label for="fonction">Entreprise</label>
-                    <input type="text" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
-                  </div>
-                      <div class="form-group ">
-                    <label for="matr">Branche</label>
-                    <input type="text" value="{{ $stagiaire->lieu_travail }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
                 </div>
-                      <div class="form-group ">
-                    <label for="fonction">Departement</label>
-                    <input type="text" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>
+
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" value="{{ $stagiaire->lieu_travail }}"  class="form-control test"  name="lieu" placeholder="Matricule">
+                    <label class="ml-3 form-control-placeholder">Branche</label>
                   </div>
+
+                  </div>
+                 <div class="row px-3 mt-4">
+                      <div class="form-group mt-1 mb-1">
+                    <input type="text" class="form-control test"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}">
+                    <label class="ml-3 form-control-placeholder" >Departement</label>
+                
+                  </div>
+                </div>
+
             </div>
         </div>
             <div class="col-lg-1 col-md-6">
@@ -244,7 +260,7 @@
             </div>
         </div>
         <br>
-
+            
       </div>
     </div>
     <button style="background-color: #801D68;color:white" class="btn modification "> Enregister</button>
@@ -258,13 +274,13 @@
     display: none;
 }
   </style>
-
-
-
+ 
+  
+  
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-
+  
   // $(document).ready(function(){
   //   alert("Bien venu");
   // });
@@ -272,21 +288,9 @@
     $("#vartemp").val()
     $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
     $("img.icon").parents('.upload-icon').addClass('has-img');
-    readURL(this);
-  });
-  //fonction qui change la photo de profil du stagiaire
-  function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+});
 
-            reader.onload = function (e) {
-                //alert(e.target.result);
-                $('#photo_stg').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+});
 </script>
         {{-- <form  class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
             @csrf
@@ -324,7 +328,7 @@
               <label for="phone">Téléphone</label>
               <input type="text" class="form-control"  name="phone" value="{{ $stagiaire->telephone_stagiaire }}">
             </div>
-
+           
              <div class="form-group">
               <label for="niv_etude">Niveau d'étude</label>
               <input type="text" class="form-control"  name="niv" value="{{ $stagiaire->niveau_etude }}">

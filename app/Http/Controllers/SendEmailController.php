@@ -1,17 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Mail\Contact;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Mail;
 
 class SendEmailController extends Controller
 {
@@ -23,10 +24,8 @@ class SendEmailController extends Controller
         $mail = $request->mail;
         $objet= $request->objet;
         $entreprise = $request->entreprise;
-        $msg = $request->message;
-
-        Mail::to('nicrah16@gmail.com')->send(new Contact($name, $objet, $entreprise, $msg, $mail));
-
-        return back();
+        $msg = $request->msg;
+        Mail::to('contact@numerika.center')->send(new Contact($name, $objet, $entreprise, $msg, $mail));
+        return back()->with('message', 'Votre message a été bien envoyé');
     }
 }

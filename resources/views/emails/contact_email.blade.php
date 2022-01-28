@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+<<<<<<< HEAD
     <h2>Contact Form</h2>
 Mail vient de : {{ $name }}
 Here are the details:
@@ -16,5 +17,17 @@ Here are the details:
 <b>entreprise:</b> {{ $entreprise }}
 <b>Message:</b> {{ $msg}}
 Thank You
+=======
+    <h2>Formation.mg</h2>
+
+
+<b>Nom:</b> {{ $name }}<br>
+<b>Email:</b> {{ $email }}<br>
+<b>objet:</b> {{ $objet }}<br>
+<b>entreprise:</b>{{ $msg }}<br>
+<b>Message:</b>{{$entreprise}}  <br>
+
+
+>>>>>>> cc239c1d8ddd4d1ce2bc12835cba63b0072591bc
 </body>
 </html>

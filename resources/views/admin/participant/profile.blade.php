@@ -19,7 +19,6 @@
                                     @can('isStagiaire')
                                         <a href="{{route('edit_participant',$stagiaire->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
                                     @endcan
-
                                 </div>
                             </div>
                             <div class="col-sm-8">
@@ -37,7 +36,7 @@
                                             <h6 class="text-muted f-w-400">{{$stagiaire->date_naissance}}</h6>
 
                                             <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
-                                            <h6 class="text-muted f-w-400">{{$stagiaire->adresse}}</h6>
+                                            <h6 class="text-muted f-w-400">{{$stagiaire->lot}} &nbsp;{{$stagiaire->quartier}} &nbsp;{{$stagiaire->ville}} &nbsp;{{$stagiaire->code_postal}}&nbsp;{{$stagiaire->region}}</h6>
 
                                             <p class="m-b-10 f-w-600"><i class="bx bx-envelope"></i>&nbsp;E-mail</p>
                                             <h6 class="text-muted f-w-400">{{$stagiaire->mail_stagiaire}}</h6>
@@ -53,11 +52,13 @@
                                         <p class="m-b-10 f-w-600"><i  class="fa fa-id-card-o"></i>&nbsp;Matricule</p>
                                             <h6 class="text-muted f-w-400">{{$stagiaire->matricule}}</h6>
                                             <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Entreprise</p>
-                                            <h6 class="text-muted f-w-400">{{$stagiaire->entreprise->nom_etp}}</h6>
+                                            <h6 class="text-muted f-w-400">{{optional(optional($stagiaire)->entreprise)->nom_etp}}</h6>
                                               <p class="m-b-10 f-w-600"><i  class="bx bxs-graduation"></i>&nbsp;Niveau d'étude</p>
                                             <h6 class="text-muted f-w-400">{{$stagiaire->niveau_etude}}</h6>
                                             <p class="m-b-10 f-w-600"><i class="bx bx-home"></i>&nbsp;Département</p>
-                                            <h6 class="text-muted f-w-400">{{$stagiaire->departement->nom_departement}}</h6>
+                                            <h6 class="text-muted f-w-400">{{optional(optional($stagiaire)->departement)->nom_departement}}</h6>
+                                            <p class="m-b-10 f-w-600"><i  class="bx bx bx-home"></i>&nbsp;Branche</p>
+                                            <h6 class="text-muted f-w-400">{{$stagiaire->lieu_travail}}</h6>
                                      </div>
                                     </div>
 

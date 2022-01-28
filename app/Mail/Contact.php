@@ -32,8 +32,8 @@ class Contact extends Mailable
      */
     public function build()
     {
-        return $this->from('contact@numerika.center')
-        ->subject('Message du site formation.mg')
+        return $this->from($this->email)
+        ->subject('formation.mg')
         ->view('emails.contact_email')
         ->with([
             'name' => $this->name,
