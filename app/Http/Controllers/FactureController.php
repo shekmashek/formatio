@@ -308,15 +308,17 @@ class FactureController extends Controller
                 [$groupe_id[$i]]
             );
 
-            $contat_pathBC .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_' . $imput["type_facture"];
-            $contat_pathFA .= '' . $groupe_id[$i] . '_' . $imput["type_facture"];
-            $contat_file .= '' . $groupe_id[$i] . '_' . $imput["type_facture"];
+            $contat_pathBC .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
+            $contat_pathFA .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
+            $contat_file .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
             if ($i + 1 < count($groupe_id)) {
                 $contat_pathBC .= '_et_';
                 $contat_pathFA .= '_et_';
                 $contat_file .= '_et_';
             }
         }
+
+        dd($contat_pathBC);
         //creation sous dossier Facture/BonCommande/Nom_du_cfp
         $dossier = 'facture';
         $sous_dossier = 'bc';
@@ -325,7 +327,7 @@ class FactureController extends Controller
         $bc = new getImageModel();
   //    $bc->create_sub_directory($dossier,$sous_dossier,$dossier_cfp,$projet_folder,$,$);
 
-  dd($contat_pathBC);
+
         $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);
         return $res;
     }
