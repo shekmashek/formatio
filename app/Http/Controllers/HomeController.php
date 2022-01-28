@@ -85,9 +85,12 @@ class HomeController extends Controller
             }
         }
         if (Auth::user()->exists) {
-
-            $GChart = DB::select('SELECT SUM(hors_taxe) as prix , YEAR(invoice_date) as annee from factures group by YEAR(invoice_date) order by (YEAR( invoice_date) ) ASC');
-
+                $user_id = User::where('email', Auth::user()->email)->value('id');
+                $centre_fp = cfp::where('user_id', $user_id)->value('id');
+                // dd($user_id,$centre_fp);
+                $GChart = DB::select('SELECT SUM(hors_taxe) as prix , MONTH(invoice_date) as mois,
+                year(invoice_date) as annee from factures where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = '.$centre_fp.' group by MONTH(invoice_date),
+                year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
 
             return view('layouts.dashboard',compact('GChart'));
         }
