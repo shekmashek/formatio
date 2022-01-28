@@ -84,7 +84,7 @@ class HomeController extends Controller
                 }
             }
         }
-        if (Auth::user()->exists) {
+        if(Gate::allows('isCFP')) {
                 $user_id = User::where('id', Auth::user()->id)->value('id');
                 $centre_fp = cfp::where('user_id', $user_id)->value('id');
 
