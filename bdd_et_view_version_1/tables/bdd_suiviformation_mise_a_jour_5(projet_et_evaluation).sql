@@ -306,8 +306,7 @@ insert into nombre(nombre) values(5);
 
 create table ressources(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  titre text not null,
-  description text,
+  description text not null,
   demandeur varchar(255) not null,
   groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES goupes(id) ON DELETE CASCADe
 );

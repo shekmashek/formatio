@@ -213,50 +213,7 @@ td{
     $('#stagiaire').on('change', function() {
        id_stagiaire = $(this).val();
     });
-    // //enregistrer execution
-    // $("#action1").click(function(e){
-    //    e.preventDefault();
-    //    var evaluation = $("#evaluation").val();
-    //    var qualite = $('#qualite').val();
-    //    var exc_m1 = $('#exc_m1').val();
-    //    var exc_m2= $('#exc_m2').val();
-    //    var exc_m3= $('#exc_m3').val();
-    //    var exc_m4 = $('#exc_m4').val();
-    //    var exc_m5 = $('#exc_m5').val();
-    //    var bi_m1 = $('#bi_m1').val();
-    //    var bi_m2= $('#bi_m2').val();
-    //    var bi_m3= $('#bi_m3').val();
-    //    var url = '{{ url('store_execution') }}';
-    //      $.ajax({
-    //        url:url,
-    //        method:'get',
-    //        data:{
-    //                Qualite : qualite,
-    //                Evaluation : evaluation,
-    //                Stagiaire_id:id_stagiaire,
-    //                Session_id:id_session,
-    //                Exc_m1:exc_m1,
-    //                Exc_m2:exc_m2,
-    //                Exc_m3:exc_m3,
-    //                Exc_m4:exc_m4,
-    //                Exc_m5:exc_m5,
-    //                Bi_m1:bi_m1,
-    //                Bi_m2:bi_m2,
-    //                Bi_m3:bi_m3
-    //             },
-    //        success:function(response){
-    //           if(response.success){
-    //              window.location.reload();
-    //           }else{
-    //               alert("Error")
-    //           }
-    //        },
-    //        error:function(error){
-    //           console.log(error)
-    //        }
-    //    });
-    // });
-
+    
     $(".rechercher").on('click',function(e){
         var id = $("#matricule_search").val();
         $.ajax({

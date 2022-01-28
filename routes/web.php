@@ -547,3 +547,5 @@ Route::get('search_matricule','SessionController@getStagiaires')->name('search_m
 Route::get('one_stagiaire','SessionController@getOneStagiaire')->name('one_stagiaire');
 Route::get('add_participant_groupe','SessionController@addParticipantGroupe')->name('add_participant_groupe');
 Route::get('supprimer_participant_groupe','SessionController@supprimmer_stagiaire')->name('supprimer_participant_groupe');
+Route::get('add_ressource','SessionController@ajout_ressource')->name('add_ressource');
+Route::get('supprimer_ressource','SessionController@supprimer_ressource')->name('supprimer_ressource');

@@ -214,11 +214,13 @@
                 <div class="panel panel-default">
 
                     <div class="panel-body">
+                        @canany(['isCFP'])
                         <nav class="d-flex justify-content-end mb-1">
                                 <a class="nouveau_detail btn"  aria-current="page"  data-toggle="modal" data-target="#modal_nouveau_detail">
                                     <i class="far fa-plus-circle p-1" style="background-color: white; border-radius: 50%; font-weight: bold;"></i>
                                      <small class="text-white">Nouveau détail</small class="text-white"></a>
                         </nav>
+                        @endcanany
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -231,13 +233,15 @@
                                         <th>Début</th>
                                         <th>Fin</th>
                                         <th>Formateur</th>
-                                        <th>Action</th>
+                                        @canany(['isCFP'])
+                                            <th>Action</th>
+                                        @endcanany
                                 </thead>
                                 <tbody>
                                     @foreach ($datas as $d)
                                     <tr>
                                         @canany(['isReferent','isManager','isFormateur'])
-                                        <td> <strong style="color: blue">{{$d->nom_cfp }}</strong></td>
+                                        <td>{{$d->nom_cfp }}</td>
                                         @endcanany
                                         <td>{{$d->nom_module}}</td>
                                         <td>{{$d->lieu}}</td>
@@ -246,7 +250,9 @@
                                         <td>{{$d->h_fin}} h</td>
 
                                         <td>{{$d->nom_formateur." ".$d->prenom_formateur}}</td>
-                                        <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
+                                        @canany(['isCFP'])
+                                            <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
+                                        @endcanany
                                         {{-- <td >
                                                 <a href="{{route('execution',[$d->detail_id])}}" class ="btn btn-info" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </td>
@@ -257,6 +263,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            @canany('isCFP')
                             <div class="modal fade" id="modal_nouveau_detail">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -300,6 +307,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endcanany
                             
                             <div class="modal fade" id="myModal">
                                 <div class="modal-dialog">
