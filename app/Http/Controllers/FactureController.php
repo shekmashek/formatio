@@ -318,16 +318,18 @@ class FactureController extends Controller
             }
         }
 
-        dd($contat_pathBC);
-        //creation sous dossier Facture/BonCommande/Nom_du_cfp
+
+        //creation sous dossier Facture/BonCommande/Nom_du_cfp et enregistrement du bc et devis
         $dossier = 'facture';
         $sous_dossier = 'bc';
         $dossier_cfp = $un_cfp->nom.$un_cfp->id;
         $projet_folder = $un_projet->nom_projet.$un_projet->id;
         $bc = new getImageModel();
-  //    $bc->create_sub_directory($dossier,$sous_dossier,$dossier_cfp,$projet_folder,$,$);
-
-
+        //enregistrement du bc
+        $bc->create_sub_directory($dossier,$sous_dossier,$dossier_cfp,$projet_folder,$contat_pathBC,$imput->file('down_bc')->getContent());
+        //enregistrement du devis
+        $sous_dossier2 = 'devis';
+        $bc->create_sub_directory($dossier,$sous_dossier2,$dossier_cfp,$projet_folder,$contat_pathBC,$imput->file('down_fa')->getContent());
         $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);
         return $res;
     }
