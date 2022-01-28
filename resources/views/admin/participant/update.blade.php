@@ -62,11 +62,11 @@
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                      <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" width="50%" height="50%" class="rounded-circle">
+                      <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  width="50%" height="50%" class="rounded-circle">
                       {{-- <input type="text" id = 'vartemp'> --}}
                   </div>
                   </label>
-                  <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
+                  <img src="" alt="">    <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
                   </div>
             </center>
                 <div class="row px-3 mt-4">
@@ -271,9 +271,23 @@
     $("#vartemp").val()
     $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
     $("img.icon").parents('.upload-icon').addClass('has-img');
-});
+    readURL(this);
+  });
+  //fonction qui change la photo de profil du stagiaire
+  function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-});
+            reader.onload = function (e) {
+                //alert(e.target.result);
+                $('#photo_stg').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
 </script>
         {{-- <form  class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
             @csrf

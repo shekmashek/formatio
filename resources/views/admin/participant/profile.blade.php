@@ -15,10 +15,15 @@
                                     <a href="{{route('edit_participant',$stagiaire->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
                                 @endcan
                                     </center>
-                                   <div>
-                                    <h6 class="p-2 f-w-900 text-white">{{$stagiaire->titre}} {{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}} {{$stagiaire->fonction_stagiaire}}</h6>
-                                    <h6 class="p-2 f-w-900 text-white"> {{$stagiaire->fonction_stagiaire}}</h6>
+                                   <div class="row">
+                                       <div class="col-md-6">
+                                        <h6 class="p-2 f-w-900 text-white">{{$stagiaire->titre}} {{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}</h6>
 
+                                       </div>
+                                       <div class="col-md-6">
+                                        <h6 class="p-2 f-w-900 text-white">{{$stagiaire->fonction_stagiaire}}</h6>
+
+                                       </div>
                                    </div>
                                     <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     
