@@ -69,10 +69,49 @@
                                         </div>
                                         @enderror
                                     </div><br>
-                                      <div class="form-group">
-                                        <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse">
-                                        @error('adresse')
+                                     
+                                    </div><br>
+                                    <div class="form-group">
+                                        <label for="lot">Lot</label>
+                                        <input type="text" class="form-control" id="lot" name="lot" placeholder="Lot">
+                                        @error('lot')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                    </div><br>
+                                   
+                                    <div class="form-group">
+                                        <label for="quartier">Quartier</label>
+                                        <input type="text" class="form-control" id="quartier" name="quartier" placeholder="Quartier">
+                                        @error('quartier')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                    </div><br>
+                                    <div class="form-group">
+                                        <label for="code_postal">Code Postale</label>
+                                        <input type="text" class="form-control" id="code_postal" name="code_postal" placeholder="Code Postale">
+                                        @error('code_postal')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                    </div><br>
+                                    <div class="form-group">
+                                        <label for="ville">Ville</label>
+                                        <input type="text" class="form-control" id="ville" name="ville" placeholder="Ville">
+                                        @error('ville')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                    </div><br>
+                                    <div class="form-group">
+                                        <label for="region">Region</label>
+                                        <input type="text" class="form-control" id="region" name="region" placeholder="Region">
+                                        @error('region')
                                           <div class ="col-sm-6">
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
@@ -85,6 +124,18 @@
                                           <option value="femme">Femme</option>
                                       </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="titre">Titre</label>
+                                        <select name="titre" class="form-control" id="titre">
+                                            <option value="Monsieur">Mr</option>
+                                            <option value="Mme">Mme</option>
+                                            <option value="Mlle">Mlle</option>
+                                            <option value="Dr">Dr</option>
+                                            <option value="Prof">Prof</option>
+                                            <option value="Dir">Dir</option>
+                                            <option value="PDG">PDG</option>
+                                        </select>
+                                      </div>
                                        <div class="form-group">
                                         <label for="naissance">Date de naissance</label>
                                         <input type="date" class="form-control" name="naissance">
@@ -98,8 +149,6 @@
                                           </div>
                                           @enderror
                                     </div><br>
-
-
                                     <div class="form-group">
                                       <label for="email">E-mail</label>
                                       <input type="email" class="form-control" id="mail" name="mail" placeholder="E-mail">
@@ -193,28 +242,7 @@
                                         @enderror
                                     </div><br>
 
-                                    {{-- <div class="form-group">
-                                        <label for="CIN">CIN</label>
-                                        <input type="text" class="form-control" id="cin" name="cin" placeholder="Numero CIN">
-                                        @error('cin')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                                          </div>
-                                          @enderror
-                                    </div><br>
-                                    <div class="form-group">
-                                        <label for="naissance">Date de naissance</label>
-                                        <input type="date" class="form-control" name="naissance">
-                                    </div><br>
-                                    <div class="form-group">
-                                        <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse">
-                                        @error('adresse')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                                          </div>
-                                          @enderror
-                                    </div><br> --}}
+                                    
                                     <div class="form-group">
                                         <label for="lieu">Lieu de travail</label>
                                         <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu de travail">

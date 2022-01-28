@@ -148,27 +148,33 @@ create table objectif_globaux(
     foreign key(projet_id) references projets(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 CREATE TABLE `stagiaires` (
-  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `matricule` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nom_stagiaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom_stagiaire` varchar(255) COLLATE utf8mb4_unicode_ci,
+  `prenom_stagiaire` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `genre_stagiaire` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `titre` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fonction_stagiaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mail_stagiaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone_stagiaire` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  `user_id` bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  `photos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entreprise_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `photos` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `departement_id` bigint(20) UNSIGNED NOT NULL REFERENCES departements(id) ON DELETE CASCADE,
+  `departement_id` bigint(20) UNSIGNED NOT NULL,
   `cin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_naissance` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adresse` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lieu_travail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `niveau_etude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activiter` boolean not null default true
+  `activiter` tinyint(1) NOT NULL DEFAULT '1',
+  `lieu_travail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quartier` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code_postal` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ville` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `region` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lot` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `historique_stagiaires` (

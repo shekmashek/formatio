@@ -24,6 +24,7 @@ use App\Exports\ParticipantExport;
 use Excel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
 
 class ParticipantController extends Controller
 {
@@ -51,7 +52,6 @@ class ParticipantController extends Controller
             $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
             return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
         }
-
         if (Gate::allows('isManager')) {
 
             $entreprise_id =chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
@@ -59,7 +59,6 @@ class ParticipantController extends Controller
             $chef = $fonct->findWhereMulitOne("v_chef_departement_entreprise",
             ["entreprise_id","user_id_chef_departement"],
             [$entreprise_id,$user_id]);
-
             $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->where('departement_id',[$chef->departement_id])->get();
             return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
         }
@@ -67,6 +66,7 @@ class ParticipantController extends Controller
 
     public function create($id = null)
     {
+        
         $user_id = Auth::user()->id;
         $id_etp = responsable::where('id',$user_id)->value('entreprise_id');
         $liste_etp = entreprise::orderBy('nom_etp')->get();
@@ -117,13 +117,19 @@ class ParticipantController extends Controller
                 'matricule' => ["required"],
                 'nom' => ["required"],
                 'prenom' =>  ["required"],
+                'rue' =>  ["required"],
+                'quartier' =>  ["required"],
+                'code_postal' =>  ["required"],
+                'ville' =>  ["required"],
+                'region' =>  ["required"],
+                'lot' =>  ["required"],
                 'fonction' => ["required"],
                 'mail' => ["required", "email"],
                 'phone' => ["required"],
                 'lieu' => ["required"],
                 'image' => ["required"],
                 'cin' =>  ["required"],
-                'adresse' =>  ["required"]
+                
             ],
             [
                 'matricule.required' => 'Veuillez remplir le champ',
@@ -132,10 +138,15 @@ class ParticipantController extends Controller
                 'fonction.required' =>  'Veuillez remplir le champ',
                 'mail.required' =>  'Veuillez remplir le champ',
                 'mail.email' => 'Addresse mail non valide',
+                'rue.required' => 'Veuillez remplir le champ',
+                'quartier.required' => 'Veuillez remplir le champ',
+                'ville.required' => 'Veuillez remplir le champ',
+                'code_postal.required' => 'Veuillez remplir le champ',
+                'lot.required' => 'Veuillez remplir le champ',
+                'region.required' => 'Veuillez remplir le champ',
                 'phone.required' => 'Veuillez remplir le champ',
                 'image.required' => "Veuillez importer une photo",
                 'cin.required' => 'Entrer le CIN',
-                'adresse.required' => 'Entrez l\'adresse',
             ]
         );
 
@@ -174,8 +185,14 @@ class ParticipantController extends Controller
             $participant->matricule = $request->matricule;
             $participant->nom_stagiaire = $request->nom;
             $participant->lieu_travail = $request->lieu;
+            $participant->code_postal = $request->code_postal;
+            $participant->region = $request->region;
+            $participant->ville = $request->ville;
+            $participant->lot = $request->lot;
+            $participant->quartier = $request->quartier;
             $participant->prenom_stagiaire = $request->prenom;
             $participant->genre_stagiaire = $request->genre;
+            $participant->titre = $request->titre;
             $participant->fonction_stagiaire = $request->fonction;
             $participant->mail_stagiaire = $request->mail;
             $participant->telephone_stagiaire = $request->phone;
@@ -205,11 +222,9 @@ class ParticipantController extends Controller
             //get user id
             $user_id = User::where('email', $request->mail)->value('id');
             $participant->user_id = $user_id;
-
             $participant->departement_id = $request->liste_dep;
             $participant->CIN = $request->cin;
             $participant->date_naissance = $request->naissance;
-            $participant->adresse = $request->adresse;
             $participant->niveau_etude = $request->niveau;
             $participant->entreprise_id = $entreprise_id;
             $participant->save();
@@ -223,7 +238,6 @@ class ParticipantController extends Controller
     {
         $liste_etp = entreprise::orderBy('nom_etp')->get();
         $datas = stagiaire::orderBy('nom_stagiaire')->where('entreprise_id', $id)->get();
-
         $info = entreprise::orderBy("nom_etp")->where('id', $id)->get();
         $info_impression = [
             'id' => $info[0]->id,
@@ -238,8 +252,14 @@ class ParticipantController extends Controller
             $user_id =  $users = Auth::user()->id;
             $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
             $stagiaire = stagiaire::findOrFail($id);
-
+            if(Gate::allows('isReferent') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
+            {
+                return view('admin.participant.updates', compact('stagiaire'));
+            }
+            else{
             return view('admin.participant.update', compact('stagiaire'));
+
+            }
         } else {
 
 
@@ -251,20 +271,42 @@ class ParticipantController extends Controller
 
     public function update(Request $request)
     {
+        $participant = new stagiaire();
         $id = $request->id_get;
+      
+        $input = $request->image;
+  
+        if ($image = $request->file('image')) {
+            $destinationPath = 'image/stagiaires';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input= "$profileImage";
+        }
+          
+        // stagiaire::where('id', $id)->update([']);
+        $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
             'date_naissance' => $request->date,
+            'lieu_travail' => $request->lieu,
             'genre_stagiaire' => $request->genre,
             'fonction_stagiaire' => $request->fonction,
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
+            'photos'=>$input,
             'cin' => $request->cin,
-            'adresse' => $request->adresse,
-            'niveau_etude' => $request->niveau
+            'niveau_etude' => $request->niveau,
+            'titre'=>$request->titre,
+            'ville'=>$request->ville,
+            'quartier'=>$request->quartier,
+            'code_postal'=>$request->code_postal,
+            'lot'=>$request->lot,
+            
         ]);
+       
+
         return back();
     }
 
@@ -538,25 +580,62 @@ class ParticipantController extends Controller
         // $stagiaire=stagiaire::findOrFail($id);
         return view('admin.participant.profile', compact('stagiaires'));
     }
-    //update_stagieir connecte
+    //update_stagiaire connecte
     public function update_stagiaire(Request $request, $id)
     {
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-
+        $input = $request->image;
+        if ($image = $request->file('image')) {
+            $destinationPath = 'image/stagiaires';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input= "$profileImage";
+        }
+        if ($input !=null){
         $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
             'date_naissance' => $request->date,
+            'genre_stagiaire' => $request->genre,
             'fonction_stagiaire' => $request->fonction,
-
-            'niveau_etude' => $request->niv,
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
-            'adresse' => $request->adresse
+            'photos'=>$input,
+            'lieu_travail' => $request->lieu,
+            'cin' => $request->cin,
+            'niveau_etude' => $request->niveau,
+            'titre'=>$request->titre,
+            'ville'=>$request->ville,
+            'quartier'=>$request->quartier,
+            'code_postal'=>$request->code_postal,
+            'lot'=>$request->lot,
+            
         ]);
+        }
+        else{
+        stagiaire::where('id', $id)->update([
+            'matricule' => $request->matricule,
+            'nom_stagiaire' => $request->nom,
+            'prenom_stagiaire' => $request->prenom,
+            'date_naissance' => $request->date,
+            'genre_stagiaire' => $request->genre,
+            'fonction_stagiaire' => $request->fonction,
+            'telephone_stagiaire' => $request->phone,
+            'mail_stagiaire' => $request->mail,
+            'lieu_travail' => $request->lieu,
+            'cin' => $request->cin,
+            'niveau_etude' => $request->niveau,
+            'titre'=>$request->titre,
+            'ville'=>$request->ville,
+            'quartier'=>$request->quartier,
+            'code_postal'=>$request->code_postal,
+            'lot'=>$request->lot,
+            
+        ]);
+    }
         $password = $request->password;
         $nom = $request->nom;
         $mail = $request->mail;

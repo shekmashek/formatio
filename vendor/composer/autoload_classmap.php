@@ -9,6 +9,7 @@ return array(
     'App\\Choix_pour_questions' => $baseDir . '/app/Choix_pour_questions.php',
     'App\\Collaboration' => $baseDir . '/app/Collaboration.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+    'App\\Contact' => $baseDir . '/app/Contact.php',
     'App\\Cours' => $baseDir . '/app/Cours.php',
     'App\\Departement' => $baseDir . '/app/Departement.php',
     'App\\DepartementEntreprise' => $baseDir . '/app/DepartementEntreprise.php',
@@ -49,6 +50,7 @@ return array(
     'App\\Http\\Controllers\\FroidEvaluationController' => $baseDir . '/app/Http/Controllers/FroidEvaluationController.php',
     'App\\Http\\Controllers\\GroupeController' => $baseDir . '/app/Http/Controllers/GroupeController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\Mail' => $baseDir . '/app/Http/Controllers/Mail.php',
     'App\\Http\\Controllers\\MailController' => $baseDir . '/app/Http/Controllers/MailController.php',
     'App\\Http\\Controllers\\ModuleController' => $baseDir . '/app/Http/Controllers/ModuleController.php',
     'App\\Http\\Controllers\\NiveauController' => $baseDir . '/app/Http/Controllers/NiveauController.php',
@@ -61,6 +63,7 @@ return array(
     'App\\Http\\Controllers\\ProjetControlleur' => $baseDir . '/app/Http/Controllers/ProjetControlleur.php',
     'App\\Http\\Controllers\\RapportFinaleController' => $baseDir . '/app/Http/Controllers/RapportFinaleController.php',
     'App\\Http\\Controllers\\ResponsableController' => $baseDir . '/app/Http/Controllers/ResponsableController.php',
+    'App\\Http\\Controllers\\SendEmailController' => $baseDir . '/app/Http/Controllers/SendEmailController.php',
     'App\\Http\\Controllers\\SessionController' => $baseDir . '/app/Http/Controllers/SessionController.php',
     'App\\Http\\Controllers\\UtilisateurControlleur' => $baseDir . '/app/Http/Controllers/UtilisateurControlleur.php',
     'App\\Http\\Controllers\\formulaireEvaluationChaudController' => $baseDir . '/app/Http/Controllers/formulaireEvaluationChaudController.php',
@@ -130,7 +133,10 @@ return array(
     'Barryvdh\\Debugbar\\DataFormatter\\SimpleFormatter' => $vendorDir . '/barryvdh/laravel-debugbar/src/DataFormatter/SimpleFormatter.php',
     'Barryvdh\\Debugbar\\DebugbarViewEngine' => $vendorDir . '/barryvdh/laravel-debugbar/src/DebugbarViewEngine.php',
     'Barryvdh\\Debugbar\\Facade' => $vendorDir . '/barryvdh/laravel-debugbar/src/Facade.php',
+<<<<<<< HEAD
     'Barryvdh\\Debugbar\\Facades\\Debugbar' => $vendorDir . '/barryvdh/laravel-debugbar/src/Facades/Debugbar.php',
+=======
+>>>>>>> contact
     'Barryvdh\\Debugbar\\JavascriptRenderer' => $vendorDir . '/barryvdh/laravel-debugbar/src/JavascriptRenderer.php',
     'Barryvdh\\Debugbar\\LaravelDebugbar' => $vendorDir . '/barryvdh/laravel-debugbar/src/LaravelDebugbar.php',
     'Barryvdh\\Debugbar\\LumenServiceProvider' => $vendorDir . '/barryvdh/laravel-debugbar/src/LumenServiceProvider.php',
