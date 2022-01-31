@@ -40,4 +40,9 @@
     </div>
 </div>
 
+<form action="#">
+    @csrf
+    <input id="fileSelect" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+</form>
+
 @endsection

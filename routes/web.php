@@ -609,3 +609,6 @@ Route::get('/formateur-image/{path}', 'ProfController@getImage');
 
 //test creation sous dossier
 Route::get('test','FactureController@test')->name('test');
+
+
+Route::get('show_excel','ViexExcelController@index')->name('show_excel');
