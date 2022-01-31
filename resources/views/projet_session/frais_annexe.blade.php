@@ -1,91 +1,90 @@
-<form action="">
-    <div class="shadow mb-3 col-12 pb-5 section">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="frais_annexe">
-                    Frais de déplacement
-                    <input type="hidden" value="Frais de déplacement" name="description[]">
-                </div>
-            </div>
-            <div class="col-md-9">
-                <ul>
-                    <li><input type="number" id="deplacement" value="0" name="montant[]" class="text-end test"
-                            placeholder="0 " required>&nbsp; Ariary </li>
-                </ul>
+<div class="shadow mb-3 col-12 pb-5 section">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="frais_annexe">
+                Frais de déplacement
+                <input type="hidden" value="Frais de déplacement" name="description[]">
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="frais_annexe">Hébergement</div>
-                <input type="hidden" value="Hébergement" name="description[]">
-            </div>
-            <div class="col-md-9">
-                <ul>
-                    <li><input type="number" value="0" id="hebergement" name="montant[]" class="text-end test"
-                            placeholder="0 " required>&nbsp; Ariary </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="frais_annexe">Restauration</div>
-                <input type="hidden" value="Restauration" name="description[]">
-            </div>
-            <div class="col-md-9">
-                <ul>
-                    <li><input type="number" value="0" id="restauration" name="montant[]" class="text-end test"
-                            placeholder="0 " required>&nbsp; Ariary </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="frais_annexe">Location de salle</div>
-                <input type="hidden" value="Location de salle" name="description[]">
-            </div>
-            <div class="col-md-9">
-                <ul>
-                    <li><input type="number" value="0" id="location_salle" name="montant[]" class="text-end test"
-                            placeholder="0 " required>&nbsp; Ariary </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="frais_annexe">Location matérielle</div>
-                <input type="hidden" value="Location matérielle" name="description[]">
-            </div>
-            <div class="col-md-9">
-                <ul>
-                    <li><input type="number" value="0" id="location_materielle" name="montant[]"
-                            class="text-end test" placeholder="0 " required>&nbsp; Ariary </li>
-                </ul>
-            </div>
-        </div>
-        <div id="newRow_frais">
-
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <button type="button" id="addRow_frais"><i class="fa fa-plus-circle"></i> Autre(s)</a>
-            </div>
-            <div class="col-md-9"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-9">
-                <span>Total</span>
-                <input type="number" class="input_total_frais text-end pe-2 total" placeholder="0" disabled>Ariary
-                
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 align-items-center">
-                <button type="button" id="save_frais_annexe" class="btn btn-success">Enregistrer</button>
-            </div>
+        <div class="col-md-9">
+            <ul>
+                <li><input type="number" id="deplacement" value="0" name="montant[]" class="text-end test"
+                        placeholder="0 " required>&nbsp; Ariary </li>
+            </ul>
         </div>
     </div>
-</form>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="frais_annexe">Hébergement</div>
+            <input type="hidden" value="Hébergement" name="description[]">
+        </div>
+        <div class="col-md-9">
+            <ul>
+                <li><input type="number" value="0" id="hebergement" name="montant[]" class="text-end test"
+                        placeholder="0 " required>&nbsp; Ariary </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="frais_annexe">Restauration</div>
+            <input type="hidden" value="Restauration" name="description[]">
+        </div>
+        <div class="col-md-9">
+            <ul>
+                <li><input type="number" value="0" id="restauration" name="montant[]" class="text-end test"
+                        placeholder="0 " required>&nbsp; Ariary </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="frais_annexe">Location de salle</div>
+            <input type="hidden" value="Location de salle" name="description[]">
+        </div>
+        <div class="col-md-9">
+            <ul>
+                <li><input type="number" value="0" id="location_salle" name="montant[]" class="text-end test"
+                        placeholder="0 " required>&nbsp; Ariary </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="frais_annexe">Location matérielle</div>
+            <input type="hidden" value="Location matérielle" name="description[]">
+        </div>
+        <div class="col-md-9">
+            <ul>
+                <li><input type="number" value="0" id="location_materielle" name="montant[]" class="text-end test"
+                        placeholder="0 " required>&nbsp; Ariary </li>
+            </ul>
+        </div>
+    </div>
+    <div id="newRow_frais">
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <button type="button" id="addRow_frais"><i class="fa fa-plus-circle"></i> Autre(s)</a>
+        </div>
+        <div class="col-md-9"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            <span>Total</span>
+            <input type="number" class="input_total_frais text-end pe-2 total" placeholder="0" disabled>Ariary
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 align-items-center">
+            <button type="button" id="save_frais_annexe" class="btn btn-success">Enregistrer</button>
+        </div>
+    </div>
+</div>
+<div id="resultat_frais"></div>
 <style>
     ul {
         padding: 0 !important;
@@ -111,7 +110,8 @@
     .test {
         height: 23.42px !important;
     }
-    .total{
+
+    .total {
         height: 23.42px !important;
     }
 
@@ -125,7 +125,7 @@
         $(".test").each(function() {
             sum += +$(this).val();
         });
-        $(".total").val(sum); 
+        $(".total").val(sum);
     });
 
     $(document).on('click', '#addRow_frais', function() {
@@ -158,7 +158,7 @@
         var description = $("input[name='description[]']").map(function() {
             return $(this).val();
         }).get();
-        
+
         var montant = $("input[name='montant[]']").map(function() {
             return $(this).val();
         }).get();
@@ -167,13 +167,29 @@
             type: "GET",
             url: "{{ route('insert_frais_annexe') }}",
             data: {
-                description:description,
-                montant:montant,
+                description: description,
+                montant: montant,
                 groupe: groupe_id,
             },
             dataType: "html",
             success: function(response) {
-                alert('eto');
+                var userData = JSON.parse(response);
+                // html = '';
+                alert(userData);
+                // for (let i = 0; i < userData.length; i++) {
+                //     html += '<div class="row" id="inputFormRow_frais">';
+                //     html += '<div class="col-md-3">';
+                //     html += '<label class="w-100 pe-2">'+userData[i].description+'</label>';
+                //     html += '</div>';
+                //     html += '<div class="col-md-9">';
+                //     html += '<ul>';
+                //     html +='<li><label class="text-end test">'+userData[i].montant+'</label></li>';
+                //     html += '</ul>';
+                //     html += '</div>';
+                //     html += '</div>';
+                // }
+                
+                // $('resultat_frais').append(html);
             },
             error: function(error) {
                 console.log(error);
@@ -188,6 +204,4 @@
         });
         $(".total").val(sum);
     });
-
-
 </script>
