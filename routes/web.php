@@ -549,3 +549,4 @@ Route::get('add_participant_groupe','SessionController@addParticipantGroupe')->n
 Route::get('supprimer_participant_groupe','SessionController@supprimmer_stagiaire')->name('supprimer_participant_groupe');
 Route::get('add_ressource','SessionController@ajout_ressource')->name('add_ressource');
 Route::get('supprimer_ressource','SessionController@supprimer_ressource')->name('supprimer_ressource');
+Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');

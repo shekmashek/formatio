@@ -210,4 +210,17 @@ class SessionController extends Controller
             ]
         );
     }
+
+    public function insert_frais_annexe(Request $request){
+        $id_user = Auth::user()->id;
+        $etp_id = DB::select('select entreprise_id from v_responsable_entreprise where user_id_responsable = ?',[$id_user])[0]->entreprise_id;
+        $description = $request->description;
+        $montant = $request->montant;
+        $groupe_id = $request->groupe;
+        for ($i=0; $i < count($description); $i++) { 
+            DB::insert('insert into frais_annexe_formation(description,montant,entreprise_id,groupe_id) values(?,?,?,?)',[$description[$i],$montant[$i],$groupe_id,$etp_id]);
+        }
+        $all_frais_annexe = DB::select('select * from ressources where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
+        return response()->json($all_frais_annexe);
+    }
 }
