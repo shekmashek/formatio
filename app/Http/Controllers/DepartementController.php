@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\entreprise;
 use App\Departement;
@@ -92,20 +92,16 @@ class DepartementController extends Controller
 
         return view('admin/chefDepartement/profilChefDepartement', compact('vars', 'departement'));
     }
-
+    //enregistrer departement
     public function store(Request $request)
     {
-
         $input = $request->all();
+        $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $id_etp = $rqt[0]->entreprise_id;
         for ($i = 0; $i < count($input['departement']); $i++) {
-            $depParEtp = new DepartementEntreprise();
-            $depParEtp->departement_id = $input['departement'][$i];
-            $depParEtp->entreprise_id = $request->etp_id;
-            $depParEtp->save();
+            DB::insert('insert into departement_entreprises (entreprise_id, nom_departement) values (?, ?)', [$id_etp, $input['departement'][$i]]);
         }
-        // return back();
-
-        return redirect()->route('profile_entreprise', $request->etp_id);
+        return back();
     }
 
     public function show()
@@ -144,4 +140,23 @@ class DepartementController extends Controller
     {
         //
     }
+    //fonction qui montre les départements et services de l'entreprise connecté
+    public function show_departement(Request $request){
+        $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $id_etp = $rqt[0]->entreprise_id;
+        $rqt = db::select('select * from v_departement_service_entreprise where entreprise_id = ?',[$id_etp]);
+        $liste_departement = $rqt[0]->nom_departement;
+        $liste_service= $rqt[0]->nom_service;
+        return view('admin.departement.nouveau_departement',compact('liste_departement','liste_service'));
+    }
+    //fonction qui enregistre les services ratachés aux départements
+    public function enregistrement_service(Request $request){
+        $id_departement = $request->departement_id;
+        $input = $request->all();
+        for ($i = 0; $i < count($input['service']); $i++) {
+            DB::insert('insert into services (departement_entreprise_id, nom_service) values (?, ?)', [$id_departement, $input['service'][$i]]);
+        }
+        return back();
+    }
+
 }

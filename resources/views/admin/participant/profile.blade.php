@@ -12,10 +12,10 @@
      <div class="row">
             <div class="col-lg-4 col-md-6">
                 <div class="formation-service">
-            
+
                             @foreach ($stagiaires as $stagiaire)
 
-                            
+
                                     <center>
                                      <div class="m-b-25"> <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde">
                                     </div>
@@ -27,20 +27,20 @@
                                        <div class="col-lg-8">
                                         <h6 class="p-2  ">{{$stagiaire->titre}} {{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}</h6>
                                         <p class="m-b-10  "><i class="bx bx-calendar-alt"></i>&nbsp;<strong style="color:gray">Date de naissance</strong><br>&nbsp;{{$stagiaire->date_naissance}}</p>
-                                       
+
                                        </div>
                                        <div class="col-lg-4">
                                         <h6 class="p-2 f-w-900 ">{{$stagiaire->fonction_stagiaire}}</h6>
                                         <p class="m-b-10  "><i class="bx bx-id-card"></i>&nbsp;<strong style="color:gray">CIN</strong><br>{{$stagiaire->cin}}</p>
-                                       
+
                                        </div>
                                    </div>
                                     <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
-                                    
+
                                 </div>
                             </div>
-                    
-                
+
+
                     <div class="col-lg-4 col-md-6">
                         <div class="formation-service">
                             <h6 class="m-b-20  ">Informations personnelles</h6>
@@ -54,7 +54,7 @@
                                 <h6 class="text-muted f-w-400 text-white">{{$stagiaire->mail_stagiaire}}</h6>
                             </div>
                     </div>
-                    
+
                     <div class="col-lg-4 col-md-6">
                         <div class="formation-service">
                             <h6 class="m-b-20  ">Informations professionnelles</h6>

@@ -1,0 +1,7 @@
+Ajout nouveau table services dans : bdd_suiviformation_mise_a_jour_3(entreprises);
+Supprimer la table departements:
+    DROP TABLE departements;
+Modification de la table : departement_entreprises
+    ALTER TABLE departement_entreprises add column nom_departement varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+    ALTER TABLE departement_entreprises DROP departement_id;
+Ajout view : bdd_suivi_formation_22(inscriptioin_compte) , bdd_suivi_formation_departement

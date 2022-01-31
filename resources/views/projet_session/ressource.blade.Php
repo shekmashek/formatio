@@ -13,7 +13,7 @@
         <label for="" class="ps-2">Action</label>
         <button class="btn-ajout mt-3"> Ajouter </button>
     </div>
-</section> 
+</section>
 @endif --}}
 
 {{-- @if (count($stagiaire) != 0) --}}
@@ -50,7 +50,7 @@
                     </div>
                     <hr class="m-0">
                 </div>
-                
+
             @endforeach
         </div>
     <div class="mt-3">
@@ -131,11 +131,11 @@
                     html += '<div class="col-md-2">';
                     html += '<section>';
                     html += '<button type="button" class="supprimer_ressource" data-id="'+userData[i].id+'"><i class="fa fa-trash-alt"></i></button>';
-                    html += '</section>';    
+                    html += '</section>';
                     html += '</div>';
 
                     html += '<hr class="m-0">';
-                    html += '</div>';  
+                    html += '</div>';
                 }
                 $('#affiche_ressource').append(html);
 

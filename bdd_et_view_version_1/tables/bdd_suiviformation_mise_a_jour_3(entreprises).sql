@@ -193,3 +193,12 @@ CREATE TABLE `historique_stagiaires` (
   `date_arrivee` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `particulier` boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `services` (
+  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  departement_entreprise_id bigint(20) unsigned not null,
+  `nom_service` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  foreign key(departement_entreprise_id) references departement_entreprises (id) on delete cascade
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
