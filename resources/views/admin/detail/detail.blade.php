@@ -7,7 +7,7 @@
         background-color: #822164;
         border-radius: 20px;
         color: #fff;
-        padding: 0 8; 
+        padding: 0 8;
     }
     .nouveau_detail:hover{
         background-color: #b8368f;
@@ -49,13 +49,13 @@
     }
 
 </style>
- 
-@if($test === 0)
+
+@if(count($datas) === 0)
 <form onsubmit="change_active()" id="non_existante" action="{{route('detail.store')}}" method="post">
     @csrf
     <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
     <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
-        
+
     <div class="row">
         <div class="col-md-4 p-0">
             <div class="row">
@@ -97,7 +97,7 @@
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-5 px-2">
-                            <div class="input-group">  
+                            <div class="input-group">
                                 {{-- <div class="input-group-prepend my-1">
                                     <div class="input-group-text"><i class="fa fa-user"></i></div>
                                 </div> --}}
@@ -107,7 +107,7 @@
                                         <option value="{{$format->formateur_id}}">{{$format->prenom_formateur}}</option>
                                     @endforeach
                                 </select>
-                                
+
                             </div>
                         </div>
                         <div class="col-md-7 px-0 pe-2">
@@ -129,7 +129,7 @@
         <div class="text-end ms-4">
             <button id="addRow" type="button"><i class="far fa-plus-circle"></i></button>
         </div>
-        
+
 
     </div>
     <div class="enregistrer">
@@ -141,7 +141,7 @@
 
 {{-- donnee non exiatante --}}
 
-@if($test != 0)
+@if(count($datas) != 0)
     <div id="existante">
         {{-- <div class="row">
             <div class="col-lg-12">
@@ -210,7 +210,7 @@
         {{-- </div> --}}
         <!-- /.row -->
 
-        
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -260,7 +260,7 @@
                                         </td>
                                         <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
                                         <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
-                                       
+
                                      </tr>
                                     @endforeach
                                 </tbody>
@@ -310,7 +310,7 @@
                                 </div>
                             </div>
                             @endcanany
-                            
+
                             <div class="modal fade" id="myModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -474,36 +474,36 @@
                 html += '<div class="row" id ="inputFormRow">';
 
                     html += '<div class="col-md-4 p-0">';
-                    html += '<div class="row">'  ; 
-                    html += '<div class="col-md-5 p-0">' ;       
-                    html += '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';            
-                    html += '</div>'  ;      
-                    html += ' <div class="col-md-7 ps-1 d-flex">';       
-                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';                
-                    html += '<input type="time" name="fin[]" class="form-control my-1" required>';                
-                    html += '</div>' ;      
-                    html += '</div>';    
+                    html += '<div class="row">'  ;
+                    html += '<div class="col-md-5 p-0">' ;
+                    html += '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';
+                    html += '</div>'  ;
+                    html += ' <div class="col-md-7 ps-1 d-flex">';
+                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
+                    html += '<input type="time" name="fin[]" class="form-control my-1" required>';
+                    html += '</div>' ;
+                    html += '</div>';
                     html += '</div>';
 
                     html += '<div class="col-md-8">';
                     html += '<div class="row">';
                         html += '<div class="col-md-5 px-2">';
-                        html += '<div class="input-group">';      
-                        html += '<select name="formateur[]" id="" class="form-control  my-1" required>'  ;      
-                        html += '<option value="" selected hidden> Choisir formateur </option>' ;       
+                        html += '<div class="input-group">';
+                        html += '<select name="formateur[]" id="" class="form-control  my-1" required>'  ;
+                        html += '<option value="" selected hidden> Choisir formateur </option>' ;
                         for(var $i = 0; $i < userData.length; $i++){
                             html += '<option value="'+userData[$i].formateur_id+'">'+userData[$i].prenom_formateur+'</option>';
-                        }                
+                        }
                         html += '</select>';
                         html += '</div>';
                         html += '</div>';
                         html += '<div class="col-md-7 px-0 pe-2">';
-                        html += '<div class="input-group">' ;   
-                        html += '<input type="text" name="lieu[]" class="form-control my-1" required>';        
+                        html += '<div class="input-group">' ;
+                        html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
                         html +=  '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
-                        html += '</div>';        
-                        html += '</div>';    
-                        
+                        html += '</div>';
+                        html += '</div>';
+
 
                     html +='</div>';
                     html +='</div>';

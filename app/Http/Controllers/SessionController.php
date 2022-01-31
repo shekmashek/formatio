@@ -98,7 +98,7 @@ class SessionController extends Controller
     public function detail_session(){
         $user_id = Auth::user()->id;
         $id = request()->id_session;
-        // ???--mbola tsy mety 
+        // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
         // ???--
@@ -108,7 +108,7 @@ class SessionController extends Controller
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-        }      
+        }
         if(Gate::allows('isReferent')){
             $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $formateur = NULL;
@@ -186,7 +186,7 @@ class SessionController extends Controller
         $demandeur = '';
         if (Gate::allows('isCFP')){
             $demandeur = Auth::user()->name;
-        } 
+        }
         if(Gate::allows('isFormateur')){
             $demandeur = DB::select('select nom_cfp from v_demmande_cfp_formateur where user_id_formateur = ?',[$id_user])[0]->nom_cfp;
         }
