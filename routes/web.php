@@ -616,3 +616,7 @@ Route::get('export_excel_new_participant','ParticipantController@export_excel_ne
 Route::get('show_excel','ViexExcelController@index')->name('show_excel');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
 Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep');
+
+Route::get('nouvelle_departememnt', function () {
+    return view('admin.departememnt.nouveau_departement');
+})->name('nouvelle_departememnt');
