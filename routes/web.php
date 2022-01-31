@@ -619,3 +619,6 @@ Route::get('test','FactureController@test')->name('test');
 Route::get('supprimer_participant_groupe','SessionController@supprimmer_stagiaire')->name('supprimer_participant_groupe');
 Route::get('add_ressource','SessionController@ajout_ressource')->name('add_ressource');
 Route::get('supprimer_ressource','SessionController@supprimer_ressource')->name('supprimer_ressource');
+
+//-------------------- CRUD DEPARTEMENT - SERVICE -----------------------\\
+Route::get('liste_departement','DepartementController@show_departement')->name('liste_departement');

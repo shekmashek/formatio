@@ -158,5 +158,30 @@ class DepartementController extends Controller
         }
         return back();
     }
+    //fonction qui modifie le nom de département
+    public function update_departement(Request $request){
+        $id_dep = $request->Id;
+        $nom_dep = $request->Nom;
+        db::update('update departement_entreprises set nom_departement = ? where id = ?',[$nom_dep,$id_dep]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Données modifiées avec succès',
 
+            ]
+        );
+    }
+    //fonction qui modifie le nom du service
+    public function update_service(Request $request){
+        $id_serv = $request->Id;
+        $nom_serv = $request->Nom;
+        db::update('update services set nom_service = ? where id = ?',[$nom_serv,$id_serv]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Données modifiées avec succès',
+
+            ]
+        );
+    }
 }
