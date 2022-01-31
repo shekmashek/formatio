@@ -57,7 +57,17 @@ class ProgrammeController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $id = $request->id_module;
+        $donnees = $request->all();
+        for($i = 0; $i < count($donnees['titre_prog']); $i++){
+            $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)',[$donnees['titre_prog'][$i],$id]);
+            $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
+            for($j = 0; $j < count($donnees['cours']); $j++){
+                $cour = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)',[$donnees['cours'][$j],$id_prog]);
+            }
+        }
+
+        return redirect()->route('liste_module');
     }
 
     public function show($id)

@@ -296,6 +296,7 @@ Route::get('/nouvelle_programme','ProgrammeController@news')->name('nouvelle_pro
 Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_programme');
 Route::post('/destroy_programme/{id}','ProgrammeController@destroy')->name('destroy_programme');
 Route::post('/update_programme/{id}','ProgrammeController@update')->name('update_programme/{id}');
+Route::post('insert_prog_cours','ProgrammeController@store')->name('insert_prog_cours');
 Route::get('/create_programme','ProgrammeController@create')->name('create_programme');
 
 // cours

@@ -48,10 +48,10 @@
         font-size: 14px
     }
 
-    .active,
+    /* .active,
     .accordion:hover {
         background-color: #ccc;
-    }
+    } */
 
     .plus_prog {
         color: #801D68;
@@ -63,7 +63,7 @@
     }
 
     .accordion:after {
-        content: '\002B';
+        /* content: '\002B'; */
         color: #801D68;
         font-weight: bold;
         float: left;
@@ -74,9 +74,19 @@
         padding-left: .5rem;
     }
 
-    .active:after {
-        content: "\2212";
+    .btn_enregistrer{
+        background-color: #801D68;
     }
+
+    .btn_enregistrer:hover{
+        background-color: white;
+        color: #801D68;
+        border: 1px solid #801D68;
+    }
+
+    /* .active:after {
+        content: "\2212";
+    } */
 
     .panel {
         padding: 0 18px;
@@ -109,16 +119,6 @@
         <button type="button" class="btn btn" style="border-radius: 15px"><a
                 href="{{route('select_par_module',$ctg->id)}}">{{$ctg->nom_formation}}</a></button>
         @endforeach
-        <style>
-            .btn {
-                background-color: #801D68;
-                color: white
-            }
-
-            .btn:hover {
-                color: white
-            }
-        </style>
     </div>
 </div>
 <section class="detail__formation">
@@ -290,44 +290,11 @@
                                 @endforeach
                             </div>
                         </div> --}}
-                        <form action="" class="w-100">
+                        <form action="{{route('insert_prog_cours')}}" method="POST" class="w-100">
+                            @csrf
+                            <div id="newProg"></div>
+                            <br>
                             <div class="row detail__formation__item__left__accordion">
-                                {{-- <div class="accordion" id="accordion__program">
-                                    <div class="card">
-                                        <div class="card-header" id="heading1">
-                                            <h2 class="mb-0 d-flex">
-                                                <button class="btn text-left" type="button" data-toggle="collapse"
-                                                    data-target="#collapse" aria-expanded="true" id="icon"
-                                                    aria-controls="collapse1"><i
-                                                        class="bx bxs-plus-circle icon-prog-list"
-                                                        id="icon"></i></button>
-
-                                                <input type="text" class="form-control">&nbsp;&nbsp;<i id="addRowProg"
-                                                    class="fa fa-plus pt-4" style="font-size: 15px" role="button"></i>
-                                            </h2>
-                                        </div>
-                                        <div id="collapse" class="collapse show" aria-labelledby="heading1"
-                                            data-parent="#accordion__program">
-                                            <div class="card-body"><span class="d-flex" id="headingcours"><i
-                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                                        class="form-control">
-                                                </span>
-                                                <span class="d-flex" id="headingcours"><i
-                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                                        class="form-control">
-                                                </span>
-                                                <span class="d-flex" id="headingcours"><i
-                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                                        class="form-control">&nbsp;<i id="addRowCours"
-                                                        class="fa fa-plus pt-4" style="font-size: 15px"
-                                                        role="button"></i>
-                                                </span>
-                                                <div class="card-body" id="newRowCours"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
                                 <span role="button" class="accordion accordion_prog"><input type="text"
                                         class="form-control" name="titre_prog[]"
                                         placeholder="Titre de votre programme"><i id="addProg"
@@ -337,7 +304,7 @@
                                     <span class="d-flex input_cours"><i
                                             class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
                                             class="form-control" name="cours[]" placeholder="Votre cours"><i
-                                            id="addCours" class="bx bx-plus-circle pt-3 ms-3 ps-2"
+                                            id="addCours0" class="bx bx-plus-circle pt-3 ms-3 ps-2"
                                             style="font-size: 24px; color: #801D68" role="button"
                                             title="ajouter un nouveau cours"></i></span>
                                     <span class="d-flex input_cours" id="headingcours"><i
@@ -352,15 +319,17 @@
                                             id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2"
                                             style="font-size: 24px; color: #801D68" role="button"
                                             title="ajouter un nouveau cours"></i></span>
-                                    <span id="newCours"></span>
+                                    <span id="newCours0"></span>
                                 </div>
                             </div>
                             <br>
-                            <div id="newProg"></div>
+                            <div class="form-row">
+                                <input type="hidden" value="{{$id}}" name="id_module">
+                                <button type="submit" class="btn btn-primary btn_enregistrer">Enregistrer</button>
+                            </div>
                         </form>
                     </div>
                 </div>
-
 
                 {{-- section 5 --}}
                 {{-- FIXME:mise en forme de design --}}
@@ -625,7 +594,7 @@
         });
     });
 
-    $(document).on('click','#addCours', function() {
+    $(document).on('click','#addCours0', function() {
         var html = '';
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
@@ -635,7 +604,7 @@
         html += '</i>';
         html += '</span>';
 
-        $('#newCours').append(html);
+        $('#newCours0').append(html);
     });
 
         $(document).on('click','#addCours1', function() {

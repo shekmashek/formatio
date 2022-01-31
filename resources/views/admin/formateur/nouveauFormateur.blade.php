@@ -321,32 +321,6 @@
         $(this).closest('#inputFormRow2').remove();
     });
 
-    //validation formulaire
-    // function valider(){
-
-    //     var nom = document.getElementById("nom").value;
-
-    //     if (nom != "") {
-    //         return true;
-    //         document.getElementById("formInsert").submit();
-    //     }else{
-    //         document.getElementById("nom").focus();
-    //         alert("Veuillez remplir le champ nom!");
-    //     }
-
-    // function validateForm() {
-    //     var nom = document.forms["formInsert"]["nom"];
-    //     if (nom.value == "") {
-    //         document.getElementById("errorname").innerHTML="Veuillez entrez un nom valide";
-    //         nom.focus();
-    //         return false;
-    //     }else{
-    //         document.getElementById("errorname").innerHTML="";
-    //         return true;
-    //     }
-    // }
-
-    // }
 
 </script>
 @endsection

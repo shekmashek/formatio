@@ -108,40 +108,6 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         //condition de validation de formulaire
-        // $request->validate(
-        //     [
-        //         'reference' => ["required"],
-        //         'nom_module' => ["required"],
-        //         'prix' =>  ["required"],
-        //         'heure' => ["required"],
-        //         'jour' => ["required"],
-        //         'prerequis' => ["required"],
-        //         'objectifs' => ["required"],
-        //         'description' => ["required"],
-        //         'materiel' => ["required"],
-        //         'bon_a_savoir' => ["required"],
-        //         'cible' => ["required"],
-        //         'prestation' => ["required"],
-        //         'min_pers' => ["required"],
-        //         'max_pers' => ["required"]
-        //     ],
-        //     [
-        //         'reference.required' => 'Veuillez remplir le champ',
-        //         'nom_module.required' => 'Veuillez remplir le champ',
-        //         'prix.required' => 'Veuillez remplir le champ',
-        //         'heure.required' => ["Veuillez remplir le champ"],
-        //         'jour.required' => 'Veuillez remplir le champ',
-        //         'prerequis.required' => 'Veuillez remplir le champ',
-        //         'objectifs.requires' => 'Veuillez remplir le champ',
-        //         'description.required' => 'Veuillez remplir le champ',
-        //         'materiel.required' => 'Veuillez remplir le champ',
-        //         'bon_a_savoir.required' => 'Veuillez remplir le champ',
-        //         'cible.required' => 'Veuillez remplir le champ',
-        //         'prestation.required' => 'Veuillez remplir le champ',
-        //         'min_pers.required' => 'Veuillez remplir le champ',
-        //         'max_pers.required' => 'Veuillez remplir le champ'
-        //     ]
-        // );
         $validator = Validator::make($request->all(), [
             'reference' => 'required',
                 'nom_module' => 'required',
@@ -202,11 +168,11 @@ class ModuleController extends Controller
     public function affichage(Request $request)
     {
         $id = $request->Id;
-        $module = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
         // $mod = programme::where('module_id', $id)->with('Module')->get();
         // $id_formation = module::where('id', $id)->value('formation_id');
         // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
-        return response()->json($module);
+        return response()->json($module_en_cours);
     }
 
     public function update(Request $request)

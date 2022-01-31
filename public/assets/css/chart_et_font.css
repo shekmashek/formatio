@@ -2242,7 +2242,7 @@ Détails Formation
 
 .new_btn_programme .btn{
   color:white;
-  background: #801d68;
+  background-image: linear-gradient(60deg,#AA076B ,#61045F);
   padding: 10px 20px 10px 20px;
   position: relative;
   border-radius: 0;
@@ -2253,7 +2253,7 @@ Détails Formation
   transform: scale(1.1);
   border-color: white;
   background-color: white;
-  color: #801d68;
+  color: white;
 }
 
 .new_btn_programme .btn::before {
@@ -2332,6 +2332,29 @@ input::autofill-selected {
 }
 /* input label top */
 
+.navigation_module{
+  background-image: linear-gradient(60deg,#61045F, #AA076B);
+  color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.navigation_module:hover{
+  background-color: var(--color-parent);
+}
+
+.navigation_module .nav-link{
+  color: rgba(243, 243, 243, 0.911);
+  font-weight: bolder;
+}
+
+.nav-tabs .nav-link.active{
+  background-color: white !important;
+  color: #61045F;
+  border-radius: 0;
+}
+
+.nav-tabs .nav-link:hover{
+  border-radius: 0;
+}
 
 
 /* nouveau module */
