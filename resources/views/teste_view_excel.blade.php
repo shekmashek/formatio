@@ -1,17 +1,12 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+@extends('./layouts/admin')
+@section('content')
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-    <button id="addRowMontant" type="button" class="btn btn-success"><i class="fa fa-plus">montant</i></button>
-
-
+ 
     <table id="example" class="display">
         <thead>
             <tr>
@@ -20,13 +15,23 @@
                 <th>Prenom</th>
                 <th>Sexe</th>
                 <th>Nombre</th>
+                <th>Nombre</th>
+                <th>Nombre</th>
+                <th>Nombre</th>
+                <th>Nombre</th>
+                <th>Nombre</th>
         </thead>
         <tbody id="newRowMontant">
-            @for($i = 0; $i < 100; $i++) <tr>
-                <td><input type="text"></td>
+            @for($i = 1; $i <= 50; $i++) <tr>
+                <td><span class="input-group-text" id="basic-addon1">{{$i}}</span><input type="text"></td>
                 <td><input type="text"></td>
                 <td><input type="text"></td>
                 <td><input type="number"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
                 </tr>
                 @endfor
         </tbody>
@@ -98,6 +103,4 @@
         */
 
     </script>
-
-</body>
-</html>
+@endsection
