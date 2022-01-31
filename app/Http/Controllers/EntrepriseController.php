@@ -246,4 +246,10 @@ class EntrepriseController extends Controller
         $etp = new getImageModel();
         return $etp->get_image($path,$dossier);
     }
+
+    public function affiche_dep(Request $req){
+        $fonct = new FonctionGenerique();
+        $datas1 = $fonct->findWhere("v_departement",["entreprise_id"],[$req->id]);
+        return response()->json($datas1);
+    }
 }

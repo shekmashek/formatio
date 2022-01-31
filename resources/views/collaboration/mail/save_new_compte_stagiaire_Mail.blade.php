@@ -12,8 +12,8 @@
         <strong>Félicitations!</strong>votre compte est activé. <br>
     </p>
 
-    <p>vous êtes le responsable principale de <strong>{{$nom_etp}}</strong> </p>
-    <p>Etant que responsable, vous pouvez vous connecter en tant que: <br>
+    <p>vous pouvez maintenant accéder à la plateforme pour la formation</strong> </p>
+    <p>Etant que employeur de <strong>{{$nom_etp}}</strong>, vous pouvez vous connecter en tant que: <br>
         nom: {{$nom_resp}} <br>
         adresse email: {{$email_resp}}
         mot de passe : 0000

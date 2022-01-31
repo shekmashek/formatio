@@ -5,7 +5,7 @@
 <style type="text/css">
     button,
     value {
-        font-size: 12px;
+        font-size: 30px;
     }
 
     .font_text strong,
@@ -33,13 +33,13 @@
         font-size: 12px
     }
 
-    .form_colab button {
+    /* .form_colab button {
         height: 30px;
         padding: 0;
         padding-left: 5px;
         padding-right: 5px;
         font-size: 13px;
-    }
+    } */
 
     .nav_bar_list:hover {
         background-color: transparent;
@@ -90,7 +90,7 @@
                 <h6>Comment ajouter plusieurs stagiaires d'une seule coup?</h6>
                 <p>Tout d'abord, vous devrez avoir un fichier excel des listes des stagiaires avec des exception comportant seulement ses colonnes requis pour les informations minimum:</p>
                 <p>1°):<strong> Maximum 30 personne(s) </strong></p>
-                <p>2°): <strong> "Matricule" , "Nom", "Prénom", " Genre ou Sexe (ex: F ou M)", "Date Naissance (ex:Jour/Mois/Année) ", "CIN", "email", " Télephone"," Fonction" </strong></p>
+                <p>2°):Les champs neccéssaire: <strong> "Matricule" , "Nom", "Prénom", " Genre ou Sexe (ex: F ou M)", "Date Naissance (ex:Jour/Mois/Année) ", "CIN", "email", " Télephone"," Fonction" </strong></p>
                 <p>3°): Faire <strong>copier coller </strong> les données en sélectionnants la prémière ligne ou utiliser la racourcie CRTL+A et CRTL+C (pour copier) et CRTL+V pour coller</p>
             </div>
             {{-- <div class="col-md-4"></div> --}}
@@ -118,7 +118,7 @@
                     <div class="form-group">
                         <label for="etp">Entreprise</label><br>
                         <select name="liste_etp" class="form-control" id="liste_etp">
-                            <option value="">Choisissez une entreprise...</option>
+                            {{-- <option value="">Choisissez une entreprise...</option> --}}
                             @foreach ($liste_etp as $liste)
                             <option value="{{$liste->id}}">{{$liste->nom_etp}}</option>
                             @endforeach
@@ -128,7 +128,7 @@
             <div class="form-group">
                 <label for="etp">Departement</label><br>
                 <select name="departement_id" class="form-control" id="departement_id">
-                    <option value="">Choisissez un département...</option>
+                    {{-- <option value="">Choisissez un département...</option> --}}
                     @foreach ($liste_dep as $liste)
                     <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
                     @endforeach
@@ -140,9 +140,9 @@
             <div class="form-group">
                 <label for="etp">Departement</label><br>
                 <select name="departement_id" class="form-control" id="departement_id">
-                    <option value="">Choisissez un département...</option>
+                    {{-- <option value="">Choisissez un département...</option> --}}
                     @foreach ($liste_dep as $liste)
-                    <option value="{{$liste->departement->id}}">{{$liste->nom_departement}}</option>
+                    <option value="{{$liste->departement_id}}">{{$liste->nom_departement}}</option>
                     @endforeach
                 </select>
             </div><br>
@@ -151,9 +151,9 @@
             @can('isManager')
             <div class="form-group">
                 <label for="etp">Departement</label><br>
-                <select name="departement_id" class="form-control" id="departement_id">
+                <select name="departement_departement_" class="form-control" id="departement_id">
                     @foreach ($liste_dep as $liste)
-                    <option value="{{$liste->departement->id}}">{{$liste->nom_departement}}</option>
+                    <option value="{{$liste->departement_id}}">{{$liste->nom_departement}}</option>
                     @endforeach
                 </select>
             </div><br>
@@ -247,7 +247,8 @@
 
     </div>
 
-    <script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script type="text/javascript">
         $(document).ready(function() {
 
             $('td input').bind('paste', null, function(e) {
@@ -284,7 +285,6 @@
 
     $('#liste_etp').on('change', function() {
         $('#departement_id').empty();
-
         var id = $(this).val();
         $.ajax({
             url: "{{route('show_dep')}}"
@@ -294,7 +294,6 @@
             }
             , success: function(response) {
                 var userData = response;
-
                 for (var $i = 0; $i < userData.length; $i++) {
                     $("#departement_id").append('<option value="' + userData[$i].id + '">' + userData[$i].departement.nom_departement + '</option>');
                 }

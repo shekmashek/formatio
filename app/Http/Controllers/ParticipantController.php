@@ -18,6 +18,8 @@ use App\responsable;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 /* ====================== Exportation Excel ============= */
 use App\Exports\ParticipantExport;
@@ -649,8 +651,7 @@ class ParticipantController extends Controller
                     $verify = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req["email_" . $i]]);
 
                     if (count($verify) <= 0) {
-                        // DB::beginTransaction();
-                        // try {
+
                         $user = new User();
                         $user->name = $req["nom_" . $i];
                         $user->email = $req["email_" . $i];
@@ -658,16 +659,17 @@ class ParticipantController extends Controller
                         $user->password = Hash::make($ch1);
                         $user->role_id = '3';
                         $user->save();
-                        // } catch (Exception $e) {
-                        //     DB::rollback();
-                        //     echo $e->getMessage();
-                        // }
 
                         $user_stg_id = User::where('email', $req["email_" . $i])->value('id');
 
                         if (Gate::allows('isReferent')) {
                             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+                            $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$entreprise_id]);
+
                             $stg->insert_multi($doner, $user_stg_id, $entreprise_id);
+
+                            Mail::to($doner['email'])->send(new save_new_compte_stagiaire_Mail($doner["nom"].' '.$doner["prenom"],$doner['email'],$etp->nom_etp));
+
                             return back()->with('success', "terminé!");
                         }
                     } else {
@@ -680,5 +682,7 @@ class ParticipantController extends Controller
                 return back()->with('error', "champs vide");
             }
         }
+
+
     }
 }

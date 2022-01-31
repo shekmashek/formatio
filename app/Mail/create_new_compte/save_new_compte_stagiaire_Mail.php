@@ -7,19 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class save_new_compte_cfp_Mail extends Mailable
+class save_new_compte_stagiaire_Mail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($nom_resp_cfp, $email_resp_cfp,$nom_etp)
+    public function __construct($nom_resp, $email_resp,$nom_etp)
     {
-        $this->nom_resp_cfp = $nom_resp_cfp;
-        $this->email_resp_cfp = $email_resp_cfp;
+        $this->nom_resp = $nom_resp;
+        $this->email_resp = $email_resp;
         $this->nom_etp = $nom_etp;
     }
     /**
@@ -31,11 +26,13 @@ class save_new_compte_cfp_Mail extends Mailable
     {
         return $this->from('contact@formation.mg')
             ->subject('Compte crée avec success')
-            ->view('collaboration.mail.save_new_compte_cfp_Mail')
+            ->view('collaboration.mail.save_new_compte_stagiaire_Mail')
             ->with([
-                'nom_resp_cfp' => $this->nom_resp_cfp,
-                'email_resp_cfp' => $this->email_resp_cfp,
+                'nom_resp' => $this->nom_resp,
+                'email_resp' => $this->email_resp,
                 'nom_etp' => $this->nom_etp
             ]);
     }
+
+
 }

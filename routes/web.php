@@ -615,3 +615,4 @@ Route::get('test','FactureController@test')->name('test');
 Route::get('export_excel_new_participant','ParticipantController@export_excel_new_participant')->name('export_excel_new_participant');
 Route::get('show_excel','ViexExcelController@index')->name('show_excel');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
+Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep');
