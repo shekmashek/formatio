@@ -91,11 +91,11 @@ create or replace view  v_responsable_entreprise as
         e.activiter as activiter_etp,
         e.telephone_etp
         from responsables r
-        join 
+        join
             entreprises e on e.id = r.entreprise_id;
 
--- create or replace view v_apprenants as 
---     select 
+-- create or replace view v_apprenants as
+--     select
 
 -- create or REPLACE view v_projet_entreprise_cfp as
 --     select

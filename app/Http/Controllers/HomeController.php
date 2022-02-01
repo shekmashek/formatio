@@ -90,10 +90,25 @@ class HomeController extends Controller
                 $centre_fp = cfp::where('user_id', $user_id)->value('id');
 
                 $GChart = DB::select('SELECT SUM(hors_taxe) as prix , MONTH(invoice_date) as mois,
-                year(invoice_date) as annee from factures where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = '.$centre_fp.' group by MONTH(invoice_date),
+                year(invoice_date) as annee from factures where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
+                INTERVAL 1 YEAR)) and cfp_id = '.$centre_fp.' group by MONTH(invoice_date),
                 year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
 
-            return view('layouts.dashboard',compact('GChart'));
+                $CA_actuel = DB::select('SELECT SUM(hors_taxe) as total from factures where YEAR(invoice_date)=year(now()) and cfp_id = '.$centre_fp.' ');
+                $CA_precedent = DB::select('SELECT SUM(hors_taxe) as total from factures where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = '.$centre_fp.' ');
+
+// debut
+                // $formations = formation::where('cfp_id', $centre_fp)->value('id');
+                // $top_10_module = DB::select('select ');
+                // ty no anaovana DB select  $modules = module::where('formation_id', $formations)->value('id');
+// fin
+
+// debut top 10 par client
+
+// fin top 10 par client
+
+                // dd($user_id, $centre_fp, $top_10_par_client);
+            return view('layouts.dashboard',compact('GChart','CA_actuel','CA_precedent'));
         }
         if (Gate::allows('isReferent')) {
                     $totale_invitation = $this->collaboration->count_invitation();
