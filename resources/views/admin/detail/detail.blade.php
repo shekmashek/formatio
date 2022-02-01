@@ -244,7 +244,7 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
-                                    @canany(['isReferent', 'isManager', 'isFormateur'])
+                                    @canany(['isReferent', 'isManager'])
                                         <th>CFP</th>
                                     @endcanany
                                     <th>Module</th>
@@ -253,14 +253,14 @@
                                     <th>Début</th>
                                     <th>Fin</th>
                                     <th>Formateur</th>
-                                    @canany(['isCFP', 'isFormateur'])
+                                    @canany(['isCFP'])
                                         <th>Action</th>
                                     @endcanany
                                 </thead>
                                 <tbody>
                                     @foreach ($datas as $d)
                                         <tr>
-                                            @canany(['isReferent', 'isManager', 'isFormateur'])
+                                            @canany(['isReferent', 'isManager'])
                                                 <td>{{ $d->nom_cfp }}</td>
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>
@@ -273,10 +273,10 @@
                                             @canany(['isCFP'])
                                                 <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
                                             @endcanany
-                                            @canany(['isFormateur'])
+                                            {{-- @canany(['isFormateur'])
                                                 <td><i data-toggle="collapse" href="#stagiaire_presence" class="fa fa-edit"
                                                         style="color:rgb(130,33,100);">Emargement</i></td>
-                                            @endcanany
+                                            @endcanany --}}
                                             {{-- <td >
                                                 <a href="{{route('execution',[$d->detail_id])}}" class ="btn btn-info" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </td>
@@ -287,57 +287,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            @foreach ($datas as $dt)
-                                <div class="collapse" id="stagiaire_presence">
-                                    <div class="table-responsive">
-                                        <table class="table">
-    
-                                            <tbody>
-                                                <form action="{{ route('insert_presence') }}" id="myform" method="post" role="form">
-                                                   @foreach ($stagiaire as $liste)
-                                                   <tr class="m-0"> 
-                                                       <td>{{$liste->matricule}}</td>
-                                                       <td>{{$liste->nom_stagiaire}}</td>
-                                                       <td >{{$liste->prenom_stagiaire}}</td>
-                                                        {{-- <td>
-                                                            <input type="submit" class="btn btn-primary pointage" id = "{{$liste->stagiaire_id}}" value = "Pointage">
-                                                        </td> --}}
-            
-                                                        <td>
-                                                            {{-- @if($message!="")
-                                                            <label>{{ $liste->status }}</label>
-                                                            @else --}}
-                                                                @csrf
-                                                                {{-- <div class="radio"> --}}
-                                                                    <label style="color: green;">
-                                                                    <input class="m-0" type="radio" name="attendance[{{ $liste->stagiaire_id }}]" value="Présent" >
-                                                                            Présent
-                                                                    </label>
-                                                                    <label  style="color: red;">
-                                                                    <input class="-0" type="radio" name="attendance[{{ $liste->stagiaire_id }}]" value="Absent">
-                                                                            Absent
-                                                                    </label>
-                                                                {{-- </div> --}}
-                                                            {{-- @endif --}}
-                                                        </td>
-                                                    </tr>
-                                                   @endforeach
-            
-                                                    <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
-            
-            
-            
-                                                </form>
-                                            </tbody>
-                                        </table>
-                                        {{-- @if($message=="")
-                                            <button class="btn btn-success form-control" form="myform"  name="add_attendance">Ajouter</button>
-                                        @else
-                                            <a href="{{ route('modifier',[$datas[0]->detail_id]) }}"><button class="btn btn-primary form-control">Modifier</button></a>
-                                        @endif --}}
-                                    </div>
-                                </div>
-                            @endforeach
                             
                         </div>
                         </tbody>
