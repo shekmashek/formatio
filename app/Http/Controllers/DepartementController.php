@@ -146,7 +146,8 @@ class DepartementController extends Controller
         $id_etp = $rqt[0]->entreprise_id;
         $rqt = db::select('select * from departement_entreprises where entreprise_id = ?',[$id_etp]);
         $nb = count($rqt);
-        $service_departement = DB::select('select *  from v_departement_service_entreprise  where entreprise_id = ? ', [$id_etp]);
+        $service_departement = DB::select("select nom_departement, GROUP_CONCAT(nom_service) AS nom_service
+        FROM v_departement_service_entreprise where entreprise_id = ? GROUP BY nom_departement ", [$id_etp]);
         $nb_serv = count($service_departement);
         if($rqt != null){
             // $liste_departement = $rqt[3]->nom_departement;

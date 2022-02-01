@@ -151,7 +151,7 @@ class Client
           'include_granted_scopes' => null,
           'login_hint' => '',
           'request_visible_actions' => '',
-          'access_type' => 'offline',
+          'access_type' => 'online',
           'approval_prompt' => 'auto',
 
           // Task Runner retry configuration
@@ -1291,5 +1291,4 @@ class Client
 
     return new UserRefreshCredentials($scope, $creds);
   }
-
 }

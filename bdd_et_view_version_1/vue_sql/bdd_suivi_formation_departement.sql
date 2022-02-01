@@ -12,3 +12,6 @@ WHERE
     serv.departement_entreprise_id = dep.id;
 
 
+SELECT `nom_departement`, GROUP_CONCAT(`nom_service`) AS service
+FROM `v_departement_service_entreprise` 
+GROUP BY `nom_departement`
