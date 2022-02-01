@@ -200,7 +200,7 @@ class FormationController extends Controller
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
-            return view('referent.catalogue.detail_formation',compact('infos','cours','programmes','nb_avis','liste_avis','categorie'));
+            return view('referent.catalogue.detail_formation',compact('infos','cours','programmes','nb_avis','liste_avis','categorie','id'));
         }
         else return redirect()->route('liste_module');
        }

@@ -297,3 +297,5 @@ INSERT INTO `cours` (`id`, `titre_cours`, `programme_id`, `created_at`, `updated
 (141, 'Entonnoir', 71, NULL, NULL),
 (142, 'Cascade', 71, NULL, NULL),
 (143, 'Jauge', 72, NULL, NULL);
+
+ALTER TABLE modules add status int;

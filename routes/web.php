@@ -220,6 +220,7 @@ Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('/destroy_module','ModuleController@destroy')->name('destroy_module');
 Route::post('/update_module','ModuleController@update')->name('update_module');
+Route::get('publier_module/{id}','ModuleController@module_publier')->name('publier_module');
 
 // route recherche par référence
 Route::get('rechercheReference/{reference?}','ModuleController@rechercheReference')->name('rechercheReference');
@@ -296,6 +297,7 @@ Route::get('/nouvelle_programme','ProgrammeController@news')->name('nouvelle_pro
 Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_programme');
 Route::post('/destroy_programme/{id}','ProgrammeController@destroy')->name('destroy_programme');
 Route::post('/update_programme/{id}','ProgrammeController@update')->name('update_programme/{id}');
+Route::post('insert_prog_cours','ProgrammeController@store')->name('insert_prog_cours');
 Route::get('/create_programme','ProgrammeController@create')->name('create_programme');
 
 // cours

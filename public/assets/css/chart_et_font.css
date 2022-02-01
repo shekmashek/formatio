@@ -2243,7 +2243,27 @@ Détails Formation
 
 .new_btn_programme .btn{
   color:white;
-  background: #801d68;
+  background-image: linear-gradient(60deg,#AA076B ,#61045F);
+  padding: 10px 20px 10px 20px;
+  position: relative;
+  border-radius: 0;
+  transition: all .2s ease;
+}
+
+.new_btn_programme .publiees{
+  color:white;
+  background-image: linear-gradient(60deg,#11998e ,#38ef7d);
+  padding: 10px 20px 10px 20px;
+  position: relative;
+  border-radius: 0;
+  transition: all .2s ease;
+  cursor: normal;
+  width: 10rem;
+}
+
+.new_btn_programme .non_pub{
+  color:white;
+  background-image: linear-gradient(60deg,#fc6767 ,#ec008c);
   padding: 10px 20px 10px 20px;
   position: relative;
   border-radius: 0;
@@ -2254,12 +2274,22 @@ Détails Formation
   transform: scale(1.1);
   border-color: white;
   background-color: white;
-  color: #801d68;
+  color: white;
 }
 
 .new_btn_programme .btn::before {
   content:'';
   border-top: 3.5rem solid rgba(247, 247, 247); /*couleur du fond derrière le bouton*/
+  border-right: 2rem solid transparent;
+  position: absolute;
+  left:0;
+  bottom: 0
+}
+
+.new_btn_programme .non_pub::before,
+.new_btn_programme .publiees::before{
+  content:'';
+  border-top: 3.5rem solid white; /*couleur du fond derrière le bouton*/
   border-right: 2rem solid transparent;
   position: absolute;
   left:0;
@@ -2333,6 +2363,109 @@ input::autofill-selected {
 }
 /* input label top */
 
+.navigation_module{
+  background-image: linear-gradient(60deg,#61045F, #AA076B);
+  color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.navigation_module:hover{
+  background-color: var(--color-parent);
+}
+
+.navigation_module .nav-link{
+  color: rgba(243, 243, 243, 0.911);
+  font-weight: bolder;
+}
+
+.nav-tabs .nav-link.active{
+  background-color: white !important;
+  color: #61045F;
+  border-radius: 0;
+}
+
+.nav-tabs .nav-link:hover{
+  border-radius: 0;
+}
+
+.searchBoxMod {
+   position: relative;
+  left: 47%;
+  transform: translate(-50%, 50%);
+  /* background: rgba(255, 255, 255, 0.514); */
+  background-color: #AA076B;
+  height: 46px;
+  border-radius: 40px;
+  padding-top: 2px;
+  padding-right: 2px;
+  padding-left: 2px;
+  border: 1px solid #AA076B;
+}
+
+.searchBoxMod:hover{
+  background-color: white;
+}
+
+.searchBoxMod:hover>.searchInputMod {
+  width: 150px;
+  padding: 20px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.searchBoxMod:hover>.searchButtonMod {
+  background: #AA076B;
+  color: white;
+}
+
+.searchButtonMod {
+  color: #d50000;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+  border: 1px solid #AA076B;
+}
+
+.searchInputMod {
+  position: relative;
+  bottom: 13px;
+  align-items: center;
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: #AA076B;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0px;
+  margin-bottom: 10px;
+}
+.searchInputMod::placeholder{
+  color: #AA076B;
+}
+
+.filtre_cours{
+  background-color: rgba(212, 212, 212, 0.253);
+  height: 30rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+
+
+
+@media screen and (max-width: 620px) {
+  .searchBoxMod:hover>.searchInputMod {
+      width: 150px;
+      padding: 0 6px;
+  }
+}
 
 
 /* nouveau module */
