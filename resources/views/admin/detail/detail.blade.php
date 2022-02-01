@@ -1,147 +1,163 @@
 <style>
-    .icon_plus{
+    .icon_plus {
         border: 2px solid whitesmoke;
         font-size: 0.5rem;
     }
-    .nouveau_detail{
+
+    .nouveau_detail {
         background-color: #822164;
         border-radius: 20px;
         color: #fff;
         padding: 0 8;
     }
-    .nouveau_detail:hover{
+
+    .nouveau_detail:hover {
         background-color: #b8368f;
         color: #fff;
     }
-    .outline{
+
+    .outline {
         outline: none;
         box-shadow: none;
     }
-    .th_sans_donnee{
+
+    .th_sans_donnee {
         font-weight: bold;
         text-align: center;
     }
-    .form_control_time{
+
+    .form_control_time {
         height: .5rem;
     }
+
     input[type="text"],
-    input[type="date"]{
-        height: auto !important ;
+    input[type="date"] {
+        height: auto !important;
     }
-    .intervention{
+
+    .intervention {
         background-color: rgb(241, 241, 242);
         padding: 2px 8px;
         border-radius: 1rem;
         text-align: center;
     }
-    .icon_plus{
+
+    .icon_plus {
         color: #b8368f;
-        margin-top:  -1rem;
+        margin-top: -1rem;
         font-size: 3rem;
         position: sticky;
         margin-left: 90%;
     }
-    .icon_plus:hover{
+
+    .icon_plus:hover {
         cursor: pointer;
     }
-    p{
+
+    p {
         text-align: center !important;
     }
 
 </style>
 
-@if(count($datas) === 0)
-<form onsubmit="change_active()" id="non_existante" action="{{route('detail.store')}}" method="post">
-    @csrf
-    <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
-    <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+@if (count($datas) === 0)
+    <form onsubmit="change_active()" id="non_existante" action="{{ route('detail.store') }}" method="post">
+        @csrf
+        <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
+        <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
 
-    <div class="row">
-        <div class="col-md-4 p-0">
-            <div class="row">
-                <div class="col-md-5 ps-2">
-                    <p><i class="fa fa-calendar-day entete"></i>&nbsp;Date </p>
-                </div>
-                <div class="col-md-7 p-0 d-flex justify-content-around entete">
-                    <p><i class="fa fa-clock"></i>&nbsp;Heure début </p>
-                    <p><i class="fa fa-clock"></i>&nbsp;Heure fin </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="row entete">
-                <div class="col-md-4"><p> <i class="fa fa-user"></i>&nbsp;Formateur </p></div>
-                <div class="col-md-8"><p><i class="fa fa-map-marker-alt"></i>&nbsp;Lieu </p></div>
-            </div>
-        </div>
-    </div>
-    @canany(['isCFP'])
-    <div id="conteneur">
-        <div class="fils m-0">
-            @php
-                $i=0;
-            @endphp
-            @while ($i<3)
-            <div class="row" id="inputFormRow">
-                <div class="col-md-4 p-0">
-                    <div class="row">
-                        <div class="col-md-5 p-0">
-                            <input type="date" name="date[]" placeholder="" class="form-control m-1" required>
-                        </div>
-                        <div class="col-md-7 ps-1 d-flex">
-                                <input type="time" name="debut[]" class="form-control my-1 ms-1" required>
-                                <input type="time" name="fin[]" class="form-control my-1 ms-1" required>
-                        </div>
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <div class="row">
+                    <div class="col-md-5 ps-2">
+                        <p><i class="fa fa-calendar-day entete"></i>&nbsp;Date </p>
+                    </div>
+                    <div class="col-md-7 p-0 d-flex justify-content-around entete">
+                        <p><i class="fa fa-clock"></i>&nbsp;Heure début </p>
+                        <p><i class="fa fa-clock"></i>&nbsp;Heure fin </p>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-5 px-2">
-                            <div class="input-group">
-                                {{-- <div class="input-group-prepend my-1">
+            </div>
+            <div class="col-md-8">
+                <div class="row entete">
+                    <div class="col-md-4">
+                        <p> <i class="fa fa-user"></i>&nbsp;Formateur </p>
+                    </div>
+                    <div class="col-md-8">
+                        <p><i class="fa fa-map-marker-alt"></i>&nbsp;Lieu </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @canany(['isCFP'])
+            <div id="conteneur">
+                <div class="fils m-0">
+                    @php
+                        $i = 0;
+                    @endphp
+                    @while ($i < 3)
+                        <div class="row" id="inputFormRow">
+                            <div class="col-md-4 p-0">
+                                <div class="row">
+                                    <div class="col-md-5 p-0">
+                                        <input type="date" name="date[]" placeholder="" class="form-control m-1" required>
+                                    </div>
+                                    <div class="col-md-7 ps-1 d-flex">
+                                        <input type="time" name="debut[]" class="form-control my-1 ms-1" required>
+                                        <input type="time" name="fin[]" class="form-control my-1 ms-1" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-5 px-2">
+                                        <div class="input-group">
+                                            {{-- <div class="input-group-prepend my-1">
                                     <div class="input-group-text"><i class="fa fa-user"></i></div>
                                 </div> --}}
-                                <select name="formateur[]" id="" class="form-control  my-1" required>
-                                    <option value="" selected hidden> Choisir formateur </option>
-                                    @foreach($formateur as $format)
-                                        <option value="{{$format->formateur_id}}">{{$format->prenom_formateur}}</option>
-                                    @endforeach
-                                </select>
+                                            <select name="formateur[]" id="" class="form-control  my-1" required>
+                                                <option value="" selected hidden> Choisir formateur </option>
+                                                @foreach ($formateur as $format)
+                                                    <option value="{{ $format->formateur_id }}">
+                                                        {{ $format->prenom_formateur }}</option>
+                                                @endforeach
+                                            </select>
 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 px-0 pe-2">
+                                        <div class="input-group">
+                                            <input type="text" name="lieu[]" class="form-control my-1" required>
+                                            <button id="removeRow" type="button"><i
+                                                    class="far fa-minus-circle mx-1 my-3"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-7 px-0 pe-2">
-                            <div class="input-group">
-                                <input type="text" name="lieu[]" class="form-control my-1" required>
-                                <button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button>
-                            </div>
-                        </div>
-                    </div>
+                        @php
+                            $i++;
+                        @endphp
+                    @endwhile
                 </div>
+
+                <div id="newRow"></div>
+                <div class="text-end ms-4">
+                    <button id="addRow" type="button"><i class="far fa-plus-circle"></i></button>
+                </div>
+
+
             </div>
-            @php
-                $i++;
-            @endphp
-            @endwhile
-        </div>
-
-        <div id="newRow"></div>
-        <div class="text-end ms-4">
-            <button id="addRow" type="button"><i class="far fa-plus-circle"></i></button>
-        </div>
-
-
-    </div>
-    <div class="enregistrer">
-        <button type="submit" class="btn btn-success"><i class="far fa-save"></i>&nbsp;Enregistrer</button>
-    </div>
-    @endcanany
-</form>
+            <div class="enregistrer">
+                <button type="submit" class="btn btn-success"><i class="far fa-save"></i>&nbsp;Enregistrer</button>
+            </div>
+        @endcanany
+    </form>
 @endif
 
 {{-- donnee non exiatante --}}
 
-@if(count($datas) != 0)
+@if (count($datas) != 0)
     <div id="existante">
         {{-- <div class="row">
             <div class="col-lg-12">
@@ -191,7 +207,7 @@
                                     Rechercher par entreprise <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    @foreach($liste as $etp)
+                                    @foreach ($liste as $etp)
                                     <li><a href="{{route('show_detail_entreprise',$etp->entreprise_id)}}">{{$etp->nom_etp}}</a></li>
                                     @endforeach
                                     <li class="divider"></li>
@@ -200,7 +216,7 @@
                             </li>
                             @endcanany --}}
 
-                        {{-- </ul>
+        {{-- </ul>
 
                     </div>
                 </div>
@@ -217,142 +233,214 @@
 
                     <div class="panel-body">
                         @canany(['isCFP'])
-                        <nav class="d-flex justify-content-end mb-1">
-                                <a class="nouveau_detail btn"  aria-current="page"  data-toggle="modal" data-target="#modal_nouveau_detail">
-                                    <i class="far fa-plus-circle p-1" style="background-color: white; border-radius: 50%; font-weight: bold;"></i>
-                                     <small class="text-white">Nouveau détail</small class="text-white"></a>
-                        </nav>
+                            <nav class="d-flex justify-content-end mb-1">
+                                <a class="nouveau_detail btn" aria-current="page" data-toggle="modal"
+                                    data-target="#modal_nouveau_detail">
+                                    <i class="far fa-plus-circle p-1"
+                                        style="background-color: white; border-radius: 50%; font-weight: bold;"></i>
+                                    <small class="text-white">Nouveau détail</small class="text-white"></a>
+                            </nav>
                         @endcanany
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
-                                        @canany(['isReferent','isManager','isFormateur'])
+                                    @canany(['isReferent', 'isManager', 'isFormateur'])
                                         <th>CFP</th>
-                                        @endcanany
-                                        <th>Module</th>
-                                        <th width="30%">Lieu</th>
-                                        <th>Date</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
-                                        <th>Formateur</th>
-                                        @canany(['isCFP'])
-                                            <th>Action</th>
-                                        @endcanany
+                                    @endcanany
+                                    <th>Module</th>
+                                    <th width="30%">Lieu</th>
+                                    <th>Date</th>
+                                    <th>Début</th>
+                                    <th>Fin</th>
+                                    <th>Formateur</th>
+                                    @canany(['isCFP', 'isFormateur'])
+                                        <th>Action</th>
+                                    @endcanany
                                 </thead>
                                 <tbody>
                                     @foreach ($datas as $d)
-                                    <tr>
-                                        @canany(['isReferent','isManager','isFormateur'])
-                                        <td>{{$d->nom_cfp }}</td>
-                                        @endcanany
-                                        <td>{{$d->nom_module}}</td>
-                                        <td>{{$d->lieu}}</td>
-                                        <td>{{$d->date_detail}}</td>
-                                        <td>{{$d->h_debut}} h</td>
-                                        <td>{{$d->h_fin}} h</td>
-                                        {{--test commit--}}
-                                        <td>{{$d->nom_formateur." ".$d->prenom_formateur}}</td>
-                                        @canany(['isCFP'])
-                                            <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
-                                        @endcanany
-                                        {{-- <td >
+                                        <tr>
+                                            @canany(['isReferent', 'isManager', 'isFormateur'])
+                                                <td>{{ $d->nom_cfp }}</td>
+                                            @endcanany
+                                            <td>{{ $d->nom_module }}</td>
+                                            <td>{{ $d->lieu }}</td>
+                                            <td>{{ $d->date_detail }}</td>
+                                            <td>{{ $d->h_debut }} h</td>
+                                            <td>{{ $d->h_fin }} h</td>
+                                            {{-- test commit --}}
+                                            <td>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}</td>
+                                            @canany(['isCFP'])
+                                                <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
+                                            @endcanany
+                                            @canany(['isFormateur'])
+                                                <td><i data-toggle="collapse" href="#stagiaire_presence" class="fa fa-edit"
+                                                        style="color:rgb(130,33,100);">Emargement</i></td>
+                                            @endcanany
+                                            {{-- <td >
                                                 <a href="{{route('execution',[$d->detail_id])}}" class ="btn btn-info" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </td>
                                         <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
                                         <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
-
-                                     </tr>
+                                        
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            @canany('isCFP')
+                            @foreach ($datas as $dt)
+                                <div class="collapse" id="stagiaire_presence">
+                                    <div class="table-responsive">
+                                        <table class="table">
+    
+                                            <tbody>
+                                                <form action="{{ route('insert_presence') }}" id="myform" method="post" role="form">
+                                                   @foreach ($stagiaire as $liste)
+                                                   <tr class="m-0"> 
+                                                       <td>{{$liste->matricule}}</td>
+                                                       <td>{{$liste->nom_stagiaire}}</td>
+                                                       <td >{{$liste->prenom_stagiaire}}</td>
+                                                        {{-- <td>
+                                                            <input type="submit" class="btn btn-primary pointage" id = "{{$liste->stagiaire_id}}" value = "Pointage">
+                                                        </td> --}}
+            
+                                                        <td>
+                                                            {{-- @if($message!="")
+                                                            <label>{{ $liste->status }}</label>
+                                                            @else --}}
+                                                                @csrf
+                                                                {{-- <div class="radio"> --}}
+                                                                    <label style="color: green;">
+                                                                    <input class="m-0" type="radio" name="attendance[{{ $liste->stagiaire_id }}]" value="Présent" >
+                                                                            Présent
+                                                                    </label>
+                                                                    <label  style="color: red;">
+                                                                    <input class="-0" type="radio" name="attendance[{{ $liste->stagiaire_id }}]" value="Absent">
+                                                                            Absent
+                                                                    </label>
+                                                                {{-- </div> --}}
+                                                            {{-- @endif --}}
+                                                        </td>
+                                                    </tr>
+                                                   @endforeach
+            
+                                                    <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
+            
+            
+            
+                                                </form>
+                                            </tbody>
+                                        </table>
+                                        {{-- @if($message=="")
+                                            <button class="btn btn-success form-control" form="myform"  name="add_attendance">Ajouter</button>
+                                        @else
+                                            <a href="{{ route('modifier',[$datas[0]->detail_id]) }}"><button class="btn btn-primary form-control">Modifier</button></a>
+                                        @endif --}}
+                                    </div>
+                                </div>
+                            @endforeach
+                            
+                        </div>
+                        </tbody>
+                        </table>
+                        @canany('isCFP')
                             <div class="modal fade" id="modal_nouveau_detail">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-title pt-3" style="height: 50px; align-items: center;">
                                             <h5 class="text-center my-auto">Nouveau detail</h5>
                                         </div>
-                                        <form class="btn-submit" action="{{route('detail.store')}}" method="post">
+                                        <form class="btn-submit" action="{{ route('detail.store') }}" method="post">
                                             @csrf
-                                                <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
-                                                <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
-                                                <div class="form-group mx-auto">
-                                                    <label for="formateur">Formateur</label><br>
-                                                    <select class="form-control" id="formateur" name="formateur">
-                                                        @foreach($formateur as $format)
-                                                        <option value="{{$format->formateur_id}}">{{$format->nom_formateur}} {{$format->prenom_formateur}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <p><strong style="color: red" id="err_formateur"></strong></p>
-                                                </div>
-                                                <div class="form-group mx-auto">
-                                                    <label for="lieu">Lieu</label>
-                                                    <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu">
+                                            <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
+                                            <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+                                            <div class="form-group mx-auto">
+                                                <label for="formateur">Formateur</label><br>
+                                                <select class="form-control" id="formateur" name="formateur">
+                                                    @foreach ($formateur as $format)
+                                                        <option value="{{ $format->formateur_id }}">
+                                                            {{ $format->nom_formateur }}
+                                                            {{ $format->prenom_formateur }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <p><strong style="color: red" id="err_formateur"></strong></p>
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="lieu">Lieu</label>
+                                                <input type="text" class="form-control" id="lieu" name="lieu"
+                                                    placeholder="Lieu">
 
-                                                </div>
-                                                <div class="form-group mx-auto">
-                                                    <label for="date">Date</label>
-                                                    <input type="date" class="form-control" id="date_detail" name="date" min="" max="">
-                                                </div>
-                                                <div class="form-group mx-auto">
-                                                    <label for="debut">Heure début</label>
-                                                    <input type="time" class="form-control" id="debut" name="debut" min="07:00" max="17:00">
-                                                </div>
-                                                <div class="form-group mx-auto">
-                                                    <label for="fin">Heure fin</label>
-                                                    <input type="time" class="form-control" id="fin" name="fin" min="08:00" max="18:08">
-                                                </div>
-                                                <div class="d-flex justify-content-center mb-3">
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="date">Date</label>
+                                                <input type="date" class="form-control" id="date_detail" name="date"
+                                                    min="" max="">
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="debut">Heure début</label>
+                                                <input type="time" class="form-control" id="debut" name="debut"
+                                                    min="07:00" max="17:00">
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="fin">Heure fin</label>
+                                                <input type="time" class="form-control" id="fin" name="fin" min="08:00"
+                                                    max="18:08">
+                                            </div>
+                                            <div class="d-flex justify-content-center mb-3">
                                                 <input type="submit" id="ajouter" class="btn btn-primary" value="Ajouter">
-                                                </div>
-                                            </form>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            @endcanany
+                        @endcanany
 
-                            <div class="modal fade" id="myModal">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title">Modification</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form class="btn-submit">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <label for="nom">Projet</label>
-                                                    <input type="text" class="form-control" id="projetModif" placeholder="Projet">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="groupe">Groupe</label>
-                                                    <input type="text" class="form-control" id="groupeModif" placeholder="Groupe">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="lieu">Lieu</label>
-                                                    <input type="text" class="form-control" id="lieuModif" placeholder="Lieu">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="debut">Date début</label>
-                                                    <input type="date" class="form-control" id="debutModif" name="debut">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="fin">Date fin</label>
-                                                    <input type="date" class="form-control" id="finModif" name="fin">
-                                                </div>
-                                                <button class="btn btn-success modification " id="action1"><span class="glyphicon glyphicon-pencil"></span> Modifier</button>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">Modification</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="btn-submit">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="nom">Projet</label>
+                                                <input type="text" class="form-control" id="projetModif"
+                                                    placeholder="Projet">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="groupe">Groupe</label>
+                                                <input type="text" class="form-control" id="groupeModif"
+                                                    placeholder="Groupe">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lieu">Lieu</label>
+                                                <input type="text" class="form-control" id="lieuModif"
+                                                    placeholder="Lieu">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="debut">Date début</label>
+                                                <input type="date" class="form-control" id="debutModif" name="debut">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fin">Date fin</label>
+                                                <input type="date" class="form-control" id="finModif" name="fin">
+                                            </div>
+                                            <button class="btn btn-success modification " id="action1"><span
+                                                    class="glyphicon glyphicon-pencil"></span> Modifier</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -364,13 +452,14 @@
 <script></script>
 <script>
     $("#non_existante").on('submit', function() {
-        document.getElementById('#non_existante').onsubmit = function (){
-         document.querySelector('#non_existante').style.display = "none";
-        document.querySelector('#existante').style.display = "block";
-    }
+        document.getElementById('#non_existante').onsubmit = function() {
+            document.querySelector('#non_existante').style.display = "none";
+            document.querySelector('#existante').style.display = "block";
+        }
     });
-    function change_active(){
-         document.querySelector('#non_existante').style.display = "none";
+
+    function change_active() {
+        document.querySelector('#non_existante').style.display = "none";
         document.querySelector('#existante').style.display = "block";
     };
     // document.getElementById('#non_existante').onsubmit = function (){
@@ -388,13 +477,13 @@
         var id = e.target.id;
 
         $.ajax({
-            type: "GET"
-            , url: "{{route('edit_detail')}}"
-            , data: {
+            type: "GET",
+            url: "{{ route('edit_detail') }}",
+            data: {
                 Id: id
-            }
-            , dataType: "html"
-            , success: function(response) {
+            },
+            dataType: "html",
+            success: function(response) {
                 var userData = JSON.parse(response);
                 for (var $i = 0; $i < userData.length; $i++) {
                     $("#projetModif").val(userData[$i].projet.nom_projet);
@@ -405,8 +494,8 @@
                     id_detail = userData[$i].id;
                 }
                 $('#action1').val('Modifier');
-            }
-            , error: function(error) {
+            },
+            error: function(error) {
                 console.log(error)
             }
         });
@@ -414,19 +503,19 @@
     $(".supprimer").on('click', function(e) {
         var id = e.target.id;
         $.ajax({
-            type: "GET"
-            , url: "{{route('destroy_detail')}}"
-            , data: {
+            type: "GET",
+            url: "{{ route('destroy_detail') }}",
+            data: {
                 Id: id
-            }
-            , success: function(response) {
+            },
+            success: function(response) {
                 if (response.success) {
                     window.location.reload();
                 } else {
                     alert("Error")
                 }
-            }
-            , error: function(error) {
+            },
+            error: function(error) {
                 console.log(error)
             }
         });
@@ -437,81 +526,85 @@
         var date_fin = $('#fin').val();
         var url = 'update_detail/' + id_detail;
         $.ajax({
-            url: url
-            , method: 'get'
-            , data: {
+            url: url,
+            method: 'get',
+            data: {
 
-                Lieu: lieu
-                , Debut: date_debut
-                , Fin: date_fin,
+                Lieu: lieu,
+                Debut: date_debut,
+                Fin: date_fin,
 
-            }
-            , success: function(response) {
+            },
+            success: function(response) {
                 if (response.success) {
                     window.location.reload();
                 } else {
                     alert("Error")
                 }
-            }
-            , error: function(error) {
+            },
+            error: function(error) {
                 console.log(error)
             }
         });
     });
 
-    $(document).on('click', '#removeRow', function () {
+    $(document).on('click', '#removeRow', function() {
         $(this).closest('#inputFormRow').remove();
     });
 
-    $(document).on('click','#addRow',function () {
+    $(document).on('click', '#addRow', function() {
         $('#frais').empty();
         $.ajax({
-            url:"{{route('all_formateurs')}}",
-            type:'get',
-            success:function(response){
-                var userData=response;
+            url: "{{ route('all_formateurs') }}",
+            type: 'get',
+            success: function(response) {
+                var userData = response;
                 var html = '';
                 html += '<div class="row" id ="inputFormRow">';
 
-                    html += '<div class="col-md-4 p-0">';
-                    html += '<div class="row">'  ;
-                    html += '<div class="col-md-5 p-0">' ;
-                    html += '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';
-                    html += '</div>'  ;
-                    html += ' <div class="col-md-7 ps-1 d-flex">';
-                    html += '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
-                    html += '<input type="time" name="fin[]" class="form-control my-1" required>';
-                    html += '</div>' ;
-                    html += '</div>';
-                    html += '</div>';
+                html += '<div class="col-md-4 p-0">';
+                html += '<div class="row">';
+                html += '<div class="col-md-5 p-0">';
+                html +=
+                    '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';
+                html += '</div>';
+                html += ' <div class="col-md-7 ps-1 d-flex">';
+                html +=
+                    '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
+                html += '<input type="time" name="fin[]" class="form-control my-1" required>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
 
-                    html += '<div class="col-md-8">';
-                    html += '<div class="row">';
-                        html += '<div class="col-md-5 px-2">';
-                        html += '<div class="input-group">';
-                        html += '<select name="formateur[]" id="" class="form-control  my-1" required>'  ;
-                        html += '<option value="" selected hidden> Choisir formateur </option>' ;
-                        for(var $i = 0; $i < userData.length; $i++){
-                            html += '<option value="'+userData[$i].formateur_id+'">'+userData[$i].prenom_formateur+'</option>';
-                        }
-                        html += '</select>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '<div class="col-md-7 px-0 pe-2">';
-                        html += '<div class="input-group">' ;
-                        html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
-                        html +=  '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
-                        html += '</div>';
-                        html += '</div>';
+                html += '<div class="col-md-8">';
+                html += '<div class="row">';
+                html += '<div class="col-md-5 px-2">';
+                html += '<div class="input-group">';
+                html += '<select name="formateur[]" id="" class="form-control  my-1" required>';
+                html += '<option value="" selected hidden> Choisir formateur </option>';
+                for (var $i = 0; $i < userData.length; $i++) {
+                    html += '<option value="' + userData[$i].formateur_id + '">' + userData[$i]
+                        .prenom_formateur + '</option>';
+                }
+                html += '</select>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="col-md-7 px-0 pe-2">';
+                html += '<div class="input-group">';
+                html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
+                html +=
+                    '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
+                html += '</div>';
+                html += '</div>';
 
 
-                    html +='</div>';
-                    html +='</div>';
-                html +='</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
 
                 $('#newRow').append(html);
             },
-            error:function(error){
+            error: function(error) {
                 console.log(error);
             }
         });

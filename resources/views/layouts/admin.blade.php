@@ -125,7 +125,7 @@
                     </ul>
                     </li>
                     @endcanany
-                    @canany(['isCFP'])
+                    @canany(['isCFP','isFormateur'])
                     <li class="my-2">
                         <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">

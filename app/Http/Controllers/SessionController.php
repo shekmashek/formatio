@@ -116,9 +116,10 @@ class SessionController extends Controller
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
         }
         if(Gate::allows('isFormateur')){
-            $cfp_id = DB::select("select cfp_id v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id]);
+            $formateur_id = formateur::where('user_id', $user_id)->value('id');
+            $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
             $formateur = NULL;
-            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
+            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id"], [$cfp_id,$formateur_id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
         }
         // public
