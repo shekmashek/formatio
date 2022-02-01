@@ -29,6 +29,27 @@ class ModuleController extends Controller
             return $next($request);
         });
     }
+    // public function index($id = null)
+    // {
+    //     $id_user = Auth::user()->id;
+    //     $cfp_id =cfp::where('user_id', $id_user)->value('id');
+    //     if (Gate::allows('isCFP')) {
+    //         $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
+    //         $categorie = formation::where('cfp_id', $cfp_id)->get();
+    //         if(count($infos) <= 0){
+    //             return view('admin.module.guide');
+    //         }else{
+    //             return view('admin.module.module', compact('infos', 'categorie'));
+    //         }
+    //     }
+    //     if (Gate::allows('isSuperAdmin')) {
+    //         $infos = DB::select('select * from moduleformation');
+    //         $categorie = formation::all();
+    //     }
+
+    //     return view('admin.module.module', compact('infos', 'categorie'));
+    // }
+
     public function index($id = null)
     {
         $id_user = Auth::user()->id;
@@ -36,17 +57,23 @@ class ModuleController extends Controller
         if (Gate::allows('isCFP')) {
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             $categorie = formation::where('cfp_id', $cfp_id)->get();
+            $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
+                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id)');
+            $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
+                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1');
+            $mod_publies = DB::select('select * from moduleformation where status = 2');
             if(count($infos) <= 0){
                 return view('admin.module.guide');
             }else{
-                return view('admin.module.module', compact('infos', 'categorie'));
+                return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
             $infos = DB::select('select * from moduleformation');
             $categorie = formation::all();
         }
-        return view('admin.module.module', compact('infos', 'categorie'));
+
+        return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies'));
     }
 
     /*   ====================  Generate PDF gestion de Catalogue     */
@@ -169,8 +196,6 @@ class ModuleController extends Controller
     {
         $id = $request->Id;
         $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
-        // $mod = programme::where('module_id', $id)->with('Module')->get();
-        // $id_formation = module::where('id', $id)->value('formation_id');
         // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
         return response()->json($module_en_cours);
     }
@@ -277,5 +302,12 @@ class ModuleController extends Controller
             $response[] = array("value" => $form->id, "label" => $form->nom_formation);
         }
         return response()->json($response);
+    }
+
+    public function module_publier(Request $request){
+        $id = $request->id;
+        $statut = 2;
+        $changer_status = DB::update('update modules set status=? where id= ?',[$statut,$id]);
+        return back();
     }
 }

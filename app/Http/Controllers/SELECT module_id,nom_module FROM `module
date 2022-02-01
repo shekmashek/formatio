@@ -1,3 +1,0 @@
-SELECT module_id,nom_module FROM `moduleformation` AS mf where NOT EXISTS (
-	SELECT * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id
-);
