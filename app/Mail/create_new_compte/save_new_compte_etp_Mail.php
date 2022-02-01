@@ -16,10 +16,11 @@ class save_new_compte_etp_Mail extends Mailable
      *
      * @return void
      */
-    public function __construct($nom_resp, $email_resp)
+    public function __construct($nom_resp, $email_resp,$nom_etp)
     {
         $this->nom_resp = $nom_resp;
         $this->email_resp = $email_resp;
+        $this->nom_etp = $nom_etp;
     }
     /**
      * Build the message.
@@ -33,7 +34,8 @@ class save_new_compte_etp_Mail extends Mailable
             ->view('collaboration.mail.save_new_compte_etp_Mail')
             ->with([
                 'nom_resp' => $this->nom_resp,
-                'email_resp' => $this->email_resp
+                'email_resp' => $this->email_resp,
+                'nom_etp' => $this->nom_etp
             ]);
     }
 }

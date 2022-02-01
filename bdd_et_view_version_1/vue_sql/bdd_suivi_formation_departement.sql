@@ -10,3 +10,5 @@ FROM
 WHERE
     dep.entreprise_id = etp.id AND
     serv.departement_entreprise_id = dep.id;
+
+

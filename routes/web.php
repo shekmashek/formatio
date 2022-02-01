@@ -622,3 +622,15 @@ Route::get('supprimer_ressource','SessionController@supprimer_ressource')->name(
 
 //-------------------- CRUD DEPARTEMENT - SERVICE -----------------------\\
 Route::get('liste_departement','DepartementController@show_departement')->name('liste_departement');
+//enregistrement service
+Route::post('enregistrement_service','DepartementController@enregistrement_service')->name('enregistrement_service');
+Route::get('affiche_departement','DepartementController@liste_dep')->name('affiche_departement');
+// ======= export excel copier coller participant
+Route::get('export_excel_new_participant','ParticipantController@export_excel_new_participant')->name('export_excel_new_participant');
+Route::get('show_excel','ViexExcelController@index')->name('show_excel');
+Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
+Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep');
+
+// Route::get('nouvelle_departememnt', function () {
+//     return view('admin.departememnt.nouveau_departement');
+// })->name('nouvelle_departememnt');

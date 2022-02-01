@@ -144,17 +144,28 @@ class DepartementController extends Controller
     public function show_departement(Request $request){
         $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
         $id_etp = $rqt[0]->entreprise_id;
-        $rqt = db::select('select * from v_departement_service_entreprise where entreprise_id = ?',[$id_etp]);
-        $liste_departement = $rqt[0]->nom_departement;
-        $liste_service= $rqt[0]->nom_service;
-        return view('admin.departement.nouveau_departement',compact('liste_departement','liste_service'));
+        $rqt = db::select('select * from departement_entreprises where entreprise_id = ?',[$id_etp]);
+        $nb = count($rqt);
+        $service_departement = DB::select('select *  from v_departement_service_entreprise  where entreprise_id = ? ', [$id_etp]);
+        $nb_serv = count($service_departement);
+        if($rqt != null){
+            // $liste_departement = $rqt[3]->nom_departement;
+            return view('admin.departememnt.nouveau_departement',compact('rqt','nb','nb_serv','service_departement'));
+        }
+        else{
+            return view('admin.departememnt.nouveau_departement');
+        }
+
     }
     //fonction qui enregistre les services ratachés aux départements
     public function enregistrement_service(Request $request){
-        $id_departement = $request->departement_id;
+        // $id_departement = $request->departement_id;
         $input = $request->all();
+        $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $id_etp = $rqt[0]->entreprise_id;
+
         for ($i = 0; $i < count($input['service']); $i++) {
-            DB::insert('insert into services (departement_entreprise_id, nom_service) values (?, ?)', [$id_departement, $input['service'][$i]]);
+            DB::insert('insert into services (departement_entreprise_id, nom_service) values (?, ?)', [ $input['departement_id'][$i], $input['service'][$i] ]);
         }
         return back();
     }
@@ -183,5 +194,12 @@ class DepartementController extends Controller
 
             ]
         );
+    }
+    //show departement select option
+    public function liste_dep(Request $request){
+        $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $id_etp = $rqt[0]->entreprise_id;
+        $nom_dep = DB::select('select * from departement_entreprises where entreprise_id = ?',[$id_etp]);
+        return response()->json($nom_dep);
     }
 }

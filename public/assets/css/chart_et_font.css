@@ -1094,6 +1094,7 @@ select {
   width: 100%;
   height: auto;
 }
+/*
 .form_insert_formateur input:valid,
 
 .form_insert_formateur input:invalid {

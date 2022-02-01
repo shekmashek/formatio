@@ -112,8 +112,10 @@ class NouveauCompteController extends Controller
 
             $this->img->store_image("entreprise",$data["logo_cfp"],$req->file('logo_cfp')->getContent());
             $this->img->store_image("responsable",$resp["photo_resp"],$req->file('photo_resp_cfp')->getContent());
+            $fonct = new FonctionGenerique();
+            $cfp = $fonct->findWhereMulitOne("cfps",["email"],[$req->email_cfp]);
 
-            Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp.' '.$req->prenom_resp_cfp,$req->email_resp_cfp));
+            Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp.' '.$req->prenom_resp_cfp,$req->email_resp_cfp,$cfp->nom));
             return redirect()->route('inscription_save');
         } else {
             return back()->with('error', 'Organisation de Formation existe déjà!');
@@ -189,7 +191,10 @@ class NouveauCompteController extends Controller
             //============= save image
             $this->img->store_image("entreprise",$data["logo_etp"],$req->file('logo_etp')->getContent());
             $this->img->store_image("responsable",$resp["photo_resp"],$req->file('photo_resp')->getContent());
-            Mail::to($req->email_resp)->send(new save_new_compte_etp_Mail($req->nom_resp.' '.$req->prenom_resp,$req->email_resp));
+            $fonct = new FonctionGenerique();
+            $etp = $fonct->findWhereMulitOne("cfps",["email_etp"],[$req->email_cfp]);
+
+            Mail::to($req->email_resp)->send(new save_new_compte_etp_Mail($req->nom_resp.' '.$req->prenom_resp,$req->email_resp,$etp->nom_etp));
 
             return redirect()->route('inscription_save');
         } else {

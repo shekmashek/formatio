@@ -18,6 +18,8 @@ use App\responsable;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 /* ====================== Exportation Excel ============= */
 use App\Exports\ParticipantExport;
@@ -32,7 +34,7 @@ class ParticipantController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -54,39 +56,44 @@ class ParticipantController extends Controller
         }
         if (Gate::allows('isManager')) {
 
-            $entreprise_id =chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
+            $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
             $fonct = new FonctionGenerique();
-            $chef = $fonct->findWhereMulitOne("v_chef_departement_entreprise",
-            ["entreprise_id","user_id_chef_departement"],
-            [$entreprise_id,$user_id]);
-            $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->where('departement_id',[$chef->departement_id])->get();
+            $chef = $fonct->findWhereMulitOne(
+                "v_chef_departement_entreprise",
+                ["entreprise_id", "user_id_chef_departement"],
+                [$entreprise_id, $user_id]
+            );
+
+            $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->where('departement_id', [$chef->departement_id])->get();
             return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
         }
     }
 
     public function create($id = null)
     {
-        
+
         $user_id = Auth::user()->id;
-        $id_etp = responsable::where('id',$user_id)->value('entreprise_id');
+        $id_etp = responsable::where('id', $user_id)->value('entreprise_id');
         $liste_etp = entreprise::orderBy('nom_etp')->get();
         if (Gate::allows('isSuperAdmin')) {
-            $datas = stagiaire::with('entreprise', 'User')->where('activiter',[true])->get();
+            $datas = stagiaire::with('entreprise', 'User')->where('activiter', [true])->get();
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-            $datas = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = '.$entreprise_id);
-            $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id ='.$entreprise_id);
+            $datas = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = ' . $entreprise_id);
+            $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id =' . $entreprise_id);
             // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }
         if (Gate::allows('isManager')) {
             $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
             $fonct = new FonctionGenerique();
-            $chef = $fonct->findWhereMulitOne("v_chef_departement_entreprise",
-            ["entreprise_id","user_id_chef_departement"],
-            [$entreprise_id,$user_id]);
+            $chef = $fonct->findWhereMulitOne(
+                "v_chef_departement_entreprise",
+                ["entreprise_id", "user_id_chef_departement"],
+                [$entreprise_id, $user_id]
+            );
 
-            $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->where('departement_id',[$chef->departement_id])->where('activiter',[true])->get();
+            $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id', [$entreprise_id])->where('departement_id', [$chef->departement_id])->where('activiter', [true])->get();
         }
 
 
@@ -106,7 +113,7 @@ class ParticipantController extends Controller
             'nom_entreprise' => 'Tout'
         ];
         // return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression','id_etp'));
-        return view('admin.participant.stagiaire_entreprise', compact('ancien','liste_etp', 'datas', 'info_impression','id_etp'));
+        return view('admin.participant.stagiaire_entreprise', compact('ancien', 'liste_etp', 'datas', 'info_impression', 'id_etp'));
     }
 
     public function store(Request $request)
@@ -129,7 +136,7 @@ class ParticipantController extends Controller
                 'lieu' => ["required"],
                 'image' => ["required"],
                 'cin' =>  ["required"],
-                
+
             ],
             [
                 'matricule.required' => 'Veuillez remplir le champ',
@@ -202,11 +209,11 @@ class ParticipantController extends Controller
 
             $str = 'images/stagiaires';
 
-             //stocker logo dans google drive
+            //stocker logo dans google drive
             //stocker logo dans google drive
             $dossier = 'stagiaire';
             $stock_stg = new getImageModel();
-            $stock_stg->store_image($dossier,$nom_image,$request->file('image')->getContent());
+            $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
 
             $participant->photos = $nom_image;
 
@@ -273,16 +280,16 @@ class ParticipantController extends Controller
     {
         $participant = new stagiaire();
         $id = $request->id_get;
-      
+
         $input = $request->image;
-  
+
         if ($image = $request->file('image')) {
             $destinationPath = 'image/stagiaires';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input= "$profileImage";
         }
-          
+
         // stagiaire::where('id', $id)->update([']);
         $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
@@ -303,9 +310,9 @@ class ParticipantController extends Controller
             'quartier'=>$request->quartier,
             'code_postal'=>$request->code_postal,
             'lot'=>$request->lot,
-            
+
         ]);
-       
+
 
         return back();
     }
@@ -314,30 +321,30 @@ class ParticipantController extends Controller
     {
         $id = request()->id;
         //on récupère le matricule , l'activité,entreprise id, du stagiaire
-        $resultat = DB::select('SELECT matricule,entreprise_id,departement_id,activiter FROM stagiaires WHERE id = '.$id);
+        $resultat = DB::select('SELECT matricule,entreprise_id,departement_id,activiter FROM stagiaires WHERE id = ' . $id);
         $matricule = $resultat[0]->matricule;
         $entreprise_id = $resultat[0]->entreprise_id;
         $departement_id = $resultat[0]->departement_id;
         $activite = $resultat[0]->activiter;
-        if($activite == 1) {
+        if ($activite == 1) {
             $date_depart = $dt = Carbon::today()->toDateString();
             //on insère dans l'historique stagiaire l'entreprise id, le matricule et le stagiaire id
             DB::insert('INSERT INTO historique_stagiaires
                         (`stagiaire_id`, `ancien_entreprise_id`,`ancien_departement_id` ,`nouveau_entreprise_id`,`nouveau_departement_id`, `ancien_matricule`, `nouveau_matricule`, `date_depart`, `date_arrivee`,`particulier`)
-                        Values (?,?,?,?,?,?,?,?,?,?)',[$id,$entreprise_id,$departement_id,0,0,$matricule,0,$date_depart,0,0]);
+                        Values (?,?,?,?,?,?,?,?,?,?)', [$id, $entreprise_id, $departement_id, 0, 0, $matricule, 0, $date_depart, 0, 0]);
 
-           //on modifie l'entreprise id du stagiaire par 0
-            DB::update('update stagiaires set activiter = 0  where id = '.$id);
+            //on modifie l'entreprise id du stagiaire par 0
+            DB::update('update stagiaires set activiter = 0  where id = ' . $id);
         }
-        if($activite == 0) {
+        if ($activite == 0) {
             $date_depart = $dt = Carbon::today()->toDateString();
             //on insère dans l'historique stagiaire l'entreprise id, le matricule et le stagiaire id
             DB::insert('INSERT INTO historique_stagiaires
                         (`stagiaire_id`, `ancien_entreprise_id`,`ancien_departement_id` ,`nouveau_entreprise_id`,`nouveau_departement_id`, `ancien_matricule`, `nouveau_matricule`, `date_depart`, `date_arrivee`)
-                        Values (?,?,?,?,?,?,?,?,?)',[$id,$entreprise_id,$departement_id,$entreprise_id,$departement_id,$matricule,$matricule,$date_depart,$date_depart]);
+                        Values (?,?,?,?,?,?,?,?,?)', [$id, $entreprise_id, $departement_id, $entreprise_id, $departement_id, $matricule, $matricule, $date_depart, $date_depart]);
 
-           //on modifie l'entreprise id du stagiaire par 0
-            DB::update('update stagiaires set activiter = 1 where id = '.$id);
+            //on modifie l'entreprise id du stagiaire par 0
+            DB::update('update stagiaires set activiter = 1 where id = ' . $id);
         }
 
         // $stag = stagiaire::findOrFail($id);
@@ -384,14 +391,15 @@ class ParticipantController extends Controller
         return response()->json($response);
     }
 
-    public function getStagiairesCIN(Request $request){
+    public function getStagiairesCIN(Request $request)
+    {
         $search = $request->search;
-        $etp_id = responsable::where('id',Auth::id())->value('entreprise_id');
+        $etp_id = responsable::where('id', Auth::id())->value('entreprise_id');
 
         if ($search == '') {
             $stagiaires = stagiaire::orderby('nom_stagiaire', 'asc')->select('id', 'cin')->limit(5)->get();
         } else {
-            $stagiaires = stagiaire::orderby('nom_stagiaire', 'asc')->select('id', 'cin')->where([['entreprise_id','!=',$etp_id],['cin', 'like', $search . '%']])->limit(5)->get();
+            $stagiaires = stagiaire::orderby('nom_stagiaire', 'asc')->select('id', 'cin')->where([['entreprise_id', '!=', $etp_id], ['cin', 'like', $search . '%']])->limit(5)->get();
         }
 
         $response = array();
@@ -419,47 +427,45 @@ class ParticipantController extends Controller
 
     //recherche par CIN
 
-    public function rechercheCIN(Request $request){
+    public function rechercheCIN(Request $request)
+    {
         $cin = $request->cin;
-        $id = stagiaire::where('cin',$cin)->value('id');
+        $id = stagiaire::where('cin', $cin)->value('id');
         if ($id == null) {
-            $datas["exist"]=0;
+            $datas["exist"] = 0;
             $datas["msg"] = "Verifier le CIN";
             return response()->json($datas);
         }
-        $etp_id = stagiaire::where('cin',$cin)->value('entreprise_id');
-        $etp_id_referent = responsable::where('user_id',Auth::id())->value('entreprise_id');
+        $etp_id = stagiaire::where('cin', $cin)->value('entreprise_id');
+        $etp_id_referent = responsable::where('user_id', Auth::id())->value('entreprise_id');
 
         if ($etp_id != $etp_id_referent) {
-                $stg = db::select('select * from historique_stagiaires where stagiaire_id ='.$id);
-                if($stg!=null)  {
-                    if($stg[0]->nouveau_entreprise_id == $etp_id_referent) {
-                        $datas["exist"]=0;
-                        $datas["msg"] = "Cette personne est déjà dans votre entreprise";
-                        return response()->json($datas);
-                    }
-                    else{
-                        $stg_particulier = $stg[0]->particulier;
-                        $datas["stg"] = stagiaire::where('cin', $cin)->get();
-                        $datas["exist"]=1;
-                        return response()->json($datas);
-                    }
-                }
-                if($stg==null) {
-                    $datas["exist"]=0;
-                    $datas["msg"] = "Aucun résultat";
+            $stg = db::select('select * from historique_stagiaires where stagiaire_id =' . $id);
+            if ($stg != null) {
+                if ($stg[0]->nouveau_entreprise_id == $etp_id_referent) {
+                    $datas["exist"] = 0;
+                    $datas["msg"] = "Cette personne est déjà dans votre entreprise";
+                    return response()->json($datas);
+                } else {
+                    $stg_particulier = $stg[0]->particulier;
+                    $datas["stg"] = stagiaire::where('cin', $cin)->get();
+                    $datas["exist"] = 1;
                     return response()->json($datas);
                 }
-                // return response()->json($datas);
+            }
+            if ($stg == null) {
+                $datas["exist"] = 0;
+                $datas["msg"] = "Aucun résultat";
+                return response()->json($datas);
+            }
+            // return response()->json($datas);
 
-        }
-        else{
-            $datas["exist"]=0;
+        } else {
+            $datas["exist"] = 0;
             $datas["msg"] = "Cette personne est déjà dans votre entreprise";
             return response()->json($datas);
-
         }
-     }
+    }
     // public function rechercheCIN(Request $request){
     //     $cin = $request->cin;
     //     $id = stagiaire::where('cin',$cin)->value('id');
@@ -496,15 +502,16 @@ class ParticipantController extends Controller
 
     //  }
     //ajout stagiaire dans une nouvelle entreprise
-    public function nouvelle_entreprise_stagiaire(Request $request){
+    public function nouvelle_entreprise_stagiaire(Request $request)
+    {
         //on récupère l'id entreprise du référent connecté
-        $etp_id = responsable::where('user_id',Auth::id())->value('entreprise_id');
+        $etp_id = responsable::where('user_id', Auth::id())->value('entreprise_id');
         $id = $request->stg;
         $matricule = $request->matricule;
         $email_nouveau = $request->mail_prof;
         //on met à jour le nouveau entreprise du stagiaire dans historique et remplacer la valeur particulier par 0
-        db::update('update historique_stagiaires set nouveau_entreprise_id = ?, nouveau_matricule = ? , particulier = ?',[$etp_id,$matricule,0]);
-        db::update('update stagiaires set entreprise_id = ?, matricule = ? ,mail_stagiaire = ? ,activiter = ? where id = ?',[$etp_id,$matricule,$email_nouveau,1,$id]);
+        db::update('update historique_stagiaires set nouveau_entreprise_id = ?, nouveau_matricule = ? , particulier = ?', [$etp_id, $matricule, 0]);
+        db::update('update stagiaires set entreprise_id = ?, matricule = ? ,mail_stagiaire = ? ,activiter = ? where id = ?', [$etp_id, $matricule, $email_nouveau, 1, $id]);
         return redirect()->route('liste_participant');
     }
     public function rechercheFonction(Request $request)
@@ -573,7 +580,7 @@ class ParticipantController extends Controller
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
         if ($stagiaire_connecte) {
-            $stagiaires =stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
+            $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         } else {
             $stagiaires = stagiaire::with('entreprise', 'Departement')->where('id', $id)->get();
         }
@@ -612,7 +619,7 @@ class ParticipantController extends Controller
             'quartier'=>$request->quartier,
             'code_postal'=>$request->code_postal,
             'lot'=>$request->lot,
-            
+
         ]);
         }
         else{
@@ -633,7 +640,7 @@ class ParticipantController extends Controller
             'quartier'=>$request->quartier,
             'code_postal'=>$request->code_postal,
             'lot'=>$request->lot,
-            
+
         ]);
     }
         $password = $request->password;
@@ -645,7 +652,8 @@ class ParticipantController extends Controller
         ]);
         return redirect()->route('profile_stagiaire', $id);
     }
-    public function last_record(){
+    public function last_record()
+    {
         $last_record_historique = DB::select(' SELECT *
         FROM (
           SELECT *
@@ -658,9 +666,103 @@ class ParticipantController extends Controller
         dd($last_record_historique);
     }
     //fonction récupération photos depuis google drive
-    public function getImage($path){
+    public function getImage($path)
+    {
         $dossier = 'stagiaire';
         $etp = new getImageModel();
-        return $etp->get_image($path,$dossier);
+        return $etp->get_image($path, $dossier);
+    }
+
+    // ============== export excel new participant
+
+    public function export_excel_new_participant()
+    {
+        $user_id = Auth::user()->id;
+
+        $fonct = new FonctionGenerique();
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            $liste_dep = $fonct->findWhere("v_departement", ["entreprise_id"], [$entreprise_id]);
+
+            return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep'));
+        }
+
+        if (Gate::allows('isManager')) {
+            $chef_id = $fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->id;
+            $dep_etp_id = $fonct->findWhereMulitOne("chef_dep_entreprises", ["chef_departement_id"], [$chef_id])->departement_entreprise_id;
+            $liste_dep = $fonct->findWhere("v_departement", ["departement_id"], [$dep_etp_id]);
+
+            return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep'));
+        }
+
+        if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
+            $liste_dep = $fonct->findAll("departements");
+            $liste_etp = $fonct->findAll("entreprises");
+
+            return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep', 'liste_etp'));
+        }
+    }
+
+    public function save_multi_stagiaire(Request $req)
+    {
+        $user_id = Auth::user()->id;
+        $stg = new stagiaire();
+        $fonct = new FonctionGenerique();
+
+        for ($i = 1; $i <= 30; $i += 1) {
+
+            $doner["matricule"] = $req["matricule_" . $i];
+            $doner["nom"]  = $req["nom_" . $i];
+            $doner["prenom"]  = $req["prenom_" . $i];
+            $doner["sexe"]  = $req["sexe_" . $i];
+            $doner["dte"]  = $req["naissance_" . $i];
+            $doner["cin"]  = $req["cin_" . $i];
+            $doner["email"]  = $req["email_" . $i];
+            $doner["tel"]  = $req["tel_" . $i];
+            $doner["fonction"]  = $req["fonction_" . $i];
+            $doner["departement_id"]  = $req["departement_id"];
+
+            if ($req["matricule_" . $i] != null && $req["nom_" . $i] != null) {
+                if (
+                    $req["prenom_" . $i] != null && $req["sexe_" . $i] != null && $req["naissance_" . $i] != null && $req["cin_" . $i] != null
+                    && $req["email_" . $i] != null && $req["tel_" . $i] != null && $req["fonction_" . $i] != null
+                ) {
+
+                    $verify = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req["email_" . $i]]);
+
+                    if (count($verify) <= 0) {
+
+                        $user = new User();
+                        $user->name = $req["nom_" . $i];
+                        $user->email = $req["email_" . $i];
+                        $ch1 = "0000";
+                        $user->password = Hash::make($ch1);
+                        $user->role_id = '3';
+                        $user->save();
+
+                        $user_stg_id = User::where('email', $req["email_" . $i])->value('id');
+
+                        if (Gate::allows('isReferent')) {
+                            $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+                            $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$entreprise_id]);
+
+                            $stg->insert_multi($doner, $user_stg_id, $entreprise_id);
+
+                            Mail::to($doner['email'])->send(new save_new_compte_stagiaire_Mail($doner["nom"].' '.$doner["prenom"],$doner['email'],$etp->nom_etp));
+
+                            return back()->with('success', "terminé!");
+                        }
+                    } else {
+                        return back()->with('error', "erreur,l'une des données existes déjà!");
+                    }
+                } else {
+                    return back()->with('error', "l'une des champs sont invalid!");
+                }
+            } else {
+                return back()->with('error', "champs vide");
+            }
+        }
+
+
     }
 }

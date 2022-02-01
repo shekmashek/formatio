@@ -12,7 +12,7 @@
         <strong>Félicitations!</strong>votre compte est activé. <br>
     </p>
 
-    <p>vous êtes le responsable principale de <strong>Numerika Center</strong> </p>
+    <p>vous êtes le responsable principale de <strong>{{$nom_etp}}</strong> </p>
     <p>Etant que responsable, vous pouvez vous connecter en tant que: <br>
         nom: {{$nom_resp}} <br>
         adresse email: {{$email_resp}}
