@@ -139,12 +139,20 @@ class HomeController extends Controller
         elseif (Gate::allows('isStagiaire')) {
             return view('layouts.accueil_admin');
         } elseif (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $entp = new entreprise();
 
+            $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
 
-            $entreprise = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation'));
+            $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
+            $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+
+            $entreprise = $entp->getEntreprise($etp2,$etp1);
+
+            $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
+            $module = $fonct->findAll("modules");
+
+            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation','formation','module'));
         }
     }
 
