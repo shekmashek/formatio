@@ -7,7 +7,7 @@
     <div class="collapse" id="corps">
 
     <div class="d-flex justify-content-end mb-3 me-2">
-        <i class="fa fa-folder-plus ms-2" style="font-size: 22px; color:rgb(130,33,100);">&nbsp;<a class="m-0 p-0" style="font-size: 16px;"> Ajouter un nouveau projet </a></i>
+        <i class="fa fa-folder-plus ms-2" style="font-size: 22px; color:rgb(130,33,100);">&nbsp;<a class="m-0 p-0" href="{{ route('nouveau_projet') }}" style="font-size: 16px;"> Ajouter un nouveau projet </a></i>
     </div>
 
     <table class="table table-stroped m-0 p-0">
@@ -42,16 +42,16 @@
                     {{-- <td> Ampandrana </td>
                     <td> 09 h à 10 H </td> --}}
                     <td> <p class="en_cours m-0 p-0">{{ $pj->status }}</p> </td>
-                    <td> 
+                    <td>
                         <i class="far fa-plus pb-3 i_carret"></i>
                     </td>
                 </tr>
             @endforeach
-        </tbody> 
+        </tbody>
     </table>
 
     </div>
-     
+
 </div><br>
 
 
