@@ -63,6 +63,16 @@
     <div class="container my-5">
         <div class="row">
             <h4>Départements/Services/Branches</h4>
+            @if(Session::has('success'))
+            <div class="alert alert-success">
+                <strong>{{Session::get('success')}}</strong>
+            </div>
+            @endif
+            @if(Session::has('error'))
+            <div class="alert alert-danger">
+                <strong>{{Session::get('error')}}</strong>
+            </div>
+            @endif
 
             <div class="col-md-12 mt-5">
                 <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
@@ -179,16 +189,6 @@
 
                             </form>
 
-                            @if(Session::has('success'))
-                            <div class="alert alert-success">
-                                <strong>{{Session::get('success')}}</strong>
-                            </div>
-                            @endif
-                            @if(Session::has('error'))
-                            <div class="alert alert-danger">
-                                <strong>{{Session::get('error')}}</strong>
-                            </div>
-                            @endif
 
                         </div>
                     </div>
@@ -351,16 +351,6 @@
 
                             </form>
 
-                            @if(Session::has('success'))
-                            <div class="alert alert-success">
-                                <strong>{{Session::get('success')}}</strong>
-                            </div>
-                            @endif
-                            @if(Session::has('error'))
-                            <div class="alert alert-danger">
-                                <strong>{{Session::get('error')}}</strong>
-                            </div>
-                            @endif
 
                         </div>
                     </div>
@@ -369,6 +359,74 @@
 
 
         </div>
+
+
+
+
+        {{-- internface branch --}}
+
+        <div class="tab-pane fade" id="branche" role="tabpanel" aria-labelledby="branche-tab">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-5">
+
+                        <div class="shadow p-3 mb-5 bg-body rounded ">
+
+                            <h4>Branche</h4>
+
+                            <div class="table-responsive text-center">
+
+                                <table class="table  table-borderless table-sm">
+                                    <tbody id="data_collaboration">
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-7">
+                        <div class="shadow p-3 mb-5 bg-body rounded ">
+
+                            <h4>Ajout de branche</h4>
+                            <form name="formInsert" id="formInsert" action="{{route('formateur.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();" class="form_colab">
+                                @csrf
+                                <div class="form-row d-flex">
+                                    <div class="col mb-2">
+                                        <select class="form-select mt-2" id="inlineFormInput" aria-label="Default select example">
+                                            <option selected>Choisit département </option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_service[]" placeholder="Nom de service" required />
+                                    </div>
+                                    <div class="col ms-2">
+                                        <button type="button" class="btn btn-success mt-2" id="addRow2"><i class='bx bxs-plus-circle'></i></button>
+                                    </div>
+
+                                </div>
+                                <div id="add_column2"></div>
+
+                                <button type="submit" class="btn btn-primary mt-2">Sauvegarder</button>
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        {{-- fin --}}
 
     </div>
 
