@@ -115,6 +115,12 @@ class SessionController extends Controller
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$etp_id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
         }
+        if(Gate::allows('isFormateur')){
+            $cfp_id = DB::select("select cfp_id v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id]);
+            $formateur = NULL;
+            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
+            $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+        }
         // public
         // ---apprenants
         $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$projet[0]->groupe_id]);
