@@ -41,6 +41,7 @@
             </div>
         </nav>
         <hr>
+
         {{-- <div class="row">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -78,6 +79,7 @@
                     <a href="#publies" class="nav-link" data-bs-toggle="tab">Publiées&nbsp;({{count($mod_publies)}})</a>
                 </li>
             </ul>
+
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="enCours">
                     <div class="container-fluid d-flex p-0 mt-3 me-3">
@@ -98,7 +100,6 @@
                                 </form>
                             </div>
                             <p class="mt-2">En cours</p>
-
                             <div class="container p-0">
                                 <ul class="ps-2">
                                     <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
@@ -190,11 +191,9 @@
                                             </div>
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn modifier" data-id="{{$mod->module_id}}"
-                                                    data-toggle="modal" data-target="#myModal_{{$mod->module_id}}"
-                                                    id="{{$mod->module_id}}}" id="{{$mod->module_id}}"><i
+                                                <button class="btn modifier"><a href="{{route('modifier_module',$mod->module_id)}}"><i
                                                         class='bx bx-edit'
-                                                        style="color: #0052D4 !important;font-size: 20px"></i></button>
+                                                        style="color: #0052D4 !important;font-size: 20px"></i></a></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
                                                 <button class="btn supprimer" data-toggle="modal"
@@ -203,13 +202,11 @@
                                                         style="color: #ff0000 !important;font-size: 20px"></i></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn afficher " data-id="{{$mod->module_id}}"
-                                                    data-toggle="modal" data-target="#ModalAffichage"
+                                                <button class="btn afficher "
                                                     id="{{$mod->module_id}}"><i class='fa fa-eye'
                                                         style="color: #799F0C !important;font-size: 20px"
                                                         title="Afficher"></i></button>
                                             </div>
-
                                             <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
                                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -237,185 +234,222 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-                                <div class="modal fade" id="myModal_{{$mod->module_id}}">
+                                {{-- <div class="modal fade" id="myModal_{{$mod->module_id}}">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content modal_center" style="width: 800px">
                                             <div class="modal-header d-flex justify-content-center"
-                                                style="background-color:rgb(96,167,134);">
+                                                style="background-color: #801d68;">
                                                 <h5 class="modal-title text-white">Modification</h5>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body p-5 pt-3">
                                                 <form action="{{ route('update_module',$mod->module_id) }}"
-                                                    method="POST">
+                                                    method="POST" id="frm_modif_module">
                                                     @csrf
-                                                    <div class="form-group">
-                                                        <label for="username"><small><b>Réference</b></small></label>
-                                                        <input type="text" class="form-control" name="reference"
-                                                            value="{{$mod->reference}}">
-                                                    </div><br>
-                                                    <label for="username"><small><b>Nom du module</b></small></label>
-                                                    <input type="text" class="form-control" name="nom_module"
-                                                        value="{{$mod->nom_module}}">
-                                                    @error('nom_module')
-                                                    <div class="col-sm-6">
-                                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                                    <div class="form-row d-flex me-3">
+                                                        <div class="col-5">
+                                                            <div class="form-group">
+                                                                <input type="text" id="nom_module"
+                                                                    class="form-control label_placeholder"
+                                                                    value="{{$mod->nom_module}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="nom_module">Nom module</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 ms-2 me-2">
+                                                            <div class="form-group">
+                                                                <input type="text" id="reference"
+                                                                    class="form-control label_placeholder"
+                                                                    value="{{$mod->reference}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="reference">Reference</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-5">
+                                                            <div class="form-group">
+                                                                <input type="text" id="description"
+                                                                    class="form-control label_placeholder"
+                                                                    value="{{$mod->description}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="description">Description</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    @enderror
-                                                    <br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Categorie</b></small> </label>
-                                                        <input type="text" class="form-control" name="categorie"
-                                                            value="{{$mod->nom_formation}}">
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="prix"> <small><b>Prix (Ar)</b></small> </label>
-                                                        <input type="text" class="form-control" name="prix"
-                                                            placeholder="Prix" value="{{$mod->prix}}" ); @endphp">
-                                                        @error('prix')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                                    <div class="form-row d-flex me-3">
+                                                        <div class="col-5">
+                                                            <div class="form-group">
+                                                                <input type="text" id="dureej"
+                                                                    class="form-control label_placeholder"
+                                                                    onfocus="(this.type='number')"
+                                                                    value="{{$mod->duree_jour}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="dureej">Duree en Jour</label>
+                                                            </div>
                                                         </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="duree"><small><b>Durée (H)</b></small></label>
-                                                        <input type="text" class="form-control" name="duree"
-                                                            value="{{$mod->duree}}">
-                                                        @error('duree')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                                        <div class="col-2 ms-2 me-2">
+                                                            <div class="form-group">
+                                                                <input type="text" id="prix"
+                                                                    class="form-control label_placeholder"
+                                                                    onfocus="(this.type='number')"
+                                                                    value="{{$mod->prix}}">
+                                                                <label class="form-control-placeholder" for="prix">Prix
+                                                                    en AR</label>
+                                                            </div>
                                                         </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="duree"><small><b>Durée (Jours)</b></small></label>
-                                                        <input type="text" class="form-control" name="duree_jour"
-                                                            value="{{$mod->duree_jour}}">
-                                                        @error('duree')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                                        <div class="col-5">
+                                                            <div class="form-group">
+                                                                <input type="text" id="dureeh"
+                                                                    class="form-control label_placeholder"
+                                                                    onfocus="(this.type='number')"
+                                                                    value="{{$mod->duree}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="dureeh">Duree Heure</label>
+                                                            </div>
                                                         </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Pré-requis</b></small>
-                                                        </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="prerequis">{{$mod->prerequis}}</textarea>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Objectif</b></small> </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="objectif">{{$mod->objectif}}</textarea>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Modalité de
-                                                                    formation</b></small> </label>
-                                                        @if($mod->modalite_formation == 'En ligne')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}}</option>
-                                                            <option value="Presentiel"> Présentiel </option>
-                                                            <option value="Presentiel - En ligne"> Présentiel - En ligne
-                                                            </option>
-                                                        </select>
-                                                        @endif
-                                                        @if($mod->modalite_formation == 'Presentiel')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="En ligne"> En ligne </option>
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}} </option>
-                                                            <option value="Presentiel - En ligne"> Présentiel - En ligne
-                                                            </option>
-                                                        </select>
-                                                        @endif
-                                                        @if($mod->modalite_formation == 'Presentiel - En ligne')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="En ligne"> En ligne </option>
-                                                            <option value="Presentiel"> Présentiel </option>
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}} </option>
-                                                        </select>
-                                                        @endif
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="modalite">Modalité de la formation</label><br>
-                                                        <select class="form-control" id="modalite"
-                                                            name="modalite_formation">
-                                                            <option value="En ligne">En ligne</option>
-                                                            <option value="Présentiel">Présentiel</option>
-                                                            <option value="En ligne/Présentiel">En ligne/Présentiel
-                                                            </option>
-                                                        </select>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Matériel
-                                                                    nécessaire</b></small> </label>
-                                                        <input type="text" class="form-control" name="materiel"
-                                                            value="{{$mod->materiel_necessaire}}">
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Description</b></small>
-                                                        </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="description">{{$mod->description}}</textarea>
                                                     </div>
-                                                    <input type="text" hidden value="{{$mod->module_id}}"
-                                                        name="id_value">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Retour </button>&nbsp;
-                                                <button type="submit" class="btn btn-success "> Modifier </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                                    <div class="form-row d-flex me-3">
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+                                                                <input type="text" id="nb_min"
+                                                                    class="form-control label_placeholder"
+                                                                    onfocus="(this.type='number')"
+                                                                    value="{{$mod->min_pers}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="nb_min">Min</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-8 ms-2 me-2">
+                                                            <div class="form-group">
+                                                                <input type="text" id="equipement"
+                                                                    class="form-control label_placeholder"
+                                                                    value="{{$mod->materiel_necessaire}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="equipement">Equipement</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+                                                                <input type="text" id="nb_max"
+                                                                    class="form-control label_placeholder"
+                                                                    onfocus="(this.type='number')"
+                                                                    value="{{$mod->max_pers}}">
+                                                                <label class="form-control-placeholder"
+                                                                    for="nb_max">Max</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-row d-flex me-3">
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                @if($mod->modalite_formation == 'En ligne')
+                                                                <select class="form-select label_placeholder mt-2"
+                                                                    aria-label="Default select example">
+                                                                    <option value="{{$mod->modalite_formation}}"
+                                                                        selected>
+                                                                        {{$mod->modalite_formation}}</option>
+                                                                    <option value="Presentiel"> Présentiel </option>
+                                                                    <option value="Presentiel - En ligne"> Présentiel -
+                                                                        En ligne
+                                                                    </option>
+                                                                </select>
+                                                                @endif
+                                                                @if($mod->modalite_formation == 'Presentiel')
+                                                                <select class="form-select label_placeholder mt-2"
+                                                                    aria-label="Default select example">
+                                                                    <option value="En ligne"> En ligne </option>
+                                                                    <option value="{{$mod->modalite_formation}}"
+                                                                        selected>
+                                                                        {{$mod->modalite_formation}} </option>
+                                                                    <option value="Presentiel - En ligne"> Présentiel -
+                                                                        En ligne
+                                                                    </option>
+                                                                </select>
+                                                                @endif
+                                                                @if($mod->modalite_formation == 'Presentiel - En ligne')
+                                                                <select class="form-select label_placeholder mt-2"
+                                                                    aria-label="Default select example">
+                                                                    <option value="En ligne"> En ligne </option>
+                                                                    <option value="Presentiel"> Présentiel </option>
+                                                                    <option value="{{$mod->modalite_formation}}"
+                                                                        selected>
+                                                                        {{$mod->modalite_formation}} </option>
+                                                                </select>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 ms-2 me-2">
+                                                            <div class="form-group">
+                                                                <select class="form-select label_placeholder mt-2"
+                                                                    id="modalite" name="modalite_formation">
+                                                                    <option value="{{$mod->niveau}}" selected>
+                                                                        {{$mod->niveau}}</option>
+                                                                    @foreach ($mod_en_cours as $mod)
+                                                                    <option value="{{$mod->niveau}}">{{$mod->niveau}}
+                                                                    </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-row d-flex me-3">
+                                                        <div class="col">
+                                                            <label class="" for="objectif">Objectif</label>
+                                                            <textarea class="form-control label_placeholder"
+                                                                name="objectif"
+                                                                id="objectif">{{$mod->objectif}}</textarea>
+                                                        </div>
+                                                        <div class="col ms-2 me-2">
+                                                            <label class="" for="objectif">Public cible</label>
+                                                            <textarea class="form-control label_placeholder"
+                                                                name="objectif" id="objectif">{{$mod->cible}}</textarea>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label class="" for="objectif">Prerequis</label>
+                                                            <textarea class="form-control label_placeholder"
+                                                                name="objectif"
+                                                                id="objectif">{{$mod->prerequis}}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row d-flex me-3 mt-3">
+                                                        <div class="col">
+                                                            <label class="" for="objectif">Bon a savoir</label>
+                                                            <textarea class="form-control label_placeholder"
+                                                                name="objectif"
+                                                                id="objectif">{{$mod->bon_a_savoir}}</textarea>
+                                                        </div>
+                                                        <div class="col ms-2">
+                                                            <label class="" for="objectif">Prestation
+                                                                pedagogique</label>
+                                                            <textarea class="form-control label_placeholder"
+                                                                name="objectif"
+                                                                id="objectif">{{$mod->prestation}}</textarea>
+                                                        </div>
+                                                    </div>
 
-                                @endforeach
-                                <div class="modal fade" id="ModalAffichage">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center">
-                                                <h5 class="modal-title text-white">Catégorie : </h5>&nbsp;
-                                                <label for="nom_module" id="nomFormation"
-                                                    class="pt-2 text-white"></label>
+
                                             </div>
-                                            <div class="modal-body">
-                                                <h4 class="modal-title">Module: </h4>
-                                                <label for="nom_module" id="nomModule"></label><br>
-                                                <form>
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="ref">Référence : </label>
-                                                        <label id="ref"></label>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="prix">Prix(Ar) : </label>
-                                                        <label id="prix"></label>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="duree">Durée(H) : </label>
-                                                        <label id="duree"></label>
-                                                    </div>
-                                                </form>
+                                            <div class="modal-footer text-center">
+
+                                                <div class="col"><button type="submit" class="btn btn-success w-75"><a
+                                                            href="#">Enregistrer</a></button></div>
+                                                <div class="col ms-2 me-2"><button type="button"
+                                                        class="btn btn-warning w-75" onclick="resetForm();"
+                                                        )>Reinitialiser</button>
+                                                </div>
+                                                <div class="col"><button type="button" class="btn btn-secondary w-75"
+                                                        data-dismiss="modal"><a href="#">Retour</a></button></div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary " id="fermer"
-                                                    data-dismiss="modal">
-                                                    Fermer </button>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="nonPublies">
                     <div class="container-fluid d-flex p-0 mt-3 me-3">
                         <div class="col-2 filtre_cours ps-3">
@@ -435,7 +469,6 @@
                                 </form>
                             </div>
                             <p class="mt-2">Non publiees</p>
-
                             <div class="container p-0">
                                 <ul class="ps-2">
                                     <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
@@ -499,7 +532,8 @@
                                             </div>
                                             <div class="new_btn_programme">
                                                 <button type="button" class="btn btn-primary non_pub"><a
-                                                        href="{{route('publier_module',$mod->module_id)}}">Publier votre
+                                                        href="{{route('publier_module',$mod->module_id)}}">Publier
+                                                        votre
                                                         module</a></button>
                                             </div>
                                         </div>
@@ -545,7 +579,6 @@
                                                         style="color: #799F0C !important;font-size: 20px"
                                                         title="Afficher"></i></button>
                                             </div>
-
                                             <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
                                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -555,7 +588,8 @@
                                                             <h6 class="modal-title">Avertissement !</h6>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée, cette
+                                                            <small>Vous êtes sur le point d'effacer une donnée,
+                                                                cette
                                                                 action
                                                                 est irréversible. Continuer ?</small>
                                                         </div>
@@ -573,185 +607,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-                                <div class="modal fade" id="myModal_{{$mod->module_id}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center"
-                                                style="background-color:rgb(96,167,134);">
-                                                <h5 class="modal-title text-white">Modification</h5>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ route('update_module',$mod->module_id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="username"><small><b>Réference</b></small></label>
-                                                        <input type="text" class="form-control" name="reference"
-                                                            value="{{$mod->reference}}">
-                                                    </div><br>
-                                                    <label for="username"><small><b>Nom du module</b></small></label>
-                                                    <input type="text" class="form-control" name="nom_module"
-                                                        value="{{$mod->nom_module}}">
-                                                    @error('nom_module')
-                                                    <div class="col-sm-6">
-                                                        <span style="color:#ff0000;"> {{$message}} </span>
-                                                    </div>
-                                                    @enderror
-                                                    <br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Categorie</b></small> </label>
-                                                        <input type="text" class="form-control" name="categorie"
-                                                            value="{{$mod->nom_formation}}">
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="prix"> <small><b>Prix (Ar)</b></small> </label>
-                                                        <input type="text" class="form-control" name="prix"
-                                                            placeholder="Prix" value="{{$mod->prix}}" ); @endphp">
-                                                        @error('prix')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                                        </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="duree"><small><b>Durée (H)</b></small></label>
-                                                        <input type="text" class="form-control" name="duree"
-                                                            value="{{$mod->duree}}">
-                                                        @error('duree')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                                        </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="duree"><small><b>Durée (Jours)</b></small></label>
-                                                        <input type="text" class="form-control" name="duree_jour"
-                                                            value="{{$mod->duree_jour}}">
-                                                        @error('duree')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                                        </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Pré-requis</b></small>
-                                                        </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="prerequis">{{$mod->prerequis}}</textarea>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Objectif</b></small> </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="objectif">{{$mod->objectif}}</textarea>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Modalité de
-                                                                    formation</b></small> </label>
-                                                        @if($mod->modalite_formation == 'En ligne')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}}</option>
-                                                            <option value="Presentiel"> Présentiel </option>
-                                                            <option value="Presentiel - En ligne"> Présentiel - En ligne
-                                                            </option>
-                                                        </select>
-                                                        @endif
-                                                        @if($mod->modalite_formation == 'Presentiel')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="En ligne"> En ligne </option>
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}} </option>
-                                                            <option value="Presentiel - En ligne"> Présentiel - En ligne
-                                                            </option>
-                                                        </select>
-                                                        @endif
-                                                        @if($mod->modalite_formation == 'Presentiel - En ligne')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="En ligne"> En ligne </option>
-                                                            <option value="Presentiel"> Présentiel </option>
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}} </option>
-                                                        </select>
-                                                        @endif
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="modalite">Modalité de la formation</label><br>
-                                                        <select class="form-control" id="modalite"
-                                                            name="modalite_formation">
-                                                            <option value="En ligne">En ligne</option>
-                                                            <option value="Présentiel">Présentiel</option>
-                                                            <option value="En ligne/Présentiel">En ligne/Présentiel
-                                                            </option>
-                                                        </select>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Matériel
-                                                                    nécessaire</b></small> </label>
-                                                        <input type="text" class="form-control" name="materiel"
-                                                            value="{{$mod->materiel_necessaire}}">
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Description</b></small>
-                                                        </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="description">{{$mod->description}}</textarea>
-                                                    </div>
-                                                    <input type="text" hidden value="{{$mod->module_id}}"
-                                                        name="id_value">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Retour </button>&nbsp;
-                                                <button type="submit" class="btn btn-success "> Modifier </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 @endforeach
-                                <div class="modal fade" id="ModalAffichage">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center">
-                                                <h5 class="modal-title text-white">Catégorie : </h5>&nbsp;
-                                                <label for="nom_module" id="nomFormation"
-                                                    class="pt-2 text-white"></label>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h4 class="modal-title">Module: </h4>
-                                                <label for="nom_module" id="nomModule"></label><br>
-                                                <form>
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="ref">Référence : </label>
-                                                        <label id="ref"></label>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="prix">Prix(Ar) : </label>
-                                                        <label id="prix"></label>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="duree">Durée(H) : </label>
-                                                        <label id="duree"></label>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary " id="fermer"
-                                                    data-dismiss="modal">
-                                                    Fermer </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="publies">
                     <div class="container-fluid d-flex p-0 mt-3 me-3">
                         <div class="col-2 filtre_cours ps-3">
@@ -890,7 +751,8 @@
                                                             <h6 class="modal-title">Avertissement !</h6>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée, cette
+                                                            <small>Vous êtes sur le point d'effacer une donnée,
+                                                                cette
                                                                 action
                                                                 est irréversible. Continuer ?</small>
                                                         </div>
@@ -908,177 +770,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal fade" id="myModal_{{$mod->module_id}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center"
-                                                style="background-color:rgb(96,167,134);">
-                                                <h5 class="modal-title text-white">Modification</h5>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ route('update_module',$mod->module_id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="username"><small><b>Réference</b></small></label>
-                                                        <input type="text" class="form-control" name="reference"
-                                                            value="{{$mod->reference}}">
-                                                    </div><br>
-                                                    <label for="username"><small><b>Nom du module</b></small></label>
-                                                    <input type="text" class="form-control" name="nom_module"
-                                                        value="{{$mod->nom_module}}">
-                                                    @error('nom_module')
-                                                    <div class="col-sm-6">
-                                                        <span style="color:#ff0000;"> {{$message}} </span>
-                                                    </div>
-                                                    @enderror
-                                                    <br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Categorie</b></small> </label>
-                                                        <input type="text" class="form-control" name="categorie"
-                                                            value="{{$mod->nom_formation}}">
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="prix"> <small><b>Prix (Ar)</b></small> </label>
-                                                        <input type="text" class="form-control" name="prix"
-                                                            placeholder="Prix" value="{{$mod->prix}}" ); @endphp">
-                                                        @error('prix')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                                        </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="duree"><small><b>Durée (H)</b></small></label>
-                                                        <input type="text" class="form-control" name="duree"
-                                                            value="{{$mod->duree}}">
-                                                        @error('duree')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                                        </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="duree"><small><b>Durée (Jours)</b></small></label>
-                                                        <input type="text" class="form-control" name="duree_jour"
-                                                            value="{{$mod->duree_jour}}">
-                                                        @error('duree')
-                                                        <div class="col-sm-6">
-                                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                                        </div>
-                                                        @enderror
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Pré-requis</b></small>
-                                                        </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="prerequis">{{$mod->prerequis}}</textarea>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Objectif</b></small> </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="objectif">{{$mod->objectif}}</textarea>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Modalité de
-                                                                    formation</b></small> </label>
-                                                        @if($mod->modalite_formation == 'En ligne')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}}</option>
-                                                            <option value="Presentiel"> Présentiel </option>
-                                                            <option value="Presentiel - En ligne"> Présentiel - En ligne
-                                                            </option>
-                                                        </select>
-                                                        @endif
-                                                        @if($mod->modalite_formation == 'Presentiel')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="En ligne"> En ligne </option>
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}} </option>
-                                                            <option value="Presentiel - En ligne"> Présentiel - En ligne
-                                                            </option>
-                                                        </select>
-                                                        @endif
-                                                        @if($mod->modalite_formation == 'Presentiel - En ligne')
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option value="En ligne"> En ligne </option>
-                                                            <option value="Presentiel"> Présentiel </option>
-                                                            <option value="{{$mod->modalite_formation}}" selected>
-                                                                {{$mod->modalite_formation}} </option>
-                                                        </select>
-                                                        @endif
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="modalite">Modalité de la formation</label><br>
-                                                        <select class="form-control" id="modalite"
-                                                            name="modalite_formation">
-                                                            <option value="En ligne">En ligne</option>
-                                                            <option value="Présentiel">Présentiel</option>
-                                                            <option value="En ligne/Présentiel">En ligne/Présentiel
-                                                            </option>
-                                                        </select>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Matériel
-                                                                    nécessaire</b></small> </label>
-                                                        <input type="text" class="form-control" name="materiel"
-                                                            value="{{$mod->materiel_necessaire}}">
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label for="categorie"> <small><b>Description</b></small>
-                                                        </label>
-                                                        <textarea class="form-control" rows="5"
-                                                            name="description">{{$mod->description}}</textarea>
-                                                    </div>
-                                                    <input type="text" hidden value="{{$mod->module_id}}"
-                                                        name="id_value">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Retour </button>&nbsp;
-                                                <button type="submit" class="btn btn-success "> Modifier </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 @endforeach
-                                <div class="modal fade" id="ModalAffichage">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center">
-                                                <h5 class="modal-title text-white">Catégorie : </h5>&nbsp;
-                                                <label for="nom_module" id="nomFormation"
-                                                    class="pt-2 text-white"></label>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h4 class="modal-title">Module: </h4>
-                                                <label for="nom_module" id="nomModule"></label><br>
-                                                <form>
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="ref">Référence : </label>
-                                                        <label id="ref"></label>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="prix">Prix(Ar) : </label>
-                                                        <label id="prix"></label>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="duree">Durée(H) : </label>
-                                                        <label id="duree"></label>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary " id="fermer"
-                                                    data-dismiss="modal">
-                                                    Fermer </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1284,6 +976,10 @@
 
     $(document).ready(function(){
     $("#myTab a:last").tab("show"); // show last tab
+
+    function resetForm() {
+        document.getElementById("frm_modif_module").reset();
+    }
 });
 
 </script>

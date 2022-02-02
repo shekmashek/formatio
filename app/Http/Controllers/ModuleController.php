@@ -200,6 +200,25 @@ class ModuleController extends Controller
         return response()->json($module_en_cours);
     }
 
+    public function modifier_mod(Request $request)
+    {
+        $id = $request->id;
+        if (Gate::allows('isCFP')) {
+            $id_user = Auth::user()->id;
+            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+            $liste = formation::where('cfp_id',$cfp_id)->orderBy('nom_formation')->get();
+            $niveau = Niveau::all();
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        } else {
+            $liste = formation::orderBy('nom_formation')->get();
+            $niveau = Niveau::all();
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+
+        }
+
+        return view('admin.module.modif_module',compact('module_en_modif','liste', 'niveau'));
+    }
+
     public function update(Request $request)
     {
         $id = $request->id_value;

@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <div id="page-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid bg-light">
         <nav class="navbar navbar-expand-lg w-100">
             <div class="row w-100 g-0 m-0">
                 <div class="col-lg-12">
@@ -40,7 +40,10 @@
         <hr>
         <div class="panel-body">
             <div class="row">
-                <form action="{{route('module.store')}}" method="POST" id="frm_new_module">
+                @foreach ($module_en_modif as $mod)
+
+                @endforeach
+                <form action="{{ route('update_module',$mod->module_id) }}" method="POST" id="frm_new_module">
                     @csrf
                     <div class="container-fluid">
                         <div class="row">
@@ -88,11 +91,17 @@
                                                 <div class="acf-input-wrap">
                                                     {{-- test input top --}}
                                                     {{-- <div class="row px-3 mt-4">
-                                                        <div class="form-group mt-1 mb-1"> <input type="text" id="email" class="form-control test" required> <label class="ml-3 form-control-placeholder" for="email">Email</label> </div>
+                                                        <div class="form-group mt-1 mb-1"> <input type="text" id="email"
+                                                                class="form-control label_placeholder" required> <label
+                                                                class="ml-3 form-control-placeholder"
+                                                                for="email">Email</label> </div>
                                                     </div> --}}
-                                                    <input type="text" class="form-control module module"
-                                                        id="acf-nom_module" name="nom_module"
-                                                        placeholder="Nom du module" >
+
+                                                    <input type="text"
+                                                        class="form-control module module label_placeholder"
+                                                        id="acf-nom_module" name="nom_module" required
+                                                        value="{{$mod->nom_module}}"> <label for="acf-nom_module"
+                                                        class="form-control-placeholder">Nom module</label>
                                                     @error('nom_module')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -103,31 +112,15 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="premier_vue2">
-                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire categ categ"
-                                                        id="acf-categorie" name="categorie" style="height: 50px;">
-                                                        <option value="null" disable selected hidden>Choisissez la
-                                                            catégorie de formation ...</option>
-                                                        @foreach($liste as $li)
-                                                        <option value="{{$li->id}}" data-value="{{$li->nom_formation}}">
-                                                            {{$li->nom_formation}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="form-group" id="premier_vue3">
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control descript descript"
-                                                        id="acf-description" name="description"
-                                                        placeholder="Déscription" >
+                                                    <input type="text"
+                                                        class="form-control descript descript label_placeholder"
+                                                        id="acf-description" name="description" required
+                                                        value="{{$mod->description}}"><label for="acf-description"
+                                                        class="form-control-placeholder">Description</label>
                                                     @error('description')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -145,11 +138,14 @@
                                                 <div class="acf-field acf-field-text acf-field-jour is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control jour jour"
+                                                            <input type="text"
+                                                                class="form-control jour jour label_placeholder"
                                                                 id="acf-jour" name="jour" min="1" max="365"
-                                                                placeholder="Durée en Jours (J)"
                                                                 onfocus="(this.type='number')"
-                                                                title="entrer une durée en jours" >
+                                                                title="entrer une durée en jours"
+                                                                value="{{$mod->duree_jour}}"><label for="acf-jour"
+                                                                class="form-control-placeholder">Durée en Jours
+                                                                (J)</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -160,11 +156,14 @@
                                                 <div class="acf-field acf-field-text acf-field-heur is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control heur heur"
+                                                            <input type="text"
+                                                                class="form-control heur heur label_placeholder"
                                                                 id="acf-heur" name="heure" min="1" max="8760"
-                                                                placeholder="Durée en Heure (H)"
                                                                 onfocus="(this.type='number')"
-                                                                title="entrer une durée en heure" >
+                                                                title="entrer une durée en heure"
+                                                                value="{{$mod->duree}}"><label for="acf-heur"
+                                                                class="form-control-placeholder">Durée en Heure
+                                                                (H)</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -177,14 +176,46 @@
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire modalite modalite"
+                                                    @if($mod->modalite_formation == 'En ligne')
+                                                    <select
+                                                        class="form-control select_formulaire modalite modalite label_placeholder mt-2"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
-                                                        <option value="null" disable selected hidden>Choisissez la
-                                                            modalite de formation ...</option>
-                                                        <option value="En ligne">En ligne</option>
-                                                        <option value="Présentiel">Présentiel</option>
-                                                        <option value="En ligne/Présentiel">En ligne/Présentiel</option>
+                                                        <option value="{{$mod->modalite_formation}}" selected>
+                                                            {{$mod->modalite_formation}}</option>
+                                                        <option value="Presentiel"> Présentiel </option>
+                                                        <option value="Presentiel - En ligne"> Présentiel -
+                                                            En ligne
+                                                        </option>
                                                     </select>
+                                                    <label for="acf-modalite" class="form-control-placeholder">Choisissez la
+                                                        modalite de formation...</label>
+                                                    @endif
+                                                    @if($mod->modalite_formation == 'Presentiel')
+                                                    <select
+                                                        class="form-control select_formulaire modalite modalite label_placeholder mt-2"
+                                                        id="acf-modalite" name="modalite" style="height: 50px;">
+                                                        <option value="En ligne"> En ligne </option>
+                                                        <option value="{{$mod->modalite_formation}}" selected>
+                                                            {{$mod->modalite_formation}} </option>
+                                                        <option value="Presentiel - En ligne"> Présentiel -
+                                                            En ligne
+                                                        </option>
+                                                    </select>
+                                                    <label for="acf-modalite" class="form-control-placeholder">Choisissez la
+                                                        modalite de formation...</label>
+                                                    @endif
+                                                    @if($mod->modalite_formation == 'Presentiel - En ligne')
+                                                    <select
+                                                        class="form-control select_formulaire modalite modalite label_placeholder mt-2"
+                                                        id="acf-modalite" name="modalite" style="height: 50px;">
+                                                        <option value="En ligne"> En ligne </option>
+                                                        <option value="Presentiel"> Présentiel </option>
+                                                        <option value="{{$mod->modalite_formation}}" selected>
+                                                            {{$mod->modalite_formation}} </option>
+                                                    </select>
+                                                    <label for="acf-modalite" class="form-control-placeholder">Choisissez la
+                                                        modalite de formation...</label>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -194,15 +225,17 @@
                                         <div class="acf-field acf-field-text acf-field-niveau is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire niveau niveau"
+                                                    <select class="form-control select_formulaire niveau niveau label_placeholder"
                                                         id="acf-niveau" name="niveau" style="height: 50px;">
-                                                        <option value="null" disable selected hidden>Choisissez le
-                                                            niveau de formation...</option>
+                                                        <option value="{{$mod->niveau_id}}" selected>
+                                                            {{$mod->niveau}} </option>
                                                         @foreach($niveau as $nv)
                                                         <option value="{{$nv->id}}" data-value="{{$nv->niveau}}">
                                                             {{$nv->niveau}}</option>
                                                         @endforeach
                                                     </select>
+                                                    <label for="acf-niveau" class="form-control-placeholder">Choisissez le
+                                                        niveau de formation...</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -212,8 +245,8 @@
                                             class="bx bxs-edit close" onclick="myFunction()"></i>
                                         <br>
                                         <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                class="new_list_nouvelle px-5"
-                                                onclick="suivant_objectif();"><a href="#preview_haut2">Suivant</a></button></p>
+                                                class="new_list_nouvelle px-5" onclick="suivant_objectif();"><a
+                                                    href="#preview_haut2">Suivant</a></button></p>
                                     </span>
 
 
@@ -236,11 +269,11 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_module();"><a href="#preview_haut">Retour</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="retour_module();"><a
+                                                        href="#preview_haut">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_cible();"><a href="#preview_objectif">Suivant</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="suivant_cible();"><a
+                                                        href="#preview_objectif">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -267,7 +300,7 @@
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control prerequis prerequis"
                                                         id="acf-prerequis" name="prerequis" placeholder="Prerequis"
-                                                        rows=3  style="height: 200px"></textarea>
+                                                        rows=3 style="height: 200px"></textarea>
                                                     @error('prerequis')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -279,11 +312,11 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_objectif();"><a href="#preview_haut2">Retour</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="retour_objectif();"><a
+                                                        href="#preview_haut2">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_reference();"><a href="#preview_reference">Suivant</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="suivant_reference();"><a
+                                                        href="#preview_reference">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -292,8 +325,7 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control reference reference"
-                                                        id="acf-reference" name="reference" placeholder="Reference"
-                                                        >
+                                                        id="acf-reference" name="reference" placeholder="Reference">
                                                     @error('reference')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -309,8 +341,8 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control prix prix" id="acf-prix"
-                                                        name="prix" minlength="1" maxlength="7"
-                                                        pattern="[0-9]{1,7}" placeholder="Prix en AR" >
+                                                        name="prix" minlength="1" maxlength="7" pattern="[0-9]{1,7}"
+                                                        placeholder="Prix en AR">
                                                     @error('prix')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -322,11 +354,11 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_cible();"><a href="#preview_objectif">Retour</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="retour_cible();"><a
+                                                        href="#preview_objectif">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_equipement();"><a href="#changer_equipement">Suivant</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="suivant_equipement();"><a
+                                                        href="#changer_equipement">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -336,7 +368,7 @@
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control materiel materiel"
                                                         id="acf-materiel" name="materiel"
-                                                        placeholder="Equipement necessaire" >
+                                                        placeholder="Equipement necessaire">
                                                     @error('materiel')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -353,8 +385,7 @@
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control bon_a_savoir bon_a_savoir"
                                                         id="acf-bon_a_savoir" name="bon_a_savoir"
-                                                        placeholder="Bon a savoir"
-                                                        style="height: 200px"></textarea>
+                                                        placeholder="Bon a savoir" style="height: 200px"></textarea>
                                                     @error('bon_a_savoir')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -366,11 +397,11 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_reference();"><a href="#changer_reference">Retour</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="retour_reference();"><a
+                                                        href="#changer_reference">Retour</a></button></p>
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_prestation();"><a href="#changer_prestation">Suivant</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="suivant_prestation();"><a
+                                                        href="#changer_prestation">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -380,8 +411,8 @@
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control prestation prestation"
                                                         id="acf-prestation" name="prestation"
-                                                        placeholder="Prestations pedagogiques"
-                                                        style="height: 200px" onkeyup='estComplet();'></textarea>
+                                                        placeholder="Prestations pedagogiques" style="height: 200px"
+                                                        onkeyup='estComplet();'></textarea>
                                                     @error('prestation')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -404,7 +435,7 @@
                                                                     id="acf-max" name="max_pers" min="1" max="100"
                                                                     placeholder="Nombre personne max "
                                                                     onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale" >
+                                                                    title="entrer le nombre de personne maximale">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -419,7 +450,7 @@
                                                                     id="acf-min" name="min_pers" min="1" max="100"
                                                                     placeholder="Nombre personne min"
                                                                     onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale" >
+                                                                    title="entrer le nombre de personne maximale">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -428,8 +459,8 @@
                                         </div>
                                         <div class="col text-center">
                                             <p class="mt-3" style="font-size: 16px;"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_equipement();"><a href="#changer_equipement">Retour</a></button></p>
+                                                    class="new_list_nouvelle px-5" onclick="retour_equipement();"><a
+                                                        href="#changer_equipement">Retour</a></button></p>
                                         </div>
                                     </div>
 
@@ -742,13 +773,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    $(".module").keyup(function() {
+    $(".module").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_module').css('color','black');
     });
 
-    $(".descript").keyup(function() {
+    $(".descript").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_descript').css('color','black');
@@ -786,49 +817,49 @@
         $('#preview_niveau').css('color','black');
     });
 
-    $(".objectif").keyup(function() {
+    $(".objectif").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_objectif').css('color','black');
     });
 
-    $(".cible").keyup(function() {
+    $(".cible").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_cible').css('color','black');
     });
 
-    $(".prerequis").keyup(function() {
+    $(".prerequis").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_prerequis').css('color','black');
     });
 
-    $(".reference").keyup(function() {
+    $(".reference").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_reference').css('color','black');
     });
 
-    $(".prix").keyup(function() {
+    $(".prix").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_prix').css('color','black');
     });
 
-    $(".materiel").keyup(function() {
+    $(".materiel").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_materiel').css('color','black');
     });
 
-    $(".bon_a_savoir").keyup(function() {
+    $(".bon_a_savoir").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_bon_a_savoir').css('color','black');
     });
 
-    $(".prestation").keyup(function() {
+    $(".prestation").on('keyup change',function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
         $('#preview_presentation').css('color','black');
