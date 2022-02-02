@@ -636,3 +636,4 @@ Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep'
 // Route::get('nouvelle_departememnt', function () {
 //     return view('admin.departememnt.nouveau_departement');
 // })->name('nouvelle_departememnt');
+Route::get('teste_chart','DashBoardCfpController@index')->name('teste_chart');

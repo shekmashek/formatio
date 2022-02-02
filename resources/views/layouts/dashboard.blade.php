@@ -24,7 +24,7 @@
                                 <p class="p-0 m-0 " style="font-size: 14px; font-weight: bold;">C.A actuel:
                                     @php
                                         foreach ($CA_actuel as $total) {
-                                            $total = $total->total;
+                                            $total = $total->total_ttc;
                                             echo $total . ' ';
                                         }
                                     @endphp Ar TTC</p>
@@ -32,7 +32,7 @@
                                 <p class="p-1 m-0" style="font-size: 13px;">C.A précedent:
                                     @php
                                         foreach ($CA_precedent as $totals) {
-                                            $totals = $totals->total;
+                                            $totals = $totals->total_ttc;
                                             echo $totals . ' ';
                                         }
                                     @endphp Ar TTC</p>
@@ -182,6 +182,37 @@
         $(document).ready(function() {
             $("myTab a:last").tab("show");
         });
+
+    /*    var name = [];
+                    var marks = [];
+
+                    // for (var i in data) {
+                        name.push("Noam");
+                        marks.push("blue");
+                    // }
+
+                    var chartdata = {
+                        labels: name,
+                        datasets: [
+                            {
+                                label: 'Student Marks',
+                                backgroundColor: '#49e2ff',
+                                borderColor: '#46d5f1',
+                                hoverBackgroundColor: '#CCCCCC',
+                                hoverBorderColor: '#666666',
+                                data: marks
+                            }
+                        ]
+                    };
+
+                    var graphTarget = $("#chart_div");
+
+                    var barGraph = new Chart(graphTarget, {
+                        type: 'bar',
+                        data: chartdata
+                    });
+                });
+*/
     </script>
 
     <script type="text/javascript">
@@ -199,7 +230,7 @@
                 ['mois', 'prix', 'annee'],
                 @php
                 foreach ($GChart as $product) {
-                    $val = "['" . $product->mois . "', " . $product->prix . ', ' . $product->annee . ']';
+                    $val = "['" . $product->mois . "', " . $product->net_ttc . ', ' . $product->annee . ']';
                     echo $val . ',';
                 }
                 @endphp
