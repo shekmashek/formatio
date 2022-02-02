@@ -72,7 +72,8 @@ class FactureController extends Controller
         $facture_inactif = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
         // $verify = DB::select('select (groupes.id) groupe_id,cfp_id,projet_id from groupes,projets where projets.id=projet_id and cfp_id=?', [$cfp_id]);
 
-        if (count($facture_inactif) <= 0) {
+        $test = count($facture_inactif)+ count($facture_actif);
+        if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
 

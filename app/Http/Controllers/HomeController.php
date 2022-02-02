@@ -32,10 +32,9 @@ class HomeController extends Controller
         $this->collaboration = new Collaboration();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return view('auth.connexion');
+            if (Auth::user()->exists == false) return view('auth.connexion');
             return $next($request);
         });
-
     }
 
 
@@ -48,35 +47,35 @@ class HomeController extends Controller
 
     // }
 
-     public function index(Request $request)
+    public function index(Request $request)
     {
-        if(Gate::allows('isStagiaire')){
-            $valeur = DB::select('select activiter,id from stagiaires where user_id = '.Auth::id());
+        if (Gate::allows('isStagiaire')) {
+            $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
             $activiter = $valeur[0]->activiter;
             $stg_id =  $valeur[0]->id;
-            $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = '.$stg_id);
+            $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = ' . $stg_id);
             $etp_nouveau_id = $value_etp[0]->nouveau_entreprise_id;
             $particulier = $value_etp[0]->particulier;
             //si le compte stagiaire est actif
-            if($activiter == 1){
+            if ($activiter == 1) {
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
                     return view('layouts.accueil_admin', compact('totale_invitation'));
                 }
             }
             //si le compte est inactif, on vérifie d'abord si le stagiaire est déjà dans une autre entreprise
-            if($activiter == 0){
-                if ($etp_nouveau_id == 0 && $particulier == 0){
+            if ($activiter == 0) {
+                if ($etp_nouveau_id == 0 && $particulier == 0) {
                     $msg = 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre adresse e-mail personnelle';
-                    return view('auth.email_nouveau',compact('msg'));
+                    return view('auth.email_nouveau', compact('msg'));
                 }
-                if ($etp_nouveau_id == 0  && $particulier == 1){
+                if ($etp_nouveau_id == 0  && $particulier == 1) {
                     if (Auth::user()->exists) {
                         $totale_invitation = $this->collaboration->count_invitation();
                         return view('layouts.accueil_admin', compact('totale_invitation'));
                     }
                 }
-                if ($etp_nouveau_id == 1){
+                if ($etp_nouveau_id == 1) {
                     if (Auth::user()->exists) {
                         $totale_invitation = $this->collaboration->count_invitation();
                         return view('layouts.accueil_admin', compact('totale_invitation'));
@@ -85,13 +84,29 @@ class HomeController extends Controller
             }
         }
         if (Auth::user()->exists) {
+            $user_id = User::where('id', Auth::user()->id)->value('id');
+            $centre_fp = cfp::where('user_id', $user_id)->value('id');
+            $GChart = DB::select('SELECT SUM(hors_taxe) as prix , MONTH(invoice_date) as mois,
+                year(invoice_date) as annee from factures where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
+                INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
+                year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
 
-            $GChart = DB::select('SELECT SUM(hors_taxe) as prix , YEAR(invoice_date) as annee from factures group by YEAR(invoice_date) order by (YEAR( invoice_date) ) ASC');
+            $CA_actuel = DB::select('SELECT SUM(hors_taxe) as total from factures where YEAR(invoice_date)=year(now()) and cfp_id = ' . $centre_fp . ' ');
+            $CA_precedent = DB::select('SELECT SUM(hors_taxe) as total from factures where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' ');
 
+            // debut
+            // $formations = formation::where('cfp_id', $centre_fp)->value('id');
+            // $top_10_module = DB::select('select ');
+            // ty no anaovana DB select  $modules = module::where('formation_id', $formations)->value('id');
+            // fin
 
-            return view('layouts.dashboard',compact('GChart'));
+            // debut top 10 par client
+
+            // fin top 10 par client
+
+            // dd($user_id, $centre_fp, $top_10_par_client);
+            return view('layouts.dashboard', compact('GChart', 'CA_actuel', 'CA_precedent'));
         }
-
     }
 
 
@@ -124,9 +139,9 @@ class HomeController extends Controller
             // return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
-            $infos = DB::select('select * from where entreprise_id = ?',[$entreprise_id]);
-            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?',[$entreprise_id]);
-            return view('projet_session.index2',compact('data','infos','stagiaires'));
+            $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
+            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?', [$entreprise_id]);
+            return view('projet_session.index2', compact('data', 'infos', 'stagiaires'));
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
@@ -135,24 +150,24 @@ class HomeController extends Controller
             $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
-        }
-        elseif (Gate::allows('isStagiaire')) {
+        } elseif (Gate::allows('isStagiaire')) {
             return view('layouts.accueil_admin');
         } elseif (Gate::allows('isCFP')) {
             $entp = new entreprise();
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $projet = $fonct->findWhere("v_projetentreprise", ["cfp_id"], [$cfp_id]);
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
 
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
-            $entreprise = $entp->getEntreprise($etp2,$etp1);
+            $entreprise = $entp->getEntreprise($etp2, $etp1);
 
             $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
 
-            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation','formation','module'));
+            return view('projet_session.index2', compact('projet','data', 'entreprise', 'totale_invitation', 'formation', 'module'));
         }
     }
 
@@ -164,14 +179,14 @@ class HomeController extends Controller
     public function detail($id)
     {
         $totale_invitation = $this->collaboration->count_invitation();
-        $id_module =detail::where('id', $id)->value('module_id');
+        $id_module = detail::where('id', $id)->value('module_id');
         $nom_module = module::where('id', $id_module)->value('nom_module');
         $id_formation = module::where('id', $id_module)->value('formation_id');
         $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
         //récupérer id du projet en fonction de l'id du détail
         $id_projet = detail::where('id', $id)->value('projet_id');
         //récupérer nom du projet en fonction de l'id projet
-        $nom_projet =projet::where('id', $id_projet)->value('nom_projet');
+        $nom_projet = projet::where('id', $id_projet)->value('nom_projet');
 
         $datas = DB::table('executions')
             ->join('details', 'details.id', '=', 'executions.detail_id')
@@ -309,14 +324,15 @@ class HomeController extends Controller
         return response()->json($profil_user);
     }
     //modification e-mail stagiaire en cas de changement d'entreprise
-    public function update_email(Request $request){
+    public function update_email(Request $request)
+    {
         $email = $request->email;
         $user_id = Auth::id();
-        $val =db::select('select id from stagiaires where user_id = '.$user_id);
+        $val = db::select('select id from stagiaires where user_id = ' . $user_id);
         $id_stg = $val[0]->id;
-        DB::update('update stagiaires set mail_stagiaire = ? where user_id = ?',[$email,$user_id]);
-        DB::update("update users set email = ? where id = ?",[$email,$user_id]);
-        DB::update("update historique_stagiaires set particulier = ? where stagiaire_id = ?",[1,$id_stg]);
+        DB::update('update stagiaires set mail_stagiaire = ? where user_id = ?', [$email, $user_id]);
+        DB::update("update users set email = ? where id = ?", [$email, $user_id]);
+        DB::update("update historique_stagiaires set particulier = ? where stagiaire_id = ?", [1, $id_stg]);
         $totale_invitation = $this->collaboration->count_invitation();
         return view('layouts.accueil_admin', compact('totale_invitation'));
     }
