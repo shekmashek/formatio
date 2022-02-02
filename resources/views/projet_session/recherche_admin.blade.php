@@ -1,181 +1,205 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
 <style>
   *{
-    font-size: 14px;
+    font-size: 1rem;
+    font-family: 'Lato';
+    color: grey;
   }
-    .enfant{
-        width: 100%;
-        background-color: transparent;
-        height: 25px !important;
-        border: none;
-        margin: 0 4px;
-        border-left: 1px solid rgb(130,33,100);
-        border-bottom: 1px solid rgb(130,33,100);
-    }
-    .form_input{
-      height: 10px;
-      font-size: 12px;
-    }
-    .form_input_search{
-      height: 30px !important;
-      border-radius: .5rem;
-      border: none;
-      border-bottom: 2px solid rgb(130,33,100); 
-      border-top: 2px solid rgb(130,33,100); 
-      color: grey;
-      padding-left: .5rem;
-    }
-    .btn-hide-column{
-      padding: 6px 12px;
-      border: none;
-      border-bottom: 2px solid rgb(130,33,100); 
-      border-top: 2px solid rgb(130,33,100); 
-      color: grey;
-      border-radius: .5rem;
-    }
-    .form_input_search:focus{
-      outline: none;
-      box-shadow: none;
-    }
-    .search_icon{
-      color: rgb(130,33,100);
-    }
-    .btn-hide{
-      padding: 0 6px;
-      border: none;
-      background-color: transparent;
-    }
-    .modal > fade{
-      float: right !important;
-    }
+  .input-recherche{
+    height: 2em !important;
+    padding-left: .5rem;
+  }
+  .label_sexe{
+    border: 1px solid aqua;
+  }
+  .titre_card{
+    color: rgb(130,33,100);
+  }
+  .btn-appliquer{
+    padding: 6px 12px;
+    font-size: .7rem;
+    border-top:3px solid rgb(130,33,100);
+    border-left: 2px solid rgb(130,33,100);
+    border-right: 2px solid rgb(130,33,100);
+    border-bottom: 3px solid rgb(130,33,100);
+    border-radius: .5rem;
+    transition: all .4s ease-in-out;
+  }
+  .btn-appliquer:hover{
+    transform: scale(1.1) ;
+  }
+  .box-separateur{
+    box-shadow: rgb(130,33,100) 0px 2px 4px 0px;
+    border-radius: .5rem;
+    padding: 1rem;
+    background-color: #fff;
+    margin: 0 2px;
+  }
+  .select-class{
+    height: 2em !important;
+    margin: 0 !important;
+  }
+  i:hover{
+    cursor: pointer;
+  }
 </style>
 
-<div class="d-flex justify-content-between mb-3">
+{{-- personne --}}
+   <div class="bg-white p-0 w-100">
+    <div class="d-flex justify-content-between pt-2 px-4"><h5 class="titre_card">Personne</h5> <i class="fa fa-eye" href="#personne_ressource" data-toggle="collapse"></i></div>
+    <div class="collapse show" id="personne_ressource">
+        <div class="d-flex justify-content-evenly">
+          <div class="box-separateur px-5">
+            <label for="sexe"  class="ms-2">Sexe :</label><br>
+                  <label class="form-check-label p-0 m-0 label_sexe" for="flexRadioDefault1">Homme</label>
+                  <label class="form-check-label p-0 m-0 label_sexe" for="flexRadioDefault1">Femme</label>
+                  <label class="form-check-label p-0 m-0 label_sexe" for="flexRadioDefault1">Tout</label>
+          </div>
+
+          <div class="box-separateur">
+            <label for="matricule">Matricule :</label><br>
+            <input type="text" class="input-recherche" name="" id="" placeholder="N° matricule" width="75px">
+          </div>
+
+          <div class="box-separateur">
+            <label for="nom">Nom :</label><br>
+            <input type="text" class="input-recherche" placeholder="Nom . . .">
+          </div>
+
+          <div class="box-separateur">
+            <label for="prenom">Prenom :</label><br>
+            <input type="text" class="input-recherche" placeholder="Prénom . . .">
+          </div>
+
+          <div class="box-separateur">
+            <label for="age">Age :</label><br>
+            <input type="text" class="input-recherche" placeholder="32 . . .">
+          </div>
+        </div>
+      <div class="mt-3 me-4 mb-2 d-flex justify-content-end">
+        <button class="btn-appliquer">Appliquer</button>
+      </div><br>
+    </div>
+   </div>
+{{-- personne --}}
+
+{{-- fonction --}}
+<span>Fonction&nbsp; &nbsp; <i class="fa fa-eye" href="#fonction_ressource" data-toggle="collapse"></i></span>
+<div class="collapse show" id="fonction_ressource">
+<div class="d-flex shadow justify-content-between align-items-center py-2">
+  <div class="d-flex">
+    <div class="mx-2 box-separateur">
+      <label for="fonction">Fonction :</label><br>
+      <input type="text" class="input-recherche" placeholder="Fonction . . .">
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="departement">Département :</label><br>
+      <input type="text" class="input-recherche" placeholder="Département . . .">
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="service">Service :</label><br>
+      <input type="text" class="input-recherche" placeholder="Service . . .">
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="branche">Branche :</label><br>
+      <input type="text" class="input-recherche" placeholder="Branche . . .">
+    </div>
+  </div>
   <div>
-    <input type="text" class="form_input_search" placeholder="Rechercher ici . . . ">&nbsp; &nbsp;
-    <button class="btn-hide"><i class="fa fa-search search_icon"></i></button>
+    <button class="btn-appliquer me-2">Appliquer</button>
   </div>
-    <div>
-      <button class="btn-hide-column"data-toggle="modal" data-target="#exampleModalCenter">< / Cacher des colonnes ></button>
-      <button class="btn-hide-column"><i class="fad fa-file-excel" style="color: yellowgreen"></i>&nbsp; Exporter en Excel </button>
-    </div>
+</div><br>
 </div>
-<nav class="d-flex">
-  <div class="mx-1">
-      <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Projet
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </div>
-  </div>
-  <div class="mx-1">
-      <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Module
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </div>
-  </div>
-  <div class="mx-1">
-      <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Centre
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </div>
-  </div>
-  <div class="mx-1">
-      <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Année
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </div>
-  </div>
-  <div class="mx-1">
-      <button class="btn btn-success"><i class="fa fa-search"></i> &nbsp; Valider</button>
-  </div>
-</nav>
+{{-- fonction --}}
 
+{{-- domaine --}}
+<span>Domaine&nbsp; &nbsp; <i class="fa fa-eye" href="#domaine_ressource" data-toggle="collapse"></i></span>
+<div class="collapse show" id="domaine_ressource">
+<div class="d-flex shadow justify-content-between align-items-center py-2">
+  <div class="d-flex">
+    <div class="mx-2 box-separateur">
+      <label for="domaine">Domaine :</label><br>
+      <input type="text" class="input-recherche" placeholder="Fonction . . .">
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="thematique">Thématique :</label><br>
+        <select class="select-class">
+          <option selected hidden style="color: grey">Choississez le thématique</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="of">Organisme de formation :</label><br>
+      <input type="text" class="input-recherche" placeholder="Service . . .">
+    </div>
+  </div>
+  <div>
+    <button class="btn-appliquer me-2">Appliquer</button>
+  </div>
+</div><br>
+</div>
+{{-- domaine --}}
 
-<main>
-    <section class="d-flex">
-        <input class="enfant ps-3" type="text" disabled placeholder="Projet . . .">
-        <input class="enfant ps-3" type="text" disabled placeholder="Module . . .">
-        <input class="enfant ps-3" type="text" disabled placeholder="Centre . . .">
-        <input class="enfant ps-3" type="text" disabled placeholder="Année . . .">
-    </section><hr>
-    <section>
-        <table class="table">
-            <thead>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Age</th>
-                <th>Sexe</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rakoto</td>
-                    <td>Bema</td>
-                    <td>32</td>
-                    <td>homme</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-</main>
+{{-- date --}}
+<span>Date&nbsp; &nbsp; <i class="fa fa-eye" href="#date_ressource" data-toggle="collapse"></i></span>
+<div id="date_ressource" class="collapse show">
+<div class="d-flex shadow justify-content-between align-items-center py-2" >
+  <div class="d-flex">
+    <div class="mx-2 box-separateur">
+      <label for="date">Date :</label><br>
+      <input type="text" class="input-recherche" placeholder="11/02/2021 . . .">
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="mois">Mois :</label><br>
+      <input type="text" class="input-recherche" placeholder="Janvier . . .">
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="annee">Année :</label><br>
+      <input type="text" class="input-recherche" placeholder="2022 . . .">
+    </div>
+  </div>
+  <div>
+    <button class="btn-appliquer me-2">Appliquer</button>
+  </div>
+</div><br>
+</div>
+{{-- date --}}
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+{{-- qualité --}}
+<span>Qualité&nbsp; &nbsp; <i class="fa fa-eye" href="#qualite_ressource" data-toggle="collapse"></i></span>
+<div id="qualite_ressource" class="collapse show">
+<div class="d-flex shadow justify-content-between align-items-center py-2" >
+  <div class="d-flex">
+    <div class="mx-2 box-separateur">
+      <label for="presence">Qualité :</label><br>
+      <span class="d-flex">
+        <div class="form-check mx-2">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">Présence</label>
+        </div>
+        <div class="form-check mx-2">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">Absence</label>
+        </div>
+      </span>
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="mois">Réussite :</label><br>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">Absence</label>
       </div>
     </div>
   </div>
+  <div>
+    <button class="btn-appliquer me-2">Appliquer</button>
+  </div>
 </div>
-<script>
-     var checker = document.getElementById('checkme');
- var sendbtn = document.getElementById('sendNewSms');
- // when unchecked or checked, run the function
- checker.onchange = function(){
-if(this.checked){
-    sendbtn.disabled = false;
-} else {
-    sendbtn.disabled = true;
-}
-
-}
-</script>
+</div><br>
+{{-- qualité --}}
 @endsection
