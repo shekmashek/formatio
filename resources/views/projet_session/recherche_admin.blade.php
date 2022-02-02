@@ -9,8 +9,14 @@
     color: grey;
   }
   .input-recherche{
-    height: 2em !important;
+    height: 1.6em !important;
     padding-left: .5rem;
+    border: none;
+    border-bottom: 1px solid rgb(130,33,100);
+  }
+  .input-recherche:focus{
+    box-shadow: none;
+    outline: none;
   }
   .label_sexe{
     border: 1px solid aqua;
@@ -26,7 +32,20 @@
     border-right: 2px solid rgb(130,33,100);
     border-bottom: 3px solid rgb(130,33,100);
     border-radius: .5rem;
+    margin-left: 40%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     transition: all .4s ease-in-out;
+  }
+  .Titre_div{
+    background: rgb(130,33,100);
+    color: white;
+  }
+  .Titre_div:hover{
+    cursor: pointer;
+  }
+  li{
+    list-style: none;;
   }
   .btn-appliquer:hover{
     transform: scale(1.1) ;
@@ -88,7 +107,7 @@
 {{-- personne --}}
 
 {{-- fonction --}}
-<span>Fonction&nbsp; &nbsp; <i class="fa fa-eye" href="#fonction_ressource" data-toggle="collapse"></i></span>
+{{-- <span>Fonction&nbsp; &nbsp; <i class="fa fa-eye" href="#fonction_ressource" data-toggle="collapse"></i></span>
 <div class="collapse show" id="fonction_ressource">
 <div class="d-flex shadow justify-content-between align-items-center py-2">
   <div class="d-flex">
@@ -113,11 +132,11 @@
     <button class="btn-appliquer me-2">Appliquer</button>
   </div>
 </div><br>
-</div>
+</div> --}}
 {{-- fonction --}}
 
 {{-- domaine --}}
-<span>Domaine&nbsp; &nbsp; <i class="fa fa-eye" href="#domaine_ressource" data-toggle="collapse"></i></span>
+{{-- <span>Domaine&nbsp; &nbsp; <i class="fa fa-eye" href="#domaine_ressource" data-toggle="collapse"></i></span>
 <div class="collapse show" id="domaine_ressource">
 <div class="d-flex shadow justify-content-between align-items-center py-2">
   <div class="d-flex">
@@ -143,11 +162,11 @@
     <button class="btn-appliquer me-2">Appliquer</button>
   </div>
 </div><br>
-</div>
+</div> --}}
 {{-- domaine --}}
 
 {{-- date --}}
-<span>Date&nbsp; &nbsp; <i class="fa fa-eye" href="#date_ressource" data-toggle="collapse"></i></span>
+{{-- <span>Date&nbsp; &nbsp; <i class="fa fa-eye" href="#date_ressource" data-toggle="collapse"></i></span>
 <div id="date_ressource" class="collapse show">
 <div class="d-flex shadow justify-content-between align-items-center py-2" >
   <div class="d-flex">
@@ -168,11 +187,11 @@
     <button class="btn-appliquer me-2">Appliquer</button>
   </div>
 </div><br>
-</div>
+</div> --}}
 {{-- date --}}
 
 {{-- qualité --}}
-<span>Qualité&nbsp; &nbsp; <i class="fa fa-eye" href="#qualite_ressource" data-toggle="collapse"></i></span>
+{{-- <span>Qualité&nbsp; &nbsp; <i class="fa fa-eye" href="#qualite_ressource" data-toggle="collapse"></i></span>
 <div id="qualite_ressource" class="collapse show">
 <div class="d-flex shadow justify-content-between align-items-center py-2" >
   <div class="d-flex">
@@ -201,6 +220,60 @@
     <button class="btn-appliquer me-2">Appliquer</button>
   </div>
 </div>
-</div><br>
+</div><br> --}}
 {{-- qualité --}}
+
+<div class="col-md-3">
+  <div class="Titre_div px-3" href="#personne" data-toggle="collapse">Personne</div>
+  <div class="px-3 pt-3 bg-white collapse show" id="personne">
+    <div class="d-flex justify-content-between">
+      <p>Homme</p> <input type="radio" class="" name="flexRadioDefault" id="flexRadioDefault1">
+    </div>
+    <div class="d-flex justify-content-between">
+       <p>Femme</p> <input type="radio" class="" name="flexRadioDefault" id="flexRadioDefault1">
+    </div>
+    <div class="d-flex align-items-center m-0 p-0" style="height: 2em !important;">
+      <p class="p-0 m-0"> Matricule</p>
+      <input type="text" class="input-recherche w-100">&nbsp; au &nbsp;
+      <input type="text" class="input-recherche w-100">
+    </div>
+    <div class="d-flex align-items-center m-0 p-0">
+      <p class="p-0 m-0"> Nom </p>
+        <input type="text" class="input-recherche w-100 ms-3">
+    </div>
+    <div class="d-flex align-items-center m-0 p-0">
+      <p class="p-0 m-0"> Prénom </p>
+        <input type="text" class="input-recherche w-100">
+    </div>
+    <li>
+      <button class="btn-appliquer">Appliquer</button>
+    </li>
+  </div>
+
+  <div class="Titre_div px-3" href="#personne1" data-toggle="collapse">Personne</div>
+  <div class="px-3 pt-3 bg-white collapse show" id="personne1">
+    <div class="d-flex justify-content-between">
+      <p>Homme</p> <input type="radio" class="" name="flexRadioDefault" id="flexRadioDefault1">
+    </div>
+    <div class="d-flex justify-content-between">
+       <p>Femme</p> <input type="radio" class="" name="flexRadioDefault" id="flexRadioDefault1">
+    </div>
+    <div class="d-flex align-items-center m-0 p-0" style="height: 2em !important;">
+      <p class="p-0 m-0"> Matricule</p>
+      <input type="text" class="input-recherche w-100">&nbsp; au &nbsp;
+      <input type="text" class="input-recherche w-100">
+    </div>
+    <div class="d-flex align-items-center m-0 p-0">
+      <p class="p-0 m-0"> Nom </p>
+        <input type="text" class="input-recherche w-100 ms-3">
+    </div>
+    <div class="d-flex align-items-center m-0 p-0">
+      <p class="p-0 m-0"> Prénom </p>
+        <input type="text" class="input-recherche w-100">
+    </div>
+    <li>
+      <button class="btn-appliquer">Appliquer</button>
+    </li>
+  </div>
+</div>
 @endsection
