@@ -67,6 +67,7 @@ class ModuleController extends Controller
             }else{
                 return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies'));
             }
+        
         }
         if (Gate::allows('isSuperAdmin')) {
             $infos = DB::select('select * from moduleformation');
