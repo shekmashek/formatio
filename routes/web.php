@@ -638,3 +638,9 @@ Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep'
 // })->name('nouvelle_departememnt');
 
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
+Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
+
+
+Route::get('/recherche_admin', function(){
+    return view('projet_session.recherche_admin');
+});
