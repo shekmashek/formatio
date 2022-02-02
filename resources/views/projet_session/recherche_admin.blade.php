@@ -48,7 +48,8 @@
 </style>
 
 {{-- personne --}}
-   <div class="bg-white p-0 w-100">
+{{-- hfkhnd --}}
+   <div class="bg-white p-0 w-100 ">
     <div class="d-flex justify-content-between pt-2 px-4"><h5 class="titre_card">Personne</h5> <i class="fa fa-eye" href="#personne_ressource" data-toggle="collapse"></i></div>
     <div class="collapse show" id="personne_ressource">
         <div class="d-flex justify-content-evenly">
