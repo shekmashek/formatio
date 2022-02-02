@@ -54,7 +54,9 @@ class HomeController extends Controller
             $valeur = DB::select('select activiter,id from stagiaires where user_id = '.Auth::id());
             $activiter = $valeur[0]->activiter;
             $stg_id =  $valeur[0]->id;
-
+            $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = '.$stg_id);
+            $etp_nouveau_id = $value_etp[0]->nouveau_entreprise_id;
+            $particulier = $value_etp[0]->particulier;
             //si le compte stagiaire est actif
             if($activiter == 1){
                 if (Auth::user()->exists) {
@@ -64,9 +66,6 @@ class HomeController extends Controller
             }
             //si le compte est inactif, on vérifie d'abord si le stagiaire est déjà dans une autre entreprise
             if($activiter == 0){
-                $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = '.$stg_id);
-                $etp_nouveau_id = $value_etp[0]->nouveau_entreprise_id;
-                $particulier = $value_etp[0]->particulier;
                 if ($etp_nouveau_id == 0 && $particulier == 0){
                     $msg = 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre adresse e-mail personnelle';
                     return view('auth.email_nouveau',compact('msg'));
@@ -85,20 +84,13 @@ class HomeController extends Controller
                 }
             }
         }
-        if(Gate::allows('isCFP')) {
-                $user_id = User::where('id', Auth::user()->id)->value('id');
-                $centre_fp = cfp::where('user_id', $user_id)->value('id');
+        if (Auth::user()->exists) {
 
-                $GChart = DB::select('SELECT SUM(hors_taxe) as prix , MONTH(invoice_date) as mois,
-                year(invoice_date) as annee from factures where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = '.$centre_fp.' group by MONTH(invoice_date),
-                year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
+            $GChart = DB::select('SELECT SUM(hors_taxe) as prix , YEAR(invoice_date) as annee from factures group by YEAR(invoice_date) order by (YEAR( invoice_date) ) ASC');
+
 
             return view('layouts.dashboard',compact('GChart'));
         }
-        if (Gate::allows('isReferent') or Gate::allows('isSuperAdmin')) {
-                    $totale_invitation = $this->collaboration->count_invitation();
-                    return view('layouts.accueil_admin', compact('totale_invitation'));
-                }
 
     }
 
@@ -131,10 +123,10 @@ class HomeController extends Controller
             // $cfp = $fonct->findAll("cfps");
             // return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
-            // $infos = DB::select('select * from where entreprise_id = ?',[$entreprise_id]);
-            // $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?',[$entreprise_id]);
-            return view('projet_session.index2',compact('data'));
+            $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
+            $infos = DB::select('select * from where entreprise_id = ?',[$entreprise_id]);
+            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?',[$entreprise_id]);
+            return view('projet_session.index2',compact('data','infos','stagiaires'));
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
@@ -147,12 +139,20 @@ class HomeController extends Controller
         elseif (Gate::allows('isStagiaire')) {
             return view('layouts.accueil_admin');
         } elseif (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $entp = new entreprise();
 
+            $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
 
-            $entreprise = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation'));
+            $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
+            $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+
+            $entreprise = $entp->getEntreprise($etp2,$etp1);
+
+            $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
+            $module = $fonct->findAll("modules");
+
+            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation','formation','module'));
         }
     }
 
