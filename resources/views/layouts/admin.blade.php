@@ -124,11 +124,11 @@
                                 href="{{route('liste_departement')}}"><i class='bx bxs-plus-circle nouveau_icon'
                                     title="nouveau departement"></i>nouveaux departement</a>
                                 </li>
-                                <li  class="my-1 sousMenu">
+                                {{-- <li  class="my-1 sousMenu">
                                     <a class='nouveau_icon_lien'
                                 href="#"><i class='bx bxs-plus-circle nouveau_icon'
                                     title="nouveau entreprise"></i>nouveaux Services</a>
-                                </li>
+                                </li> --}}
                                 {{-- <li class="my-1 sousMenu">
                                     <a href="{{route('liste_entreprise')}}">Entreprises</a>
                                 </li>
@@ -1059,7 +1059,7 @@
             }
         });
     });
-    
+
     $(document).ready(function() {
         $('.ui-helper-hidden-accessible').hide();
     });
