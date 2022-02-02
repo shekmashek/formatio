@@ -34,11 +34,11 @@
             </nav>
 
 
-        </div>
+            </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
 
                     <div class="panel-body">
                         <div class="row">
@@ -259,12 +259,13 @@
 
                                     <div class="form-group">
                                         <label for="lieu">Lieu de travail</label>
-                                        <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu de travail">
+                                        <input type="text" class="form-control" id="lieu" name="lieu"
+                                            placeholder="Lieu de travail">
                                         @error('lieu')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                                          </div>
-                                          @enderror
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{ $message }} </span>
+                                            </div>
+                                        @enderror
                                     </div><br>
                                     {{-- <div class="form-group">
                                 {{-- <div class="form-group">

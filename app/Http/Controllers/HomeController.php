@@ -154,6 +154,14 @@ class HomeController extends Controller
             $entreprise = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation'));
         }
+        if(Gate::allows('isFormateur')){
+            $formateur_id = formateur::where('user_id', $user_id)->value('id');
+            $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
+            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
+
+            $entreprise = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation'));
+        }
     }
 
     public function compte(Request $request)

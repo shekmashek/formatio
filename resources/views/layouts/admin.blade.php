@@ -189,7 +189,7 @@
                     </ul>
                     </li>
                     @endcanany
-                    @canany(['isCFP'])
+                    @canany(['isCFP','isFormateur'])
                     <li class="my-2">
                         <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false"
                             class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span
@@ -1059,6 +1059,7 @@
             }
         });
     });
+    
     $(document).ready(function() {
         $('.ui-helper-hidden-accessible').hide();
     });

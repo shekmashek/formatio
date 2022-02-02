@@ -310,3 +310,11 @@ create table ressources(
   demandeur varchar(255) not null,
   groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES goupes(id) ON DELETE CASCADe
 );
+
+create table frais_annexe_formation(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  description text not null,
+  montant decimal(20,2) not null,
+  entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADe,
+  groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES goupes(id) ON DELETE CASCADe
+);

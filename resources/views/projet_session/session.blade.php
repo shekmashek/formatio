@@ -174,7 +174,7 @@
                         @include('projet_session.index_evaluation')
                       </div>
                       <div id="emargement" class="tabcontent">
-                        Emargement
+                        @include('projet_session.emargement')
                       </div>
                       <div id="rapport" class="tabcontent">
                         Rapport de formation

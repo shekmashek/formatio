@@ -637,3 +637,4 @@ Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep'
 //     return view('admin.departememnt.nouveau_departement');
 // })->name('nouvelle_departememnt');
 
+Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');

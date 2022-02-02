@@ -115,6 +115,13 @@ class SessionController extends Controller
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$etp_id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
         }
+        if(Gate::allows('isFormateur')){
+            $formateur_id = formateur::where('user_id', $user_id)->value('id');
+            $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
+            $formateur = NULL;
+            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id"], [$cfp_id,$formateur_id]);
+            $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+        }
         // public
         // ---apprenants
         $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$projet[0]->groupe_id]);
@@ -209,5 +216,22 @@ class SessionController extends Controller
                 'message' => 'Data deleted successfully',
             ]
         );
+    }
+
+    public function insert_frais_annexe(Request $request){
+        $id_user = Auth::user()->id;
+        $etp_id = DB::select('select entreprise_id from v_responsable_entreprise where user_id_responsable = ?',[$id_user])[0]->entreprise_id;
+        $description = $request->description;
+        $montant = $request->montant;
+        $groupe_id = $request->groupe;
+        for ($i=0; $i < count($description); $i++) { 
+            DB::insert('insert into frais_annexe_formation(description,montant,entreprise_id,groupe_id) values(?,?,?,?)',[$description[$i],$montant[$i],$groupe_id,$etp_id]);
+        }
+        $all_frais_annexe = DB::select('select * from ressources where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
+        return response()->json($all_frais_annexe);
+    }
+
+    public function insert_precence(Request $request){
+
     }
 }
