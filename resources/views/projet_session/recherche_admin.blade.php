@@ -49,6 +49,8 @@
 
 {{-- personne --}}
 {{-- hfkhnd --}}
+<form method="POST" action="{{route('recherche_multi_critere')}}">
+  @csrf
    <div class="bg-white p-0 w-100 ">
     <div class="d-flex justify-content-between pt-2 px-4"><h5 class="titre_card">Personne</h5> <i class="fa fa-eye" href="#personne_ressource" data-toggle="collapse"></i></div>
     <div class="collapse show" id="personne_ressource">
@@ -62,22 +64,22 @@
 
           <div class="box-separateur">
             <label for="matricule">Matricule :</label><br>
-            <input type="text" class="input-recherche" name="" id="" placeholder="N° matricule" width="75px">
+            <input type="text" class="input-recherche" name="matricule" id="matricule" placeholder="N° matricule" width="75px">
           </div>
 
           <div class="box-separateur">
             <label for="nom">Nom :</label><br>
-            <input type="text" class="input-recherche" placeholder="Nom . . .">
+            <input type="text" name = "nom_pers" id = "nom_pers" class="input-recherche" placeholder="Nom . . .">
           </div>
 
           <div class="box-separateur">
             <label for="prenom">Prenom :</label><br>
-            <input type="text" class="input-recherche" placeholder="Prénom . . .">
+            <input type="text" name = "prenom_pers" id = "prenom_pers" class="input-recherche" placeholder="Prénom . . .">
           </div>
 
           <div class="box-separateur">
             <label for="age">Age :</label><br>
-            <input type="text" class="input-recherche" placeholder="32 . . .">
+            <input type="text" name = "age_pers" id = "age_pers" class="input-recherche" placeholder="32 . . .">
           </div>
         </div>
       <div class="mt-3 me-4 mb-2 d-flex justify-content-end">
@@ -94,20 +96,20 @@
   <div class="d-flex">
     <div class="mx-2 box-separateur">
       <label for="fonction">Fonction :</label><br>
-      <input type="text" class="input-recherche" placeholder="Fonction . . .">
+      <input type="text" name = "nom_fonction" id = "nom_fonction" class="input-recherche" placeholder="Fonction . . .">
     </div>
     <div class="mx-2 box-separateur">
       <label for="departement">Département :</label><br>
-      <input type="text" class="input-recherche" placeholder="Département . . .">
+      <input type="text" name = "nom_departement" id = "nom_departement" class="input-recherche" placeholder="Département . . .">
     </div>
     <div class="mx-2 box-separateur">
       <label for="service">Service :</label><br>
-      <input type="text" class="input-recherche" placeholder="Service . . .">
+      <input type="text" class="input-recherche" name = "nom_service" id = "nom_service" placeholder="Service . . .">
     </div>
-    <div class="mx-2 box-separateur">
+    {{-- <div class="mx-2 box-separateur">
       <label for="branche">Branche :</label><br>
       <input type="text" class="input-recherche" placeholder="Branche . . .">
-    </div>
+    </div> --}}
   </div>
   <div>
     <button class="btn-appliquer me-2">Appliquer</button>
@@ -123,11 +125,11 @@
   <div class="d-flex">
     <div class="mx-2 box-separateur">
       <label for="domaine">Domaine :</label><br>
-      <input type="text" class="input-recherche" placeholder="Fonction . . .">
+      <input type="text" name = "nom_domaine" id = "nom_domaine" class="input-recherche" placeholder="Domaine . . .">
     </div>
     <div class="mx-2 box-separateur">
       <label for="thematique">Thématique :</label><br>
-        <select class="select-class">
+        <select class="select-class" name = "nom_thematique" id = "nom_thematique">
           <option selected hidden style="color: grey">Choississez le thématique</option>
           <option value="1">One</option>
           <option value="2">Two</option>
@@ -136,7 +138,7 @@
     </div>
     <div class="mx-2 box-separateur">
       <label for="of">Organisme de formation :</label><br>
-      <input type="text" class="input-recherche" placeholder="Service . . .">
+      <input type="text" name = "nom_cfp" id = "nom_cfp" class="input-recherche" placeholder="OF . . .">
     </div>
   </div>
   <div>
@@ -153,15 +155,15 @@
   <div class="d-flex">
     <div class="mx-2 box-separateur">
       <label for="date">Date :</label><br>
-      <input type="text" class="input-recherche" placeholder="11/02/2021 . . .">
+      <input type="text" name = "rech_date" id = "rech_date" class="input-recherche" placeholder="11/02/2021 . . .">
     </div>
     <div class="mx-2 box-separateur">
       <label for="mois">Mois :</label><br>
-      <input type="text" class="input-recherche" placeholder="Janvier . . .">
+      <input type="text" name = "rech_mois" id = "rech_mois" class="input-recherche" placeholder="Janvier . . .">
     </div>
     <div class="mx-2 box-separateur">
       <label for="annee">Année :</label><br>
-      <input type="text" class="input-recherche" placeholder="2022 . . .">
+      <input type="text" name = "rech_annee" id = "rech_annee" class="input-recherche" placeholder="2022 . . .">
     </div>
   </div>
   <div>
@@ -202,5 +204,6 @@
   </div>
 </div>
 </div><br>
+</form>
 {{-- qualité --}}
 @endsection

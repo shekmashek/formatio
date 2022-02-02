@@ -11,4 +11,6 @@ WHERE
     dep.entreprise_id = etp.id AND
     serv.departement_entreprise_id = dep.id;
 
+select * GROUP_CONCAT('nom_service') as nom_service from v_departement_service_entreprise 
+
 
