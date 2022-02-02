@@ -6,25 +6,16 @@
   *{
     font-size: 1rem;
     font-family: 'Lato';
+    color: grey;
   }
   .input-recherche{
     height: 2em !important;
     padding-left: .5rem;
   }
-  .bordure_sexe{
-    /* border: 1px solid grey; */
-    height: 2em;
-    display: flex;
-    align-items: center;
-    padding: 0 6px;
+  .label_sexe{
+    border: 1px solid aqua;
   }
   .titre_card{
-    background-color: #ffffff;
-    border-top:3px solid rgb(130,33,100);
-    border-left: 2px solid rgb(130,33,100);
-    border-right: 2px solid rgb(130,33,100);
-    border-top-right-radius: .5rem;
-    padding: 0 6px;
     color: rgb(130,33,100);
   }
   .btn-appliquer{
@@ -35,15 +26,17 @@
     border-right: 2px solid rgb(130,33,100);
     border-bottom: 3px solid rgb(130,33,100);
     border-radius: .5rem;
-    transform: rotate(-10deg);
-    transition: all .6s ease;
+    transition: all .4s ease-in-out;
   }
   .btn-appliquer:hover{
-    transform: rotate(0deg);
+    transform: scale(1.1) ;
   }
   .box-separateur{
-    border-right: 2px solid rgb(130,33,100);
-    padding-right: 1rem;
+    box-shadow: rgb(130,33,100) 0px 2px 4px 0px;
+    border-radius: .5rem;
+    padding: 1rem;
+    background-color: #fff;
+    margin: 0 2px;
   }
   .select-class{
     height: 2em !important;
@@ -55,71 +48,64 @@
 </style>
 
 {{-- personne --}}
-<span class="titre_card">Personne&nbsp; &nbsp; <i class="fa fa-eye" href="#personne_ressource" data-toggle="collapse"></i></span>
-<div class="collapse show" id="personne_ressource">
-<div class="d-flex shadow justify-content-between align-items-center py-2">
-  <div class="d-flex">
-    <div class="box-separateur">
-      <label for="sexe"  class="ms-2"><u>Sexe</u> :</label><br>
-        <div class="bordure_sexe mt-2">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1">Homme</label>
+{{-- hfkhnd --}}
+   <div class="bg-white p-0 w-100 ">
+    <div class="d-flex justify-content-between pt-2 px-4"><h5 class="titre_card">Personne</h5> <i class="fa fa-eye" href="#personne_ressource" data-toggle="collapse"></i></div>
+    <div class="collapse show" id="personne_ressource">
+        <div class="d-flex justify-content-evenly">
+          <div class="box-separateur px-5">
+            <label for="sexe"  class="ms-2">Sexe :</label><br>
+                  <label class="form-check-label p-0 m-0 label_sexe" for="flexRadioDefault1">Homme</label>
+                  <label class="form-check-label p-0 m-0 label_sexe" for="flexRadioDefault1">Femme</label>
+                  <label class="form-check-label p-0 m-0 label_sexe" for="flexRadioDefault1">Tout</label>
           </div>
 
-          <div class="form-check mx-2">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1">Femme</label>
+          <div class="box-separateur">
+            <label for="matricule">Matricule :</label><br>
+            <input type="text" class="input-recherche" name="" id="" placeholder="N° matricule" width="75px">
           </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-            <label class="form-check-label" for="flexRadioDefault1">Tout</label>
+          <div class="box-separateur">
+            <label for="nom">Nom :</label><br>
+            <input type="text" class="input-recherche" placeholder="Nom . . .">
+          </div>
+
+          <div class="box-separateur">
+            <label for="prenom">Prenom :</label><br>
+            <input type="text" class="input-recherche" placeholder="Prénom . . .">
+          </div>
+
+          <div class="box-separateur">
+            <label for="age">Age :</label><br>
+            <input type="text" class="input-recherche" placeholder="32 . . .">
           </div>
         </div>
+      <div class="mt-3 me-4 mb-2 d-flex justify-content-end">
+        <button class="btn-appliquer">Appliquer</button>
+      </div><br>
     </div>
-
-    <div class="mx-2 box-separateur">
-      <label for="matricule"><u>Matricule</u> :</label><br>
-      <input type="text" class="input-recherche" name="" id="" placeholder="N° matricule">
-    </div>
-
-    <div class="mx-2 box-separateur">
-      <label for="nom"><u>Nom</u> :</label><br>
-      <input type="text" class="input-recherche" placeholder="Nom . . .">
-    </div>
-
-    <div class="mx-2 box-separateur">
-      <label for="prenom"><u>Prenom</u> :</label><br>
-      <input type="text" class="input-recherche" placeholder="Prénom . . .">
-    </div>
-  </div>
-  <div class="mx-2">
-    <button class="btn-appliquer">Appliquer</button>
-  </div>
-</div><br>
-</div>
+   </div>
 {{-- personne --}}
 
 {{-- fonction --}}
-<span class="titre_card">Fonction&nbsp; &nbsp; <i class="fa fa-eye" href="#fonction_ressource" data-toggle="collapse"></i></span>
+<span>Fonction&nbsp; &nbsp; <i class="fa fa-eye" href="#fonction_ressource" data-toggle="collapse"></i></span>
 <div class="collapse show" id="fonction_ressource">
 <div class="d-flex shadow justify-content-between align-items-center py-2">
   <div class="d-flex">
     <div class="mx-2 box-separateur">
-      <label for="fonction"><u>Fonction</u> :</label><br>
+      <label for="fonction">Fonction :</label><br>
       <input type="text" class="input-recherche" placeholder="Fonction . . .">
     </div>
     <div class="mx-2 box-separateur">
-      <label for="departement"><u>Département</u> :</label><br>
+      <label for="departement">Département :</label><br>
       <input type="text" class="input-recherche" placeholder="Département . . .">
     </div>
     <div class="mx-2 box-separateur">
-      <label for="service"><u>Service</u> :</label><br>
+      <label for="service">Service :</label><br>
       <input type="text" class="input-recherche" placeholder="Service . . .">
     </div>
     <div class="mx-2 box-separateur">
-      <label for="branche"><u>Branche</u> :</label><br>
+      <label for="branche">Branche :</label><br>
       <input type="text" class="input-recherche" placeholder="Branche . . .">
     </div>
   </div>
@@ -131,16 +117,16 @@
 {{-- fonction --}}
 
 {{-- domaine --}}
-<span class="titre_card">Domaine&nbsp; &nbsp; <i class="fa fa-eye" href="#domaine_ressource" data-toggle="collapse"></i></span>
+<span>Domaine&nbsp; &nbsp; <i class="fa fa-eye" href="#domaine_ressource" data-toggle="collapse"></i></span>
 <div class="collapse show" id="domaine_ressource">
 <div class="d-flex shadow justify-content-between align-items-center py-2">
   <div class="d-flex">
     <div class="mx-2 box-separateur">
-      <label for="domaine"><u>Domaine</u> :</label><br>
+      <label for="domaine">Domaine :</label><br>
       <input type="text" class="input-recherche" placeholder="Fonction . . .">
     </div>
     <div class="mx-2 box-separateur">
-      <label for="thematique"><u>Thématique</u> :</label><br>
+      <label for="thematique">Thématique :</label><br>
         <select class="select-class">
           <option selected hidden style="color: grey">Choississez le thématique</option>
           <option value="1">One</option>
@@ -149,7 +135,7 @@
         </select>
     </div>
     <div class="mx-2 box-separateur">
-      <label for="of"><u>Organisme de formation</u> :</label><br>
+      <label for="of">Organisme de formation :</label><br>
       <input type="text" class="input-recherche" placeholder="Service . . .">
     </div>
   </div>
@@ -161,27 +147,60 @@
 {{-- domaine --}}
 
 {{-- date --}}
-<span class="titre_card">Date&nbsp; &nbsp; <i class="fa fa-eye" href="#date_ressource" data-toggle="collapse"></i></span>
+<span>Date&nbsp; &nbsp; <i class="fa fa-eye" href="#date_ressource" data-toggle="collapse"></i></span>
 <div id="date_ressource" class="collapse show">
 <div class="d-flex shadow justify-content-between align-items-center py-2" >
   <div class="d-flex">
     <div class="mx-2 box-separateur">
-      <label for="date"><u>Date</u> :</label><br>
+      <label for="date">Date :</label><br>
       <input type="text" class="input-recherche" placeholder="11/02/2021 . . .">
     </div>
     <div class="mx-2 box-separateur">
-      <label for="mois"><u>Mois</u> :</label><br>
+      <label for="mois">Mois :</label><br>
       <input type="text" class="input-recherche" placeholder="Janvier . . .">
     </div>
     <div class="mx-2 box-separateur">
-      <label for="annee"><u>Année</u> :</label><br>
+      <label for="annee">Année :</label><br>
       <input type="text" class="input-recherche" placeholder="2022 . . .">
     </div>
   </div>
   <div>
     <button class="btn-appliquer me-2">Appliquer</button>
   </div>
-</div>
+</div><br>
 </div>
 {{-- date --}}
+
+{{-- qualité --}}
+<span>Qualité&nbsp; &nbsp; <i class="fa fa-eye" href="#qualite_ressource" data-toggle="collapse"></i></span>
+<div id="qualite_ressource" class="collapse show">
+<div class="d-flex shadow justify-content-between align-items-center py-2" >
+  <div class="d-flex">
+    <div class="mx-2 box-separateur">
+      <label for="presence">Qualité :</label><br>
+      <span class="d-flex">
+        <div class="form-check mx-2">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">Présence</label>
+        </div>
+        <div class="form-check mx-2">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">Absence</label>
+        </div>
+      </span>
+    </div>
+    <div class="mx-2 box-separateur">
+      <label for="mois">Réussite :</label><br>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">Absence</label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button class="btn-appliquer me-2">Appliquer</button>
+  </div>
+</div>
+</div><br>
+{{-- qualité --}}
 @endsection
