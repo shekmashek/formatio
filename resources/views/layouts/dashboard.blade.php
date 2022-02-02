@@ -67,7 +67,7 @@
                 <div class="row mt-2">
                     <div class="col-lg-4">
                         <div class="form-control">
-                            <h5 class="text-center"><b>TDB finance</b></h5>
+                            <p class="text-center"><b style="font-size: 17px;">Tableau de bord financier</b></p>
                             <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">C.A actuel:
                                 {{-- @php
                                     foreach ($CA_actuel as $total) {
@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-control">
-                            <h5 class="text-center"><b>CA par module</b></h5>
+                            <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par module</b></p>
                             <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 modules</p>
                             <hr>
                             <div id="barchart_material"></div>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-control">
-                            <h5 class="text-center"><b>CA par Client</b></h5>
+                            <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par client</b></p>
                             <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 clients</p>
                             <hr>
                             <div id="barchart_material_2"></div>
