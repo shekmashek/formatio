@@ -637,4 +637,3 @@ Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep'
 //     return view('admin.departememnt.nouveau_departement');
 // })->name('nouvelle_departememnt');
 
-//test commit
