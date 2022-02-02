@@ -230,4 +230,8 @@ class SessionController extends Controller
         $all_frais_annexe = DB::select('select * from ressources where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
         return response()->json($all_frais_annexe);
     }
+
+    public function insert_precence(Request $request){
+
+    }
 }
