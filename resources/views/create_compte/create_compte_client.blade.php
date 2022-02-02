@@ -34,7 +34,7 @@
 
                         <div class="form-ground">
                             <label for="exampleFormControlInput1" class="form-label">Logo<strong style="color:#ff0000;">*</strong></label>
-                            <input type="file" required name="logo_cfp" class="form-control" id="logo_cfp" />
+                            <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
                         </div>
 
                         <div class="row">

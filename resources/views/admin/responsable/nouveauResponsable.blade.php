@@ -56,6 +56,15 @@
                                         </div>
                                         @enderror
                                     </div><br>
+                                    <div class="form-group">
+                                        <label for="cin">Date Naissance</label><br><br>
+                                        <input type="date" autocomplete="off" class="form-control" id="naissance" name="naissance">
+                                        @error('naissance')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                      </div><br>
                                      <div class="form-group">
                                       <label for="sary">Photo</label>
                                       <input type="file" class="form-control-file" id="photo" name="photos">
@@ -104,6 +113,27 @@
                                           @endforeach
                                       </select>
                                     </div><br><br>
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="exampleFormControlInput1" class="form-label" align="left">Sexe</label>
+                                            <select class="form-select" aria-label="Default select example" name="sexe_resp" required id="sexe_resp">
+                                                <option value="null" disabled selected hidden>Veuillez Sélectionner</option>
+                                                <option value="H">Homme</option>
+                                                <option value="S">Femme</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="exampleFormControlInput1" class="form-label" align="left">Date de Naissance<strong style="color:#ff0000;">*</strong></label>
+                                            <input type="date" required name="dte_resp" class="form-control" id="dte_resp" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label for="exampleFormControlInput1" class="form-label" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                                            <input type="text" required name="cin_resp" class="form-control" id="cin_resp" />
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                     <button type = "submit" class="btn btn-outline-success "><span class="fa fa-save"></span>&nbsp; Ajouter
                                 </form>
