@@ -62,7 +62,7 @@
 
     <div class="container my-5">
         <div class="row">
-            <h4>Départements/Services/Branches</h4>
+            <h4>Départements/Services</h4>
             @if(Session::has('success'))
             <div class="alert alert-success">
                 <strong>{{Session::get('success')}}</strong>
@@ -86,11 +86,11 @@
                             gestion de service
                         </a>
                     </li>
-                    <li class="nav-item ms-5">
+                    {{-- <li class="nav-item ms-5">
                         <a href="#"  style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-toggle="tab" data-target="#branche" type="button" role="tab" aria-controls="branche" aria-selected="false">
                             gestion de branche
                         </a>
-                    </li>
+                    </li> --}}
 
                 </ul>
             </div>
