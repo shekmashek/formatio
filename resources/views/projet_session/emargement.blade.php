@@ -28,66 +28,68 @@
             <hr class="m-2 p-0">
             <div class="collapse" id="stagiaire_presence_{{ $dt->detail_id }}">
                 {{-- <form action="{{ route('insert_presence') }}" id="myform" method="post" role="form"> --}}
-                    <div class="row m-0 p-0 d-flex flex-grow">
-                        @foreach ($stagiaire as $liste)
-                            <div class="col-md-1 text-center">{{ $liste->matricule }}</div>
-                            <div class="col-md-2 text-center">{{ $liste->nom_stagiaire }}</div>
-                            <div class="col-md-2 text-center">{{ $liste->prenom_stagiaire }}</div>
-                            {{-- <div class="col-md-1">
+                <div class="row m-0 p-0 d-flex flex-grow">
+                    @foreach ($stagiaire as $liste)
+                        <div class="col-md-1 text-center">{{ $liste->matricule }}</div>
+                        <div class="col-md-2 text-center">{{ $liste->nom_stagiaire }}</div>
+                        <div class="col-md-2 text-center">{{ $liste->prenom_stagiaire }}</div>
+                        {{-- <div class="col-md-1">
                         <input type="submit" class="btn btn-primary pointage" id = "{{$liste->stagiaire_id}}" value = "Pointage">
                         </div class="col-md-1"> --}}
 
-                            <div class="col-md-3 text-center ">
-                                {{-- @if ($message != '')
+                        <div class="col-md-3 text-center ">
+                            {{-- @if ($message != '')
                         <label>{{ $liste->status }}</label>
                         @else --}}
-                                @csrf
-                                {{-- <div class="radio"> --}}
-                                <label style="color: green;">
-                                    <input class="m-2 present" type="radio" id="present"
-                                        data-id="{{ $dt->detail_id . $liste->stagiaire_id }}"
-                                        name="attendance[{{ $liste->stagiaire_id }}]" value="1">
-                                    Présent
-                                </label>
-                                <label style="color: red;">
-                                    <input class="m-2 absent" type="radio" id="absent"
-                                        data-id="{{ $dt->detail_id . $liste->stagiaire_id }}"
-                                        name="attendance[{{ $liste->stagiaire_id }}]" value="0">
-                                    Absent
-                                </label>
-                                {{-- </div> --}}
-                                {{-- @endif --}}
-                            </div>
-                            <div class="col-md-4">
-                                <div class="row" class="pointage"
-                                    id="pointage_{{ $dt->detail_id . $liste->stagiaire_id }}">
-                                    <div class="col-md-6 text-center m-0">
-                                        <input type="text" class="m-0" name="h_entree[{{ $liste->stagiaire_id }}]"
-                                            placeholder="Heure entrée" style="width: 150px"
-                                            onfocus="(this.type='time')">
-                                    </div>
-                                    <div class="col-md-6 text-center m-0">
-                                        <input type="text" class="m-0" name="h_sortie[{{ $liste->stagiaire_id }}]"
-                                            placeholder="Heure sortie" style="width: 150px"
-                                            onfocus="(this.type='time')">
-                                    </div>
+                            @csrf
+                            {{-- <div class="radio"> --}}
+                            <label style="color: green;">
+                                <input class="m-2 present" type="radio" id="present"
+                                    data-id="{{ $dt->detail_id . $liste->stagiaire_id }}"
+                                    name="attendance[{{ $dt->detail_id }}][{{ $liste->stagiaire_id }}]" value="1"
+                                    required>
+                                Présent
+                            </label>
+                            <label style="color: red;">
+                                <input class="m-2 absent" type="radio" id="absent"
+                                    data-id="{{ $dt->detail_id . $liste->stagiaire_id }}"
+                                    name="attendance[{{ $dt->detail_id }}][{{ $liste->stagiaire_id }}]" value="0"
+                                    required>
+                                Absent
+                            </label>
+                            {{-- </div> --}}
+                            {{-- @endif --}}
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row" class="pointage"
+                                id="pointage_{{ $dt->detail_id . $liste->stagiaire_id }}">
+                                <div class="col-md-6 text-center m-0">
+                                    <input type="text" class="m-0"
+                                        name="h_entree[{{ $liste->stagiaire_id }}]" placeholder="Heure entrée"
+                                        style="width: 150px" onfocus="(this.type='time')">
+                                </div>
+                                <div class="col-md-6 text-center m-0">
+                                    <input type="text" class="m-0"
+                                        name="h_sortie[{{ $liste->stagiaire_id }}]" placeholder="Heure sortie"
+                                        style="width: 150px" onfocus="(this.type='time')">
                                 </div>
                             </div>
-                            </tr>
-                        @endforeach
-                        
-                        <div align="center">
-                            <button class="btn-success w-25" id="add_presence" data-id="{{ $dt->detail_id }}"  form="myform"
-                            name="add_attendance">Enregistrer</button>
                         </div>
-                        
+                        </tr>
+                    @endforeach
 
-                        {{-- @if ($message == '')
-                    <button class="btn btn-success form-control" form="myform"  name="add_attendance">Ajouter</button>
-                @else
-                    <a href="{{ route('modifier',[$datas[0]->detail_id]) }}"><button class="btn btn-primary form-control">Modifier</button></a>
-                @endif --}}
+                    <div align="center">
+                        <button class="btn-success w-25" id="add_presence" data-id="{{ $dt->detail_id }}"
+                            form="myform" name="add_attendance">Enregistrer</button>
                     </div>
+
+
+                    {{-- @if ($message == '')
+                            <button class="btn btn-success form-control" form="myform"  name="add_attendance">Ajouter</button>
+                        @else
+                            <a href="{{ route('modifier',[$datas[0]->detail_id]) }}"><button class="btn btn-primary form-control">Modifier</button></a>
+                        @endif --}}
+                </div>
                 {{-- </form> --}}
             </div>
         </div>
@@ -130,24 +132,38 @@
 
     $(document).on('click', '#add_presence', function(e) {
         var id_detail = $(this).data('id');
-        var attendance = $("input[name='attendance[]']").map(function() {
-            return $(this).val();
-        }).get();
-        var h_entree = $("input[name='h_entree[]']").map(function() {
-            return $(this).val();
-        }).get();
-        var h_sortie = $("input[name='h_sortie[]']").map(function() {
-            return $(this).val();
-        }).get();
+        // var attendance = $('input[name="attendance[' + id_detail + ']"]').map(function() {
+        //     return $(this).val();
+        // }).get();
+        // var h_entree = $("input[name='h_entree[]']").map(function() {
+        //     return $(this).val();
+        // }).get();
+        // var h_sortie = $("input[name='h_sortie[]']").map(function() {
+        //     return $(this).val();
+        // }).get();
 
-        alert(attendance);
+        var attendance = [];
+        // $('input[name*="attendance[]"]').each(function() {
+        //     // alert($(this).val());
+        //     attendance.push($(this).val());
+        // });
+        // var attendance = [];
+        // $('input[name^="attendance[' + id_detail + ']"]').each(function() {
+        //     attendance.push((this).val());
+        // });
+        // $('input[name^="attendance"]').each(function() {
+        //     attendance.push((this).val());
+        // });
+        
+        $('input[name^="attendance"]').each(function() {
+            attendance.push($(this).val());
+        });
+        alert(attendance[11][1]);
         $.ajax({
             type: "GET",
             url: "{{ route('insert_frais_annexe') }}",
             data: {
-                detail_id: id_detail,
-                montant: montant,
-                groupe: groupe_id,
+                detail_id: id_detail
             },
             dataType: "html",
             success: function(response) {
@@ -166,7 +182,7 @@
                 //     html += '</div>';
                 //     html += '</div>';
                 // }
-                
+
                 // $('resultat_frais').append(html);
             },
             error: function(error) {
