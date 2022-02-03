@@ -20,7 +20,6 @@
     <script src="{{ asset('function js/programme/edit_programme.js') }}"></script>
     <script src="{{asset('js/qcmStep.js')}}"></script>
 
-
     <script type="text/javascript">
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 

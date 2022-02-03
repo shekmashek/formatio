@@ -9,13 +9,13 @@ html {
 
 #grad1 {
     background-color:  #9C27B0;
-    background-image: linear-gradient(120deg, #FF4081, #81D4FA)
+    background-image: linear-gradient(120deg, #FF4081, #801D68)
 }
 
 #msform {
     text-align: center;
     position: relative;
-    margin-top: 20px
+
 }
 
 #msform fieldset .form-card {
@@ -53,8 +53,8 @@ html {
 #msform input,
 #msform textarea {
     padding: 0px 8px 4px 8px;
-    border: none;
-    border-bottom: 1px solid #ccc;
+    /* border: none; */
+    border: 1px solid #ccc;
     border-radius: 0px;
     margin-bottom: 25px;
     margin-top: 2px;
@@ -73,13 +73,13 @@ html {
     box-shadow: none !important;
     border: none;
     font-weight: bold;
-    border-bottom: 2px solid skyblue;
+    border-bottom: 2px solid #801D68;
     outline-width: 0
 }
 
 #msform .action-button {
     width: 100px;
-    background: skyblue;
+    background: #801D68;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -91,7 +91,7 @@ html {
 
 #msform .action-button:hover,
 #msform .action-button:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #801D68
 }
 
 #msform .action-button-previous {
@@ -120,7 +120,7 @@ select.list-dt {
 }
 
 select.list-dt:focus {
-    border-bottom: 2px solid skyblue
+    border-bottom: 2px solid #801D68
 }
 
 .card {
@@ -141,7 +141,8 @@ select.list-dt:focus {
 #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
-    color: lightgrey
+    color: lightgrey;
+    height: 4.7rem !important;
 }
 
 #progressbar .active {
@@ -151,7 +152,7 @@ select.list-dt:focus {
 #progressbar li {
     list-style-type: none;
     font-size: 12px;
-    width: 25%;
+    width: 20%;
     float: left;
     position: relative
 }
@@ -182,11 +183,12 @@ select.list-dt:focus {
     line-height: 45px;
     display: block;
     font-size: 18px;
-    color: #ffffff;
-    background: lightgray;
+    color: #801D68;
+    background: white;
     border-radius: 50%;
     margin: 0 auto 10px auto;
-    padding: 2px
+    padding: 2px;
+    border: 1px solid #801D68 !important;
 }
 
 #progressbar li:after {
@@ -202,7 +204,9 @@ select.list-dt:focus {
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: skyblue
+    background: #801D68;
+    border: 1px solid #801D68 !important;
+    color: white;
 }
 
 .radio-group {
@@ -233,4 +237,27 @@ select.list-dt:focus {
 .fit-image {
     width: 100%;
     object-fit: cover
+}
+
+
+
+#progressbar #etape1:before {
+    font-family: FontAwesome;
+    content: "1"
+}
+#progressbar #etape2:before {
+    font-family: FontAwesome;
+    content: "2"
+}
+#progressbar #etape3:before {
+    font-family: FontAwesome;
+    content: "3"
+}
+#progressbar #etape4:before {
+    font-family: FontAwesome;
+    content: "4"
+}
+#progressbar #etape5:before {
+    font-family: FontAwesome;
+    content: "5"
 }
