@@ -9,15 +9,12 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use App\Mail\Contact;
-use App\Http\Controllers\Controller;
+use App\Mail\sendsemail;
 use Illuminate\Http\Request;
 
-
-class SendEmailController extends Controller
+class Email extends Controller
 {
-
-    public function sendMail(Request $request)
+    public function envoie(Request $request)
     {
         $request->validate(
             [
@@ -45,7 +42,7 @@ class SendEmailController extends Controller
             $objet= $request->objet;
             $entreprise = $request->entreprise;
             $msg = $request->msg;
-            Mail::to('contact@numerika.center')->send(new Contact($name, $objet, $entreprise, $msg, $mail));
+            Mail::to('contact@numerika.center')->send(new sendsemail($name, $objet, $entreprise, $msg, $mail));
             return back()->with('message', 'Votre message a été bien envoyé');
         }
         else{
@@ -53,5 +50,4 @@ class SendEmailController extends Controller
 
         }
         }
-
 }

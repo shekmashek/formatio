@@ -762,7 +762,7 @@
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
-                                    <a href="#">
+                                    <a href="{{url('contacts')}}" style="color: #801D62;text-decoration:none">
                                         <p>Contactez-nous</p>
                                     </a>
                                 </div>
@@ -772,7 +772,7 @@
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
-                                    <a href="#">
+                                    <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank">
                                         <p>Condition d'utilisation</p>
                                     </a>
                                 </div>

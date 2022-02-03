@@ -16,8 +16,16 @@ Route::get('/', function () {
 Route::get('contact',function(){
     return view('contact');
 });
+//Route contact2
+Route:: get('contacts',function(){
+    return view('contacts');
+});
 //Rout send email
 Route::post('/envoyer', 'SendEmailController@sendMail')->name('contact');
+//route sendemail2
+
+Route::post('/email','email@envoie')->name('contacter');
+
 
 Route::get('/projet_session', function () {
     return view('projet_session/index2');

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Contact extends Mailable
+class sendsemail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -26,7 +26,7 @@ class Contact extends Mailable
     }
 
     /**
-     * Build the msg.
+     * Build the message.
      *
      * @return $this
      */
