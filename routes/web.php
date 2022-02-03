@@ -219,7 +219,7 @@ Route::get('/liste_module/{id?}','ModuleController@index')->name('liste_module')
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('/destroy_module','ModuleController@destroy')->name('destroy_module');
-Route::post('/update_module','ModuleController@update')->name('update_module');
+Route::post('update_module/{id}','ModuleController@update')->name('update_module');
 Route::get('publier_module/{id}','ModuleController@module_publier')->name('publier_module');
 Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifier_module');
 

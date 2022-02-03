@@ -2478,6 +2478,12 @@ input:-webkit-autofill:active  {
   background-color: white !important;
 }
 
+.modal_grand{
+  width: 70rem;
+  position: relative;
+  right: 60%;
+}
+
 /* nouveau module */
 
 /* footer */

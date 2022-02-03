@@ -206,48 +206,24 @@ class ModuleController extends Controller
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
-            $liste = formation::where('cfp_id',$cfp_id)->orderBy('nom_formation')->get();
+
             $niveau = Niveau::all();
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
         } else {
-            $liste = formation::orderBy('nom_formation')->get();
+
             $niveau = Niveau::all();
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
 
         }
 
-        return view('admin.module.modif_module',compact('module_en_modif','liste', 'niveau'));
+        return view('admin.module.modif_module',compact('module_en_modif', 'niveau'));
     }
 
     public function update(Request $request)
     {
-        $id = $request->id_value;
-
-        //modifier les données
-        $reference = $request->reference;
-        $nom_module = $request->nom_module;
-        $prix = $request->prix;
-        $duree = $request->duree;
-        $duree_jour = $request->duree_jour;
-        $modalite = $request->modalite_formation;
-        $prerequis = $request->prerequis;
-        $objectif = $request->objectif;
-        $materiel = $request->materiel;
-        $description = $request->description;
-
-        module::where('id', $id)
-            ->update([
-                'reference' => $reference,
-                'nom_module' => $nom_module,
-                'prix' => $prix,
-                'duree' => $duree,
-                'duree_jour' => $duree_jour,
-                'prerequis' => $prerequis,
-                'objectif' => $objectif,
-                'modalite_formation' => $modalite,
-                'description' => $description,
-                'materiel_necessaire' => $materiel
-            ]);
+        $id = $request->id;
+        //modifier les donnée
+        DB::update('update modules set reference=?, nom_module=?, prix=?, duree=?, duree_jour=?, prerequis=?, objectif=?, modalite_formation=?, description=?, materiel_necessaire=?, bon_a_savoir=?, cible=?, prestation=?, min=?, max=? where id=?',[$request->reference,$request->nom_module,$request->prix,$request->heure,$request->jour,$request->prerequis,$request->objectif,$request->modalite,$request->description,$request->materiel,$request->bon_a_savoir,$request->cible,$request->prestation,$request->min_pers,$request->max_pers,$request->id]);
 
         return redirect()->route('liste_module');
     }
