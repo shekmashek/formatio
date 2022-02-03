@@ -83,7 +83,7 @@ class HomeController extends Controller
                 }
             }
         }
-        if (Auth::user()->exists) {
+        if (Gate::allows('isCFP')) {
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = cfp::where('user_id', $user_id)->value('id');
             $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
@@ -102,10 +102,16 @@ class HomeController extends Controller
 
             // debut top 10 par client
 
-            // fin top 10 par client  
+            // fin top 10 par client
 
             // dd($user_id, $centre_fp, $top_10_par_client);
             return view('layouts.dashboard', compact('GChart', 'CA_actuel', 'CA_precedent'));
+        }
+        if (Gate::allows('isReferent')) {
+            $user_id = User::where('id', Auth::user()->id)->value('id');
+
+            return view('layouts.dashboard_referent');
+            // dd($user_id);
         }
     }
 
