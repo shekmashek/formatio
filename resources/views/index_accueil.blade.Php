@@ -119,7 +119,7 @@ Gérez votre entreprise ( dépenses, budgets, personnel, factures, données, év
                     <div class="bordure">Informations légales</div>
                     <div class="bordure">Contactez-nous</div>
                     <div class="bordure">Politique de confidentialités</div>
-                    <div class="bordure">Condition d'utilisation</div>
+                    <div class="bordure">  <a href="{{route('condition_generale_de_vente')}}" target="_blank"> Condition d'utilisation</a> </div>
                     <div class="bordure">Tarifs</div>
                     <div class="bordure">Crédits</div>
                     <div> &nbsp; Version 0.9</div>
