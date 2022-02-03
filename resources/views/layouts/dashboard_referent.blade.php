@@ -4,7 +4,7 @@
     <div class="p-0 m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation justify-content-end" id="myTab" style="font-size: 13px;">
             <li class="nav-item">
-                <a href="#TBFinancière" class="nav-link active" data-bs-toggle="tab">Taux d'abscence</a>
+                <a href="#TBFinancière" class="nav-link active" data-bs-toggle="tab">Tableau de bord</a>
             </li>
             <li class="nav-item">
                 <a href="#TBStatistique" class="nav-link " data-bs-toggle="tab">Tableau de bord statistique</a>
@@ -20,43 +20,57 @@
                     <div class="row mt-2">
                         <div class="col-lg-4">
                             <div class="form-control">
-                                <p class="text-center"><b style="font-size: 17px;">Tableau de bord </b></p>
-                                <p class="p-0 m-0 " style="font-size: 14px; font-weight: bold;">C.A actuel:
+                                <p class="text-center"><b style="font-size: 16px;">Stagiaire par sexe</b></p>
+                                <p class="p-0 m-0 " style="font-size: 14px; ">Total Homme :15,4 %
                                     {{-- @php
                                         foreach ($CA_actuel as $total) {
                                             $total = $total->total_ttc;
                                             echo $total . ' ';
                                         }
                                     @endphp --}}
-                                    Ar TTC</p>
+                                </p>
+                                <p class="p-0 mt-1 " style="font-size: 14px;" >Total Femme : 84,6 %
+                                    {{-- @php
+                                        foreach ($CA_actuel as $total) {
+                                            $total = $total->total_ttc;
+                                            echo $total . ' ';
+                                    @endphp --}}
+                                </p>
 
-                                <p class="p-1 m-0" style="font-size: 13px;">C.A précedent:
+                                <hr>
+                                <div id="piechart"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-control">
+                                <p class="text-center"><b style="font-size: 16px;">Total stagiaire </b></p>
+                                <p class="p-0 m-0 " style="font-size: 14px; font-weight: bold;">Total stagiaire actuel : 700
+                                    {{-- @php
+                                        foreach ($CA_actuel as $total) {
+                                            $total = $total->total_ttc;
+                                            echo $total . ' ';
+                                        }
+                                    @endphp --}}
+                                </p>
+                                <p class="p-1 m-0" style="font-size: 13px;">Total stagiaire de l'année précédent : 250
                                     {{-- @php
                                         foreach ($CA_precedent as $totals) {
                                             $totals = $totals->total_ttc;
                                             echo $totals . ' ';
                                         }
-                                    @endphp  --}}
-                                    Ar TTC</p>
-                                <hr>
-                                <div id="chart_div"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-control">
-                                <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par module</b></p>
-                                <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 modules</p>
+                                    @endphp --}}
+                                </p>
                                 <hr>
                                 <div id="barchart_material"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="form-control">
+                            {{-- <div class="form-control">
                                 <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par client</b></p>
                                 <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 clients</p>
                                 <hr>
                                 <div id="barchart_material_2"></div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -68,7 +82,7 @@
                 <div class="row mt-2">
                     <div class="col-lg-4">
                         <div class="form-control">
-                            <p class="text-center"><b style="font-size: 17px;">Tableau de bord financier</b></p>
+                            <p class="text-center"><b style="font-size: 16px;">Tableau de bord financier</b></p>
                             <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">C.A actuel:
                                 {{-- @php
                                     foreach ($CA_actuel as $total) {
@@ -184,125 +198,30 @@
             $("myTab a:last").tab("show");
         });
 
-    /*    var name = [];
-                    var marks = [];
-
-                    // for (var i in data) {
-                        name.push("Noam");
-                        marks.push("blue");
-                    // }
-
-                    var chartdata = {
-                        labels: name,
-                        datasets: [
-                            {
-                                label: 'Student Marks',
-                                backgroundColor: '#49e2ff',
-                                borderColor: '#46d5f1',
-                                hoverBackgroundColor: '#CCCCCC',
-                                hoverBorderColor: '#666666',
-                                data: marks
-                            }
-                        ]
-                    };
-
-                    var graphTarget = $("#chart_div");
-
-                    var barGraph = new Chart(graphTarget, {
-                        type: 'bar',
-                        data: chartdata
-                    });
-                });
-*/
     </script>
 
-    <script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['corechart', 'bar']
-        });
-        google.charts.setOnLoadCallback(drawStuff);
+<script type="text/javascript">
 
-        function drawStuff() {
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
-            var button = document.getElementById('change-chart');
-            var chartDiv = document.getElementById('chart_div');
+    function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['mois', 'prix', 'annee'],
-                // @php
-                // foreach ($GChart as $product) {
-                //     $val = "['" . $product->mois . "', " . $product->net_ttc . ', ' . $product->annee . ']';
-                //     echo $val . ',';
-                // }
-                // @endphp
-            ]);
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Homme',     11],
+        ['Femme',      2]
+      ]);
 
-            var materialOptions = {
-                width: 350,
-                chart: {
-                    title: '',
-                    subtitle: ''
-                },
-                series: {
-                    0: {
-                        axis: 'Actuel'
-                    },
-                    1: {
-                        axis: 'précédent'
-                    }
-                },
-                axes: {
-                    y: {
-                        distance: {
-                            label: 'C.A'
-                        },
-                        brightness: {
-                            side: 'right',
-                            label: ''
-                        }
-                    }
-                }
-            };
+      var options = {
+        title: ''
+      };
 
-            var classicOptions = {
-                width: 350,
-                series: {
-                    0: {
-                        targetAxisIndex: 0
-                    },
-                    1: {
-                        targetAxisIndex: 1
-                    }
-                },
-                title: '',
-                vAxes: {
-                    // Adds titles to each axis.
-                    0: {
-                        title: ''
-                    },
-                    1: {
-                        title: ' '
-                    }
-                }
-            };
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-            function drawMaterialChart() {
-                var materialChart = new google.charts.Bar(chartDiv);
-                materialChart.draw(data, google.charts.Bar.convertOptions(materialOptions));
-                button.innerText = 'Change to Classic';
-                button.onclick = drawClassicChart;
-            }
-
-            function drawClassicChart() {
-                var classicChart = new google.visualization.ColumnChart(chartDiv);
-                classicChart.draw(data, classicOptions);
-                button.innerText = 'Change to Material';
-                button.onclick = drawMaterialChart;
-            }
-
-            drawMaterialChart();
-        };
-    </script>
+      chart.draw(data, options);
+    }
+  </script>
 
     <script type="text/javascript">
         google.charts.load('current', {

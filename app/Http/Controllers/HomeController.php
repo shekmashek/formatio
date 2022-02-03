@@ -111,7 +111,8 @@ class HomeController extends Controller
             $user_id = User::where('id', Auth::user()->id)->value('id');
 
             return view('layouts.dashboard_referent');
-            // dd($user_id);
+        }else{
+            return view('layouts.accueil_admin');
         }
     }
 
