@@ -22,8 +22,8 @@
                 <div class="col-md-2 text-center">{{ $dt->date_detail }}</div>
                 <div class="col-md-1 text-center">{{ $dt->h_debut }}</div>
                 <div class="col-md-1 text-center">{{ $dt->h_fin }}</div>
-                <div class="col-md-2 text-center"><i id="faire_presence" data-toggle="collapse"
-                        href="#stagiaire_presence_{{ $dt->detail_id }}" class="fa fa-edit">Emargement</i></div>
+                <div class="col-md-2 text-center fermer_collapse"><i id="faire_presence" data-toggle="collapse"
+                        href="#stagiaire_presence_{{ $dt->detail_id }}" class="fa fa-edit reset_radio">Emargement</i></div>
             </div>
             <hr class="m-2 p-0">
             <div class="collapse" id="stagiaire_presence_{{ $dt->detail_id }}">
@@ -107,6 +107,7 @@
 
 </style>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
         // change the selector to use a class
@@ -128,45 +129,32 @@
 
             $(id).show();
         });
+
+        $(".fermer_collapse").click(function() {
+            $(".present").prop('checked', false);
+            $(".absent").prop('checked', false);
+        });
     });
 
     $(document).on('click', '#add_presence', function(e) {
         var id_detail = $(this).data('id');
-        // var attendance = $('input[name="attendance[' + id_detail + ']"]').map(function() {
-        //     return $(this).val();
-        // }).get();
-        // var h_entree = $("input[name='h_entree[]']").map(function() {
-        //     return $(this).val();
-        // }).get();
-        // var h_sortie = $("input[name='h_sortie[]']").map(function() {
-        //     return $(this).val();
-        // }).get();
-
         var attendance = [];
-        // $('input[name*="attendance[]"]').each(function() {
-        //     // alert($(this).val());
-        //     attendance.push($(this).val());
-        // });
-        // var attendance = [];
-        // $('input[name^="attendance[' + id_detail + ']"]').each(function() {
-        //     attendance.push((this).val());
-        // });
-        // $('input[name^="attendance"]').each(function() {
-        //     attendance.push((this).val());
-        // });
-        
-        $('input[name^="attendance"]').each(function() {
+        $("input[type='radio'][name^='attendance']:checked").map(function() {
             attendance.push($(this).val());
         });
-        alert(attendance[11][1]);
+        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+        alert(attendance[0]);
         $.ajax({
             type: "GET",
-            url: "{{ route('insert_frais_annexe') }}",
-            data: {
-                detail_id: id_detail
+            url: "{{route('insert_presence_detail')}}",
+            data:{
+                presence:attendance,
+                groupe:groupe_id,
+                detail_id:id_detail
             },
             dataType: "html",
             success: function(response) {
+                alert('eto');
                 var userData = JSON.parse(response);
                 // html = '';
                 alert(userData);

@@ -124,7 +124,7 @@ class SessionController extends Controller
         }
         // public
         // ---apprenants
-        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$projet[0]->groupe_id]);
+        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
         // ---ressources
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
@@ -231,7 +231,17 @@ class SessionController extends Controller
         return response()->json($all_frais_annexe);
     }
 
-    public function insert_precence(Request $request){
-
+    public function insert_presence(Request $request){
+        $presence = $request->presence;
+        $groupe_id = $request->groupe;
+        $detail_id = $request->detail_id;
+        $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
+        $i = 0;
+        foreach($stagiaire as $stg){
+            DB::insert('insert into presences(stagiaire_id,detail_id,status) values(?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$i]]);
+            $i++;
+        }
+        $presence_detail = DB::select("select * from presences where detail_id = ? order by stagiaire_id as", [$detail_id]);
+        return response()->json($presence_detail);
     }
 }
