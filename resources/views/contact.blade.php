@@ -17,35 +17,22 @@
 </head>
 <body>
     <div class="container">
-<<<<<<< HEAD
-        <h1>Contact-nous</h1>
-        <br>
-        <br>
-
-=======
         <p class=" mt-4" style="font-size: 20px;">Contactez-nous</p>
-       
-   
+
+
         <hr>
->>>>>>> cc239c1d8ddd4d1ce2bc12835cba63b0072591bc
         <div class="row">
 
             <div class="col-lg-4">
                 <p class=" ms-5 mt-4" style="font-size: 20px;">Adresse</p>
 
-                
+
                 <i class="fa fa-map-marker text mt-3" aria-hidden="true">
                     II N 60 A Analamahitsy 101 Antananarivo Madagascar.
                 </i>
-<<<<<<< HEAD
-                <br>
-                <br>
-               <i class="fa fa-envelope" aria-hidden="true">
-=======
-                
+
 
                <i class="fa fa-envelope text mt-3" aria-hidden="true">
->>>>>>> cc239c1d8ddd4d1ce2bc12835cba63b0072591bc
                 contact@numerika.center
                </i>
                <br>
@@ -54,25 +41,18 @@
                </i>
             </div>
             <div class="col-lg-8">
-<<<<<<< HEAD
-                <h3>Pour nous contacter Veuillez remplir les formulaires ci-dessous</h3>
-                <br>
-                <br>
-
-=======
                 <p class=" ms-5 mt-4" style="font-size: 20px;">Pour nous contacter Veuillez remplir les formulaires ci-dessous</p>
-             
+
                 @if(session()->has('message'))
                 <div class="alert alert-success">
                     {{ session()->get('message') }}
                 </div>
             @endif
->>>>>>> cc239c1d8ddd4d1ce2bc12835cba63b0072591bc
                 <div class="row">
                     <div class="col-lg-6">
                 <form method="POST" action="{{route('contact')}}" enctype="multipart/form-data">
                     @csrf
-                    
+
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Votre nom" name="name">
                      </div>
@@ -99,26 +79,13 @@
                     <textarea type="text" class="form-control" placeholder="Votre message" style="height: 200px" name="msg"></textarea>
                  </div>
                  <br>
-<<<<<<< HEAD
 
-                      <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="submit">Envoyer</button>
-
-                      </div>
-=======
-                
                     <button class="btn " type="submit" style="background-color: #801D68;color:white">Envoyer</button>
-                      
->>>>>>> cc239c1d8ddd4d1ce2bc12835cba63b0072591bc
+
             </div>
             </div>
         </form>
         </div>
-<<<<<<< HEAD
-    </div>
-    {{-- <footer class="footer_container">
-=======
->>>>>>> cc239c1d8ddd4d1ce2bc12835cba63b0072591bc
 
         <br><br><br>
         <footer class="footer_container">
@@ -133,10 +100,10 @@
                 <div> &nbsp; Version 0.9</div>
             </div>
     </footer>
-    </div>     
+    </div>
     <style>
         .text{color: grey;font-size: 16px}
     </style>
-    
+
 </body>
 </html>

@@ -644,3 +644,11 @@ Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name(
 Route::get('/recherche_admin', function(){
     return view('projet_session.recherche_admin');
 });
+
+///////__________RECHERCHE MULTICRITERE_____________________\\\\\\\\\
+Route::post('recherche_multi_critere','RecherchemultiController@store')->name('recherche_multi_critere');
+
+//route conditions generales de vente
+Route::get('condition_generale_de_vente',function(){
+    return view('cgv');
+})->name('condition_generale_de_vente');
