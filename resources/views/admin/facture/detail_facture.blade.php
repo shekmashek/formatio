@@ -335,7 +335,8 @@
                                                     <div class="d-flex">
                                                         <td>
                                                             <div align="right">
-                                                                {{number_format($montant_totale->net_ht,2,",",".")}}
+                                                                {{-- {{number_format($montant_totale->net_ht,2,",",".")}} --}}
+                                                                {{number_format($montant_totale->net_ttc,2,",",".")}}
                                                             </div>
                                                         </td>
                                                     </div>

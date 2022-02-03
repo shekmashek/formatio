@@ -493,7 +493,7 @@ $(document).on('click','#addRowMontant',function () {
         $('#montant').empty();
         var id = $("#projet_id").val();
 
-        $.ajax({
+     /*   $.ajax({
             url:"{{route('groupe_projet')}}",
             type:'get',
             data:{id:id},
@@ -506,7 +506,7 @@ $(document).on('click','#addRowMontant',function () {
             error:function(error){
                 console.log(error);
             }
-        });
+        }); */
 
         $.ajax({
             url:"{{route('groupe_projet')}}",
@@ -519,7 +519,6 @@ $(document).on('click','#addRowMontant',function () {
                 html +='<div class="row" id="inputFormRowMontant">';
                 html += '<div class="col">';
                 html += '<label class="visually" for="specificSizeSelect">Choisir la Session a Facturé</label>';
-                // html += '<input type="text" class="form-control" placeholder=ProjetNom@Groupe id="montant" name="projet_groupe[]" list="projet_groupe" id="specificSizeSelect"/>';
                 html+='<select id="session_id" class="form-control" name="session_id[]">';
                 for (var $i = 0; $i < userData.length; $i++){
                     html += '<option value="'+userData[$i].id+'">'+userData[$i].nom_groupe+'</option>';

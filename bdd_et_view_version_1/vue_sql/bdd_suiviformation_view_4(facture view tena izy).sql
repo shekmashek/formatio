@@ -57,9 +57,7 @@ CREATE OR REPLACE VIEW v_montant_brut_facture AS SELECT
 FROM
     v_montant_frais_annexe mfa
 RIGHT JOIN v_montant_pedagogique_facture mpf ON
-    mpf.num_facture = mfa.num_facture AND mpf.projet_id = mfa.projet_id AND mpf.cfp_id = mfa.cfp_id;
-
-
+    mpf.num_facture = mfa.num_facture  AND mpf.cfp_id = mfa.cfp_id;
 
 CREATE OR REPLACE VIEW v_remise_facture AS SELECT
 	cfp_id,

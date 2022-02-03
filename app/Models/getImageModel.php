@@ -45,6 +45,11 @@ class getImageModel extends Model
         }
 
         $dir = '/'.$root;
+        $root1='';
+        $root2='';
+        $root3='';
+        $root4='';
+
         $recursive = true; // Get subdirectories also?
         $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
         foreach ($sub_directory as $key => $value) {
@@ -86,6 +91,7 @@ class getImageModel extends Model
             if($value['name'] == $projet_folder)
                 $root4= $value['path'];
         }
+
         $dir4 = $dir3.'/'.$root4;
         $recursive = true; // Get subdirectories also?
         $sub_directory4  = collect(Storage::cloud()->listContents($dir4, $recursive));
