@@ -135,7 +135,7 @@ CREATE OR REPLACE VIEW v_participantsession AS SELECT
     s.departement_id,
     s.cin,
     s.date_naissance,
-    s.adresse,
+    (s.lot) adresse,
     s.niveau_etude,
     (s.activiter) activiter_stagiaire,
     pe.nom_projet,
@@ -172,7 +172,7 @@ CREATE OR REPLACE VIEW v_coursfroidevaluation AS SELECT
     s.departement_id,
     s.cin,
     s.date_naissance,
-    s.adresse,
+    (s.lot) adresse,
     s.niveau_etude,
     (s.activiter) activiter_stagiaire
 FROM
