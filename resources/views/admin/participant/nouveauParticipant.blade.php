@@ -215,10 +215,9 @@
                                 <label for="etp">Departement</label><br>
                                 <select name="liste_dep" class="form-control" id="liste_dep">
                                     <option value="">Choisissez un département...</option>
-                                    @foreach ($liste_dep as $liste)
-                                    <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
-                                    @endforeach
-
+                                    @for ($i = 0; $i < count($liste_dep); $i++)
+                                        <option value="{{$liste_dep[$i]->id}}">{{$liste_dep[$i]->nom_departement}}</option>
+                                    @endfor
                                 </select>
                             </div><br>
                             @endcan
@@ -227,9 +226,9 @@
                                 <label for="etp">Departement</label><br>
                                 <select name="liste_dep" class="form-control" id="liste_dep">
                                     <option value="">Choisissez un département...</option>
-                                    @foreach ($liste_dep as $liste)
-                                    <option value="{{$liste->departement->id}}">{{$liste->departement->nom_departement}}</option>
-                                    @endforeach
+                                    @for ($i = 0; $i < count($liste_dep); $i++)
+                                        <option value="{{$liste_dep[$i]->id}}">{{$liste_dep[$i]->nom_departement}}</option>
+                                    @endfor
                                 </select>
                             </div><br>
                             @endcan
@@ -290,7 +289,7 @@
                             </div>
                             @enderror
                         </div><br> --}}
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="lieu">Lieu de travail</label>
                             <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu de travail">
                             @error('lieu')
@@ -298,7 +297,7 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
-                        </div><br>
+                        </div><br> --}}
                         {{-- <div class="form-group">
                                         <label for="niveau">Niveau d'étude</label><br>
                                         <select name="niveau" class="form-control" id="niveau">

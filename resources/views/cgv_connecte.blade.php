@@ -39,12 +39,10 @@
 
 </style>
 @section('content')
-<div class="test"><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis officia corporis ea magni unde eos, magnam, cupiditate adipisci illo, ab cumque dolor ratione pariatur. Ipsum cumque vel quibusdam natus quae!</p></div>
 <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
     <i class="far fa-arrow-up"></i>
 </button>
 <div class="container-fluid row_conditions">
-
     <div class="row">
         <div class="col-4 ">
             <ul class="nav flex-column navperso">

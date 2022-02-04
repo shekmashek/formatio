@@ -51,7 +51,8 @@ class ParticipantController extends Controller
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
+            $liste_dep = db::select('select * from departement_entreprises where entreprise_id = ? ',[$entreprise_id]);
+            // $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
             return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
         }
         if (Gate::allows('isManager')) {
@@ -580,7 +581,10 @@ class ParticipantController extends Controller
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
         if ($stagiaire_connecte) {
-            $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
+            $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
+            $stagiaires = db::select('select * from v_stagiaire_entreprises where matricule = ?',[$matricule]);
+            // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
+
         } else {
             $stagiaires = stagiaire::with('entreprise', 'Departement')->where('id', $id)->get();
         }

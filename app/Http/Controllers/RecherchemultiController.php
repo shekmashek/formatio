@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\responsable;
 class RecherchemultiController extends Controller
 {
     /**
@@ -13,7 +15,10 @@ class RecherchemultiController extends Controller
      */
     public function index()
     {
-        //
+        $id_etp = responsable::where('user_id',Auth::id())->value('entreprise_id');
+        $liste_dep = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement',[$id_etp]);
+        $liste_serv = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? ',[$id_etp]);
+        return view('projet_session.recherche_admin',compact('liste_dep','liste_serv'));
     }
 
     /**
