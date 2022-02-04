@@ -654,7 +654,7 @@ Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name(
 // });
 
 ///////__________RECHERCHE MULTICRITERE_____________________\\\\\\\\\
-Route::get('recherche_multi_critere','RecherchemultiController@index')->name('recherche_multi_critere');
+Route::get('recherche_admin','RecherchemultiController@index')->name('recherche_admin');
 
 //route conditions generales de vente
 Route::get('condition_generale_de_vente','ConditionController@index')->name('condition_generale_de_vente');
