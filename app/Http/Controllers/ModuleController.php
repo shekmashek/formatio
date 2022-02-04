@@ -219,6 +219,44 @@ class ModuleController extends Controller
         return view('admin.module.modif_module',compact('module_en_modif', 'niveau'));
     }
 
+    public function modifier_mod_prog(Request $request)
+    {
+        $id = $request->id;
+        if (Gate::allows('isCFP')) {
+            $id_user = Auth::user()->id;
+            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+
+            $niveau = Niveau::all();
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        } else {
+
+            $niveau = Niveau::all();
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+
+        }
+
+        return view('admin.module.modif_module_prog',compact('module_en_modif', 'niveau'));
+    }
+
+    public function modifier_mod_publies(Request $request)
+    {
+        $id = $request->id;
+        if (Gate::allows('isCFP')) {
+            $id_user = Auth::user()->id;
+            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+
+            $niveau = Niveau::all();
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        } else {
+
+            $niveau = Niveau::all();
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+
+        }
+
+        return view('admin.module.modif_module_publies',compact('module_en_modif', 'niveau'));
+    }
+
     public function update(Request $request)
     {
         $id = $request->id;

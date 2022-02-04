@@ -274,7 +274,7 @@
                                             </div>
                                             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                                                 <div class="detail__formation__result__item2">
-                                                    <div class="text-center"><img src="" alt="logo" id="logos" class="img-fluid" style="width: 200px; height: 100px;">
+                                                    <div class="text-center" id="imgDiv"><img src='{{asset("images/CFP/".$mod_en_cours[0]->logo)}}' alt="logo" id="logos" class="img-fluid" style="width: 200px; height: 100px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -548,11 +548,10 @@
                                             </div>
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn modifier" data-id="{{$mod->module_id}}"
-                                                    data-toggle="modal" data-target="#myModal_{{$mod->module_id}}"
-                                                    id="{{$mod->module_id}}}" id="{{$mod->module_id}}"><i
+                                                <button class="btn modifier"><a
+                                                    href="{{route('modifier_module_prog',$mod->module_id)}}"><i
                                                         class='bx bx-edit'
-                                                        style="color: #0052D4 !important; font-size: 20px"></i></button>
+                                                        style="color: #0052D4 !important;font-size: 20px"></i></a></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
                                                 <button class="btn supprimer" data-toggle="modal"
@@ -710,11 +709,10 @@
                                             </div>
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn modifier" data-id="{{$mod->module_id}}"
-                                                    data-toggle="modal" data-target="#myModal_{{$mod->module_id}}"
-                                                    id="{{$mod->module_id}}}" id="{{$mod->module_id}}"><i
+                                                <button class="btn modifier"><a
+                                                    href="{{route('modifier_module_pub',$mod->module_id)}}"><i
                                                         class='bx bx-edit'
-                                                        style="color: #0052D4 !important; font-size: 20px"></i></button>
+                                                        style="color: #0052D4 !important;font-size: 20px"></i></a></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
                                                 <button class="btn supprimer" data-toggle="modal"
@@ -808,6 +806,7 @@
                     $("#jour").text(userData[$i].duree_jour);
                     $("#jour2").text(userData[$i].duree_jour);
                     $("#objectif").text(userData[$i].objectif);
+                    $("#prerequis").text(userData[$i].prerequis);
                     $("#modalite").text(userData[$i].modalite_formation);
                     $("#modalite2").text(userData[$i].modalite_formation);
                     $("#description").text(userData[$i].description);
@@ -817,12 +816,6 @@
                     $("#prestation").text(userData[$i].prestation);
                     $("#nom_formation").text(userData[$i].nom_formation);
                     $("#niveau").text(userData[$i].niveau);
-                    let image = document.getElementById("logos").attr(src);
-
-                    // let img = $('<img />', {src : "{{asset('images/CFP/Numerika26-01-2022.png')}}" + $('#logos').val()});
-                    // img.appendTo('body');
-
-
                 }
                 // var ul = document.getElementById('programme');
 

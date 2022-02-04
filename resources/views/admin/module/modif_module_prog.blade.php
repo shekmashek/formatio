@@ -9,7 +9,7 @@
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
                             <div class="col">
-                                <h3 class="mt-2">Modification modules avec aperçu</h3>
+                                <h3 class="mt-2">Modification modules non Publiées avec aperçu</h3>
                             </div>
                             <div class="col search_formatiom">
                                 {{-- <form action="">
@@ -78,7 +78,12 @@
                                         <p id="changer_prestation" onclick="changer_prestation();" role="button"
                                             class="text-center btn_change_form py-2 mb-1"><a
                                                 href="#preview_prestation"><i class='bx bx-hive'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>prestation</span></a>
+                                                    style="color: #801d68; font-size:2rem"></i><br><span>Prestation</span></a>
+                                        </p>
+                                        <p id="changer_programme" onclick="changer_programme();" role="button"
+                                            class="text-center btn_change_form py-2 mb-1"><a
+                                                href="#preview_programme"><i class='bx bx-list-ol'
+                                                    style="color: #801d68; font-size:2rem"></i><br><span>Programme</span></a>
                                         </p>
                                     </div>
                                 </div>
@@ -260,9 +265,11 @@
                                         <div class="acf-field acf-field-text acf-field-objectif is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control objectif objectif label_placeholder" id="acf-objectif"
-                                                        name="objectif"
-                                                        style="height: 200px !important;padding-top: 1rem" required>{{$mod->objectif}}</textarea><label for="acf-objectif" class="form-control-placeholder">Objectifs</label>
+                                                    <textarea class="form-control objectif objectif label_placeholder"
+                                                        id="acf-objectif" name="objectif"
+                                                        style="height: 200px !important;padding-top: 1rem"
+                                                        required>{{$mod->objectif}}</textarea><label for="acf-objectif"
+                                                        class="form-control-placeholder">Objectifs</label>
                                                     @error('objectif')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -286,9 +293,11 @@
                                         <div class="acf-field acf-field-text acf-field-cible is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control cible cible label_placeholder" id="acf-cible"
-                                                        name="cible" rows=3
-                                                        style="height: 200px !important;padding-top: 1rem" required>{{$mod->cible}}</textarea><label for="acf-cible" class="form-control-placeholder">Public cible</label>
+                                                    <textarea class="form-control cible cible label_placeholder"
+                                                        id="acf-cible" name="cible" rows=3
+                                                        style="height: 200px !important;padding-top: 1rem"
+                                                        required>{{$mod->cible}}</textarea><label for="acf-cible"
+                                                        class="form-control-placeholder">Public cible</label>
                                                     @error('cible')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -304,8 +313,10 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control prerequis prerequis label_placeholder"
-                                                        id="acf-prerequis" name="prerequis"
-                                                        rows=3 style="height: 200px !important;padding-top: 1rem">{{$mod->prerequis}}</textarea><label for="acf-prerequis" class="form-control-placeholder">Prerequis</label>
+                                                        id="acf-prerequis" name="prerequis" rows=3
+                                                        style="height: 200px !important;padding-top: 1rem">{{$mod->prerequis}}</textarea><label
+                                                        for="acf-prerequis"
+                                                        class="form-control-placeholder">Prerequis</label>
                                                     @error('prerequis')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -329,8 +340,11 @@
                                         <div class="acf-field acf-field-text acf-field-reference is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control reference reference label_placeholder"
-                                                        id="acf-reference" name="reference" value="{{$mod->reference}}"><label for="acf-reference" class="form-control-placeholder">Reference</label>
+                                                    <input type="text"
+                                                        class="form-control reference reference label_placeholder"
+                                                        id="acf-reference" name="reference"
+                                                        value="{{$mod->reference}}"><label for="acf-reference"
+                                                        class="form-control-placeholder">Reference</label>
                                                     @error('reference')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -345,9 +359,11 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix prix label_placeholder" id="acf-prix"
-                                                        name="prix" pattern="[0-9]{1,7}"
-                                                        value="{{$mod->prix}}" onfocus="(this.type='number')"><label for="acf-prix" class="form-control-placeholder">Prix en AR</label>
+                                                    <input type="text" class="form-control prix prix label_placeholder"
+                                                        id="acf-prix" name="prix" pattern="[0-9]{1,7}"
+                                                        value="{{$mod->prix}}" onfocus="(this.type='number')"><label
+                                                        for="acf-prix" class="form-control-placeholder">Prix en
+                                                        AR</label>
                                                     @error('prix')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -371,9 +387,11 @@
                                         <div class="acf-field acf-field-text acf-field-materiel is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control materiel materiel label_placeholder"
+                                                    <input type="text"
+                                                        class="form-control materiel materiel label_placeholder"
                                                         id="acf-materiel" name="materiel"
-                                                        value="{{$mod->materiel_necessaire}}"><label for="acf-materiel" class="form-control-placeholder">Equipement necessaire</label>
+                                                        value="{{$mod->materiel_necessaire}}"><label for="acf-materiel"
+                                                        class="form-control-placeholder">Equipement necessaire</label>
                                                     @error('materiel')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -388,9 +406,12 @@
                                         <div class="acf-field acf-field-text acf-field-bon_a_savoir is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control bon_a_savoir bon_a_savoir label_placeholder"
+                                                    <textarea
+                                                        class="form-control bon_a_savoir bon_a_savoir label_placeholder"
                                                         id="acf-bon_a_savoir" name="bon_a_savoir"
-                                                        style="height: 200px !important;padding-top: 1rem">{{$mod->bon_a_savoir}}</textarea><label for="acf-bon_a_savoir" class="form-control-placeholder">Bon a savoir</label>
+                                                        style="height: 200px !important;padding-top: 1rem">{{$mod->bon_a_savoir}}</textarea><label
+                                                        for="acf-bon_a_savoir" class="form-control-placeholder">Bon a
+                                                        savoir</label>
                                                     @error('bon_a_savoir')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -414,10 +435,13 @@
                                         <div class="acf-field acf-field-text acf-field-prestation is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prestation prestation label_placeholder"
+                                                    <textarea
+                                                        class="form-control prestation prestation label_placeholder"
                                                         id="acf-prestation" name="prestation"
                                                         style="height: 200px !important;padding-top: 1rem"
-                                                        onkeyup='estComplet();'>{{$mod->prestation}}</textarea><label for="acf-bon_a_savoir" class="form-control-placeholder">Prestation pedagogiques</label>
+                                                        onkeyup='estComplet();'>{{$mod->prestation}}</textarea><label
+                                                        for="acf-bon_a_savoir"
+                                                        class="form-control-placeholder">Prestation pedagogiques</label>
                                                     @error('prestation')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -436,11 +460,15 @@
                                                     <div class="acf-field acf-field-text acf-field-miin is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control min min label_placeholder"
+                                                                <input type="text"
+                                                                    class="form-control min min label_placeholder"
                                                                     id="acf-min" name="min_pers" min="1" max="100"
                                                                     value="{{$mod->min_pers}}"
                                                                     onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale"><label for="acf-min" class="form-control-placeholder">Nombre personne min</label>
+                                                                    title="entrer le nombre de personne maximale"><label
+                                                                    for="acf-min"
+                                                                    class="form-control-placeholder">Nombre personne
+                                                                    min</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -451,11 +479,50 @@
                                                     <div class="acf-field acf-field-text acf-field-max is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control max max label_placeholder"
+                                                                <input type="text"
+                                                                    class="form-control max max label_placeholder"
                                                                     id="acf-max" name="max_pers" min="1" max="100"
                                                                     value="{{$mod->max_pers}}"
                                                                     onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale"><label for="acf-max" class="form-control-placeholder">Nombre personne max</label>
+                                                                    title="entrer le nombre de personne maximale"><label
+                                                                    for="acf-max"
+                                                                    class="form-control-placeholder">Nombre personne
+                                                                    max</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <p class="mt-3" style="font-size: 16px;"><button type="button"
+                                                    class="new_list_nouvelle px-5" onclick="retour_equipement();"><a
+                                                        href="#changer_equipement">Retour</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
+                                                    class="new_list_nouvelle px-5" onclick="suivant_programme();"><a
+                                                        href="#changer_prestation">Suivant</a></button></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-5 apres_preview" id="septieme_vue">
+
+                                        <div class="form-row d-flex">
+                                            <div class="col me-1">
+                                                <div class="form-group" id="premier_">
+                                                    <div class="acf-field acf-field-text acf-field-miin is-required">
+                                                        <div class="acf-input">
+                                                            <div class="acf-input-wrap">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group" id="premier_">
+                                                    <div class="acf-field acf-field-text acf-field-max is-required">
+                                                        <div class="acf-input">
+                                                            <div class="acf-input-wrap">
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -464,7 +531,7 @@
                                         </div>
                                         <div class="col text-center">
                                             <p class="mt-3" style="font-size: 16px;"><button type="button"
-                                                    class="new_list_nouvelle px-5" onclick="retour_equipement();"><a
+                                                    class="new_list_nouvelle px-5" onclick="retour_prestation();"><a
                                                         href="#changer_equipement">Retour</a></button></p>
                                         </div>
                                     </div>
@@ -492,7 +559,8 @@
                             id="border_premier">
                             <div class="col-lg-6 col-md-6 detail__formation__result__content new_back">
                                 <div class="detail__formation__result__item ">
-                                    <h4><span id="preview_categ"><span class="py-4 acf-categorie">{{$mod->nom_formation}}</span></span><span
+                                    <h4><span id="preview_categ"><span
+                                                class="py-4 acf-categorie">{{$mod->nom_formation}}</span></span><span
                                             style="color: black !important;">&nbsp;-&nbsp;</span>
                                         <span></span>
                                         <span id="preview_module"><span class="acf-nom_module">Excel
@@ -908,6 +976,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
+        var programme = document.getElementById("septieme_vue");
         var mod_preview = document.getElementById("border_premier");
         $('#border_premier').css('border','4px solid #ec008c');
         $('#border_objectif').css('border','none');
@@ -921,6 +990,7 @@
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_reference').css('border','none');
+        $('#changer_programme').css('border','none');
         if (mod.style.display === "none") {
             mod.style.display = "block";
             mod3.style.display = "block";
@@ -939,6 +1009,7 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             mod_preview.style.color = "#939BA0";
+            programme.style.display = "none";
         } else {
             mod.style.display = "block";
             mod3.style.display = "block";
@@ -957,6 +1028,7 @@
             bon_a_savoir.style.display = "none";
             materiel.style.display = "none";
             mod_preview.style.color = "#939BA0";
+            programme.style.display = "none";
         }
     }
 
@@ -977,6 +1049,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
+        var programme = document.getElementById("septieme_vue");
         $('#border_objectif').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -988,6 +1061,7 @@
         $('#changer_cible').css('border','none');
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
+        $('#changer_programme').css('border','none');
         $('#changer_reference').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
@@ -1006,8 +1080,7 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-
-
+            programme.style.display = "none";
         } else {
             objectif.style.display = "block";
             mod.style.display = "none";
@@ -1025,7 +1098,7 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-
+            programme.style.display = "none";
         }
     }
 
@@ -1046,6 +1119,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
+        var programme = document.getElementById("septieme_vue");
         $('#border_cible').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_objectif').css('border','none');
@@ -1058,6 +1132,7 @@
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_reference').css('border','none');
+        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1075,6 +1150,7 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
+            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1092,6 +1168,7 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
+            programme.style.display = "none";
         }
     }
 
@@ -1112,6 +1189,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
+        var programme = document.getElementById("septieme_vue");
         $('#border_reference').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -1124,6 +1202,7 @@
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_module').css('border','none');
+        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1141,7 +1220,7 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-
+            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1159,6 +1238,7 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
+            programme.style.display = "none";
         }
     }
 
@@ -1179,6 +1259,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
+        var programme = document.getElementById("septieme_vue");
         $('#border_equipement').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -1191,6 +1272,7 @@
         $('#changer_module').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_reference').css('border','none');
+        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1208,7 +1290,7 @@
             materiel.style.display = "block";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-
+            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1226,6 +1308,7 @@
             materiel.style.display = "block";
             prestation.style.display = "none";
             bouttons.style.display = "none";
+            programme.style.display = "none";
         }
     }
 
@@ -1246,6 +1329,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
+        var programme = document.getElementById("septieme_vue");
         $('#border_prestation').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -1258,6 +1342,7 @@
         $('#changer_equipement').css('border','none');
         $('#changer_module').css('border','none');
         $('#changer_reference').css('border','none');
+        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1275,6 +1360,7 @@
             materiel.style.display = "none";
             prestation.style.display = "block";
             bouttons.style.display = "block";
+            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1292,6 +1378,78 @@
             materiel.style.display = "none";
             prestation.style.display = "block";
             bouttons.style.display = "block";
+            programme.style.display = "none";
+
+        }
+    }
+
+    function changer_programme() {
+        var mod = document.getElementById("premier_vue");
+        var mod3 = document.getElementById("premier_vue3");
+        var mod4 = document.getElementById("premier_vue4");
+        var mod5 = document.getElementById("premier_vue5");
+        var mod6 = document.getElementById("premier_vue6");
+        var mod7 = document.getElementById("premier_vue7");
+        var mod8 = document.getElementById("premier_vue8");
+        var objectif = document.getElementById("second_vue");
+        var public = document.getElementById("troisiem_vue");
+        var prerequis = document.getElementById("troisiem_vue2");
+        var reference = document.getElementById("quatriem_vue");
+        var prix = document.getElementById("quatriem_vue2");
+        var bon_a_savoir = document.getElementById("cinquiem_vue");
+        var materiel = document.getElementById("cinquiem_vue2");
+        var prestation = document.getElementById("sixieme_vue");
+        var bouttons = document.getElementById("sixieme_vue2");
+        var programme = document.getElementById("septieme_vue");
+        $('#border_prestation').css('border','4px solid #ec008c');
+        $('#border_premier').css('border','none');
+        $('#border_cible').css('border','none');
+        $('#border_equipement').css('border','none');
+        $('#border_reference').css('border','none');
+        $('#border_objectif').css('border','none');
+        $('#changer_prestation').css('border','none');
+        $('#changer_objectif').css('border','none');
+        $('#changer_cible').css('border','none');
+        $('#changer_equipement').css('border','none');
+        $('#changer_module').css('border','none');
+        $('#changer_reference').css('border','none');
+        $('#changer_programme').css('border','1px solid #ec008c');
+        if (objectif.style.display === "none") {
+            mod.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            materiel.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+            programme.style.display = "block";
+        } else {
+            mod.style.display = "none";
+            mod3.style.display = "none";
+            mod4.style.display = "none";
+            mod5.style.display = "none";
+            mod6.style.display = "none";
+            mod7.style.display = "none";
+            mod8.style.display = "none";
+            objectif.style.display = "none";
+            public.style.display = "none";
+            prerequis.style.display = "none";
+            reference.style.display = "none";
+            prix.style.display = "none";
+            bon_a_savoir.style.display = "none";
+            materiel.style.display = "none";
+            prestation.style.display = "none";
+            bouttons.style.display = "none";
+            programme.style.display = "block";
         }
     }
 
@@ -1340,6 +1498,16 @@
     function retour_equipement(){
         changer_equipement();
     }
+
+    function suivant_programme(){
+        changer_programme();
+    }
+
+    function retour_prestation(){
+        changer_prestation();
+    }
+
+
 
 </script>
 @endsection

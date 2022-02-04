@@ -9,7 +9,7 @@
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
                             <div class="col">
-                                <h3 class="mt-2">Modification modules avec aperçu</h3>
+                                <h3 class="mt-2">Modification modules Publiées avec aperçu</h3>
                             </div>
                             <div class="col search_formatiom">
                                 {{-- <form action="">
@@ -1340,6 +1340,8 @@
     function retour_equipement(){
         changer_equipement();
     }
+
+
 
 </script>
 @endsection

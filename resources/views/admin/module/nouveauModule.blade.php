@@ -25,7 +25,7 @@
                             </div>
                             <div class="col" align="right">
                                 <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-                                    href="{{route('liste_formation')}}">
+                                    href="{{route('liste_module')}}">
                                     <span><span style="font-size: 20px">
                                             << </span>&nbsp;Retour
                                         </span>
