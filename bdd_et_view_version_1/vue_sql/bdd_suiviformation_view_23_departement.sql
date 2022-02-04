@@ -25,7 +25,7 @@ CREATE OR REPLACE VIEW v_chef_departement_entreprise AS SELECT
     chef.telephone_chef,
     chef.cin_chef,
     chef.photos,
-    chef_etp.id as chef_etp_id,
+    chef_etp.id as chef_etp_id
 FROM
     chef_departements chef,
     chef_dep_entreprises chef_etp,
