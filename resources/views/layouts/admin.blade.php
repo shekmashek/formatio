@@ -567,7 +567,9 @@
                         <a href="{{route('categorie')}}" class="nav_linke liste"><i class='bx bxl-sketch nav_icon'></i><span class="nav_name">Categorie Formation</span></a>
                     </li>
                     @endcan
-
+                    <li class="my-2">
+                        <a href="{{route('recherche_admin')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Reporting</span></a>
+                    </li>
                     </ul>
                 </div>
                 <div>
