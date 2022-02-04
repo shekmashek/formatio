@@ -390,7 +390,7 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.departement_id,
     stg.cin,
     stg.date_naissance,
-    stg.adresse,
+    (stg.lot) adresse,
     stg.lieu_travail,
     stg.niveau_etude,
     stg.activiter,
