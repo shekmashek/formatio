@@ -140,17 +140,18 @@
 
         <br><br><br>
         <footer class="footer_container">
+
             <div class="d-flex justify-content-center pt-3">
                 <div class="bordure">&copy; Copyright 2022</div>
                 <div class="bordure">Informations légales</div>
-                <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none">Contactez-nous</a></div>
+                <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Contactez-nous</a></div>
                 <div class="bordure">Politique de confidentialités</div>
-                <div class="bordure">Condition d'utilisation</div>
+                <div class="bordure" > <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
                 <div class="bordure">Tarifs</div>
                 <div class="bordure">Crédits</div>
                 <div> &nbsp; Version 0.9</div>
             </div>
-    </footer>
+</footer>
     </div>
     <style>
         .text{color: grey;font-size: 16px}
