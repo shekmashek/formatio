@@ -387,7 +387,8 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    stg.departement_id,
+    stg.departement_entreprises_id,
+    stg.service_id as stg_service_id,
     stg.cin,
     stg.date_naissance,
     stg.adresse,
@@ -395,14 +396,17 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.niveau_etude,
     stg.activiter,
     etp.nom_etp,
-    dept.nom_departement
+    dept.nom_departement,
+    serv.nom_service,
+    serv.id as service_id
 FROM
     stagiaires as stg,
     entreprises as etp,
-    departements as dept
+    departement_entreprises as dept,
+    services as serv
 WHERE
     stg.entreprise_id = etp.id and
-    stg.departement_id = dept.id;
+    stg.departement_entreprises_id = dept.id and stg.service_id = serv.id;
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.id AS stagiaire_id,
@@ -416,7 +420,7 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    stg.departement_id,
+    stg.departement_entreprises_id,
     stg.cin,
     stg.date_naissance,
     stg.adresse,
