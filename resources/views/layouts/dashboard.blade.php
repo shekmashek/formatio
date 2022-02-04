@@ -55,7 +55,6 @@
                 <a href="#TBQualité" class="nav-link m-1" data-bs-toggle="tab" style="color: white"> <i class="fad fa-book-alt"></i>&nbsp; TDB Qualité</a>
             </li>
         </ul><br>
-
         <div class="tab-content ">
             <div class="tab-pane fade show active" id="TBFinancière">
                 <div class="container-fluid" style="font-size: 13px;">
