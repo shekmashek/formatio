@@ -664,3 +664,5 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 // Route::get('condition_generale_de_vente',function(){
 //     return view('cgv');
 // })->name('condition_generale_de_vente');
+Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
+Route::get('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');

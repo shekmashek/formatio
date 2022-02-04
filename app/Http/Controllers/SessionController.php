@@ -124,12 +124,13 @@ class SessionController extends Controller
         }
         // public
         // ---apprenants
-        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ?',[$projet[0]->groupe_id]);
+        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
         // ---ressources
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
+        $presence_detail = DB::select("select * from v_detail_presence where groupe_id = ?", [$projet[0]->groupe_id]);
 
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail'));
     }
 
     public function getFormateur(){
@@ -231,7 +232,26 @@ class SessionController extends Controller
         return response()->json($all_frais_annexe);
     }
 
-    public function insert_precence(Request $request){
-
+    public function insert_presence(Request $request){
+        $presence = $request->presence;
+        $groupe_id = $request->groupe;
+        $detail_id = $request->detail_id;
+        $h_entree = $request->entree;
+        $h_sortie = $request->sortie;
+        $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
+        $detail = DB::select('select h_debut,h_fin from details where id = ?',[$detail_id]);
+        $i = 0;
+        foreach($stagiaire as $stg){
+            if(empty($h_entree[$i])){
+                $h_entree[$i] = $detail[0]->h_debut;
+            }
+            if(empty($h_sortie[$i])){
+                $h_sortie[$i] = $detail[0]->h_fin;
+            }
+            DB::insert('insert into presences(stagiaire_id,detail_id,status,h_entree,h_sortie) values(?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$i],$h_entree[$i],$h_sortie[$i]]);
+            $i++;
+        }
+        $presence_detail = DB::select("select * from v_detail_presence where detail_id = ? order by stagiaire_id asc", [$detail_id]);
+        return response()->json($presence_detail);
     }
 }

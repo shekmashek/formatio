@@ -49,7 +49,7 @@ select g.id as groupe_id,
         s.entreprise_id,
         s.user_id,
         s.photos,
-        s.departement_id,
+        s.departement_entreprises_id,
         s.cin,
         s.date_naissance,
         s.adresse,
@@ -93,6 +93,29 @@ create or replace view  v_responsable_entreprise as
         from responsables r
         join
             entreprises e on e.id = r.entreprise_id;
+
+
+create or replace view v_detail_presence as
+    select d.id as detail_id,
+        d.lieu,
+        d.h_debut,
+        d.h_fin,
+        d.date_detail,
+        d.formateur_id,
+        d.groupe_id,
+        d.projet_id,
+        d.cfp_id,
+        p.status,
+        p.stagiaire_id,
+        p.h_entree,
+        p.h_sortie,
+        case when p.status = 0 then 'Absent'
+             when p.status = 1 then 'Présent'
+        end as text_status,
+        case when p.status = 0 then '#ff0000'
+             when p.status = 1 then '#00ff00'
+        end as color_status
+    from details d join presences p on d.id = p.detail_id order by p.stagiaire_id asc;
 
 -- create or replace view v_apprenants as
 --     select
