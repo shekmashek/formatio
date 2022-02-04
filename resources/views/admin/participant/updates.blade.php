@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <style>
-    
+
        .image-ronde{
   width : 120px; height : 120px;
   border: none;
@@ -9,7 +9,7 @@
   -webkit-border-radius : 75px;
   border-radius : 75px;
 }
-    
+
 
   .test {
       padding: 2px;
@@ -21,7 +21,7 @@
       letter-spacing: 1px;
       height: 50px !important
   }
-  
+
   .test:focus{
       -moz-box-shadow: none !important;
       -webkit-box-shadow: none !important;
@@ -29,7 +29,7 @@
       border: 2px solid #E53935 !important;
       outline-width: 0 !important;
   }
-  
+
   .form-control-placeholder {
     position: absolute;
     top: 1rem;
@@ -41,7 +41,7 @@
     opacity: 0.5;
     left: 2rem;
   }
-  
+
   .test:focus+.form-control-placeholder,
   .test:valid+.form-control-placeholder {
     font-size: 95%;
@@ -51,15 +51,15 @@
     opacity: 1;
     background-color: white;
   }
-  label{}
+
 </style>
 <br>
 
 <div class="shadow p-3 mb-5 bg-body rounded">
   <center>
-  <p style="font-size: 20px;" >Mon compte</p>
+  <p style="font-size: 20px;color:gray" >Mon compte</p>
   </center>
-  
+
   <div class="formation__item set-bg" id>
     <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
       @csrf
@@ -80,29 +80,29 @@
             </center>
                 <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
-                        
+
                         <input type="text" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom" style="font-size:15px">
-                        <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:gray">Nom</label>
-                      </div> 
-                </div> 
-                  
+                        <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:#801D68">Nom</label>
+                      </div>
+                </div>
+
                 <div class="row px-3 mt-4">
                   <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test" value="   {{ $stagiaire->prenom_stagiaire }}"  name="prenom" style="font-size:15px">
-                        <label class="ml-3 form-control-placeholder"style="font-size:13px;color:gray" >Prénom</label>
-                     
+                        <label class="ml-3 form-control-placeholder"style="font-size:13px;color:#801D68" >Prénom</label>
+
                       </div>
-                </div> 
+                </div>
                 <div class="row px-3 mt-4">
                   <div class="form-group mt-1 mb-1">
-                  
+
                         <select value="   {{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre" style="font-size:15px">
-                       
+
                           <option value="Homme"  selected >Homme</option>
                           <option value="Femme">Femme</option>
-                      
+
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Genre</label>
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
 
                       </div>
                     </div>
@@ -118,46 +118,46 @@
                             <option value="Dir">Dir</option>
                             <option value="PDG">PDG</option>
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray" >Titre</label>
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68" >Titre</label>
 
                       </div>
                     </div>
-                    
+
                     <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
-                        <input type="date" class="form-control test" name="date" value="   {{ $stagiaire->date_naissance }}" style="font-size:15px">
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Date de Naissance</label>
-                      
+                        <input type="date" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}" style="font-size:15px">
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Date de Naissance</label>
+
                       </div>
                     </div>
                     <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" value="   {{ $stagiaire->cin}}" class="form-control test"  name="cin"  style="font-size:15px">
-                          <label  class="ml-3 form-control-placeholder"  style="font-size:13px;color:gray" >CIN</label>
-                      
-                        </div> 
-                    </div> 
+                          <label  class="ml-3 form-control-placeholder"  style="font-size:13px;color:#801D68" >CIN</label>
+
+                        </div>
+                    </div>
 
                      <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
-                        <input type="email" class="form-control test"  name="mail" value="   {{ $stagiaire->mail_stagiaire }}" style="font-size:15px" >
-                        <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:gray">E-mail</label>
-                      
+                        <input type="email" class="form-control test"  name="mail" value="{{ $stagiaire->mail_stagiaire }}" style="font-size:15px" >
+                        <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:#801D68">E-mail</label>
+
                       </div>
-                    </div> 
+                    </div>
 
                         <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test"  name="phone" value="   {{ $stagiaire->telephone_stagiaire }}" style="font-size:15px">
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Téléphone</label>
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Téléphone</label>
                       </div>
                         </div>
 
                        <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
-                        <input type="password" class="form-control test" value=""  name="password" placeholder="" style="font-size:15px"> 
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray" >Mot de passe</label>
-                      
+                        <input type="password" class="form-control test" value=""  name="password" placeholder="" style="font-size:15px">
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68" >Mot de passe</label>
+
                       </div>
                     </div>
                   </div>
@@ -166,52 +166,52 @@
                 <div class="col-lg-4 col-md-6">
                    <div class="formation-service">
                 <p style="font-size: 17px;color:gray" class="ms-5">Informations Personnelles</p>
-                        
+
                        <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="lot" name="lot" placeholder="Lot" value="   {{ $stagiaire->lot}}" style="font-size:15px">
-                          <label  class="ml-3 form-control-placeholder" style="font-size:13px;color:gray" >Lot</label>
-                          
-                      </div> 
-                    </div> 
-                    
+                          <label  class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68" >Lot</label>
+
+                      </div>
+                    </div>
+
                      <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="quartier" name="quartier" placeholder="Quartier" value="   {{ $stagiaire->quartier}}"style="font-size:15px">
-                          <label  class="ml-3 form-control-placeholder" style="font-size:13px;color:gray" > Quartier</label>
+                          <label  class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68" > Quartier</label>
 
                         </div>
                       </div>
                      <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="code_postal" name="code_postal" placeholder="Code Postale" value="   {{ $stagiaire->code_postal}}" style="font-size:15px">
-                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Code Postale</label>
+                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Code Postale</label>
                         </div>
                       </div>
                      <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="ville" name="ville" placeholder="Ville" value="   {{ $stagiaire->ville}}" style="font-size:15px">
-                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Ville</label>
-                      
+                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Ville</label>
+
                         </div>
                     </div>
 
                      <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test" id="region" name="region" placeholder="Region" value="   {{ $stagiaire->region}}" style="font-size:15px">
-                          <label  class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Region</label>
+                          <label  class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Region</label>
                         </div>
                     </div>
-                
-                
+
+
                <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                   <input type="text" class="form-control test"  name="niveau" value="   {{ $stagiaire->niveau_etude }}" style="font-size:15px">
-                  <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Niveau d'étude</label>
-                
+                  <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Niveau d'étude</label>
+
                 </div>
               </div>
-                
+
               </div>
              </div>
           <div class="col-lg-4 col-md-6">
@@ -221,37 +221,37 @@
                  <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                     <input type="text" value="   {{ $stagiaire->matricule}}"  class="form-control test"  name="matricule" style="font-size:15px" >
-                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Matricule</label>
+                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Matricule</label>
                   </div>
                   </div>
                  <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                     <input type="text" class="form-control test"  name="fonction" placeholder="Fonction" value="   {{ $stagiaire->fonction_stagiaire }}" style="font-size:15px" >
-                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Fonction</label>
-                  
+                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Fonction</label>
+
                   </div>
                 </div>
 
                  <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                     <input type="text" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}" style="font-size:15px" >
-                    <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:gray">Entreprise</label>
-                  
+                    <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:#801D68">Entreprise</label>
+
                   </div>
                 </div>
 
                  <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                     <input type="text" value="   {{ $stagiaire->lieu_travail }}"  class="form-control test"  name="lieu" placeholder="Matricule" style="font-size:15px">
-                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Branche</label>
+                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Branche</label>
                   </div>
 
                   </div>
                  <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                     <input type="text" class="form-control test"  name="departement" value="   {{ optional(optional($stagiaire)->departement)->nom_departement }}" style="font-size:15px">
-                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:gray">Departement</label>
-                
+                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Departement</label>
+
                   </div>
                 </div>
 
@@ -260,7 +260,7 @@
             <div class="col-lg-1 col-md-6">
 
           </div>
-        <div class="col-lg-11 col-md-6">
+        {{-- <div class="col-lg-11 col-md-6">
             <div class="formation-service">
                 <h4><span class="lnr lnr-phone"></span>Formation suivie</h4>
                 <p>
@@ -269,8 +269,8 @@
             </div>
         </div>
         <br>
-            
-      </div>
+
+      </div> --}}
     </div>
     <button style="background-color: #801D68;color:white" class="btn modification "> Enregister</button>
         </form>
@@ -283,13 +283,13 @@
     display: none;
 }
   </style>
- 
-  
-  
+
+
+
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-  
+
   // $(document).ready(function(){
   //   alert("Bien venu");
   // });
@@ -350,7 +350,7 @@
               <label for="phone">Téléphone</label>
               <input type="text" class="form-control"  name="phone" value="{{ $stagiaire->telephone_stagiaire }}">
             </div>
-           
+
              <div class="form-group">
               <label for="niv_etude">Niveau d'étude</label>
               <input type="text" class="form-control"  name="niv" value="{{ $stagiaire->niveau_etude }}">

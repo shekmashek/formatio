@@ -596,6 +596,16 @@ class ParticipantController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        // $date = date('d-m-Y');
+        // $participant = new stagiaire();
+        // $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.' . $request->image->extension());
+        //  $str = 'images/stagiaires';
+          //stocker logo dans google drive
+            //stocker logo dans google drive
+        //     $dossier = 'stagiaire';
+        //     $stock_stg = new getImageModel();
+        //     $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
+        //     $participant->photos = $nom_image;
         $input = $request->image;
         if ($image = $request->file('image')) {
             $destinationPath = 'image/stagiaires';
