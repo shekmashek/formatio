@@ -511,7 +511,15 @@
                                                     <div class="acf-field acf-field-text acf-field-miin is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-
+                                                                <input type="text"
+                                                                    class="form-control min min label_placeholder"
+                                                                    id="acf-min" name="min_pers" min="1" max="100"
+                                                                    value="{{$mod->min_pers}}"
+                                                                    onfocus="(this.type='number')"
+                                                                    title="entrer le nombre de personne maximale"><label
+                                                                    for="acf-min"
+                                                                    class="form-control-placeholder">Nombre personne
+                                                                    min</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -522,7 +530,15 @@
                                                     <div class="acf-field acf-field-text acf-field-max is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-
+                                                                <input type="text"
+                                                                    class="form-control max max label_placeholder"
+                                                                    id="acf-max" name="max_pers" min="1" max="100"
+                                                                    value="{{$mod->max_pers}}"
+                                                                    onfocus="(this.type='number')"
+                                                                    title="entrer le nombre de personne maximale"><label
+                                                                    for="acf-max"
+                                                                    class="form-control-placeholder">Nombre personne
+                                                                    max</label>
                                                             </div>
                                                         </div>
                                                     </div>
