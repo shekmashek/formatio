@@ -181,22 +181,24 @@
             dataType: "html",
             success: function(response) {
                 var userData = JSON.parse(response);
-                // html = '';
-                // alert(userData);
-                // for (let i = 0; i < userData.length; i++) {
-                //     html += '<div class="row" id="inputFormRow_frais">';
-                //     html += '<div class="col-md-3">';
-                //     html += '<label class="w-100 pe-2">'+userData[i].description+'</label>';
-                //     html += '</div>';
-                //     html += '<div class="col-md-9">';
-                //     html += '<ul>';
-                //     html +='<li><label class="text-end test">'+userData[i].montant+'</label></li>';
-                //     html += '</ul>';
-                //     html += '</div>';
-                //     html += '</div>';
-                // }
+                for (let i = 0; i < userData.length; i++) {
+                    var html = '';
+                    var div_presence = 'resultat_presence_';
+                    var div_pointage = 'pointage_'; 
+                    html += '<label style="color:'+userData[i].color_status+'">';
+                    html += userData[i].text_status;
+                    html += '</label>';
+                    
+                    div_presence +=  userData[i].detail_id;
+                    div_presence += userData[i].stagiaire_id;
 
-                // $('resultat_frais').append(html);
+                    div_pointage +=  userData[i].detail_id;
+                    div_pointage += userData[i].stagiaire_id;
+                    
+                    $("'#"+div_presence+"'").append(html);
+                    $("'#"+div_pointage+"'").hide();
+                }
+
             },
             error: function(error) {
                 console.log(error);
