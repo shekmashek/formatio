@@ -46,13 +46,13 @@
     <div class="p-0 m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation justify-content-end " id="myTab" style="font-size: 13px;">
             <li class="nav-item">
-                <a href="#TBFinancière" class="nav-link active" data-bs-toggle="tab" style="color: white"> <i class="fad fa-sliders-v"></i>&nbsp; TDB système</a>
+                <a href="#TBFinancière" class="nav-link active m-1" data-bs-toggle="tab" style="color: white"> <i class="fad fa-sliders-v"></i>&nbsp; TDB système</a>
             </li>
             <li class="nav-item">
-                <a href="#TBStatistique" class="nav-link " data-bs-toggle="tab" style="color: white"> <i class="far fa-money-check"></i>&nbsp; TDB financier</a>
+                <a href="#TBStatistique" class="nav-link m-1" data-bs-toggle="tab" style="color: white"> <i class="far fa-money-check"></i>&nbsp; TDB financier</a>
             </li>
             <li class="nav-item">
-                <a href="#TBQualité" class="nav-link " data-bs-toggle="tab" style="color: white"> <i class="fad fa-book-alt"></i>&nbsp; TDB Qualité</a>
+                <a href="#TBQualité" class="nav-link m-1" data-bs-toggle="tab" style="color: white"> <i class="fad fa-book-alt"></i>&nbsp; TDB Qualité</a>
             </li>
         </ul><br>
 
