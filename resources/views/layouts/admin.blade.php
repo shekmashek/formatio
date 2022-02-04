@@ -740,7 +740,7 @@
         </header>
         {{-- header --}}
         {{-- content --}}
-        <div class="container-fluid pb-5 h-100">
+        <div class="container-fluid pb-5 h-100" style="background: white;">
             @yield('content')
         </div>
         {{-- content --}}
