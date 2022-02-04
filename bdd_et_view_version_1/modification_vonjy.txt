@@ -3,6 +3,6 @@ creation de table frais_annexe_formation(bdd_suiviformation_mise_a_jour_5)
 ALTER TABLE presences ADD COLUMN h_entree time;
 ALTER TABLE presences ADD COLUMN h_sortie time;
 
-ALTER TABLE presences Modify column status int(2) not null;  
+ALTER TABLE presences Modify column status int(2) not null;
 
 creation de view v_detail_presence(bdd_suiviformation_view_9)

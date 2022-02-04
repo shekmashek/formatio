@@ -33,7 +33,7 @@
                         @if ($prd->detail_id == $dt->detail_id)
                             @foreach ($stagiaire as $liste)
                                 @if ()
-                                    
+
                                 @endif
                                 <div class="col-md-1 text-center">{{ $liste->matricule }}</div>
                                 <div class="col-md-2 text-center">{{ $liste->nom_stagiaire }}</div>
@@ -91,7 +91,7 @@
                                 </tr>
                             {{-- @endforeach
                         @endif --}}
-                        
+
                     @endforeach
 
                     <div align="center">
@@ -184,17 +184,17 @@
                 for (let i = 0; i < userData.length; i++) {
                     var html = '';
                     var div_presence = 'resultat_presence_';
-                    var div_pointage = 'pointage_'; 
+                    var div_pointage = 'pointage_';
                     html += '<label style="color:'+userData[i].color_status+'">';
                     html += userData[i].text_status;
                     html += '</label>';
-                    
+
                     div_presence +=  userData[i].detail_id;
                     div_presence += userData[i].stagiaire_id;
 
                     div_pointage +=  userData[i].detail_id;
                     div_pointage += userData[i].stagiaire_id;
-                    
+
                     $("'#"+div_presence+"'").append(html);
                     $("'#"+div_pointage+"'").hide();
                 }
