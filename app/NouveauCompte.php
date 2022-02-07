@@ -10,14 +10,16 @@ class NouveauCompte extends Model
 {
 
     public function insert_CFP($doner,$user_id){
-        $data=[$doner["nom_cfp"],$doner["domaine_cfp"],$doner["lot"],
-        $doner["ville"],$doner["region"],$doner["email_cfp"],$doner["tel_cfp"],$doner["web_cfp"],
-        $doner["nif"],$doner["stat"],$doner["rcs"],$doner["cif"],$user_id,$doner["logo_cfp"],$doner["rue"],
-        $doner["quartier"],$doner["code_postal"]
+        $data=[$doner["logo_cfp"],$doner["nom_cfp"],$doner["ville"],
+       $doner["email_cfp"],$doner["tel_cfp"],$doner["web_cfp"],
+        $doner["nif"],$doner["rue"],
+        $doner["quartier"],$doner["code_postal"],$user_id
     ];
 
-        DB::insert('insert into cfps(nom,domaine_de_formation,adresse_lot,adresse_ville,adresse_region,email,telephone,site_cfp,created_at, updated_at,nif,stat,rcs,cif,user_id,logo,adresse_rue,adresse_quartier,adresse_code_postal) values (?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?,?,?,?)', $data);
+        DB::insert('insert into cfps(logo,nom,adresse_ville,email,telephone,site_cfp,nif,adresse_lot,adresse_quartier,adresse_code_postal,adresse_region,created_at,user_id) values (?,?,?,?,?,?,?,?,?,?,?,NOW(),?)', $data);
         DB::commit();
+
+        // insert into cfps(logo,nom,adresse_ville,email,telephone,site_cfp,nif,adresse_lot,adresse_quartier,adresse_code_postal,adresse_region,created_at,user_id) values ('noam_cfp','Numerika Center','Tana','antoenjara1998@gmail.com','0328683700','ituniversity.com','1324567897865434','Analamahitsy','Q-analamahitsy','s','43','NOW()','41');
     }
 
 
@@ -56,6 +58,10 @@ class NouveauCompte extends Model
 
     public function verify_cfp($nom,$mail){
         $dta = DB::select('select * from cfps WHERE UPPER(nom)=UPPER(?) OR email=?',[$nom,$mail]);
+        return $dta;
+    }
+    public function verify_NIF_cfp($nif){
+        $dta = DB::select('select * from cfps WHERE UPPER(nif)=UPPER(?) OR email=?',[$nif]);
         return $dta;
     }
 

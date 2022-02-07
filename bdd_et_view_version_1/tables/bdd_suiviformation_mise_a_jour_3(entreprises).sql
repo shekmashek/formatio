@@ -136,18 +136,6 @@ CREATE TABLE `responsables` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-create table objectif_globaux(
-    id bigint(20) unsigned primary key not null auto_increment,
-    description TEXT NOT NULL,
-    but_objectif_id bigint(20) unsigned NOT NULL,
-    projet_id bigint(20) unsigned NOT NULL,
-    cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
-    foreign key(but_objectif_id) references but_objectif(id) on delete cascade,
-    foreign key(projet_id) references projets(id) on delete cascade
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 CREATE TABLE `stagiaires` (
   `id` bigint(20) UNSIGNED NOT NULL,

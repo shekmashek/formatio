@@ -41,84 +41,104 @@ class NouveauCompteController extends Controller
         return view('create_compte.create_compte_client', compact('departements', 'secteurs'));
     }
 
+    public function verify_nif_cfp(Request $req)
+    {
+        $data = $this->new_compte->verify_NIF_cfp($req->nif);
+        return response()->json($data);
+    }
     public function create_compte_cfp(Request $req)
     {
-        // ======== cfp
-        // $data["logo_cfp"] = $req->logo_cfp;
-        $date = date('d-m-y');
-        $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
+        $qst_IA_robot = 27 - 16;
+        $value_confident = $req->value_confident;
+        $val_resp_robot = $req->val_robot;
 
-        $data["logo_cfp"] = "noam_cfp";
-        $data["domaine_cfp"] = $req->domaine_cfp;
-        $data["nom_cfp"] = $req->name_cfp;
-        $data["lot"] = $req->lot;
-        $data["ville"] = $req->ville;
-        $data["region"] = $req->region;
-        $data["email_cfp"] = $req->email_cfp;
-        $data["tel_cfp"] = $req->tel_cfp;
-        $data["web_cfp"] = $req->web_cfp;
-        $data["nif"] = $req->nif;
-        $data["stat"] = $req->stat;
-        $data["rcs"] = $req->rcs;
-        $data["cif"] = $req->cif;
+        if ($qst_IA_robot == $val_resp_robot) {
+            if ($value_confident == 1) // il approuve les règlement
+            {
+                // ======== cfp
+                $date = date('d-m-y');
+                $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
 
-        $data["rue"] = $req->rue_cfp;
-        $data["quartier"] = $req->quartier_cfp;
-        $data["code_postal"] = $req->code_postal_cfp;
+                $data["logo_cfp"] = "noam_cfp";
+                // $data["domaine_cfp"] = $req->domaine_cfp;
+                $data["nom_cfp"] = $req->name_cfp;
+                // $data["lot"] = $req->lot;
+                $data["ville"] = $req->ville;
+                $data["region"] = $req->region;
+                $data["email_cfp"] = $req->email_resp_cfp;
+                $data["tel_cfp"] = $req->tel_resp_cfp;
+                $data["web_cfp"] = $req->web_cfp;
+                $data["nif"] = $req->nif;
+                // $data["stat"] = $req->stat;
+                // $data["rcs"] = $req->rcs;
+                // $data["cif"] = $req->cif;
 
-        // ======= responsable
-        // $resp["photo_resp"] = $req->photo_resp_cfp;
-        $resp["photo_resp"]  = str_replace(' ', '_', $req->nom_resp_cfp .  '' . $req->tel_resp_cfp . '' . $date . '.' . $req->file('photo_resp_cfp')->extension());
-        $resp["sexe_resp"] = $req->sexe_resp_cfp;
+                $data["rue"] = $req->lot_cfp;
+                $data["quartier"] = $req->quartier_cfp;
+                $data["code_postal"] = $req->code_postal_cfp;
 
-        $resp["nom_resp"] = $req->nom_resp_cfp;
-        $resp["prenom_resp"] = $req->prenom_resp_cfp;
-        $resp["dte_naissance_resp"] = $req->dte_resp_cfp;
-        $resp["cin_resp"] = $req->cin_resp_cfp;
-        $resp["email_resp"] = $req->email_resp_cfp;
-        $resp["tel_resp"] = $req->tel_resp_cfp;
-        $resp["rue_resp"] = $req->rue_resp_cfp;
-        $resp["quartier_resp"] = $req->quartier_resp_cfp;
-        $resp["code_postal_resp"] = $req->code_postal_resp_cfp;
-        $resp["lot_resp"] = $req->lot_resp_cfp;
-        $resp["ville_resp"] = $req->ville_resp_cfp;
-        $resp["region_resp"] = $req->region_resp_cfp;
+                // ======= responsable
+                // $resp["photo_resp"]  = str_replace(' ', '_', $req->nom_resp_cfp .  '' . $req->tel_resp_cfp . '' . $date . '.' . $req->file('photo_resp_cfp')->extension());
+                $resp["sexe_resp"] = $req->sexe_resp_cfp;
 
-        $resp["fonction_resp"] = $req->fonction_resp_cfp;
-        $resp["departement_resp"] = $req->departement_resp_cfp;
-        $resp["poste_resp"] = $req->poste_resp_cfp;
+                $resp["nom_resp"] = $req->nom_resp_cfp;
+                $resp["prenom_resp"] = $req->prenom_resp_cfp;
+                $resp["dte_naissance_resp"] = $req->dte_resp_cfp;
+                $resp["cin_resp"] = $req->cin_resp_cfp;
+                $resp["email_resp"] = $req->email_resp_cfp;
+                $resp["tel_resp"] = $req->tel_resp_cfp;
+                // $resp["rue_resp"] = $req->lot_cfp;
+                // $resp["quartier_resp"] = $req->quartier_resp_cfp;
+                // $resp["code_postal_resp"] = $req->code_postal_resp_cfp;
+                // $resp["lot_resp"] = $req->lot_resp_cfp;
+                // $resp["ville_resp"] = $req->ville_resp_cfp;
+                // $resp["region_resp"] = $req->region_resp_cfp;
 
+                $resp["fonction_resp"] = $req->fonction_resp_cfp;
+                // $resp["departement_resp"] = $req->departement_resp_cfp;
+                // $resp["poste_resp"] = $req->poste_resp_cfp;
 
-        $verify = $this->new_compte->verify_cfp($req->name_entreprise, $req->email_cfp);
+                $verify = $this->new_compte->verify_cfp($req->name_entreprise, $req->email_cfp);
+                // dd($verify);
 
-       if (count($verify) <= 0) { // cfp n'existe pas
+                if (count($verify) <= 0) { // cfp n'existe pas
 
-            $this->user->name = $req->nom_resp_cfp;
-            $this->user->email = $req->email_resp_cfp;
-            $ch1 = "0000";
-            $this->user->password = Hash::make($ch1);
-            $this->user->role_id = '7';
+                    $this->user->name = $req->nom_resp_cfp;
+                    $this->user->email = $req->email_resp_cfp;
+                    $ch1 = "0000";
+                    $this->user->password = Hash::make($ch1);
+                    $this->user->role_id = '7';
 
-            $this->user->save();
+                    // $this->user->save();
 
-            $user_id = User::where('email', $req->email_resp_cfp)->value('id');
+                    $user_id = User::where('email', $req->email_resp_cfp)->value('id');
 
-            $this->new_compte->insert_CFP($data, $user_id);
-            $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp])->id;
-            $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$cfp_id]);
-            $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
+                    $this->new_compte->insert_CFP($data, $user_id);
+                    // dd($data);
 
-            //============= save image
+                    $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp])->id;
+                    dd($cfp_id);
 
-            $this->img->store_image("entreprise",$data["logo_cfp"],$req->file('logo_cfp')->getContent());
-            $this->img->store_image("responsable",$resp["photo_resp"],$req->file('photo_resp_cfp')->getContent());
-            $fonct = new FonctionGenerique();
-            $cfp = $fonct->findWhereMulitOne("cfps",["email"],[$req->email_cfp]);
+                    $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$cfp_id]);
+                    $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
 
-            Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp.' '.$req->prenom_resp_cfp,$req->email_resp_cfp,$cfp->nom));
-            return redirect()->route('inscription_save');
+                    //============= save image
+
+                    $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
+                    // $this->img->store_image("responsable",$resp["photo_resp"],$req->file('photo_resp_cfp')->getContent());
+                    $fonct = new FonctionGenerique();
+                    $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp]);
+
+                    Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+                    return redirect()->route('inscription_save');
+                } else {
+                    return back()->with('error', 'Organisation de Formation existe déjà!');
+                }
+            } else {
+                return back()->with('error', 'vous ne pouvez pas crée un compte sans accepter notre règle confidentiel, merci :-) !');
+            }
         } else {
-            return back()->with('error', 'Organisation de Formation existe déjà!');
+            return back()->with('error', 'désolé, les robots ne sont pas autorisé sur ce plateforme :-) !');
         }
     }
 
@@ -189,12 +209,12 @@ class NouveauCompteController extends Controller
             $this->new_compte->insert_resp_ETP($resp, $entreprise_id, $user_id);
 
             //============= save image
-            $this->img->store_image("entreprise",$data["logo_etp"],$req->file('logo_etp')->getContent());
-            $this->img->store_image("responsable",$resp["photo_resp"],$req->file('photo_resp')->getContent());
+            $this->img->store_image("entreprise", $data["logo_etp"], $req->file('logo_etp')->getContent());
+            $this->img->store_image("responsable", $resp["photo_resp"], $req->file('photo_resp')->getContent());
             $fonct = new FonctionGenerique();
-            $etp = $fonct->findWhereMulitOne("cfps",["email_etp"],[$req->email_cfp]);
+            $etp = $fonct->findWhereMulitOne("cfps", ["email_etp"], [$req->email_cfp]);
 
-            Mail::to($req->email_resp)->send(new save_new_compte_etp_Mail($req->nom_resp.' '.$req->prenom_resp,$req->email_resp,$etp->nom_etp));
+            Mail::to($req->email_resp)->send(new save_new_compte_etp_Mail($req->nom_resp . ' ' . $req->prenom_resp, $req->email_resp, $etp->nom_etp));
 
             return redirect()->route('inscription_save');
         } else {

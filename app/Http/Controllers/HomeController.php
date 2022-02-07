@@ -107,12 +107,15 @@ class HomeController extends Controller
 
             // dd($user_id, $centre_fp, $top_10_par_client);
             return view('layouts.dashboard', compact('GChart', 'CA_actuel', 'CA_precedent'));
+        } else {
+            $totale_invitation = $this->collaboration->count_invitation();
+            return view('layouts.accueil_admin', compact('totale_invitation'));
         }
         if (Gate::allows('isReferent')) {
             $user_id = User::where('id', Auth::user()->id)->value('id');
 
             return view('layouts.dashboard_referent');
-        }else{
+        } else {
             return view('layouts.accueil_admin');
         }
     }
@@ -124,6 +127,7 @@ class HomeController extends Controller
 
         $user_id = Auth::user()->id;
         $totale_invitation = $this->collaboration->count_invitation();
+        $entp = new entreprise();
 
 
         //récupérer id de l'utilisateur en fonction de l'email
@@ -161,7 +165,6 @@ class HomeController extends Controller
         } elseif (Gate::allows('isStagiaire')) {
             return view('layouts.accueil_admin');
         } elseif (Gate::allows('isCFP')) {
-            $entp = new entreprise();
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $projet = $fonct->findWhere("v_projetentreprise", ["cfp_id"], [$cfp_id]);
@@ -175,22 +178,22 @@ class HomeController extends Controller
             $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
 
-            return view('projet_session.index2', compact('projet','data', 'entreprise', 'totale_invitation', 'formation', 'module'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module'));
         }
-        if(Gate::allows('isFormateur')){
+        if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
-            $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
+            $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?", [$user_id])[0]->cfp_id;
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
 
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
-            $entreprise = $entp->getEntreprise($etp2,$etp1);
+            $entreprise = $entp->getEntreprise($etp2, $etp1);
 
             $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
 
-            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation','formation','module'));
+            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation', 'formation', 'module'));
         }
     }
 

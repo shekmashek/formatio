@@ -11,6 +11,18 @@ insert into but_objectif values(1,"Objectifs globaux de la formation :",1,NULL,N
 insert into but_objectif values(2,"Objectif pédagogique de la formation Compétences clé :",1,NULL,NULL);
 insert into but_objectif values(3,"Objectif pédagogique de la formation Business Intelligence :",1,NULL,NULL);
 
+create table objectif_globaux(
+    id bigint(20) unsigned primary key not null auto_increment,
+    description TEXT NOT NULL,
+    but_objectif_id bigint(20) unsigned NOT NULL,
+    projet_id bigint(20) unsigned NOT NULL,
+    cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    foreign key(but_objectif_id) references but_objectif(id) on delete cascade,
+    foreign key(projet_id) references projets(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 create table pedagogique(
     id bigint(20) unsigned primary key not null auto_increment,

@@ -1,6 +1,50 @@
 @extends('./layouts/admin')
 @section('content')
 
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="col-lg-4">
+            <div class="form-control">
+                <p class="text-center"><b style="font-size: 17px;">Tableau de bord financier</b></p>
+                <p class="p-0 m-0 " style="font-size: 14px; font-weight: bold;">C.A actuel:
+                    @php
+                        foreach ($CA_actuel as $total) {
+                            $total = $total->total_ttc;
+                            echo $total . ' ';
+                        }
+                    @endphp Ar TTC</p>
+
+                <p class="p-1 m-0" style="font-size: 13px;">C.A précedent:
+                    @php
+                        foreach ($CA_precedent as $totals) {
+                            $totals = $totals->total_ttc;
+                            echo $totals . ' ';
+                        }
+                    @endphp Ar TTC</p>
+                <hr>
+                <div id="chart_div"></div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-control">
+                <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par module</b></p>
+                <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 modules</p>
+                <hr>
+                {{-- <div id="barchart_material"></div> --}}
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-control">
+                <p class="text-center"><b style="font-size: 17px;">Chiffre d'affaires par client</b></p>
+                <p class="p-0 m-0 " style="font-size: 15px; font-weight: bold;">Top 10 clients</p>
+                <hr>
+                {{-- <div id="barchart_material_2"></div> --}}
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <div class="container-fluid p-5">
     <div id="barchart_material" style="width: 30%; height: 500px;"></div>
 </div>
@@ -21,10 +65,10 @@
             /*      ["Mois","Année", "Chiffre d'affaire"],["janvier","2021","30000 AR"],["fevrier","2021","7000 AR"],*/
 
             /* en bas, actuel,precedent*/
-            ["Mois {{$GChart[0]->annee}}", "chiffre"],
+            ["Mois {{$GChart[0]->annee}}", "chiffre précent", "chiffre Actuel"],
             @php
                   foreach($GChart as $product) {
-                      echo "['".$product-> mois."', ".$product-> net_ttc."],";
+                    echo "['".$product-> mois."', ".$product-> net_ttc."],";
                   }
                   @endphp
 

@@ -8,10 +8,25 @@ CREATE TABLE projets_inter (
   updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE entreprises_inter_projets (
+CREATE TABLE groupes_inter (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  max_participant varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  min_participant varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  nom_groupe varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  projet_id  bigint(20) UNSIGNED  NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
+  module_id  bigint(20) UNSIGNED  NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
+  date_debut date NOT NULL,
+  date_fin date NOT NULL,
+  status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  activiter boolean not null default true,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE entreprises_inter_groupes (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  projet_id bigint(20) UNSIGNED NOT NULL REFERENCES projets_inter(id) ON DELETE CASCADE,
+  groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES projets_inter(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -67,4 +82,3 @@ CREATE TABLE presences_inter (
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-

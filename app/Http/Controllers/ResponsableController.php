@@ -25,7 +25,7 @@ class ResponsableController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -60,7 +60,8 @@ class ResponsableController extends Controller
                 'mail' => ["required"],
                 'phone' => ["required"],
                 'photos' => ["required"],
-                'cin' => ["required"]
+                'cin' => ["required"],
+                'naissance' => ["required"]
             ],
             [
                 'nom.required' => 'Veuillez remplir le champ',
@@ -69,8 +70,8 @@ class ResponsableController extends Controller
                 'mail.required' =>  'Veuillez remplir le champ',
                 'phone.required' => 'Veuillez remplir le champ',
                 'photos.required' => 'Veuillez remplir le champ',
-                'cin.required' => 'Veuillez remplir le champ'
-
+                'cin.required' => 'Veuillez remplir le champ',
+                'naissance.required' => 'Veuillez remplir le champ'
             ]
         );
         //enregistrer les projets dans la bdd
@@ -80,16 +81,17 @@ class ResponsableController extends Controller
         $resp->fonction_resp = $request->fonction;
         $resp->email_resp = $request->mail;
         $resp->cin_resp = $request->cin;
+        $resp->date_naissance_resp = $request->naissance;
         $resp->telephone_resp = $request->phone;
 
         //insertion image
         $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom .  '' . $request->phone . '.' . $request->photos->extension());
         $str = 'images/responsables/';
-         //stocker logo dans google drive
+        //stocker logo dans google drive
 
         $dossier = 'responsable';
         $stock_resp = new getImageModel();
-        $stock_resp->store_image($dossier,$nom_image,$request->file('photos')->getContent());
+        $stock_resp->store_image($dossier, $nom_image, $request->file('photos')->getContent());
 
         // $request->photos->move(public_path($str), $nom_image);
         $resp->photos = $nom_image;
@@ -217,7 +219,7 @@ class ResponsableController extends Controller
 
         $sup = User::where('id', $resp->user_id)->delete();
         $del = Responsable::where('id', $id)->delete();
-        File::delete("images/responsables/".$resp->photos);
+        File::delete("images/responsables/" . $resp->photos);
 
         return back();
     }
@@ -283,10 +285,11 @@ class ResponsableController extends Controller
         $ref = responsable::findOrFail($id);
         return view('admin.responsable.updateResponsable', compact('ref'));
     }
-      //fonction récupération photos depuis google drive
-    public function getImage($path){
+    //fonction récupération photos depuis google drive
+    public function getImage($path)
+    {
         $dossier = 'responsable';
         $etp = new getImageModel();
-        return $etp->get_image($path,$dossier);
+        return $etp->get_image($path, $dossier);
     }
 }

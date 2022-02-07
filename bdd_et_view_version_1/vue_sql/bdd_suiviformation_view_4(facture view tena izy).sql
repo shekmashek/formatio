@@ -298,15 +298,15 @@ WHERE
 CREATE OR REPLACE VIEW v_facture_existant AS SELECT
     v_facture_existant_tmp.*,
     projets.entreprise_id,
+     entreprises.nom_etp,
     (
         CASE WHEN(payement_totale - montant_total) < 0 AND payement_totale <= 0 THEN 'valider' WHEN(payement_totale - montant_total) < 0 AND payement_totale > 0 THEN 'en_cour' WHEN(payement_totale - montant_total) >= 0 THEN 'terminer'
     END
 ) facture_encour
 FROM
-    v_facture_existant_tmp, projets
+    v_facture_existant_tmp, projets,entreprises
 where
-    projet_id = projets.id
-;
+    projet_id = projets.id and projets.entreprise_id = entreprises.id;
 
 
 CREATE OR REPLACE VIEW v_facture_actif AS SELECT

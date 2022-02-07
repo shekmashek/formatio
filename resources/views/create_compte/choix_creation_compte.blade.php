@@ -2,47 +2,52 @@
 @section('content')
 
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+<style>
+    .test a {
+        text-decoration-style: none;
+        transition: all .5s ease-in-out;
+    }
 
-            <div class="row mt-5">
-                <div class="col-md-5 shadow p-3 bg-body rounded">
-                    <a href="{{route('create+compte+client/OF')}}" class="btn btn-primary" style="text-decoration: none">
+    .test {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
 
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Organisation de Formation</h5>
-                            <p class="card-text">organisation de formation ou OF</p>
-                        </div>
-                    </a>
-                </div>
+    .test:hover {
+        transform: scale(0.95);
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
 
-                <div class="col-md-2"></div>
-                <div class="col-md-5 shadow p-3 bg-body rounded ml-2">
-                    <a href="{{route('create+compte+client/employeur')}}" class="btn btn-primary" style="text-decoration: none">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Employer</h5>
-                            <p class="card-text">responsable de l'entreprise</p>
-                        </div>
-                    </a>
-                </div>
+</style>
 
+<div class="row justify-content-center">
+    <h5 class="nav-item active">
+
+        Inscription gratuite sur la plateforme <strong>formation.mg</strong>
+
+    </h5>
+    <p>D'abord, faites nous savoir si vous êtes un organisme de formation ou un employeur</p>
+
+    <div class="col-md-4  p-3 bg-body rounded test me-2">
+        <a href="{{route('create+compte+client/OF')}}" role="button">
+
+            <img src="{{asset('img_create-compte/instructor_signup.png')}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h6 class="card-title text-center">Organisation de Formation</h6>
             </div>
-
-
-
-        </div>
-
-        <div class="col-md-3"></div>
+        </a>
     </div>
+
+
+    <div class="col-md-4  p-3 bg-body rounded ms-2 test">
+        <a href="{{route('create+compte+client/employeur')}}" class="" role="button">
+            <img src="{{asset('img_create-compte/student_signup.png')}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h6 class="card-title text-center">Employeur</h6>
+            </div>
+        </a>
+    </div>
+
 </div>
 
-<form action="#">
-    @csrf
-    <input id="fileSelect" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-</form>
 
 @endsection

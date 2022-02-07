@@ -28,7 +28,7 @@ class DashBoardCfpController extends Controller
         $CA_actuel = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where YEAR(invoice_date)=year(now()) and cfp_id = ' . $centre_fp . ' ');
         $CA_precedent = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' ');
 
-
+        $client_top_10_par_anne = DB::select('SELECT entreprise_id,nom_etp,(SUM(net_ttc)) net_ttc from v_facture_existant where cfp_id='.$centre_fp.' group by entreprise_id,nom_etp order by (SUM(net_ttc)) desc limit 10');
 
         return view('admin.dashboard.chart_cfp.dashboard_cfp', compact('GChart', 'CA_actuel', 'CA_precedent'));
     }

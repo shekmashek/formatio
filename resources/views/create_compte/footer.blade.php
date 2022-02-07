@@ -20,9 +20,30 @@
     <script src="{{ asset('function js/programme/edit_programme.js') }}"></script>
     <script src="{{asset('js/qcmStep.js')}}"></script>
 
-
     <script type="text/javascript">
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $(document).on('change','#nif_cfp',function(){
+var nif = $(this).val();
+$.ajax({
+            url:'{{route("verify_nif_cfp")}}',
+            type:'get',
+            data:{nif:nif },
+            success:function(response){
+                var userData=response;
+
+                if(userData.length >0){
+                    document.getElementById("nif_cfp_err").innerHTML = "NIF appartient déjà sur d'autre organisme de formation!";
+                } else {
+                    document.getElementById("nif_cfp_err").innerHTML = "";
+                }
+
+            },
+            error:function(error){
+                console.log(error);
+            }
+        });
+});
 
         // ============ select type inscription cfp ou responsables
 /*

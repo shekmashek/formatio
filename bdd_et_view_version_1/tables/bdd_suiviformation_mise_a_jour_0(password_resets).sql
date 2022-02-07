@@ -10,4 +10,3 @@ create table categorie_formations(
     formation_id bigint(20) UNSIGNED NOT NULL references formations(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-UNSIGNED

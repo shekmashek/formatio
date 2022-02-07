@@ -598,6 +598,8 @@ Route::get('inscription_save',function(){
     return view('create_compte.create_sauvegarder');
 })->name('inscription_save');
 
+Route::get('verify_nif_cfp','NouveauCompteController@verify_nif_cfp')->name('verify_nif_cfp');
+
 
 Route::post('create_compte_cfp','NouveauCompteController@create_compte_cfp')->name('create_compte_cfp');
 Route::post('create_compte_employeur','NouveauCompteController@create_compte_employeur')->name('create_compte_employeur');
