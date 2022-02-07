@@ -55,6 +55,7 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $module = $fonct->findWhere("modules", ["formation_id"], [$rq->id]);
+
         return response()->json($module);
     }
 
