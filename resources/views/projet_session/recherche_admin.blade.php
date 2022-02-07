@@ -4,6 +4,18 @@
 <link rel="stylesheet" href="{{ asset('reporting/index.css') }}">
 
 
+<div class="d-flex">
+<p class="menu_google">Personne &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+<p class="menu_google">Fonction &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+<p class="menu_google">Domaine &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p> 
+<p class="menu_google">Date &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p> 
+<p class="menu_google">Qualite &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+<p class="menu_google">Niveau &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+<p class="menu_google">Status &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+<p class="menu_google">Modalite &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+</div>
+
+
 <div class="col-md-7 mx-auto pb-5">
   {{-- personne --}}
   <div class="Titre_div px-3" href="#personne" data-toggle="collapse" onclick="menu_1()">

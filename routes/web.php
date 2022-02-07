@@ -655,7 +655,7 @@ Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name(
 
 
 // Route::get('/recherche_admin', function(){
-//     return view('projet_session.recherche_admin');
+//     return view('projet_session.recherche_admin')->name("recherche_admin");
 // });
 
 ///////__________RECHERCHE MULTICRITERE_____________________\\\\\\\\\

@@ -107,3 +107,17 @@ input[type="date"]{
 .row{
     padding-bottom: 1rem;;
 }
+
+.menu_google{
+    padding: 0 1rem;
+}
+.menu_google:hover{
+    background-color: rgb(193,210,204);
+    color: white;
+    cursor: pointer;
+}
+.menu_google:hover >i{
+    background-color: rgb(193,210,204);
+    color: white;
+    cursor: pointer;
+}
