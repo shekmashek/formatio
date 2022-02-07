@@ -518,7 +518,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS SELECT
     s.departement_id,
     s.cin,
     s.date_naissance,
-    s.adresse,
+    (s.lot) adresse,
     s.niveau_etude,
     s.activiter AS activiter_stagiaire,
     s.lieu_travail
@@ -546,7 +546,7 @@ CREATE OR REPLACE VIEW v_presence_detail AS SELECT
     s.departement_id,
     s.cin,
     s.date_naissance,
-    s.adresse AS adresse_stg,
+    (s.lot) adresse_stg,
     s.niveau_etude,
     s.activiter AS activiter_stagiaire,
     s.lieu_travail

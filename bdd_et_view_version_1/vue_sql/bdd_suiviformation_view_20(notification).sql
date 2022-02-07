@@ -1,8 +1,16 @@
-
-create or replace view v_notification_test_niveaux as
-    select s.stagiaire_id,s.demande_tn_id,s.etat,d.description_test,d.entreprise_id,d.cfp_id,d.formation_id,d.date_creation
-    from stagiaire_pour_test_niveaux s join demande_test_niveaux d on d.id=s.demande_tn_id;
-
+CREATE OR REPLACE VIEW v_notification_test_niveaux AS SELECT
+    s.stagiaire_id,
+    s.demande_tn_id,
+    s.etat,
+    d.description_test,
+    d.entreprise_id,
+    d.cfp_id,
+    d.formation_id,
+    d.date_creation
+FROM
+    stagiaire_pour_test_niveaux s
+JOIN demande_test_niveaux d ON
+    d.id = s.demande_tn_id;
 
 create or replace view v_question_reponse_test_niveau as
     select c.*,q.cfp_id,q.formation_id from question_evaluations q join choix_pour_questions c
