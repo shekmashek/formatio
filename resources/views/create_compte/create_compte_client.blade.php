@@ -99,7 +99,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <input type="text" name="name_etp" class="form-control input_inscription" id="name_etp" required />
-                                <label for="name_etp" class="form-control-placeholder">Non<strong style="color:#ff0000;">*</strong></label>
+                                <label for="name_etp" class="form-control-placeholder">Nom<strong style="color:#ff0000;">*</strong></label>
                             </div>
                         </div>
                         <div class="col">
@@ -111,18 +111,32 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-ground">
-                            <label for="secteur_etp" class="form-label" align="left">Secteur d'activité<strong style="color:#ff0000;">*</strong></label>
-                            <input type="text" max=10 required name="secteur_etp" class="form-control" id="secteur_etp" />
-                        </div>
+                    <div class="form-group">
+                        <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
+                        <label for="nif_etp" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
+                        <span style="color:#ff0000;" id="nif_etp_err"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="stat" required class="form-control input_inscription" id="stat" />
+                        <label for="stat" required class="form-control-placeholder">STAT<strong style="color:#ff0000;">*</strong></label>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="rcs" required class="form-control input_inscription" id="rcs" />
+                        <label for="rcs" required class="form-control-placeholder">RCS<strong style="color:#ff0000;">*</strong></label>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="cif" class="form-control input_inscription" id="cif" />
+                        <label for="cif" class="form-control-placeholder">CIF à jour</label>
+
                     </div>
 
                     <div class="row mt-2">
                         <div class="col">
                             <div class="form-group">
-                                <input type="text" name="rue_etp" required class="form-control input_inscription" id="rue_etp" />
-                                <label for="rue_etp" class="form-control-placeholder">Lot ou Rue<strong style="color:#ff0000;">*</strong></label>
+                                <input type="text" name="lot_etp" required class="form-control input_inscription" id="lot_etp" />
+                                <label for="lot_etp" class="form-control-placeholder">Lot ou Rue<strong style="color:#ff0000;">*</strong></label>
                             </div>
                         </div>
                         <div class="col">
@@ -151,34 +165,51 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group m-0">
-                        <label for="#" class="form-control-label">Région<strong style="color:#ff0000;">*</strong></label>
-                        <select class="form-select" aria-label="Default select example" name="region_etp" required id="region">
-                            <option>Diana</option>
-                            <option>Sava</option>
-                            <option>Itasy</option>
-                            <option>Analamanga</option>
-                            <option>Vakinankaratra</option>
-                            <option>Bongolava</option>
-                            <option>Sofia</option>
-                            <option>Boeny</option>
-                            <option>Betsiboka</option>
-                            <option>Melaky</option>
-                            <option>Alaotra-Mangoro</option>
-                            <option>Atsinanana</option>
-                            <option>Analanjirofo</option>
-                            <option>Amoron'i Mania</option>
-                            <option>Haute Matsiatra</option>
-                            <option>Vatovay</option>
-                            <option>Fitovinany</option>
-                            <option>Atsimo-Atsinanana</option>
-                            <option>Ihorombe</option>
-                            <option>Menabe</option>
-                            <option>Atsimo-Andrefana</option>
-                            <option>Androy</option>
-                            <option>Anôsy</option>
-                        </select>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group m-0">
+                                <label for="#" class="form-control-label">Secteur d'activité<strong style="color:#ff0000;">*</strong></label>
+                                <select class="form-select" aria-label="Default select example" name="secteur_id" required id="secteur_id">
+                                    @foreach ($secteur as $sect)
+                                    <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group m-0">
+                                <label for="#" class="form-control-label">Région<strong style="color:#ff0000;">*</strong></label>
+                                <select class="form-select" aria-label="Default select example" name="region" required id="region">
+                                    <option value="Diana">Diana</option>
+                                    <option value="Sava">Sava</option>
+                                    <option value="Itasy">Itasy</option>
+                                    <option value="Analamanga">Analamanga</option>
+                                    <option value="Vakinankaratra">Vakinankaratra</option>
+                                    <option value="Bongolava">Bongolava</option>
+                                    <option value="Sofia">Sofia</option>
+                                    <option value="Boeny">Boeny</option>
+                                    <option value="Betsiboka">Betsiboka</option>
+                                    <option value="Melaky">Melaky</option>
+                                    <option value="Alaotra-Mangoro">Alaotra-Mangoro</option>
+                                    <option value="Atsinanana">Atsinanana</option>
+                                    <option value="Analanjirofo">Analanjirofo</option>
+                                    <option value="Amoron'i Mania">Amoron'i Mania</option>
+                                    <option value="Haute Matsiatra">Haute Matsiatra</option>
+                                    <option value="Vatovay">Vatovay</option>
+                                    <option value="Fitovinany">Fitovinany</option>
+                                    <option value="Atsimo-Atsinanana">Atsimo-Atsinanana</option>
+                                    <option value="Ihorombe">Ihorombe</option>
+                                    <option value="Menabe">Menabe</option>
+                                    <option value="Atsimo-Andrefana">Atsimo-Andrefana</option>
+                                    <option value="Androy">Androy</option>
+                                    <option value="Anôsy">Anôsy</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
 
                     <input type="button" name="next" class="next action-button" value="Suivant" />
                 </fieldset>
@@ -190,14 +221,14 @@
                     <h4 align="left" class="mb-2">A propos de vous</strong></h4>
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <input type="text" required name="nom_resp_etp" class="form-control input_inscription" id="nom_resp_etp" />
                                 <label for="nom_resp_etp" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
 
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <div class="form-group">
                                 <input type="text" name="prenom_resp_etp" class="form-control input_inscription" id="prenom_resp_etp" />
                                 <label for="prenom_resp_etp" class="form-control-placeholder" align="left">Prénom</label>
@@ -206,11 +237,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <input type="text" name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
-                        <label for="cin_resp_etp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
-                    </div>
 
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <input type="text" name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
+                                <label for="cin_resp_etp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <input type="text" required name="fonction_resp_etp" class="form-control input_inscription" id="fonction_resp_etp" />
+                                <label for="fonction_resp_etp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div class="row">
@@ -253,44 +294,6 @@
                     </div>
 
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" required name="fonction_resp_etp" class="form-control input_inscription" id="fonction_resp_etp" />
-                                <label for="fonction_resp_etp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" required name="departement_resp_etp" class="form-control input_inscription" id="departement_resp_etp" />
-                                <label for="departement_resp_etp" class="form-control-placeholder" align="left">Département<strong style="color:#ff0000;">*</strong></label>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" required name="service_resp_etp" class="form-control input_inscription" id="service_resp_etp" />
-                                <label for="service_resp_etp" class="form-control-placeholder" align="left">Service<strong style="color:#ff0000;">*</strong></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" required name="branche_resp_etp" class="form-control input_inscription" id="branche_resp_etp" />
-                                <label for="branche_resp_etp" class="form-control-placeholder" align="left">Branche<strong style="color:#ff0000;">*</strong></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- <div class="form-group">
-                        <input type="text" name="poste_resp_etp" class="form-control input_inscription" id="poste_resp_etp" />
-                        <label for="poste_resp_etp" class="form-control-placeholder" align="left">Poste</label>
-
-                    </div> --}}
-
 
                     <input type="button" name="previous" class="previous action-button" value="Précendent" />
                     <input type="button" name="make_payment" class="next action-button" value="Suivant" />
@@ -301,53 +304,58 @@
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
                     <h4 align="left" class="mb-2">Veuillez renseigner votre information l'égale de votre organisation</h4>
 
+                    <div class="row justify-content-center">
+                        <h5 class="mt-5 mb-2" align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h5>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-1">
+                            <h6> <strong>16</strong></h6>
+                        </div>
+                        <div class="col-sm-1">
+                            <h6> <strong> + </strong></h6>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" name="val_robot" class="form-control input_inscription" placeholder="?" id="val_robot" style="width: 60px" />
+                                {{-- <label for="val_robot" required class="form-control-placeholder"><strong style="color:#ff0000;">?</strong></label> --}}
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <h6> <strong> = </strong></h6>
+                        </div>
+                        <div class="col-sm-1">
+                            <h6> <strong> 27 </strong></h6>
+                        </div>
 
-                    <div class="form-group">
-                        <input type="text" name="nif" required class="form-control input_inscription" id="name_entreprise" />
-                        <label for="name_entreprise" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
+                        <div class="col-sm-3"></div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-check-label m-0" for="flexCheckDefault" align="left">
+                                J'ai lu et accepter les termes de confidentiels du plateforme
+                            </label>
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
-                    <div class="form-group">
-                        <input type="text" name="stat" required class="form-control input_inscription" id="stat" />
-                        <label for="stat" required class="form-control-placeholder">STAT</label>
 
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="rcs" required class="form-control input_inscription" id="rcs" />
-                        <label for="rcs" required class="form-control-placeholder">RCS</label>
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="cif" class="form-control input_inscription" id="cif" />
-                        <label for="cif" class="form-control-placeholder">CIF à jour</label>
-
-                    </div>
-                    <div class="form-check">
-                        <input name="value_confident" class="form-check-input me-5" type="checkbox" value="" id="flexCheckDefault" style="width: 18px">
-                        <label class="form-check-label m-0" for="flexCheckDefault">
-                            J'ai lu et accepter les termes de confidentiels du plateforme
-                        </label>
-                    </div>
                     <input type="button" name="previous" class="previous action-button" value="Précedent" />
-                    <input type="button" name="next" class="next action-button" value="Suivant" />
+                    <input type="button" name="next" class="next action-button" value="Confirmer" />
 
                 </fieldset>
 
                 {{-- --}}
 
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h5 align="left" class="mb-2">Après avoir remplir notre condition,vous pouvez maitenant activier votre.</strong></h5>
-                    <h6>Avant d'activer votre,veuillez bien revérifier votre données!</h6>
-                    <h5 class="mt-5">Je ne suis pas un robot <strong style="color:#ff0000;">!</strong></h5>
-                    <h6>16 + <strong style="color:#ff0000;">?</strong> = 27 </h6>
-
+                    <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez acepter la validation sur votre mail</strong></h5>
+                    {{-- <h6>Avant d'activer votre,veuillez bien revérifier votre données!</h6> --}}
                     <div class="form-group">
-                        <input type="text" name="val_robot" required class="form-control input_inscription" id="val_robot" />
-                        <label for="val_robot" required class="form-control-placeholder">réponse<strong style="color:#ff0000;">*</strong></label>
+                        <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
                     </div>
-
-                    <input type="button" name="previous" class="previous action-button" value="Précendent" />
-                    <button type="submit" class="action-button">Activation</button>
+                    {{-- <input type="button" name="previous" class="previous action-button" value="Précendent" /> --}}
+                    <button type="submit" class="action-button">lancer</button>
                 </fieldset>
 
                 {{-- --}}

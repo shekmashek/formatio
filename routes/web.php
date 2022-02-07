@@ -599,6 +599,7 @@ Route::get('inscription_save',function(){
 })->name('inscription_save');
 
 Route::get('verify_nif_cfp','NouveauCompteController@verify_nif_cfp')->name('verify_nif_cfp');
+Route::get('verify_nif_etp','NouveauCompteController@verify_nif_etp')->name('verify_nif_etp');
 
 
 Route::post('create_compte_cfp','NouveauCompteController@create_compte_cfp')->name('create_compte_cfp');

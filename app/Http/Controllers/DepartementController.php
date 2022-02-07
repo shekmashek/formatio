@@ -22,7 +22,7 @@ class DepartementController extends Controller
     public function __construct()
     {
         $this->liste_entreprise = entreprise::orderBy('nom_etp')->get();
-        $this->liste_departement =  Departement::all();
+        // $this->liste_departement =  Departement::all();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if(Auth::user()->exists == false) return redirect()->route('sign-in');

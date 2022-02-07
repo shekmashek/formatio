@@ -54,7 +54,7 @@ SELECT
     p.activiter,
     p.created_at,
     e.nom_etp,
-    e.adresse,
+    (e.adresse_rue) adresse,
     e.logo,
     e.nif,
     e.stat,
@@ -132,7 +132,7 @@ CREATE OR REPLACE VIEW v_participantsession AS SELECT
     s.telephone_stagiaire,
     s.user_id,
     s.photos,
-    s.departement_id,
+    (s.departement_entreprise_id) departement_id,
     s.cin,
     s.date_naissance,
     (s.lot) adresse,
@@ -169,7 +169,7 @@ CREATE OR REPLACE VIEW v_coursfroidevaluation AS SELECT
     s.telephone_stagiaire,
     s.user_id,
     s.photos,
-    s.departement_id,
+    (s.departement_entreprise_id) departement_id,
     s.cin,
     s.date_naissance,
     (s.lot) adresse,
@@ -387,7 +387,7 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    stg.departement_entreprises_id,
+    (stg.departement_entreprise_id) departement_id,
     stg.service_id as stg_service_id,
     stg.cin,
     stg.date_naissance,
@@ -406,7 +406,7 @@ FROM
     services as serv
 WHERE
     stg.entreprise_id = etp.id and
-    stg.departement_entreprises_id = dept.id and stg.service_id = serv.id;
+    stg.departement_entreprise_id = dept.id and stg.service_id = serv.id;
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.id AS stagiaire_id,
@@ -420,10 +420,10 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    stg.departement_entreprises_id,
+    (stg.departement_entreprise_id) departement_entreprises_id,
     stg.cin,
     stg.date_naissance,
-    stg.adresse,
+    (stg.lot) adresse,
     stg.lieu_travail,
     stg.niveau_etude,
     stg.activiter,

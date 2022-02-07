@@ -71,8 +71,8 @@ class CollaborationController extends Controller
     {
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["entreprise_id"], [$entreprise_id]);
-        $responsable_etp = $this->fonct->findWhere("findWhereMulitOne", ["entreprise_id","user_id"], [$entreprise_id,$user_id]);
+        $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
+        $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id","user_id"], [$entreprise_id,$user_id]);
 
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp]);
 
