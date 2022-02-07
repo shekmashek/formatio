@@ -30,11 +30,11 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->collaboration = new Collaboration();
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (Auth::user()->exists == false) return view('auth.connexion');
-            return $next($request);
-        });
+        // $this->middleware('auth');
+        // $this->middleware(function ($request, $next) {
+        //     if (Auth::user()->exists == false) return view('auth.connexion');
+        //     return $next($request);
+        // });
     }
 
 

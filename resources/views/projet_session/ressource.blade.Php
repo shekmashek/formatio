@@ -17,6 +17,7 @@
 @endif --}}
 
 {{-- @if (count($stagiaire) != 0) --}}
+
 <div class="shadow mb-3 col-12 pb-5">
     <div class="row">
         <div class="col-md-5">
@@ -30,29 +31,30 @@
             </span>
         </div>
     </div>
-        <div id="affiche_ressource">
-            @foreach ($ressource as $r)
-                <div class="row" id="ressource_{{ $r->id }}">
-                    <div class="col-md-5">
-                        <section>
-                            <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
-                        </section>
-                    </div>
-                    <div class="col-md-5">
-                        <section>
-                            {{ $r->demandeur }}
-                        </section>
-                    </div>
-                    <div class="col-md-2">
-                        <section>
-                            <button type="button" class="supprimer_ressource" data-id="{{ $r->id }}"><i class="fa fa-trash-alt"></i></button>
-                        </section>
-                    </div>
-                    <hr class="m-0">
+    <div id="affiche_ressource">
+        @foreach ($ressource as $r)
+            <div class="row" id="ressource_{{ $r->id }}">
+                <div class="col-md-5">
+                    <section>
+                        <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
+                    </section>
                 </div>
+                <div class="col-md-5">
+                    <section>
+                        {{ $r->demandeur }}
+                    </section>
+                </div>
+                <div class="col-md-2">
+                    <section>
+                        <button type="button" class="supprimer_ressource" data-id="{{ $r->id }}"><i
+                                class="fa fa-trash-alt"></i></button>
+                    </section>
+                </div>
+                <hr class="m-0">
+            </div>
 
-            @endforeach
-        </div>
+        @endforeach
+    </div>
     <div class="mt-3">
         <h5>Autre(s)</h5>
         <section class="row px-3">
@@ -96,7 +98,7 @@
 <script>
     $("#ajouter_ressource").on('click', function(e) {
         var ressource = $("#description_ressource").val();
-        if(ressource === ''){
+        if (ressource === '') {
             return false;
         }
         var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
@@ -114,11 +116,11 @@
                 $("#description_ressource").val('');
                 var html = '';
                 for (var i = 0; i < userData.length; i++) {
-                    html += '<div class="row" id="ressource_'+userData[i].id+'">';
+                    html += '<div class="row" id="ressource_' + userData[i].id + '">';
 
                     html += '<div class="col-md-5">';
                     html += '<section>';
-                    html += '<i class="far fa-check-circle"></i>&nbsp;'+userData[i].description;
+                    html += '<i class="far fa-check-circle"></i>&nbsp;' + userData[i].description;
                     html += '</section>';
                     html += '</div>';
 
@@ -130,7 +132,8 @@
 
                     html += '<div class="col-md-2">';
                     html += '<section>';
-                    html += '<button type="button" class="supprimer_ressource" data-id="'+userData[i].id+'"><i class="fa fa-trash-alt"></i></button>';
+                    html += '<button type="button" class="supprimer_ressource" data-id="' +
+                        userData[i].id + '"><i class="fa fa-trash-alt"></i></button>';
                     html += '</section>';
                     html += '</div>';
 
@@ -151,21 +154,21 @@
         var id = $(this).data("id");
         var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
         $.ajax({
-            type: "GET"
-            , url: "{{route('supprimer_ressource')}}"
-            , data: {
+            type: "GET",
+            url: "{{ route('supprimer_ressource') }}",
+            data: {
                 Id: id,
-                groupe:groupe_id
-            }
-            , success: function(response) {
+                groupe: groupe_id
+            },
+            success: function(response) {
                 if (response.success) {
-                    var row=document.getElementById("ressource_"+id);
+                    var row = document.getElementById("ressource_" + id);
                     row.parentNode.removeChild(row);
                 } else {
                     alert("Error")
                 }
-            }
-            , error: function(error) {
+            },
+            error: function(error) {
                 console.log(error)
             }
         });
