@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 /*================ importation class Export et import ======================*/
 use App\Exports\FormationExport;
 use App\Imports\FormationImport;
+use App\Models\FonctionGenerique;
 
 use Excel;
 use Illuminate\Support\Facades\DB;
@@ -56,9 +57,11 @@ class ModuleController extends Controller
         $cfp_id =cfp::where('user_id', $id_user)->value('id');
         if (Gate::allows('isCFP')) {
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
-            $categorie = formation::where('cfp_id', $cfp_id)->get();
+            // $categorie = formation::where('cfp_id', $cfp_id)->get();
+            $categorie = formation::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
                 select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id)');
+                // dd($mod_en_cours);
             $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
                 select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1');
             $mod_publies = DB::select('select * from moduleformation where status = 2');
@@ -67,7 +70,7 @@ class ModuleController extends Controller
             }else{
                 return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies'));
             }
-        
+
         }
         if (Gate::allows('isSuperAdmin')) {
             $infos = DB::select('select * from moduleformation');
@@ -120,6 +123,21 @@ class ModuleController extends Controller
 
     public function create()
     {
+        $fonct = new FonctionGenerique();
+            $domaine = $fonct->findAll("domaines");
+            $liste = formation::orderBy('nom_formation')->get();
+            $niveau = Niveau::all();
+        return view('admin.module.nouveauModule', compact('domaine','liste', 'niveau'));
+    }
+
+    public function get_formation(Request $req){
+        $fonct = new FonctionGenerique();
+        $formation = $fonct->findWhere("formations",["domaine_id"],[$req->id]);
+        return response()->json($formation);
+    }
+
+    /*public function create()
+    {
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
@@ -131,11 +149,14 @@ class ModuleController extends Controller
         }
 
         return view('admin.module.nouveauModule', compact('liste', 'niveau'));
-    }
+    }*/
 
     public function store(Request $request)
     {
         //condition de validation de formulaire
+
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $validator = Validator::make($request->all(), [
             'reference' => 'required',
                 'nom_module' => 'required',
@@ -172,7 +193,7 @@ class ModuleController extends Controller
         if ($validator->fails()) {
             return back();
         } else {
-            DB::insert('insert into modules(reference,nom_module,formation_id,prix,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?)',[$request->reference,$request->nom_module,$request->categorie,$request->prix,$request->heure,$request->jour,$request->prerequis,$request->objectif,$request->description,$request->modalite,$request->materiel,$request->niveau,$request->cible,$request->bon_a_savoir,$request->prestation,$request->min_pers,$request->max_pers]);
+            DB::insert('insert into modules(reference,nom_module,formation_id,prix,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?)',[$request->reference,$request->nom_module,$request->categorie,$request->prix,$request->heure,$request->jour,$request->prerequis,$request->objectif,$request->description,$request->modalite,$request->materiel,$request->niveau,$request->cible,$request->bon_a_savoir,$request->prestation,$request->min_pers,$request->max_pers,$cfp_id]);
             return redirect()->route('liste_module');
         }
 

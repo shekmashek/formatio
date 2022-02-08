@@ -24,8 +24,7 @@
                                 </form> --}}
                             </div>
                             <div class="col" align="right">
-                                <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-                                    href="{{route('liste_module')}}">
+                                <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}" href="{{route('liste_module')}}">
                                     <span><span style="font-size: 20px">
                                             << </span>&nbsp;Retour
                                         </span>
@@ -47,35 +46,17 @@
                             <div class="col-lg-1 postion_fixe">
                                 <div class="row">
                                     <div class="col text-left ps-0 me-3">
-                                        <p id="changer_module" onclick="changer_module();" role="button"
-                                            class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i
-                                                    class='bx bxs-cube-alt'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>Module</span></a>
+                                        <p id="changer_module" onclick="changer_module();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i class='bx bxs-cube-alt' style="color: #801d68; font-size:2rem"></i><br><span>Module</span></a>
                                         </p>
-                                        <p id="changer_objectif" onclick="changer_objectif();" role="button"
-                                            class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut2"><i
-                                                    class='bx bx-radio-circle-marked'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>Objectif</span></a>
+                                        <p id="changer_objectif" onclick="changer_objectif();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut2"><i class='bx bx-radio-circle-marked' style="color: #801d68; font-size:2rem"></i><br><span>Objectif</span></a>
                                         </p>
-                                        <p id="changer_cible" onclick="changer_cible();" role="button"
-                                            class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i
-                                                    class='bx bx-user'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>Cible</span></a>
+                                        <p id="changer_cible" onclick="changer_cible();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i class='bx bx-user' style="color: #801d68; font-size:2rem"></i><br><span>Cible</span></a>
                                         </p>
-                                        <p id="changer_reference" onclick="changer_reference();" role="button"
-                                            class="text-center btn_change_form py-2 mb-1"><a
-                                                href="#preview_reference"><i class='bx bx-clipboard'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>Reference</span></a>
+                                        <p id="changer_reference" onclick="changer_reference();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_reference"><i class='bx bx-clipboard' style="color: #801d68; font-size:2rem"></i><br><span>Reference</span></a>
                                         </p>
-                                        <p id="changer_equipement" onclick="changer_equipement();" role="button"
-                                            class="text-center btn_change_form py-2 mb-1"><a
-                                                href="#preview_equipement"><i class='bx bxs-cog'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>Equipement</span></a>
+                                        <p id="changer_equipement" onclick="changer_equipement();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_equipement"><i class='bx bxs-cog' style="color: #801d68; font-size:2rem"></i><br><span>Equipement</span></a>
                                         </p>
-                                        <p id="changer_prestation" onclick="changer_prestation();" role="button"
-                                            class="text-center btn_change_form py-2 mb-1"><a
-                                                href="#preview_prestation"><i class='bx bx-hive'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>prestation</span></a>
+                                        <p id="changer_prestation" onclick="changer_prestation();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_prestation"><i class='bx bx-hive' style="color: #801d68; font-size:2rem"></i><br><span>prestation</span></a>
                                         </p>
                                     </div>
                                 </div>
@@ -90,9 +71,7 @@
                                                     {{-- <div class="row px-3 mt-4">
                                                         <div class="form-group mt-1 mb-1"> <input type="text" id="email" class="form-control test" required> <label class="ml-3 form-control-placeholder" for="email">Email</label> </div>
                                                     </div> --}}
-                                                    <input type="text" class="form-control module module"
-                                                        id="acf-nom_module" name="nom_module"
-                                                        placeholder="Nom du module" >
+                                                    <input type="text" class="form-control module module" id="acf-nom_module" name="nom_module" placeholder="Nom du module">
                                                     @error('nom_module')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -103,19 +82,36 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group" id="premier_vue9">
+                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap">
+                                                    <select class="form-control select_formulaire" id="acf-domaine" name="domaine" style="height: 50px;">
+                                                        <option value="null" disable selected hidden>Choisissez la
+                                                            domaine de formation ...</option>
+                                                        @foreach($domaine as $do)
+                                                        <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
+                                                            {{$do->nom_domaine}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group" id="premier_vue2">
                                         <div class="acf-field acf-field-text acf-field-categorie is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire categ categ"
-                                                        id="acf-categorie" name="categorie" style="height: 50px;">
-                                                        <option value="null" disable selected hidden>Choisissez la
+                                                    <select class="form-control select_formulaire categ categ" id="acf-categorie" name="categorie" style="height: 50px;">
+                                                        {{-- <option value="null" disable selected hidden>Choisissez la
                                                             catégorie de formation ...</option>
                                                         @foreach($liste as $li)
                                                         <option value="{{$li->id}}" data-value="{{$li->nom_formation}}">
-                                                            {{$li->nom_formation}}</option>
-                                                        @endforeach
+                                                        {{$li->nom_formation}}</option>
+                                                        @endforeach --}}
                                                     </select>
+                                                    <span style="color:#c77cce;" id="domaine_id_err">choisir le type de domaine valide pour avoir ses formations</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,9 +121,7 @@
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control descript descript"
-                                                        id="acf-description" name="description"
-                                                        placeholder="Déscription" >
+                                                    <input type="text" class="form-control descript descript" id="acf-description" name="description" placeholder="Déscription">
                                                     @error('description')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -145,11 +139,7 @@
                                                 <div class="acf-field acf-field-text acf-field-jour is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control jour jour"
-                                                                id="acf-jour" name="jour" min="1" max="365"
-                                                                placeholder="Durée en Jours (J)"
-                                                                onfocus="(this.type='number')"
-                                                                title="entrer une durée en jours" >
+                                                            <input type="text" class="form-control jour jour" id="acf-jour" name="jour" min="1" max="365" placeholder="Durée en Jours (J)" onfocus="(this.type='number')" title="entrer une durée en jours">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -160,11 +150,7 @@
                                                 <div class="acf-field acf-field-text acf-field-heur is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control heur heur"
-                                                                id="acf-heur" name="heure" min="1" max="8760"
-                                                                placeholder="Durée en Heure (H)"
-                                                                onfocus="(this.type='number')"
-                                                                title="entrer une durée en heure" >
+                                                            <input type="text" class="form-control heur heur" id="acf-heur" name="heure" min="1" max="8760" placeholder="Durée en Heure (H)" onfocus="(this.type='number')" title="entrer une durée en heure">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -177,8 +163,7 @@
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire modalite modalite"
-                                                        id="acf-modalite" name="modalite" style="height: 50px;">
+                                                    <select class="form-control select_formulaire modalite modalite" id="acf-modalite" name="modalite" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez la
                                                             modalite de formation ...</option>
                                                         <option value="En ligne">En ligne</option>
@@ -194,8 +179,7 @@
                                         <div class="acf-field acf-field-text acf-field-niveau is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire niveau niveau"
-                                                        id="acf-niveau" name="niveau" style="height: 50px;">
+                                                    <select class="form-control select_formulaire niveau niveau" id="acf-niveau" name="niveau" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez le
                                                             niveau de formation...</option>
                                                         @foreach($niveau as $nv)
@@ -208,12 +192,9 @@
                                         </div>
                                     </div>
 
-                                    <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i
-                                            class="bx bxs-edit close" onclick="myFunction()"></i>
+                                    <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i class="bx bxs-edit close" onclick="myFunction()"></i>
                                         <br>
-                                        <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                class="new_list_nouvelle px-5"
-                                                onclick="suivant_objectif();"><a href="#preview_haut2">Suivant</a></button></p>
+                                        <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="suivant_objectif();"><a href="#preview_haut2">Suivant</a></button></p>
                                     </span>
 
 
@@ -222,9 +203,7 @@
                                         <div class="acf-field acf-field-text acf-field-objectif is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control objectif objectif" id="acf-objectif"
-                                                        name="objectif" placeholder="Objectifs"
-                                                        style="height: 200px"></textarea>
+                                                    <textarea class="form-control objectif objectif" id="acf-objectif" name="objectif" placeholder="Objectifs" style="height: 200px"></textarea>
                                                     @error('objectif')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -235,12 +214,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_module();"><a href="#preview_haut">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_cible();"><a href="#preview_objectif">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="retour_module();"><a href="#preview_haut">Retour</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="suivant_cible();"><a href="#preview_objectif">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -248,9 +223,7 @@
                                         <div class="acf-field acf-field-text acf-field-cible is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control cible cible" id="acf-cible"
-                                                        name="cible" placeholder="Public cible" rows=3
-                                                        style="height: 200px"></textarea>
+                                                    <textarea class="form-control cible cible" id="acf-cible" name="cible" placeholder="Public cible" rows=3 style="height: 200px"></textarea>
                                                     @error('cible')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -265,9 +238,7 @@
                                         <div class="acf-field acf-field-text acf-field-prerequis is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prerequis prerequis"
-                                                        id="acf-prerequis" name="prerequis" placeholder="Prerequis"
-                                                        rows=3  style="height: 200px"></textarea>
+                                                    <textarea class="form-control prerequis prerequis" id="acf-prerequis" name="prerequis" placeholder="Prerequis" rows=3 style="height: 200px"></textarea>
                                                     @error('prerequis')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -278,12 +249,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_objectif();"><a href="#preview_haut2">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_reference();"><a href="#preview_reference">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="retour_objectif();"><a href="#preview_haut2">Retour</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="suivant_reference();"><a href="#preview_reference">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -291,9 +258,7 @@
                                         <div class="acf-field acf-field-text acf-field-reference is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control reference reference"
-                                                        id="acf-reference" name="reference" placeholder="Reference"
-                                                        >
+                                                    <input type="text" class="form-control reference reference" id="acf-reference" name="reference" placeholder="Reference">
                                                     @error('reference')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -308,9 +273,7 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix prix" id="acf-prix"
-                                                        name="prix" minlength="1" maxlength="7"
-                                                        pattern="[0-9]{1,7}" placeholder="Prix en AR" >
+                                                    <input type="text" class="form-control prix prix" id="acf-prix" name="prix" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix en AR">
                                                     @error('prix')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -321,12 +284,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_cible();"><a href="#preview_objectif">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_equipement();"><a href="#changer_equipement">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="retour_cible();"><a href="#preview_objectif">Retour</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="suivant_equipement();"><a href="#changer_equipement">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -334,9 +293,7 @@
                                         <div class="acf-field acf-field-text acf-field-materiel is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control materiel materiel"
-                                                        id="acf-materiel" name="materiel"
-                                                        placeholder="Equipement necessaire" >
+                                                    <input type="text" class="form-control materiel materiel" id="acf-materiel" name="materiel" placeholder="Equipement necessaire">
                                                     @error('materiel')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -351,10 +308,7 @@
                                         <div class="acf-field acf-field-text acf-field-bon_a_savoir is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control bon_a_savoir bon_a_savoir"
-                                                        id="acf-bon_a_savoir" name="bon_a_savoir"
-                                                        placeholder="Bon a savoir"
-                                                        style="height: 200px"></textarea>
+                                                    <textarea class="form-control bon_a_savoir bon_a_savoir" id="acf-bon_a_savoir" name="bon_a_savoir" placeholder="Bon a savoir" style="height: 200px"></textarea>
                                                     @error('bon_a_savoir')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -365,12 +319,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_reference();"><a href="#changer_reference">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="suivant_prestation();"><a href="#changer_prestation">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="retour_reference();"><a href="#changer_reference">Retour</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5" onclick="suivant_prestation();"><a href="#changer_prestation">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -378,10 +328,7 @@
                                         <div class="acf-field acf-field-text acf-field-prestation is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prestation prestation"
-                                                        id="acf-prestation" name="prestation"
-                                                        placeholder="Prestations pedagogiques"
-                                                        style="height: 200px" onkeyup='estComplet();'></textarea>
+                                                    <textarea class="form-control prestation prestation" id="acf-prestation" name="prestation" placeholder="Prestations pedagogiques" style="height: 200px" onkeyup='estComplet();'></textarea>
                                                     @error('prestation')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -400,11 +347,7 @@
                                                     <div class="acf-field acf-field-text acf-field-max is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control max max"
-                                                                    id="acf-max" name="max_pers" min="1" max="100"
-                                                                    placeholder="Nombre personne max "
-                                                                    onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale" >
+                                                                <input type="text" class="form-control max max" id="acf-max" name="max_pers" min="1" max="100" placeholder="Nombre personne max " onfocus="(this.type='number')" title="entrer le nombre de personne maximale">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -415,11 +358,7 @@
                                                     <div class="acf-field acf-field-text acf-field-min is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control min min"
-                                                                    id="acf-min" name="min_pers" min="1" max="100"
-                                                                    placeholder="Nombre personne min"
-                                                                    onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale" >
+                                                                <input type="text" class="form-control min min" id="acf-min" name="min_pers" min="1" max="100" placeholder="Nombre personne min" onfocus="(this.type='number')" title="entrer le nombre de personne maximale">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -427,9 +366,7 @@
                                             </div>
                                         </div>
                                         <div class="col text-center">
-                                            <p class="mt-3" style="font-size: 16px;"><button type="button"
-                                                    class="new_list_nouvelle px-5"
-                                                    onclick="retour_equipement();"><a href="#changer_equipement">Retour</a></button></p>
+                                            <p class="mt-3" style="font-size: 16px;"><button type="button" class="new_list_nouvelle px-5" onclick="retour_equipement();"><a href="#changer_equipement">Retour</a></button></p>
                                         </div>
                                     </div>
 
@@ -437,12 +374,10 @@
                                         <hr>
                                         <div class="form-row d-flex">
                                             <div class="col me-1">
-                                                <button type="submit" class="btn btn-success w-100"
-                                                    id="sauvegarder">Sauvegarder</button>
+                                                <button type="submit" class="btn btn-success w-100" id="sauvegarder">Sauvegarder</button>
                                             </div>
                                             <div class="col">
-                                                <button type="button" class="btn btn-danger w-100"
-                                                    onclick="resetForm();">
+                                                <button type="button" class="btn btn-danger w-100" onclick="resetForm();">
                                                     Annuler</button>
                                             </div>
                                         </div>
@@ -452,13 +387,11 @@
                 </form>
                 <div class="col-lg-7 live_preview" id="preview_haut">
                     <div class="container py-4 bg-light">
-                        <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5"
-                            id="border_premier">
+                        <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5" id="border_premier">
                             <div class="col-lg-6 col-md-6 detail__formation__result__content new_back">
                                 <div class="detail__formation__result__item ">
                                     <h4><span id="preview_categ"><span class="py-4 acf-categorie">Ms
-                                                Excel</span></span><span
-                                            style="color: black !important;">&nbsp;-&nbsp;</span>
+                                                Excel</span></span><span style="color: black !important;">&nbsp;-&nbsp;</span>
                                         <span></span>
                                         <span id="preview_module"><span class="acf-nom_module">Excel
                                                 avancee</span></span>
@@ -479,14 +412,11 @@
                             </div>
                             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                                 <div class="detail__formation__result__item2">
-                                    <div class="text-center"><img src="{{asset('images/CFP/Votre-logo-1.png')}}"
-                                            alt="logo" class="img-fluid" style="width: 200px; height: 100px;"></div>
+                                    <div class="text-center"><img src="{{asset('images/CFP/Votre-logo-1.png')}}" alt="logo" class="img-fluid" style="width: 200px; height: 100px;"></div>
                                 </div>
                             </div>
-                            <div
-                                class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon"
-                                        style="color: black !important;"></i>
+                            <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
+                                <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon" style="color: black !important;"></i>
                                     <span id="preview_jour"><span class="acf-jour">
                                             4
                                         </span>j</span>
@@ -494,14 +424,12 @@
                                             28
                                         </span>h</span>
                                 </div>
-                                <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
-                                        style="color: black !important;"></i>&nbsp;<span class="acf-modalite">Presentiel
+                                <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon" style="color: black !important;"></i>&nbsp;<span class="acf-modalite">Presentiel
                                         et a
                                         distance</span>
                                 </div>
                                 <div class="col" id="preview_niveau">
-                                    <i class='bx bx-equalizer bx_icon' style="color: black !important;"></i>&nbsp;<span
-                                        class="acf-niveau">Debutant</span>
+                                    <i class='bx bx-equalizer bx_icon' style="color: black !important;"></i>&nbsp;<span class="acf-niveau">Debutant</span>
                                 </div>
                             </div>
                         </div>
@@ -511,8 +439,7 @@
                                 <div class="row detail__formation__item__left__objectif" id="border_objectif">
                                     <div class="col-lg-12" id="preview_objectif">
                                         <span class="adresse__text">
-                                            <i
-                                                class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
+                                            <i class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
                                         <p><span>>&nbsp;</span><span class="acf-objectif"> Suite logique de
                                                 la formation "Excel - Intermédiaire", cette
                                                 formation vous permet, au travers d'études de cas et
@@ -524,8 +451,7 @@
                                 <div class="row detail__formation__item__left__adresse" id="border_cible">
                                     <div class="col-lg-6 d-flex flex-row">
                                         <div class="row d-flex flex-row">
-                                            <span class="adresse__text"><i
-                                                    class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
+                                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
                                                 qui ?</span>
                                             <div class="col-12 px-2" id="preview_cible">
                                                 <p><span>>&nbsp;</span><span class="acf-cible">Contrôleur de
@@ -538,8 +464,7 @@
 
                                     <div class="col-lg-6">
                                         <div class="row d-flex flex-row">
-                                            <span class="adresse__text"><i
-                                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
+                                            <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
 
                                             <div class="col-12" id="preview_prerequis">
                                                 <p><span>>&nbsp;</span><span class="acf-prerequis"> Avoir
@@ -555,8 +480,7 @@
                                 <div class="row detail__formation__item__left__adresse" id="border_equipement">
                                     <div class="col-lg-6 d-flex flex-row">
                                         <div class="row d-flex flex-row">
-                                            <span class="adresse__text"><i
-                                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
+                                            <span class="adresse__text"><i class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
                                                 necessaire</span>
                                             <div class="col-12" id="preview_materiel">
                                                 <p><span>>&nbsp;</span><span class="acf-materiel">ordinateur</span> </p>
@@ -566,8 +490,7 @@
 
                                     <div class="col-lg-6">
                                         <div class="row d-flex flex-row">
-                                            <span class="adresse__text"><i
-                                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
+                                            <span class="adresse__text"><i class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
                                                 a savoir</span>
 
                                             <div class="col-12" id="preview_bon_a_savoir">
@@ -583,8 +506,7 @@
                                 <div class="row detail__formation__item__left__adresse" id="border_prestation">
                                     <div class="col-lg-12 d-flex flex-row">
                                         <div class="row d-flex flex-row">
-                                            <span class="adresse__text"><i
-                                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
+                                            <span class="adresse__text"><i class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
                                                 pedagogiques</span>
                                             <div class="col-12" id="preview_prestation">
                                                 <p><span>>&nbsp;</span><span class="acf-prestation">Package
@@ -608,8 +530,7 @@
                                 <div class="row detail__formation__item__main">
                                     <div class="detail__prix__main__presentiel pt-3">
                                         <div>
-                                            <p class="text-uppercase" id="preview_modalite"><span
-                                                    class="acf-modalite">Presentiel et a
+                                            <p class="text-uppercase" id="preview_modalite"><span class="acf-modalite">Presentiel et a
                                                     distance</span></p>
                                         </div>
                                     </div>
@@ -693,15 +614,13 @@
                                         @foreach($niveau as $nv)
                                         <tr>
                                             <td>{{$nv->niveau}}</td>
-                                            <td align="center"><a href="{{route('supprimer_niveau',$nv->id)}}"><i
-                                                        class="bx bxs-trash"></i></a></td>
+                                            <td align="center"><a href="{{route('supprimer_niveau',$nv->id)}}"><i class="bx bxs-trash"></i></a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-end mx-5 pb-3">
-                                    <button type="button" class="btn btn-secondary"
-                                        onclick="myFunction()">Retour</button>&nbsp;
+                                    <button type="button" class="btn btn-secondary" onclick="myFunction()">Retour</button>&nbsp;
                                     <button class="btn btn-primary" onclick="myFunction1()">Ajouter
                                         un niveau</button>
                                 </div>
@@ -715,12 +634,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <input type="text" class="form-control" name="niveau"
-                                                            placeholder="niveau" required>
+                                                        <input type="text" class="form-control" name="niveau" placeholder="niveau" required>
                                                     </td>
                                                     <td align="center" class="p-2">
-                                                        <button type="submit"
-                                                            class="btn btn-primary mt-3">Enregistrer</button>
+                                                        <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -742,96 +659,129 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+    $("#acf-domaine").change(function() {
+        var id = $(this).val();
+        $('.categ').empty();
+        $(".categ").append('<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>');
+
+        $.ajax({
+            url: "{{route('get_formation')}}"
+            , type: 'get'
+            , data: {
+                id: id
+            }
+            , success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("domaine_id_err").innerHTML = "";
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        $(".categ").append('<option value="' + userData[$i].id + '" data-value="' + userData[$i].nom_formation + '" >' + userData[$i].nom_formation + '</option>');
+                    }
+                } else {
+                    document.getElementById("domaine_id_err").innerHTML = "choisir le type de domaine valide pour avoir ses formations";
+                }
+
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+
+    });
+
+
     $(".module").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_module').css('color','black');
+        $('#preview_module').css('color', 'black');
     });
 
     $(".descript").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_descript').css('color','black');
+        $('#preview_descript').css('color', 'black');
     });
+
 
     $(".categ").change(function() {
         var $this = $(this);
         var value2 = $('select.categ option[value="' + $(this).val() + '"]').data('value');
         $('.' + $this.attr("id") + '').html(value2);
-        $('#preview_categ').css('color','black');
+        $('#preview_categ').css('color', 'black');
     });
 
     $(".jour").change(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_jour').css('color','black');
+        $('#preview_jour').css('color', 'black');
     });
 
     $(".heur").change(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_heur').css('color','black');
+        $('#preview_heur').css('color', 'black');
     });
 
     $(".modalite").change(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_modalite').css('color','black');
+        $('#preview_modalite').css('color', 'black');
     });
 
     $(".niveau").change(function() {
         var $this = $(this);
         var valueniveau = $('select.niveau option[value="' + $(this).val() + '"]').data('value');
         $('.' + $this.attr("id") + '').html(valueniveau);
-        $('#preview_niveau').css('color','black');
+        $('#preview_niveau').css('color', 'black');
     });
 
     $(".objectif").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_objectif').css('color','black');
+        $('#preview_objectif').css('color', 'black');
     });
 
     $(".cible").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_cible').css('color','black');
+        $('#preview_cible').css('color', 'black');
     });
 
     $(".prerequis").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_prerequis').css('color','black');
+        $('#preview_prerequis').css('color', 'black');
     });
 
     $(".reference").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_reference').css('color','black');
+        $('#preview_reference').css('color', 'black');
     });
 
     $(".prix").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_prix').css('color','black');
+        $('#preview_prix').css('color', 'black');
     });
 
     $(".materiel").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_materiel').css('color','black');
+        $('#preview_materiel').css('color', 'black');
     });
 
     $(".bon_a_savoir").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_bon_a_savoir').css('color','black');
+        $('#preview_bon_a_savoir').css('color', 'black');
     });
 
     $(".prestation").keyup(function() {
         var $this = $(this);
         $('.' + $this.attr("id") + '').html($this.val());
-        $('#preview_presentation').css('color','black');
+        $('#preview_presentation').css('color', 'black');
     });
 
     function myFunction() {
@@ -865,6 +815,7 @@
         var mod6 = document.getElementById("premier_vue6");
         var mod7 = document.getElementById("premier_vue7");
         var mod8 = document.getElementById("premier_vue8");
+        var mod9 = document.getElementById("premier_vue9");
         var objectif = document.getElementById("second_vue");
         var public = document.getElementById("troisiem_vue");
         var prerequis = document.getElementById("troisiem_vue2");
@@ -875,18 +826,18 @@
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
         var mod_preview = document.getElementById("border_premier");
-        $('#border_premier').css('border','4px solid #801d68');
-        $('#border_objectif').css('border','none');
-        $('#border_cible').css('border','none');
-        $('#border_equipement').css('border','none');
-        $('#border_prestation').css('border','none');
-        $('#border_reference').css('border','none');
-        $('#changer_module').css('border','1px solid #801d68');
-        $('#changer_objectif').css('border','none');
-        $('#changer_cible').css('border','none');
-        $('#changer_equipement').css('border','none');
-        $('#changer_prestation').css('border','none');
-        $('#changer_reference').css('border','none');
+        $('#border_premier').css('border', '4px solid #801d68');
+        $('#border_objectif').css('border', 'none');
+        $('#border_cible').css('border', 'none');
+        $('#border_equipement').css('border', 'none');
+        $('#border_prestation').css('border', 'none');
+        $('#border_reference').css('border', 'none');
+        $('#changer_module').css('border', '1px solid #801d68');
+        $('#changer_objectif').css('border', 'none');
+        $('#changer_cible').css('border', 'none');
+        $('#changer_equipement').css('border', 'none');
+        $('#changer_prestation').css('border', 'none');
+        $('#changer_reference').css('border', 'none');
         if (mod.style.display === "none") {
             mod.style.display = "block";
             mod2.style.display = "block";
@@ -896,6 +847,7 @@
             mod6.style.display = "block";
             mod7.style.display = "block";
             mod8.style.display = "block";
+            mod9.style.display = "block";
             objectif.style.display = "none";
             bouttons.style.display = "none";
             public.style.display = "none";
@@ -915,6 +867,7 @@
             mod6.style.display = "block";
             mod7.style.display = "block";
             mod8.style.display = "block";
+            mod9.style.display = "block";
             objectif.style.display = "none";
             bouttons.style.display = "none";
             prestation.style.display = "none";
@@ -937,6 +890,7 @@
         var mod6 = document.getElementById("premier_vue6");
         var mod7 = document.getElementById("premier_vue7");
         var mod8 = document.getElementById("premier_vue8");
+        var mod9 = document.getElementById("premier_vue9");
         var objectif = document.getElementById("second_vue");
         var public = document.getElementById("troisiem_vue");
         var prerequis = document.getElementById("troisiem_vue2");
@@ -946,18 +900,18 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        $('#border_objectif').css('border','4px solid #801d68');
-        $('#border_premier').css('border','none');
-        $('#border_cible').css('border','none');
-        $('#border_equipement').css('border','none');
-        $('#border_prestation').css('border','none');
-        $('#border_reference').css('border','none');
-        $('#changer_objectif').css('border','1px solid #801d68');
-        $('#changer_module').css('border','none');
-        $('#changer_cible').css('border','none');
-        $('#changer_equipement').css('border','none');
-        $('#changer_prestation').css('border','none');
-        $('#changer_reference').css('border','none');
+        $('#border_objectif').css('border', '4px solid #801d68');
+        $('#border_premier').css('border', 'none');
+        $('#border_cible').css('border', 'none');
+        $('#border_equipement').css('border', 'none');
+        $('#border_prestation').css('border', 'none');
+        $('#border_reference').css('border', 'none');
+        $('#changer_objectif').css('border', '1px solid #801d68');
+        $('#changer_module').css('border', 'none');
+        $('#changer_cible').css('border', 'none');
+        $('#changer_equipement').css('border', 'none');
+        $('#changer_prestation').css('border', 'none');
+        $('#changer_reference').css('border', 'none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod2.style.display = "none";
@@ -967,6 +921,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "block";
             public.style.display = "none";
             prerequis.style.display = "none";
@@ -988,6 +943,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             public.style.display = "none";
             prerequis.style.display = "none";
             reference.style.display = "none";
@@ -1009,6 +965,7 @@
         var mod6 = document.getElementById("premier_vue6");
         var mod7 = document.getElementById("premier_vue7");
         var mod8 = document.getElementById("premier_vue8");
+        var mod9 = document.getElementById("premier_vue9");
         var objectif = document.getElementById("second_vue");
         var public = document.getElementById("troisiem_vue");
         var prerequis = document.getElementById("troisiem_vue2");
@@ -1018,18 +975,18 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        $('#border_cible').css('border','4px solid #801d68');
-        $('#border_premier').css('border','none');
-        $('#border_objectif').css('border','none');
-        $('#border_equipement').css('border','none');
-        $('#border_prestation').css('border','none');
-        $('#border_reference').css('border','none');
-        $('#changer_cible').css('border','1px solid #801d68');
-        $('#changer_objectif').css('border','none');
-        $('#changer_module').css('border','none');
-        $('#changer_equipement').css('border','none');
-        $('#changer_prestation').css('border','none');
-        $('#changer_reference').css('border','none');
+        $('#border_cible').css('border', '4px solid #801d68');
+        $('#border_premier').css('border', 'none');
+        $('#border_objectif').css('border', 'none');
+        $('#border_equipement').css('border', 'none');
+        $('#border_prestation').css('border', 'none');
+        $('#border_reference').css('border', 'none');
+        $('#changer_cible').css('border', '1px solid #801d68');
+        $('#changer_objectif').css('border', 'none');
+        $('#changer_module').css('border', 'none');
+        $('#changer_equipement').css('border', 'none');
+        $('#changer_prestation').css('border', 'none');
+        $('#changer_reference').css('border', 'none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod2.style.display = "none";
@@ -1039,6 +996,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "block";
             prerequis.style.display = "block";
@@ -1057,6 +1015,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "block";
             prerequis.style.display = "block";
@@ -1078,6 +1037,7 @@
         var mod6 = document.getElementById("premier_vue6");
         var mod7 = document.getElementById("premier_vue7");
         var mod8 = document.getElementById("premier_vue8");
+        var mod9 = document.getElementById("premier_vue9");
         var objectif = document.getElementById("second_vue");
         var public = document.getElementById("troisiem_vue");
         var prerequis = document.getElementById("troisiem_vue2");
@@ -1087,18 +1047,18 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        $('#border_reference').css('border','4px solid #801d68');
-        $('#border_premier').css('border','none');
-        $('#border_cible').css('border','none');
-        $('#border_equipement').css('border','none');
-        $('#border_prestation').css('border','none');
-        $('#border_objectif').css('border','none');
-        $('#changer_reference').css('border','1px solid #801d68');
-        $('#changer_objectif').css('border','none');
-        $('#changer_cible').css('border','none');
-        $('#changer_equipement').css('border','none');
-        $('#changer_prestation').css('border','none');
-        $('#changer_module').css('border','none');
+        $('#border_reference').css('border', '4px solid #801d68');
+        $('#border_premier').css('border', 'none');
+        $('#border_cible').css('border', 'none');
+        $('#border_equipement').css('border', 'none');
+        $('#border_prestation').css('border', 'none');
+        $('#border_objectif').css('border', 'none');
+        $('#changer_reference').css('border', '1px solid #801d68');
+        $('#changer_objectif').css('border', 'none');
+        $('#changer_cible').css('border', 'none');
+        $('#changer_equipement').css('border', 'none');
+        $('#changer_prestation').css('border', 'none');
+        $('#changer_module').css('border', 'none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod2.style.display = "none";
@@ -1108,6 +1068,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "none";
             prerequis.style.display = "none";
@@ -1127,6 +1088,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "none";
             prerequis.style.display = "none";
@@ -1148,6 +1110,7 @@
         var mod6 = document.getElementById("premier_vue6");
         var mod7 = document.getElementById("premier_vue7");
         var mod8 = document.getElementById("premier_vue8");
+        var mod9 = document.getElementById("premier_vue9");
         var objectif = document.getElementById("second_vue");
         var public = document.getElementById("troisiem_vue");
         var prerequis = document.getElementById("troisiem_vue2");
@@ -1157,18 +1120,18 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        $('#border_equipement').css('border','4px solid #801d68');
-        $('#border_premier').css('border','none');
-        $('#border_cible').css('border','none');
-        $('#border_reference').css('border','none');
-        $('#border_prestation').css('border','none');
-        $('#border_objectif').css('border','none');
-        $('#changer_equipement').css('border','1px solid #801d68');
-        $('#changer_objectif').css('border','none');
-        $('#changer_cible').css('border','none');
-        $('#changer_module').css('border','none');
-        $('#changer_prestation').css('border','none');
-        $('#changer_reference').css('border','none');
+        $('#border_equipement').css('border', '4px solid #801d68');
+        $('#border_premier').css('border', 'none');
+        $('#border_cible').css('border', 'none');
+        $('#border_reference').css('border', 'none');
+        $('#border_prestation').css('border', 'none');
+        $('#border_objectif').css('border', 'none');
+        $('#changer_equipement').css('border', '1px solid #801d68');
+        $('#changer_objectif').css('border', 'none');
+        $('#changer_cible').css('border', 'none');
+        $('#changer_module').css('border', 'none');
+        $('#changer_prestation').css('border', 'none');
+        $('#changer_reference').css('border', 'none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod2.style.display = "none";
@@ -1178,6 +1141,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "none";
             prerequis.style.display = "none";
@@ -1197,6 +1161,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "none";
             prerequis.style.display = "none";
@@ -1217,6 +1182,7 @@
         var mod5 = document.getElementById("premier_vue5");
         var mod6 = document.getElementById("premier_vue6");
         var mod7 = document.getElementById("premier_vue7");
+        var mod9 = document.getElementById("premier_vue9");
         var mod8 = document.getElementById("premier_vue8");
         var objectif = document.getElementById("second_vue");
         var public = document.getElementById("troisiem_vue");
@@ -1227,18 +1193,18 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        $('#border_prestation').css('border','4px solid #801d68');
-        $('#border_premier').css('border','none');
-        $('#border_cible').css('border','none');
-        $('#border_equipement').css('border','none');
-        $('#border_reference').css('border','none');
-        $('#border_objectif').css('border','none');
-        $('#changer_prestation').css('border','1px solid #801d68');
-        $('#changer_objectif').css('border','none');
-        $('#changer_cible').css('border','none');
-        $('#changer_equipement').css('border','none');
-        $('#changer_module').css('border','none');
-        $('#changer_reference').css('border','none');
+        $('#border_prestation').css('border', '4px solid #801d68');
+        $('#border_premier').css('border', 'none');
+        $('#border_cible').css('border', 'none');
+        $('#border_equipement').css('border', 'none');
+        $('#border_reference').css('border', 'none');
+        $('#border_objectif').css('border', 'none');
+        $('#changer_prestation').css('border', '1px solid #801d68');
+        $('#changer_objectif').css('border', 'none');
+        $('#changer_cible').css('border', 'none');
+        $('#changer_equipement').css('border', 'none');
+        $('#changer_module').css('border', 'none');
+        $('#changer_reference').css('border', 'none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod2.style.display = "none";
@@ -1248,6 +1214,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "none";
             prerequis.style.display = "none";
@@ -1266,6 +1233,7 @@
             mod6.style.display = "none";
             mod7.style.display = "none";
             mod8.style.display = "none";
+            mod9.style.display = "none";
             objectif.style.display = "none";
             public.style.display = "none";
             prerequis.style.display = "none";
@@ -1281,46 +1249,46 @@
     function resetForm() {
         changer_module();
         document.getElementById("frm_new_module").reset();
-        $('#changer_module').css('border','1px solid #801d68');
+        $('#changer_module').css('border', '1px solid #801d68');
     }
 
-    function suivant_objectif(){
+    function suivant_objectif() {
         changer_objectif();
     }
 
-    function retour_module(){
+    function retour_module() {
         changer_module();
     }
 
-    function suivant_cible(){
+    function suivant_cible() {
         changer_cible();
     }
 
-    function retour_objectif(){
+    function retour_objectif() {
         changer_objectif();
     }
 
-    function suivant_reference(){
+    function suivant_reference() {
         changer_reference();
     }
 
-    function retour_cible(){
+    function retour_cible() {
         changer_cible();
     }
 
-    function suivant_equipement(){
+    function suivant_equipement() {
         changer_equipement();
     }
 
-    function retour_reference(){
+    function retour_reference() {
         changer_reference();
     }
 
-    function suivant_prestation(){
+    function suivant_prestation() {
         changer_prestation();
     }
 
-    function retour_equipement(){
+    function retour_equipement() {
         changer_equipement();
     }
 
@@ -1339,11 +1307,11 @@
     let btn = document.getElementById("sauvegarder");
     btn.disabled = true;
 
-    function estComplet(){
-        if(module_vide.value != "" && descript_vide.value != "" && jour_vide.value != "" && heure_vide.value != "" && objectif_vide.value != "" && cible_vide.value != "" && prerequis_vide.value != "" &&
-        reference_vide.value != "" && prix_vide.value != "" && materiel_vide.value != "" && bonasavoir_vide.value != "" && prestation_vide.value != ""){
+    function estComplet() {
+        if (module_vide.value != "" && descript_vide.value != "" && jour_vide.value != "" && heure_vide.value != "" && objectif_vide.value != "" && cible_vide.value != "" && prerequis_vide.value != "" &&
+            reference_vide.value != "" && prix_vide.value != "" && materiel_vide.value != "" && bonasavoir_vide.value != "" && prestation_vide.value != "") {
             btn.disabled = false;
-        }else{
+        } else {
             btn.disabled = true;
         }
     }

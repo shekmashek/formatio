@@ -6,7 +6,7 @@ CREATE OR REPLACE VIEW v_moduleformation AS SELECT
     m.duree,
     f.id AS formation_id,
     f.nom_formation,
-    f.cfp_id
+    m.cfp_id
 FROM
     modules m
 JOIN formations f ON
@@ -288,13 +288,13 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.prestation,
     m.bon_a_savoir,
     m.status,
+    m.cfp_id,
     ifnull(m.max,0) as max_pers,
     ifnull(m.min,0) as min_pers,
     n.niveau,
     f.id AS formation_id,
     f.nom_formation,
     f.domaine_id,
-    f.cfp_id,
     cfps.nom,
     cfps.logo,
     cfps.email,
@@ -304,7 +304,7 @@ FROM
     modules m
 JOIN formations f ON
     m.formation_id = f.id
-JOIN cfps ON f.cfp_id = cfps.id
+JOIN cfps ON m.cfp_id = cfps.id
 JOIN niveaux n ON
     n.id = m.niveau_id
 left join v_moyenne_avis_module a on m.id = a.module_id;
@@ -328,7 +328,7 @@ CREATE OR REPLACE VIEW cfpcours AS SELECT
     f.id AS formation_id,
     f.nom_formation,
     f.domaine_id,
-    f.cfp_id,
+    m.cfp_id,
     cfps.nom,
     cfps.logo,
     cfps.email,
@@ -339,7 +339,7 @@ FROM
     modules m
 JOIN formations f ON
     m.formation_id = f.id
-JOIN cfps ON f.cfp_id = cfps.id
+JOIN cfps ON m.cfp_id = cfps.id
 JOIN niveaux n ON
     n.id = m.niveau_id
 JOIN programmes p ON
