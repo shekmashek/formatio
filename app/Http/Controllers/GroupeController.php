@@ -45,8 +45,8 @@ class GroupeController extends Controller
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $projet = $fonct->findWhereMulitOne("v_projetentreprise", ["projet_id"], [$idProjet]);
         $groupe = $fonct->findWhere("v_groupe", ["projet_id"], [$idProjet]);
-        $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
-        $module = $fonct->findAll("modules");
+        $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
+        $formation = $fonct->findAll("formations");
         return view('admin.groupe.nouveauGroupe', compact('projet', 'groupe', 'formation', 'module'));
     }
 

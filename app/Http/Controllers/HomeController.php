@@ -175,8 +175,8 @@ class HomeController extends Controller
 
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
-            $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
-            $module = $fonct->findAll("modules");
+            $formation = $fonct->findAll("formations");
+            $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
 
             return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module'));
         }

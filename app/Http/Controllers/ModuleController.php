@@ -55,20 +55,22 @@ class ModuleController extends Controller
     {
         $id_user = Auth::user()->id;
         $cfp_id =cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $cfp = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
         if (Gate::allows('isCFP')) {
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             // $categorie = formation::where('cfp_id', $cfp_id)->get();
             $categorie = formation::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
                 select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id)');
-                // dd($mod_en_cours);
-            $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
+                $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
                 select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1');
             $mod_publies = DB::select('select * from moduleformation where status = 2');
+
             if(count($infos) <= 0){
                 return view('admin.module.guide');
             }else{
-                return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies'));
+                return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies','cfp'));
             }
 
         }
