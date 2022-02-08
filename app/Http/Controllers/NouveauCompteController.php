@@ -30,8 +30,8 @@ class NouveauCompteController extends Controller
 
     public function index_create_compte_cfp()
     {
-        $departements =  $this->fonct->findAll("departements");
-        return view('create_compte.create_compte_cfp', compact('departements'));
+        // $departements =  $this->fonct->findAll("departements");
+        return view('create_compte.create_compte_cfp');
     }
 
     public function index_create_compte_employeur()
@@ -78,7 +78,6 @@ class NouveauCompteController extends Controller
                 $data["code_postal"] = $req->code_postal_cfp;
 
                 // ======= responsable
-                // $resp["photo_resp"]  = str_replace(' ', '_', $req->nom_resp_cfp .  '' . $req->tel_resp_cfp . '' . $date . '.' . $req->file('photo_resp_cfp')->extension());
                 $resp["sexe_resp"] = $req->sexe_resp_cfp;
 
                 $resp["nom_resp"] = $req->nom_resp_cfp;
@@ -98,7 +97,7 @@ class NouveauCompteController extends Controller
                 // $resp["departement_resp"] = $req->departement_resp_cfp;
                 // $resp["poste_resp"] = $req->poste_resp_cfp;
 
-                $verify = $this->new_compte->verify_cfp($req->name_entreprise, $req->email_cfp);
+                $verify = $this->new_compte->verify_cfp($req->name_entreprise, $req->email_resp_cfp);
                 // dd($verify);
 
                 if (count($verify) <= 0) { // cfp n'existe pas
@@ -109,15 +108,15 @@ class NouveauCompteController extends Controller
                     $this->user->password = Hash::make($ch1);
                     $this->user->role_id = '7';
 
-                    // $this->user->save();
+                    $this->user->save();
 
                     $user_id = User::where('email', $req->email_resp_cfp)->value('id');
 
                     $this->new_compte->insert_CFP($data, $user_id);
                     // dd($data);
 
-                    $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp])->id;
-                    dd($cfp_id);
+                    $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp])->id;
+                    // dd($req->email_cfp);
 
                     $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$cfp_id]);
                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
@@ -127,7 +126,7 @@ class NouveauCompteController extends Controller
                     $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
                     // $this->img->store_image("responsable",$resp["photo_resp"],$req->file('photo_resp_cfp')->getContent());
                     $fonct = new FonctionGenerique();
-                    $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp]);
+                    $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
 
                     Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
                     return redirect()->route('inscription_save');

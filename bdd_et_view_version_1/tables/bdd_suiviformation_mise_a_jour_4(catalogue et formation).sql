@@ -298,4 +298,13 @@ INSERT INTO `cours` (`id`, `titre_cours`, `programme_id`, `created_at`, `updated
 (142, 'Cascade', 71, NULL, NULL),
 (143, 'Jauge', 72, NULL, NULL);
 
+CREATE TABLE `competence_a_evaluers` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `titre_competence` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module_id` bigint(20) UNSIGNED NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
+  `objectif` int(10) UNSIGNED not null DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 

@@ -163,9 +163,7 @@
                                             </div>
                                             <div class="new_btn_programme">
                                                 <button type="button" class="btn btn-primary"><a
-                                                        href="{{route('select_par_module',$mod->module_id)}}">Completer
-                                                        votre
-                                                        programme</a></button>
+                                                        href="{{route('select_par_module',$mod->module_id)}}">Completer&nbsp;votre&nbsp;programme</a></button>
                                             </div>
                                         </div>
                                         <div
@@ -246,7 +244,7 @@
                 </div>
 
                 <div class="modal fade" id="ModalAffichage">
-                    <div class="modal-dialog" >
+                    <div class="modal-dialog">
                         <div class="modal-content modal_grand">
                             <div class="container-fluid">
                                 <div class="col-lg-12" id="preview_haut">
@@ -255,12 +253,17 @@
                                             id="border_premier">
                                             <div class="col-lg-6 col-md-6 detail__formation__result__content new_back">
                                                 <div class="detail__formation__result__item ">
-                                                    <h4><span id="preview_categ"><span class="py-4 acf-categorie" id="nom_formation"></span></span><span style="color: black !important;">&nbsp;-&nbsp;</span>
+                                                    <h4><span id="preview_categ"><span class="py-4 acf-categorie"
+                                                                id="nom_formation"></span></span><span
+                                                            style="color: black !important;">&nbsp;-&nbsp;</span>
                                                         <span></span>
-                                                        <span id="preview_module"><span class="acf-nom_module" id="nom_module"></span></span>
+                                                        <span id="preview_module"><span class="acf-nom_module"
+                                                                id="nom_module"></span></span>
                                                     </h4>
-                                                    <p id="preview_descript"><span class="acf-description" id="description"></span></p>
-                                                    <div class="detail__formation__result__avis" style="color: black !important;">
+                                                    <p id="preview_descript"><span class="acf-description"
+                                                            id="description"></span></p>
+                                                    <div class="detail__formation__result__avis"
+                                                        style="color: black !important;">
                                                         <div class="Stars" style="--note: 4.5;">
                                                             <i class='bx bxs-star'></i>
                                                             <i class='bx bxs-star'></i>
@@ -274,20 +277,30 @@
                                             </div>
                                             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                                                 <div class="detail__formation__result__item2">
-                                                    <div class="text-center" id="imgDiv"><img src='{{asset("images/CFP/".$mod_en_cours[0]->logo)}}' alt="logo" id="logos" class="img-fluid" style="width: 200px; height: 100px;">
-                                                    </div>
+                                                    {{-- <div class="text-center" id="imgDiv"><img
+                                                            src='{{asset("images/CFP/".$mod_en_cours[0]->logo)}}'
+                                                            alt="logo" id="logos" class="img-fluid"
+                                                            style="width: 200px; height: 100px;">
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div
                                                 class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                                <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon" style="color: black !important;"></i>
-                                                    <span id="preview_jour"><span class="acf-jour" id="jour"></span>j</span>
-                                                    <span id="preview_heur">/<span class="acf-heur" id="heure"></span>h</span>
+                                                <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon"
+                                                        style="color: black !important;"></i>
+                                                    <span id="preview_jour"><span class="acf-jour"
+                                                            id="jour"></span>j</span>
+                                                    <span id="preview_heur">/<span class="acf-heur"
+                                                            id="heure"></span>h</span>
                                                 </div>
-                                                <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon" style="color: black !important;"></i>&nbsp;<span lass="acf-modalite" id="modalite"></span>
+                                                <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
+                                                        style="color: black !important;"></i>&nbsp;<span
+                                                        lass="acf-modalite" id="modalite"></span>
                                                 </div>
                                                 <div class="col" id="preview_niveau">
-                                                    <i class='bx bx-equalizer bx_icon' style="color: black !important;"></i>&nbsp;<span class="acf-niveau" id="niveau"></span>
+                                                    <i class='bx bx-equalizer bx_icon'
+                                                        style="color: black !important;"></i>&nbsp;<span
+                                                        class="acf-niveau" id="niveau"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -299,8 +312,10 @@
                                                     id="border_objectif">
                                                     <div class="col-lg-12" id="preview_objectif">
                                                         <span class="adresse__text">
-                                                            <i class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
-                                                            <p><span>>&nbsp;</span><span class="acf-objectif" id="objectif"></span></p>
+                                                            <i
+                                                                class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
+                                                        <p><span>>&nbsp;</span><span class="acf-objectif"
+                                                                id="objectif"></span></p>
                                                     </div>
                                                 </div>
 
@@ -308,18 +323,23 @@
                                                     id="border_cible">
                                                     <div class="col-lg-6 d-flex flex-row">
                                                         <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?</span>
+                                                            <span class="adresse__text"><i
+                                                                    class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
+                                                                qui ?</span>
                                                             <div class="col-12 px-2" id="preview_cible">
-                                                                <p><span>>&nbsp;</span><span class="acf-cible" id="cible"></span></p>
+                                                                <p><span>>&nbsp;</span><span class="acf-cible"
+                                                                        id="cible"></span></p>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-lg-6">
                                                         <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
+                                                            <span class="adresse__text"><i
+                                                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
                                                             <div class="col-12" id="preview_prerequis">
-                                                                <p><span>>&nbsp;</span><span class="acf-prerequis" id="prerequis"></span></p>
+                                                                <p><span>>&nbsp;</span><span class="acf-prerequis"
+                                                                        id="prerequis"></span></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -329,18 +349,24 @@
                                                     id="border_equipement">
                                                     <div class="col-lg-6 d-flex flex-row">
                                                         <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement necessaire</span>
+                                                            <span class="adresse__text"><i
+                                                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
+                                                                necessaire</span>
                                                             <div class="col-12" id="preview_materiel">
-                                                                <p><span>>&nbsp;</span><span class="acf-materiel" id="materiel"></span></p>
+                                                                <p><span>>&nbsp;</span><span class="acf-materiel"
+                                                                        id="materiel"></span></p>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-lg-6">
                                                         <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon a savoir</span>
+                                                            <span class="adresse__text"><i
+                                                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
+                                                                a savoir</span>
                                                             <div class="col-12" id="preview_bon_a_savoir">
-                                                                <p><span>>&nbsp;</span><span class="acf-bon_a_savoir" id="bon_a_savoir"></span>
+                                                                <p><span>>&nbsp;</span><span class="acf-bon_a_savoir"
+                                                                        id="bon_a_savoir"></span>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -351,14 +377,57 @@
                                                     id="border_prestation">
                                                     <div class="col-lg-12 d-flex flex-row">
                                                         <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations pedagogiques</span>
+                                                            <span class="adresse__text"><i
+                                                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
+                                                                pedagogiques</span>
                                                             <div class="col-12" id="preview_prestation">
-                                                                <p><span>>&nbsp;</span><span class="acf-prestation" id="prestation"></span>
+                                                                <p><span>>&nbsp;</span><span class="acf-prestation"
+                                                                        id="prestation"></span>
                                                                 </p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                {{-- <div class="row detail__formation__item__left">
+                                                    <h3 class="pt-3 pb-3">Programme de la formation</h3>
+                                                    <div></div>
+                                                    <div class="col-lg-12">
+                                                        <div class="row detail__formation__item__left__accordion">
+                                                            <div class="accordion" id="accordion__program">
+                                                                <?php //$i=1 ?>
+                                                                @foreach ($programmes as $prgc)
+                                                                <div class="card">
+                                                                    <div class="card-header" id="heading1">
+                                                                        <h2 class="mb-0"><button
+                                                                                class="btn btn-block text-left"
+                                                                                type="button" data-toggle="collapse"
+                                                                                data-target="#collapse{{$i}}"
+                                                                                aria-expanded="true" id="icon"
+                                                                                aria-controls="collapse1"><i
+                                                                                    class="bx bxs-plus-circle icon-prog-list"
+                                                                                    id="icon"></i>&nbsp;&nbsp;{{$i}} -
+                                                                                {{$prgc->titre}}</button></h2>
+                                                                    </div>
+                                                                    @foreach ($cours as $c)
+                                                                    @if($c->programme_id == $prgc->id)
+                                                                    <div id="collapse{{$i}}" class="collapse show"
+                                                                        aria-labelledby="heading1"
+                                                                        data-parent="#accordion__program">
+                                                                        <div class="card-body"> <i
+                                                                                class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}
+                                                                        </div>
+                                                                    </div>
+                                                                    @endif
+                                                                    @endforeach
+                                                                    <?php //$i++ ?>
+                                                                </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div> --}}
                                             </div>
 
                                             <div class="col-lg-4 detail__formation__item__right" id="border_reference">
@@ -372,7 +441,8 @@
                                                 <div class="row detail__formation__item__main">
                                                     <div class="detail__prix__main__presentiel pt-3">
                                                         <div>
-                                                            <p class="text-uppercase" id="preview_modalite"><span class="acf-modalite" id="modalite2"></span></p>
+                                                            <p class="text-uppercase" id="preview_modalite"><span
+                                                                    class="acf-modalite" id="modalite2"></span></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -393,15 +463,17 @@
                                                     <div class="col-lg-6 detail__prix__main__dure">
                                                         <div>
                                                             <p><i
-                                                                class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span>
+                                                                    class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span>
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 detail__prix__main__dure2">
                                                         <div>
                                                             <p>
-                                                                <span id="preview_jour"><span class="acf-jour" id="jour2"></span>j</span>
-                                                                <span id="preview_heur">/<span class="acf-heur" id="heure2"></span>h</span>
+                                                                <span id="preview_jour"><span class="acf-jour"
+                                                                        id="jour2"></span>j</span>
+                                                                <span id="preview_heur">/<span class="acf-heur"
+                                                                        id="heure2"></span>h</span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -415,7 +487,8 @@
                                                     </div>
                                                     <div class="col-lg-8 detail__prix__main__prix2">
                                                         <div>
-                                                            <p id="preview_prix" class="text-end"><span class="acf-prix" id="prix"></span>&nbsp;AR&nbsp;HT</p>
+                                                            <p id="preview_prix" class="text-end"><span class="acf-prix"
+                                                                    id="prix"></span>&nbsp;AR&nbsp;HT</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -519,15 +592,15 @@
                                                 <span>par personne</span>
                                             </div>
                                             <div class="new_btn_programme">
-                                                <button type="button" class="btn btn-primary non_pub"><a
-                                                        href="{{route('publier_module',$mod->module_id)}}">Publier
-                                                        votre
-                                                        module</a></button>
+                                                <button type="button" class="btn btn-primary non_pub"
+                                                    data-id="{{$mod->module_id}}" data-toggle="modal"
+                                                    data-target="#ModalCompetence"
+                                                    id="{{$mod->module_id}}">Compétences&nbsp;professionnelles</button>
                                             </div>
                                         </div>
                                         <div
                                             class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-2" style="font-size: 14px" id="preview_haut2"><i
+                                            <div class="col-2" style="font-size: 12px" id="preview_haut2"><i
                                                     class="bx bxs-alarm bx_icon" style="color: #801d68 !important;"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
@@ -549,9 +622,9 @@
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-1" id="preview_niveau">
                                                 <button class="btn modifier"><a
-                                                    href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                        class='bx bx-edit'
-                                                        style="color: #0052D4 !important;font-size: 20px"></i></a></button>
+                                                        href="{{route('modifier_module_prog',$mod->module_id)}}"><i
+                                                            class='bx bx-edit'
+                                                            style="color: #0052D4 !important;font-size: 20px"></i></a></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
                                                 <button class="btn supprimer" data-toggle="modal"
@@ -594,11 +667,75 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="modal fade" id="ModalCompetence">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{route('publier_module')}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" id="id" value="{{$mod->module_id}}">
+                                                <div class="modal-header">
+                                                    <h6>Compétences a évaluer</h6>
+                                                </div>
+                                                <div class="modal-body mt-2 mb-2">
+                                                    <div class="container">
+                                                        <div class="d-flex">
+                                                            <div class="col-7">
+                                                                <div class="form-group">
+                                                                    <div class="form-row">
+                                                                        <input type="text" name="titre_competence[]"
+                                                                            id="titre_competence"
+                                                                            class="form-control label_placeholder"
+                                                                            required>
+                                                                        <label for="titre_competence"
+                                                                            class="form-control-placeholder">Compétences</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="form-group ms-1">
+                                                                    <div class="form-row">
+                                                                        <input type="text" name="objectif[]"
+                                                                            id="objectif" min="1" max="10"
+                                                                            onfocus="(this.type='number')"
+                                                                            class="form-control label_placeholder"
+                                                                            required>
+                                                                        <label for="objectif"
+                                                                            class="form-control-placeholder">Notes</label>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <div class="mt-3">
+                                                                    <button id="addRow" class="form-control btn"
+                                                                        type="button" onclick="competence();"><i
+                                                                            class="bx bx-plus"
+                                                                            style="font-size: 20px"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="newRow"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary " id="fermer"
+                                                        data-dismiss="modal">
+                                                        Fermer </button>
+                                                    <button type="submit"
+                                                        class="btn btn-primary non_pub">Enregistrer</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="tab-pane fade" id="publies">
                     <div class="container-fluid d-flex p-0 mt-3 me-3">
@@ -710,9 +847,9 @@
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-1" id="preview_niveau">
                                                 <button class="btn modifier"><a
-                                                    href="{{route('modifier_module_pub',$mod->module_id)}}"><i
-                                                        class='bx bx-edit'
-                                                        style="color: #0052D4 !important;font-size: 20px"></i></a></button>
+                                                        href="{{route('modifier_module_pub',$mod->module_id)}}"><i
+                                                            class='bx bx-edit'
+                                                            style="color: #0052D4 !important;font-size: 20px"></i></a></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
                                                 <button class="btn supprimer" data-toggle="modal"
@@ -764,13 +901,12 @@
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-<script type="text/javascript">
-    //separateur de milliers javascript
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script type="text/javascript">
+        //separateur de milliers javascript
     function numStr(a, b) {
         a = '' + a;
         b = b || ' ';
@@ -903,10 +1039,10 @@
         }
     });
 
-</script>
+    </script>
 
-<script type="text/javascript">
-    // CSRF Token
+    <script type="text/javascript">
+        // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $(document).ready(function() {
         $("#reference_search").autocomplete({
@@ -938,10 +1074,9 @@
             }
         });
     });
-
-</script>
-<script type="text/javascript">
-    // CSRF Token
+    </script>
+    <script type="text/javascript">
+        // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $(document).ready(function() {
         $("#categorie_search").autocomplete({
@@ -975,12 +1110,57 @@
     });
 
     $(document).ready(function(){
-    $("#myTab a:last").tab("show"); // show last tab
+        $("#myTab a:last").tab("show"); // show last tab
+    });
 
     function resetForm() {
         document.getElementById("frm_modif_module").reset();
     }
-});
 
-</script>
-@endsection
+    function competence() {
+        var html = '';
+        html += '<div class="d-flex" id="row_new">';
+        html +=     '<div class="col-7">';
+        html +=         '<div class="form-group">';
+        html +=             '<div class="form-row">';
+        html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control label_placeholder" required>';
+        html +=                 '<label for="titre_competence" class="form-control-placeholder">Compétences';
+        html +=                 '</label>';
+        html +=             '</div>';
+        html +=         '</div>';
+        html +=     '</div>';
+
+        html +=     '<div class="col-4">';
+        html +=         '<div class="form-group ms-1">';
+        html +=             '<div class="form-row">';
+        html +=                 '<input type="number" name="objectif[]" id="objectif" min="1" max="10" class="form-control label_placeholder" required>';
+        html +=                 '<label for="objectif" class="form-control-placeholder">Notes';
+        html +=                 '</label>';
+        html +=             '</div>';
+        html +=         '</div>';
+        html +=     '</div>';
+
+        html +=     '<div class="col-1">';
+        html +=         '<div class="mt-3">';
+        html +=             '<div class="form-row">';
+        html +=                 '<button id="removeRow" class="form-control btn" type="button">';
+        html +=                     '<i class="bx bx-minus" style="font-size: 20px">';
+        html +=                     '</i>';
+        html +=                 '</button>';
+        html +=             '</div>';
+        html +=         '</div>';
+        html +=     '</div>';
+        html += '</div>';
+
+        $('#newRow').append(html);
+    }
+
+    // remove row
+    $(document).on('click', '#removeRow', function() {
+        $(this).closest('#row_new').remove();
+    });
+
+
+
+    </script>
+    @endsection

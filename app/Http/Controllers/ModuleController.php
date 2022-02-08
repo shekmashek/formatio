@@ -67,7 +67,7 @@ class ModuleController extends Controller
             }else{
                 return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies'));
             }
-        
+
         }
         if (Gate::allows('isSuperAdmin')) {
             $infos = DB::select('select * from moduleformation');
@@ -197,8 +197,10 @@ class ModuleController extends Controller
     {
         $id = $request->Id;
         $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        $programme = DB::select('select * from v_cours_programmes where module_id = ?',[$id]);
+        dd($programme);
         // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
-        return response()->json($module_en_cours);
+        return response()->json($module_en_cours,$programme);
     }
 
     public function modifier_mod(Request $request)
@@ -341,7 +343,11 @@ class ModuleController extends Controller
     public function module_publier(Request $request){
         $id = $request->id;
         $statut = 2;
-        $changer_status = DB::update('update modules set status=? where id= ?',[$statut,$id]);
+        $competence = $request->all();
+        for($i = 0; $i < count($competence['titre_competence']); $i++){
+            $prog = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['objectif'][$i],$id]);
+        }
+        $changer_status = DB::update('update modules set status = ? where id = ?',[$statut,$id]);
         return back();
     }
 }
