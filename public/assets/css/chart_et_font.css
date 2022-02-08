@@ -2289,7 +2289,7 @@ Détails Formation
 .new_btn_programme .non_pub::before,
 .new_btn_programme .publiees::before{
   content:'';
-  border-top: 3.5rem solid white; /*couleur du fond derrière le bouton*/
+  border-top: 3.5rem solid rgba(247, 247, 247); /*couleur du fond derrière le bouton*/
   border-right: 2rem solid transparent;
   position: absolute;
   left:0;

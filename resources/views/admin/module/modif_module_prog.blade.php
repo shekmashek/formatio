@@ -505,7 +505,39 @@
                                     </div>
                                     <div class="form-group mb-5 apres_preview" id="septieme_vue">
 
-                                        <div class="form-row d-flex">
+                                        <div id="newProg"></div>
+                                        <br>
+                                        <div class="row detail__formation__item__left__accordion">
+                                            <span role="button" class="accordion accordion_prog"><input type="text"
+                                                    class="form-control" name="titre_prog[]"
+                                                    placeholder="Titre de votre programme"><i id="addProg"
+                                                    class="bx bxs-plus-circle pt-3 ms-3 ps-2 plus_prog"
+                                                    style="font-size: 24px" role="button"
+                                                    title="ajouter un nouveau programme"></i></span>
+                                            <div class="panel" id="heading2">
+                                                <span class="d-flex input_cours"><i
+                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                                        class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                                        id="addCours0" class="bx bx-plus-circle pt-3 ms-3 ps-2"
+                                                        style="font-size: 24px; color: #801D68" role="button"
+                                                        title="ajouter un nouveau cours"></i></span>
+                                                <span class="d-flex input_cours" id="headingcours"><i
+                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                                        class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                                        id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2"
+                                                        style="font-size: 24px; color: #801D68" role="button"
+                                                        title="ajouter un nouveau cours"></i></span>
+                                                <span class="d-flex input_cours" id="headingcours"><i
+                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                                        class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                                        id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2"
+                                                        style="font-size: 24px; color: #801D68" role="button"
+                                                        title="ajouter un nouveau cours"></i></span>
+                                                <span id="newCours0"></span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        {{-- <div class="form-row d-flex">
                                             <div class="col me-1">
                                                 <div class="form-group" id="premier_">
                                                     <div class="acf-field acf-field-text acf-field-miin is-required">
@@ -544,7 +576,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col text-center">
                                             <p class="mt-3" style="font-size: 16px;"><button type="button"
                                                     class="new_list_nouvelle px-5" onclick="retour_prestation();"><a
@@ -1522,6 +1554,87 @@
     function retour_prestation(){
         changer_prestation();
     }
+
+    $(document).on('click','#addCour0', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours0').append(html);
+    });
+
+    $(document).on('click','#addCour1', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+
+        $('#newCours1').append(html);
+    });
+
+    // remove row2
+    $(document).on('click', '#removeCours', function() {
+        $(this).closest('#headingcours').remove();
+    });
+    var i = 0;
+
+    $(document).on('click','#addProg', function() {
+
+        var html = '';
+        html += '<div class="row detail__formation__item__left__accordion" id="heading1">';
+
+        html += '<span role="button" class="accordion accordion_prog active">';
+        html += '<input type="text" class="form-control" name="titre_prog[]" placeholder="Titre de votre programme">';
+        html += '<i id="removeProg" class="bx bxs-minus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button" title="ajouter un nouveau programme">';
+        html += '</i>';
+        html += '</span>';
+
+        html += '<div class="panel">';
+        html += '<span class="d-flex input_cours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="addCours'+i+'" class="bx bx-plus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
+        html += '<span id="newCours'+i+'">';
+        html += '</span>';
+        html += '</div>';
+
+        html += '</div>';
+
+        $('#newProg').append(html);
+        i = i+1;
+
+    });
+
+    // remove row1
+    $(document).on('click', '#removeProg', function() {
+        $(this).closest('#heading1').remove();
+    });
 
 
 

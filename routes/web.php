@@ -228,7 +228,7 @@ Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('/destroy_module','ModuleController@destroy')->name('destroy_module');
 Route::post('update_module/{id}','ModuleController@update')->name('update_module');
-Route::get('publier_module/{id}','ModuleController@module_publier')->name('publier_module');
+Route::post('publier_module','ModuleController@module_publier')->name('publier_module');
 Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifier_module');
 Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->name('modifier_module_prog');
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
