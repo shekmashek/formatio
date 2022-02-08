@@ -118,7 +118,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="adresse" id="adresse" pattern="[A-Za-z0-9.&' -/]{1,255}" title="5 à 255 caractères" placeholder="Adresse Lot ou Rue*" required>
+                                                <input type="text" class="form-control" name="adresse" id="adresse" pattern="[A-Za-z0-9.&' -/]{1,255}" title="5 à 255 caractères" placeholder="Adresse*" required>
                                             </div>
                                             @error('adresse')
                                             <div class="col-sm-6">
@@ -230,12 +230,12 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="date_debut[]" id="date_debut" class="domaine" placeholder="Date de début du travail" onfocus="(this.type='date')" >
+                                                        <input type="text" class="form-control" name="date_debut[]" id="date_debut" class="domaine" placeholder="Date de début du travail" onfocus="(this.type='date')" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="date_fin[]" id="date_fin" class="domaine" placeholder="Date de fin du travail" onfocus="(this.type='date')" >
+                                                        <input type="text" class="form-control" name="date_fin[]" id="date_fin" class="domaine" placeholder="Date de fin du travail" onfocus="(this.type='date')" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 mt-3" align="center">
@@ -330,12 +330,12 @@
         html2 += '<div class="row">';
         html2 += '<div class="col-lg-4">';
         html2 += '<div class="form-group">';
-        html2 += '<input type="date" class="form-control" name="date_debut[]" id="date_debut" class="domaine" placeholder="Date de début du travail" >';
+        html2 += '<input type="date" class="form-control" name="date_debut[]" id="date_debut" class="domaine" placeholder="Date de début du travail" required>';
         html2 += '</div>';
         html2 += '</div>';
         html2 += '<div class="col-lg-4">';
         html2 += '<div class="form-group">';
-        html2 += '<input type="date" class="form-control" name="date_fin[]" id="date_fin" class="domaine" placeholder="Date de fin du travail" >';
+        html2 += '<input type="date" class="form-control" name="date_fin[]" id="date_fin" class="domaine" placeholder="Date de fin du travail" required>';
         html2 += '</div>';
         html2 += '</div>';
         html2 += '<div class="col-lg-4 mt-3" align="center">';

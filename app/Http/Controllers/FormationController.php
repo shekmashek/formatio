@@ -21,7 +21,7 @@ class FormationController extends Controller
         $id_user = Auth::user()->id;
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
-            $formation = formation::with('Domaine')->where('cfp_id', $cfp_id)->orderBy('domaine_id')->get();
+            $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
             return view('admin.formation.formation', compact('formation'));
         }
         if (Gate::allows('isSuperAdmin')) {

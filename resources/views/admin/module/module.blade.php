@@ -276,7 +276,7 @@
                                                 <div class="detail__formation__result__item2">
                                                     {{-- <div class="text-center" id="imgDiv"><img src='{{asset("images/CFP/".$mod_en_cours[0]->logo)}}' alt="logo" id="logos" class="img-fluid" style="width: 200px; height: 100px;">
                                                     </div> --}}
-                                                    <div class="text-center" id="imgDiv"><img src='{{asset("images/CFP/".$cfp->logo)}}' alt="logo" id="logos" class="img-fluid" style="width: 200px; height: 100px;">
+                                                    <div class="text-center" id="imgDiv"><img src='/dynamic-image/{{$cfp->logo}}' alt="logo" id="logos" class="img-fluid" style="width: 200px; height: 100px;">
                                                     </div>
                                                 </div>
                                             </div>
