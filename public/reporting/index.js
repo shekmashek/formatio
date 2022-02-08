@@ -1,3 +1,62 @@
+function plusieurs(){
+  document.getElementById('toute_personne').style.display = "block";
+  document.getElementById('seul_personne').style.display = "none";
+  var classe = document.getElementById('btn_plusieurs').classList;
+  if(classe == "titre_nombre_personne"){
+    classe.add('titre_nombre_personne_active');
+    classe.remove('titre_nombre_personne');
+  }else if (classe == "titre_nombre_personne_active"){
+
+  }
+  document.getElementById('unique').classList = "titre_nombre_personne";
+}
+function unique(){
+  document.getElementById('toute_personne').style.display = "none";
+  document.getElementById('seul_personne').style.display = "block";
+  var classe1 = document.getElementById('unique').classList;
+  if(classe1 == "titre_nombre_personne"){
+    classe1.add('titre_nombre_personne_active');
+    classe1.remove('titre_nombre_personne');
+  }else if (classe1 == "titre_nombre_personne_active"){
+
+  }
+   document.getElementById('btn_plusieurs').classList = "titre_nombre_personne";
+}
+
+function personne(){
+  document.getElementById('personne_hover').style.backgroundColor = "white";
+}
+function fonction(){
+  document.getElementById('fonction_hover').style.backgroundColor = "white";
+}
+function domaine(){
+  document.getElementById('domaine_hover').style.backgroundColor = "white";
+}
+function date_hover(){
+  document.getElementById('date_hover').style.backgroundColor = "white";
+}
+function qualite(){
+  document.getElementById('qualite_hover').style.backgroundColor = "white";
+}
+function niveau(){
+  document.getElementById('niveau_hover').style.backgroundColor = "white";
+}
+function status(){
+  document.getElementById('status_hover').style.backgroundColor = "white";
+}
+function modalite(){
+  document.getElementById('modalite_hover').style.backgroundColor = "white";
+}
+function quit(){
+  document.getElementById('personne_hover').style.backgroundColor ="";
+  document.getElementById('fonction_hover').style.backgroundColor = "";
+  document.getElementById('domaine_hover').style.backgroundColor = "";
+  document.getElementById('date_hover').style.backgroundColor = "";
+  document.getElementById('qualite_hover').style.backgroundColor = "";
+  document.getElementById('niveau_hover').style.backgroundColor = "";
+  document.getElementById('status_hover').style.backgroundColor = "";
+  document.getElementById('modalite_hover').style.backgroundColor = "";
+}
 
   function annee1(){
     var doc = document.getElementById('annee_1').classList;
