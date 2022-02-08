@@ -1,10 +1,26 @@
 function plusieurs(){
   document.getElementById('toute_personne').style.display = "block";
   document.getElementById('seul_personne').style.display = "none";
+  var classe = document.getElementById('btn_plusieurs').classList;
+  if(classe == "titre_nombre_personne"){
+    classe.add('titre_nombre_personne_active');
+    classe.remove('titre_nombre_personne');
+  }else if (classe == "titre_nombre_personne_active"){
+
+  }
+  document.getElementById('unique').classList = "titre_nombre_personne";
 }
 function unique(){
   document.getElementById('toute_personne').style.display = "none";
   document.getElementById('seul_personne').style.display = "block";
+  var classe1 = document.getElementById('unique').classList;
+  if(classe1 == "titre_nombre_personne"){
+    classe1.add('titre_nombre_personne_active');
+    classe1.remove('titre_nombre_personne');
+  }else if (classe1 == "titre_nombre_personne_active"){
+
+  }
+   document.getElementById('btn_plusieurs').classList = "titre_nombre_personne";
 }
 
 function personne(){

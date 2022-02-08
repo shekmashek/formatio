@@ -125,6 +125,12 @@ input[type="date"]{
     margin: 0 2px;
     padding: .5rem 1rem;
     align-items: center;
+    transition: all 0.4s ease-in-out;
+}
+.titre_nombre_personne >i{
+    color: grey;
+    font-size: 1.2rem;
+    font-weight: bold !important;
 }
 .titre_nombre_personne:hover{
     background-color: rgb(209, 207, 207);
@@ -137,6 +143,12 @@ input[type="date"]{
     margin: 0 2px;
     padding: .5rem 1rem;
     align-items: center;
+    transition: all 0.4s ease-in-out;
+}
+.titre_nombre_personne_active >i{
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold !important;
 }
 .aseho{
     display: none;
@@ -162,7 +174,6 @@ input[type="date"]{
     display: block;
   }
   /* menu dropdown on hver */
-
 
 
 

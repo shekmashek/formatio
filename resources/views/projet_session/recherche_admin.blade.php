@@ -5,10 +5,10 @@
 
 <div class="d-flex">
   <button id="btn_plusieurs" class="titre_nombre_personne_active" onclick="plusieurs()">
-    Rechercher plusieurs personnes
+    <i class="fal fa-users"></i>&nbsp; &nbsp; Rechercher plusieurs personnes
   </button>
-  <button class="titre_nombre_personne" onclick="unique()">
-    Rechercher une seule personne
+  <button id="unique" class="titre_nombre_personne" onclick="unique()">
+    <i class="fas fa-user"></i>&nbsp; &nbsp; Rechercher une seule personne
   </button>
 </div>
 
@@ -266,7 +266,19 @@
   </div>
 </div>
   <div id="seul_personne" style="display: none;">
-    ok
+    <div class="d-flex justify-content-between">
+      <div class="d-flex">
+        <div class="d-flex m-3">
+          <p> Matricule :  </p> <input type="text" class="input-recherche p-0 m-0">
+        </div>
+        <div class="d-flex m-3">
+          <p> Nom ou Prénom :  </p> <input type="text" class="input-recherche p-0 m-0">
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-success">Appliquer</button>
+      </div>
+    </div>
   </div>
 
 
