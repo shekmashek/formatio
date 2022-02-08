@@ -98,4 +98,122 @@ class getImageModel extends Model
         //enregistrer les factures de session dans le dossier projet correspondant
         Storage::cloud()->put($dir4.'/'.$namefile, $contentfile);
     }
+    //creation dossier
+    public function create_folder($folder_name){
+        $dir = '/';
+        $recursive = false; // Get subdirectories also?
+        $contents = collect(Storage::cloud()->listContents($dir, $recursive));
+
+        $existe = $contents->where('type', '=', 'dir')
+            ->where('filename', '=', $folder_name)
+            ->first(); // There could be duplicate directory names!
+
+        if ( ! $existe) {
+            Storage::cloud()->makeDirectory($folder_name);
+        }
+
+    }
+    //recuperation dossier parent
+    public function get_folder($folder_name){
+        $dir = '/';
+        $recursive = false; // Get subdirectories also?
+        $contents = collect(Storage::cloud()->listContents($dir, $recursive));
+        $existe = $contents->where('type', '=', 'dir')
+            ->where('filename', '=', $folder_name)
+            ->first();
+        return $existe['name'];
+    }
+     //recuperation dossier parent
+     public function get_sub_folder($folder_parent){
+        // Get root directory contents...
+        $contents = collect(Storage::cloud()->listContents('/', false));
+
+        // Find the folder you are looking for...
+        $dir = $contents->where('type', '=', 'dir')
+            ->where('filename', '=', $folder_parent)
+            ->first(); // There could be duplicate directory names!
+
+        // Get the files inside the folder...
+        $files = collect(Storage::cloud()->listContents($dir['path'], false))
+            ->where('type', '=', 'dir');
+        return $files;
+    }
+
+    //creer sous dossier
+    public function create_sub_folder($folder_parent,$sub_folder){
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == $folder_parent)
+                 $root = $value['path'];
+        }
+
+        $dir = '/'.$root;
+
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        //on teste si le sous dossier exiiste déjà
+        $existe = $sub_directory->where('type', '=', 'dir')
+        ->where('filename', '=', $sub_folder)
+        ->first();
+        if ($existe == null) {
+            Storage::cloud()->makeDirectory($dir.'/'.$sub_folder);
+        }
+    }
+    //enregistrer document
+    public function store_document($folder_parent,$sub_folder,$document_name,$documents){
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+         //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == $folder_parent)
+                 $root = $value['path'];
+        }
+        $dir = '/'.$root;
+
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        foreach ($sub_directory as $key => $value) {
+            if($value['name'] == $sub_folder)
+                 $root1 = $value['path'];
+        }
+        $dir2 = '/'.$root1;
+        Storage::cloud()->put($dir2.'/'.$document_name, $documents);
+    }
+
+    //liste des fichiers dans le sous-dossier
+    public function file_list($folder_parent,$sub_folder){
+         //liste des contenues dans drive
+         $contents = collect(Storage::cloud()->listContents('/', false));
+         //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == $folder_parent)
+                 $root = $value['path'];
+        }
+        $dir = '/'.$root;
+
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        foreach ($sub_directory as $key => $value) {
+            if($value['name'] == $sub_folder)
+                 $root1 = $value['path'];
+        }
+        $dir2 = '/'.$root1;
+
+                // Get the files inside the folder...
+        $files = collect(Storage::cloud()->listContents($dir2, false))
+            ->where('type', '=', 'file');
+
+        return $files->mapWithKeys(function($file) {
+            $filename = $file['filename'].'.'.$file['extension'];
+            $path = $file['path'];
+
+            // Use the path to download each file via a generated link..
+            // Storage::cloud()->get($file['path']);
+
+            return [$filename => $path];
+        });
+
+    }
+
 }

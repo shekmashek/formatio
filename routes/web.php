@@ -668,3 +668,8 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 // })->name('condition_generale_de_vente');
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
 Route::get('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
+
+//-------------route document----------------///
+Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
+Route::post('nouveau_dossier','DocumentController@store')->name('nouveau_dossier');
+Route::get('liste_fichier/{id}','DocumentController@show')->name('liste_fichier');

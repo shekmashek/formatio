@@ -570,6 +570,12 @@
                     <li class="my-2">
                         <a href="{{route('recherche_admin')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Reporting</span></a>
                     </li>
+                    @can('isCFP')
+                        <li class="my-2">
+                            <a href="{{route('gestion_documentaire')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Document</span></a>
+                        </li>
+                    @endcan
+
                     </ul>
                 </div>
                 <div>
