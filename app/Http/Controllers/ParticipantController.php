@@ -120,7 +120,7 @@ class ParticipantController extends Controller
     public function store(Request $request)
     {
         //condition de validation de formulaire
-        $request->validate(
+       $request->validate(
             [
                 'matricule' => ["required"],
                 'nom' => ["required"],
@@ -206,7 +206,7 @@ class ParticipantController extends Controller
             $participant->telephone_stagiaire = $request->phone;
 
             $date = date('d-m-Y');
-            $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.' . $request->image->extension());
+             $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.' . $request->image->extension());
 
             $str = 'images/stagiaires';
 
@@ -216,7 +216,7 @@ class ParticipantController extends Controller
             $stock_stg = new getImageModel();
             $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
 
-            $participant->photos = $nom_image;
+          $participant->photos = $nom_image;
 
             //enregistrer les emails , name et mot de passe dans user
             $user = new User();
@@ -236,7 +236,7 @@ class ParticipantController extends Controller
             $participant->niveau_etude = $request->niveau;
             $participant->entreprise_id = $entreprise_id;
             $participant->save();
-            // $request->image->move(public_path($str), $nom_image);
+            $request->image->move(public_path($str), $nom_image);
 
             return redirect()->route('liste_participant');
         }
@@ -262,7 +262,7 @@ class ParticipantController extends Controller
             $stagiaire = stagiaire::findOrFail($id);
             if(Gate::allows('isReferent') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
             {
-                return view('admin.participant.updates', compact('stagiaire'));
+                return view('admin.participant.update', compact('stagiaire'));
             }
             else{
             return view('admin.participant.update', compact('stagiaire'));
@@ -276,7 +276,88 @@ class ParticipantController extends Controller
             return response()->json($participant);
         }
     }
+    public function edit_nom($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_nom', compact('stagiaire'));
 
+    }
+    public function edit_naissance($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_naissance', compact('stagiaire'));
+
+    }
+    public function edit_genre($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_genre', compact('stagiaire'));
+
+    }
+    public function edit_mail($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_mail', compact('stagiaire'));
+
+    }
+    public function edit_phone($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_phone', compact('stagiaire'));
+    }
+    public function edit_cin($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_cin', compact('stagiaire'));
+    }
+    public function edit_adresse($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_adresse', compact('stagiaire'));
+    }
+    public function edit_fonction($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_fonction', compact('stagiaire'));
+    }
+    public function edit_matricule($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_matricule', compact('stagiaire'));
+    }
+    public function edit_entreprise($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_entreprise', compact('stagiaire'));
+    }
+    public function edit_niveau($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_niveau', compact('stagiaire'));
+    }
+    public function edit_departement($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_departement', compact('stagiaire'));
+    }
+    public function edit_branche($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $stagiaire = stagiaire::findOrFail($id);
+        return view('admin.participant.edit_branche', compact('stagiaire'));
+    }
     public function update(Request $request)
     {
         $participant = new stagiaire();
@@ -633,6 +714,7 @@ class ParticipantController extends Controller
             'quartier'=>$request->quartier,
             'code_postal'=>$request->code_postal,
             'lot'=>$request->lot,
+            'region'=>$request->region,
 
         ]);
         }
@@ -654,6 +736,8 @@ class ParticipantController extends Controller
             'quartier'=>$request->quartier,
             'code_postal'=>$request->code_postal,
             'lot'=>$request->lot,
+            'region'=>$request->region,
+
 
         ]);
     }

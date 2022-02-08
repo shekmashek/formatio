@@ -122,15 +122,7 @@
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
                                           @enderror
-                                    <div class="form-group">
-                                        <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse">
-                                        @error('adresse')
-                                        <div class="col-sm-6">
-                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                        </div>
-                                        @enderror
-                                    </div><br>
+                                    
                                     <div class="form-group">
                                         <label for="genre">Genre</label>
                                         <select name="genre" class="form-control" id="genre">
@@ -215,9 +207,10 @@
                                 <label for="etp">Departement</label><br>
                                 <select name="liste_dep" class="form-control" id="liste_dep">
                                     <option value="">Choisissez un département...</option>
-                                    @for ($i = 0; $i < count($liste_dep); $i++)
-                                        <option value="{{$liste_dep[$i]->id}}">{{$liste_dep[$i]->nom_departement}}</option>
-                                    @endfor
+                                    @foreach ($liste_dep as $liste)
+                                    <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
+                                    @endforeach
+
                                 </select>
                             </div><br>
                             @endcan
@@ -226,9 +219,9 @@
                                 <label for="etp">Departement</label><br>
                                 <select name="liste_dep" class="form-control" id="liste_dep">
                                     <option value="">Choisissez un département...</option>
-                                    @for ($i = 0; $i < count($liste_dep); $i++)
-                                        <option value="{{$liste_dep[$i]->id}}">{{$liste_dep[$i]->nom_departement}}</option>
-                                    @endfor
+                                    @foreach ($liste_dep as $liste)
+                                    <option value="{{$liste->departement->id}}">{{$liste->departement->nom_departement}}</option>
+                                    @endforeach
                                 </select>
                             </div><br>
                             @endcan
@@ -255,7 +248,6 @@
                                     @enderror
                                 </div><br>
 
-
                                     <div class="form-group">
                                         <label for="lieu">Lieu de travail</label>
                                         <input type="text" class="form-control" id="lieu" name="lieu"
@@ -266,53 +258,6 @@
                                             </div>
                                         @enderror
                                     </div><br>
-                                    {{-- <div class="form-group">
-                                {{-- <div class="form-group">
-                                        <label for="CIN">CIN</label>
-                                        <input type="text" class="form-control" id="cin" name="cin" placeholder="Numero CIN">
-                                        @error('cin')
-                                          <div class ="col-sm-6">
-                                              <span style = "color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                        </div><br>
-                        <div class="form-group">
-                            <label for="naissance">Date de naissance</label>
-                            <input type="date" class="form-control" name="naissance">
-                        </div><br>
-                        <div class="form-group">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse">
-                            @error('adresse')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                        </div><br> --}}
-                        {{-- <div class="form-group">
-                            <label for="lieu">Lieu de travail</label>
-                            <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu de travail">
-                            @error('lieu')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                        </div><br> --}}
-                        {{-- <div class="form-group">
-                                        <label for="niveau">Niveau d'étude</label><br>
-                                        <select name="niveau" class="form-control" id="niveau">
-                                            <option value="">Choisissez un niveau d'étude...</option>
-                                            <option value = "Doctorat">Doctorat</option>
-                                            <option value = "Ingénieur">Ingénieur</option>
-                                            <option value = "Bacc+4">Bacc+4</option>
-                                            <option value = "Licence">Licence</option>
-                                            <option value = "DTS">DTS</option>
-                                            <option value = "Bacc+1">Bacc+1</option>
-                                            <option value = "BACC">BACC</option>
-                                            <option value = "BEPC">BEPC</option>
-                                            <option value = "CEPE">CEPE</option>
-                                        </select>
-                                      </div><br> --}}
                         <div class="form-group">
                             <label for="sary">Photo</label>
                             <input type="file" class="form-control-file" id="photo" name="image">

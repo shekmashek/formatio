@@ -923,7 +923,7 @@ ul .ui-menu {
 }
 
 .formation-service {
-  background-color: #f9f9ff;
+  background-color: white;
   padding: 30px;
   margin-bottom: 30px;
   border-radius: 10px;
@@ -934,10 +934,10 @@ ul .ui-menu {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.formation-service:hover {
+/* .formation-service:hover {
   box-shadow: 0px 20px 30px 0px rgba(35, 94, 231, 0.2);
   cursor: pointer;
-}
+} */
 
 .formation-service:hover h4 {
   color: red;
