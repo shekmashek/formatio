@@ -123,6 +123,7 @@ class SessionController extends Controller
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
         }
         // public
+        $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         // ---apprenants
         $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
         // ---ressources
@@ -130,7 +131,11 @@ class SessionController extends Controller
         // end public
         $presence_detail = DB::select("select * from v_detail_presence where groupe_id = ?", [$projet[0]->groupe_id]);
 
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail'));
+        // ----evaluation
+        $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
+        $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
+
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres'));
     }
 
     public function getFormateur(){
@@ -253,5 +258,31 @@ class SessionController extends Controller
         }
         $presence_detail = DB::select("select * from v_detail_presence where detail_id = ? order by stagiaire_id asc", [$detail_id]);
         return response()->json($presence_detail);
+    }
+
+    public function insert_evaluation_stagiaire(Request $request){
+        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$request->groupe]);
+        $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$request->module]);
+        foreach($stagiaire as $stg){
+            foreach($competences as $comp){
+                $stag = $request['stagiaire'][$stg->stagiaire_id];
+                $note = $request['note'][$stg->stagiaire_id][$comp->id];
+                DB::insert('insert into evaluation_stagiaires(groupe_id,competence_id,stagiaire_id,note_avant) values (?, ?, ?, ?)', [$request->groupe,$comp->id,$stag,$note]);
+            }
+        }
+        return back();
+    }
+
+    public function insert_evaluation_stagiaire_apres(Request $request){
+        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$request->groupe]);
+        $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$request->module]);
+        foreach($stagiaire as $stg){
+            foreach($competences as $comp){
+                $stag = $request['stagiaire'][$stg->stagiaire_id];
+                $note = $request['note'][$stg->stagiaire_id][$comp->id];
+                DB::update('update evaluation_stagiaires set note_apres = ? where stagiaire_id = ? and groupe_id = ? and competence_id = ?',[$note,$stag,$request->groupe,$comp->id]);
+            }
+        }
+        return back();
     }
 }

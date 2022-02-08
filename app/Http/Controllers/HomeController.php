@@ -30,11 +30,11 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->collaboration = new Collaboration();
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (Auth::user()->exists == false) return view('auth.connexion');
-            return $next($request);
-        });
+        // $this->middleware('auth');
+        // $this->middleware(function ($request, $next) {
+        //     if (Auth::user()->exists == false) return view('auth.connexion');
+        //     return $next($request);
+        // });
     }
 
 
@@ -183,6 +183,7 @@ class HomeController extends Controller
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?", [$user_id])[0]->cfp_id;
+            $projet = $fonct->findWhere("v_projetentreprise", ["cfp_id"], [$cfp_id]);
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
 
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
@@ -193,7 +194,7 @@ class HomeController extends Controller
             $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
 
-            return view('projet_session.index2', compact('data', 'entreprise', 'totale_invitation', 'formation', 'module'));
+            return view('projet_session.index2', compact('projet','data', 'entreprise', 'totale_invitation', 'formation', 'module'));
         }
     }
 

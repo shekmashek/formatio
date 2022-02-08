@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-<div class="shadow p-3 mb-5 bg-body rounded">
+<div class="shadow p-3 mb-5 bg-body rounded h-100">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
             <h5>Session </h5>
@@ -127,6 +127,12 @@
                         </button>
                     </div>
                     <div>
+                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
+                            <p class="m-0 p-0">EVALUATION DES STAGIAIRES</p>
+                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                        </button>
+                    </div>
+                    <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'rapport')" style="width: 100%">
                             <p class="m-0 p-0">RAPPORT</p>
                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
@@ -175,6 +181,9 @@
                       </div>
                       <div id="emargement" class="tabcontent">
                         @include('projet_session.emargement')
+                      </div>
+                      <div id="evaluation" class="tabcontent">
+                        @include('projet_session.evaluation_stagiaires')
                       </div>
                       <div id="rapport" class="tabcontent">
                         Rapport de formation

@@ -43,7 +43,7 @@
     <section class="section_recherche m-0 p-2">
         <div class="d-flex py-1 align-items-center align-content-center">
             <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
-            <input type="text" id="matricule_search" data-id="{{ $projet[0]->entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control col-3">
+            <input type="text" id="matricule_search" data-id="{{ $projet[0]->entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control w-10">
             <input type="hidden" id="id_entreprise" value="{{ $projet[0]->entreprise_id }}">
             <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
                 <i class="fa fa-search"></i>
