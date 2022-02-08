@@ -181,8 +181,8 @@ public function index()
         );
 
         for($i = 0; $i < count($request['lieu']); $i++){
-            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)',[$request['lieu'][$i],$request['debut'][$i],$request['fin'][$i],$request['date'][$i],$request['formateur'][$i],$request->groupe,$request->projet,$cfp_id]);           
-           
+            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)',[$request['lieu'][$i],$request['debut'][$i],$request['fin'][$i],$request['date'][$i],$request['formateur'][$i],$request->groupe,$request->projet,$cfp_id]);
+
         }
         return back();
     }

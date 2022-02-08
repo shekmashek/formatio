@@ -54,7 +54,9 @@ class GroupeController extends Controller
     public function module_formation(Request $rq)
     {
         $fonct = new FonctionGenerique();
-        $module = $fonct->findWhere("modules", ["formation_id"], [$rq->id]);
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $module = $fonct->findWhere("modules", ["formation_id","cfp_id"], [$rq->id,$cfp_id]);
 
         return response()->json($module);
     }
