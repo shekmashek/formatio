@@ -136,7 +136,6 @@ class getImageModel extends Model
         // Get the files inside the folder...
         $files = collect(Storage::cloud()->listContents($dir['path'], false))
             ->where('type', '=', 'dir');
-
         return $files;
     }
 
@@ -180,6 +179,41 @@ class getImageModel extends Model
         }
         $dir2 = '/'.$root1;
         Storage::cloud()->put($dir2.'/'.$document_name, $documents);
+    }
+
+    //liste des fichiers dans le sous-dossier
+    public function file_list($folder_parent,$sub_folder){
+         //liste des contenues dans drive
+         $contents = collect(Storage::cloud()->listContents('/', false));
+         //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == $folder_parent)
+                 $root = $value['path'];
+        }
+        $dir = '/'.$root;
+
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        foreach ($sub_directory as $key => $value) {
+            if($value['name'] == $sub_folder)
+                 $root1 = $value['path'];
+        }
+        $dir2 = '/'.$root1;
+
+                // Get the files inside the folder...
+        $files = collect(Storage::cloud()->listContents($dir2, false))
+            ->where('type', '=', 'file');
+
+        return $files->mapWithKeys(function($file) {
+            $filename = $file['filename'].'.'.$file['extension'];
+            $path = $file['path'];
+
+            // Use the path to download each file via a generated link..
+            // Storage::cloud()->get($file['path']);
+
+            return [$filename => $path];
+        });
+
     }
 
 }

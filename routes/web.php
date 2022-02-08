@@ -671,3 +671,5 @@ Route::get('insert_presence_detail','SessionController@insert_presence')->name('
 
 //-------------route document----------------///
 Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
+Route::post('nouveau_dossier','DocumentController@store')->name('nouveau_dossier');
+Route::get('liste_fichier/{id}','DocumentController@show')->name('liste_fichier');

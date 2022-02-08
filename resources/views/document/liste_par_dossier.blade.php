@@ -28,14 +28,14 @@
     </div>
     <div class="row liste">
         <div class="col-md-2">
-            <i class="fa fa-folder"></i>&nbsp;&nbsp; <a href="{{route('gestion_documentaire')}}"> {{$get_nom_cfp}} </a>
+            <i class="fa fa-folder"></i>&nbsp;&nbsp;<a href="{{route('gestion_documentaire')}}">  {{$get_nom_cfp}} </a>
         </div>
         <div class="col-md-1"><span class="vertical-line"></span></div>
-        <div class="col-md-9">
+        {{-- <div class="col-md-9">
             @for($i = 0; $i < $nb_sub_folder; $i++)
                <span class = "border border-dark sous_dossier"><i class="fa fa-folder"></i>&nbsp; <a href="{{route('liste_fichier',$get_sub_folder[$i]['name'])}}"> {{$get_sub_folder[$i]['name']}} </a> </span> &nbsp;&nbsp;
             @endfor
-        </div>
+        </div> --}}
     </div>
 </div>
 <!-- Modal -->

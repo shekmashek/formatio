@@ -21,7 +21,8 @@ class DocumentController extends Controller
         $nom_cfp = $rqt[0]->nom;
         $get_nom_cfp = $document->get_folder($nom_cfp);
         $get_sub_folder =  $document->get_sub_folder($nom_cfp);
-        return view('document.gestion_document',compact('get_nom_cfp','get_sub_folder'));
+        $nb_sub_folder = count($get_sub_folder);
+        return view('document.gestion_document',compact('get_nom_cfp','get_sub_folder','nb_sub_folder'));
         // return $document->get_folder($nom_cfp);
     }
 
@@ -32,12 +33,8 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        $document = new getImageModel();
-        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-        $nom_cfp = $rqt[0]->nom;
-        $document->create_folder($nom_cfp);
-        $document->create_sub_folder($nom_cfp,'test');
-        $document->store_document($nom_cfp,'test','test','test');
+
+        // $document->store_document($nom_cfp,'test','test','test');
     }
 
     /**
@@ -48,7 +45,12 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $document = new getImageModel();
+        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
+        $nom_cfp = $rqt[0]->nom;
+        $document->create_folder($nom_cfp);
+        $document->create_sub_folder($nom_cfp,$request->nom_sous_dossier);
+        return redirect()->route('gestion_documentaire');
     }
 
     /**
@@ -59,7 +61,13 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
-        //
+        $document = new getImageModel();
+        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
+        $nom_cfp = $rqt[0]->nom;
+        $get_nom_cfp = $document->get_folder($nom_cfp);
+        $get_sub_folder =  $document->get_sub_folder($nom_cfp);
+        $nb_sub_folder = count($get_sub_folder);
+        return view('document.liste_par_dossier',compact('get_nom_cfp','get_sub_folder','nb_sub_folder'));
     }
 
     /**
