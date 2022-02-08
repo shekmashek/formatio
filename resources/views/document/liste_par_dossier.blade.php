@@ -20,10 +20,10 @@
         <div class="col-md-4">
             <strong>Gestion de vos documents</strong>
         </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <span class="border border-dark sous_dossier" style = "background-color: #801D68;color:white"><i class="fa fa-plus"></i>&nbsp; <a data-toggle="modal" data-target="#creer_dossier"> Créer un nouveau dossier </a> </span>
-        </div><br><br>
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <input type="file" name="file_name">  <span class="border border-dark sous_dossier" style = "background-color: #801D68;color:white"><i class="fa fa-upload"></i>&nbsp; <a href="">Importer</a> </span>
+        </div><br><br><br>
         <hr>
     </div>
     <div class="row liste">
