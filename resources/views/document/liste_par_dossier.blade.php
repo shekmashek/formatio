@@ -22,7 +22,12 @@
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-6">
-            <input type="file" name="file_name">  <span class="border border-dark sous_dossier" style = "background-color: #801D68;color:white"><i class="fa fa-upload"></i>&nbsp; <a href="">Importer</a> </span>
+            <form action="{{route('importation_fichier')}}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="text" value="{{$id}}" name="sous_dossier" hidden>
+                <input type="file"  name="documents">
+                <button type="submit"><span class="border border-dark sous_dossier" style = "background-color: #801D68;color:white"><i class="fa fa-upload"></i>&nbsp; Importer </span> </button>
+            </form>
         </div><br><br><br>
         <hr>
     </div>
@@ -31,11 +36,11 @@
             <i class="fa fa-folder"></i>&nbsp;&nbsp;<a href="{{route('gestion_documentaire')}}">  {{$get_nom_cfp}} </a>
         </div>
         <div class="col-md-1"><span class="vertical-line"></span></div>
-        {{-- <div class="col-md-9">
-            @for($i = 0; $i < $nb_sub_folder; $i++)
-               <span class = "border border-dark sous_dossier"><i class="fa fa-folder"></i>&nbsp; <a href="{{route('liste_fichier',$get_sub_folder[$i]['name'])}}"> {{$get_sub_folder[$i]['name']}} </a> </span> &nbsp;&nbsp;
+        <div class="col-md-9">
+            @for($i = 0; $i < $nb_res; $i++)
+               <span class = "border border-dark sous_dossier"><i class="fa fa-folder"></i>&nbsp; <a href="#"> {{$res[$i]['filename']}} </a> </span> &nbsp;&nbsp;
             @endfor
-        </div> --}}
+        </div>
     </div>
 </div>
 <!-- Modal -->

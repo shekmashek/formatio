@@ -178,6 +178,7 @@ class getImageModel extends Model
                  $root1 = $value['path'];
         }
         $dir2 = '/'.$root1;
+
         Storage::cloud()->put($dir2.'/'.$document_name, $documents);
     }
 
@@ -203,16 +204,16 @@ class getImageModel extends Model
                 // Get the files inside the folder...
         $files = collect(Storage::cloud()->listContents($dir2, false))
             ->where('type', '=', 'file');
+        return $files;
+        // return $files->mapWithKeys(function($file) {
+        //     $filename = $file['filename'].'.'.$file['extension'];
+        //     $path = $file['path'];
 
-        return $files->mapWithKeys(function($file) {
-            $filename = $file['filename'].'.'.$file['extension'];
-            $path = $file['path'];
+        //     // Use the path to download each file via a generated link..
+        //     // Storage::cloud()->get($file['path']);
 
-            // Use the path to download each file via a generated link..
-            // Storage::cloud()->get($file['path']);
-
-            return [$filename => $path];
-        });
+        //     return [$filename => $path];
+        // });
 
     }
 
