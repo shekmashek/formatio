@@ -220,11 +220,15 @@ class ParticipantController extends Controller
 
             //enregistrer les emails , name et mot de passe dans user
             $user = new User();
-            $user->name = $request->nom;
+            $user->name = $request->nom. " " . $request->prenom;
             $user->email = $request->mail;
-            $ch1 = $request->nom;
-            $ch2 = substr($request->phone, 8, 2);
-            $user->password = Hash::make($ch1 . $ch2);
+
+            $user->cin = $request->cin;
+            $user->telephone = $request->phone;
+
+            $ch1 = '0000';
+            // $ch2 = substr($request->phone, 8, 2);
+            $user->password = Hash::make($ch1);
             $user->role_id = '3';
             $user->save();
             //get user id

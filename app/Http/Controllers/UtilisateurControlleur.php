@@ -74,6 +74,7 @@ class UtilisateurControlleur extends Controller
             $hashedPwd = Hash::make($password);
             $user->password = $hashedPwd;
             $user->role_id = $request->role_id;
+
         $user->save();
         return back();
     }
