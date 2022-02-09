@@ -107,16 +107,18 @@ class HomeController extends Controller
 
             // dd($user_id, $centre_fp, $top_10_par_client);
             return view('layouts.dashboard', compact('GChart', 'CA_actuel', 'CA_precedent'));
-        } else {
-            $totale_invitation = $this->collaboration->count_invitation();
-            return view('layouts.accueil_admin', compact('totale_invitation'));
         }
+        // else {
+        //     $totale_invitation = $this->collaboration->count_invitation();
+        //     return view('layouts.accueil_admin', compact('totale_invitation'));
+        // }
         if (Gate::allows('isReferent')) {
             $user_id = User::where('id', Auth::user()->id)->value('id');
 
             return view('layouts.dashboard_referent');
         } else {
-            return view('layouts.accueil_admin');
+            $totale_invitation = $this->collaboration->count_invitation();
+            return view('layouts.accueil_admin', compact('totale_invitation'));
         }
     }
 
