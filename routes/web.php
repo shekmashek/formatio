@@ -232,6 +232,7 @@ Route::post('publier_module','ModuleController@module_publier')->name('publier_m
 Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifier_module');
 Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->name('modifier_module_prog');
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
+Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
 
 // route recherche par référence
 Route::get('rechercheReference/{reference?}','ModuleController@rechercheReference')->name('rechercheReference');
@@ -309,7 +310,9 @@ Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_progra
 Route::post('/destroy_programme/{id}','ProgrammeController@destroy')->name('destroy_programme');
 Route::post('/update_programme/{id}','ProgrammeController@update')->name('update_programme/{id}');
 Route::post('insert_prog_cours','ProgrammeController@store')->name('insert_prog_cours');
+Route::post('update_prog_cours','ProgrammeController@update_pgc')->name('update_prog_cours');
 Route::get('/create_programme','ProgrammeController@create')->name('create_programme');
+Route::get('modif_programmes/{id}','ProgrammeController@ajout_programme')->name('modif_programmes');
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');

@@ -203,7 +203,7 @@ class FormationController extends Controller
             return view('referent.catalogue.detail_formation',compact('infos','cours','programmes','nb_avis','liste_avis','categorie','id'));
         }
         else return redirect()->route('liste_module');
-       }
+    }
     public function categorie_formations()
     {
 
