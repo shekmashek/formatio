@@ -671,3 +671,4 @@ Route::get('insert_presence_detail','SessionController@insert_presence')->name('
 
 Route::post('insert_evaluation_stagiaire','SessionController@insert_evaluation_stagiaire')->name('insert_evaluation_stagiaire');
 Route::post('insert_evaluation_stagiaire_apres','SessionController@insert_evaluation_stagiaire_apres')->name('insert_evaluation_stagiaire_apres');
+Route::get('competence_stagiaire','SessionController@get_competence_stagiaire')->name('competence_stagiaire');

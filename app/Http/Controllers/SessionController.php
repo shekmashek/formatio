@@ -19,6 +19,7 @@ use App\Models\FonctionGenerique;
 use App\responsable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use phpseclib3\Crypt\RC2;
 
 class SessionController extends Controller
 {
@@ -284,5 +285,10 @@ class SessionController extends Controller
             }
         }
         return back();
+    }
+
+    public function get_competence_stagiaire(Request $request){
+        $data = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
+        return response()->json($data);
     }
 }
