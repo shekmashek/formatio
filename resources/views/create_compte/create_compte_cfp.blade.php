@@ -222,6 +222,24 @@
 
 
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
+                                <label for="email_resp_cfp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" max=10 required name="tel_resp_cfp" class="form-control input_inscription" id="tel_resp_cfp" />
+                                <label for="tel_resp_cfp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="dte_resp_cfp" class="form-control-label" align="left">Date de Naissance<strong style="color:#ff0000;">*</strong></label>
@@ -240,27 +258,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
-                                <label for="email_resp_cfp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" max=10 required name="tel_resp_cfp" class="form-control input_inscription" id="tel_resp_cfp" />
-                                <label for="tel_resp_cfp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
-
-                            </div>
-                        </div>
-                    </div>
-
-
 
                     <input type="button" name="previous" class="previous action-button" value="Précendent" />
                     <input type="button" name="make_payment" class="next action-button" value="Suivant" />

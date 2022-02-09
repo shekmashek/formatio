@@ -22,7 +22,29 @@
 <script type="text/javascript">
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-    nif_etp
+    $(document).on('change', '#cin_resp_cfp', function() {
+        var nif = $(this).val();
+        $.ajax({
+            url: '{{route("verify_nif_cfp")}}'
+            , type: 'get'
+            , data: {
+                nif: nif
+            }
+            , success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("cin_resp_cfp_err").innerHTML = "CIN appartient déjà par un autre utilisateur";
+                } else {
+                    document.getElementById("cin_resp_cfp_err").innerHTML = "";
+                }
+
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
 
     $(document).on('change', '#nif_cfp', function() {
         var nif = $(this).val();

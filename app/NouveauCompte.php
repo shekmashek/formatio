@@ -83,13 +83,13 @@ class NouveauCompte extends Model
     }
     public function verify_NIF_cfp($nif)
     {
-        $dta = DB::select('select * from cfps WHERE UPPER(nif)=UPPER(?) OR email=?', [$nif]);
+        $dta = DB::select('select * from cfps WHERE UPPER(nif)=UPPER(?)', [$nif]);
         return $dta;
     }
 
     public function verify_NIF_etp($nif)
     {
-        $dta = DB::select('select * from entreprises WHERE UPPER(nif)=UPPER(?) OR email=?', [$nif]);
+        $dta = DB::select('select * from entreprises WHERE UPPER(nif)=UPPER(?)', [$nif]);
         return $dta;
     }
     public function verify_etp($nom, $mail)
