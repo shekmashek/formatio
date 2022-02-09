@@ -106,31 +106,24 @@ class NouveauCompte extends Model
 
     public function search_etp($nom_etp)
     {
-        // dd('select * from v_exportresponsable WHERE UPPER(nom_etp) LIKE UPPER("%'.$nom_etp.'%")');
-
-        // $data = DB::select('select * from v_responsables WHERE UPPER(nom_etp) LIKE UPPER("%'.$nom_etp.'%")');
         $data = DB::select('select * from entreprises WHERE UPPER(nom_etp) LIKE UPPER("%' . $nom_etp . '%")');
-
-        // $data = DB::select('select * from v_responsables');
-
         return $data;
     }
 
+public function verify_cin_user($valiny){
+    $data = DB::select('select * from users WHERE cin =?',[$valiny]);
+    return $data;
+}
 
+public function verify_tel_user($valiny){
+    $data = DB::select('select * from users WHERE telephone =?',[$valiny]);
+    return $data;
+}
 
-    // public function verify_resp($entreprise_id,$data){
-    //     $fonct = new FonctionGenerique();
-    //     $verify = DB::select('select * from responsables email_resp=? OR tel=?',[$data["email_resp"],$data["tel_resp"]]);
-    //    if(count($verify)<=0){
-    //     $resp = $fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id]);
-    //     if(count($resp)<=0){
-
-    //     } else{}
-    //    } else{
-    //     return back()->with('error','information invalid');
-    //    }
-
-    // }
+public function verify_mail_user($valiny){
+    $data = DB::select('select * from users WHERE email =?',[$valiny]);
+    return $data;
+}
 
 
 }

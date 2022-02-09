@@ -237,12 +237,32 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
+                                <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
+                                <span style = "color:#ff0000;" id="email_resp_etp_err"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" max=10 required name="tel_resp_etp" class="form-control input_inscription" id="tel_resp_etp" />
+                                <label for="tel_resp_etp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
+                                <span style = "color:#ff0000;" id="tel_resp_etp_err"></span>
+
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <input type="text" name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
                                 <label for="cin_resp_etp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                                <span style = "color:#ff0000;" id="cin_resp_etp_err"></span>
+
                             </div>
                         </div>
                         <div class="col">
@@ -273,26 +293,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
-                                <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" max=10 required name="tel_resp_etp" class="form-control input_inscription" id="tel_resp_etp" />
-                                <label for="tel_resp_etp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
-
-                            </div>
-                        </div>
-                    </div>
-
 
 
                     <input type="button" name="previous" class="previous action-button" value="Précendent" />

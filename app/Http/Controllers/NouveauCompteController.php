@@ -39,6 +39,27 @@ class NouveauCompteController extends Controller
         return view('create_compte.create_compte_client',compact('secteur'));
     }
 
+// ------------------------------------------------
+    public function verify_cin_user(Request $req)
+    {
+        $data = $this->new_compte->verify_cin_user($req->valiny);
+        return response()->json($data);
+    }
+
+    public function verify_mail_user(Request $req)
+    {
+        $data = $this->new_compte->verify_mail_user($req->valiny);
+        return response()->json($data);
+    }
+
+    public function verify_tel_user(Request $req)
+    {
+        $data = $this->new_compte->verify_tel_user($req->valiny);
+        return response()->json($data);
+    }
+
+// ------------------------------------------------
+
     public function verify_nif_cfp(Request $req)
     {
         $data = $this->new_compte->verify_NIF_cfp($req->nif);

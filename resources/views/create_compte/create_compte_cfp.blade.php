@@ -210,6 +210,7 @@
                             <div class="form-group">
                                 <input type="text" name="cin_resp_cfp" class="form-control input_inscription" id="cin_resp_cfp" />
                                 <label for="cin_resp_cfp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                                <span style = "color:#ff0000;" id="cin_resp_cfp_err"></span>
                             </div>
                         </div>
                         <div class="col">
@@ -226,14 +227,14 @@
                             <div class="form-group">
                                 <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
                                 <label for="email_resp_cfp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
-
+                                <span style = "color:#ff0000;" id="email_resp_cfp_err"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" max=10 required name="tel_resp_cfp" class="form-control input_inscription" id="tel_resp_cfp" />
                                 <label for="tel_resp_cfp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
-
+                                <span style = "color:#ff0000;" id="tel_resp_cfp_err"></span>
                             </div>
                         </div>
                     </div>

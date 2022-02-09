@@ -23,12 +23,12 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     $(document).on('change', '#cin_resp_cfp', function() {
-        var nif = $(this).val();
+        var result = $(this).val();
         $.ajax({
-            url: '{{route("verify_nif_cfp")}}'
+            url: '{{route("verify_cin_user")}}'
             , type: 'get'
             , data: {
-                nif: nif
+                valiny: result
             }
             , success: function(response) {
                 var userData = response;
@@ -38,7 +38,52 @@
                 } else {
                     document.getElementById("cin_resp_cfp_err").innerHTML = "";
                 }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
 
+    $(document).on('change', '#email_resp_cfp', function() {
+        var result = $(this).val();
+        $.ajax({
+            url: '{{route("verify_mail_user")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("email_resp_cfp_err").innerHTML = "mail existe déjà";
+                } else {
+                    document.getElementById("email_resp_cfp_err").innerHTML = "";
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+    $(document).on('change', '#tel_resp_cfp', function() {
+        var result = $(this).val();
+        $.ajax({
+            url: '{{route("verify_tel_user")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("tel_resp_cfp_err").innerHTML = "Télephone existes déjà";
+                } else {
+                    document.getElementById("tel_resp_cfp_err").innerHTML = "";
+                }
             }
             , error: function(error) {
                 console.log(error);
@@ -62,13 +107,83 @@
                 } else {
                     document.getElementById("nif_cfp_err").innerHTML = "";
                 }
-
             }
             , error: function(error) {
                 console.log(error);
             }
         });
     });
+
+
+    /*================= entreprise =====================*/
+
+    $(document).on('change', '#cin_resp_etp', function() {
+        var result = $(this).val();
+        $.ajax({
+            url: '{{route("verify_cin_user")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
+                if (userData.length > 0) {
+                    document.getElementById("cin_resp_etp_err").innerHTML = "CIN appartient déjà par un autre utilisateur";
+                } else {
+                    document.getElementById("cin_resp_etp_err").innerHTML = "";
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+    $(document).on('change', '#email_resp_etp', function() {
+        var result = $(this).val();
+        $.ajax({
+            url: '{{route("verify_mail_user")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
+                if (userData.length > 0) {
+                    document.getElementById("email_resp_etp_err").innerHTML = "mail existe déjà";
+                } else {
+                    document.getElementById("email_resp_etp_err").innerHTML = "";
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+    $(document).on('change', '#tel_resp_etp', function() {
+        var result = $(this).val();
+        $.ajax({
+            url: '{{route("verify_tel_user")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("tel_resp_etp_err").innerHTML = "Télephone existes déjà";
+                } else {
+                    document.getElementById("tel_resp_etp_err").innerHTML = "";
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
 
     $(document).on('change', '#nif_etp', function() {
         var nif = $(this).val();
@@ -80,13 +195,11 @@
             }
             , success: function(response) {
                 var userData = response;
-
                 if (userData.length > 0) {
                     document.getElementById("nif_etp_err").innerHTML = "NIF appartient déjà sur d'autre entreprise!";
                 } else {
                     document.getElementById("nif_etp_err").innerHTML = "";
                 }
-
             }
             , error: function(error) {
                 console.log(error);

@@ -18,3 +18,7 @@ Branche inscription_cfp_etp:
     1°) Modification table:
      -formation: alter table formations drop cfp_id;
      -modules: alter table modules add column cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE;
+
+     2°) Modification table Users:
+     alter table users add column  cin varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL DEFALUT 'XXXXX';
+    alter table users add column telephone varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFALUT 'XXXXX';
