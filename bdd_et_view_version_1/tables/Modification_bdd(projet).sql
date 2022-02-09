@@ -21,7 +21,6 @@ CREATE TABLE groupes (
   min_participant varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   nom_groupe varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   projet_id  bigint(20) UNSIGNED  NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
-  entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   module_id  bigint(20) UNSIGNED  NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
   date_debut date NOT NULL,
   date_fin date NOT NULL,
