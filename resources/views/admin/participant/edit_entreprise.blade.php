@@ -47,7 +47,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Entreprise</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
+        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">

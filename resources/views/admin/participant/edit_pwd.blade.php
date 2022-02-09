@@ -2,7 +2,7 @@
 @section('content')
 <style>
     .input{
-        width: 170px;
+        width: 350px;
     }
 .test {
     padding: 2px;
@@ -43,7 +43,7 @@
   transform: translate3d(0, -100%, 0);
   opacity: 1;
   background-color: white;
-  margin-left: 105px;
+  margin-left: 20px;
 
 }
 </style>
@@ -51,7 +51,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Anniversaire</p>
+        <p style="text-align: left">Adresse E-mail</p>
         <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
               
@@ -75,7 +75,7 @@
                   </div>
             </center> --}} 
                 
-                        <select hidden value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
+                        <select hidden  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
                           <option value="Homme"  >Homme</option>
                           <option value="Femme">Femme</option>
 
@@ -93,16 +93,20 @@
                         </select>
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label> --}}
 
-                        <div class="row px-3 mt-4">
-                            <div class="form-group mt-1 mb-1">
-                        <input type="date" class="form-control test input" name="date" value="{{ $stagiaire->date_naissance }}">
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Date de naissance</label>
-                            </div>
-                        </div>
+                      
+                        <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
+                        
                           <input type="hidden" value="{{ $stagiaire->cin}}" class="form-control test"  name="cin" >
-
-                        <input type="hidden" class="form-control test"  name="mail" value="{{ $stagiaire->mail_stagiaire }}" >
-
+                          
+                        <input type="hidden" class="form-control test input"  name="mail" value="   {{ $stagiaire->mail_stagiaire }}" >
+                           
+                          <div class="row px-3 mt-4">
+                            <div class="form-group mt-1 mb-1">
+                              <input type="password" class="form-control test input" value=""  name="password" placeholder="">
+                              <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:#801D68">Mot de passe</label>
+      
+                            </div>
+                          </div>
                         <input type="hidden" class="form-control test"  name="phone" value="{{ $stagiaire->telephone_stagiaire }}"> 
                         <input type="hidden" class="form-control test" value=""  name="password" placeholder="">  
                           <input type="hidden" class="form-control test" id="lot" name="lot" placeholder="Lot" value="{{ $stagiaire->lot}}">

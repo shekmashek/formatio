@@ -76,7 +76,7 @@
                                         @enderror
                                     </div><br>
 
-                                    </div><br>
+                              
                                     <div class="form-group">
                                         <label for="lot">Lot</label>
                                         <input type="text" class="form-control" id="lot" name="lot" placeholder="Lot">
@@ -97,8 +97,8 @@
                                           @enderror
                                     </div><br>
                                     <div class="form-group">
-                                        <label for="code_postal">Code Postale</label>
-                                        <input type="text" class="form-control" id="code_postal" name="code_postal" placeholder="Code Postale">
+                                        <label for="code_postal">Code Postal</label>
+                                        <input type="text" class="form-control" id="code_postal" name="code_postal" placeholder="Code Postal">
                                         @error('code_postal')
                                           <div class ="col-sm-6">
                                               <span style = "color:#ff0000;"> {{$message}} </span>
@@ -237,7 +237,7 @@
                             </div><br>
                             @endcan
 
-                            <div class="col-lg-6">
+                         
                                 <div class="form-group">
                                     <label for="fonction">Fonction</label>
                                     <input type="text" class="form-control" id="fonction" name="fonction" placeholder="Fonction">

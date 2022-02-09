@@ -193,15 +193,14 @@ Route::get('/edit_entreprise/{id?}','ParticipantController@edit_entreprise')->na
 Route::get('/edit_niveau/{id?}','ParticipantController@edit_niveau')->name('edit_niveau');
 Route::get('/edit_departement/{id?}','ParticipantController@edit_departement')->name('edit_departement');
 Route::get('/edit_branche/{id?}','ParticipantController@edit_branche')->name('edit_branche');
+Route::get('/edit_photos/{id?}','ParticipantController@edit_photos')->name('edit_photos');
+Route::get('/edit_pwd/{id?}','ParticipantController@edit_pwd')->name('edit_pwd');
 
-
-
-
-
+//atreto ny page eediter par champs stagiaire
 
 Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('destroy_participant');
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
-Route::get('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
+Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
 Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 

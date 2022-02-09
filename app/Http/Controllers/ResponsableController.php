@@ -71,7 +71,7 @@ class ResponsableController extends Controller
                 'phone.required' => 'Veuillez remplir le champ',
                 'photos.required' => 'Veuillez remplir le champ',
                 'cin.required' => 'Veuillez remplir le champ',
-                'naissance.required' => 'Veuillez remplir le champ'
+                // 'naissance.required' => 'Veuillez remplir le champ'
             ]
         );
         //enregistrer les projets dans la bdd
@@ -81,7 +81,7 @@ class ResponsableController extends Controller
         $resp->fonction_resp = $request->fonction;
         $resp->email_resp = $request->mail;
         $resp->cin_resp = $request->cin;
-        $resp->date_naissance_resp = $request->naissance;
+        // $resp->date_naissance_resp = $request->naissance;
         $resp->telephone_resp = $request->phone;
 
         //insertion image
@@ -188,6 +188,7 @@ class ResponsableController extends Controller
         if (Gate::allows('isSuperAdmin') || Gate::allows('isReferent')) {
             $id = $request->Id;
             $user_id = responsable::where('id', $id)->value('user_id');
+
             //modifier les données
             $nom = $request->Nom;
             $prenom = $request->Prenom;

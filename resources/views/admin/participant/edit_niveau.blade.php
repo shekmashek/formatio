@@ -1,6 +1,9 @@
 @extends('./layouts/admin')
 @section('content')
 <style>
+   .input{
+        width: 170px;
+    }
 .test {
     padding: 2px;
     border-radius: 5px;
@@ -40,6 +43,8 @@
   transform: translate3d(0, -100%, 0);
   opacity: 1;
   background-color: white;
+  margin-left: 105px;
+
 }
 </style>
 <center>                
@@ -47,7 +52,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Niveau d'etude</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
+        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -75,7 +80,7 @@
                           <option value="Femme">Femme</option>
 
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
+                        {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
  
                         <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
                             <option value="Mr">Mr</option>
@@ -86,7 +91,7 @@
                             <option value="Dir">Dir</option>
                             <option value="PDG">PDG</option>
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label>
+                        {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label> --}}
 
                       
                         <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
@@ -113,7 +118,7 @@
                         
                           <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                  <input type="text" class="form-control test"  name="niveau" value="   {{ $stagiaire->niveau_etude }}">
+                  <input type="text" class="form-control test input"  name="niveau" value="   {{ $stagiaire->niveau_etude }}">
                   <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Niveau d'etude</label>
                
                 </div>

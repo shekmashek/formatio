@@ -56,7 +56,7 @@
                                         </div>
                                         @enderror
                                     </div><br>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="cin">Date Naissance</label><br><br>
                                         <input type="date" autocomplete="off" class="form-control" id="naissance" name="naissance">
                                         @error('naissance')
@@ -64,7 +64,7 @@
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
                                           @enderror
-                                      </div><br>
+                                      </div><br> --}}
                                      <div class="form-group">
                                       <label for="sary">Photo</label>
                                       <input type="file" class="form-control-file" id="photo" name="photos">

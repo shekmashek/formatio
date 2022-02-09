@@ -1,9 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
-    .input{
-        width: 175px;
-    }
 .test {
     padding: 2px;
     border-radius: 5px;
@@ -43,15 +41,14 @@
   transform: translate3d(0, -100%, 0);
   opacity: 1;
   background-color: white;
-  margin-left: 85px;
 }
 </style>
 <center>                
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Branche</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
+        <p style="text-align: left">Photos de profile</p>
+        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -60,26 +57,27 @@
                         <input type="hidden" class="form-control test" value="   {{ $stagiaire->prenom_stagiaire }}"  name="prenom">
                       
 
-  {{-- hidden --}}
-  {{-- <p style="font-size: 20px;" class="ms-5">Profiles</p>
+            <div class="row px-3 mt-4">
+            <div class="form-group mt-1 mb-1">
             <center>
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                      <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde">
+                        <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde"> 
                       {{-- <input type="text" id = 'vartemp'> --}}
-                  {{-- </div>
+              </div>
                   </label>
                      <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
                   </div>
-            </center> --}} 
-                
+            </center>  
+        </div>
+    </div>
                         <select hidden  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
                           <option value="Homme"  >Homme</option>
                           <option value="Femme">Femme</option>
 
                         </select>
-                        {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
  
                         <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
                             <option value="Mr">Mr</option>
@@ -90,7 +88,7 @@
                             <option value="Dir">Dir</option>
                             <option value="PDG">PDG</option>
                         </select>
-                        {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label> --}}
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label>
 
                       
                         <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
@@ -126,11 +124,9 @@
                 
                    
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
-                    <div class="row px-3 mt-4">
-                      <div class="form-group mt-1 mb-1">
-                    <input type="text" value="   {{ $stagiaire->lieu_travail }}"  class="form-control test input"  name="lieu" placeholder="Matricule" >
+                   
+                    <input type="hidden" value="   {{ $stagiaire->lieu_travail }}"  class="form-control test"  name="lieu" placeholder="Matricule" >
                     
-                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Branche</label>
                
                   </div>
               </div>
@@ -143,5 +139,50 @@
 </div>
 </div>
 </div>
+<style>
 
+.image-ronde{
+  width : 150px; height : 150px;
+  border: none;
+  -moz-border-radius : 75px;
+  -webkit-border-radius : 75px;
+  border-radius : 75px;
+  cursor: pointer;
+}
+    .image-upload > input
+    {
+        display: none;
+    }
+      </style>
+    
+    
+    
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    
+      // $(document).ready(function(){
+      //   alert("Bien venu");
+      // });
+      $('#file-input').change( function(event) {
+        $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
+        $("img.icon").parents('.upload-icon').addClass('has-img');
+        readURL(this);
+      });
+      //fonction qui change la photo de profil du stagiaire
+      function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    //alert(e.target.result);
+                    $('#photo_stg').attr('src', e.target.result);
+                }
+    
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
+    
+    </script>
 @endsection

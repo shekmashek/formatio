@@ -124,6 +124,12 @@
                                     </p>
                                     </a>
                                    </div>
+                                   <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <a href="{{route('edit_edit_pwd',$stagiaire->id)}} " >
+                                    <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    </p>
+                                    </a>
+                                   </div>
                                     <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                 </div>
                             </div>
@@ -184,7 +190,7 @@
                                     <p class="text-center">Informations professionnelles</p>
                             
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_matricule',$stagiaire->id)}} " >
+                                        <a href="#" >
                                     <p class="p-1 m-0" style="font-size: 10px;">MATRICULE<span style="float: right;">{{$stagiaire->matricule}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         
                                     </p>
@@ -192,7 +198,7 @@
                                     </div>
                      
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_entreprise',$stagiaire->id)}} " >
+                                        <a href="#" >
                                     <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{optional(optional($stagiaire)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                         
                                     </p>
@@ -201,14 +207,14 @@
                                     </div>
                                     
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_departement',$stagiaire->id)}} " >
+                                        <a href="#" >
                                     <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($stagiaire)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         
                                     </p>
                                         </a>
                                     </div>
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_branche',$stagiaire->id)}} " >
+                                        <a href="#" >
                                     <p class="p-1 m-0" style="font-size: 10px;">BRANCHE<span style="float: right;">{{$stagiaire->lieu_travail}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                         </a>

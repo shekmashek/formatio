@@ -1,6 +1,9 @@
 @extends('./layouts/admin')
 @section('content')
 <style>
+    .input{
+        width: 175px;
+    }
 .test {
     padding: 2px;
     border-radius: 5px;
@@ -36,18 +39,22 @@
 .test:valid+.form-control-placeholder {
   font-size: 95%;
   font-weight: bolder;
-  top: 1.5rem;
+  top: 1.8rem;
   transform: translate3d(0, -100%, 0);
   opacity: 1;
   background-color: white;
+  margin-left: 100px;
+ 
+
+
 }
 </style>
 <center>                
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Anniversaire</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="get" >
+        <p style="text-align: left">Genre</p>
+        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
               
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -71,7 +78,7 @@
             </center> --}} 
             <div class="row px-3 mt-4">
               <div class="form-group mt-1 mb-1">
-                        <select  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
+                        <select  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test input" id="genre"  >
                           <option value="Homme"  >Homme</option>
                           <option value="Femme">Femme</option>
 
@@ -88,7 +95,7 @@
                             <option value="Dir">Dir</option>
                             <option value="PDG">PDG</option>
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label>
+                        {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label> --}}
 
                       
                         <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
