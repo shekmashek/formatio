@@ -60,87 +60,16 @@
 
 
         <div class="row justify-content-center">
-            {{-- <div class="col-md-2"></div> --}}
             <div class="col-md-8 ">
-
                 @yield('content')
 
-                <p class="mt-5">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ICI. </a></p>
+                <p class="mt-5">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ICI.</a> Vous voulez revenir à l'accueil?  Apuillez <a href="{{route('create+compte+client')}}" style="color: blue">accueil</a></p>
 
             </div>
             {{-- <div class="col-md-2"></div> --}}
         </div>
 
     </div>
-
-
-
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-
-    {{-- JQuery --}}
-    <script src="{{asset('bootstrapCss/js/bootstrap.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/boxicons.js')}}"></script>
-    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.js')}}"></script>
-    <script src="{{asset('assets/js/startmin.js')}}"></script>
-    <script src="{{asset('assets/fullcalendar/lib/main.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
-    <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/jqueryui/jquery-ui.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('function js/programme/edit_programme.js') }}"></script>
-    <script src="{{asset('js/facture.js')}}"></script>
-
-    <script type="text/javascript">
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-        $(document).on('change', '#name_entreprise', function() {
-            var id = $(this).val();
-            // document.getElementById('name_entreprise_desc').value = id;
-            document.getElementById('name_entreprise_desc').innerHTML = id;
-            console.log(document.getElementById('name_entreprise_desc').value);
-        });
-
-        // ====== autoComplet Champs search nom entreprise
-
-        $(document).ready(function() {
-
-
-            $('#name_entreprise_search').autocomplete({
-
-
-                source: function(request, response) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                        , type: 'GET'
-                        , url: "{{route('search_entreprise_referent')}}"
-                        , data: {
-                            search: request.term
-                        }
-                        , success: function(data) {
-                            response(data);
-                        }
-                    });
-                }
-                , minlength: 1
-                , autoFocus: true
-                , select: function(e, ui) {
-                    $('#name_entreprise_search').val(ui.item.nom_resp);
-                }
-
-            });
-
-
-        });
-
-    </script>
 
 </body>
 </html>

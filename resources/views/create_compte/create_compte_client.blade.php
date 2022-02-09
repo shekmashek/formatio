@@ -76,7 +76,7 @@
         <form action="{{route('create_compte_employeur')}}" id="msform" method="POST" enctype="multipart/form-data">
             @csrf
             <!-- progressbar -->
-            <ul id="progressbar" class="mb-1">
+            <ul id="progressbar_create_compte" class="mb-1">
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>

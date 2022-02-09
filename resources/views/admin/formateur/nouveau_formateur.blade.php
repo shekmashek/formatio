@@ -130,6 +130,8 @@
 
                                             <div class="form-group">
                                                 <input type="mail" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse mail*" required>
+                                                <span style="color:#ff0000;" id="mail_err"></span>
+
                                             </div>
                                             @error('mail')
                                             <div class="col-sm-6">
@@ -143,6 +145,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <input type="tel" class="form-control" name="phone" id="phone" minlength="10" maxlength="10" placeholder="Téléphone*" pattern="[0-9]{10}" title="entrer une numero de 10 chiffres sans lettre ni caractères spéciaux" required>
+                                                <span style="color:#ff0000;" id="phone_err"></span>
                                             </div>
                                             @error('phone')
                                             <div class="col-sm-6">
@@ -153,6 +156,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <input type="tel" class="form-control" name="cin" id="cin" minlength="12" maxlength="12" placeholder="Numero de CIN*" pattern="[0-9]{12}" title="entre un numero de 12 chiffres sans lettres ni caractères spéciaux" required>
+                                                <span style="color:#ff0000;" id="cin_err"></span>
                                             </div>
                                             @error('cin')
                                             <div class="col-sm-6">

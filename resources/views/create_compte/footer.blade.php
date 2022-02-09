@@ -16,12 +16,45 @@
 
 <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/jqueryui/jquery-ui.min.js')}}" type="text/javascript"></script>
-<script src="{{ asset('function js/programme/edit_programme.js') }}"></script>
-<script src="{{asset('js/qcmStep.js')}}"></script>
+<script src="{{asset('js/create_compte.js')}}"></script>
 
 <script type="text/javascript">
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+    $(document).on('change', '#name_entreprise', function() {
+            var id = $(this).val();
+            document.getElementById('name_entreprise_desc').innerHTML = id;
+            console.log(document.getElementById('name_entreprise_desc').value);
+        });
+
+        // ====== autoComplet Champs search nom entreprise
+
+        $(document).ready(function() {
+            $('#name_entreprise_search').autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                        , type: 'GET'
+                        , url: "{{route('search_entreprise_referent')}}"
+                        , data: {
+                            search: request.term
+                        }
+                        , success: function(data) {
+                            response(data);
+                        }
+                    });
+                }
+                , minlength: 1
+                , autoFocus: true
+                , select: function(e, ui) {
+                    $('#name_entreprise_search').val(ui.item.nom_resp);
+                }
+            });
+        });
+
+        /*-----------------------------------------------*/
     $(document).on('change', '#cin_resp_cfp', function() {
         var result = $(this).val();
         $.ajax({
