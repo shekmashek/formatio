@@ -23,17 +23,17 @@ function evaluation_froid(){
     document.getElementById('evaluation_chaud').style.display = "none";
     document.getElementById('evaluation_formateurs').style.display = "none";
 }
-function evaluation_formateur(){
-    document.getElementById('btn_chaud').style.backgroundColor = "rgb(241, 241, 242)";
-    document.getElementById('btn_chaud').style.border = "none";
-    document.getElementById('btn_froid').style.border = "none";
-    document.getElementById('btn_formateur').style.border = "1px solid grey";
-    document.getElementById('btn_froid').style.backgroundColor = "rgb(241, 241, 242)";
-    document.getElementById('btn_formateur').style.backgroundColor = "white";
-    document.getElementById('evaluation_chaud').style.display = "none";
-    document.getElementById('evaluation_froid').style.display = "none";
-    document.getElementById('evaluation_formateurs').style.display = "block";
-}
+// function evaluation_formateur(){
+//     document.getElementById('btn_chaud').style.backgroundColor = "rgb(241, 241, 242)";
+//     document.getElementById('btn_chaud').style.border = "none";
+//     document.getElementById('btn_froid').style.border = "none";
+//     document.getElementById('btn_formateur').style.border = "1px solid grey";
+//     document.getElementById('btn_froid').style.backgroundColor = "rgb(241, 241, 242)";
+//     document.getElementById('btn_formateur').style.backgroundColor = "white";
+//     document.getElementById('evaluation_chaud').style.display = "none";
+//     document.getElementById('evaluation_froid').style.display = "none";
+//     document.getElementById('evaluation_formateurs').style.display = "block";
+// }
 </script>
 
 
@@ -52,7 +52,7 @@ function evaluation_formateur(){
 <nav class="d-flex justify-content-around">
     <button id="btn_chaud" class="btn btn_evaluation" style="background-color: #fff; border: 1px solid grey" onclick="evaluation_chaud()">Evaluation a chaud</button>
     <button id="btn_froid" class="btn btn_evaluation" onclick="evaluation_froid()">Evaluation a froid</button>
-    <button id="btn_formateur" class="btn btn_evaluation" onclick="evaluation_formateur()">Evaluation des formateurs</button>
+    {{-- <button id="btn_formateur" class="btn btn_evaluation" onclick="evaluation_formateur()">Evaluation des formateurs</button> --}}
 </nav>
 <div id="evaluation_chaud" style="display: block">
     Evaluation a chaud
@@ -60,8 +60,8 @@ function evaluation_formateur(){
 <div id="evaluation_froid" style="display: none">
     Evaluation a froid
 </div>
-<div id="evaluation_formateurs" style="display: none">
+{{-- <div id="evaluation_formateurs" style="display: none">
     Evaluation des formateurs
-</div>
+</div> --}}
 
 
