@@ -117,6 +117,9 @@ create or replace view v_detail_presence as
         end as color_status
     from details d join presences p on d.id = p.detail_id order by p.stagiaire_id asc;
 
+
+
+
 -- create or replace view v_apprenants as
 --     select
 

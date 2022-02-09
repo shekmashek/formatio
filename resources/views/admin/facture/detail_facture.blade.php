@@ -127,7 +127,7 @@
                                         <h6>Reference de Bon de Commande: <strong>{{$facture[0]->reference_bc}}</strong></h6>
                                         <h6>Invoice Date: <strong>{{$facture[0]->invoice_date}}</strong></h6>
                                         <h6>Payment Due: <strong>{{$facture[0]->due_date}}</strong></h6>
-                                        <h6>Amount Due(MGA): <strong>Ar{{number_format($montant_totale->dernier_montant_ouvert,2,",",".")}}</strong></h6>
+                                        <h6> <strong>Amount Due(MGA):Ar{{number_format($montant_totale->dernier_montant_ouvert,2,",",".")}}</strong></h6>
                                         <h6>Mode de Payement: <strong>{{$facture[0]->description_financement}}</strong></h6>
                                     </div>
                                 </div>

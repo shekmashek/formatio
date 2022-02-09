@@ -24,7 +24,6 @@
         height: 50px !important;
         border: 2px solid #aa076c17 !important;
 
-
     }
 
     .input_inscription:focus {
@@ -80,7 +79,7 @@
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>
-                <li id="etape4"></li>
+                <li id="confirm"></li>
                 {{-- <li id="etape5"></li> --}}
             </ul> <!-- fieldsets -->
 

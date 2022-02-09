@@ -121,14 +121,19 @@ public function index()
 
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $users)->value('id');
+            $forma = new formateur();
 
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
             $liste = $fonct->findWhere("v_entreprise_par_projet",["cfp_id"],[$cfp_id]);
+            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
+            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            $formateur = $forma->getFormateur($formateur1, $formateur2);
+
             if(count($datas)<=0){
                 return view('admin.detail.guide');
               }
               else{
-            return view('admin.detail.detail', compact('datas', 'liste', 'projet'));
+            return view('admin.detail.detail', compact('formateur','datas', 'liste', 'projet'));
 
               }
         }

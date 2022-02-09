@@ -455,9 +455,6 @@ c.nom,
 p.entreprise_id
 ;
 
-
-
-
 CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     d.activiter AS activiter_demande,
     c.id AS cfp_id,
@@ -515,7 +512,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS SELECT
     s.telephone_stagiaire,
     s.user_id AS user_id_stagiaire,
     s.photos,
-    s.departement_id,
+    (s.departement_entreprise_id) departement_id,
     s.cin,
     s.date_naissance,
     (s.lot) adresse,
@@ -543,7 +540,7 @@ CREATE OR REPLACE VIEW v_presence_detail AS SELECT
     s.telephone_stagiaire,
     s.user_id AS user_id_stagiaire,
     s.photos,
-    s.departement_id,
+    (s.departement_entreprise_id) departement_id,
     s.cin,
     s.date_naissance,
     (s.lot) adresse_stg,

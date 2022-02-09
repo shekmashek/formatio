@@ -9,8 +9,9 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- profil formateur --}}
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"> --}}
+    <link rel="stylesheet" href="{{asset('css/facture.css')}}">
+    <script src="{{asset('js/facture.js')}}"></script>
+
     <link rel="stylesheet" href="{{asset('css/profil_formateur.css')}}">
 
     <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">

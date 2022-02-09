@@ -282,12 +282,12 @@
                                         </td>
                                         <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
                                         <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
-                                        
+
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            
+
                         </div>
                         </tbody>
                         </table>

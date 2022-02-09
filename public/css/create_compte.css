@@ -12,13 +12,13 @@ html {
     background-image: linear-gradient(120deg, #FF4081, #801D68)
 }
 
-#msform_facture {
+#msform {
     text-align: center;
     position: relative;
 
 }
 
-#msform_facture fieldset .form-card {
+#msform fieldset .form-card {
     background: white;
     border: 0 none;
     border-radius: 0px;
@@ -30,7 +30,7 @@ html {
     position: relative
 }
 
-#msform_facture fieldset {
+#msform fieldset {
     background: white;
     border: 0 none;
     border-radius: 0.5rem;
@@ -41,17 +41,17 @@ html {
     position: relative
 }
 
-#msform_facture fieldset:not(:first-of-type) {
+#msform fieldset:not(:first-of-type) {
     display: none
 }
 
-#msform_facture fieldset .form-card {
+#msform fieldset .form-card {
     text-align: left;
     color: #9E9E9E
 }
 
-#msform_facture input,
-#msform_facture textarea {
+#msform input,
+#msform textarea {
     padding: 0px 8px 4px 8px;
     /* border: none; */
     border: 1px solid #ccc;
@@ -66,8 +66,8 @@ html {
     letter-spacing: 1px
 }
 
-#msform_facture input:focus,
-#msform_facture textarea:focus {
+#msform input:focus,
+#msform textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -77,7 +77,7 @@ html {
     outline-width: 0
 }
 
-#msform_facture .action-button {
+#msform .action-button {
     width: 100px;
     background: #801D68;
     font-weight: bold;
@@ -89,12 +89,12 @@ html {
     margin: 10px 5px
 }
 
-#msform_facture .action-button:hover,
-#msform_facture .action-button:focus {
+#msform .action-button:hover,
+#msform .action-button:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #801D68
 }
 
-#msform_facture .action-button-previous {
+#msform .action-button-previous {
     width: 100px;
     background: #616161;
     font-weight: bold;
@@ -106,8 +106,8 @@ html {
     margin: 10px 5px
 }
 
-#msform_facture .action-button-previous:hover,
-#msform_facture .action-button-previous:focus {
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
 }
 
@@ -138,46 +138,46 @@ select.list-dt:focus {
     text-align: left
 }
 
-#progressbars {
+#progressbar {
     margin-bottom: 30px;
     overflow: hidden;
     color: lightgrey;
     height: 4.7rem !important;
 }
 
-#progressbars .active {
+#progressbar .active {
     color: #000000
 }
 
-#progressbars li {
+#progressbar li {
     list-style-type: none;
     font-size: 12px;
-    width: 16%;
+    width: 25%;
     float: left;
     position: relative
 }
 
-#progressbars #account:before {
+#progressbar #account:before {
     font-family: FontAwesome;
     content: "\f023"
 }
 
-#progressbars #personal:before {
+#progressbar #personal:before {
     font-family: FontAwesome;
     content: "\f007"
 }
 
-#progressbars #payment:before {
+#progressbar #payment:before {
     font-family: FontAwesome;
     content: "\f09d"
 }
 
-#progressbars #confirm:before {
+#progressbar #confirm:before {
     font-family: FontAwesome;
     content: "\f00c"
 }
 
-#progressbars li:before {
+#progressbar li:before {
     width: 50px;
     height: 50px;
     line-height: 45px;
@@ -191,7 +191,7 @@ select.list-dt:focus {
     border: 1px solid #801D68 !important;
 }
 
-#progressbars li:after {
+#progressbar li:after {
     content: '';
     width: 100%;
     height: 2px;
@@ -202,8 +202,8 @@ select.list-dt:focus {
     z-index: -1
 }
 
-#progressbars li.active:before,
-#progressbars li.active:after {
+#progressbar li.active:before,
+#progressbar li.active:after {
     background: #801D68;
     border: 1px solid #801D68 !important;
     color: white;
@@ -241,27 +241,23 @@ select.list-dt:focus {
 
 
 
-#progressbars #etape1:before {
+#progressbar #etape1:before {
     font-family: FontAwesome;
     content: "1"
 }
-#progressbars #etape2:before {
+#progressbar #etape2:before {
     font-family: FontAwesome;
     content: "2"
 }
-#progressbars #etape3:before {
+#progressbar #etape3:before {
     font-family: FontAwesome;
     content: "3"
 }
-#progressbars #etape4:before {
+#progressbar #etape4:before {
     font-family: FontAwesome;
     content: "4"
 }
-#progressbars #etape5:before {
+#progressbar #etape5:before {
     font-family: FontAwesome;
     content: "5"
-}
-#progressbars #etape6:before {
-    font-family: FontAwesome;
-    content: "\f00c"
 }

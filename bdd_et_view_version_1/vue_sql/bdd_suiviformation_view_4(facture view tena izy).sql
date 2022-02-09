@@ -249,7 +249,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     type_financement_id,
     (mode_financements.description) description_financement,
     nom_etp,
-    adresse,
+    (entreprises.adresse_rue) adresse,
     logo,
     reference_bc,
     remise,
