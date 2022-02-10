@@ -19,7 +19,9 @@ class DocumentController extends Controller
         $document = new getImageModel();
         $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
         $nom_cfp = $rqt[0]->nom;
+        $document->create_folder($nom_cfp);
         $get_nom_cfp = $document->get_folder($nom_cfp);
+      
         $get_sub_folder =  $document->get_sub_folder($nom_cfp);
         $nb_sub_folder = count($get_sub_folder);
         return view('document.gestion_document',compact('get_nom_cfp','get_sub_folder','nb_sub_folder'));
