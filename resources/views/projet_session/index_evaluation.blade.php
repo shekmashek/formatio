@@ -55,7 +55,7 @@ function evaluation_froid(){
     {{-- <button id="btn_formateur" class="btn btn_evaluation" onclick="evaluation_formateur()">Evaluation des formateurs</button> --}}
 </nav>
 <div id="evaluation_chaud" style="display: block">
-    @include('admin.evaluation.evaluationChaud.evaluationChaud')
+    {{-- @include('admin.evaluation.evaluationChaud.evaluationChaud') --}}
 </div>
 <div id="evaluation_froid" style="display: none">
     Evaluation a froid
