@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use App\session;
 use App\detail;
 use App\stagiaire;
-
+use App\Facture;
+use App\EvaluationChaud;
 use App\projet;
 use App\groupe;
 use App\formation;
@@ -122,6 +123,17 @@ class SessionController extends Controller
             $formateur = NULL;
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id"], [$cfp_id,$formateur_id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+        }if(Gate::allows('isStagiaire')){
+            $evaluation = new EvaluationChaud();
+            $matricule = stagiaire::where('user_id',$user_id)->value('matricule');
+            $etp_id = stagiaire::where('user_id',$user_id)->value('entreprise_id');
+            $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
+            $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
+            $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
+            $data = $evaluation->findDetailProject($matricule); // return les information du project avec detail et information du stagiaire
+
+            $stagiaire = $data['stagiaire'];
+            $detail = $data['detail'];
         }
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
@@ -135,6 +147,9 @@ class SessionController extends Controller
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
+
+        // ---------evalution fait par les stagiaires
+        
 
         return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres'));
     }
