@@ -218,7 +218,7 @@
                             <tr>
                                 <th scope="col">Session</th>
                                 <th>Designation</th>
-                                <th scope="col">(AR)</th>
+                                <th scope="col">PUTH(AR)</th>
                                 <th scope="col">Quantité</th>
                                 <th scope="col">Montant(AR)</th>
                             </tr>
@@ -318,7 +318,7 @@
 
                                     <td colspan="5"><strong>Net à Payer TTC(Ariary)</strong></td>
                                     <td>
-                                        <div align="right">
+                                        <div align="right" class="table-success">
                                             <strong>{{number_format($montant_totale->net_ttc,2,",",".")}}</strong>
                                         </div>
                                     </td>
@@ -340,7 +340,7 @@
 
                                     <td colspan="5"><strong>Reste à Payer(Ariary)</strong></td>
                                     <td>
-                                        <div align="right" class="table-success">
+                                        <div align="right">
                                             <strong>{{number_format( $montant_totale->dernier_montant_ouvert,2,",",".")}}</strong>
                                         </div>
                                     </td>
@@ -349,26 +349,25 @@
                         </table>
                 </div>
                 <div class="row table_facture2 mx-2">
+
+
                     <table class="table table-borderless">
                         <tbody>
                             <tr>
                                 <td>
                                     <h6>Arretée la présente facture à la somme de:</h6>
+                                    <ul>
+                                        Ariary <strong>{{$lettre_montant}}</strong>
+                                    </ul>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    Ariary <strong>{{$lettre_montant}}</strong>
-                                </td>
-                            </tr>
+
                             <tr>
                                 <td>
                                     <h6>Autre Message</h6>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>{{$facture[0]->other_message}}</strong>
+                                    <ul>
+                                        <strong>{{$facture[0]->other_message}}</strong>
+                                    </ul>
                                 </td>
                             </tr>
                         </tbody>

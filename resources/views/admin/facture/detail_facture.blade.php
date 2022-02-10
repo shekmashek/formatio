@@ -81,7 +81,7 @@
 
                                 <div class="col-md-3">
                                     <div align="right">
-                                        <h6><img src="{{ asset('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
+                                        <h6><img src="{{'entreprises/'.$cfp->logo }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
                                         <h5><strong>{{$cfp->nom}}</strong></h5>
                                         <h6>adresse: {{$cfp->adresse_lot}}</h6>
                                         <h6>ville: {{$cfp->adresse_ville}}</h6>
@@ -141,7 +141,7 @@
                         <div class="container-fluid my-4">
 
                             <div class="row">
-                                <table class="table table-striped ">
+                                <table class="table ">
                                     <thead class="table-success">
                                         <tr>
                                             <th scope="col">Session</th>

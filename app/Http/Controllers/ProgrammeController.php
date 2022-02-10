@@ -68,11 +68,11 @@ class ProgrammeController extends Controller
             } else {
                 $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)', [$donnees['titre_prog'][$i], $id]);
                 $id_prog = $fonct->findWhereMulitOne("programmes", ["titre", "module_id"], [$donnees['titre_prog'][$i], $id])->id;
-            }
-            for ($j = 0; $j < count($donnees['cours']); $j++) {
-                if ($donnees['cours'] != null) {
-                    $cour = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)', [$donnees['cours'][$j], $id_prog]);
-                }
+                    for ($j = 0; $j < count($donnees['cours']); $j++) {
+                        if ($donnees['cours'][$j] != null) {
+                            $cour = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)', [$donnees['cours'][$j], $id_prog]);
+                        }
+                    }
             }
         }
 
