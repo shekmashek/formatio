@@ -28,7 +28,7 @@ CREATE TABLE `secteurs` (
 INSERT INTO `secteurs` (`nom_secteur`) VALUES
 ('BTP & Ressources stratégiques(BTP/DS)'),
 ('Développement Rural(DR)'),
-('Technologies de l\'Information&Communication(TIC)'),
+("Technologies de l\'Information&Communication(TIC)"),
 ('Textile,Habillements&Accessoires(THA)'),
 ('Tourisme,Hôtellerie&Restauration(THR)'),
 ('Multi Sectoriel'),

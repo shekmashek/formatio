@@ -58,6 +58,7 @@ class ChefDepartementController extends Controller
             $chefDepart->mail_chef = $request->mail;
             $chefDepart->telephone_chef = $request->phone;
             $chefDepart->entreprise_id = $entreprise_id;
+            $chefDepart->cin_chef = $request->cin;
             $user = new User();
             $user->name = $request->nom. " " . $request->prenom;
             $user->email = $request->mail;
@@ -90,7 +91,7 @@ class ChefDepartementController extends Controller
             $idDep = $request->liste_dep;
 
             $idEtp = $request->liste_etp;
-            $departement_entreprise_id = DepartementEntreprise::where(['departement_id' => $idDep], ['entreprise_id' => $idEtp])->value('id');
+            $departement_entreprise_id = DepartementEntreprise::where(['id' => $idDep], ['entreprise_id' => $idEtp])->value('id');
 
             $chefParEtp->departement_entreprise_id = $departement_entreprise_id;
             $chefParEtp->chef_departement_id = $chef_id;
