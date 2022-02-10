@@ -170,6 +170,112 @@
         background-color: #801d6725;
         transform: scale(1.05);
     }
+
+    .background_grey6 {
+        padding-top: 6px;
+        padding-left: 6px;
+        padding-right: 6px;
+        background-color: rgba(197, 197, 197, 0.192);
+        border-radius: 5px;
+        border-width: 0;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial, sans-serif;
+        font-size: 1em;
+        transition: all 200ms;
+        margin-left: 2.2rem;
+        color: #801D68;
+    }
+
+    .background_grey6:hover {
+        /* background-color: rgba(92, 92, 241, 0.61); */
+        background-color: #801d6725;
+        transform: scale(1.05);
+        color: #801D68;
+    }
+
+    .marge_inferieur {
+        margin-bottom: 400px;
+    }
+
+    /*  */
+    .accordionWrapper {
+        width: 100%;
+        margin-right: 15px;
+    }
+
+    .accordionItem {
+        float: left;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .accordionItemHeading {
+        cursor: pointer;
+        margin: 0px 0px 10px 0px;
+        padding: 10px;
+        background: rgba(197, 197, 197, 0.192);
+        color: black;
+        width: 100%;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+
+    .close .accordionItemContent {
+        height: 0px;
+        transition: height 2s ease-out;
+        -webkit-transform: scaleY(0);
+        -o-transform: scaleY(0);
+        -ms-transform: scaleY(0);
+        transform: scaleY(0);
+        float: left;
+        display: block;
+    }
+
+    .open .accordionItemContent {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        width: 100%;
+        margin: 0px 0px 10px 0px;
+        display: block;
+        -webkit-transform: scaleY(1);
+        -o-transform: scaleY(1);
+        -ms-transform: scaleY(1);
+        transform: scaleY(1);
+        -webkit-transform-origin: top;
+        -o-transform-origin: top;
+        -ms-transform-origin: top;
+        transform-origin: top;
+
+        -webkit-transition: -webkit-transform 0.4s ease-out;
+        -o-transition: -o-transform 0.4s ease;
+        -ms-transition: -ms-transform 0.4s ease;
+        transition: transform 0.4s ease;
+        box-sizing: border-box;
+    }
+
+    .open .accordionItemHeading {
+        margin: 0px;
+        -webkit-border-top-left-radius: 3px;
+        -webkit-border-top-right-radius: 3px;
+        -moz-border-radius-topleft: 3px;
+        -moz-border-radius-topright: 3px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        -webkit-border-bottom-right-radius: 0px;
+        -webkit-border-bottom-left-radius: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        background-color: rgba(197, 197, 197, 0.192);
+        color: black;
+    }
+
+    /*  */
 </style>
 <div class="row">
     <div class="col-lg-3">
@@ -239,7 +345,7 @@
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
             </div>
         </div>
-        <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
+        <div class="row detail__formation__detail justify-content-space-between py-5 px-5 mb-5">
             <div class="col-lg-9 detail__formation__content">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
@@ -336,253 +442,150 @@
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__item__left">
-                    <form action="{{route('update_prog_cours')}}" method="POST" class="w-100">
-                        @csrf
-
-                        <h3 class="pt-3 pb-3">Programme de la formation</h3>
-                        <div></div>
-                        <div class="col-lg-12">
-                            <?php $i=1 ?>
-                            @foreach ($programmes as $prgc)
-                            <input type="hidden" name="id" id="id" value="{{$prgc->module_id}}">
-                            <div class="row detail__formation__item__left__accordion mb-3">
-                                <span role="button" class="accordion accordion_prog"><input
-                                    type="text" class="form-control" name="titre_prog[]"
-                                    value="{{$prgc->titre}}" style="text-transform: capitalize">
-                                    <i id="addProg"
-                                        class="bx bx-plus pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px"
-                                        role="button" title="ajouter un nouveau programme"></i>
-                                </span>
-                                @foreach ($cours as $c)
-                                @if($c->programme_id == $prgc->id)
-                                <div class="panel" id="heading2">
-                                    <span class="d-flex input_cours"><i
-                                            class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                            class="form-control" name="cours[]" value="{{$c->titre_cours}}" style="text-transform: capitalize"><i
-                                            id="add_Cours{{$i}}" class="bx bx-plus mt-3 background_plus"
-                                            style="font-size: 14px; color: #801D68" role="button"
-                                            title="ajouter un nouveau cours"></i></span>
-                                    <span id="new_Cours{{$i}}"></span>
+                    <h3 class="pt-3 pb-3">Programme de la formation</h3>
+                    <div class="col-lg-12">
+                        <div class="row detail__formation__item__left">
+                            <form action="{{route('update_prog_cours')}}" method="POST" class="w-100">
+                                @csrf
+                                <div id="newProg"></div>
+                                <div class="form-row">
+                                    <input type="hidden" value="{{$id}}" name="id_module">
+                                    <button type="submit" class="btn btn-primary background_grey6">Enregistrer</button>
+                                    <button type="button" id="addProg" class="background_grey6 btn">Nouveau
+                                        Programme</button>
                                 </div>
-                                @endif
-                                @endforeach
+                            </form>
+                        </div>
+                        <br>
+                        <div class="row detail__formation__item__left__accordion ">
+                            <div class="accordionWrapper">
+                                <?php $i=1 ?>
+                                @foreach ($programmes as $prgc)
+                                <div class="accordionItem open" id="programme{{$prgc->id}}">
+                                    <h6 class="accordionItemHeading">{{$i}} - {{$prgc->titre}}<i
+                                        class="bx bx-minus mt-3 background_plus suppression_programme"
+                                        style="font-size: 14px; color: #801D68" role="button"
+                                        title="ajouter un nouveau cours" id="{{$prgc->id}}"></i></h6>
+                                    <div class="accordionItemContent">
+                                        @foreach ($cours as $c)
+                                        @if($c->programme_id == $prgc->id)
+                                        <p id="cours{{$c->cours_id}}"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} <span><i
+                                            class="bx bx-minus mt-3 background_plus suppression"
+                                            style="font-size: 14px; color: #801D68" role="button"
+                                            title="ajouter un nouveau cours" id="{{$c->cours_id}}"></i></span></p>
+                                        @endif
+                                        @endforeach
+                                        <button type="button" class="btn background_grey6">Nouvelle Cours</button>
+                                    </div>
+
+                                </div>
                                 <?php $i++ ?>
-                            </div>
-                            @endforeach
-                            <br>
-                            <div id="newProg"></div>
-                            <br>
-                            {{-- <div class="row detail__formation__item__left__accordion">
-                                <span role="button" class="accordion accordion_prog"><input type="text"
-                                        class="form-control" name="titre_prog[]"
-                                        placeholder="Titre de votre programme"><i id="addProg"
-                                        class="bx bx-plus pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px"
-                                        role="button" title="ajouter un nouveau programme"></i></span>
-                                <div class="panel" id="heading2">
-                                    <span class="d-flex input_cours"><i
-                                            class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                            class="form-control" name="cours[]" placeholder="Votre cours"><i
-                                            id="addCours0" class="bx bx-plus mt-3 background_plus"
-                                            style="font-size: 14px; color: #801D68" role="button"
-                                            title="ajouter un nouveau cours"></i></span>
-                                    <span id="newCours0"></span>
-                                </div>
-                            </div> --}}
-                            <br>
-                            <div class="form-row">
-                                <input type="hidden" value="{{$id}}" name="id_module">
-                                <button type="submit" class="btn btn-primary btn_enregistrer">Enregistrer</button>
-                            </div>
-                    </form>
-                </div>
-            </div>
+                                @endforeach
 
-            {{-- section 5 --}}
-            {{-- FIXME:mise en forme de design --}}
-            <div class="row detail__formation__programme__avis">
-                <div>
-                    <h3 class="pt-5 pb-0">Avis sur la formation</h3>
-                </div>
-                <div class="col-12 mb-5">
-                    <div class="card p-2 pt-1">
-                        <div class="row detail__formation__programme__avis__rated d-flex">
-                            <div class="col-md-4 text-center d-flex flex-column">
-                                <div class="rating-box">
-                                    <h1 class="pt-4">{{ $res->pourcentage }}</h1>
-                                    <p class="">sur 5</p>
-                                </div>
-                                <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
-                            </div>
-                            <div class="col-md-8 pt-2">
-                                <div class="table-rating-bar justify-content-center">
-                                    <table class="text-left mx-auto">
-                                        <tr>
-                                            <td class="rating-label">Excellent</td>
-                                            <td class="rating-bar">
-                                                <div class="bar-container">
-                                                    {{-- <div class="bar-5"
-                                                        style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;">
-                                                    </div> --}}
-                                                </div>
-                                            </td>
-                                            {{-- <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%
-                                            </td> --}}
-                                        </tr>
-                                        <tr>
-                                            <td class="rating-label">Bien</td>
-                                            <td class="rating-bar">
-                                                <div class="bar-container">
-                                                    {{-- <div class="bar-4"
-                                                        style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;">
-                                                    </div> --}}
-                                                </div>
-                                            </td>
-                                            {{-- <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%
-                                            </td> --}}
-                                        </tr>
-                                        <tr>
-                                            <td class="rating-label">Moyenne</td>
-                                            <td class="rating-bar">
-                                                <div class="bar-container">
-                                                    {{-- <div class="bar-3"
-                                                        style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;">
-                                                    </div> --}}
-                                                </div>
-                                            </td>
-                                            {{-- <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%
-                                            </td> --}}
-                                        </tr>
-                                        <tr>
-                                            <td class="rating-label">Normal</td>
-                                            <td class="rating-bar">
-                                                <div class="bar-container">
-                                                    {{-- <div class="bar-2"
-                                                        style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;">
-                                                    </div> --}}
-                                                </div>
-                                            </td>
-                                            {{-- <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%
-                                            </td> --}}
-                                        </tr>
-                                        <tr>
-                                            <td class="rating-label">Terrible</td>
-                                            <td class="rating-bar">
-                                                <div class="bar-container">
-                                                    {{-- <div class="bar-1"
-                                                        style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;">
-                                                    </div> --}}
-                                                </div>
-                                            </td>
-                                            {{-- <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%
-                                            </td> --}}
-                                        </tr>
-                                    </table>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="detail__formation__programme__avis__donnes">
-                        @foreach ($liste_avis as $avis)
-                        <div class="row">
-                            <div class="d-flex flex-row">
-                                <div class="col">
-                                    <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }} {{ $avis->prenom_stagiaire }}
-                                    </h5>
-                                </div>
-                                <div class="col">
-                                    <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
-                                </div>
-                                <div class="col">
-                                    <p class="text-left d-flex flex-row">
-                                    <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span
-                                        class="text-muted">{{ $avis->note }}</span></p>
-                                </div>
+                </div>
+            </div>
+
+
+            {{-- <form action="{{route('update_prog_cours')}}" method="POST" class="w-100">
+                @csrf
+                <div id="newProg"></div>
+                <br> --}}
+                {{-- <div class="row detail__formation__item__left__accordion">
+                    <span role="button" class="accordion accordion_prog"><input type="text" class="form-control"
+                            name="titre_prog[]" placeholder="Titre de votre programme"><i id="addProg"
+                            class="bx bx-plus pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button"
+                            title="ajouter un nouveau programme"></i></span>
+                    <div class="panel" id="heading2">
+                        <span class="d-flex input_cours"><i class="bx bx-chevron-right pt-4"></i>&nbsp;<input
+                                type="text" class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                id="addCours0" class="bx bx-plus mt-3 background_plus"
+                                style="font-size: 14px; color: #801D68" role="button"
+                                title="ajouter un nouveau cours"></i></span>
+                        <span id="newCours0"></span>
+                    </div>
+                </div> --}}
+
+
+
+
+                {{-- FIXME:mise en forme de design --}}
+                <div class="col-lg-3 detail__formation__item__right">
+                    <div class="row detail__formation__item__main__head align-items-center">
+                        <div class="detail__prix__head">
+                            <div class="detail__prix__text">
+                                <p class="pt-2"><b>INTRA</b></p>
                             </div>
                         </div>
-                        <div class="row ms-1">
-                            <p>{{ $avis->commentaire }}</p>
+                    </div>
+                    <div class="row detail__formation__item__main">
+                        <div class="detail__prix__main__presentiel pt-3">
+                            <div>
+                                <p class="text-uppercase">{{$res->modalite_formation}}</p>
+                            </div>
                         </div>
-                        <hr>
-                        @endforeach
+                    </div>
+                    <div class="row detail__formation__item__main">
+                        <div class="col-lg-6 detail__prix__main__ref">
+                            <div>
+                                <p><i class="bx bx-clipboard"></i>&nbsp;Reference</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 detail__prix__main__ref2">
+                            <div>
+                                <p>{{ $res->reference }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr">
+                    <div class="row detail__formation__item__main">
+                        <div class="col-lg-6 detail__prix__main__dure">
+                            <div>
+                                <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 detail__prix__main__dure2">
+                            <div>
+                                <p>
+                                    <span>
+                                        @isset($res->duree_jour)
+                                        {{$res->duree_jour}} jours
+                                        @endisset
+                                    </span>
+                                    <span>
+                                        @isset($res->duree)
+                                        /{{$res->duree}} h
+                                        @endisset
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr">
+                    <div class="row detail__formation__item__rmain">
+                        <div class="col-lg-4 detail__prix__main__prix">
+                            <div>
+                                <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 detail__prix__main__prix2">
+                            <div class="text-end">
+                                <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr">
+                    <div class="row detail__formation__item__main">
+                        <div class="col-lg-12 detail__prix__main__btn py-5">
+                            <button type="submit" class="btn">Demander un dévis</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        {{-- FIXME:mise en forme de design --}}
-        <div class="col-lg-3 detail__formation__item__right">
-            <div class="row detail__formation__item__main__head align-items-center">
-                <div class="detail__prix__head">
-                    <div class="detail__prix__text">
-                        <p class="pt-2"><b>INTRA</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row detail__formation__item__main">
-                <div class="detail__prix__main__presentiel pt-3">
-                    <div>
-                        <p class="text-uppercase">{{$res->modalite_formation}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row detail__formation__item__main">
-                <div class="col-lg-6 detail__prix__main__ref">
-                    <div>
-                        <p><i class="bx bx-clipboard"></i>&nbsp;Reference</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 detail__prix__main__ref2">
-                    <div>
-                        <p>{{ $res->reference }}</p>
-                    </div>
-                </div>
-            </div>
-            <hr class="hr">
-            <div class="row detail__formation__item__main">
-                <div class="col-lg-6 detail__prix__main__dure">
-                    <div>
-                        <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span></p>
-                    </div>
-                </div>
-                <div class="col-lg-6 detail__prix__main__dure2">
-                    <div>
-                        <p>
-                            <span>
-                                @isset($res->duree_jour)
-                                {{$res->duree_jour}} jours
-                                @endisset
-                            </span>
-                            <span>
-                                @isset($res->duree)
-                                /{{$res->duree}} h
-                                @endisset
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <hr class="hr">
-            <div class="row detail__formation__item__rmain">
-                <div class="col-lg-4 detail__prix__main__prix">
-                    <div>
-                        <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
-                    </div>
-                </div>
-                <div class="col-lg-8 detail__prix__main__prix2">
-                    <div class="text-end">
-                        <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
-
-                    </div>
-                </div>
-            </div>
-            <hr class="hr">
-            <div class="row detail__formation__item__main">
-                <div class="col-lg-12 detail__prix__main__btn py-5">
-                    <button type="submit" class="btn">Demander un dévis</button>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -590,34 +593,82 @@
 <script type="text/javascript">
     // CSRF Token
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $(document).ready(function(){
-          $( "#reference_search" ).autocomplete({
-            source: function( request, response ) {
-              // Fetch data
-              $.ajax({
-                url:"{{route('search__formation')}}",
-                type: 'get',
-                dataType: "json",
-                data: {
-                //    _token: CSRF_TOKEN,
-                   search: request.term
-                },
-                success: function( data ) {
-                    // alert("eto");
-                   response( data );
-                },error:function(data){
-                    alert("error");
-                    //alert(JSON.stringify(data));
-                }
-              });
+    $(document).ready(function(){
+        $( "#reference_search" ).autocomplete({
+        source: function( request, response ) {
+            // Fetch data
+            $.ajax({
+            url:"{{route('search__formation')}}",
+            type: 'get',
+            dataType: "json",
+            data: {
+            //    _token: CSRF_TOKEN,
+                search: request.term
             },
-            select: function (event, ui) {
-           // Set selection
-           $('#reference_search').val(ui.item.label); // display the selected text
-           return false;
-        }
-          });
+            success: function( data ) {
+                // alert("eto");
+                response( data );
+            },error:function(data){
+                alert("error");
+                //alert(JSON.stringify(data));
+            }
+            });
+        },
+        select: function (event, ui) {
+        // Set selection
+        $('#reference_search').val(ui.item.label); // display the selected text
+        return false;
+    }
         });
+    });
+
+        $(".suppression").on('click', function(e) {
+        let id = e.target.id;
+        $.ajax({
+            type: "GET"
+            , url: "{{route('suppression_cours')}}"
+            , data: {
+                Id: id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    $("#cours" + id).remove();
+                } else {
+                    alert("Error")
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+        $(".suppression_programme").on('click', function(e) {
+        let id = e.target.id;
+        $.ajax({
+            type: "GET"
+            , url: "{{route('suppression_programme')}}"
+            , data: {
+                Id: id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    $("#programme" + id).remove();
+                } else {
+                    alert("Error")
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $(".domaine").on('mouseover',function(e){
         var id = $(this).data("id");
         $.ajax({
@@ -632,7 +683,7 @@
             var domaine_id = userData[2];
             $('.sous-formation-row').html('');
             var html = '';
-             for (let i = 0; i < formations.length; i++) {
+            for (let i = 0; i < formations.length; i++) {
                 var url_formation = '{{ route("select_par_formation", ":id") }}';
                 url_formation = url_formation.replace(':id', formations[i].id);
                 html += '<dl class="sous-formation-items" data-role="two-menu">';
@@ -690,18 +741,18 @@
         $('#new_Cours2').append(html);
     });
 
-        $(document).on('click','#add_Cours3', function() {
-            var html = '';
-            html += '<span class="d-flex input_cours" id="headingcours">';
-            html += '<i class="bx bx-chevron-right pt-4">';
-            html += '</i>&nbsp;';
-            html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
-            html += '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-            html += '</i>';
-            html += '</span>';
+    $(document).on('click','#add_Cours3', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
 
-            $('#new_Cours3').append(html);
-        });
+        $('#new_Cours3').append(html);
+    });
 
     $(document).on('click','#add_Cours4', function() {
         var html = '';
@@ -833,18 +884,18 @@
         $('#newCours0').append(html);
     });
 
-        $(document).on('click','#addCours1', function() {
-            var html = '';
-            html += '<span class="d-flex input_cours" id="headingcours">';
-            html += '<i class="bx bx-chevron-right pt-4">';
-            html += '</i>&nbsp;';
-            html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
-            html += '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-            html += '</i>';
-            html += '</span>';
+    $(document).on('click','#addCours1', function() {
+        var html = '';
+        html += '<span class="d-flex input_cours" id="headingcours">';
+        html += '<i class="bx bx-chevron-right pt-4">';
+        html += '</i>&nbsp;';
+        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        html += '</i>';
+        html += '</span>';
 
-            $('#newCours1').append(html);
-        });
+        $('#newCours1').append(html);
+    });
 
     $(document).on('click','#addCours2', function() {
         var html = '';
@@ -992,6 +1043,8 @@
         html += '</div>';
 
         html += '</div>';
+        html += '</br>';
+
 
         $('#newProg').append(html);
         i = i+1;
@@ -1007,17 +1060,36 @@
     var acc = document.getElementsByClassName("accordion");
     var i;
 
-    // for (i = 0; i < acc.length; i++) {
-    //     acc[i].addEventListener("click", function() {
-    //         this.classList.toggle("active");
-    //         var panel = this.nextElementSibling;
-    //         if (panel.style.maxHeight) {
-    //             panel.style.maxHeight = "null";
-    //         } else {
-    //             panel.style.maxHeight = panel.scrollHeight + "%";
-    //         }
-    //     });
-    // }
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = "null";
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+
+    $( function() {
+    $( "#accordion" ).accordion();
+  } );
+
+    var accItem = document.getElementsByClassName('accordionItem');
+    var accHD = document.getElementsByClassName('accordionItemHeading');
+    for (i = 0; i < accHD.length; i++) {
+        accHD[i].addEventListener('click', toggleItem, false);
+    }
+    function toggleItem() {
+        var itemClass = this.parentNode.className;
+        for (i = 0; i < accItem.length; i++) {
+            accItem[i].className = 'accordionItem close';
+        }
+        if (itemClass == 'accordionItem close') {
+            this.parentNode.className = 'accordionItem open';
+        }
+    }
 
 </script>
 @endsection

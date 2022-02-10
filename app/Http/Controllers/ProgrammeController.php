@@ -59,15 +59,18 @@ class ProgrammeController extends Controller
     {
         $id = $request->id_module;
         $donnees = $request->all();
+
         for($i = 0; $i < count($donnees['titre_prog']); $i++){
-            $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)',[$donnees['titre_prog'][$i],$id]);
-            $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
-            for($j = 0; $j < count($donnees['cours']); $j++){
-                if ($donnees['cours'][$i] != null) {
-                    dd($donnees['cours']);
-                    $cour = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)',[$donnees['cours'][$j],$id_prog]);
+            if ($donnees['titre_prog'][$i] != null) {
+                $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)',[$donnees['titre_prog'][$i],$id]);
+                $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
+                for($j = 0; $j < count($donnees['cours_'.$i]); $j++){
+                    if ($donnees['cours_'.$i][$j] != null) {
+                        $cours = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)',[$donnees['cours_'.$i][$j],$id_prog]);
+                    }
                 }
             }
+
         }
 
         return redirect()->route('liste_module');
@@ -80,16 +83,28 @@ class ProgrammeController extends Controller
         $id_prog = $values_prog[0]->id;
         $values_cours = DB::select('select titre_cours,id from cours where programme_id = ?',[$id_prog]);
         $donnees = $request->all();
-        for($i = 0; $i < count($donnees['titre_prog']); $i++){
-            $prog = DB::update('update programmes set titre= replace(titre,?,?) where module_id = ?',[$values_prog[0]->titre,$donnees['titre_prog'][$i],$id]);
-            $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
 
-            for($j = 0; $j < count($donnees['cours']); $j++){
-                if ($donnees['cours'][$i] != null) {
-                    $cour = DB::update('update cours set titre_cours= replace(titre_cours,?,?) where programme_id = ?',[$values_cours[0]->titre_cours,$donnees['cours'][$j],$id_prog]);
-                }
+
+        //         IF EXISTS(select * from test where id=30122)
+        //    update test set name='john' where id=3012
+        // ELSE
+        //    insert into test(name) values('john');
+
+        //    update test set name='john' where id=3012
+        // IF @@ROWCOUNT=0
+        //    insert into test(name) values('john');
+        for($i = 0; $i < count($donnees['titre_prog']); $i++){
+            $prog = DB::update('update programmes set titre=? where module_id = ?',[$donnees['titre_prog'][$i],$id]);
+            if ($prog == 1) {
+                $prog_inst = DB::insert('insert into programmes(titre,module_id) values(?)',[$donnees['titre_prog'][$i],$id]);
             }
         }
+            // for($j = 0; $j < count($donnees['cours']); $j++){
+            //     if ($donnees['cours'][$i] != null) {
+            //         $cour = DB::update('update cours set titre_cours=? where programme_id = ?',[$donnees['cours'][$j],$id_prog]);
+            //     }
+            // }
+
 
         return redirect()->route('liste_module');
     }
@@ -169,4 +184,18 @@ class ProgrammeController extends Controller
         }
         else return redirect()->route('liste_module');
     }
+
+    public function suppre_programme(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from cours where programme_id = ?',[$id]);
+        DB::delete('delete from programmes where id = ?', [$id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
+
 }

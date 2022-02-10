@@ -292,25 +292,24 @@
                         </div> --}}
                         <form action="{{route('insert_prog_cours')}}" method="POST" class="w-100">
                             @csrf
-                            <div id="newProg"></div>
-                            <br>
                             <div class="row detail__formation__item__left__accordion">
-                                <span role="button" class="accordion accordion_prog"><input type="text"
-                                        class="form-control" name="titre_prog[]"
+                                 <span role="button" class="accordion accordion_prog"><input type="text"
+                                        class="form-control" name="titre_prog[0]"
                                         placeholder="Titre de votre programme"><i id="addProg"
                                         class="bx bxs-plus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px"
                                         role="button" title="ajouter un nouveau programme"></i></span>
                                 <div class="panel" id="heading2">
                                     <span class="d-flex input_cours"><i
                                             class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                            class="form-control" name="cours[]" placeholder="Votre cours"><i
+                                            class="form-control" name="cours_0[]" placeholder="Votre cours"><i
                                             id="addCours0" class="bx bx-plus-circle pt-3 ms-3 ps-2"
                                             style="font-size: 24px; color: #801D68" role="button"
                                             title="ajouter un nouveau cours"></i></span>
-
                                     <span id="newCours0"></span>
                                 </div>
                             </div>
+                            <br>
+                            <div id="newProg"></div>
                             <br>
                             <div class="form-row">
                                 <input type="hidden" value="{{$id}}" name="id_module">
@@ -588,7 +587,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_0[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -601,7 +600,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_1[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -614,7 +613,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_2[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -627,7 +626,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_3[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -640,7 +639,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_4[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -653,7 +652,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_5[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -666,7 +665,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_6[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -679,7 +678,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_7[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -692,7 +691,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_8[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -705,7 +704,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_9[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -718,7 +717,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_10[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -732,7 +731,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_11[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -745,7 +744,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_12[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -758,7 +757,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_13[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -771,7 +770,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_14[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -784,7 +783,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_15[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -797,7 +796,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_16[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -810,7 +809,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_17[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -823,7 +822,7 @@
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_18[]" placeholder="Votre cours">';
         html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';
@@ -835,7 +834,7 @@
     $(document).on('click', '#removeCours', function() {
         $(this).closest('#headingcours').remove();
     });
-    var i = 0;
+    var i = 1;
 
     $(document).on('click','#addProg', function() {
 
@@ -843,7 +842,7 @@
         html += '<div class="row detail__formation__item__left__accordion" id="heading1">';
 
         html += '<span role="button" class="accordion accordion_prog active">';
-        html += '<input type="text" class="form-control" name="titre_prog[]" placeholder="Titre de votre programme">';
+        html += '<input type="text" class="form-control" name="titre_prog['+i+']" placeholder="Titre de votre programme">';
         html += '<i id="removeProg" class="bx bxs-minus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button" title="ajouter un nouveau programme">';
         html += '</i>';
         html += '</span>';
@@ -852,7 +851,7 @@
         html += '<span class="d-flex input_cours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_'+i+'[]"  placeholder="Votre cours">';
         html += '<i id="addCours'+i+'" class="bx bx-plus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
         html += '</i>';
         html += '</span>';

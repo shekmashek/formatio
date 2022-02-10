@@ -94,4 +94,16 @@ class CoursControlleur extends Controller
         $datas = DB::select('select * from v_cours_programme where programme_id = ?', [$id_programme]);
         return view('admin.cours.liste_cours', compact('datas', 'id_programme'));
     }
+
+    public function suppre_cours(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from cours where id = ?', [$id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
 }
