@@ -765,7 +765,7 @@
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
-                                    <a href="#">
+                                    <a href="{{url('info_legale')}}">
                                         <p>Informations légales</p>
                                     </a>
                                 </div>

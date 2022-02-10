@@ -664,6 +664,11 @@ Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name(
 ///////__________RECHERCHE MULTICRITERE_____________________\\\\\\\\\
 Route::get('recherche_admin','RecherchemultiController@index')->name('recherche_admin');
 
+// route information légales
+Route::get('/info_legale', function () {
+    return view('/info_legale');
+});
+
 //route conditions generales de vente
 Route::get('condition_generale_de_vente','ConditionController@index')->name('condition_generale_de_vente');
 // Route::get('condition_generale_de_vente',function(){

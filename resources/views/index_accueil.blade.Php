@@ -116,7 +116,7 @@ Gérez votre entreprise ( dépenses, budgets, personnel, factures, données, év
 
                 <div class="d-flex justify-content-center pt-3">
                     <div class="bordure">&copy; Copyright 2022</div>
-                    <div class="bordure">Informations légales</div>
+                    <div class="bordure"><a href="{{url('info_legale')}}" style="color:#801D68 !important" target="_blank">Informations légales</a></div>
                     <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Contactez-nous</a></div>
                     <div class="bordure">Politique de confidentialités</div>
                     <div class="bordure" > <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
