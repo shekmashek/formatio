@@ -674,3 +674,4 @@ Route::get('gestion_documentaire','DocumentController@index')->name('gestion_doc
 Route::post('nouveau_dossier','DocumentController@store')->name('nouveau_dossier');
 Route::get('liste_fichier/{id}','DocumentController@show')->name('liste_fichier');
 Route::post('importation_fichier','DocumentController@importation_fichier')->name('importation_fichier');
+Route::get('download_file','DocumentController@download_file')->name('download_file');

@@ -13,6 +13,11 @@
         padding : 10px;
         border-radius: 5px;
     }
+    .liste_fichier{
+        border: 2px solid;
+        padding : 10px;
+        border-radius: 5px;
+    }
 </style>
 @section('content')
 <div class="container" style="padding-top: 50px">
@@ -37,35 +42,47 @@
         </div>
         <div class="col-md-1"><span class="vertical-line"></span></div>
         <div class="col-md-9">
-            @for($i = 0; $i < $nb_res; $i++)
-               <span class = "border border-dark sous_dossier"><i class="fa fa-folder"></i>&nbsp; <a href="#"> {{$res[$i]['filename']}} </a> </span> &nbsp;&nbsp;
-            @endfor
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="creer_dossier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Le nom de votre dossier</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form action="{{route('nouveau_dossier')}}" method="POST">
-                @csrf
-                <input type="text" class="form-control" name="nom_sous_dossier">
+            <div class="container">
+                <div class="row">
+                    @for($i = 0; $i < $nb_res; $i++)
+                    <div class="col-6 justify-content-around">
+                         <div class = "liste_fichier">
+                            @if($res[$i]['extension'] == "txt")
+                            <span>Fichier texte</span>
+                            @endif
+                            @if($res[$i]['extension'] == "html")
+                                <span>Fichier html</span>
+                            @endif
+                            @if($res[$i]['extension'] == "pdf")
+                                <span>Fichier pdf</span>
+                            @endif
 
+                            <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('download_file',['id'=>$id,'filename'=>$res[$i]['filename']])}}"> {{$res[$i]['filename'].'.'.$res[$i]['extension']}} </a> </span> &nbsp;&nbsp;
+                            <br>
+                        </div><br>
+                    </div><br>
+                    @endfor
                 </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-      </div>
+            </div>
+            {{-- @for($i = 0; $i < $nb_res; $i++)
+
+                    <div class = "liste_fichier col-md-6">
+                        @if($res[$i]['extension'] == "txt")
+                            <span>Fichier texte</span>
+                        @endif
+                        @if($res[$i]['extension'] == "html")
+                            <span>Fichier html</span>
+                        @endif
+                        @if($res[$i]['extension'] == "pdf")
+                            <span>Fichier pdf</span>
+                        @endif
+                        <span><i class="fa fa-file-download"></i>&nbsp; <a href="#"> {{$res[$i]['filename'].'.'.$res[$i]['extension']}} </a> </span> &nbsp;&nbsp;
+                        <br>
+                    </div>
+
+            @endfor --}}
+        </div>
     </div>
 </div>
-<!-- End Modal -->
+
 @endsection
