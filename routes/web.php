@@ -39,18 +39,21 @@ Route::get('all_formateurs','SessionController@getFormateur')->name('all_formate
 // end
 
 
-
 Auth::routes();
 
 Route::get('/user',function(){
     return view('suivi/user');
 });
 
-
 Route::get('/home/{id?}','HomeController@index')->name('home');
+Route::get('/hometdbf/{id?}','HomeControllerTDBF@index')->name('hometdbf');
+Route::get('/hometdbq/{id?}','HomeControllerTDBQ@index')->name('hometdbq');
+// tableau de bord pour le référent
+Route::get('/homertdbf/{id?}','HomeControllerRTDBF@index')->name('homertdbf');
+Route::get('/homertdbq/{id?}','HomeControllerRTDBQ@index')->name('homertdbq');
+
 
 Route::get('/liste_projet/{id?}', 'HomeController@liste_projet')->name('liste_projet');
-
 Route::get('/liste','HomeController@liste')->name('liste');
 Route::get('/compte','HomeController@compte')->name('compte');
 Route::get('/detail_projet/{id}','HomeController@detail')->name('detail_projet');
