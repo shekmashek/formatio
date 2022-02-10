@@ -354,26 +354,27 @@ create or replace view v_detail_projet_groupe as
     g.status as status_groupe,g.activiter as activiter_groupe
     from details d join projets p on d.projet_id = p.id
     join groupes g on d.groupe_id = g.id;
+
 create or replace view v_groupe as
-select
-groupes.id,
-min_participant,
-max_participant,
-nom_groupe,
-projet_id,
-module_id,
-date_debut,
-date_fin,
-groupes.status,
-groupes.activiter,
-projets.nom_projet,
-reference,nom_module,formation_id,prix,duree,duree_jour,objectif,
-nom_formation,domaine_id,
-nom_domaine
-from
-groupes,modules,formations,domaines,projets,entreprises
-where groupes.module_id = modules.id and formation_id = formations.id and domaine_id = domaines.id
-and projet_id = projets.id and entreprise_id = entreprises.id;
+    select
+        groupes.id,
+        min_participant,
+        max_participant,
+        nom_groupe,
+        projet_id,
+        module_id,
+        date_debut,
+        date_fin,
+        groupes.status,
+        groupes.activiter,
+        projets.nom_projet,
+        reference,nom_module,formation_id,prix,duree,duree_jour,objectif,
+        nom_formation,domaine_id,
+        nom_domaine
+    from
+    groupes,modules,formations,domaines,projets,entreprises
+    where groupes.module_id = modules.id and formation_id = formations.id and domaine_id = domaines.id
+    and projet_id = projets.id and entreprise_id = entreprises.id;
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.id AS stagiaire_id,

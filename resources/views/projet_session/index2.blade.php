@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 <div class="d-flex justify-content-end mb-3 me-2">
-    <a href="#" class="m-0 p-0" style="font-size: 16px;" data-toggle="modal" data-target="#new_projet"> <i class="fa fa-folder-plus ms-2" style="font-size: 22px; color:rgb(130,33,100);">&nbsp; Ajouter un nouveau projet</i> </a>
+    <a href="#" class="m-0 p-0" style="font-size: 16px;" data-toggle="modal" data-target="#new_projet"> <i class="fa fa-folder-plus ms-2" style="font-size: 13px; color:rgb(130,33,100);">&nbsp; Ajouter un nouveau projet</i> </a>
 </div>
 
 {{-- nouveau projet --}}
@@ -24,12 +24,11 @@
                         @csrf
 
                         <label for="etp">Entreprise</label><br>
-                        <select name="liste_etp" class=" form-control inputbox inputboxP mt-3" id="liste_etp" name="liste_etp">
-                            @foreach($entreprise as $li)
-                            <option value="{{$li->entreprise_id}}">{{$li->nom_etp}}</option>
+                        <select name="type_formation" class=" form-control inputbox inputboxP mt-3" id="liste_etp" required>
+                            @foreach($type_formation as $tf)
+                            <option value="{{$tf->id}}">{{$tf->type_formation}}</option>
                             @endforeach
                         </select>
-
                         @if(count($entreprise) <=0) <P><strong style="color: red">désoler,vous ne pouver pas créer un projet si vous n'avez pas encore collaborer avec des entreprises,merci!</strong> </p>
                             @endif
 
@@ -51,10 +50,8 @@
 {{-- <div class="card shadow mx-3 my-3 px-3 pt-3"> --}}
 <div class="shadow p-3 mb-5 bg-body rounded">
     <i class="far fa-caret-circle-down pb-3" data-toggle="collapse" href="#corps" role="button" aria-expanded="false"><a data-toggle="collapse" href="#corps" role="button" aria-expanded="false" aria-controls="collapseExample"> Janvier </a> </i>
+    @canany(['isCFP','isFormateur'])
     <div class="collapse" id="corps">
-
-
-
         @foreach ($projet as $prj)
 
         <h6> {{$prj->nom_projet.'('.$prj->totale_session.')'}}</h6>
@@ -98,7 +95,7 @@
                         @endcan
                         <td> {{ $pj->date_projet }} </td>
                         <td>
-                            <p class="en_cours m-0 p-0">{{ $pj->status }}</p>
+                            <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
                         </td>
                         <td>
                             <a href="#" class="" data-toggle="modal" data-target="#edit_prj_{{ $pj->projet_id }}"><i class="fa fa-edit"></i></a>
@@ -120,7 +117,7 @@
 
                                                     <span>Status du projet</span>
                                                     <div class="inputbox inputboxP mt-3">
-                                                        <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status_projet" value="{{ $pj->status }}" name="edit_status_projet" />
+                                                        <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status_projet" value="{{ $pj->status_projet }}" name="edit_status_projet" />
                                                         <datalist id="edit_status_projet">
                                                             <option>En Cours</option>
                                                             <option>Fini</option>
@@ -228,6 +225,34 @@
         @endforeach
 
     </div>
+    @endcanany
+    @canany(['isReferent'])
+    <div class="collapse" id="corps">
+        <table class="table table-stroped m-0 p-0">
+            <thead class="thead_projet">
+                <th>Projet</th>
+                <th> Session </th>
+                <th> Centre de formation </th>
+                <th> Date du projet</th>
+
+                <th> Statut </th>
+            </thead>
+            <tbody>
+                @foreach ($data as $pj)
+                    <tr>
+                        <td>{{ $pj->nom_projet }}</td>
+                        <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
+                        <td> {{ $pj->nom_cfp }} </td>
+                        <td> {{ date("d-m-Y",strtotime($pj->date_projet)) }} </td>
+                        <td>
+                            <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endcanany
 
 </div><br>
 

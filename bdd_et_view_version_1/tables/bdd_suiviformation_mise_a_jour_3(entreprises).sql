@@ -28,7 +28,7 @@ CREATE TABLE `secteurs` (
 INSERT INTO `secteurs` (`nom_secteur`) VALUES
 ('BTP & Ressources stratégiques(BTP/DS)'),
 ('Développement Rural(DR)'),
-('Technologies de l\'Information&Communication(TIC)'),
+('Technologies de l Information&Communication(TIC)'),
 ('Textile,Habillements&Accessoires(THA)'),
 ('Tourisme,Hôtellerie&Restauration(THR)'),
 ('Multi Sectoriel'),
@@ -164,6 +164,7 @@ CREATE TABLE `stagiaires` (
   `region` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lot` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE `historique_stagiaires` (
   `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,

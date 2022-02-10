@@ -75,8 +75,8 @@
                                                     </div>
                                                 </div>
 
-                                                <p>Téléphone: {{$projet->telephone_cfp}}</p>
-                                                <p>E-mail: <strong style="color: blue">{{$projet->email_cfp}}</strong> </p>
+                                                <p>Téléphone: {{$projet->tel_cfp}}</p>
+                                                <p>E-mail: <strong style="color: blue">{{$projet->mail_cfp}}</strong> </p>
                                             </div>
 
                                             </div>
@@ -86,7 +86,7 @@
 
                                         <h6 class="card-title my-2">Nom du projet: <strong style="color: green">{{$projet->nom_projet}}</strong> </h6>
                                         <h6 class="card-subtitle mb-2 text-muted">status: <strong style="color: rgb(145, 40, 231)"> {{$projet->status}} </strong></h6>
-                                        <p class="card-text">date de création: {{$projet->created_at}}</p>
+                                        <p class="card-text">date de création: {{date("d-m-Y", strtotime($projet->date_projet))}}</p>
                                     </div>
                                 </div>
 
@@ -145,17 +145,17 @@
                                             <td>{{ $grp->nom_formation }}</td>
                                             <td>{{ $grp->date_debut }}</td>
                                             <td>{{ $grp->date_fin }}</td>
-                                            <td>{{ $grp->status }}</td>
+                                            <td>{{ $grp->status_groupe }}</td>
                                             <td>
                                                 @canany(['isCFP'])
-                                                <button class="btn btn-success mb-2 payement"  data-toggle="modal" data-target="#edit_session_{{ $grp->id }}"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-success mb-2 payement"  data-toggle="modal" data-target="#edit_session_{{ $grp->groupe_id }}"><i class="fa fa-edit"></i></button>
                                                 @endcanany
 
                                             </td>
                                         </tr>
 
                                           {{-- debut modal encaissement --}}
-                        <div id="edit_session_{{ $grp->id }}"  class="modal fade" data-backdrop="true">
+                        <div id="edit_session_{{ $grp->groupe_id }}"  class="modal fade" data-backdrop="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -163,7 +163,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="card p-3 cardPayement">
-                                            <form action="{{ route('update_groupe',$grp->id) }}" id="zsxsq" method="POST">
+                                            <form action="{{ route('update_groupe',$grp->groupe_id) }}" id="zsxsq" method="POST">
                                                 @csrf
                                                 <span>{{ $grp->nom_groupe }}</span>
                                                 <div class="row">
@@ -189,7 +189,7 @@
                                                 </div>
                                                 <strong>Status du session</strong>
                                                 <div class="inputbox inputboxP mt-3">
-                                                    <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du session" list="edit_status" value="{{ $grp->status }}"  name="edit_status"/>
+                                                    <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du session" list="edit_status" value="{{ $grp->groupe_id }}"  name="edit_status"/>
                                                         <datalist id="edit_status">
                                                                 <option>En Cours</option>
                                                                 <option>Fini</option>

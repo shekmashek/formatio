@@ -39,7 +39,7 @@
                         </div>
                         <div>
                             <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>
-                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_cfp }}</strong></p>
+                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p>
                         </div>
                     </div>
                 </div>

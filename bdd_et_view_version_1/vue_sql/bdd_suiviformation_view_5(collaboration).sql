@@ -503,31 +503,32 @@ WHERE
 
 
 
-CREATE OR REPLACE VIEW v_participant_groupe AS SELECT
-    dm.*,
-    pg.stagiaire_id,
-    s.matricule,
-    s.nom_stagiaire,
-    s.prenom_stagiaire,
-    s.genre_stagiaire,
-    s.fonction_stagiaire,
-    s.mail_stagiaire,
-    s.telephone_stagiaire,
-    s.user_id AS user_id_stagiaire,
-    s.photos,
-    s.departement_id,
-    s.cin,
-    s.date_naissance,
-    (s.lot) adresse,
-    s.niveau_etude,
-    s.activiter AS activiter_stagiaire,
-    s.lieu_travail
-FROM
-    participant_groupe pg
-JOIN v_detailmodule dm ON
-    pg.groupe_id = dm.groupe_id
-JOIN stagiaires s ON
-    s.id = pg.stagiaire_id;
+CREATE OR REPLACE VIEW v_participant_groupe AS 
+    SELECT
+        dm.*,
+        pg.stagiaire_id,
+        s.matricule,
+        s.nom_stagiaire,
+        s.prenom_stagiaire,
+        s.genre_stagiaire,
+        s.fonction_stagiaire,
+        s.mail_stagiaire,
+        s.telephone_stagiaire,
+        s.user_id AS user_id_stagiaire,
+        s.photos,
+        s.departement_id,
+        s.cin,
+        s.date_naissance,
+        (s.lot) adresse,
+        s.niveau_etude,
+        s.activiter AS activiter_stagiaire,
+        s.lieu_travail
+    FROM
+        participant_groupe pg
+    JOIN v_detailmodule dm ON
+        pg.groupe_id = dm.groupe_id
+    JOIN stagiaires s ON
+        s.id = pg.stagiaire_id;
 
 
 CREATE OR REPLACE VIEW v_presence_detail AS SELECT
