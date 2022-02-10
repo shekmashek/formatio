@@ -69,9 +69,11 @@ class DocumentController extends Controller
         $nb_sub_folder = count($get_sub_folder);
         $listes = new getImageModel();
         $res = $listes->file_list($nom_cfp,$id);
+        dd($res);
         $nb_res = count($res);
         return view('document.liste_par_dossier',compact('id','get_nom_cfp','get_sub_folder','nb_sub_folder','res','nb_res'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
