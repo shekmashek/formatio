@@ -76,7 +76,7 @@
             </center> --}} 
                 
                         <select hidden  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
-                          <option value="Homme"  >Homme</option>
+                          <option value="{{$stagiaire->genre_stagiaire}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
                         </select>

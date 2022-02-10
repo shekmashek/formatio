@@ -124,12 +124,14 @@
                                     </p>
                                     </a>
                                    </div>
+                                   @can('isStagiare')
                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                     <a href="{{route('edit_edit_pwd',$stagiaire->id)}} " >
                                     <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     </a>
                                    </div>
+                                   @endcan
                                     <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                 </div>
                             </div>

@@ -677,14 +677,14 @@ class ParticipantController extends Controller
             $stagiaires = stagiaire::with('entreprise', 'Departement')->where('id', $id)->get();
         }
         // $stagiaire=stagiaire::findOrFail($id);
-        if(Gate::allows('isReferent') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
+        if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
         {
-            return view('admin.participant.profile', compact('stagiaires'));
+            return view('admin.participant.profiles', compact('stagiaires'));
 
         }
         else
         {
-        return view('admin.participant.profiles', compact('stagiaires'));
+        return view('admin.participant.profile', compact('stagiaires'));
             
         }
     }
@@ -705,7 +705,7 @@ class ParticipantController extends Controller
             //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
             $input = $request->image;
         if ($image = $request->file('image')) {
-            $destinationPath = 'image/stagiaires';
+            $destinationPath = 'images/stagiaires';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input= "$profileImage";
