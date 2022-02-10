@@ -86,14 +86,14 @@ class HomeController extends Controller
         }
         if (Gate::allows('isCFP')) {
             $user_id = User::where('id', Auth::user()->id)->value('id');
-            $centre_fp = cfp::where('user_id', $user_id)->value('id');
-            $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
-                year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
-                INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
-                year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
+            // $centre_fp = cfp::where('user_id', $user_id)->value('id');
+            // $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
+            //     year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
+            //     INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
+            //     year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
 
-            $CA_actuel = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where YEAR(invoice_date)=year(now()) and cfp_id = ' . $centre_fp . ' ');
-            $CA_precedent = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' ');
+            // $CA_actuel = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where YEAR(invoice_date)=year(now()) and cfp_id = ' . $centre_fp . ' ');
+            // $CA_precedent = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' ');
 
             // debut
             // $formations = formation::where('cfp_id', $centre_fp)->value('id');
@@ -102,20 +102,21 @@ class HomeController extends Controller
             // fin
 
             // debut top 10 par client
-
             // fin top 10 par client
-
             // dd($user_id, $centre_fp, $top_10_par_client);
-            return view('layouts.dashboard', compact('GChart', 'CA_actuel', 'CA_precedent'));
+
+            return view('layouts.dashboard');
         }
         // else {
         //     $totale_invitation = $this->collaboration->count_invitation();
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
         // }
+
         if (Gate::allows('isReferent')) {
             $user_id = User::where('id', Auth::user()->id)->value('id');
 
             return view('layouts.dashboard_referent');
+
         } else {
             $totale_invitation = $this->collaboration->count_invitation();
             return view('layouts.accueil_admin', compact('totale_invitation'));
