@@ -26,7 +26,7 @@ class ModuleController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -54,32 +54,31 @@ class ModuleController extends Controller
     public function index($id = null)
     {
         $id_user = Auth::user()->id;
-        $cfp_id =cfp::where('user_id', $id_user)->value('id');
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $fonct = new FonctionGenerique();
-        $cfp = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
+        $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
         if (Gate::allows('isCFP')) {
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             // $categorie = formation::where('cfp_id', $cfp_id)->get();
             $categorie = formation::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
                 select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id)');
-                $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
+            $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
                 select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1');
             $mod_publies = DB::select('select * from moduleformation where status = 2');
 
-            if(count($infos) <= 0){
+            if (count($infos) <= 0) {
                 return view('admin.module.guide');
-            }else{
-                return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies','cfp'));
+            } else {
+                return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp'));
             }
-
         }
         if (Gate::allows('isSuperAdmin')) {
             $infos = DB::select('select * from moduleformation');
             $categorie = formation::all();
         }
 
-        return view('admin.module.module', compact('infos', 'categorie','mod_en_cours','mod_non_publies','mod_publies'));
+        return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies'));
     }
 
     /*   ====================  Generate PDF gestion de Catalogue     */
@@ -126,15 +125,16 @@ class ModuleController extends Controller
     public function create()
     {
         $fonct = new FonctionGenerique();
-            $domaine = $fonct->findAll("domaines");
-            $liste = formation::orderBy('nom_formation')->get();
-            $niveau = Niveau::all();
-        return view('admin.module.nouveauModule', compact('domaine','liste', 'niveau'));
+        $domaine = $fonct->findAll("domaines");
+        $liste = formation::orderBy('nom_formation')->get();
+        $niveau = Niveau::all();
+        return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau'));
     }
 
-    public function get_formation(Request $req){
+    public function get_formation(Request $req)
+    {
         $fonct = new FonctionGenerique();
-        $formation = $fonct->findWhere("formations",["domaine_id"],[$req->id]);
+        $formation = $fonct->findWhere("formations", ["domaine_id"], [$req->id]);
         return response()->json($formation);
     }
 
@@ -159,8 +159,10 @@ class ModuleController extends Controller
 
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
-        $validator = Validator::make($request->all(), [
-            'reference' => 'required',
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'reference' => 'required',
                 'nom_module' => 'required',
                 'prix' =>  'required',
                 'heure' => 'required',
@@ -174,9 +176,10 @@ class ModuleController extends Controller
                 'prestation' => 'required',
                 'min_pers' => 'required',
                 'max_pers' => 'required'
-        ],
-        ['reference.required' => 'Veuillez remplir le champ',
-        'nom_module.required' => 'Veuillez remplir le champ',
+            ],
+            [
+                'reference.required' => 'Veuillez remplir le champ',
+                'nom_module.required' => 'Veuillez remplir le champ',
                 'prix.required' => 'Veuillez remplir le champ',
                 'heure.required' => ["Veuillez remplir le champ"],
                 'jour.required' => 'Veuillez remplir le champ',
@@ -189,16 +192,15 @@ class ModuleController extends Controller
                 'prestation.required' => 'Veuillez remplir le champ',
                 'min_pers.required' => 'Veuillez remplir le champ',
                 'max_pers.required' => 'Veuillez remplir le champ'
-                ]
+            ]
 
-    );
+        );
         if ($validator->fails()) {
             return back();
         } else {
-            DB::insert('insert into modules(reference,nom_module,formation_id,prix,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?)',[$request->reference,$request->nom_module,$request->categorie,$request->prix,$request->heure,$request->jour,$request->prerequis,$request->objectif,$request->description,$request->modalite,$request->materiel,$request->niveau,$request->cible,$request->bon_a_savoir,$request->prestation,$request->min_pers,$request->max_pers,$cfp_id]);
+            DB::insert('insert into modules(reference,nom_module,formation_id,prix,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?)', [$request->reference, $request->nom_module, $request->categorie, $request->prix, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->description, $request->modalite, $request->materiel, $request->niveau, $request->cible, $request->bon_a_savoir, $request->prestation, $request->min_pers, $request->max_pers, $cfp_id]);
             return redirect()->route('liste_module');
         }
-
     }
 
 
@@ -219,7 +221,7 @@ class ModuleController extends Controller
     public function affichage(Request $request)
     {
         $id = $request->Id;
-        $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        $module_en_cours = DB::select('select * from moduleformation where module_id = ?', [$id]);
         // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
         return response()->json($module_en_cours);
     }
@@ -232,15 +234,14 @@ class ModuleController extends Controller
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
 
             $niveau = Niveau::all();
-            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         } else {
 
             $niveau = Niveau::all();
-            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
-
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
 
-        return view('admin.module.modif_module',compact('module_en_modif', 'niveau'));
+        return view('admin.module.modif_module', compact('module_en_modif', 'niveau'));
     }
 
     public function modifier_mod_prog(Request $request)
@@ -251,15 +252,14 @@ class ModuleController extends Controller
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
 
             $niveau = Niveau::all();
-            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         } else {
 
             $niveau = Niveau::all();
-            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
-
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
 
-        return view('admin.module.modif_module_prog',compact('module_en_modif', 'niveau'));
+        return view('admin.module.modif_module_prog', compact('module_en_modif', 'niveau'));
     }
 
     public function modifier_mod_publies(Request $request)
@@ -270,22 +270,21 @@ class ModuleController extends Controller
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
 
             $niveau = Niveau::all();
-            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         } else {
 
             $niveau = Niveau::all();
-            $module_en_modif = DB::select('select * from moduleformation where module_id = ?',[$id]);
-
+            $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
 
-        return view('admin.module.modif_module_publies',compact('module_en_modif', 'niveau'));
+        return view('admin.module.modif_module_publies', compact('module_en_modif', 'niveau'));
     }
 
     public function update(Request $request)
     {
         $id = $request->id;
         //modifier les donnée
-        DB::update('update modules set reference=?, nom_module=?, prix=?, duree=?, duree_jour=?, prerequis=?, objectif=?, modalite_formation=?, description=?, materiel_necessaire=?, bon_a_savoir=?, cible=?, prestation=?, min=?, max=? where id=?',[$request->reference,$request->nom_module,$request->prix,$request->heure,$request->jour,$request->prerequis,$request->objectif,$request->modalite,$request->description,$request->materiel,$request->bon_a_savoir,$request->cible,$request->prestation,$request->min_pers,$request->max_pers,$request->id]);
+        DB::update('update modules set reference=?, nom_module=?, prix=?, duree=?, duree_jour=?, prerequis=?, objectif=?, modalite_formation=?, description=?, materiel_necessaire=?, bon_a_savoir=?, cible=?, prestation=?, min=?, max=? where id=?', [$request->reference, $request->nom_module, $request->prix, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->modalite, $request->description, $request->materiel, $request->bon_a_savoir, $request->cible, $request->prestation, $request->min_pers, $request->max_pers, $request->id]);
 
         return redirect()->route('liste_module');
     }
@@ -293,8 +292,9 @@ class ModuleController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->Id;
-        $module = module::find($id);
-        $module->delete();
+        // $module = module::find($id);
+        //   $module->delete();
+        DB::delete('delete from modules where id = ?', [$id]);
         return response()->json(
             [
                 'success' => true,
@@ -343,7 +343,7 @@ class ModuleController extends Controller
             $categorie = formation::where('nom_formation', $ctg)->get();
         }
         $formation_id = formation::where('nom_formation', $ctg)->value('id');
-        $module =module::where('formation_id', $formation_id)->get();
+        $module = module::where('formation_id', $formation_id)->get();
         return view('admin.module.module', compact('categorie', 'module'));
     }
     public function getCategorie(Request $request)
@@ -361,10 +361,11 @@ class ModuleController extends Controller
         return response()->json($response);
     }
 
-    public function module_publier(Request $request){
+    public function module_publier(Request $request)
+    {
         $id = $request->id;
         $statut = 2;
-        $changer_status = DB::update('update modules set status=? where id= ?',[$statut,$id]);
+        $changer_status = DB::update('update modules set status=? where id= ?', [$statut, $id]);
         return back();
     }
 }

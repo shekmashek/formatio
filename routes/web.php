@@ -64,6 +64,7 @@ Route::get('admin_count_etp','AdminController@admin_etp')->name('admin_count_etp
 Route::get('collaboration_cfp','HomeController@collaboration_cfps')->name('collaboration_cfp');
 Route::get('collaboration_etp','HomeController@collaboration_etp')->name('collaboration_etp');
 Route::get('collaboration_frmt','HomeController@collaboration_frmt')->name('collaboration_frmt');
+Route::get('/image-cfp/{logo_cfp}','CfpController@img_cfp')->name('image-cfp');
 
 Route::get('listes_notifs','HomeController@liste_notification')->name('listes_notifs');
 Route::get('listes_messages','HomeController@liste_message')->name('listes_messages');

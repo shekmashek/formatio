@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use App\Mail\ReferentMail;
 use App\Models\getImageModel;
 use PDF;
@@ -97,7 +97,7 @@ class ResponsableController extends Controller
         $resp->photos = $nom_image;
         //enregistrer les emails , name et mot de passe dans user
         $user = new User();
-        $user->name = $request->nom. " " . $request->prenom;
+        $user->name = $request->nom . " " . $request->prenom;
         $user->email = $request->mail;
 
         $user->cin = $request->cin;
@@ -220,9 +220,16 @@ class ResponsableController extends Controller
     {
         $id = $request->id;
         $resp = Responsable::findOrFail($id);
-
-        $sup = User::where('id', $resp->user_id)->delete();
-        $del = Responsable::where('id', $id)->delete();
+        DB::beginTransaction();
+        try {
+            DB::delete('delete from responsables where id = ?', [$id]);
+            DB::delete('delete from users where id = ?', [$id]);
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
+        //  $sup = User::where('id', $resp->user_id)->delete();
+        //  $del = Responsable::where('id', $id)->delete();
         File::delete("images/responsables/" . $resp->photos);
 
         return back();

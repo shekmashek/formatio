@@ -36,10 +36,10 @@ class NouveauCompteController extends Controller
     public function index_create_compte_employeur()
     {
         $secteur = $this->fonct->findAll("secteurs");
-        return view('create_compte.create_compte_client',compact('secteur'));
+        return view('create_compte.create_compte_client', compact('secteur'));
     }
 
-// ------------------------------------------------
+    // ------------------------------------------------
     public function verify_cin_user(Request $req)
     {
         $data = $this->new_compte->verify_cin_user($req->valiny);
@@ -58,7 +58,7 @@ class NouveauCompteController extends Controller
         return response()->json($data);
     }
 
-// ------------------------------------------------
+    // ------------------------------------------------
 
     public function verify_nif_cfp(Request $req)
     {
@@ -194,7 +194,7 @@ class NouveauCompteController extends Controller
                     $this->user->password = Hash::make($ch1);
                     $this->user->role_id = '2';
 
-                     $this->user->save();
+                    $this->user->save();
 
                     $user_id = User::where('email', $req->email_resp_etp)->value('id');
 

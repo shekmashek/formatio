@@ -10,6 +10,7 @@ use App\groupe;
 use App\projet;
 use App\cfp;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
 
 class GroupeController extends Controller
 {
@@ -123,7 +124,8 @@ class GroupeController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id_get;
-        $del = groupe::where('id', $id)->delete();
+       // $del = groupe::where('id', $id)->delete();
+       DB::delete('delete from groupes where id = ?', [$id]);
         return back();
     }
 }

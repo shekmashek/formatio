@@ -252,6 +252,7 @@ class ProfController extends Controller
             DB::beginTransaction();
             try {
                 DB::delete('delete from formateurs where id = ?', [$id_formateur]);
+                DB::delete('delete from users where id = ?', [$user_id]);
             } catch (Exception $e) {
                 DB::rollback();
                 echo $e->getMessage();

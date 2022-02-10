@@ -126,9 +126,13 @@ class ChefDepartementController extends Controller
         $id = $request->id_get;
         $chef = chefDepartement::findOrFail($id);
         $user_id = chefDepartement::where('id', $id)->value('user_id');
-        $del = chefDepartement::where('id', $id)->delete();
-        $del_user = User::where('id', $user_id)->delete();
-        $huhu = chefDepartementEntreprise::where('chef_departement_id',$id)->delete();
+       DB::delete('delete from chef_departements where id = ?', [$id]);
+       DB::delete('delete from user where id = ?', [$user_id]);
+       DB::delete('delete from chef_dep_entreprises where id = ?', [$id]);
+
+       // $del = chefDepartement::where('id', $id)->delete();
+       // $del_user = User::where('id', $user_id)->delete();
+     //   $huhu = chefDepartementEntreprise::where('chef_departement_id',$id)->delete();
         File::delete("images/chefDepartement/".$chef->photos);
 
         return back();

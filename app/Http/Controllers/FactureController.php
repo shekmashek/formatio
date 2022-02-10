@@ -188,6 +188,7 @@ class FactureController extends Controller
             return $this->listeFacture_referent($id);
         }
     }
+
     public function detail_facture($numero_fact)
     {
         $user_id = Auth::user()->id;

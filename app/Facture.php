@@ -212,8 +212,17 @@ return $this->int2str((int)($a/1000)).' '.$this->int2str(1000).' '.$this->int2st
     }
 
     public function suprime($num_facture,$cfp_id){
-        $res=Facture::where('num_facture',$num_facture)->delete();
-        DB::delete('delete from factures where num_facture = ? and cfp_id', [$num_facture,$cfp_id]);
+        DB::beginTransaction();
+        try
+        {
+            DB::delete('delete from factures where num_facture = ? and cfp_id=?', [$num_facture,$cfp_id]);
+            DB::delete('delete from montant_frais_annexes where num_facture = ? and cfp_id=?', [$num_facture,$cfp_id]);
+            DB::delete('delete from encaissements where num_facture = ? and cfp_id=?', [$num_facture,$cfp_id]);
+        } catch(Exception $e){
+            DB::rollback();
+            echo $e->getMessage();
+        }
+
     }
 
     public function suprime_frais_annexe($num_facture,$cfp_id){

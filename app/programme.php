@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\FonctionGenerique;
 
@@ -65,7 +66,8 @@ class Programme extends Model
 
     public function supression($id){
 
-        $res=programme::where('id',$id)->delete();
+      //  $res=programme::where('id',$id)->delete();
+        $res=DB::delete('delete from programmes where id = ?', [$id]);
         if ($res){
           $data=[
           'success'=>'supression du programme est effectuer!'

@@ -14,42 +14,40 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+
 class UtilisateurControlleur extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
     public function index($id = null)
     {
-        $liste =entreprise::orderBy('nom_etp')->get();
-        if($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
+        $liste = entreprise::orderBy('nom_etp')->get();
+        if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
         else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
-        return view('admin.utilisateur.utilisateur',compact('datas','liste'));
+        return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
     }
 
-    public function create($id=null)
+    public function create($id = null)
     {
         $liste = entreprise::orderBy('nom_etp')->get();
-        if($id) $datas = stagiaire::orderBy('nom_stagiaire')->with('entreprise')->take($id)->get();
+        if ($id) $datas = stagiaire::orderBy('nom_stagiaire')->with('entreprise')->take($id)->get();
         else  $datas = stagiaire::orderBy("nom_stagiaire")->with('entreprise')->get();
-        return view('admin.utilisateur.utilisateur_stagiaire',compact('datas','liste'));
+        return view('admin.utilisateur.utilisateur_stagiaire', compact('datas', 'liste'));
     }
-    public function liste_formateur(){
+    public function liste_formateur()
+    {
         $datas = formateur::orderBy("nom_formateur")->get();
-         if(count($datas)<=0){
-                return view('admin.utilisateur.guide');
-
-            }
-            else{
-        return view('admin.utilisateur.utilisateur_formateur',compact('datas'));
-
-            }
-
+        if (count($datas) <= 0) {
+            return view('admin.utilisateur.guide');
+        } else {
+            return view('admin.utilisateur.utilisateur_formateur', compact('datas'));
+        }
     }
 
     public function store(Request $request)
@@ -61,7 +59,7 @@ class UtilisateurControlleur extends Controller
     {
         $users = User::where('role_id', '1')->get();
         $liste = entreprise::orderBy('nom_etp')->get();
-        return view('admin/utilisateur/admin', compact('liste','users'));
+        return view('admin/utilisateur/admin', compact('liste', 'users'));
     }
     public function new_admin(Request $request)
     {
@@ -71,9 +69,9 @@ class UtilisateurControlleur extends Controller
         $user->password = $request->password_new_user;
 
         $password = $user->password;
-            $hashedPwd = Hash::make($password);
-            $user->password = $hashedPwd;
-            $user->role_id = $request->role_id;
+        $hashedPwd = Hash::make($password);
+        $user->password = $hashedPwd;
+        $user->role_id = $request->role_id;
 
         $user->save();
         return back();
@@ -89,12 +87,19 @@ class UtilisateurControlleur extends Controller
     {
         $liste = entreprise::orderBy('nom_etp')->get();
         $supers = User::where('role_id', '6')->get();
-        return view('admin/utilisateur/superAdmin', compact('liste','supers'));
+        return view('admin/utilisateur/superAdmin', compact('liste', 'supers'));
     }
 
     public function delete_cfp($id)
     {
-        $del = cfp::where('id', $id)->delete();
+        //$del = cfp::where('id', $id)->delete();
+        DB::beginTransaction();
+        try {
+            DB::delete('delete from cfps where id = ?', [$id]);
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
         return redirect('utilisateur_cfp');
     }
     public function new_cfp()
@@ -105,8 +110,8 @@ class UtilisateurControlleur extends Controller
     public function profil_cfp($id)
     {
         // $liste_cfps = cfp::findOrFail($id)->get();
-        $liste_cfps = DB::select('select * from cfps where id = '.$id);
-        return view('admin.utilisateur.profil_cfp',compact('liste_cfps'));
+        $liste_cfps = DB::select('select * from cfps where id = ' . $id);
+        return view('admin.utilisateur.profil_cfp', compact('liste_cfps'));
     }
     public function register_cfp(Request $request)
     {
@@ -130,15 +135,15 @@ class UtilisateurControlleur extends Controller
         $user->name = $request->nom;
         $user->email = $request->email;
         $ch1 = $request->nom;
-        $ch2 = substr($request->telephone,8,2);
-        $user->password = Hash::make($ch1.$ch2);
+        $ch2 = substr($request->telephone, 8, 2);
+        $user->password = Hash::make($ch1 . $ch2);
         $user->role_id = '7';
         $user->save();
         //get user id
-        $user_id = User::where('email',$request->email)->value('id');
+        $user_id = User::where('email', $request->email)->value('id');
 
         $date = date('d-m-Y');
-        $nom_image = str_replace(' ', '_', $request->nom.''.$date.'.'.$request->logo->extension());
+        $nom_image = str_replace(' ', '_', $request->nom . '' . $date . '.' . $request->logo->extension());
 
         $str = 'images/CFP';
 
@@ -146,7 +151,7 @@ class UtilisateurControlleur extends Controller
 
         $dossier = 'entreprise';
         $stock_cfp = new getImageModel();
-        $stock_cfp->store_image($dossier,$nom_image,$request->file('logo')->getContent());
+        $stock_cfp->store_image($dossier, $nom_image, $request->file('logo')->getContent());
         // $request->logo->move(public_path($str), $nom_image);
 
         $new_cfp->logo = $nom_image;
@@ -159,7 +164,7 @@ class UtilisateurControlleur extends Controller
     }
     public function update_cfp(Request $request, $id)
     {
-        $update_cfp = cfp::where('id',$id)->update([
+        $update_cfp = cfp::where('id', $id)->update([
             'nom' => $request->get('nom_cfp'),
             'adresse_lot' => $request->get('adresse_lot'),
             'adresse_ville' => $request->get('adresse_ville'),
@@ -179,21 +184,21 @@ class UtilisateurControlleur extends Controller
     public function show($id)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
-        $datas = responsable::orderBy('nom_resp')->where('entreprise_id',$id)->get();
-        return view('admin.utilisateur.utilisateur',compact('datas','liste'));
+        $datas = responsable::orderBy('nom_resp')->where('entreprise_id', $id)->get();
+        return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
     }
     public function show_stagiaire($id)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
-        $datas = stagiaire::orderBy('nom_stagiaire')->where('entreprise_id',$id)->get();
-        return view('admin.utilisateur.utilisateur_stagiaire',compact('datas','liste'));
+        $datas = stagiaire::orderBy('nom_stagiaire')->where('entreprise_id', $id)->get();
+        return view('admin.utilisateur.utilisateur_stagiaire', compact('datas', 'liste'));
     }
 
 
     public function edit(Request $request)
     {
         $id = $request->Id;
-        $user= User::where('id',$id)->get();
+        $user = User::where('id', $id)->get();
         return response()->json($user);
     }
 
@@ -204,8 +209,9 @@ class UtilisateurControlleur extends Controller
         $nom = $request->Nom;
         $mail = $request->Mail;
         User::where('id', $id)
-                ->update(['name' =>$nom,
-                            'email' => $mail
+            ->update([
+                'name' => $nom,
+                'email' => $mail
             ]);
         return redirect()->route('liste_utilisateur');
     }
@@ -213,8 +219,15 @@ class UtilisateurControlleur extends Controller
     public function destroy(Request $request)
     {
         $id = $request->Id;
-        $user = User::find($id);
-        $user->delete();
+        //   $user = User::find($id);
+        //   $user->delete();
+        DB::beginTransaction();
+        try {
+            DB::delete('delete from users where id = ?', [$id]);
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
         return response()->json(
             [
                 'success' => true,

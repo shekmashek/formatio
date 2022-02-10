@@ -81,7 +81,7 @@
 
                                 <div class="col-md-3">
                                     <div align="right">
-                                        <h6><img src="{{'entreprises/'.$cfp->logo }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
+                                        <h6><img src="/image-cfp/{{$cfp->logo }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
                                         <h5><strong>{{$cfp->nom}}</strong></h5>
                                         <h6>adresse: {{$cfp->adresse_lot}}</h6>
                                         <h6>ville: {{$cfp->adresse_ville}}</h6>
@@ -321,31 +321,6 @@
                                     </div>
 
 
-                                    <div class="row">
-                                        <div class="col-md-4"></div>
-                                        <div class="col-md-4"></div>
-                                        <div class="col-md-4">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="d-flex">
-                                                        <td><strong>Net à payer TTC(Ariary)</strong></td>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="d-flex">
-                                                        <td>
-                                                            <div align="right">
-                                                                {{-- {{number_format($montant_totale->net_ht,2,",",".")}} --}}
-                                                                {{number_format($montant_totale->net_ttc,2,",",".")}}
-                                                            </div>
-                                                        </td>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                    </div>
-
                                     @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
 
                                     <div class="row">
@@ -373,6 +348,31 @@
                                     </div>
 
                                     @endif
+
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="d-flex">
+                                                        <td><strong>Net à payer TTC(Ariary)</strong></td>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="d-flex">
+                                                        <td>
+                                                            <div align="right">
+                                                                {{-- {{number_format($montant_totale->net_ttc,2,",",".")}} --}}
+                                                                               {{number_format($montant_totale->montant_total,2,",",".")}}
+                                                            </div>
+                                                        </td>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-4"></div>

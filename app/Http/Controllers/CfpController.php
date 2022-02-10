@@ -7,15 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 use App\responsable;
-use App\DepartementEntreprise;
-use App\User;
-use App\cfp;
-use App\Secteur;
 use App\Mail\entrepriseMail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
-
-
+use App\Models\getImageModel;
 
 class CfpController extends Controller
 {
@@ -41,8 +36,12 @@ class CfpController extends Controller
         $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp",["entreprise_id"],[$entreprise_id]);
         $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp",["entreprise_id"],[$entreprise_id]);
         $cfp = $fonct->concatTwoList($etp1Collaborer,$etp2Collaborer);
-// dd($demmande);
         return view('cfp.cfp', compact('cfp','refuse_demmande_cfp','invitation'));
+    }
 
+    public function img_cfp($logo_cfp){
+        $get_img = new getImageModel();
+        $dossier = 'entreprise';
+        return $get_img->get_image($logo_cfp,$dossier);
     }
 }

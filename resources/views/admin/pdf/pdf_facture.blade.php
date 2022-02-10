@@ -314,16 +314,6 @@
                                     </td>
                                 </tr>
 
-                                <tr align="right">
-
-                                    <td colspan="5"><strong>Net à Payer TTC(Ariary)</strong></td>
-                                    <td>
-                                        <div align="right" class="table-success">
-                                            <strong>{{number_format($montant_totale->net_ttc,2,",",".")}}</strong>
-                                        </div>
-                                    </td>
-                                </tr>
-
                                 @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
 
                                 <tr align="right">
@@ -336,11 +326,22 @@
                                     </td>
                                 </tr>
                                 @endif
+
+                                <tr align="right">
+
+                                    <td colspan="5"><strong>Net à Payer TTC(Ariary)</strong></td>
+                                    <td>
+                                        <div align="right">
+                                            <strong>{{number_format($montant_totale->montant_total,2,",",".")}}</strong>
+                                        </div>
+                                    </td>
+                                </tr>
+
                                 <tr align="right">
 
                                     <td colspan="5"><strong>Reste à Payer(Ariary)</strong></td>
                                     <td>
-                                        <div align="right">
+                                        <div align="right" class="table-success">
                                             <strong>{{number_format( $montant_totale->dernier_montant_ouvert,2,",",".")}}</strong>
                                         </div>
                                     </td>
