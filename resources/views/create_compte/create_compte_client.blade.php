@@ -73,16 +73,14 @@
 <div class="row justify-content-center">
     <div class="col-md-12">
 
-        <form action="{{route('create_compte_employeur')}}" id="msform" method="POST" enctype="multipart/form-data">
+        <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
             @csrf
-            <!-- progressbar -->
-            <ul id="progressbar_create_compte" class="mb-1">
+            <ul id="progressbars" class="mb-1">
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>
                 <li id="confirm"></li>
-                {{-- <li id="etape5"></li> --}}
-            </ul> <!-- fieldsets -->
+            </ul>
 
             <div id="formulaire">
 

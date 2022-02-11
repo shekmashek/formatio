@@ -12,13 +12,13 @@ html {
     background-image: linear-gradient(120deg, #FF4081, #801D68)
 }
 
-#msform {
+#msform_facture {
     text-align: center;
     position: relative;
 
 }
 
-#msform fieldset .form-card {
+#msform_facture fieldset .form-card {
     background: white;
     border: 0 none;
     border-radius: 0px;
@@ -30,7 +30,7 @@ html {
     position: relative
 }
 
-#msform fieldset {
+#msform_facture fieldset {
     background: white;
     border: 0 none;
     border-radius: 0.5rem;
@@ -41,17 +41,17 @@ html {
     position: relative
 }
 
-#msform fieldset:not(:first-of-type) {
+#msform_facture fieldset:not(:first-of-type) {
     display: none
 }
 
-#msform fieldset .form-card {
+#msform_facture fieldset .form-card {
     text-align: left;
     color: #9E9E9E
 }
 
-#msform input,
-#msform textarea {
+#msform_facture input,
+#msform_facture textarea {
     padding: 0px 8px 4px 8px;
     /* border: none; */
     border: 1px solid #ccc;
@@ -66,8 +66,8 @@ html {
     letter-spacing: 1px
 }
 
-#msform input:focus,
-#msform textarea:focus {
+#msform_facture input:focus,
+#msform_facture textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -77,7 +77,7 @@ html {
     outline-width: 0
 }
 
-#msform .action-button {
+#msform_facture .action-button {
     width: 100px;
     background: #801D68;
     font-weight: bold;
@@ -89,12 +89,12 @@ html {
     margin: 10px 5px
 }
 
-#msform .action-button:hover,
-#msform .action-button:focus {
+#msform_facture .action-button:hover,
+#msform_facture .action-button:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #801D68
 }
 
-#msform .action-button-previous {
+#msform_facture .action-button-previous {
     width: 100px;
     background: #616161;
     font-weight: bold;
@@ -106,8 +106,8 @@ html {
     margin: 10px 5px
 }
 
-#msform .action-button-previous:hover,
-#msform .action-button-previous:focus {
+#msform_facture .action-button-previous:hover,
+#msform_facture .action-button-previous:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
 }
 
@@ -124,274 +124,7 @@ select.list-dt:focus {
 }
 
 .card {
-    z-index: 0;* {
-        margin: 0;
-        padding: 0
-    }
-
-    html {
-        height: 100%
-    }
-
-    #grad1 {
-        background-color:  #9C27B0;
-        background-image: linear-gradient(120deg, #FF4081, #801D68)
-    }
-
-    #msform_facture {
-        text-align: center;
-        position: relative;
-
-    }
-
-    #msform_facture fieldset .form-card {
-        background: white;
-        border: 0 none;
-        border-radius: 0px;
-        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-        padding: 20px 40px 30px 40px;
-        box-sizing: border-box;
-        width: 94%;
-        margin: 0 3% 20px 3%;
-        position: relative
-    }
-
-    #msform_facture fieldset {
-        background: white;
-        border: 0 none;
-        border-radius: 0.5rem;
-        box-sizing: border-box;
-        width: 100%;
-        margin: 0;
-        padding-bottom: 20px;
-        position: relative
-    }
-
-    #msform_facture fieldset:not(:first-of-type) {
-        display: none
-    }
-
-    #msform_facture fieldset .form-card {
-        text-align: left;
-        color: #9E9E9E
-    }
-
-    #msform_facture input,
-    #msform_facture textarea {
-        padding: 0px 8px 4px 8px;
-        /* border: none; */
-        border: 1px solid #ccc;
-        border-radius: 0px;
-        margin-bottom: 25px;
-        margin-top: 2px;
-        width: 100%;
-        box-sizing: border-box;
-        font-family: montserrat;
-        color: #2C3E50;
-        font-size: 16px;
-        letter-spacing: 1px
-    }
-
-    #msform_facture input:focus,
-    #msform_facture textarea:focus {
-        -moz-box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        border: none;
-        font-weight: bold;
-        border-bottom: 2px solid #801D68;
-        outline-width: 0
-    }
-
-    #msform_facture .action-button {
-        width: 100px;
-        background: #801D68;
-        font-weight: bold;
-        color: white;
-        border: 0 none;
-        border-radius: 0px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px
-    }
-
-    #msform_facture .action-button:hover,
-    #msform_facture .action-button:focus {
-        box-shadow: 0 0 0 2px white, 0 0 0 3px #801D68
-    }
-
-    #msform_facture .action-button-previous {
-        width: 100px;
-        background: #616161;
-        font-weight: bold;
-        color: white;
-        border: 0 none;
-        border-radius: 0px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px
-    }
-
-    #msform_facture .action-button-previous:hover,
-    #msform_facture .action-button-previous:focus {
-        box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
-    }
-
-    select.list-dt {
-        border: none;
-        outline: 0;
-        border-bottom: 1px solid #ccc;
-        padding: 2px 5px 3px 5px;
-        margin: 2px
-    }
-
-    select.list-dt:focus {
-        border-bottom: 2px solid #801D68
-    }
-
-    .card {
-        z-index: 0;
-        border: none;
-        border-radius: 0.5rem;
-        position: relative
-    }
-
-    .fs-title {
-        font-size: 25px;
-        color: #2C3E50;
-        margin-bottom: 10px;
-        font-weight: bold;
-        text-align: left
-    }
-
-    #progressbar_create_compte {
-        margin-bottom: 30px;
-        overflow: hidden;
-        color: lightgrey;
-        height: 4.7rem !important;
-    }
-
-    #progressbar_create_compte .active {
-        color: #000000
-    }
-
-    #progressbar_create_compte li {
-        list-style-type: none;
-        font-size: 12px;
-        width: 25%;
-        float: left;
-        position: relative
-    }
-
-    #progressbar_create_compte #account:before {
-        font-family: FontAwesome;
-        content: "\f023"
-    }
-
-    #progressbar_create_compte #personal:before {
-        font-family: FontAwesome;
-        content: "\f007"
-    }
-
-    #progressbar_create_compte #payment:before {
-        font-family: FontAwesome;
-        content: "\f09d"
-    }
-
-    #progressbar_create_compte #confirm:before {
-        font-family: FontAwesome;
-        content: "\f00c"
-    }
-
-    #progressbar_create_compte li:before {
-        width: 50px;
-        height: 50px;
-        line-height: 45px;
-        display: block;
-        font-size: 18px;
-        color: #801D68;
-        background: white;
-        border-radius: 50%;
-        margin: 0 auto 10px auto;
-        padding: 2px;
-        border: 1px solid #801D68 !important;
-    }
-
-    #progressbar_create_compte li:after {
-        content: '';
-        width: 100%;
-        height: 2px;
-        background: lightgray;
-        position: absolute;
-        left: 0;
-        top: 25px;
-        z-index: -1
-    }
-
-    #progressbar_create_compte li.active:before,
-    #progressbar_create_compte li.active:after {
-        background: #801D68;
-        border: 1px solid #801D68 !important;
-        color: white;
-    }
-
-    .radio-group {
-        position: relative;
-        margin-bottom: 25px
-    }
-
-    .radio {
-        display: inline-block;
-        width: 204;
-        height: 104;
-        border-radius: 0;
-        background: lightblue;
-        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-        box-sizing: border-box;
-        cursor: pointer;
-        margin: 8px 2px
-    }
-
-    .radio:hover {
-        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
-    }
-
-    .radio.selected {
-        box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
-    }
-
-    .fit-image {
-        width: 100%;
-        object-fit: cover
-    }
-
-
-
-    #progressbar_create_compte #etape1:before {
-        font-family: FontAwesome;
-        content: "1"
-    }
-    #progressbar_create_compte #etape2:before {
-        font-family: FontAwesome;
-        content: "2"
-    }
-    #progressbar_create_compte #etape3:before {
-        font-family: FontAwesome;
-        content: "3"
-    }
-    #progressbar_create_compte #etape4:before {
-        font-family: FontAwesome;
-        content: "4"
-    }
-    #progressbar_create_compte #etape5:before {
-        font-family: FontAwesome;
-        content: "5"
-    }
-    #progressbar_create_compte #etape6:before {
-        font-family: FontAwesome;
-        content: "\f00c"
-    }
-
+    z-index: 0;
     border: none;
     border-radius: 0.5rem;
     position: relative
@@ -405,18 +138,18 @@ select.list-dt:focus {
     text-align: left
 }
 
-#progressbar_create_compte {
+#progressbars {
     margin-bottom: 30px;
     overflow: hidden;
     color: lightgrey;
     height: 4.7rem !important;
 }
 
-#progressbar_create_compte .active {
+#progressbars .active {
     color: #000000
 }
 
-#progressbar_create_compte li {
+#progressbars li {
     list-style-type: none;
     font-size: 12px;
     width: 25%;
@@ -424,27 +157,27 @@ select.list-dt:focus {
     position: relative
 }
 
-#progressbar_create_compte #account:before {
+#progressbars #account:before {
     font-family: FontAwesome;
     content: "\f023"
 }
 
-#progressbar_create_compte #personal:before {
+#progressbars #personal:before {
     font-family: FontAwesome;
     content: "\f007"
 }
 
-#progressbar_create_compte #payment:before {
+#progressbars #payment:before {
     font-family: FontAwesome;
     content: "\f09d"
 }
 
-#progressbar_create_compte #confirm:before {
+#progressbars #confirm:before {
     font-family: FontAwesome;
     content: "\f00c"
 }
 
-#progressbar_create_compte li:before {
+#progressbars li:before {
     width: 50px;
     height: 50px;
     line-height: 45px;
@@ -458,7 +191,7 @@ select.list-dt:focus {
     border: 1px solid #801D68 !important;
 }
 
-#progressbar_create_compte li:after {
+#progressbars li:after {
     content: '';
     width: 100%;
     height: 2px;
@@ -469,8 +202,8 @@ select.list-dt:focus {
     z-index: -1
 }
 
-#progressbar_create_compte li.active:before,
-#progressbar_create_compte li.active:after {
+#progressbars li.active:before,
+#progressbars li.active:after {
     background: #801D68;
     border: 1px solid #801D68 !important;
     color: white;
@@ -508,23 +241,20 @@ select.list-dt:focus {
 
 
 
-#progressbar_create_compte #etape1:before {
+#progressbars #etape1:before {
     font-family: FontAwesome;
     content: "1"
 }
-#progressbar_create_compte #etape2:before {
+#progressbars #etape2:before {
     font-family: FontAwesome;
     content: "2"
 }
-#progressbar_create_compte #etape3:before {
+#progressbars #etape3:before {
     font-family: FontAwesome;
     content: "3"
 }
-#progressbar_create_compte #etape4:before {
+
+#progressbars #confirm:before {
     font-family: FontAwesome;
-    content: "4"
-}
-#progressbar_create_compte #etape5:before {
-    font-family: FontAwesome;
-    content: "5"
+    content: "\f00c"
 }

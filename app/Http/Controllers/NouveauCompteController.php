@@ -110,7 +110,7 @@ class NouveauCompteController extends Controller
 
                 if (count($verify) <= 0) { // cfp n'existe pas
 
-                    $this->user->name = $req->nom_resp_cfp;
+                    $this->user->name = $req->nom_resp_cfp." ".$req->prenom_resp_cfp;
                     $this->user->email = $req->email_resp_cfp;
                     $ch1 = "0000";
                     $this->user->password = Hash::make($ch1);
@@ -187,7 +187,7 @@ class NouveauCompteController extends Controller
 
                 if (count($verify) <= 0) { // etp n'existe pas
 
-                    $this->user->name = $req->nom_resp_etp;
+                    $this->user->name = $req->nom_resp_etp." ".$req->prenom_resp_etp;
                     $this->user->email = $req->email_resp_etp;
                     $ch1 = "0000";
                     $this->user->password = Hash::make($ch1);
