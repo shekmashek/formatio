@@ -178,6 +178,7 @@ class getImageModel extends Model
                  $root1 = $value['path'];
         }
         $dir2 = '/'.$root1;
+
         Storage::cloud()->put($dir2.'/'.$document_name, $documents);
     }
 
@@ -203,17 +204,63 @@ class getImageModel extends Model
                 // Get the files inside the folder...
         $files = collect(Storage::cloud()->listContents($dir2, false))
             ->where('type', '=', 'file');
+        // return Storage::cloud()->get($files['path']);
+        return $files;
+        // return $files->mapWithKeys(function($file) {
+        //     $filename = $file['filename'].'.'.$file['extension'];
+        //     $path = $file['path'];
 
-        return $files->mapWithKeys(function($file) {
-            $filename = $file['filename'].'.'.$file['extension'];
-            $path = $file['path'];
+        //     // Use the path to download each file via a generated link..
+        //     $download =  Storage::cloud()->get($file['path']);
 
-            // Use the path to download each file via a generated link..
-            // Storage::cloud()->get($file['path']);
-
-            return [$filename => $path];
-        });
+        //     return [$filename => $path];
+        // });
 
     }
+    //download file
+    public function download_file($folder_parent,$sub_folder,$filename){
+
+    //     //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //parcourir sous dossier:facture par exemple
+       foreach ($contents as $key => $value) {
+           if($value['name'] == $folder_parent)
+                $root = $value['path'];
+       }
+       $dir = '/'.$root;
+
+       $recursive = true; // Get subdirectories also?
+       $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+       foreach ($sub_directory as $key => $value) {
+           if($value['name'] == $sub_folder)
+                $root1 = $value['path'];
+       }
+       $dir2 = '/'.$root1;
+
+               // Get the files inside the folder...
+       $files = collect(Storage::cloud()->listContents($dir2, false))
+           ->where('type', '=', 'file')
+           ->where('filename', '=', $filename)
+
+           ->first();
+
+        $rawData = Storage::cloud()->get($files['path']);
+
+           return response($rawData, 200)
+               ->header('ContentType', $files['mimetype'])
+               ->header('Content-Disposition', "attachment; filename='$filename'");
+
+    //    return $files->mapWithKeys(function($file) {
+    //        $filename = $file['filename'].'.'.$file['extension'];
+    //        $path = $file['path'];
+
+    //        // Use the path to download each file via a generated link..
+    //        Storage::cloud()->get($file['path']);
+
+    //        return [$filename => $path];
+    //    });
+
+   }
+
 
 }
