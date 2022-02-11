@@ -136,6 +136,7 @@ class getImageModel extends Model
         // Get the files inside the folder...
         $files = collect(Storage::cloud()->listContents($dir['path'], false))
             ->where('type', '=', 'dir');
+
         return $files;
     }
 
@@ -246,7 +247,7 @@ class getImageModel extends Model
 
         $rawData = Storage::cloud()->get($files['path']);
 
-           return response($rawData, 200)
+        return response($rawData, 200)
                ->header('ContentType', $files['mimetype'])
                ->header('Content-Disposition', "attachment; filename='$filename'");
 

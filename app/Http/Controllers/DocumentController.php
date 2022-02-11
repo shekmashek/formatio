@@ -19,7 +19,9 @@ class DocumentController extends Controller
         $document = new getImageModel();
         $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
         $nom_cfp = $rqt[0]->nom;
+        $document->create_folder($nom_cfp);
         $get_nom_cfp = $document->get_folder($nom_cfp);
+      
         $get_sub_folder =  $document->get_sub_folder($nom_cfp);
         $nb_sub_folder = count($get_sub_folder);
         return view('document.gestion_document',compact('get_nom_cfp','get_sub_folder','nb_sub_folder'));
@@ -67,8 +69,12 @@ class DocumentController extends Controller
         $get_nom_cfp = $document->get_folder($nom_cfp);
         $get_sub_folder =  $document->get_sub_folder($nom_cfp);
         $nb_sub_folder = count($get_sub_folder);
-        return view('document.liste_par_dossier',compact('get_nom_cfp','get_sub_folder','nb_sub_folder'));
+        $listes = new getImageModel();
+        $res = $listes->file_list($nom_cfp,$id);
+         $nb_res = count($res);
+        return view('document.liste_par_dossier',compact('id','get_nom_cfp','get_sub_folder','nb_sub_folder','res','nb_res'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -102,5 +108,30 @@ class DocumentController extends Controller
     public function destroy($id)
     {
         //
+    }
+    //importation de fichier
+    public function importation_fichier(Request $request){
+        //récupérer le deuxième paramètre de l'url :: sub_folder
+        $sub_folder = $request->sous_dossier;
+        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
+        $nom_cfp = $rqt[0]->nom;
+
+        $document = new getImageModel();
+        $document->store_document($nom_cfp,$sub_folder,$request->file('documents')->getClientOriginalName(),$request->file('documents')->getContent());
+        return redirect()->back();
+    }
+    //telecharger fichier
+    public function download_file(){
+        $id = request()->id;
+        $namefile = request()->filename;
+
+         $document = new getImageModel();
+        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
+        $nom_cfp = $rqt[0]->nom;
+        $get_nom_cfp = $document->get_folder($nom_cfp);
+        $get_sub_folder =  $document->get_sub_folder($nom_cfp);
+        $nb_sub_folder = count($get_sub_folder);
+        $listes = new getImageModel();
+        return $listes->download_file($nom_cfp,$id,$namefile);
     }
 }
