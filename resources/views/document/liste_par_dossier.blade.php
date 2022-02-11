@@ -42,7 +42,7 @@
             <i class="fa fa-caret-right " id="droite" onclick="afficherSousDossier();" ></i>&nbsp;&nbsp;<i class="fa fa-folder"></i>&nbsp;&nbsp;<a href="{{route('gestion_documentaire')}}">  {{$get_nom_cfp}} </a>
             <div class="row" id="sub_directory">
                 @for($i = 0; $i < $nb_sub_folder; $i++)
-                <div class="col-8">
+                <div class="col-12">
                      @if ( Request::segment(2)  == $id && $id == $get_sub_folder[$i]['name'])
                         <span style="padding-left: 28px;color : #801D68 "><i class="fa fa-folder"></i>&nbsp; <a href="{{route('liste_fichier',$get_sub_folder[$i]['name'])}}"> {{$get_sub_folder[$i]['name']}} </a> </span> &nbsp;&nbsp
                     @else
