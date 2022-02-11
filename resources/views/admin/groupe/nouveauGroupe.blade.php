@@ -102,10 +102,16 @@
                                                 {{ date('M j, Y', strtotime($projet->date_projet)) }}</p>
                                         </div>
                                     </div>
-
+                                    
                                     @canany(['isCFP'])
-                                        <button class="btn btn-success mb-2 payement" data-toggle="modal"
-                                            data-target="#modal"><i class="fa fa-plus"></i> session</button>
+                                        @if ($projet->type_formation_id == 2 && count($groupe)<=0)
+                                            <button class="btn btn-success mb-2 payement" data-toggle="modal"
+                                                data-target="#modal"><i class="fa fa-plus"></i> session</button>
+                                        @endif
+                                        @if ($projet->type_formation_id == 1)
+                                            <button class="btn btn-success mb-2 payement" data-toggle="modal"
+                                                data-target="#modal"><i class="fa fa-plus"></i> session</button>
+                                        @endif
                                     @endcanany
                                     @error('dte_debut')
                                         <div class="col-sm-6">
@@ -170,7 +176,7 @@
                                                     </td>
                                                 </tr>
 
-                                                {{-- debut modal encaissement --}}
+                                                {{-- debut modifier session --}}
                                                 <div id="edit_session_{{ $grp->groupe_id }}" class="modal fade"
                                                     data-backdrop="true">
                                                     <div class="modal-dialog">
@@ -189,8 +195,28 @@
                                                                         <span>{{ $grp->nom_groupe }}</span>
                                                                         <div class="row">
                                                                             <div class="col">
-                                                                                <span>min participant</span>
-                                                                                <div class="inputbox inputboxP mt-3"> <input
+                                                                                <span>Date début</span>
+                                                                                <div class="inputbox inputboxP mt-0"> <input
+                                                                                        autocomplete="off" type="date"
+                                                                                        value="{{ $grp->date_debut }}"
+                                                                                        name="edit_dte_debut"
+                                                                                        class="form-control formPayement"
+                                                                                        required="required"> </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <span>Date fin</span>
+                                                                                <div class="inputbox inputboxP mt-0"> <input
+                                                                                        autocomplete="off" type="date"
+                                                                                        value="{{ $grp->date_fin }}"
+                                                                                        name="edit_dte_fin"
+                                                                                        class="form-control formPayement"
+                                                                                        required="required"> </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <span>Min participant</span>
+                                                                                <div class="inputbox inputboxP mt-0"> <input
                                                                                         autocomplete="off" type="number"
                                                                                         value="{{ $grp->min_participant }}"
                                                                                         min="0" pattern="[0-9]"
@@ -199,8 +225,8 @@
                                                                                         required="required"> </div>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <span>max participant</span>
-                                                                                <div class="inputbox inputboxP mt-3"> <input
+                                                                                <span>Max participant</span>
+                                                                                <div class="inputbox inputboxP mt-0"> <input
                                                                                         autocomplete="off" type="number"
                                                                                         value="{{ $grp->max_participant }}"
                                                                                         min="0" pattern="[0-9]"
@@ -209,43 +235,51 @@
                                                                                         required="required"> </div>
                                                                             </div>
                                                                         </div>
-
                                                                         <div class="row">
                                                                             <div class="col">
-                                                                                <span>date début</span>
-                                                                                <div class="inputbox inputboxP mt-3"> <input
-                                                                                        autocomplete="off" type="date"
-                                                                                        value="{{ $grp->date_debut }}"
-                                                                                        name="edit_dte_debut"
-                                                                                        class="form-control formPayement"
-                                                                                        required="required"> </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <span>date fin</span>
-                                                                                <div class="inputbox inputboxP mt-3"> <input
-                                                                                        autocomplete="off" type="date"
-                                                                                        value="{{ $grp->date_fin }}"
-                                                                                        name="edit_dte_fin"
-                                                                                        class="form-control formPayement"
-                                                                                        required="required"> </div>
+                                                                                <span>Payement</span>
+                                                                                <select class="form-select m-0" name="payement"
+                                                                                    aria-label="Default select example">
+                                                                                    <option value="{{ $grp->type_payement_id }}">{{ $grp->type_payement }}</option>
+                                                                                    @foreach ($payement as $paye)
+                                                                                        <option value="{{ $paye->id }}">
+                                                                                            {{ $paye->type }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                             </div>
                                                                         </div>
-                                                                        <strong>Status du session</strong>
+
+                                                                        <div class="inputbox inputboxP mt-0"><span>Formation</span> </div>
+                                                                            <select class="form-select selectP m-0" id="formation_id"
+                                                                                name="formation_id" aria-label="Default select example">
+                                                                                <option value="{{ $grp->formation_id }}">{{ $grp->nom_formation }}</option>
+                                                                                @foreach ($formation as $form)
+                                                                                    <option value="{{ $form->id }}">
+                                                                                        {{ $form->nom_formation }}</option>
+                                                                                @endforeach
+                                                                            </select>
+
+                                                                            <span>Module</span>
+                                                                            <input hidden name="projet_id" value="{{ $projet->projet_id }}">
+                                                                            <select class="form-select selectP m-0 p-0" id="module_id" name="module_id"
+                                                                                aria-label="Default select example">
+                                                                                <option value="{{ $grp->module_id }}">{{ $grp->nom_module }}</option>
+                                                                            </select>
+                                                                            {{-- <span style="color:#ff0000;" id="module_id_err">Aucun module détecté!
+                                                                                veuillez choisir la formation</span> --}}
+
+                                                                        {{-- <strong>Status du session</strong>
                                                                         <div class="inputbox inputboxP mt-3">
-                                                                            <input type="text"
-                                                                                class="form-control formPayement"
-                                                                                id="exampleFormControlInput1"
-                                                                                placeholder="status du session"
-                                                                                list="edit_status"
-                                                                                value="{{ $grp->groupe_id }}"
-                                                                                name="edit_status" />
+                                                                            <input
+                                                                                class="form-control" id="exampleFormControlInput1" list="edit_status" placeholder="Choisissez le statut du projet" name="edit_status"/>
                                                                             <datalist id="edit_status">
                                                                                 <option>En Cours</option>
                                                                                 <option>Fini</option>
                                                                                 <option>Stopper la formation</option>
                                                                             </datalist>
 
-                                                                        </div>
+                                                                        </div> --}}
 
 
                                                                         <div class="mt-4 mb-4">
