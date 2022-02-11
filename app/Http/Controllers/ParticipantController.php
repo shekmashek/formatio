@@ -700,7 +700,7 @@ class ParticipantController extends Controller
         $fonct = new FonctionGenerique();
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            $liste_dep = $fonct->findWhere("v_departement", ["entreprise_id"], [$entreprise_id]);
+            $liste_dep = $fonct->findWhere("departement_entreprises", ["entreprise_id"], [$entreprise_id]);
 
             return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep'));
         }

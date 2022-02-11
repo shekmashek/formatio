@@ -142,7 +142,7 @@
                 <select name="departement_id" class="form-control" id="departement_id">
                     {{-- <option value="">Choisissez un département...</option> --}}
                     @foreach ($liste_dep as $liste)
-                    <option value="{{$liste->departement_id}}">{{$liste->nom_departement}}</option>
+                    <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
                     @endforeach
                 </select>
             </div><br>
