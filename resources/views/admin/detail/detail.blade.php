@@ -100,7 +100,7 @@
                             <div class="col-md-4 p-0">
                                 <div class="row">
                                     <div class="col-md-5 p-0">
-                                        <input type="date" name="date[]" placeholder="" class="form-control m-1" required>
+                                        <input type="date" min="{{ $projet[0]->date_debut }}" max="{{ $projet[0]->date_fin }}" name="date[]" placeholder="" class="form-control m-1" required>
                                     </div>
                                     <div class="col-md-7 ps-1 d-flex">
                                         <input type="time" name="debut[]" class="form-control my-1 ms-1" required>
@@ -115,11 +115,11 @@
                                             {{-- <div class="input-group-prepend my-1">
                                     <div class="input-group-text"><i class="fa fa-user"></i></div>
                                 </div> --}}
-                                            <select name="formateur[]" id="" class="form-control  my-1" required>
+                                            <select name="formateur[]" style="height: 2.361rem" id="" class="form-control  my-1" required>
                                                 <option value="" selected hidden> Choisir formateur </option>
                                                 @foreach ($formateur as $format)
                                                     <option value="{{ $format->formateur_id }}">
-                                                        {{ $format->prenom_formateur }}</option>
+                                                        {{ $format->nom_formateur.' '.$format->prenom_formateur }}</option>
                                                 @endforeach
                                             </select>
 

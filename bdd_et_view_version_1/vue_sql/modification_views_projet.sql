@@ -142,7 +142,6 @@ create or replace view v_groupe_projet_entreprise_module as
         mf.nom_formation,
         mf.domaine_id,
         mf.nom,
-        mf.logo as logo_cfp,
         mf.email,
         mf.telephone,
         mf.pourcentage

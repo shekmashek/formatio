@@ -102,13 +102,13 @@ class SessionController extends Controller
         $id = request()->id_session;
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details')[0]->nombre;
-        $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe')[0]->nombre;
+        $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
         // ???--
         $fonct = new FonctionGenerique();
         if(Gate::allows('isCFP')){
             $cfp_id = Cfp::where('user_id', $user_id)->value('id');
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
+            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
         }
         if(Gate::allows('isReferent')){
@@ -121,7 +121,7 @@ class SessionController extends Controller
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
             $formateur = NULL;
-            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id"], [$cfp_id,$formateur_id]);
+            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
         }if(Gate::allows('isStagiaire')){
             $evaluation = new EvaluationChaud();
