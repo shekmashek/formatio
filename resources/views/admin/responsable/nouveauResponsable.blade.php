@@ -119,6 +119,17 @@
                                         </div>
                                         @enderror
                                     </div><br>
+                               
+                                
+                                <div class="form-group">
+                                    <label for="poste">Poste</label><br><br>
+                                    <input type="text" autocomplete="off" class="form-control" id="poste" name="poste" placeholder="poste">
+                                    @error('poste')
+                                      <div class ="col-sm-6">
+                                          <span style = "color:#ff0000;"> {{$message}} </span>
+                                      </div>
+                                      @enderror
+                                  </div><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">

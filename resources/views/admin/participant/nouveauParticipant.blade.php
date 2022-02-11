@@ -176,7 +176,6 @@
                                         </div>
                                         @enderror
                                     </div><br>
-
                                     <div class="form-group">
                                         <label for="niveau">Niveau d'étude</label><br>
                                         <select name="niveau" class="form-control" id="niveau">
@@ -236,8 +235,6 @@
                                 </select>
                             </div><br>
                             @endcan
-
-                         
                                 <div class="form-group">
                                     <label for="fonction">Fonction</label>
                                     <input type="text" class="form-control" id="fonction" name="fonction" placeholder="Fonction">

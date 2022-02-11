@@ -55,35 +55,35 @@
         <form   class="btn-submit" action="{{route('update_responsable')}}" method="post" enctype="multipart/form-data">
             @csrf
               
-                    <input type="hidden" value="   {{ $ref->nom_resp }}" class="form-control test input"  name="nom">
+                    <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
                   
                 
-                        <input type="hidden" class="form-control test input" value="   {{ $ref->prenom_resp }}"  name="prenom">
+                        <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>
 
 
-                        <select hidden  value="{{$ref->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
-                          <option value="{{$ref->sexe_resp}}"  >Homme</option>
+                        <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
+                          <option value="{{$responsable->sexe_resp}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
                         </select>
                    
                 
-                        <input type="hidden" class="form-control test" name="date" value="{{ $ref->date_naissance_resp}}">
+                        <input type="hidden" class="form-control test" name="date" value="{{ $responsable->date_naissance_resp}}">
        
-                          <input type="hidden" value="{{ $ref->cin_resp}}" class="form-control test"  name="cin" >
+                          <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="cin" >
 
-                        <input type="hidden" class="form-control test"  name="mail" value="{{ $ref->email_resp }}" >
+                        <input type="hidden" class="form-control test"  name="mail" value="{{ $responsable->email_resp }}" >
 
-                        <input type="hidden" class="form-control test"  name="phone" value="{{ $ref->telephone_resp }}"> 
+                        <input type="hidden" class="form-control test"  name="phone" value="{{ $responsable->telephone_resp }}"> 
                        
                        
                         <input type="hidden" class="form-control test input" value=""  name="password" placeholder="">  
                        
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input" id="lot" name="lot" placeholder="Lot" value="{{ $ref->adresse_lot}}">
+                        <input type="text" class="form-control test input" id="lot" name="lot" placeholder="Lot" value="   {{ $responsable->adresse_lot}}">
 
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Lot</label>
 
@@ -91,7 +91,7 @@
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="quartier" name="quartier" placeholder="Quartier" value="{{ $ref->adresse_quartier}}">
+                          <input type="text" class="form-control test input" id="quartier" name="quartier" placeholder="Quartier" value="   {{ $responsable->adresse_quartier}}">
 
                           <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Quartier</label>
 
@@ -99,35 +99,35 @@
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="code_postal" name="code_postal" placeholder="Code Postale" value="{{ $ref->adresse_code_postal}}">
+                          <input type="text" class="form-control test input" id="code_postal" name="code_postal" placeholder="Code Postale" value="   {{ $responsable->adresse_code_postal}}">
                           <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Code Postal</label>
 
                         </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="ville" name="ville" placeholder="Ville" value="{{ $ref->adresse_ville}}">
+                          <input type="text" class="form-control test input" id="ville" name="ville" placeholder="Ville" value="   {{ $responsable->adresse_ville}}">
                           <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Ville</label>
 
                         </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="region" name="region" placeholder="Region" value="{{ $ref->adresse_region}}">
+                          <input type="text" class="form-control test input" id="region" name="region" placeholder="Region" value="   {{ $responsable->adresse_region}}">
                         
                           <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Région</label>
 
                         </div>
                 </div> 
-                    <input type="hidden" class="form-control"  name="fonction" placeholder="Fonction" value="{{ $ref->fonction_resp}}" readonly>
+                    <input type="hidden" class="form-control"  name="fonction" placeholder="Fonction" value="{{ $responsable->fonction_resp}}" readonly>
                 
                   
-                    <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($ref)->entreprise)->nom_etp}}" readonly>
+                    <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($responsable)->entreprise)->nom_etp}}" readonly>
                 
-                    <input type="hidden" value="{{ $ref->poste_resp }}"  class="form-control"  name="poste"  readonly>
+                    <input type="hidden" value="{{ $responsable->poste_resp }}"  class="form-control"  name="poste"  readonly>
              
                  
-                    <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($ref)->departement)->nom_departement }}" readonly>
+                    <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($responsable)->departement)->nom_departement }}" readonly>
             
                  
                    

@@ -120,43 +120,43 @@ class ParticipantController extends Controller
     public function store(Request $request)
     {
         //condition de validation de formulaire
-       $request->validate(
-            [
-                'matricule' => ["required"],
-                'nom' => ["required"],
-                'prenom' =>  ["required"],
-                'rue' =>  ["required"],
-                'quartier' =>  ["required"],
-                'code_postal' =>  ["required"],
-                'ville' =>  ["required"],
-                'region' =>  ["required"],
-                'lot' =>  ["required"],
-                'fonction' => ["required"],
-                'mail' => ["required", "email"],
-                'phone' => ["required"],
-                'lieu' => ["required"],
-                'image' => ["required"],
-                'cin' =>  ["required"],
+    //    $request->validate(
+    //         [
+    //             'matricule' => ["required"],
+    //             'nom' => ["required"],
+    //             'prenom' =>  ["required"],
+    //             'rue' =>  ["required"],
+    //             'quartier' =>  ["required"],
+    //             'code_postal' =>  ["required"],
+    //             'ville' =>  ["required"],
+    //             'region' =>  ["required"],
+    //             'lot' =>  ["required"],
+    //             'fonction' => ["required"],
+    //             'mail' => ["required", "email"],
+    //             'phone' => ["required"],
+    //             'lieu' => ["required"],
+    //             'image' => ["required"],
+    //             'cin' =>  ["required"],
 
-            ],
-            [
-                'matricule.required' => 'Veuillez remplir le champ',
-                'nom.required' => 'Veuillez remplir le champ',
-                'prenom.required' => 'Veuillez remplir le champ',
-                'fonction.required' =>  'Veuillez remplir le champ',
-                'mail.required' =>  'Veuillez remplir le champ',
-                'mail.email' => 'Addresse mail non valide',
-                'rue.required' => 'Veuillez remplir le champ',
-                'quartier.required' => 'Veuillez remplir le champ',
-                'ville.required' => 'Veuillez remplir le champ',
-                'code_postal.required' => 'Veuillez remplir le champ',
-                'lot.required' => 'Veuillez remplir le champ',
-                'region.required' => 'Veuillez remplir le champ',
-                'phone.required' => 'Veuillez remplir le champ',
-                'image.required' => "Veuillez importer une photo",
-                'cin.required' => 'Entrer le CIN',
-            ]
-        );
+    //         ],
+    //         [
+    //             'matricule.required' => 'Veuillez remplir le champ',
+    //             'nom.required' => 'Veuillez remplir le champ',
+    //             'prenom.required' => 'Veuillez remplir le champ',
+    //             'fonction.required' =>  'Veuillez remplir le champ',
+    //             'mail.required' =>  'Veuillez remplir le champ',
+    //             'mail.email' => 'Addresse mail non valide',
+    //             'rue.required' => 'Veuillez remplir le champ',
+    //             'quartier.required' => 'Veuillez remplir le champ',
+    //             'ville.required' => 'Veuillez remplir le champ',
+    //             'code_postal.required' => 'Veuillez remplir le champ',
+    //             'lot.required' => 'Veuillez remplir le champ',
+    //             'region.required' => 'Veuillez remplir le champ',
+    //             'phone.required' => 'Veuillez remplir le champ',
+    //             'image.required' => "Veuillez importer une photo",
+    //             'cin.required' => 'Entrer le CIN',
+    //         ]
+    //     );
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');

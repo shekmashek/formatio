@@ -101,7 +101,8 @@
                                         
                                     </p>
                                     <a href="{{route('edit_photos',$stagiaire->id)}} " >
-                                    <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde"></a>
+                                    <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde">
+                                </a>
                                     
                                    </div>
                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
