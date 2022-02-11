@@ -79,9 +79,8 @@
                              
                                      <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
                                      <p class="p-1 m-0" style="font-size: 10px;">PHOTO
-                                         
                                      </p>
-                                     <a href="#" >
+                                     <a href="{{route('edit_photos',$refs->id)}}" >
                                         <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                                     </a>
                                     </div>
@@ -105,6 +104,12 @@
                                      </p>
                                      </a>
                                     </div>
+                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <a href="{{route('edit_pwd',$refs->id)}} " >
+                                        <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        </p>
+                                        </a>
+                                       </div>
                                      <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                  </div>
                              </div>
@@ -160,7 +165,7 @@
                                      <p class="text-center">Informations professionnelles</p>
                              
                                      <div style="border-bottom: solid 1px #d399c2;" class="">
-                                         <a href="#" >
+                                         <a hrefs="#" >
                                      <p class="p-1 m-0" style="font-size: 10px;">Poste responsable<span style="float: right;">{{$refs->poste_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
@@ -168,7 +173,7 @@
                                      </div>
                       
                                      <div style="border-bottom: solid 1px #d399c2;" class="">
-                                         <a href="# " >
+                                         <a hrefs="#" >
                                      <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{optional(optional($refs)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
@@ -177,7 +182,7 @@
                                      </div>
                                      
                                      <div style="border-bottom: solid 1px #d399c2;" class="">
-                                         <a href="#" >
+                                         <a hrefs="#" >
                                      <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
@@ -187,7 +192,6 @@
                                      <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                  </div>
                          </div>
-                            
      </div>
 
 @endsection

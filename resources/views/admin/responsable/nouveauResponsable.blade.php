@@ -27,7 +27,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action = "{{route('responsable.store')}}" method = "POST" enctype="multipart/form-data">
+                                <form action = "{{route('enregistrer_resp')}}" method = "POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
                                       <label for="name">Nom</label><br><br>
@@ -47,24 +47,60 @@
                                         </div>
                                         @enderror
                                     </div><br>
-                                     <div class="form-group">
+                                     {{-- <div class="form-group">
                                       <label for="cin">CIN</label><br><br>
                                       <input type="text" autocomplete="off" class="form-control" id="cin" name="cin" placeholder="CIN">
                                       @error('cin')
                                         <div class ="col-sm-6">
                                             <span style = "color:#ff0000;"> {{$message}} </span>
                                         </div>
-                                        @enderror
-                                    </div><br>
+                                        @enderror --}}
+                                    {{-- </div><br> --}}
                                     <div class="form-group">
-                                        <label for="cin">Date Naissance</label><br><br>
-                                        <input type="date" autocomplete="off" class="form-control" id="naissance" name="naissance">
-                                        @error('naissance')
+                                        <label for="lot">Lot</label><br><br>
+                                        <input type="text" autocomplete="off" class="form-control" id="lot" name="lot" placeholder="Lot">
+                                        @error('lot')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                      </div><br> 
+                                      <div class="form-group">
+                                        <label for="quartier">Quartier</label><br><br>
+                                        <input type="text" autocomplete="off" class="form-control" id="quartier" name="quartier" placeholder="Quartier">
+                                        @error('quartier')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                      </div><br> 
+                                      <div class="form-group">
+                                        <label for="code_postal">Code Postal</label><br><br>
+                                        <input type="text" autocomplete="off" class="form-control" id="code_postal" name="code_postal" placeholder="Code Postal">
+                                        @error('code_postal')
                                           <div class ="col-sm-6">
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
                                           @enderror
                                       </div><br>
+                                      <div class="form-group">
+                                        <label for="ville">Ville</label><br><br>
+                                        <input type="text" autocomplete="off" class="form-control" id="ville" name="ville" placeholder="Ville">
+                                        @error('ville')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                      </div><br>  
+                                      <div class="form-group">
+                                        <label for="region">Région</label><br><br>
+                                        <input type="text" autocomplete="off" class="form-control" id="region" name="region" placeholder="Région">
+                                        @error('region')
+                                          <div class ="col-sm-6">
+                                              <span style = "color:#ff0000;"> {{$message}} </span>
+                                          </div>
+                                          @enderror
+                                      </div><br> 
                                      <div class="form-group">
                                       <label for="sary">Photo</label>
                                       <input type="file" class="form-control-file" id="photo" name="photos">
@@ -83,6 +119,17 @@
                                         </div>
                                         @enderror
                                     </div><br>
+                               
+                                
+                                <div class="form-group">
+                                    <label for="poste">Poste</label><br><br>
+                                    <input type="text" autocomplete="off" class="form-control" id="poste" name="poste" placeholder="poste">
+                                    @error('poste')
+                                      <div class ="col-sm-6">
+                                          <span style = "color:#ff0000;"> {{$message}} </span>
+                                      </div>
+                                      @enderror
+                                  </div><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -113,14 +160,13 @@
                                           @endforeach
                                       </select>
                                     </div><br><br>
-
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="exampleFormControlInput1" class="form-label" align="left">Sexe</label>
                                             <select class="form-select" aria-label="Default select example" name="sexe_resp" required id="sexe_resp">
                                                 <option value="null" disabled selected hidden>Veuillez Sélectionner</option>
-                                                <option value="H">Homme</option>
-                                                <option value="S">Femme</option>
+                                                <option value="Homme">Homme</option>
+                                                <option value="Femme">Femme</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">

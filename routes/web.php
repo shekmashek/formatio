@@ -161,19 +161,37 @@ Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name(
 
 //route responsable
 Route::resource('responsable','ResponsableController')->except([
-    'index','edit','destroy','update'
+    'index','edit','destroy','update','store'
 ]);
+Route::post('enregistrer_resp','ResponsableController@store')->name('enregistrer_resp');
 Route::get('/liste_responsable/{id?}','ResponsableController@index')->name('liste_responsable');
 Route::get('/nouveau_responsable','ResponsableController@create')->name('nouveau_responsable');
 Route::get('/edit_responsable','ResponsableController@edit')->name('edit_responsable');
 
 Route::get('/destroy_responsable','ResponsableController@destroy')->name('destroy_responsable');
 
-Route::get('/update_responsable','ResponsableController@update')->name('update_responsable');
+Route::post('/update_responsable','ResponsableController@update')->name('update_responsable');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
+//Route pour modifier chaque champs pour responsable
+Route::get('/edit_nom/{id}','ResponsableController@edit_nom')->name('edit_nom');
+Route::get('/edit_naissance/{id}','ResponsableController@edit_naissance')->name('edit_naissance');
+Route::get('/edit_genre/{id}','ResponsableController@edit_genre')->name('edit_genre');
+Route::get('/edit_mail/{id}','ResponsableController@edit_mail')->name('edit_mail');
+Route::get('/edit_phone/{id}','ResponsableController@edit_phone')->name('edit_phone');
+Route::get('/edit_cin/{id}','ResponsableController@edit_cin')->name('edit_cin');
+Route::get('/edit_adresse/{id}','ResponsableController@edit_adresse')->name('edit_adresse');
+Route::get('/edit_fonction/{id}','ResponsableController@edit_fonction')->name('edit_fonction');
+Route::get('/edit_matricule/{id}','ResponsableController@edit_matricule')->name('edit_matricule');
+Route::get('/edit_entreprise/{id}','ResponsableController@edit_entreprise')->name('edit_entreprise');
+Route::get('/edit_niveau/{id}','ResponsableController@edit_niveau')->name('edit_niveau');
+Route::get('/edit_departement/{id}','ResponsableController@edit_departement')->name('edit_departement');
+Route::get('/edit_branche/{id}','ResponsableController@edit_branche')->name('edit_branche');
+Route::get('/edit_photos/{id}','ResponsableController@edit_photos')->name('edit_photos');
+Route::get('/edit_pwd/{id}','ResponsableController@edit_pwd')->name('edit_pwd');
+Route::get('/edit_poste/{id}','ResponsableController@edit_poste')->name('edit_poste');
 
 //route----------------- STAGIAIRE
 Route::resource('participant','ParticipantController')->except([
@@ -182,10 +200,28 @@ Route::resource('participant','ParticipantController')->except([
 Route::get('/nouveau_participant','ParticipantController@index')->name('nouveau_participant');
 Route::get('/liste_participant/{id?}','ParticipantController@create')->name('liste_participant');
 Route::get('/edit_participant/{id?}','ParticipantController@edit')->name('edit_participant');
+//Route pour modifier chaque champs pour participant
+Route::get('/edit_nom/{id?}','ParticipantController@edit_nom')->name('edit_nom');
+Route::get('/edit_naissance/{id?}','ParticipantController@edit_naissance')->name('edit_naissance');
+Route::get('/edit_genre/{id?}','ParticipantController@edit_genre')->name('edit_genre');
+Route::get('/edit_mail/{id?}','ParticipantController@edit_mail')->name('edit_mail');
+Route::get('/edit_phone/{id?}','ParticipantController@edit_phone')->name('edit_phone');
+Route::get('/edit_cin/{id?}','ParticipantController@edit_cin')->name('edit_cin');
+Route::get('/edit_adresse/{id?}','ParticipantController@edit_adresse')->name('edit_adresse');
+Route::get('/edit_fonction/{id?}','ParticipantController@edit_fonction')->name('edit_fonction');
+Route::get('/edit_matricule/{id?}','ParticipantController@edit_matricule')->name('edit_matricule');
+Route::get('/edit_entreprise/{id?}','ParticipantController@edit_entreprise')->name('edit_entreprise');
+Route::get('/edit_niveau/{id?}','ParticipantController@edit_niveau')->name('edit_niveau');
+Route::get('/edit_departement/{id?}','ParticipantController@edit_departement')->name('edit_departement');
+Route::get('/edit_branche/{id?}','ParticipantController@edit_branche')->name('edit_branche');
+Route::get('/edit_photos/{id?}','ParticipantController@edit_photos')->name('edit_photos');
+Route::get('/edit_pwd/{id?}','ParticipantController@edit_pwd')->name('edit_pwd');
+
+//atreto ny page eediter par champs stagiaire
 
 Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('destroy_participant');
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
-Route::get('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
+Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
 Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
