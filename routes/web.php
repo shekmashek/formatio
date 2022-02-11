@@ -310,10 +310,12 @@ Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_progra
 Route::post('/destroy_programme/{id}','ProgrammeController@destroy')->name('destroy_programme');
 Route::post('/update_programme/{id}','ProgrammeController@update')->name('update_programme/{id}');
 Route::post('insert_prog_cours','ProgrammeController@store')->name('insert_prog_cours');
-Route::post('update_prog_cours','ProgrammeController@update_pgc')->name('update_prog_cours');
+Route::post('/update_prog_cours','ProgrammeController@update_pgc')->name('update_prog_cours');
 Route::get('/create_programme','ProgrammeController@create')->name('create_programme');
 Route::get('modif_programmes/{id}','ProgrammeController@ajout_programme')->name('modif_programmes');
 Route::get('suppression_programme','ProgrammeController@suppre_programme')->name('suppression_programme');
+Route::get('editer_programme','ProgrammeController@edit')->name('editer_programme');
+
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');

@@ -154,6 +154,7 @@
         padding-top: 6px;
         padding-left: 6px;
         padding-right: 6px;
+        padding-bottom: 5px;
         background-color: rgba(197, 197, 197, 0.192);
         border-radius: 5px;
         border-width: 0;
@@ -192,6 +193,46 @@
         background-color: #801d6725;
         transform: scale(1.05);
         color: #801D68;
+    }
+
+    .background_grey3 {
+        padding: 5px;
+        background-color: rgba(197, 197, 197, 0.192);
+        border-radius: 5px;
+        border-width: 0;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial, sans-serif;
+        font-size: 1em;
+        transition: all 200ms;
+        color: green;
+    }
+
+    .background_grey3:hover {
+        /* background-color: rgba(92, 92, 241, 0.61); */
+        background-color: #3b9f0c31;
+        transform: scale(1.05);
+        color: green;
+    }
+
+    .background_red {
+        padding: 5px;
+        background-color: rgba(197, 197, 197, 0.192);
+        border-radius: 5px;
+        border-width: 0;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial, sans-serif;
+        font-size: 1em;
+        transition: all 200ms;
+        color: red;
+    }
+
+    .background_red:hover {
+        /* background-color: rgba(92, 92, 241, 0.61); */
+        background-color: rgba(255, 0, 0, 0.158);
+        transform: scale(1.05);
+        color: red;
     }
 
     .marge_inferieur {
@@ -275,7 +316,36 @@
         color: black;
     }
 
-    /*  */
+    .cours_hover:hover {
+        background-color: rgba(247, 221, 238, 0.295);
+        cursor: pointer;
+        transition: all .5s ease-in-out;
+    }
+
+    .form_modif{
+        padding: 10px;
+    }
+
+    .form_modif input{
+        border: none;
+        border-bottom: 1px solid #801D68;
+        font-size: 14px;
+        text-transform: capitalize
+    }
+
+    .form_modif input:focus{
+        border: none;
+        border-bottom: 2px solid #801D68;
+        font-size: 16px;
+        transition: all .5s ease;
+        background-color: rgba(247, 221, 238, 0.295);
+        border-radius: 5px;
+        text-transform: capitalize
+    }
+
+    .modal-header{
+        background-color: rgba(247, 221, 238, 0.452);
+    }
 </style>
 <div class="row">
     <div class="col-lg-3">
@@ -445,7 +515,7 @@
                     <h3 class="pt-3 pb-3">Programme de la formation</h3>
                     <div class="col-lg-12">
                         <div class="row detail__formation__item__left">
-                            <form action="{{route('update_prog_cours')}}" method="POST" class="w-100">
+                            <form action="{{route('insert_prog_cours')}}" method="POST" class="w-100">
                                 @csrf
                                 <div id="newProg"></div>
                                 <div class="form-row">
@@ -459,25 +529,70 @@
                         <br>
                         <div class="row detail__formation__item__left__accordion ">
                             <div class="accordionWrapper">
-                                <?php $i=1 ?>
+                                <?php $i=0 ?>
                                 @foreach ($programmes as $prgc)
                                 <div class="accordionItem open" id="programme{{$prgc->id}}">
-                                    <h6 class="accordionItemHeading">{{$i}} - {{$prgc->titre}}<i
-                                        class="bx bx-minus mt-3 background_plus suppression_programme"
-                                        style="font-size: 14px; color: #801D68" role="button"
-                                        title="ajouter un nouveau cours" id="{{$prgc->id}}"></i></h6>
+                                    <h6 class="accordionItemHeading p-0 pb-2 ps-3">{{$i+1}} - {{$prgc->titre}}<i
+                                            class="bx bx-minus mt-3 background_plus suppression_programme"
+                                            style="font-size: 14px; color: #801D68; left: 75%; position: relative;"
+                                            role="button" title="ajouter un nouveau cours" id="{{$prgc->id}}"></i></h6>
                                     <div class="accordionItemContent">
                                         @foreach ($cours as $c)
                                         @if($c->programme_id == $prgc->id)
-                                        <p id="cours{{$c->cours_id}}"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} <span><i
-                                            class="bx bx-minus mt-3 background_plus suppression"
-                                            style="font-size: 14px; color: #801D68" role="button"
-                                            title="ajouter un nouveau cours" id="{{$c->cours_id}}"></i></span></p>
+                                        <p id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 p-0 cours_hover"><i
+                                                class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} <span><i
+                                                    class="bx bx-minus mt-3 background_plus suppression"
+                                                    style="font-size: 14px; color: #801D68; left: 80%; position: relative;"
+                                                    role="button" title="ajouter un nouveau cours"
+                                                    id="{{$c->cours_id}}"></i></span></p>
                                         @endif
                                         @endforeach
-                                        <button type="button" class="btn background_grey6">Nouvelle Cours</button>
+                                        <button type="button" class="btn background_grey6 mb-2 mt-2">Nouvelle
+                                            Cours</button>
+                                        <button type="button" class="background_grey6 btn mb-2 mt-2 "
+                                            data-toggle="modal" data-target="#Modal_{{$prgc->id}}"
+                                            id="{{$prgc->id}}">Modifier Cours et Programme</button>
                                     </div>
+                                    {{-- data-target="#Modal_{{$prgc->id}}" --}}
 
+                                </div>
+
+                                <div class="modal fade" id="Modal_{{$prgc->id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="Modal{{$prgc->id}}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ModalLabel">Modifier les Cours et le
+                                                    Programme</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{route('update_prog_cours')}}" method="POST" class="form_modif">
+                                                    @csrf
+                                                    <input type="hidden" value="{{$prgc->id}}" name="id_prog">
+                                                    <div class="form-row">
+                                                        <input type="text" name="titre_prog" class="w-100 input_modif titre_{{$i}}" value="{{$prgc->titre}}">
+                                                        <hr>
+                                                        <div class="d-flex flex-column">
+                                                            <?php $j=0 ?>
+                                                            @foreach ($cours as $c)
+                                                            @if($c->programme_id == $prgc->id)
+                                                            <input type="text" name="cours{{$c->cours_id}}[]" class="w-100 input_modif cours_{{$j}}" value="{{$c->titre_cours}}">
+                                                            <input type="hidden" name="id_cours" value="{{$c->cours_id}}">
+                                                            <?php $j++ ?>
+                                                            @endif
+
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn background_red btn-md" data-dismiss="modal">Fermer</button>
+                                                <button type="submit" class="btn background_grey3 btn-md">Enregistrer</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
                                 </div>
                                 <?php $i++ ?>
                                 @endforeach
@@ -488,104 +603,81 @@
                 </div>
             </div>
 
-
-            {{-- <form action="{{route('update_prog_cours')}}" method="POST" class="w-100">
-                @csrf
-                <div id="newProg"></div>
-                <br> --}}
-                {{-- <div class="row detail__formation__item__left__accordion">
-                    <span role="button" class="accordion accordion_prog"><input type="text" class="form-control"
-                            name="titre_prog[]" placeholder="Titre de votre programme"><i id="addProg"
-                            class="bx bx-plus pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button"
-                            title="ajouter un nouveau programme"></i></span>
-                    <div class="panel" id="heading2">
-                        <span class="d-flex input_cours"><i class="bx bx-chevron-right pt-4"></i>&nbsp;<input
-                                type="text" class="form-control" name="cours[]" placeholder="Votre cours"><i
-                                id="addCours0" class="bx bx-plus mt-3 background_plus"
-                                style="font-size: 14px; color: #801D68" role="button"
-                                title="ajouter un nouveau cours"></i></span>
-                        <span id="newCours0"></span>
-                    </div>
-                </div> --}}
-
-
-
-
-                {{-- FIXME:mise en forme de design --}}
-                <div class="col-lg-3 detail__formation__item__right">
-                    <div class="row detail__formation__item__main__head align-items-center">
-                        <div class="detail__prix__head">
-                            <div class="detail__prix__text">
-                                <p class="pt-2"><b>INTRA</b></p>
-                            </div>
+            {{-- FIXME:mise en forme de design --}}
+            <div class="col-lg-3 detail__formation__item__right">
+                <div class="row detail__formation__item__main__head align-items-center">
+                    <div class="detail__prix__head">
+                        <div class="detail__prix__text">
+                            <p class="pt-2"><b>INTRA</b></p>
                         </div>
                     </div>
-                    <div class="row detail__formation__item__main">
-                        <div class="detail__prix__main__presentiel pt-3">
-                            <div>
-                                <p class="text-uppercase">{{$res->modalite_formation}}</p>
-                            </div>
+                </div>
+                <div class="row detail__formation__item__main">
+                    <div class="detail__prix__main__presentiel pt-3">
+                        <div>
+                            <p class="text-uppercase">{{$res->modalite_formation}}</p>
                         </div>
                     </div>
-                    <div class="row detail__formation__item__main">
-                        <div class="col-lg-6 detail__prix__main__ref">
-                            <div>
-                                <p><i class="bx bx-clipboard"></i>&nbsp;Reference</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 detail__prix__main__ref2">
-                            <div>
-                                <p>{{ $res->reference }}</p>
-                            </div>
+                </div>
+                <div class="row detail__formation__item__main">
+                    <div class="col-lg-6 detail__prix__main__ref">
+                        <div>
+                            <p><i class="bx bx-clipboard"></i>&nbsp;Reference</p>
                         </div>
                     </div>
-                    <hr class="hr">
-                    <div class="row detail__formation__item__main">
-                        <div class="col-lg-6 detail__prix__main__dure">
-                            <div>
-                                <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 detail__prix__main__dure2">
-                            <div>
-                                <p>
-                                    <span>
-                                        @isset($res->duree_jour)
-                                        {{$res->duree_jour}} jours
-                                        @endisset
-                                    </span>
-                                    <span>
-                                        @isset($res->duree)
-                                        /{{$res->duree}} h
-                                        @endisset
-                                    </span>
-                                </p>
-                            </div>
+                    <div class="col-lg-6 detail__prix__main__ref2">
+                        <div>
+                            <p>{{ $res->reference }}</p>
                         </div>
                     </div>
-                    <hr class="hr">
-                    <div class="row detail__formation__item__rmain">
-                        <div class="col-lg-4 detail__prix__main__prix">
-                            <div>
-                                <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
-                            </div>
+                </div>
+                <hr class="hr">
+                <div class="row detail__formation__item__main">
+                    <div class="col-lg-6 detail__prix__main__dure">
+                        <div>
+                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span></p>
                         </div>
-                        <div class="col-lg-8 detail__prix__main__prix2">
-                            <div class="text-end">
-                                <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+                    </div>
+                    <div class="col-lg-6 detail__prix__main__dure2">
+                        <div>
+                            <p>
+                                <span>
+                                    @isset($res->duree_jour)
+                                    {{$res->duree_jour}} jours
+                                    @endisset
+                                </span>
+                                <span>
+                                    @isset($res->duree)
+                                    /{{$res->duree}} h
+                                    @endisset
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="hr">
+                <div class="row detail__formation__item__rmain">
+                    <div class="col-lg-4 detail__prix__main__prix">
+                        <div>
+                            <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 detail__prix__main__prix2">
+                        <div class="text-end">
+                            <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
 
-                            </div>
                         </div>
                     </div>
-                    <hr class="hr">
-                    <div class="row detail__formation__item__main">
-                        <div class="col-lg-12 detail__prix__main__btn py-5">
-                            <button type="submit" class="btn">Demander un dévis</button>
-                        </div>
+                </div>
+                <hr class="hr">
+                <div class="row detail__formation__item__main">
+                    <div class="col-lg-12 detail__prix__main__btn py-5">
+                        <button type="submit" class="btn">Demander un dévis</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -633,6 +725,7 @@
             , success: function(response) {
                 if (response.success) {
                     $("#cours" + id).remove();
+                    windows.location.reload();
                 } else {
                     alert("Error")
                 }
@@ -655,6 +748,31 @@
                     $("#programme" + id).remove();
                 } else {
                     alert("Error")
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+
+    $(".modifier").on('click', function(e) {
+        let id = e.target.id;
+        $.ajax({
+            method: "GET"
+            , url: "{{route('editer_programme')}}"
+            , data: {
+                Id: id
+            }
+            , dataType: "html"
+            , success: function(response) {
+                let progData = JSON.parse(response);
+                for (let $i = 0; $i < progData.length; $i++) {
+                    $(".titre_"+    $i).val(progData[$i].titre);
+
+                    for (let $j = 0; $j < progData.length; $j++) {
+                    $(".cours_"+$j).val(progData[$j].titre_cours);
+                }
                 }
             }
             , error: function(error) {
