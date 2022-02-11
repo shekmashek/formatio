@@ -159,7 +159,7 @@
 
                                 <td>
                                     <div align="right">
-                                        <h6><img src="{{ public_path('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
+                                        <h6><img src="dynamic-image/{{$cfp->logo}}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
                                         <h5><strong>{{$cfp->nom}}</strong></h5>
                                         <h6>adresse: {{$cfp->adresse_lot}}</h6>
                                         <h6>ville: {{$cfp->adresse_ville}}</h6>

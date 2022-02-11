@@ -41,16 +41,46 @@
         </nav>
     </header>
     <main>
-        <div class="container-fluid ">
-            <p class="p-5 m-0" style="text-align: left; font-size: 12px;">
-                Le site <a style="color: #801D68; text-decoration-line: underline;"  href="#">https://www.digiforma.com</a> est édité par A World For US SAS, au capital de 11000 €, entreprise immatriculée au RCS de PARIS sous le numéro 51048950300027, dont le siège social est sis au 41 rue Poliveau, 75005 PARIS. <br> <br>
-                N° de TVA intracommunautaire : FR26510489503. <br> <br>
-                Directeur de la publication : Henri Morlaye, Directeur Technique de A World For US SAS, joignable à l’adresse info@aworldforus.com. <br> <br>
-                Le site est hébergé par Heroku Inc., 650 7th Street, San Francisco, CA (tel : +33 1 (877) 563-4311).
-                Le stockage des données personnelles des utilisateurs est exclusivement réalisé sur les centres de données (« clusters ») de la société Amazon Inc, dont le siège social est situé 10 Terry Avenue North, Seattle, WA. Tous les clusters Amazon sur lesquels les données du Site sont stockées sont localisés dans des Etats membres de l’Union Européenne..
-                Les informations concernant la collecte et le traitement des données personnelles (politique et déclaration) sont fournies dans la charte de données personnelles du site. <br> <br>
-                Pour toutes demandes commerciales, merci de nous contacter via la <a style="color: #801D68; text-decoration-line: underline;"  href="#">page de contact</a>  ou bien de visiter notre <a style="color: #801D68; text-decoration-line: underline;" href="#">centre d’aide.</a>
-            </p>
+        <div class="container-fluid">
+            <div class="p-5 m-0">
+                <center><h1>Offrez-vous l'excellence</h1></center>
+                <p class="p-3" style="font-size: 14px; color:rgb(131, 131, 131)">Toutes nos offres sont <b> sans engagement : </b> <br>
+                nos clients travaillent avec nous car ils sont <b> satisfaits </b>, pas sous contrat ! </p> </center>
+            </div>
+            <div class="row">
+                <div class="col-lg-3"></div>
+                    <div class="col-lg-2">
+                        <center>
+                            <p>Basic</p>
+                            <b class="p-0 m-0" style="font-size: 25px;">199 €</b>
+                            <p>Par mois</p>
+                        </center>
+                    </div>
+                    <div class="col-lg-2">
+                        <center>
+                            <p>Pro</p>
+                            <b class="p-0 m-0" style="font-size: 25px;">299 €</b>
+                            <p>Par mois</p>
+                        </center>
+                    </div>
+                    <div class="col-lg-2">
+                        <center>
+                            <p>Premium</p>
+                            <b class="p-0 m-0" style="font-size: 25px;">499 €</b>
+                            <p>Par mois</p>
+                        </center>
+                    </div>
+                    <div class="col-lg-2">
+                        <center>
+                            <p>Elite</p>
+                            <b class="p-0 m-0" style="font-size: 25px;">Sur devis</b>
+                        </center>
+                    </div>
+                <div class="col-lg-1"></div>
+            </div>
+            <div class="row">
+
+            </div>
         </div>
     </main>
     <footer class="footer_container">

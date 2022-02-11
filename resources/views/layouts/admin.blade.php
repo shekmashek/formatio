@@ -785,7 +785,7 @@
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
-                                    <a href="#">
+                                    <a href="{{url('tarifs')}}"  style="color:#801D68 !important" target="_blank">
                                         <p>Tarifs</p>
                                     </a>
                                 </div>
