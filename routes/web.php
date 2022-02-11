@@ -668,7 +668,10 @@ Route::get('recherche_admin','RecherchemultiController@index')->name('recherche_
 Route::get('/info_legale', function () {
     return view('/info_legale');
 });
-
+// route tarifs
+Route::get('/tarifs', function (){
+    return view('/tarif');
+});
 //route conditions generales de vente
 Route::get('condition_generale_de_vente','ConditionController@index')->name('condition_generale_de_vente');
 // Route::get('condition_generale_de_vente',function(){
