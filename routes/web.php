@@ -605,6 +605,8 @@ Route::get('verify_nif_etp','NouveauCompteController@verify_nif_etp')->name('ver
 Route::get('verify_mail_user','NouveauCompteController@verify_mail_user')->name('verify_mail_user');
 Route::get('verify_tel_user','NouveauCompteController@verify_tel_user')->name('verify_tel_user');
 Route::get('verify_cin_user','NouveauCompteController@verify_cin_user')->name('verify_cin_user');
+Route::get('verify_name_cfp','NouveauCompteController@verify_name_cfp')->name('verify_name_cfp');
+Route::get('verify_name_etp','NouveauCompteController@verify_name_etp')->name('verify_name_etp');
 
 
 

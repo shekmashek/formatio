@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\DB;
 use App\Mail\create_new_compte\save_new_compte_cfp_Mail;
 use App\Mail\create_new_compte\save_new_compte_etp_Mail;
 
@@ -231,4 +230,17 @@ class NouveauCompteController extends Controller
         }
         return response()->json($results);
     }
+
+    public function verify_name_etp(Request $req)
+    {
+        $data = DB::select("select * from entreprises where UPPER(nom_etp)=UPPER('" . $req->valiny . "')");
+        return response()->json($data);
+    }
+
+    public function verify_name_cfp(Request $req)
+    {
+        $data = DB::select("select * from cfps where UPPER(nom)=UPPER('" . $req->valiny . "')");
+        return response()->json($data);
+    }
+
 }

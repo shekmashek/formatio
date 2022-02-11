@@ -255,4 +255,5 @@ class EntrepriseController extends Controller
         $datas1 = $fonct->findWhere("v_departement", ["entreprise_id"], [$req->id]);
         return response()->json($datas1);
     }
+
 }

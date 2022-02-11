@@ -246,43 +246,54 @@
         console.log(document.getElementById('name_entreprise_desc').value);
     });
 
-    // ====== autoComplet Champs search nom entreprise
+    // ====== recherche name cfp et entreprise
+    $(document).on('change', '#name_cfp', function() {
+        var result = $(this).val();
 
-    $(document).ready(function() {
-
-
-        $('#name_entreprise_search').autocomplete({
-
-
-            source: function(request, response) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                    , type: 'GET'
-                    , url: "{{route('search_entreprise_referent')}}"
-                    , data: {
-                        search: request.term
-                    }
-                    , success: function(data) {
-                        response(data);
-                    }
-                });
+        $.ajax({
+            url: '{{route("verify_name_cfp")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
             }
-            , minlength: 1
-            , autoFocus: true
-            , select: function(e, ui) {
-                $('#name_entreprise_search').val(ui.item.nom_resp);
-            }
+            , success: function(response) {
+                var userData = response;
 
+                if (userData.length > 0) {
+                    document.getElementById("name_cfp_err").innerHTML = "Entité existe déjà";
+                } else {
+                    document.getElementById("name_cfp_err").innerHTML = "";
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
         });
+    });
 
+    $(document).on('change', '#name_etp', function() {
+        var result = $(this).val();
+        $.ajax({
+            url: '{{route("verify_name_etp")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
 
+                if (userData.length > 0) {
+                    document.getElementById("name_etp_err").innerHTML = "Entité existe déjà";
+                } else {
+                    document.getElementById("name_etp_err").innerHTML = "";
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
     });
 
 </script>
-
-
-
 </body>
 </html>

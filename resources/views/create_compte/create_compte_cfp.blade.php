@@ -98,7 +98,8 @@
                         <div class="col">
                             <div class="form-group">
                                 <input type="text" name="name_cfp" class="form-control input_inscription" id="name_cfp" required />
-                                <label for="name_cfp" class="form-control-placeholder">Nom<strong style="color:#ff0000;">*</strong></label>
+                                <label for="name_cfp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
+                                <span style = "color:#ff0000;" id="name_cfp_err"></span>
                             </div>
                         </div>
                         <div class="col">
