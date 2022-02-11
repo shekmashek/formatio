@@ -188,44 +188,48 @@
                 <div class="form-row d-flex">
                     <div class="col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+
                         <div class="row">
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_1" />
+                                <input required type="text" minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_1" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_2" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_2" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_3" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_3" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_4" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_4" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_5" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_5" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_6" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_6" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_7" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_7" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_8" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_8" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_9" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_9" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_10" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_10" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_11" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_11" />
                             </div>
                             <div class="col">
-                                <input required type="text"  class="form-control mb-2" id="inlineFormInput" name="cin_12" />
+                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_12" />
                             </div>
                         </div>
+
+                        {{-- <input required type="text" minlength="12" maxlength="12"  class="form-control mb-2" id="inlineFormInput" name="cin" /> --}}
+
                     </div>
                 </div>
 
