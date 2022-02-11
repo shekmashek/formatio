@@ -38,6 +38,12 @@ class ParticipantController extends Controller
             return $next($request);
         });
     }
+
+    public function get_service(Request $req){
+        $service = db::select('select * from v_departement_service_entreprise where departement_entreprise_id = ? ',[$req->id]);
+        return response()->json($service);
+    }
+
     public function index()
     {
         $email_error = "";
@@ -52,8 +58,12 @@ class ParticipantController extends Controller
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $liste_dep = db::select('select * from departement_entreprises where entreprise_id = ? ',[$entreprise_id]);
+            $service = db::select('select * from v_departement_service_entreprise where entreprise_id = ? ',[$entreprise_id]);
+
+
+
             // $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
-            return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
+            return view('admin.participant.nouveauParticipant', compact('service','liste_dep', 'email_error', 'matricule_error'));
         }
         if (Gate::allows('isManager')) {
 
@@ -120,7 +130,8 @@ class ParticipantController extends Controller
     public function store(Request $request)
     {
         //condition de validation de formulaire
-        $request->validate(
+
+   /*     $request->validate(
             [
                 'matricule' => ["required"],
                 'nom' => ["required"],
@@ -157,7 +168,7 @@ class ParticipantController extends Controller
                 'cin.required' => 'Entrer le CIN',
             ]
         );
-
+*/
 
 
         if (Gate::allows('isReferent')) {
@@ -212,9 +223,6 @@ class ParticipantController extends Controller
 
             //stocker logo dans google drive
             //stocker logo dans google drive
-            $dossier = 'stagiaire';
-            $stock_stg = new getImageModel();
-            $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
 
             $participant->photos = $nom_image;
 
@@ -234,15 +242,18 @@ class ParticipantController extends Controller
             //get user id
             $user_id = User::where('email', $request->mail)->value('id');
             $participant->user_id = $user_id;
-            $participant->departement_id = $request->liste_dep;
-            $participant->CIN = $request->cin;
+            $participant->service_id = $request->service_id;
+            $participant->cin = $request->cin;
             $participant->date_naissance = $request->naissance;
             $participant->niveau_etude = $request->niveau;
             $participant->entreprise_id = $entreprise_id;
             $participant->save();
             // $request->image->move(public_path($str), $nom_image);
+            $dossier = 'stagiaire';
+            $stock_stg = new getImageModel();
+            $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
 
-            return redirect()->route('liste_participant');
+    //        return redirect()->route('liste_participant');
         }
     }
 

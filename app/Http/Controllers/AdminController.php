@@ -42,6 +42,7 @@ class AdminController extends Controller
     public function admin_etp()
     {
         $id_user = Auth::user()->id;
+        
         $id_etp = responsable::where('user_id',$id_user)->value('id');
 
         $cfp_etp = DB::select('select COUNT(*) as cfp_etp FROM `demmande_cfp_etp` where inviter_etp_id = ? and activiter = ?',[$id_etp,1])[0]->cfp_etp;

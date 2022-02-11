@@ -1,4 +1,6 @@
 CREATE OR REPLACE VIEW v_departement_service_entreprise AS SELECT
+     dep.id as departement_entreprise_id,
+    serv.id as service_id,
     etp.id as entreprise_id,
     etp.nom_etp,
     dep.nom_departement,

@@ -253,7 +253,17 @@ class FactureController extends Controller
             "defaultPaperSize" => "a4",
             "dpi" => 130
         ]);
+
         $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $pdf->getDomPDF()->setHttpContext(
+            stream_context_create([
+                'ssl' => [
+                    'allow_self_signed'=> TRUE,
+                    'verify_peer' => FALSE,
+                    'verify_peer_name' => FALSE,
+                ]
+            ])
+        );
         return $pdf->download('facture de ' . $facture[0]->nom_etp . ' sur le project  ' . $facture[0]->nom_projet . '.pdf');
         // return view('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }

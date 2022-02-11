@@ -2,6 +2,7 @@
 create or replace view v_departement as
 select  * from  departement_entreprises;
 
+
 -- create or replace view v_departement as
 -- select
 --     departement_id,
