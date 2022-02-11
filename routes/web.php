@@ -679,6 +679,6 @@ Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name(
 Route::get('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
 
 
-Route::get('nouveau+responsable+cfp','ResponsableCfpController@index')->name('nouveau+responsable+cfp');
+Route::get('liste+responsable+cfp','ResponsableCfpController@index')->name('liste+responsable+cfp');
 Route::post('save+nouveau+responsable+cfp','ResponsableCfpController@store')->name('save+nouveau+responsable+cfp');
 Route::post('delete+responsable+cfp','ResponsableCfpController@destroy')->name('delete+responsable+cfp');
