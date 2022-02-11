@@ -89,13 +89,16 @@
                             </td>
 
                             <td>
-
-                                <p style="color: rgb(18, 238, 66)">moi</p>
+                                <div align="center">
+                                    <strong style="color: rgb(18, 238, 66)">moi</strong>
+                                </div>
                             </td>
                         </tr>
-<tr>
-    <td colspan="3"><hr></td>
-</tr>
+                        <tr>
+                            <td colspan="3">
+                                <hr>
+                            </td>
+                        </tr>
                         @if (count($responsable)<=0) <tr>
                             <td colspan="3"> <strong align="center">Aucun autre que vous qui est responsable de votre entité</strong></td>
                             </tr>
@@ -191,40 +194,40 @@
 
                         <div class="row">
                             <div class="col">
-                                <input required type="text" minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_1" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_1" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_2" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_2" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_3" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_3" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_4" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_4" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_5" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_5" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_6" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_6" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_7" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_7" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_8" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_8" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_9" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_9" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_10" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_10" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_11" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_11" />
                             </div>
                             <div class="col">
-                                <input required type="text"  minlength="1" maxlength="1"  class="form-control mb-2" id="inlineFormInput" name="cin_12" />
+                                <input required type="text" minlength="1" maxlength="1" class="form-control mb-2" id="inlineFormInput" name="cin_12" />
                             </div>
                         </div>
 
@@ -301,8 +304,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 <script type="text/javascript">
-
-     /*-----------------------------------------------*/
+    /*-----------------------------------------------*/
 
     $(document).on('change', '#email', function() {
         var result = $(this).val();
