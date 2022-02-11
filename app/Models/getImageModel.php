@@ -136,6 +136,7 @@ class getImageModel extends Model
         // Get the files inside the folder...
         $files = collect(Storage::cloud()->listContents($dir['path'], false))
             ->where('type', '=', 'dir');
+
         return $files;
     }
 

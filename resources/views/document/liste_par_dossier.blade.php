@@ -38,7 +38,20 @@
     </div>
     <div class="row liste">
         <div class="col-md-2">
-            <i class="fa fa-folder"></i>&nbsp;&nbsp;<a href="{{route('gestion_documentaire')}}">  {{$get_nom_cfp}} </a>
+            {{-- <i class="fa fa-caret-down " onclick="afficherSousDossier();" style="display: none" id="bas"></i>--}}
+            <i class="fa fa-caret-right " id="droite" onclick="afficherSousDossier();" ></i>&nbsp;&nbsp;<i class="fa fa-folder"></i>&nbsp;&nbsp;<a href="{{route('gestion_documentaire')}}">  {{$get_nom_cfp}} </a>
+            <div class="row" id="sub_directory">
+                @for($i = 0; $i < $nb_sub_folder; $i++)
+                <div class="col-8">
+                     @if ( Request::segment(2)  == $id && $id == $get_sub_folder[$i]['name'])
+                        <span style="padding-left: 28px;color : #801D68 "><i class="fa fa-folder"></i>&nbsp; <a href="{{route('liste_fichier',$get_sub_folder[$i]['name'])}}"> {{$get_sub_folder[$i]['name']}} </a> </span> &nbsp;&nbsp
+                    @else
+                        <span style="padding-left: 28px" ><i class="fa fa-folder"></i>&nbsp; <a href="{{route('liste_fichier',$get_sub_folder[$i]['name'])}}"> {{$get_sub_folder[$i]['name']}} </a> </span> &nbsp;&nbsp
+
+                    @endif
+                </div>
+                @endfor
+            </div>
         </div>
         <div class="col-md-1"><span class="vertical-line"></span></div>
         <div class="col-md-9">
@@ -84,5 +97,18 @@
         </div>
     </div>
 </div>
+<script>
+    function afficherSousDossier(){
+        let sub_dir = document.getElementById('sub_directory');
+        if(getComputedStyle(sub_dir).display != "none"){
+            sub_dir.style.display = "none";
+            droite.className = "fa fa-caret-right";
+        }
 
+        else{
+            sub_dir.style.display = "block";
+            droite.className = "fa fa-caret-down";
+        }
+    }
+</script>
 @endsection
