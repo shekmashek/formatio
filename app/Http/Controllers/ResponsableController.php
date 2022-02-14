@@ -68,7 +68,7 @@ class ResponsableController extends Controller
         //         'ville' => ["required"],
         //         'region' => ["required"],
         //         'quartier' => ["required"],
-                    
+
         //     ],
         //     [
         //         'nom.required' => 'Veuillez remplir le champ',
@@ -92,8 +92,8 @@ class ResponsableController extends Controller
         //         // 'naissance.required' => 'Veuillez remplir le champ'
         //     ]
         // );
-        
-                   
+
+
         //enregistrer les projets dans la bdd
         $resp = new responsable();
         $resp->nom_resp = $request->nom;
@@ -142,12 +142,12 @@ class ResponsableController extends Controller
         foreach ($emails as $email) {
             Mail::to($email)->send(new ReferentMail());
         }
-        
+
       //  $user_id=DB::select('select * from users where email = ?', [$request->mail]);
     //   $user_id = DB::table('users')->where('email', $request->mail)->value('email');
     //  $nom_image = str_replace(' ', '_', $request->nom . '' . $request->prenom .  '' . $request->phone . '.' . $request->photos->extension());
     //     $str = 'images/responsables/';
-    // $rqt =     DB::insert('insert into responsables (nom_resp,prenom_resp,sexe_resp,date_naissance_resp,cin_resp,email_resp,telephone_resp,fonction_resp,poste_resp,adresse_quartier,adresse_code_postal,adresse_lot,adresse_ville ,adresse_region,user_id,photos) 
+    // $rqt =     DB::insert('insert into responsables (nom_resp,prenom_resp,sexe_resp,date_naissance_resp,cin_resp,email_resp,telephone_resp,fonction_resp,poste_resp,adresse_quartier,adresse_code_postal,adresse_lot,adresse_ville ,adresse_region,user_id,photos)
     //     values (?, ?,?,?,?,?,?,?,?,?,?,?,?)',
     //      [$request->nom,$request->prenom,$request->sexe_resp,$request->dte_resp,$request->cin_resp,$request->mail,$request->phone,$request->fonction,$request->poste,$request->quartier,$request->code_postal,$request->lot,$request->ville,$request->region,$user_id,$nom_image
 
@@ -238,7 +238,7 @@ class ResponsableController extends Controller
         $responsable = responsable::findOrFail($id);
         return view('admin.responsable.edit_fonction', compact('responsable'));
     }
-  
+
     public function edit_entreprise($id, Request $request){
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
@@ -291,6 +291,7 @@ class ResponsableController extends Controller
             $nom = $request->nom;
             $prenom = $request->prenom;
             $date = $request->date;
+
             $cin = $request->cin;
             $genre = $request->genre;
             $code_postal = $request->code_postal;
@@ -305,10 +306,10 @@ class ResponsableController extends Controller
             $mdp = $request->password;
             $mdpHash = Hash::make($mdp);
             $input = $request->image;
-            
+
          //stocker logo dans google drive
             //stocker logo dans google drive
-           
+
             // $dossier = 'stagiaire';
             // $stock_stg = new getImageModel();
             //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
@@ -355,7 +356,7 @@ class ResponsableController extends Controller
                     'adresse_ville'=>$ville,
                     'adresse_region'=>$region,
                     'poste_resp'=>$poste,
-                    
+
                 ]);
 
             }
@@ -374,7 +375,7 @@ class ResponsableController extends Controller
                 // entreprise::where('id',$id)->update([
                 //     'nom_etp'=>$request->entreprise
                 // ]);
-                
+
             return redirect()->route('affResponsable');
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isReferent')) {
