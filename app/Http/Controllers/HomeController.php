@@ -154,9 +154,9 @@ class HomeController extends Controller
             // return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
-            $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
-            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?', [$entreprise_id]);
-            return view('projet_session.index2', compact('data', 'infos', 'stagiaires'));
+            // $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
+            // $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?', [$entreprise_id]);
+            return view('projet_session.index2', compact('data'));
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
