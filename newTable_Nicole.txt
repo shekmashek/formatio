@@ -22,3 +22,7 @@ Branche inscription_cfp_etp:
      2°) Modification table Users:
      alter table users add column  cin varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL DEFALUT 'XXXXX';
     alter table users add column telephone varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFALUT 'XXXXX';
+
+
+alter table responsables add column  prioriter boolean not null default false;
+alter table responsables_cfp add column  prioriter boolean not null default false;

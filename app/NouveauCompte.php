@@ -34,7 +34,7 @@ class NouveauCompte extends Model
             $cfp_id, $user_id
         ];
         DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
-        ,cfp_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,1,NOW())', $data);
+        ,cfp_id,user_id,activiter,created_at,prioriter) values(?,?,?,?,?,?,?,?,1,NOW(),true)', $data);
         DB::commit();
     }
 
@@ -59,7 +59,7 @@ class NouveauCompte extends Model
             $entreprise_id, $user_id
         ];
         DB::insert('insert into responsables(nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-        ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,1,NOW())', $data);
+        ,entreprise_id,user_id,activiter,created_at,prioriter) values(?,?,?,?,?,?,?,?,1,NOW(),true)', $data);
         DB::commit();
     }
 
