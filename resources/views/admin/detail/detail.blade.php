@@ -228,6 +228,15 @@
 
 
         <div class="row">
+            @if (count($datas) != 0)
+                @can('isReferent')
+                <div class="col-md-12 m-1">
+                    Confirmer la session "<Strong style="color: #822164">{{ $projet[0]->nom_groupe }}</Strong>" du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les details ci-dessous 
+                    <a href="{{ route('acceptation_session',[$projet[0]->groupe_id]) }}"><button type="button" class="btn btn-success" data-dismiss="modal">Accepter</button></a>
+                    {{-- <a href=""><button type="button" class="btn  btn-danger" data-dismiss="modal">Refuser</button></a> --}}
+                </div>
+                @endcan
+            @endif
             <div class="col-lg-12">
                 <div class="panel panel-default">
 
@@ -393,6 +402,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 @endif

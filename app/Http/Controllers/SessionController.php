@@ -20,8 +20,9 @@ use App\Models\FonctionGenerique;
 use App\responsable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use phpseclib3\Crypt\RC2;
-
+use App\Mail\acceptation_session;
 class SessionController extends Controller
 {
     public function __construct()
@@ -114,7 +115,7 @@ class SessionController extends Controller
         if(Gate::allows('isReferent')){
             $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $formateur = NULL;
-            $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$etp_id]);
+            $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
         }
         if(Gate::allows('isFormateur')){
@@ -305,5 +306,20 @@ class SessionController extends Controller
     public function get_competence_stagiaire(Request $request){
         $data = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
         return response()->json($data);
+    }
+
+    public function acceptation_session(Request $request){
+        // envoyer mail
+        $fonct = new FonctionGenerique();
+        $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+        $name_session = $session->nom_groupe;
+        $name_etp = $session->nom_etp;
+        $date_debut = $session->date_debut;
+        $date_fin = $session->date_fin;
+        $mail_etp = $session->email_etp;
+        Mail::to($session->mail_cfp)->send(new acceptation_session($mail_etp,$name_session,$name_etp,$date_debut,$date_fin));
+        // fin
+        DB::update('update groupes set status = 2 where id = ?',[$request->groupe]);
+        return back();
     }
 }

@@ -7,12 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Formation.mg</h2>
-<b>Nom:</b> {{ $name }}<br>
-<b>Email:</b> {{ $email }}<br>
-<b>objet:</b> {{ $objet }}<br>
-<b>entreprise:</b>{{ $msg }}<br>
-<b>Message:</b>{{$entreprise}}  <br>
+    
+    L'entreprise {{ $name_etp }} a accepté la session de formation : {{ $name_session }} du {{ $date_debut }} au {{ $date_fin }}
 
 
 </body>
