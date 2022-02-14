@@ -167,7 +167,8 @@ Route::get('/edit_responsable','ResponsableController@edit')->name('edit_respons
 
 Route::get('/destroy_responsable','ResponsableController@destroy')->name('destroy_responsable');
 
-Route::post('/update_responsable','ResponsableController@update')->name('update_responsable');
+Route::post('/update_responsable/{id?}','ResponsableController@update')->name('update_responsable');
+Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
 // editer profil responsable
@@ -183,12 +184,19 @@ Route::get('/edit_adresse/{id}','ResponsableController@edit_adresse')->name('edi
 Route::get('/edit_fonction/{id}','ResponsableController@edit_fonction')->name('edit_fonction');
 Route::get('/edit_matricule/{id}','ResponsableController@edit_matricule')->name('edit_matricule');
 Route::get('/edit_entreprise/{id}','ResponsableController@edit_entreprise')->name('edit_entreprise');
-Route::get('/edit_niveau/{id}','ResponsableController@edit_niveau')->name('edit_niveau');
+Route::get('/edit_nif/{id}','ResponsableController@edit_nif')->name('edit_nif');
+Route::get('/edit_rcs/{id}','ResponsableController@edit_rcs')->name('edit_rcs');
+Route::get('/edit_cif/{id}','ResponsableController@edit_cif')->name('edit_cif');
 Route::get('/edit_departement/{id}','ResponsableController@edit_departement')->name('edit_departement');
-Route::get('/edit_branche/{id}','ResponsableController@edit_branche')->name('edit_branche');
+Route::get('/edit_stat/{id}','ResponsableController@edit_stat')->name('edit_stat');
 Route::get('/edit_photos/{id}','ResponsableController@edit_photos')->name('edit_photos');
 Route::get('/edit_pwd/{id}','ResponsableController@edit_pwd')->name('edit_pwd');
 Route::get('/edit_poste/{id}','ResponsableController@edit_poste')->name('edit_poste');
+Route::get('/edit_adresse_etp/{id}','ResponsableController@edit_adresse_etp')->name('edit_adresse_etp');
+Route::get('/edit_site/{id}','ResponsableController@edit_site')->name('edit_site');
+Route::get('/edit_phone_etp/{id}','ResponsableController@edit_phone_etp')->name('edit_phone_etp');
+Route::get('/edit_email_etp/{id}','ResponsableController@edit_email_etp')->name('edit_email_etp');
+
 
 //route----------------- STAGIAIRE
 Route::resource('participant','ParticipantController')->except([

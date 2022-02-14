@@ -66,7 +66,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Entreprise</p>
-        <form   class="btn-submit" action="{{route('update_responsable')}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
@@ -114,10 +114,19 @@
                       
                     <input type="hidden" class="form-control input"  name="fonction" placeholder="Fonction" value="{{ $responsable->fonction_resp}}" readonly>
                 
-            
+                    <input type="hidden" class="form-control input test"  name="rcs"  value="  {{ optional(optional($responsable)->entreprise)->rcs}}" >
+                    <input type="hidden" class="form-control input test"  name="nif"  value="  {{ optional(optional($responsable)->entreprise)->nif}}" >
+                    <input type="hidden" class="form-control input test"  name="stat"  value="  {{ optional(optional($responsable)->entreprise)->stat}}" >
+                    <input type="hidden" class="form-control input test"  name="email_etp"  value="  {{ optional(optional($responsable)->entreprise)->email_etp}}" >
+                    <input type="hidden" class="form-control input test"  name="site"  value="  {{ optional(optional($responsable)->entreprise)->site_etp}}" >
+                    <input type="hidden" class="form-control input test"  name="cif"  value="  {{ optional(optional($responsable)->entreprise)->cif}}" >
+                    <input type="hidden" class="form-control input test"  name="adresse_etp"  value="  {{ optional(optional($responsable)->entreprise)->adresse}}" >
+          
+                    <input type="hidden" class="form-control input test"  name="phone_etp"  value="  {{ optional(optional($responsable)->entreprise)->telephone_etp}}" >
+                   
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
-                    <input type="tesxt" class="form-control input test"  name="entreprise"  value="{{ optional(optional($responsable)->entreprise)->nom_etp}}" >
+                    <input type="text" class="form-control input test"  name="etp"  value="  {{ optional(optional($responsable)->entreprise)->nom_etp}}" >
                     <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Entreprise</label>
 
                 </div>

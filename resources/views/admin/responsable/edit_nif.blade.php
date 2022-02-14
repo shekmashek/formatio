@@ -57,6 +57,7 @@
   opacity: 1;
   background-color: white;
   margin-left: 105px;
+  margin-top: -10px;
 
 }
 </style>
@@ -64,8 +65,8 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photos de profile</p>
-        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
+        <p style="text-align: left">NIF</p>
+        <form   class="btn-submit" action="{{route('update_entreprise',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
@@ -74,22 +75,7 @@
                 
                         <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>
-                        <div class="row px-3 mt-4">
-                            <div class="form-group mt-1 mb-1">
-                            <center>
-                                <div class="image-upload">
-                                  <label for="file-input">
-                                    <div class="upload-icon">
-                                        <img src="{{asset('images/responsables/'.$responsable->photos)}}" id = "photo_stg"  class="image-ronde"> 
-                                      {{-- <input type="text" id = 'vartemp'> --}}
-                              </div>
-                                  </label>
-                                     <input id="file-input" type="file" name="image" value="{{$responsable->photos}}"/>
-                                  </div>
-                            </center>  
-                        </div>
-                    </div>
-                                     
+
 
                         <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
@@ -128,11 +114,22 @@
                       
                     <input type="hidden" class="form-control input"  name="fonction" placeholder="Fonction" value="{{ $responsable->fonction_resp}}" readonly>
                 
-            
+                    <input type="hidden" class="form-control input test"  name="etp"  value="  {{ optional(optional($responsable)->entreprise)->nom_etp}}" >
+              
+                    <input type="hidden" class="form-control input test"  name="etp"  value="  {{ optional(optional($responsable)->entreprise)->nom_etp}}" >
+                    <input type="hidden" class="form-control input test"  name="rcs"  value="  {{ optional(optional($responsable)->entreprise)->rcs}}" >
+                    <input type="hidden" class="form-control input test"  name="adresse_etp"  value="  {{ optional(optional($responsable)->entreprise)->adresse}}" >
+                    
+                    <input type="hidden" class="form-control input test"  name="stat"  value="  {{ optional(optional($responsable)->entreprise)->stat}}" >
+                    <input type="hidden" class="form-control input test"  name="cif"  value="  {{ optional(optional($responsable)->entreprise)->nif}}" >
+                    <input type="hidden" class="form-control input test"  name="email_etp"  value="  {{ optional(optional($responsable)->entreprise)->email_etp}}" >
+                    <input type="hidden" class="form-control input test"  name="site"  value="  {{ optional(optional($responsable)->entreprise)->site_etp}}" >
+                    <input type="hidden" class="form-control input test"  name="phone_etp"  value="  {{ optional(optional($responsable)->entreprise)->telephone_etp}}" >
+                                    
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
-                    <input type="hidden" class="form-control input"  name="entreprise"  value="{{ optional(optional($responsable)->entreprise)->nom_etp}}" readonly>
-                    {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Entreprise</label> --}}
+                    <input type="text" class="form-control input test"  name="nif"  value="  {{ optional(optional($responsable)->entreprise)->nif}}" >
+                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">NIF</label>
 
                 </div>
         </div> 
@@ -150,52 +147,7 @@
 </div>
 </div>
 </div>
-<style>
 
-    .image-ronde{
-      width : 150px; height : 150px;
-      border: none;
-      -moz-border-radius : 75px;
-      -webkit-border-radius : 75px;
-      border-radius : 75px;
-      cursor: pointer;
-    }
-        .image-upload > input
-        {
-            display: none;
-        }
-          </style>
-        
-        
-        
-        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script>
-        
-          // $(document).ready(function(){
-          //   alert("Bien venu");
-          // });
-          $('#file-input').change( function(event) {
-            $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
-            $("img.icon").parents('.upload-icon').addClass('has-img');
-            readURL(this);
-          });
-          //fonction qui change la photo de profil du stagiaire
-          function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-        
-                    reader.onload = function (e) {
-                        //alert(e.target.result);
-                        $('#photo_stg').attr('src', e.target.result);
-                    }
-        
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-        
-        
-        </script>
 @endsection
 
 

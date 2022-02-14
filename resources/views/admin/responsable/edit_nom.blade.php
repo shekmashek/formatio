@@ -52,7 +52,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Modifier le nom</p>
-        <form   class="btn-submit" action="{{route('update_responsable')}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">

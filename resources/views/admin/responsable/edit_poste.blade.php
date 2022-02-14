@@ -65,7 +65,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Poste</p>
-        <form   class="btn-submit" action="{{route('update_responsable')}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
@@ -118,7 +118,7 @@
                     <input type="hidden" class="form-control input"  name="entreprise"  value="{{ optional(optional($responsable)->entreprise)->nom_etp}}" readonly>
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
-                    <input type="text" value="{{ $responsable->poste_resp }}"  class="form-control input test"  name="poste"  >
+                    <input type="text" value="  {{ $responsable->poste_resp }}"  class="form-control input test"  name="poste"  >
                     <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Poste</label>
 
                 </div>
