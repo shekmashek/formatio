@@ -86,6 +86,20 @@ create or replace view v_groupe_entreprise as
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
+        case g.status 
+            when 0 then 'Créer'
+            when 1 then 'Prévisionnel' 
+            when 2 then 'A venir' 
+            when 3 then 'En cours' 
+            when 4 then 'Terminé'
+        end item_status_groupe,
+        case g.status 
+            when 0 then 'Créer'
+            when 1 then 'status_grise' 
+            when 2 then 'status_confirme' 
+            when 3 then 'statut_active' 
+            when 4 then 'status_termine'
+        end class_status_groupe,
         g.activiter as activiter_groupe,
         g.type_payement_id,
         tp.type as type_payement

@@ -20,7 +20,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ url('projet_session') }}"> <i class="fa fa-arrow-alt-circle-left mt-4 me-3" href="{{ url('projet_session') }}">&nbsp; projet</i> </a>
+            <a href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}"> <i class="fa fa-circle-xmark mt-4 me-3" href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}">&nbsp;Annuler</i> </a>
         </div>
     </nav>
     <section class="bg-light py-1">
@@ -55,12 +55,15 @@
                 </div>
             </div>
             <div class="d-flex me-2 flex-wrap">
-                <div class="status_grise">Prévisionnel</div>
+                <div class="{{ $projet[0]->class_status_groupe }}">{{ $projet[0]->item_status_groupe }}</div>
+                {{-- 
+                    <div class="status_grise">Confirmé</div>
+                <div class="status_confirme">Confirmé</div>
                 <div class="status_confirme">Confirmé</div>
                 <div class="statut_active">En cours</div>
-                <div class="status_termine">Terminé</div>
-                <div class="status_archive">Archivé</div>
-                <div class="status_annule">Annulé</div>
+                <div class="status_termine">Terminé</div> --}}
+                {{-- <div class="status_archive">Archivé</div> --}}
+                {{-- <div class="status_annule">Annulé</div> --}}
             </div>
         </div>
     </section>

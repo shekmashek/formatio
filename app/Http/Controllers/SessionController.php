@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
+use App\Mail\annuler_session;
+
 class SessionController extends Controller
 {
     public function __construct()
@@ -320,6 +322,23 @@ class SessionController extends Controller
         Mail::to($session->mail_cfp)->send(new acceptation_session($mail_etp,$name_session,$name_etp,$date_debut,$date_fin));
         // fin
         DB::update('update groupes set status = 2 where id = ?',[$request->groupe]);
+        return back();
+    }
+
+    public function annuler_session(Request $request){
+        if(Gate::allows('isReferent')){
+            $fonct = new FonctionGenerique();
+            $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+            $name_session = $session->nom_groupe;
+            $name_etp = $session->nom_etp;
+            $name_cfp = $session->nom_cfp;
+            $date_debut = $session->date_debut;
+            $date_fin = $session->date_fin;
+            $mail_acteur = $session->email_etp;
+            $mail_cfp = $session->mail_cfp;
+            Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
+        }
+        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
         return back();
     }
 }

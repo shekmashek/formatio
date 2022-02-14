@@ -19,7 +19,7 @@
 {{-- @if (count($stagiaire) != 0) --}}
 
 <div class="shadow mb-3 col-12 pb-5">
-    <div class="row">
+    <div class="row ms-4 mt-0">
         <div class="col-md-5">
             <span>
                 <h5>Matériel nécessaire</h5>
@@ -33,7 +33,7 @@
     </div>
     <div id="affiche_ressource">
         @foreach ($ressource as $r)
-            <div class="row" id="ressource_{{ $r->id }}">
+            <div class="row ms-4 mt-0" id="ressource_{{ $r->id }}">
                 <div class="col-md-5">
                     <section>
                         <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
@@ -50,12 +50,12 @@
                                 class="fa fa-trash-alt"></i></button>
                     </section>
                 </div>
-                <hr class="m-0">
+                <hr class="m-0 mr-5">
             </div>
 
         @endforeach
     </div>
-    <div class="mt-3">
+    <div class="ms-4 mt-3">
         <h5>Autre(s)</h5>
         <section class="row px-3">
             <div class="col-md-8  py-0 px-1">

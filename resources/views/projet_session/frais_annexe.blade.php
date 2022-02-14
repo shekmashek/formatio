@@ -1,5 +1,5 @@
 <div class="shadow mb-3 col-12 pb-5 section">
-    <div class="row">
+    <div class="row ms-4">
         <div class="col-md-3">
             <div class="frais_annexe">
                 Frais de déplacement
@@ -13,7 +13,7 @@
             </ul>
         </div>
     </div>
-    <div class="row">
+    <div class="row ms-4">
         <div class="col-md-3">
             <div class="frais_annexe">Hébergement</div>
             <input type="hidden" value="Hébergement" name="description[]">
@@ -25,7 +25,7 @@
             </ul>
         </div>
     </div>
-    <div class="row">
+    <div class="row ms-4">
         <div class="col-md-3">
             <div class="frais_annexe">Restauration</div>
             <input type="hidden" value="Restauration" name="description[]">
@@ -37,7 +37,7 @@
             </ul>
         </div>
     </div>
-    <div class="row">
+    <div class="row ms-4">
         <div class="col-md-3">
             <div class="frais_annexe">Location de salle</div>
             <input type="hidden" value="Location de salle" name="description[]">
@@ -49,7 +49,7 @@
             </ul>
         </div>
     </div>
-    <div class="row">
+    <div class="row ms-4">
         <div class="col-md-3">
             <div class="frais_annexe">Location matérielle</div>
             <input type="hidden" value="Location matérielle" name="description[]">
@@ -64,7 +64,7 @@
     <div id="newRow_frais">
 
     </div>
-    <div class="row">
+    <div class="row ms-4">
         <div class="col-md-3">
             <button type="button" id="addRow_frais"><i class="fa fa-plus-circle"></i> Autre(s)</a>
         </div>
@@ -78,7 +78,7 @@
 
         </div>
     </div>
-    <div class="row">
+    <div class="row ms-4">
         <div class="col-md-12 align-items-center">
             <button type="button" id="save_frais_annexe" class="btn btn-success">Enregistrer</button>
         </div>

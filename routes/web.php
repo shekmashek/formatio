@@ -260,8 +260,8 @@ Route::get('date_but','DetailController@showDate')->name('date_but');
 
 Route::get('/show/{id}','DetailController@show')->name('show');
 Route::get('/store_detail','DetailController@store')->name('store_detail');
-Route::get('/update_detail/{id}','DetailController@update')->name('update_detail');
-Route::get('/destroy_detail','DetailController@destroy')->name('destroy_detail');
+Route::post('/update_detail/{id}','DetailController@update')->name('update_detail');
+Route::get('/destroy_detail/{id?}','DetailController@destroy')->name('destroy_detail');
 
 //Route execution du projet
 Route::get('/liste_execution','ExecutionController@index')->name('liste_execution');
@@ -679,3 +679,4 @@ Route::get('competence_stagiaire','SessionController@get_competence_stagiaire')-
 
 
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
+Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');

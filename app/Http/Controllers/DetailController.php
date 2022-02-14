@@ -213,30 +213,35 @@ public function index()
     public function update(Request $request, $id)
     {
         //modifier les données
-        $lieu = $request->Lieu;
-        $date_debut = $request->Debut;
-        $date_fin = $request->Fin;
+        $lieu = $request->lieu;
+        $h_debut = $request->debut;
+        $h_fin = $request->fin;
+        $formateur = $request->formateur;
+        $date_detail = $request->date;
         detail::where('id', $id)
             ->update([
+                'formateur_id' =>$formateur,
                 'lieu' => $lieu,
-                'date_debut' => $date_debut,
-                'date_fin' => $date_fin,
+                'h_debut' => $h_debut,
+                'h_fin' => $h_fin,
+                'date_detail' => $date_detail,
             ]);
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data updated successfully',
+        // return response()->json(
+        //     [
+        //         'success' => true,
+        //         'message' => 'Data updated successfully',
 
-            ]
-        );
+        //     ]
+        // );
+        return back();
     }
 
     public function destroy(Request $request)
     {
-        $id = $request->Id;
+        $id = $request->id;
         $detail = detail::find($id);
         $detail->delete();
-        return redirect()->route('liste_detail');
+        return back();
     }
     //affichage date en fonction session
     public function showDate(Request $request){
