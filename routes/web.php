@@ -230,10 +230,11 @@ Route::get('/get_formation','ModuleController@get_formation')->name('get_formati
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('/destroy_module','ModuleController@destroy')->name('destroy_module');
 Route::post('update_module/{id}','ModuleController@update')->name('update_module');
-Route::get('publier_module/{id}','ModuleController@module_publier')->name('publier_module');
+Route::post('publier_module','ModuleController@module_publier')->name('publier_module');
 Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifier_module');
 Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->name('modifier_module_prog');
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
+Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
 
 // route recherche par référence
 Route::get('rechercheReference/{reference?}','ModuleController@rechercheReference')->name('rechercheReference');
@@ -311,15 +312,23 @@ Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_progra
 Route::post('/destroy_programme/{id}','ProgrammeController@destroy')->name('destroy_programme');
 Route::post('/update_programme/{id}','ProgrammeController@update')->name('update_programme/{id}');
 Route::post('insert_prog_cours','ProgrammeController@store')->name('insert_prog_cours');
+Route::post('/update_prog_cours','ProgrammeController@update_pgc')->name('update_prog_cours');
 Route::get('/create_programme','ProgrammeController@create')->name('create_programme');
+Route::get('modif_programmes/{id}','ProgrammeController@ajout_programme')->name('modif_programmes');
+Route::get('suppression_programme','ProgrammeController@suppre_programme')->name('suppression_programme');
+Route::get('editer_programme','ProgrammeController@edit')->name('editer_programme');
+
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');
-Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+// Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+Route::post('insertion_cours','CoursControlleur@store')->name('insertion_cours');
 Route::get('modifier_cours/{id_cours?}/','CoursControlleur@update')->name('modifier_cours');
 Route::get('liste_cours/{id_prog?}','CoursControlleur@liste_cours')->name('liste_cours');
 Route::get('supprimer_cours/{id_cours?}/{id_programme?}', 'CoursControlleur@destroy')->name('supprimer_cours');
 Route::get('edit_cours','CoursControlleur@edit')->name('edit_cours');
+Route::get('suppression_cours','CoursControlleur@suppre_cours')->name('suppression_cours');
+
 
 Route::get('/agenda',function(){
     return view('admin.agenda.agenda');

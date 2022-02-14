@@ -1,2 +1,4 @@
 ALTER TABLE modules add status int;
 Modification view : moduleformation
+
+Ajout d'un nouvelle table : competence_a_evaluer dans le module, catalogue de formation

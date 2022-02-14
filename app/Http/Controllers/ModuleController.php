@@ -221,9 +221,10 @@ class ModuleController extends Controller
     public function affichage(Request $request)
     {
         $id = $request->Id;
-        $module_en_cours = DB::select('select * from moduleformation where module_id = ?', [$id]);
+        $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
+        $programme = DB::select('select * from v_cours_programmes where module_id = ?',[$id]);
         // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
-        return response()->json($module_en_cours);
+        return response()->json($module_en_cours,$programme);
     }
 
     public function modifier_mod(Request $request)
@@ -365,7 +366,36 @@ class ModuleController extends Controller
     {
         $id = $request->id;
         $statut = 2;
-        $changer_status = DB::update('update modules set status=? where id= ?', [$statut, $id]);
+        $competence = $request->all();
+        for($i = 0; $i < count($competence['titre_competence']); $i++){
+            $prog = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['objectif'][$i],$id]);
+        }
+        $changer_status = DB::update('update modules set status = ? where id = ?',[$statut,$id]);
         return back();
+    }
+
+    public function affichageParModule($id){
+        $id = request('id');
+
+        $categorie= DB::select('select * from formations where status = 1');
+        $test =  DB::select('select exists(select * from moduleformation where module_id = '.$id.') as moduleExiste');
+      //on verifie si moduleformation contient le module_id
+        if ($test[0]->moduleExiste == 1){
+            // $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
+            $infos = DB::select('select * from moduleformation where module_id = ?',[$id]);
+            $nb = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.formation_id = ? group by mf.formation_id',[$id]);
+            if($nb == null){
+                $nb_avis = 0;
+            }else{
+                $nb_avis = $nb[0]->nb_avis;
+            }
+
+            $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
+            $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
+            $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
+            // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
+            return view('admin.module.ajout_programme',compact('infos','cours','programmes','nb_avis','liste_avis','categorie','id'));
+        }
+        else return redirect()->route('liste_module');
     }
 }

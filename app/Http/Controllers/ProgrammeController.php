@@ -60,23 +60,45 @@ class ProgrammeController extends Controller
     {
         $id = $request->id_module;
         $donnees = $request->all();
-        $fonct = new FonctionGenerique();
+
         for ($i = 0; $i < count($donnees['titre_prog']); $i++) {
-            $verify_prog = $fonct->findWhereMulitOne("programmes", ["titre", "module_id"], [$donnees['titre_prog'][$i], $id]);
-            if ($verify_prog != null) {
-                $id_prog = $verify_prog->id;
-            } else {
+            if ($donnees['titre_prog'][$i] != null) {
                 $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)', [$donnees['titre_prog'][$i], $id]);
-                $id_prog = $fonct->findWhereMulitOne("programmes", ["titre", "module_id"], [$donnees['titre_prog'][$i], $id])->id;
-                    for ($j = 0; $j < count($donnees['cours']); $j++) {
-                        if ($donnees['cours'][$j] != null) {
-                            $cour = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)', [$donnees['cours'][$j], $id_prog]);
-                        }
+                $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
+                for ($j = 0; $j < count($donnees['cours_' . $i]); $j++) {
+
+                    if ($donnees['cours_' . $i][$j] != null) {
+                        $cours = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)', [$donnees['cours_' . $i][$j], $id_prog]);
                     }
+                }
             }
         }
+        return back();
+        // return redirect()->route('liste_module');
+    }
 
-        return redirect()->route('liste_module');
+    public function update_pgc(Request $request)
+    {
+        $id = $request->id_prog;
+        $donnees = $request->all();
+        $fonct = new FonctionGenerique();
+
+        if ($request->titre_prog != null) {
+            $prog = DB::update('update programmes set titre=? where id = ?', [$request->titre_prog, $id]);
+            $cours = $fonct->findWhere('cours', ['programme_id'], [$id]);
+
+            for ($i = 0; $i < count($cours); $i++) {
+                $id_cour = $donnees['id_cours_' . $id . '_' . $cours[$i]->id];
+                $val_cour = $donnees['cours_' . $id . '_' . $cours[$i]->id];
+
+                if ($donnees['cours_' . $id . '_' . $cours[$i]->id] != null) {
+                    $cour = DB::update('update cours set titre_cours=? where programme_id = ? and id = ?', [$val_cour, $id, $id_cour]);
+                } else {
+                    return back()->with('error', "l'une de ses informations est invalid");
+                }
+            }
+            return back();
+        }
     }
 
     public function show($id)
@@ -84,9 +106,11 @@ class ProgrammeController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $id = $request->Id;
+        $cours_prog = DB::select('select titre,titre_cours from v_cours_programme where programme_id = ?', [$id]);
+        return response()->json($cours_prog);
     }
 
     public function info_data(Request $req)
@@ -128,5 +152,43 @@ class ProgrammeController extends Controller
         $formation = $fonction->findAll("formations");
 
         return view('admin.programme.nouveauProgramme', compact('module', 'formation'));
+    }
+
+    public function ajout_programme($id)
+    {
+        $id = request('id');
+
+        $categorie = DB::select('select * from formations where status = 1');
+        $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id . ') as moduleExiste');
+        //on verifie si moduleformation contient le module_id
+        if ($test[0]->moduleExiste == 1) {
+            // $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
+            $infos = DB::select('select * from moduleformation where module_id = ?', [$id]);
+            $nb = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.formation_id = ? group by mf.formation_id', [$id]);
+            if ($nb == null) {
+                $nb_avis = 0;
+            } else {
+                $nb_avis = $nb[0]->nb_avis;
+            }
+
+            $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
+            $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
+            $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
+            // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
+            return view('admin.module.modif_programme', compact('infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id'));
+        } else return redirect()->route('liste_module');
+    }
+
+    public function suppre_programme(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from cours where programme_id = ?', [$id]);
+        DB::delete('delete from programmes where id = ?', [$id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
     }
 }
