@@ -65,6 +65,7 @@ class ProgrammeController extends Controller
                 $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)',[$donnees['titre_prog'][$i],$id]);
                 $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
                 for($j = 0; $j < count($donnees['cours_'.$i]); $j++){
+
                     if ($donnees['cours_'.$i][$j] != null) {
                         $cours = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)',[$donnees['cours_'.$i][$j],$id_prog]);
                     }
@@ -73,27 +74,31 @@ class ProgrammeController extends Controller
 
         }
 
-        return redirect()->route('liste_module');
+        return back();
     }
 
     public function update_pgc(Request $request)
     {
         $id = $request->id_prog;
-        $cours_titre = [$request->cours.$request->id_cours];
-
         $donnees = $request->all();
-        if ($request->titre_prog != null) {
-            $prog = DB::update('update programmes set titre=? where module_id = ?',[$request->titre_prog,$id]);
-            for($i = 0; $i < count($cours_titre); $i++){
-                dd([$cours_titre][$i]);
-                if ([$cours_titre][$i] != null) {
+        $fonct = new FonctionGenerique();
 
-                    $cour = DB::update('update cours set titre_cours=? where programme_id = ?',[$donnees['cours_'.$i][$i],$id]);
+        if ($request->titre_prog != null) {
+            $prog = DB::update('update programmes set titre=? where id = ?',[$request->titre_prog,$id]);
+            $cours =$fonct->findWhere('cours',['programme_id'],[$id]);
+
+            for ($i=0; $i < count($cours); $i++) {
+                $id_cour = $donnees['id_cours_'.$id.'_'.$cours[$i]->id];
+                $val_cour = $donnees['cours_'.$id.'_'.$cours[$i]->id];
+
+                if($donnees['cours_'.$id.'_'.$cours[$i]->id] !=null){
+                        $cour = DB::update('update cours set titre_cours=? where programme_id = ? and id = ?',[ $val_cour, $id, $id_cour ]);
+                } else {
+                    return back()->with('error',"l'une de ses informations est invalid");
                 }
             }
-        }
-
         return back();
+        }
     }
 
     public function show($id)

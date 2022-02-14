@@ -319,7 +319,8 @@ Route::get('editer_programme','ProgrammeController@edit')->name('editer_programm
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');
-Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+// Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+Route::post('insertion_cours','CoursControlleur@store')->name('insertion_cours');
 Route::get('modifier_cours/{id_cours?}/','CoursControlleur@update')->name('modifier_cours');
 Route::get('liste_cours/{id_prog?}','CoursControlleur@liste_cours')->name('liste_cours');
 Route::get('supprimer_cours/{id_cours?}/{id_programme?}', 'CoursControlleur@destroy')->name('supprimer_cours');
