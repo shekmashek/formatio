@@ -78,7 +78,7 @@
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>
-                <li id="confirm"></li>
+                {{-- <li id="confirm"></li> --}}
             </ul>
 
             <div id="formulaire">
@@ -115,7 +115,7 @@
                         <span style = "color:#ff0000;" id="nif_cfp_err"></span>
                     </div>
 
-                    <div class="row mt-2">
+                    {{-- <div class="row mt-2">
                         <div class="col">
                             <div class="form-group">
                                 <input type="text" name="lot_cfp" required class="form-control input_inscription" id="lot_cfp" />
@@ -130,9 +130,9 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
 
-                    <div class="row mt-2">
+                    {{-- <div class="row mt-2">
 
                         <div class="col">
                             <div class="form-group">
@@ -147,8 +147,8 @@
 
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group m-0">
+                    </div> --}}
+                    {{-- <div class="form-group m-0">
                         <label for="#" class="form-control-label">Région<strong style="color:#ff0000;">*</strong></label>
                         <select class="form-select" aria-label="Default select example" name="region" required id="region">
                             <option value="Diana">Diana</option>
@@ -175,7 +175,7 @@
                             <option value="Androy">Androy</option>
                             <option value="Anôsy">Anôsy</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <input type="button" name="next" class="next action-button" value="Suivant" />
                 </fieldset>
@@ -184,7 +184,7 @@
                 {{-- --}}
 
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h4 align="left" class="mb-2">A propos de vous</strong></h4>
+                    <h4 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
                     <div class="row">
                         <div class="col-md-5">
@@ -238,8 +238,42 @@
                         </div>
                     </div>
 
-
                     <div class="row">
+                        <div class="col-sm-1">
+                            <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px">
+                        </div>
+                        <div class="col-md-11">
+                            <label class="form-check-label m-0" for="flexCheckDefault" align="left">
+                                J'ai lu et accepter les termes de confidentiels du plateforme
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <h6 class="mt-5 mb-2" align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-1">
+                            <h6> <strong>16</strong></h6>
+                        </div>
+                        <div class="col-sm-1">
+                            <h6> <strong> + </strong></h6>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" name="val_robot" class="form-control input_inscription" placeholder="?" id="val_robot" style="width: 60px" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <h6> <strong> = </strong></h6>
+                        </div>
+                        <div class="col-sm-1">
+                            <h6> <strong> 27 </strong></h6>
+                        </div>
+
+                        <div class="col-sm-3"></div>
+                    </div>
+
+                    {{-- <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="dte_resp_cfp" class="form-control-label" align="left">Date de Naissance<strong style="color:#ff0000;">*</strong></label>
@@ -248,7 +282,6 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                {{-- <label for="exampleFormControlInput1" class="form-control-label" align="left">Genre ou Sexe<strong style="color:#ff0000;">*</strong></label> --}}
                                 <select class="form-select" aria-label="Default select example" name="sexe_resp_cfp" required id="sexe_resp_cfp">
                                     <option value="null" disabled selected hidden>Genre ou Sexe<strong style="color:#ff0000;">*</strong></option>
 
@@ -257,7 +290,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <input type="button" name="previous" class="previous action-button" value="Précendent" />
                     <input type="button" name="make_payment" class="next action-button" value="Suivant" />
@@ -265,10 +298,23 @@
 
                 {{-- --}}
 
+                {{-- --}}
+
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                    <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
+                    <div class="form-group">
+                        <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                    <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
+                </fieldset>
+
+
+
+                  {{--  <fieldset class="shadow p-3 mb-5 bg-body rounded">
                     <h4 align="left" class="mb-2">Veuillez renseigner votre information l'égale de votre organisation</h4>
 
-                    {{-- <div class="form-group">
+                 <div class="form-group">
                         <input type="text" name="nif" required class="form-control input_inscription" id="name_entreprise" />
                         <label for="name_entreprise" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
 
@@ -287,62 +333,13 @@
                         <input type="text" name="cif" class="form-control input_inscription" id="cif" />
                         <label for="cif" class="form-control-placeholder">CIF à jour</label>
 
-                    </div> --}}
-
-
-                    <div class="row justify-content-center">
-                        <h5 class="mt-5 mb-2" align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h5>
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-1">
-                            <h6> <strong>16</strong></h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <h6> <strong> + </strong></h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" name="val_robot" class="form-control input_inscription" placeholder="?" id="val_robot" style="width: 60px" />
-                                {{-- <label for="val_robot" required class="form-control-placeholder"><strong style="color:#ff0000;">?</strong></label> --}}
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <h6> <strong> = </strong></h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <h6> <strong> 27 </strong></h6>
-                        </div>
-
-                        <div class="col-sm-3"></div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-sm-1">
-                            <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px">
-                        </div>
-                        <div class="col-md-8">
-                            <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                J'ai lu et accepter les termes de confidentiels du plateforme
-                            </label>
-                        </div>
-                        <div class="col-md-3"></div>
-                    </div>
-
                     <input type="button" name="previous" class="previous action-button" value="Précedent" />
                     <input type="button" name="next" class="next action-button" value="Confirmer" />
 
-                </fieldset>
+                </fieldset>   --}}
 
-                {{-- --}}
 
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez acepter la validation sur votre mail</strong></h5>
-                    {{-- <h6>Avant d'activer votre,veuillez bien revérifier votre données!</h6> --}}
-                    <div class="form-group">
-                    <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
-                </div>
-                    {{-- <input type="button" name="previous" class="previous action-button" value="Précendent" /> --}}
-                    <button type="submit" class="action-button">lancer</button>
-                </fieldset>
 
                 {{-- --}}
             </div>

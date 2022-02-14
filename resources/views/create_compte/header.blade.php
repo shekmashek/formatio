@@ -49,7 +49,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-
+                                Créer votre Compte
                             </li>
                         </ul>
 
@@ -60,10 +60,10 @@
 
 
         <div class="row justify-content-center">
-            <div class="col-md-8 ">
+            <div class="col-md-5 ">
                 @yield('content')
 
-                <p class="mt-5">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ICI.</a> Vous voulez revenir à l'accueil?  Apuillez <a href="{{route('create+compte+client')}}" style="color: blue">accueil</a></p>
+                <p class="mt-0">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ICI.</a> Vous voulez revenir à l'accueil?  Apuillez <a href="{{route('create+compte+client')}}" style="color: blue">accueil</a></p>
 
             </div>
             {{-- <div class="col-md-2"></div> --}}
