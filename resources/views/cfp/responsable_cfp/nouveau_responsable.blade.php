@@ -129,7 +129,11 @@
 
                                 <td>
                                     <div align="center">
+                                        @if ($etp->prioriter == 1)
+                                        <strong style="color: rgb(18, 238, 66)">{{"principale"}}</strong>
+                                        @else
                                         <strong style="color: rgb(9, 10, 10)">{{"responsable"}}</strong>
+                                        @endif
                                     </div>
                                 </td>
                                 <td>
