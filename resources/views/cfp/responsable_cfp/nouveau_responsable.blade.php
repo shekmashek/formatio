@@ -87,6 +87,15 @@
                                     <strong>{{$resp_cfp_connecter->fonction_resp_cfp}}</strong>
                                 </div>
                             </td>
+                            <td>
+                                <div align="center">
+                                    @if ($resp_cfp_connecter->prioriter == 1)
+                                    <strong style="color: rgb(18, 238, 66)">{{"principale"}}</strong>
+                                    @else
+                                    <strong style="color: rgb(9, 10, 10)">{{"responsable"}}</strong>
+                                    @endif
+                                </div>
+                            </td>
 
                             <td>
                                 <div align="center">
@@ -95,7 +104,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 <hr>
                             </td>
                         </tr>
@@ -111,9 +120,16 @@
                                         <p style="color: rgb(238, 150, 18)">{{$etp->email_resp_cfp}}</p>
                                     </div>
                                 </td>
+
                                 <td>
                                     <div align="center">
                                         <strong>{{$etp->fonction_resp_cfp}}</strong>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div align="center">
+                                        <strong style="color: rgb(9, 10, 10)">{{"responsable"}}</strong>
                                     </div>
                                 </td>
                                 <td>
@@ -170,6 +186,7 @@
 
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
 
+            @if($resp_cfp_connecter->prioriter == 1)
             <h2>Créer un nouveau responsable dans votre organisation</h2>
             <p>
                 Pour travailler plus vite pour plus de productivié et gagner du temps.
@@ -286,6 +303,8 @@
                 </div>
                 @endif
             </form>
+            @endif
+
 
         </div>
 
