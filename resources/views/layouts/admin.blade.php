@@ -16,11 +16,11 @@
     <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
     <title> formation.mg </title>
     {{-- catalogue --}}
-    <!-- Bootstrap Core CSS -->
-    <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
+    {{-- <!-- Bootstrap Core CSS -->
+    <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet"> --}}
 
-    {{-- Boxicon --}}
-    <link href="{{asset('assets/css/boxicons.min.css')}} " rel="stylesheet">
+    {{-- Boxicon
+    <link href="{{asset('assets/css/boxicons.min.css')}} " rel="stylesheet"> --}}
 
     <!-- Custom CSS -->
     <link href="{{asset('assets/css/chart_et_font.css')}}" rel="stylesheet">
@@ -28,8 +28,8 @@
     <!-- Custom Fonts -->
     <link href="{{asset('assets/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
-    <!-- full calendar -->
-    <link href="{{asset('assets/fullcalendar/lib/main.css')}}" rel='stylesheet' />
+    {{-- <!-- full calendar -->
+    <link href="{{asset('assets/fullcalendar/lib/main.css')}}" rel='stylesheet' /> --}}
 
     {{-- Js --}}
     {{-- <link rel="stylsheet" href="https://code.jquery.com/jquery-3.4.1.min.js"> --}}
@@ -811,33 +811,33 @@
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 
     {{-- JQuery --}}
-    <script src="{{asset('bootstrapCss/js/bootstrap.bundle.js')}}"></script>
+    {{-- <script src="{{asset('bootstrapCss/js/bootstrap.bundle.js')}}"></script> --}}
 
     <script src="{{asset('assets/js/boxicons.js')}}"></script>
-
-    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+{{--
+    <script src="{{asset('assets/js/jquery.min.js')}}"></script> --}}
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{asset('assets/js/bootstrap.js')}}"></script>
+    {{-- <!-- Bootstrap Core JavaScript -->
+    <script src="{{asset('assets/js/bootstrap.js')}}"></script> --}}
 
     <!-- Custom Theme JavaScript -->
     <script src="{{asset('assets/js/startmin.js')}}"></script>
 
-    <!--full  calendar -->
-    <script src="{{asset('assets/fullcalendar/lib/main.js')}}"></script>
+    {{-- <!--full  calendar -->
+    <script src="{{asset('assets/fullcalendar/lib/main.js')}}"></script> --}}
 
     {{-- auto-complete --}}
 
-    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/jquery.js') }}"></script> --}}
 
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
-    <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/jqueryui/jquery-ui.min.js')}}" type="text/javascript"></script>
+    {{-- <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script> --}}
+    {{-- <script src="{{asset('assets/jqueryui/jquery-ui.min.js')}}" type="text/javascript"></script> --}}
     <script src="{{ asset('function js/programme/edit_programme.js') }}"></script>
 
     <script src="{{asset('js/qcmStep.js')}}"></script>

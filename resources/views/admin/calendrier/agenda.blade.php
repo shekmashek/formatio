@@ -27,7 +27,8 @@
   <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
 
-
+  <!-- full calendar -->
+  <link href="{{asset('assets/fullcalendar/lib/main.css')}}" rel='stylesheet' />
 
 
 
