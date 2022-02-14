@@ -296,7 +296,7 @@
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
-                                <input type="text" name="val_robot" class="form-control input_inscription" placeholder="?" id="val_robot" style="width: 60px" />
+                                <input type="number" name="val_robot" class="form-control input_inscription" placeholder="?" id="val_robot" style="width: 60px" />
                             </div>
                         </div>
                         <div class="col-sm-2">

@@ -15,13 +15,12 @@ class NouveauCompte extends Model
             $doner["web_cfp"]=NULL;
         }
         $data = [
-            $doner["logo_cfp"], $doner["nom_cfp"], $doner["ville"],
+            $doner["logo_cfp"], $doner["nom_cfp"],
             $doner["email_cfp"], $doner["tel_cfp"], $doner["web_cfp"],
-            $doner["nif"], $doner["rue"],
-            $doner["quartier"], $doner["region"], $doner["code_postal"], $user_id
+            $doner["nif"],$user_id
         ];
 
-        DB::insert('insert into cfps(logo,nom,adresse_ville,email,telephone,site_cfp,nif,adresse_lot,adresse_quartier,adresse_region,adresse_code_postal,created_at,user_id) values (?,?,?,?,?,?,?,?,?,?,?,NOW(),?)', $data);
+        DB::insert('insert into cfps(logo,nom,email,telephone,site_cfp,nif,created_at,user_id) values (?,?,?,?,?,?,NOW(),?)', $data);
         DB::commit();
 
         // insert into cfps(logo,nom,adresse_ville,email,telephone,site_cfp,nif,adresse_lot,adresse_quartier,adresse_code_postal,adresse_region,created_at,user_id) values ('noam_cfp','Numerika Center','Tana','antoenjara1998@gmail.com','0328683700','ituniversity.com','1324567897865434','Analamahitsy','Q-analamahitsy','s','43','NOW()','41');
@@ -31,12 +30,11 @@ class NouveauCompte extends Model
     public function insert_resp_CFP($doner, $cfp_id, $user_id)
     {
         $data = [
-            $doner["nom_resp"], $doner["prenom_resp"], $doner["sexe_resp"],
-            $doner["dte_naissance_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
+            $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
             $cfp_id, $user_id
         ];
-        DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,sexe_resp_cfp,date_naissance_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
-        ,cfp_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,?,1,NOW())', $data);
+        DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
+        ,cfp_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,1,NOW())', $data);
         DB::commit();
     }
 
@@ -47,34 +45,23 @@ class NouveauCompte extends Model
             $doner["web_etp"]=NULL;
         }
         $data = [
-            $doner["nom_etp"], $doner["rue"], $doner["quartier"],
-            $doner["ville"], $doner["region"], $doner["email_etp"], $doner["tel_etp"], $doner["web_etp"],
-            $doner["nif"], $doner["stat"], $doner["rcs"], $doner["cif"], $doner["logo_etp"], $doner["code_postal"],$doner["secteur_id"]
+            $doner["nom_etp"], $doner["email_etp"], $doner["tel_etp"], $doner["web_etp"],
+            $doner["nif"], $doner["logo_etp"],$doner["secteur_id"]
         ];
 
-        DB::insert('insert into entreprises(nom_etp,adresse_rue,adresse_quartier,adresse_ville,adresse_region,email_etp,telephone_etp,site_etp,nif,stat,rcs,cif,logo,adresse_code_postal,created_at,secteur_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?, NOW(),?)', $data);
+        DB::insert('insert into entreprises(nom_etp,email_etp,telephone_etp,site_etp,nif,logo,created_at,secteur_id) values (?,?,?,?,?,?,?, NOW(),?)', $data);
         DB::commit();
     }
     public function insert_resp_ETP($doner, $entreprise_id, $user_id)
     {
         $data = [
-            $doner["nom_resp"], $doner["prenom_resp"], $doner["sexe_resp"],
-            $doner["dte_naissance_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
+            $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
             $entreprise_id, $user_id
         ];
-        DB::insert('insert into responsables(nom_resp,prenom_resp,sexe_resp,date_naissance_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-        ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,?,1,NOW())', $data);
+        DB::insert('insert into responsables(nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
+        ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,1,NOW())', $data);
         DB::commit();
     }
-    //     $data=[$doner["nom_resp"],$doner["prenom_resp"],$doner["sexe_resp"],
-    //     $doner["dte_naissance_resp"],$doner["cin_resp"],$doner["email_resp"],$doner["tel_resp"],$doner["fonction_resp"],
-    //     $doner["poste_resp"],$doner["departement_resp"],$doner["rue_resp"],$doner["quartier_resp"],$doner["poste_resp"],$doner["lot_resp"],$doner["ville_resp"],
-    //     $doner["region_resp"],$doner["photo_resp"],$entreprise_id,$user_id
-    // ];
-    //     DB::insert('insert into responsables(nom_resp,prenom_resp,sexe_resp,date_naissance_resp,cin_resp,email_resp,telephone_resp,fonction_resp,poste_resp,departement_id,adresse_rue,adresse_quartier,
-    //     adresse_code_postal,adresse_lot,adresse_ville,adresse_region,photos,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,NOW())',$data);
-    //     DB::commit();
-    // }
 
     public function verify_cfp($nom, $mail)
     {
