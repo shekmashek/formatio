@@ -597,7 +597,7 @@ class ParticipantController extends Controller
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
         if ($stagiaire_connecte) {
             $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
-            $stagiaires = db::select('select * from v_stagiaire_entreprises where matricule = ?',[$matricule]);
+            // $stagiaires = db::select('select * from v_stagiaire_entreprise where matricule = ?',[$matricule]);
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
 
         } else {

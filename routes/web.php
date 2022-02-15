@@ -185,7 +185,7 @@ Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('d
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::get('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
-Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
+// Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
 // profile_stagiaire
 Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
