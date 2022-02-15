@@ -41,79 +41,104 @@
         </nav>
     </header>
     <main>
-        <section class="section_1">
-            <div class="container-fluid conteneur">
-                <div class="row">
-                    <div class="col-md-6 py-5">
-                        <h2>Plateforme collaboratif de gestion de formation</h2>
-                            <p>La première plateforme malagasy
-                            de gestion de formation, outil
-                            incontournable et innovateur du milieu professionnel.</p><br>
-                            <center><button class="btn btn_blue">Voir plus</button></center>
+        <div class=" p-4 m-0 container-fluid" style="font-size: 14px">
+            <div class="row ">
+                <div class="p-0 col-lg-6">
+                    <div class="shadow p-3 mb-4 bg-body rounded">
+                        <div class="row ">
+                            <div class="col"  align="center">
+                                <p>Plateforme collaboratif de gestion de formation</p>
+                                <p style="font-size: 10px; color: rgb(158, 157, 157)">
+                                    La première plateforme malagasy
+                                    de gestion de formation,<br> outil
+                                    incontournable et innovateur du milieu professionnel.
+                                </p>
+                                    <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                            </div>
+                            <div class="col "  align="center">
+                                    <p style="font-size: 10px; margin:0; color: rgb(158, 157, 157)" > - Centre de formation </p>
+                                    <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Formateur</p>
+                                    <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Référent</p>
+                                    <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Apprenant</p>
+                                    <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Manager </p>
+                                    {{-- <img class=" ms-5 img-fluid rounded-3" src="{{ asset('maquette/collaboration.jpg') }}" alt="" style="height:50px; width:120px"><br> --}}
+                                    <a style="background-color: #801D68; color:white; font-size: 12px " class="btn mt-4" href="{{url('contact')}}" target="_blank">Contactez notre service commerciale</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 py-5 px-5" style="border-radius: 50%;">
-                        <img class="img-fluid rounded-3" src="{{ asset('maquette/collaboration.jpg') }}" alt="" style="border-radius: 50%;">
+                </div>
+                <div class=" p-0 col-lg-6">
+                    <div class=" ms-3 shadow p-3 mb-0 bg-body rounded">
+                        <div class="row ">
+                            <div class="col" align="center">
+                                <p>Demander une demonstration</p>
+                                <p style="font-size: 10px;  color: rgb(158, 157, 157)">
+                                    Envie de tester les fonctionnalités de Formation.mg?<br>
+                                    Contactez notre équipe commerciale et prenez rendez-vous.
+                                    Nous serons ravis de vous faire découvrir les horizons de notre logiciel et en quoi il vous est indispensable.
+                                </p>
+                                <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                                    {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn mb-2" href="">Demander une demo</a> --}}
+                            </div>
+                            <div class="col" align="center">
+                                    <img class=" img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="" style="height:70px; width:130px"><br>
+                                    <a style="background-color: #801D68; color:white; font-size: 11px " class=" btn mb-2 mt-1" href="">Demander une demo</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="section_2">
-            <div class="container-fluid conteneur">
-                <div class="row">
-                    <div class="col-md-6 py-5 px-5">
-                        <img class="img-fluid rounded-3" src="{{ asset('maquette/formation_1.jpg') }}" alt="">
+            <div class="row ">
+                <div class="p-0 col-lg-6">
+                    <div class=" shadow p-3 mb-4 bg-body rounded">
+                        <div class="row ">
+                            <div class="col"  align="center">
+                                <p>Vous êtes un organisme de formation ?</p>
+                                <p style="font-size: 10px;  color: rgb(158, 157, 157)">
+                                    Disposez d’une base de données centralisée,<br> gagnez en temps et en économie.
+                                    Retrouvez  tout ce dont vous avez besoin dans un seul et unique endroit : la gestion de vos formations (session , exécution ...),
+                                    vos facturations, vos devis, votre espace professionnel ( dressage et modification de vos catalogues).<br>
+                                    Investissez dans le futur ! <br> Digitalisez votre activité et ayez une longueur d’avance sur les autres.<br>
+                                    Améliorez votre communication et votre suivi commercial.<br>
+                                    Rapprochez-vous de vos clients, envoyez leurs des évaluations digitalisées et personnalisables et obtenez des feedbacks instantanés
+                                </p>
+                                <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                                    {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn mb-2" href="{{route('create+compte+client')}}">Creer un compte pro</a> --}}
+                            </div>
+                            <div class="col"  align="center">
+                                    <img  class=" img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="" style="height:70px; width:130px"><br>
+                                    <a style="background-color: #801D68; color:white; font-size: 11px; " class=" btn mb-2 mt-1" href="{{route('create+compte+client')}}">Creer un compte pro</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 py-5">
-                        <h2>Vous êtes un organisme de formation ?</h2><br>
-
-<p>Disposez d’une base de données centralisée, gagnez en temps et en économie.<br>
-Retrouvez  tout ce dont vous avez besoin dans un seul et unique endroit : la gestion de vos formations (session , exécution ...), vos facturations, vos devis, votre espace professionnel ( dressage et modification de vos catalogues).<br>
-Investissez dans le futur ! &nbsp;Digitalisez votre activité et ayez une longueur d’avance sur les autres.<br>
-Améliorez votre communication et votre suivi commercial.<br>
-Rapprochez-vous de vos clients, envoyez leurs des évaluations digitalisées et personnalisables et obtenez des feedbacks instantanés</p>
-<br>
-                        <center><button class="btn btn_blue">Creer un compte pro</button></center>
+                </div>
+                <div class="p-0 col-lg-6">
+                    <div class=" ms-3 shadow p-3 mb-0 bg-body rounded">
+                        <div class="row ">
+                            <div class="col" align="center">
+                                <p>Vous êtes employeur ?</p>
+                                <p style="font-size: 10px;  color: rgb(158, 157, 157)">
+                                    Accès facile, sécurisé et instantané. <br>
+                                    Accédez facilement au marché des formations professionnelles et trouvez ce dont vous avez besoin sans vous déplacer.<br>
+                                    Solution ergonomique à vos problèmes quotidiens ! <br>
+                                    Gérez votre entreprise ( dépenses, budgets, personnel, factures, données, évaluations du personnel,...) n'importe où,
+                                    à n'importe quel moment via formation.mg et dites adieu à vos tâches administratives redondantes et ennuyeuses,
+                                    les archives en paperasse volumineuses,...
+                                </P>
+                                <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                                    {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn" href="{{route('create+compte+client')}}">Creer un compte pro</a> --}}
+                            </div>
+                            <div class="col" align="center">
+                                    <img class=" img-fluid" src="{{ asset('maquette/formation.jpg') }}" alt=""  alt="" style="height:70px; width:130px"><br>
+                                    <a style="background-color: #801D68; color:white; font-size: 11px " class=" btn mb-2 mt-1" href="{{route('create+compte+client')}}">Creer un compte pro</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </section>
-        <section class="section_3">
-            <div class="container-fluid conteneur">
-                <div class="row">
-                    <div class="col-md-6 py-5">
-                        <h2>Vous êtes employeur ?</h2>
-                        <p>Accès facile, sécurisé et instantané. <br>
-Accédez facilement au marché des formations professionnelles et trouvez ce dont vous avez besoin sans vous déplacer.<br>
-Solution ergonomique à vos problèmes quotidiens ! <br>
-Gérez votre entreprise ( dépenses, budgets, personnel, factures, données, évaluations du personnel,...) n'importe où, à n'importe quel moment via formation.mg et dites adieu à vos tâches administratives redondantes et ennuyeuses, les archives en paperasse volumineuses,...</P>
-                        <br><center><button class="btn btn_blue">Creer un compte pro</button></center>
-                    </div>
-                    <div class="col-md-6 py-5 px-5 rounded-3">
-                       <img class="img-fluid" src="{{ asset('maquette/formation.jpg') }}" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="container-fluid conteneur">
-                <div class="row">
-                    <div class="col-md-6 py-5 px-5">
-                        <img class="img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="">
-                    </div>
-                    <div class="col-md-6 py-5">
-                        <h2>Demander une demonstration</h2>
-                       <p> Envie de tester les fonctionnalités de Formation.mg?
-    Contactez notre équipe commerciale et prenez rendez-vous.
-    Nous serons ravis de vous faire découvrir les horizons de notre logiciel et en quoi il vous est indispensable.</p>
-                        <br><center><button class="btn btn_blue">Demander une demo</button></center>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
     <footer class="footer_container">
-
                 <div class="d-flex justify-content-center pt-3">
                     <div class="bordure">&copy; Copyright 2022</div>
                     <div class="bordure"><a href="{{url('info_legale')}}" style="color:#801D68 !important" target="_blank">Informations légales</a></div>

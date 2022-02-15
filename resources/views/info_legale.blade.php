@@ -25,7 +25,7 @@
     <header>
         <nav class="navbar_accueil fixed-top d-flex justify-content-between">
             <div class="left_menu ms-2">
-                <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg</p>
+                <a href="{{ url('home') }}"><p class="titre_text m-0 p-0" style="color: black;"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg</p></a>
             </div>
             <div class="right_menu d-flex justify-content-end align-items-center">
                 <div class="child_right_menu">
