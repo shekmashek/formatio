@@ -81,21 +81,21 @@
                             <table class="table  table-borderless table-sm">
                                 <tbody id="data_collaboration">
 
-                                    @if (count($datas)<=0) <tr>
+                                    @if ($datas==null) <tr>
                                         <td> Aucun stagiaire</td>
                                         </tr>
                                         @else
-                                        @foreach($datas as $frm)
+
                                         <tr>
                                             <td>
                                                 <div align="left">
-                                                    <strong>{{$frm->nom_stagiaire.' '.$frm->prenom_stagiaire}}</strong>
-                                                    {{-- @if($frm->activiter == 0)
+                                                    <strong>{{$datas->nom_stagiaire.' '.$datas->prenom_stagiaire}}</strong>
+                                                    {{-- @if($datas->activiter == 0)
                                                         <strong style="background-color: red;color:white;padding:5px">Inactif </strong>
                                                     @else
                                                         <strong style="background-color: green;color:white;padding:5px">Actif </strong>
                                                     @endif --}}
-                                                    <p style="color: rgb(238, 150, 18)">{{$frm->mail_stagiaire}}</p>
+                                                    <p style="color: rgb(238, 150, 18)">{{$datas->mail_stagiaire}}</p>
 
 
                                                 </div>
@@ -111,15 +111,15 @@
                                                     </button>
 
                                                     <div class="dropdown-menu">
-                                                        <a href="{{route('profile_stagiaire',$frm->stagiaire_id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
+                                                        <a href="{{route('profile_stagiaire',$datas->stagiaire_id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
                                                         @canany(['isReferent'])
-                                                        <a href="{{route('destroy_participant',['id'=>$frm->stagiaire_id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
+                                                        <a href="{{route('destroy_participant',['id'=>$datas->stagiaire_id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
                                                         @endcanany
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        @endforeach
+
                                         @endif
                                 </tbody>
                             </table>
@@ -131,17 +131,17 @@
                             <table class="table  table-borderless table-sm">
                                 <tbody id="data_collaboration">
 
-                                    @if (count($datas)<=0) <tr>
+                                    @if ($datas == null) <tr>
                                         <td> Aucun stagiaire</td>
                                         </tr>
                                         @else
-                                        @foreach($ancien as $frm)
+                                        @foreach($ancien as $datas)
                                         <tr>
                                             <td>
                                                 <div align="left">
-                                                    <strong>{{$frm->nom_stagiaire.' '.$frm->prenom_stagiaire}}</strong>
-                                                    <strong style="color: rgb(238, 150, 18)">Depart: {{$frm->date_depart}}</strong>
-                                                    <strong style="color: rgb(238, 150, 18)">Contact : {{$frm->telephone_stagiaire}}</strong>
+                                                    <strong>{{$datas->nom_stagiaire.' '.$datas->prenom_stagiaire}}</strong>
+                                                    <strong style="color: rgb(238, 150, 18)">Depart: {{$datas->date_depart}}</strong>
+                                                    <strong style="color: rgb(238, 150, 18)">Contact : {{$datas->telephone_stagiaire}}</strong>
                                                 </div>
 
                                             <td>

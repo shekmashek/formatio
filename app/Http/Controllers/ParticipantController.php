@@ -82,7 +82,8 @@ class ParticipantController extends Controller
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-            $datas = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = ' . $entreprise_id);
+            $rqt = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = ' . $entreprise_id);
+            $datas = $rqt[0];
             $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id =' . $entreprise_id);
             // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }

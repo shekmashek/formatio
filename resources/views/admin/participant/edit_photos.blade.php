@@ -43,19 +43,19 @@
   background-color: white;
 }
 </style>
-<center>                
+<center>
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Photos de profile</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->stagiaire_id)}}" method="post" enctype="multipart/form-data">
             @csrf
-              
+
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
-                
-              
+
+
                         <input type="hidden" class="form-control test" value="   {{ $stagiaire->prenom_stagiaire }}"  name="prenom">
-                      
+
 
             <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
@@ -63,13 +63,13 @@
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                        <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde"> 
+                        <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde">
                       {{-- <input type="text" id = 'vartemp'> --}}
               </div>
                   </label>
                      <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
                   </div>
-            </center>  
+            </center>
         </div>
     </div>
                         <select hidden  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
@@ -78,7 +78,7 @@
 
                         </select>
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
- 
+
                         <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
                             <option value="Mr">Mr</option>
                             <option value="Mme">Mme</option>
@@ -90,52 +90,52 @@
                         </select>
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label>
 
-                      
+
                         <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
-                        
+
                           <input type="hidden" value="{{ $stagiaire->cin}}" class="form-control test"  name="cin" >
 
                         <input type="hidden" class="form-control test"  name="mail" value="   {{ $stagiaire->mail_stagiaire }}" >
 
-                        
-                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $stagiaire->telephone_stagiaire }}"> 
-                                       <input type="hidden" class="form-control test" value=""  name="password" placeholder="">  
+
+                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $stagiaire->telephone_stagiaire }}">
+                                       <input type="hidden" class="form-control test" value=""  name="password" placeholder="">
                           <input type="hidden" class="form-control test" id="lot" name="lot" placeholder="Lot" value="{{ $stagiaire->lot}}">
 
-                   
+
 
                           <input type="hidden" class="form-control test" id="quartier" name="quartier" placeholder="Quartier" value="{{ $stagiaire->quartier}}">
 
-                   
+
                           <input type="hidden" class="form-control test" id="code_postal" name="code_postal" placeholder="Code Postale" value="{{ $stagiaire->code_postal}}">
-                   
+
 
                           <input type="hidden" class="form-control test" id="ville" name="ville" placeholder="Ville" value="{{ $stagiaire->ville}}">
                           <input type="hidden" class="form-control test" id="region" name="region" placeholder="Region" value="{{ $stagiaire->region}}">
-                        
+
                           <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
                   <input type="hidden" class="form-control test"  name="niveau" value="   {{ $stagiaire->niveau_etude }}">
-               
+
                     <input type="hidden" value="   {{ $stagiaire->matricule}}"  class="form-control test"  name="matricule" placeholder="Matricule" >
 
-               
+
                     <input type="hidden" class="form-control test"  name="fonction" placeholder="Fonction" value="   {{ $stagiaire->fonction_stagiaire }}" >
-                
-                   
+
+
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
-                   
+
                     <input type="hidden" value="   {{ $stagiaire->lieu_travail }}"  class="form-control test"  name="lieu" placeholder="Matricule" >
-                    
-               
+
+
                   </div>
               </div>
                     <input type="hidden" class="form-control test"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" >
-               
+
 <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-</center> 
+</center>
 </div>
 </div>
 </div>
@@ -154,13 +154,13 @@
         display: none;
     }
       </style>
-    
-    
-    
+
+
+
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-    
+
       // $(document).ready(function(){
       //   alert("Bien venu");
       // });
@@ -173,16 +173,16 @@
       function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-    
+
                 reader.onload = function (e) {
                     //alert(e.target.result);
                     $('#photo_stg').attr('src', e.target.result);
                 }
-    
+
                 reader.readAsDataURL(input.files[0]);
             }
         }
-    
-    
+
+
     </script>
 @endsection
