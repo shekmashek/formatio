@@ -94,6 +94,7 @@
                                 <li class="my-1 sousMenu">
                                     <a href="{{route('departement.index')}}">Département</a>
                                 </li>
+
                             </ul>
                         </li>
                         @endcanany
@@ -102,6 +103,9 @@
                         <li class="my-2">
                             <a href="#etpSubMenu2" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Services de l'entreprise</span></a>&nbsp;&nbsp;
                             <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu2">
+                                <li class="my-1 sousMenu">
+                                    <a href="{{route('liste+responsable+entreprise')}}">Notre Responsable</a>
+                                </li>
                                 <li class="my-1 sousMenu">
                                     <a class='nouveau_icon_lien' href="{{route('liste_departement')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau departement"></i>nouveaux departement</a>
                                 </li>

@@ -689,5 +689,9 @@ Route::get('insert_presence_detail','SessionController@insert_presence')->name('
 
 
 Route::get('liste+responsable+cfp','ResponsableCfpController@index')->name('liste+responsable+cfp');
+Route::get('liste+responsable+entreprise','ResponsableController@show_responsable')->name('liste+responsable+entreprise');
+
 Route::post('save+nouveau+responsable+cfp','ResponsableCfpController@store')->name('save+nouveau+responsable+cfp');
-Route::post('delete+responsable+cfp','ResponsableCfpController@destroy')->name('delete+responsable+cfp');
+Route::post('save+nouveau+responsable+entreprise','ResponsableController@save_responsable')->name('save+nouveau+responsable+entreprise');
+
+Route::post('delete+responsable+cfp','ResponsableController@destroy')->name('delete+responsable+cfp');

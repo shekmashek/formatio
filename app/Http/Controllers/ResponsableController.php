@@ -15,6 +15,7 @@ use App\responsable;
 use App\entreprise;
 use App\User;
 use Illuminate\Support\Facades\File;
+use App\Models\FonctionGenerique;
 /* ====================== Exportation Excel ============= */
 use App\Exports\ResponsableExport;
 use Excel;
@@ -29,6 +30,74 @@ class ResponsableController extends Controller
             return $next($request);
         });
     }
+
+    public function show_responsable()
+    {
+        $user_id = Auth::id();
+        $fonct = new FonctionGenerique();
+        if (Gate::allows('isReferent')) {
+            $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+            $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+            return view('admin.entreprise.responsable.nouveau_responsable', compact('resp_etp_connecter', 'responsable'));
+        }
+    }
+
+    public function save_responsable(Request $request){
+        $user_id = Auth::id();
+        $fonct = new FonctionGenerique();
+        $resp = new responsable();
+        $user = new User();
+
+        $user_id = Auth::id();
+        if (Gate::allows('isReferent')) {
+            $resp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+            if ($resp_connecter->prioriter == 1) {
+                $resp->verify_form($request);
+
+                $verify_cin = $resp->verify_cin($request->input());
+                $verify_email = $fonct->findWhere("users", ["email"], [$request->email]);
+                $verify_phone = $fonct->findWhere("users", ["telephone"], [$request->phone]);
+
+                $doner["cin"] = $resp->concat_nb_cin($request->input());
+                $doner["nom"] = $request->nom;
+                $doner["prenom"] = $request->prenom;
+                $doner["sexe"] = $request->sexe;
+                $doner["dte"] = $request->dte;
+                $doner["email"] = $request->email;
+                $doner["phone"] = $request->phone;
+                $doner["fonction"] = $request->fonction;
+
+                if (count($verify_cin) > 0) {
+                    return back()->with('error', 'cin existe déjà');
+                } else {
+                    if (count($verify_email) > 0) {
+                        return back()->with('error', 'mail existe déjà');
+                    } else {
+                        if (count($verify_phone) > 0) {
+                            return back()->with('error', 'télephone existe déjà');
+                        } else {
+                            $user->name = $request->nom . " " . $request->prenom;
+                            $user->email = $request->email;
+                            $ch1 = "0000";
+                            $user->password = Hash::make($ch1);
+                            $user->role_id = '2';
+                            $user->save();
+
+                            if (Gate::allows('isReferent')) {
+                                $resp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+                                $result = $resp->insert_resp_ETP($doner, $resp_connecter->entreprise_id, $user->id);
+                                return $result;
+                            }
+                        }
+                    }
+                }
+            } else {
+                return back()->with('error', "seul lre responsable principale a le droit d'ajouter un nouveau responsable");
+            }
+        }
+    }
+
+
     public function index($id = null)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
