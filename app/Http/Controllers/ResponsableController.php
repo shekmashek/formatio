@@ -227,6 +227,12 @@ class ResponsableController extends Controller
         $responsable = responsable::findOrFail($id);
         return view('admin.responsable.edit_adresse_etp', compact('responsable'));
     }
+    public function edit_logo($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_logo', compact('responsable'));
+    }
     public function edit_site($id, Request $request){
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
@@ -324,12 +330,19 @@ class ResponsableController extends Controller
           
            $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[ Auth::user()->id]);
       
-        DB::update('update entreprises set nom_etp=?,adresse=?,cif=?,nif=?,stat=?,rcs=?,email_etp=?,site_etp=?,telephone_etp=?
-        where id=?',[$request->etp,$request->adresse_etp,$request->cif,$request->nif,
+           if ($image = $request->file('image')) {
+            $destinationPath = 'images/responsables';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input= "$profileImage";
+        }
+        if ($input !=null){
+        DB::update('update entreprises set nom_etp=?,adresse=?,logo=?,cif=?,nif=?,stat=?,rcs=?,email_etp=?,site_etp=?,telephone_etp=?
+        where id=?',[$request->etp,$request->adresse_etp,$input,$request->cif,$request->nif,
         $request->stat,$request->rcs,$request->email_etp,$request->site,$request->phone_etp,$resp_etp->entreprise_id]);
-     
-    return redirect()->route('affResponsable');
-       
+
+    //return redirect()->route('affResponsable');
+        }
     }
     public function update(Request $request, $id)
     {

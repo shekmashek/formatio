@@ -133,13 +133,28 @@ Route::get('/utilisateur_superAdmin','UtilisateurControlleur@superAdmin')->name(
 Route::resource('formateur','ProfController')->except([
     'index','edit'
 ]);
+Route::post('/update_prof/{id?}','ProfController@misajourFormateur')->name('update_prof');
 //collabforfateur
 Route::get('/collabformateur','ProfController@affiche')->name('collabformateur');
 //route formateur profil
-Route::get('/profile_formateur/{id}','ProfController@profile_formateur')->name('profile_formateur');
+Route::get('/profile_formateur/{id?}','ProfController@profile_formateur')->name('profile_formateur');
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
 });
+//Route update par champs prof
+Route::get('/editer_nom/{id}','ProfController@editer_nom')->name('editer_nom');
+Route::get('/editer_naissance/{id}','ProfController@editer_naissance')->name('editer_naissance');
+Route::get('/editer_genre/{id}','ProfController@editer_genre')->name('editer_genre');
+Route::get('/editer_mail/{id}','ProfController@editer_mail')->name('editer_mail');
+Route::get('/editer_phone/{id}','ProfController@editer_phone')->name('editer_phone');
+Route::get('/editer_cin/{id}','ProfController@editer_cin')->name('editer_cin');
+Route::get('/edit_adresse/{id}','ProfController@edit_adresse')->name('edit_adresse');
+Route::get('/editer_photos/{id}','ProfController@editer_photos')->name('editer_photos');
+Route::get('/editer_pwd/{id}','ProfController@editer_pwd')->name('editer_pwd');
+Route::get('/editer_adresse/{id}','ProfController@editer_adresse')->name('editer_adresse');
+Route::get('/editer_etp/{id}','ProfController@editer_etp')->name('editer_etp');
+Route::get('/editer_niveau/{id}','ProfController@editer_niveau')->name('editer_niveau');
+
 
 // Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
 //     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
@@ -196,6 +211,8 @@ Route::get('/edit_adresse_etp/{id}','ResponsableController@edit_adresse_etp')->n
 Route::get('/edit_site/{id}','ResponsableController@edit_site')->name('edit_site');
 Route::get('/edit_phone_etp/{id}','ResponsableController@edit_phone_etp')->name('edit_phone_etp');
 Route::get('/edit_email_etp/{id}','ResponsableController@edit_email_etp')->name('edit_email_etp');
+Route::get('/edit_logo/{id}','ResponsableController@edit_logo')->name('edit_logo');
+
 
 
 //route----------------- STAGIAIRE

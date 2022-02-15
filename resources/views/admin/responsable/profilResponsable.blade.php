@@ -183,7 +183,6 @@
                                      </p>
                                          </a>
                                      </div> --}}
-                                     
                                      <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                  </div>
                          </div>

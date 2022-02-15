@@ -709,6 +709,10 @@
                                         <a href="{{route('affProfilChefDepartement')}}"><button
                                                 class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
+                                        @can('isFormateur')
+                                        <a href="{{route('profile_formateur')}}"><button
+                                                class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @endcan
                                         @can('isStagiaire')
                                         <a href="{{route('profile_stagiaire')}}"><button
                                                 class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>

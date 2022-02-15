@@ -180,6 +180,13 @@
                                          </a>
                                      
                                      </div>
+                                     <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
+                                        <p class="p-1 m-0" style="font-size: 10px;">Logo
+                                        </p>
+                                        <a href="{{route('edit_logo',$refs->id)}}" >
+                                           <img src="{{asset('images/entreprises/'.$refs->entreprise->logo)}}" class="image-ronde">
+                                       </a>
+                                       </div>
                                      <div style="border-bottom: solid 1px #d399c2;" class="hover">
                                         <a href="{{route('edit_adresse_etp',$refs->id)}}" >
                                     <p class="p-1 m-0" style="font-size: 10px;">Adresse entreprise<span style="float: right;">{{optional(optional($refs)->entreprise)->adresse}} &nbsp;<i class="fas fa-angle-right"></i></span>
