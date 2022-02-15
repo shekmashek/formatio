@@ -12,3 +12,7 @@ ALTER TABLE stagiaires ADD departement_entreprises_id bigint(20);
 ALTER TABLE stagiaires ADD service_id bigint(20);
 Ajout view : bdd_suiviformation_view_23_departement
 Modification view : v_stagiaire_entreprise,v_historique_stagiaires dans bdd_suiviformation_view_1(view_miasa+avis)
+
+bdd_suiviformation_mise_a_jour_3(entreprises) : branches
+ALTER TABLE stagiaires DROP COLUMN lieu_travail;
+ALTER TABLE stagiaires ADD branche_id bigint(20);

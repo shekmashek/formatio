@@ -52,8 +52,9 @@ class ParticipantController extends Controller
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $liste_dep = db::select('select * from departement_entreprises where entreprise_id = ? ',[$entreprise_id]);
+            $lieu_travail = db::select('select * from branches where entreprise_id = ? ', [$entreprise_id]);
             // $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
-            return view('admin.participant.nouveauParticipant', compact('liste_dep', 'email_error', 'matricule_error'));
+            return view('admin.participant.nouveauParticipant', compact('lieu_travail','liste_dep', 'email_error', 'matricule_error'));
         }
         if (Gate::allows('isManager')) {
 
@@ -189,7 +190,7 @@ class ParticipantController extends Controller
         } else {
             $participant->matricule = $request->matricule;
             $participant->nom_stagiaire = $request->nom;
-            $participant->lieu_travail = $request->lieu;
+            $participant->branche_id = $request->lieu_travail;
             $participant->code_postal = $request->code_postal;
             $participant->region = $request->region;
             $participant->ville = $request->ville;
@@ -234,7 +235,7 @@ class ParticipantController extends Controller
             $request->image->move(public_path($str), $nom_image);
             $participant->save();
             return redirect()->route('liste_participant');
-          
+
         }
     }
 
@@ -276,93 +277,96 @@ class ParticipantController extends Controller
     public function edit_nom($id, Request $request){
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_nom', compact('stagiaire'));
     }
     public function edit_naissance($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_naissance', compact('stagiaire'));
     }
     public function edit_genre($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_genre', compact('stagiaire'));
     }
     public function edit_mail($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_mail', compact('stagiaire'));
 
     }
     public function edit_phone($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_phone', compact('stagiaire'));
     }
     public function edit_cin($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_cin', compact('stagiaire'));
     }
     public function edit_adresse($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_adresse', compact('stagiaire'));
     }
     public function edit_fonction($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_fonction', compact('stagiaire'));
     }
     public function edit_matricule($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_matricule', compact('stagiaire'));
     }
     public function edit_entreprise($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_entreprise', compact('stagiaire'));
     }
     public function edit_niveau($id, Request $request){
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        // $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_niveau', compact('stagiaire'));
     }
     public function edit_departement($id, Request $request){
         $liste_dep = Departement::all();
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_departement', compact('stagiaire','liste_dep'));
     }
     public function edit_branche($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_branche', compact('stagiaire'));
     }
     public function edit_photos($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_photos', compact('stagiaire'));
     }
     public function edit_pwd($id, Request $request){
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        $stagiaire = stagiaire::findOrFail($id);
+        $rqt = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?',[$id]);
+        $stagiaire = $rqt[0];
         return view('admin.participant.edit_pwd', compact('stagiaire'));
     }
     public function update(Request $request)
@@ -388,7 +392,7 @@ class ParticipantController extends Controller
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
             'date_naissance' => $request->date,
-            'lieu_travail' => $request->lieu,
+            'branche_id' => $request->lieu_travail,
             'genre_stagiaire' => $request->genre,
             'fonction_stagiaire' => $request->fonction,
             'telephone_stagiaire' => $request->phone,
@@ -670,7 +674,7 @@ class ParticipantController extends Controller
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
         if ($stagiaire_connecte) {
             $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
-            $stagiaires = db::select('select * from v_stagiaire_entreprises where matricule = ?',[$matricule]);
+            $stagiaires = db::select('select * from v_stagiaire_entreprise where matricule = ?',[$matricule]);
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
 
         } else {
@@ -684,8 +688,11 @@ class ParticipantController extends Controller
         }
         else
         {
-        return view('admin.participant.profile', compact('stagiaires'));
-            
+        $requete = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?', [$id]);
+        $stagiaire = $requete[0];
+
+        return view('admin.participant.profile', compact('stagiaire'));
+
         }
     }
     //update_stagiaire connecte
@@ -693,13 +700,13 @@ class ParticipantController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        
+
         // $input = $request->file('image')->getClientOriginalName();
 
 
          //stocker logo dans google drive
             //stocker logo dans google drive
-           
+
             // $dossier = 'stagiaire';
             // $stock_stg = new getImageModel();
             //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
@@ -713,7 +720,7 @@ class ParticipantController extends Controller
         if ($input !=null){
         $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
-            
+
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
@@ -723,7 +730,7 @@ class ParticipantController extends Controller
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
             'photos'=>$input,
-            'lieu_travail' => $request->lieu,
+            'branche_id' => $request->lieu_travail,
             'cin' => $request->cin,
             'niveau_etude' => $request->niveau,
             'titre'=>$request->titre,
@@ -751,7 +758,7 @@ class ParticipantController extends Controller
             'fonction_stagiaire' => $request->fonction,
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
-            'lieu_travail' => $request->lieu,
+            'branche_id' => $request->lieu_travail,
             'cin' => $request->cin,
             'niveau_etude' => $request->niveau,
             'titre'=>$request->titre,

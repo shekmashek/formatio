@@ -86,11 +86,11 @@
                             gestion de service
                         </a>
                     </li>
-                    {{-- <li class="nav-item ms-5">
+                    <li class="nav-item ms-5">
                         <a href="#"  style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-toggle="tab" data-target="#branche" type="button" role="tab" aria-controls="branche" aria-selected="false">
                             gestion de branche
                         </a>
-                    </li> --}}
+                    </li>
 
                 </ul>
             </div>
@@ -344,8 +344,15 @@
 
                                 <table class="table  table-borderless table-sm">
                                     <tbody id="data_collaboration">
-
-
+                                        <tr>
+                                            <td>
+                                                @if(isset($branches))
+                                                    @for($i = 0; $i < $nb_branche; $i++)
+                                                        <p><strong>{{$branches[$i]->nom_branche}}</strong></p>
+                                                    @endfor
+                                                @endif
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
 
@@ -357,27 +364,18 @@
                         <div class="shadow p-3 mb-5 bg-body rounded ">
 
                             <h4>Ajout de branche</h4>
-                            <form name="formInsert" id="formInsert" action="{{route('formateur.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();" class="form_colab">
+                            <form name="formInsert" id="formInsert" action="{{route('enregistrement_branche')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();" class="form_colab">
                                 @csrf
                                 <div class="form-row d-flex">
-                                    <div class="col mb-2">
-                                        <select class="form-select mt-2" id="inlineFormInput" aria-label="Default select example">
-                                            <option selected>Choisit département </option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-
                                     <div class="col">
-                                        <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_service[]" placeholder="Nom de service" required />
+                                        <input type="text" class="form-control mb-2" id="inlineFormInput3" name="nom_branche[]" placeholder="Nom de la branche" required />
                                     </div>
                                     <div class="col ms-2">
-                                        <button type="button" class="btn btn-success mt-2" id="addRow2"><i class='bx bxs-plus-circle'></i></button>
+                                        <button type="button" class="btn btn-success mt-2" id="addRow3"><i class='bx bxs-plus-circle'></i></button>
                                     </div>
 
                                 </div>
-                                <div id="add_column2"></div>
+                                <div id="add_column3"></div>
 
                                 <button type="submit" class="btn btn-primary mt-2">Sauvegarder</button>
 
@@ -477,6 +475,25 @@
         // remove row2
         $(document).on('click', '#removeRow2', function() {
             $(this).closest('#inputFormRow2').remove();
+        });
+
+           //add row3
+           $(document).on('click', '#addRow3', function() {
+            var html = '';
+            html += '<div class="form-row d-flex" id="inputFormRow3">';
+            html += '<div class="col">';
+            html += '<input type="text" class="form-control  mb-2" name="nom_branche[]" id="inlineFormInput3"  placeholder="Nom de la branche"  required>';
+            html += '</div>';
+            html += '<div class="col ms-2">';
+            html += '<button id="removeRow3" type="button" class="btn btn-danger mt-2"><i class="fa fa-close style="font-size: 15px;"></i></button>';
+            html += '</div>';
+            html += '</div>';
+            $('#add_column3').append(html);
+        });
+
+        // remove row3
+        $(document).on('click', '#removeRow3', function() {
+            $(this).closest('#inputFormRow3').remove();
         });
 
     </script>

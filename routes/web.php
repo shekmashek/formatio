@@ -215,7 +215,7 @@ Route::get('/edit_adresse/{id?}','ParticipantController@edit_adresse')->name('ed
 Route::get('/edit_fonction/{id?}','ParticipantController@edit_fonction')->name('edit_fonction');
 Route::get('/edit_matricule/{id?}','ParticipantController@edit_matricule')->name('edit_matricule');
 Route::get('/edit_entreprise/{id?}','ParticipantController@edit_entreprise')->name('edit_entreprise');
-Route::get('/edit_niveau/{id?}','ParticipantController@edit_niveau')->name('edit_niveau');
+Route::get('/edit_niveau/{id}','ParticipantController@edit_niveau')->name('edit_niveau');
 Route::get('/edit_departement/{id?}','ParticipantController@edit_departement')->name('edit_departement');
 Route::get('/edit_branche/{id?}','ParticipantController@edit_branche')->name('edit_branche');
 Route::get('/edit_photos/{id?}','ParticipantController@edit_photos')->name('edit_photos');
@@ -682,6 +682,9 @@ Route::get('supprimer_ressource','SessionController@supprimer_ressource')->name(
 Route::get('liste_departement','DepartementController@show_departement')->name('liste_departement');
 //enregistrement service
 Route::post('enregistrement_service','DepartementController@enregistrement_service')->name('enregistrement_service');
+//enregistrement de branche
+Route::post('enregistrement_branche','DepartementController@enregistrement_branche')->name('enregistrement_branche');
+
 Route::get('affiche_departement','DepartementController@liste_dep')->name('affiche_departement');
 // ======= export excel copier coller participant
 Route::get('export_excel_new_participant','ParticipantController@export_excel_new_participant')->name('export_excel_new_participant');
