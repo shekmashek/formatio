@@ -118,16 +118,3 @@ create or replace view v_detail_presence as
     from details d join presences p on d.id = p.detail_id order by p.stagiaire_id asc;
 
 
-
-
--- create or replace view v_apprenants as
---     select
-
--- create or REPLACE view v_projet_entreprise_cfp as
---     select
---         p.id as projet_id,p.nom_projet,p.entreprise_id,p.cfp_id,p.status as status_projet,
---         p.activiter as activiter_projet,e.nom_etp,e.adresse as adresse_etp,
---         e.logo,e.email_etp,e.telephone_etp,
---         c.nom as nom_cfp,c.email as email_cfp,c.telephone as telephone_cfp
---     from projets p join entreprises e on p.entreprise_id = e.id
---                     join cfps c on c.id = p.cfp_id;
