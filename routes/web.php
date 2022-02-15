@@ -12,6 +12,10 @@ Route::get('sign-in', function () {
 Route::get('/', function () {
     return view('index_accueil');
 });
+
+Route::get('/home', function () {
+    return view('index_accueil');
+});
 //Route contact
 Route::get('contact',function(){
     return view('contact');
