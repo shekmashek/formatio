@@ -64,7 +64,7 @@
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
                                           @enderror
-                                      </div><br> 
+                                      </div><br>
                                       <div class="form-group">
                                         <label for="quartier">Quartier</label><br><br>
                                         <input type="text" autocomplete="off" class="form-control" id="quartier" name="quartier" placeholder="Quartier">
@@ -73,7 +73,7 @@
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
                                           @enderror
-                                      </div><br> 
+                                      </div><br>
                                       <div class="form-group">
                                         <label for="code_postal">Code Postal</label><br><br>
                                         <input type="text" autocomplete="off" class="form-control" id="code_postal" name="code_postal" placeholder="Code Postal">
@@ -91,7 +91,7 @@
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
                                           @enderror
-                                      </div><br>  
+                                      </div><br>
                                       <div class="form-group">
                                         <label for="region">Région</label><br><br>
                                         <input type="text" autocomplete="off" class="form-control" id="region" name="region" placeholder="Région">
@@ -100,7 +100,7 @@
                                               <span style = "color:#ff0000;"> {{$message}} </span>
                                           </div>
                                           @enderror
-                                      </div><br> 
+                                      </div><br>
                                      <div class="form-group">
                                       <label for="sary">Photo</label>
                                       <input type="file" class="form-control-file" id="photo" name="photos">
@@ -119,8 +119,8 @@
                                         </div>
                                         @enderror
                                     </div><br>
-                               
-                                
+
+
                                 <div class="form-group">
                                     <label for="poste">Poste</label><br><br>
                                     <input type="text" autocomplete="off" class="form-control" id="poste" name="poste" placeholder="poste">

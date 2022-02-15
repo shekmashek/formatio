@@ -111,33 +111,7 @@
                             </ul>
                         </li>
                         @endcanany
-                        {{-- entreprise --}}
-                        @canany(['isReferent'])
-                        <li class="my-2">
-                            <a href="#etpSubMenu2" data-toggle="collapse" aria-expanded="false"
-                                class="nav_linke dropdown-toggle liste"><i
-                                    class='bx bx-building-house nav_icon'></i><span
-                                    class="nav_name">Services de l'entreprise</span></a>&nbsp;&nbsp;
-                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu2">
-                                <li  class="my-1 sousMenu">
-                                    <a class='nouveau_icon_lien'
-                                href="{{route('liste_departement')}}"><i class='bx bxs-plus-circle nouveau_icon'
-                                    title="nouveau departement"></i>nouveaux departement</a>
-                                </li>
-                                {{-- <li  class="my-1 sousMenu">
-                                    <a class='nouveau_icon_lien'
-                                href="#"><i class='bx bxs-plus-circle nouveau_icon'
-                                    title="nouveau entreprise"></i>nouveaux Services</a>
-                                </li> --}}
-                                {{-- <li class="my-1 sousMenu">
-                                    <a href="{{route('liste_entreprise')}}">Entreprises</a>
-                                </li>
-                                <li class="my-1 sousMenu">
-                                    <a href="{{route('departement.index')}}">Département</a>
-                                </li> --}}
-                            </ul>
-                        </li>
-                        @endcanany
+
                         @can('isCFP')
                         <li class="my-2">
                             {{-- <a href="{{route('liste_entreprise')}}" class="nav_linke liste"><i
@@ -556,12 +530,7 @@
                         </ul>
                     </li>
                     @endcanany
-                    @can('isReferent')
-                    <li class="my-2">
-                        <a href="{{route('ListeAbonnement')}}" class="nav_linke liste"><i
-                                class='bx bxl-sketch nav_icon'></i><span class="nav_name">Abonnement</span></a>
-                    </li>
-                    @endcan
+
                     @can('isSuperAdmin')
                     <li class="my-2">
                         <a href="{{route('categorie')}}" class="nav_linke liste"><i class='bx bxl-sketch nav_icon'></i><span class="nav_name">Categorie Formation</span></a>
@@ -667,7 +636,9 @@
                                     <h6 class="mb-0 text-center">Numerika</h6>
                                 </div>
                                 <div class="card-body">
-
+                                        <a href="{{route('liste_departement')}}">Structure de l'entreprise</a><br>
+                                        <a href="{{route('ListeAbonnement')}}">Abonnement</a><br>
+                                        <a href="#">Setting</a>
                                 </div>
                             </div>
                         </div>
