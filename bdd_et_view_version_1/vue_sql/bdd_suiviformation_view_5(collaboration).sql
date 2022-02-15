@@ -420,8 +420,8 @@ JOIN moduleformation mf ON
     mf.module_id = g.module_id
 JOIN formateurs f ON
     f.id = d.formateur_id
-JOIN projets p ON
-    d.projet_id = p.id
+JOIN v_groupe_projet_entreprise p ON
+    d.projet_id = p.projet_id
 JOIN cfps c ON
     p.cfp_id = c.id
 GROUP BY

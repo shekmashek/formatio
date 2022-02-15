@@ -22,6 +22,7 @@ CREATE TABLE groupes (
   nom_groupe varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   projet_id  bigint(20) UNSIGNED  NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
   module_id  bigint(20) UNSIGNED  NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
+  type_payement_id  bigint(20) UNSIGNED  NOT NULL REFERENCES type_payement(id) ON DELETE CASCADE,
   date_debut date NOT NULL,
   date_fin date NOT NULL,
   status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -326,3 +327,11 @@ create table frais_annexe_formation(
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADe,
   groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES goupes(id) ON DELETE CASCADe
 );
+
+create table status(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  status varchar(100) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+insert into `status` (`status`)  VALUES   ('Prévisionnel'),('A venir'),('En cours'),('Terminé');
