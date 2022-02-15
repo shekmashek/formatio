@@ -291,7 +291,6 @@ class ResponsableController extends Controller
         $resp = Responsable::findOrFail($id);
         DB::beginTransaction();
         try {
-            DB::delete('delete from responsables where id = ?', [$id]);
             DB::delete('delete from users where id = ?', [$id]);
         } catch (Exception $e) {
             DB::rollback();

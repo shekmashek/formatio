@@ -695,3 +695,4 @@ Route::post('save+nouveau+responsable+cfp','ResponsableCfpController@store')->na
 Route::post('save+nouveau+responsable+entreprise','ResponsableController@save_responsable')->name('save+nouveau+responsable+entreprise');
 
 Route::post('delete+responsable+cfp','ResponsableController@destroy')->name('delete+responsable+cfp');
+Route::post('delete+responsable+entreprise','ResponsableController@destroy')->name('delete+responsable+entreprise');

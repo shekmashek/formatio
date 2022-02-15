@@ -143,7 +143,7 @@
                                             <i class="fa fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('profile_entreprise',$etp->entreprise_id)}}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
+                                            <a class="dropdown-item" href="{{route('affResponsable')}}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
                                             <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                <form action="{{ route('delete+responsable+cfp') }}" method="POST">
+                                                <form action="{{ route('delete+responsable+entreprise') }}" method="POST">
                                                     @csrf
                                                     <button type="submit" class="btn btn-secondary"> Oui </button>
                                                     <input name="id" type="text" value="{{$etp->id}}" hidden>
