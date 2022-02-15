@@ -16,6 +16,7 @@ use App\responsable;
 use App\entreprise;
 use App\User;
 use Illuminate\Support\Facades\File;
+use App\Models\FonctionGenerique;
 /* ====================== Exportation Excel ============= */
 use App\Exports\ResponsableExport;
 use Excel;
@@ -220,6 +221,36 @@ class ResponsableController extends Controller
         $responsable = responsable::findOrFail($id);
         return view('admin.responsable.edit_phone', compact('responsable'));
     }
+    public function edit_adresse_etp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_adresse_etp', compact('responsable'));
+    }
+    public function edit_logo($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_logo', compact('responsable'));
+    }
+    public function edit_site($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_site', compact('responsable'));
+    }
+    public function edit_email_etp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_email_etp', compact('responsable'));
+    }
+    public function edit_phone_etp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_phone_etp', compact('responsable'));
+    }
     public function edit_cin($id, Request $request){
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
@@ -245,11 +276,11 @@ class ResponsableController extends Controller
         $responsable = responsable::findOrFail($id);
         return view('admin.responsable.edit_entreprise', compact('responsable'));
     }
-    public function edit_niveau($id, Request $request){
+    public function edit_nif($id, Request $request){
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
         $responsable = responsable::findOrFail($id);
-        return view('admin.responsable.edit_niveau', compact('responsable'));
+        return view('admin.responsable.edit_nif', compact('responsable'));
     }
     // public function edit_departement($id, Request $request){
     //     $liste_dep = Departement::all();
@@ -258,11 +289,23 @@ class ResponsableController extends Controller
     //     $responsable = responsable::findOrFail($id);
     //     return view('admin.responsable.edit_departement', compact('responsable','liste_dep'));
     // }
-    public function edit_branche($id, Request $request){
+    public function edit_stat($id, Request $request){
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
         $responsable = responsable::findOrFail($id);
-        return view('admin.responsable.edit_branche', compact('responsable'));
+        return view('admin.responsable.edit_stat', compact('responsable'));
+    }
+    public function edit_rcs($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_rcs', compact('responsable'));
+    }
+    public function edit_cif($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+        $responsable = responsable::findOrFail($id);
+        return view('admin.responsable.edit_cif', compact('responsable'));
     }
     public function edit_photos($id, Request $request){
         $user_id =  $users = Auth::user()->id;
@@ -282,11 +325,33 @@ class ResponsableController extends Controller
         $responsable = responsable::findOrFail($id);
         return view('admin.responsable.edit_poste', compact('responsable'));
     }
+    public function update_etp(Request $request, $id){
+        $fonct = new FonctionGenerique();
 
-    public function update(Request $request)
+           $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[ Auth::user()->id]);
+
+           if ($image = $request->file('image')) {
+            $destinationPath = 'images/responsables';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input= "$profileImage";
+        }
+        if ($input !=null){
+        DB::update('update entreprises set nom_etp=?,adresse=?,logo=?,cif=?,nif=?,stat=?,rcs=?,email_etp=?,site_etp=?,telephone_etp=?
+        where id=?',[$request->etp,$request->adresse_etp,$input,$request->cif,$request->nif,
+        $request->stat,$request->rcs,$request->email_etp,$request->site,$request->phone_etp,$resp_etp->entreprise_id]);
+
+    //return redirect()->route('affResponsable');
+        }
+    }
+    public function update(Request $request, $id)
     {
         if (Gate::allows('isReferent')) {
-            $id = responsable::where('user_id', Auth::user()->id)->value('id');
+           $fonct = new FonctionGenerique();
+
+           $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[ Auth::user()->id]);
+
+
             //modifier les données
             $nom = $request->nom;
             $prenom = $request->prenom;
@@ -300,7 +365,7 @@ class ResponsableController extends Controller
             $quartier = $request->quartier;
             $lot = $request->lot;
             $mail = $request->mail;
-           $poste=$request->poste;
+            $poste=$request->poste;
             $fonction = $request->fonction;
             $phone =  $request->phone;
             $mdp = $request->password;
@@ -313,6 +378,7 @@ class ResponsableController extends Controller
             // $dossier = 'stagiaire';
             // $stock_stg = new getImageModel();
             //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+
             if ($image = $request->file('image')) {
                 $destinationPath = 'images/responsables';
                 $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -320,6 +386,7 @@ class ResponsableController extends Controller
                 $input= "$profileImage";
             }
             if ($input !=null){
+
             responsable::where('id', $id)
                 ->update([
                     'nom_resp' => $nom,
@@ -338,6 +405,7 @@ class ResponsableController extends Controller
                     'poste_resp'=>$poste,
                     'photos'=>$input
                 ]);
+
             }
             else{
                 responsable::where('id', $id)
@@ -366,9 +434,8 @@ class ResponsableController extends Controller
                     'email' => $mail,
                     'password' => $mdpHash
                 ]);
-                entreprise::where('id',$id)->update([
-                    'nom_etp'=>$request->entreprise
-                ]);
+
+
                 // Departement::where('id',$id)->update([
                 //     'nom_departement'=>$request->departement
                 // ]);
@@ -378,7 +445,9 @@ class ResponsableController extends Controller
 
             return redirect()->route('affResponsable');
         }
-        if (Gate::allows('isSuperAdmin') || Gate::allows('isReferent')) {
+
+
+   if (Gate::allows('isSuperAdmin') || Gate::allows('isReferent')) {
             $id = $request->Id;
             $user_id = responsable::where('id', $id)->value('user_id');
             //modifier les données
