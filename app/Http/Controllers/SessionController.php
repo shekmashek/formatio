@@ -107,6 +107,8 @@ class SessionController extends Controller
         $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
         // ???--
+        $all_frais_annexe = [];
+
         $fonct = new FonctionGenerique();
         if(Gate::allows('isCFP')){
             $cfp_id = Cfp::where('user_id', $user_id)->value('id');
@@ -119,6 +121,7 @@ class SessionController extends Controller
             $formateur = NULL;
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
+            $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
         }
         if(Gate::allows('isFormateur')){
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
@@ -152,9 +155,8 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
 
         // ---------evalution fait par les stagiaires
-        
 
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe'));
     }
 
     public function getFormateur(){
@@ -250,9 +252,9 @@ class SessionController extends Controller
         $montant = $request->montant;
         $groupe_id = $request->groupe;
         for ($i=0; $i < count($description); $i++) { 
-            DB::insert('insert into frais_annexe_formation(description,montant,entreprise_id,groupe_id) values(?,?,?,?)',[$description[$i],$montant[$i],$groupe_id,$etp_id]);
+            DB::insert('insert into frais_annexe_formation(description,montant,entreprise_id,groupe_id) values(?,?,?,?)',[$description[$i],$montant[$i],$etp_id,$groupe_id]);
         }
-        $all_frais_annexe = DB::select('select * from ressources where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
+        $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
         return response()->json($all_frais_annexe);
     }
 

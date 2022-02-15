@@ -104,12 +104,14 @@
                             @endif
                         </button>
                     </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
-                            <p class="m-0 p-0">FRAIS ANNEXES</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
+                    @can('isReferent')
+                        <div>
+                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
+                                <p class="m-0 p-0">FRAIS ANNEXES</p>
+                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                            </button>
+                        </div>
+                    @endcan
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
                             <p class="m-0 p-0">DOCUMENT</p>

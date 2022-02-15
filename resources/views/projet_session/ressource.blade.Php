@@ -18,52 +18,54 @@
 
 {{-- @if (count($stagiaire) != 0) --}}
 
-<div class="shadow mb-3 col-12 pb-5">
+<div class="shadow mb-3 pe-5 ps-1 col-12 pb-5">
     <div class="row ms-4 mt-0">
-        <div class="col-md-5">
+        <div class="col-md-5 ">
             <span>
-                <h5>Matériel nécessaire</h5>
+                <h6>Matériel nécessaire</h6>
             </span>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 p-0">
             <span>
-                <h5>Demandé(e) par :</h5>
+                <h6>Demandé(e) par :</h6>
             </span>
         </div>
     </div>
-    <div id="affiche_ressource">
-        @foreach ($ressource as $r)
-            <div class="row ms-4 mt-0" id="ressource_{{ $r->id }}">
-                <div class="col-md-5">
-                    <section>
-                        <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
-                    </section>
+    <div class="row ms-4 mt-0 align-content-center">
+        <div id="affiche_ressource">
+            @foreach ($ressource as $r)
+                <div class="d-flex mt-0 " id="ressource_{{ $r->id }}"
+                    style="border-bottom: 1px solid black; line-height: 20px">
+                    <div class="col-md-5 ">
+                        <section>
+                            <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
+                        </section>
+                    </div>
+                    <div class="col-md-5">
+                        <section>
+                            {{ $r->demandeur }}
+                        </section>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <section>
+                            <button type="button" class="supprimer_ressource" data-id="{{ $r->id }}"><i
+                                    class="fa fa-trash-alt"></i></button>
+                        </section>
+                    </div>
                 </div>
-                <div class="col-md-5">
-                    <section>
-                        {{ $r->demandeur }}
-                    </section>
-                </div>
-                <div class="col-md-2">
-                    <section>
-                        <button type="button" class="supprimer_ressource" data-id="{{ $r->id }}"><i
-                                class="fa fa-trash-alt"></i></button>
-                    </section>
-                </div>
-                <hr class="m-0 mr-5">
-            </div>
+            @endforeach
+        </div>
+    </div>
 
-        @endforeach
-    </div>
     <div class="ms-4 mt-3">
-        <h5>Autre(s)</h5>
+        <h6 class="p-0 ms-3">Ajouter une autre ressource </h6>
         <section class="row px-3">
             <div class="col-md-8  py-0 px-1">
                 <label for="" class="ps-2"> Description </label>
             </div>
         </section>
         <form action="">
-            <section class="row px-3">
+            <section class="row px-2 ms-0">
                 <div class="col-md-7  py-0 px-1">
                     <input type="text" id="description_ressource" class="form-control ajout_form" required>
                 </div>
@@ -116,7 +118,7 @@
                 $("#description_ressource").val('');
                 var html = '';
                 for (var i = 0; i < userData.length; i++) {
-                    html += '<div class="row" id="ressource_' + userData[i].id + '">';
+                    html += '<div class="d-flex mt-0 " id="ressource_' + userData[i].id + '" style="border-bottom: 1px solid black; line-height: 20px">';
 
                     html += '<div class="col-md-5">';
                     html += '<section>';
@@ -130,7 +132,7 @@
                     html += '</section>';
                     html += '</div>';
 
-                    html += '<div class="col-md-2">';
+                    html += '<div class="col-md-2 text-center">';
                     html += '<section>';
                     html += '<button type="button" class="supprimer_ressource" data-id="' +
                         userData[i].id + '"><i class="fa fa-trash-alt"></i></button>';
