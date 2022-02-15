@@ -70,7 +70,7 @@
                         </select>
                
                         
-                        <input type="hidden" class="form-control test input" name="date" value="{{ $responsable->date_naissance_resp}}">
+                        <input type="hidden" class="form-control test input" name="date_naissance" value="{{ $responsable->date_naissance_resp}}">
                     
                
                         <div class="row px-3 mt-4">

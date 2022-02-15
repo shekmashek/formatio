@@ -290,7 +290,7 @@ class ResponsableController extends Controller
             //modifier les données
             $nom = $request->nom;
             $prenom = $request->prenom;
-            $date = $request->date;
+            $date_naiss = $request->date_naissance;
 
             $cin = $request->cin;
             $genre = $request->genre;
@@ -327,7 +327,7 @@ class ResponsableController extends Controller
                     'fonction_resp' => $fonction,
                     'email_resp' => $mail,
                     'telephone_resp' => $phone,
-                    'date_naissance_resp'=>$date,
+                    'date_naissance_resp'=>$date_naiss,
                     'sexe_resp'=>$genre,
                     'cin_resp'=>$cin,
                     'adresse_lot'=>$lot,

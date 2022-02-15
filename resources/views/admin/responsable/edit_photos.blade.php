@@ -98,7 +98,7 @@
                         </select>
                    
                 
-                        <input type="hidden" class="form-control test" name="date" value="{{ $responsable->date_naissance_resp}}">
+                        <input type="hidden" class="form-control test" name="date_naissance" value="{{ $responsable->date_naissance_resp}}">
        
                           <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="cin" >
 
