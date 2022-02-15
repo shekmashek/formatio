@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Collaboration;
 use App\Models\getImageModel;
 use Monolog\Handler\IFTTTHandler;
-
+use Illuminate\Http\Response;
 class FactureController extends Controller
 {
 
@@ -217,6 +217,7 @@ class FactureController extends Controller
             $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
         }
 
+
         return view("admin.facture.detail_facture", compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }
 
@@ -253,8 +254,22 @@ class FactureController extends Controller
             "defaultPaperSize" => "a4",
             "dpi" => 130
         ]);
+            //affichage photo
+        //   liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+         $dir = $contents->where('type', '=', 'dir')
+        ->where('filename', '=', 'entreprise')
+        ->first();
 
-        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $files = collect(Storage::cloud()->listContents($dir['path'], false))
+        ->where('type', '=', 'file')
+        ->where('filename', '=', pathinfo($cfp->logo, PATHINFO_FILENAME))
+        ->where('extension', '=', pathinfo($cfp->logo, PATHINFO_EXTENSION))
+        ->first();
+        $rawData = Storage::cloud()->get($files['path']);
+
+        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('rawData','cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -264,8 +279,14 @@ class FactureController extends Controller
                 ]
             ])
         );
+
+
         return $pdf->download('facture de ' . $facture[0]->nom_etp . ' sur le project  ' . $facture[0]->nom_projet . '.pdf');
-        // return view('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        // return view('admin.pdf.pdf_facture',
+        //         compact('cfp', 'facture', 'frais_annexes',
+        //         'montant_totale', 'facture_avoir', 'facture_acompte',
+        //         'lettre_montant'));
+
     }
 
     public function valid_facture(Request $req)
