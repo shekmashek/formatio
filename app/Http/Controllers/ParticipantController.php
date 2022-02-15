@@ -387,7 +387,7 @@ class ParticipantController extends Controller
         }
 
         // stagiaire::where('id', $id)->update([']);
-        $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
+        // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
