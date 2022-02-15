@@ -127,6 +127,7 @@
                                                     @endif
 
                                                 </div>
+                                            </td>
                                             <td>
                                                 <div align="rigth">
                                                     <p style="color: rgb(66, 55, 221)"><i class="bx bx-check"></i></p>
