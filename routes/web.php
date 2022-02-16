@@ -696,3 +696,9 @@ Route::post('save+nouveau+responsable+entreprise','ResponsableController@save_re
 
 Route::post('delete+responsable+cfp','ResponsableController@destroy')->name('delete+responsable+cfp');
 Route::post('delete+responsable+entreprise','ResponsableController@destroy')->name('delete+responsable+entreprise');
+
+
+// ======== route en cour de travaux
+Route::get('en_cour_de_travaux',function(){
+    return view('page_travaux.plateforme_en_travaux');
+})->name('en_cour_de_travaux');
