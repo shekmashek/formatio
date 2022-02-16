@@ -370,6 +370,7 @@ class ResponsableController extends Controller
             $phone =  $request->phone;
             $mdp = $request->password;
             $mdpHash = Hash::make($mdp);
+
             $input = $request->image;
 
          //stocker logo dans google drive
