@@ -133,7 +133,13 @@
                     </div>
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
-                            <p class="m-0 p-0">EVALUATION DES STAGIAIRES</p>
+                            <p class="m-0 p-0">PRE EVALUATION</p>
+                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
+                            <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
                         </button>
                     </div>
@@ -186,6 +192,9 @@
                       </div>
                       <div id="emargement" class="tabcontent">
                         @include('projet_session.emargement')
+                      </div>
+                      <div id="evaluation_pre_formation" class="tabcontent">
+                        @include('projet_session.evaluation_stagiaires_pre')
                       </div>
                       <div id="evaluation" class="tabcontent">
                         @include('projet_session.evaluation_stagiaires')

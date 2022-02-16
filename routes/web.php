@@ -667,7 +667,7 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 //     return view('cgv');
 // })->name('condition_generale_de_vente');
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
-Route::get('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
+Route::post('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
 
 //-------------route document----------------///
 Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
@@ -676,7 +676,7 @@ Route::get('liste_fichier/{id}','DocumentController@show')->name('liste_fichier'
 Route::post('insert_evaluation_stagiaire','SessionController@insert_evaluation_stagiaire')->name('insert_evaluation_stagiaire');
 Route::post('insert_evaluation_stagiaire_apres','SessionController@insert_evaluation_stagiaire_apres')->name('insert_evaluation_stagiaire_apres');
 Route::get('competence_stagiaire','SessionController@get_competence_stagiaire')->name('competence_stagiaire');
-
+Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluation_stagiaire')->name('modifier_evaluation_stagiaire');
 
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
 Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');
