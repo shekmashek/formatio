@@ -6,7 +6,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_etp AS SELECT
     entreprises.nom_etp,
     telephone_etp,
     email_etp,
-    (entreprises.adresse) adresse_etp,
+    (entreprises.adresse_rue) adresse_etp,
     (entreprises.logo) logo_etp,
     (entreprises.nif) nif_etp,
     (entreprises.stat) nif_stat,
@@ -57,7 +57,7 @@ CREATE OR REPLACE VIEW v_invitation_cfp_pour_etp AS SELECT
     (cfps.cif) cif_cfp,
     (cfps.logo) logo_cfp,
     entreprises.nom_etp,
-    (entreprises.adresse) adresse_etp,
+    (entreprises.adresse_rue) adresse_etp,
     (entreprises.logo) logo_etp,
     (entreprises.nif) nif_etp,
     (entreprises.stat) nif_stat,
@@ -309,7 +309,7 @@ CREATE OR REPLACE VIEW v_invitation_etp_pour_cfp AS SELECT
     (cfps.cif) cif_cfp,
     (cfps.logo) logo_cfp,
     cfps.user_id,
-    (entreprises.adresse) adresse_etp,
+    (entreprises.adresse_rue) adresse_etp,
     (entreprises.logo) logo_etp,
     (entreprises.nif) nif_etp,
     (entreprises.stat) nif_stat,
@@ -420,8 +420,8 @@ JOIN moduleformation mf ON
     mf.module_id = g.module_id
 JOIN formateurs f ON
     f.id = d.formateur_id
-JOIN projets p ON
-    d.projet_id = p.id
+JOIN v_groupe_projet_entreprise p ON
+    d.projet_id = p.projet_id
 JOIN cfps c ON
     p.cfp_id = c.id
 GROUP BY
@@ -454,9 +454,6 @@ p.nom_projet,
 c.nom,
 p.entreprise_id
 ;
-
-
-
 
 CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     d.activiter AS activiter_demande,
@@ -515,7 +512,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS SELECT
     s.telephone_stagiaire,
     s.user_id AS user_id_stagiaire,
     s.photos,
-    s.departement_id,
+    (s.departement_entreprise_id) departement_id,
     s.cin,
     s.date_naissance,
     (s.lot) adresse,
@@ -543,7 +540,7 @@ CREATE OR REPLACE VIEW v_presence_detail AS SELECT
     s.telephone_stagiaire,
     s.user_id AS user_id_stagiaire,
     s.photos,
-    s.departement_id,
+    (s.departement_entreprise_id) departement_id,
     s.cin,
     s.date_naissance,
     (s.lot) adresse_stg,
@@ -577,7 +574,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
     c.user_id AS user_id_cfp,
     e.id AS entreprise_id,
     e.nom_etp,
-    e.adresse,
+    (e.adresse_rue) adresse,
     e.logo AS logo_etp,
     e.nif AS nif_etp,
     e.stat AS stat_etp,
@@ -621,7 +618,7 @@ CREATE OR REPLACE VIEW v_demmande_etp_cfp AS SELECT
     c.user_id AS user_id_cfp,
     e.id AS entreprise_id,
     e.nom_etp,
-    e.adresse,
+    (e.adresse_rue) adresse,
     e.logo AS logo_etp,
     e.nif AS nif_etp,
     e.stat AS stat_etp,

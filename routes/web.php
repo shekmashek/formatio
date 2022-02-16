@@ -71,6 +71,7 @@ Route::get('admin_count_etp','AdminController@admin_etp')->name('admin_count_etp
 Route::get('collaboration_cfp','HomeController@collaboration_cfps')->name('collaboration_cfp');
 Route::get('collaboration_etp','HomeController@collaboration_etp')->name('collaboration_etp');
 Route::get('collaboration_frmt','HomeController@collaboration_frmt')->name('collaboration_frmt');
+Route::get('/image-cfp/{logo_cfp}','CfpController@img_cfp')->name('image-cfp');
 
 Route::get('listes_notifs','HomeController@liste_notification')->name('listes_notifs');
 Route::get('listes_messages','HomeController@liste_message')->name('listes_messages');
@@ -193,6 +194,8 @@ Route::post('/update_responsable/{id?}','ResponsableController@update')->name('u
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
+Route::get('/affResponsableCfp', 'ResponsableCfpController@affReferent')->name('affResponsableCfp');
+
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
 //Route pour modifier chaque champs pour responsable
@@ -213,6 +216,12 @@ Route::get('/edit_photos_resp/{id}','ResponsableController@edit_photos')->name('
 Route::get('/edit_pwd_resp/{id}','ResponsableController@edit_pwd')->name('edit_pwd_resp');
 Route::get('/edit_poste_resp/{id}','ResponsableController@edit_poste')->name('edit_poste_resp');
 
+// update password
+Route::post('/update_responsable_mdp/{id}','ResponsableController@update_responsable_mdp')->name('update_responsable_mdp');
+//update image
+Route::post('update_photos_resp','ResponsableController@update_photos_resp')->name('update_photos_resp');
+// update e-mail
+Route::post('update_mail_resp','ResponsableController@update_mail_resp')->name('update_mail_resp');
 //route----------------- STAGIAIRE
 Route::resource('participant','ParticipantController')->except([
     'create','edit','destroy','update'
@@ -243,7 +252,7 @@ Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('d
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
-Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
+// Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
 // profile_stagiaire
 Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
@@ -284,6 +293,7 @@ Route::resource('module','ModuleController')->except([
 Route::get('/afficher_module','ModuleController@affichage')->name('afficher_module');
 Route::get('/liste_module/{id?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
+Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('/destroy_module','ModuleController@destroy')->name('destroy_module');
 Route::post('update_module/{id}','ModuleController@update')->name('update_module');
@@ -291,6 +301,7 @@ Route::post('publier_module','ModuleController@module_publier')->name('publier_m
 Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifier_module');
 Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->name('modifier_module_prog');
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
+Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
 
 // route recherche par référence
 Route::get('rechercheReference/{reference?}','ModuleController@rechercheReference')->name('rechercheReference');
@@ -368,15 +379,23 @@ Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_progra
 Route::post('/destroy_programme/{id}','ProgrammeController@destroy')->name('destroy_programme');
 Route::post('/update_programme/{id}','ProgrammeController@update')->name('update_programme/{id}');
 Route::post('insert_prog_cours','ProgrammeController@store')->name('insert_prog_cours');
+Route::post('/update_prog_cours','ProgrammeController@update_pgc')->name('update_prog_cours');
 Route::get('/create_programme','ProgrammeController@create')->name('create_programme');
+Route::get('modif_programmes/{id}','ProgrammeController@ajout_programme')->name('modif_programmes');
+Route::get('suppression_programme','ProgrammeController@suppre_programme')->name('suppression_programme');
+Route::get('editer_programme','ProgrammeController@edit')->name('editer_programme');
+
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');
-Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+// Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+Route::post('insertion_cours','CoursControlleur@store')->name('insertion_cours');
 Route::get('modifier_cours/{id_cours?}/','CoursControlleur@update')->name('modifier_cours');
 Route::get('liste_cours/{id_prog?}','CoursControlleur@liste_cours')->name('liste_cours');
 Route::get('supprimer_cours/{id_cours?}/{id_programme?}', 'CoursControlleur@destroy')->name('supprimer_cours');
 Route::get('edit_cours','CoursControlleur@edit')->name('edit_cours');
+Route::get('suppression_cours','CoursControlleur@suppre_cours')->name('suppression_cours');
+
 
 Route::get('/agenda',function(){
     return view('admin.agenda.agenda');
@@ -658,6 +677,13 @@ Route::get('inscription_save',function(){
 })->name('inscription_save');
 
 Route::get('verify_nif_cfp','NouveauCompteController@verify_nif_cfp')->name('verify_nif_cfp');
+Route::get('verify_nif_etp','NouveauCompteController@verify_nif_etp')->name('verify_nif_etp');
+Route::get('verify_mail_user','NouveauCompteController@verify_mail_user')->name('verify_mail_user');
+Route::get('verify_tel_user','NouveauCompteController@verify_tel_user')->name('verify_tel_user');
+Route::get('verify_cin_user','NouveauCompteController@verify_cin_user')->name('verify_cin_user');
+Route::get('verify_name_cfp','NouveauCompteController@verify_name_cfp')->name('verify_name_cfp');
+Route::get('verify_name_etp','NouveauCompteController@verify_name_etp')->name('verify_name_etp');
+
 
 
 Route::post('create_compte_cfp','NouveauCompteController@create_compte_cfp')->name('create_compte_cfp');
@@ -748,3 +774,12 @@ Route::post('insert_evaluation_stagiaire_apres','SessionController@insert_evalua
 Route::get('competence_stagiaire','SessionController@get_competence_stagiaire')->name('competence_stagiaire');
 Route::post('importation_fichier','DocumentController@importation_fichier')->name('importation_fichier');
 Route::get('download_file','DocumentController@download_file')->name('download_file');
+
+Route::get('liste+responsable+cfp','ResponsableCfpController@index')->name('liste+responsable+cfp');
+Route::get('liste+responsable+entreprise','ResponsableController@show_responsable')->name('liste+responsable+entreprise');
+
+Route::post('save+nouveau+responsable+cfp','ResponsableCfpController@store')->name('save+nouveau+responsable+cfp');
+Route::post('save+nouveau+responsable+entreprise','ResponsableController@save_responsable')->name('save+nouveau+responsable+entreprise');
+
+Route::post('delete+responsable+cfp','ResponsableController@destroy')->name('delete+responsable+cfp');
+Route::post('delete+responsable+entreprise','ResponsableController@destroy')->name('delete+responsable+entreprise');

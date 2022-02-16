@@ -165,8 +165,10 @@
                                             <td>{{$actif->totale_jour.' jour(s))'}}</td>
                                             <td style="color:red;">{{$actif->jour_restant.' jour(s))'}}</td>
                                             <td>
+
+                                                <div class="btn-group dropleft">
                                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    ...
+                                                    <i class="fa fa-ellipsis-v"></i>
                                                 </a>
                                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                     <li>
@@ -197,6 +199,7 @@
                                                     <li><hr class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a></li>
                                                 </ul>
+                                                </div>
                                             </td>
 
                                         </tr>

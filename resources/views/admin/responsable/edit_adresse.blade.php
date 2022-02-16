@@ -76,17 +76,10 @@
 
                         <input type="hidden" class="form-control test"  name="mail" value="{{ $responsable->email_resp }}" >
 
-<<<<<<< HEAD
                         <input type="hidden" class="form-control test"  name="phone" value="{{ $responsable->telephone_resp }}">
 
 
                         <input type="hidden" class="form-control test input" value=""  name="password" placeholder="">
-
-=======
-                        <input type="hidden" class="form-control test"  name="phone" value="{{ $responsable->telephone_resp }}"> 
-                       
-                       
-                        <input type="hidden" class="form-control test input" value=""  name="password" placeholder="">  
                         <input type="hidden" class="form-control input test"  name="etp"  value="  {{ optional(optional($responsable)->entreprise)->nom_etp}}" >
                         <input type="hidden" class="form-control input test"  name="rcs"  value="  {{ optional(optional($responsable)->entreprise)->rcs}}" >
                         <input type="hidden" class="form-control input test"  name="nif"  value="  {{ optional(optional($responsable)->entreprise)->nif}}" >
@@ -94,8 +87,7 @@
                         <input type="hidden" class="form-control input test"  name="email_etp"  value="  {{ optional(optional($responsable)->entreprise)->email_etp}}" >
                         <input type="hidden" class="form-control input test"  name="site"  value="  {{ optional(optional($responsable)->entreprise)->site_etp}}" >
                         <input type="hidden" class="form-control input test"  name="phone_etp"  value="  {{ optional(optional($responsable)->entreprise)->telephone_etp}}" >
-                                        
->>>>>>> compte_new
+
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test input" id="lot" name="lot" placeholder="Lot" value="   {{ $responsable->adresse_lot}}">

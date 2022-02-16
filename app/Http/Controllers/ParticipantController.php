@@ -38,6 +38,12 @@ class ParticipantController extends Controller
             return $next($request);
         });
     }
+
+    public function get_service(Request $req){
+        $service = db::select('select * from v_departement_service_entreprise where departement_entreprise_id = ? ',[$req->id]);
+        return response()->json($service);
+    }
+
     public function index()
     {
         $email_error = "";
@@ -54,7 +60,13 @@ class ParticipantController extends Controller
             $liste_dep = db::select('select * from departement_entreprises where entreprise_id = ? ',[$entreprise_id]);
             $lieu_travail = db::select('select * from branches where entreprise_id = ? ', [$entreprise_id]);
             // $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
-            return view('admin.participant.nouveauParticipant', compact('lieu_travail','liste_dep', 'email_error', 'matricule_error'));
+            // return view('admin.participant.nouveauParticipant', compact('lieu_travail','liste_dep', 'email_error', 'matricule_error'));
+            $service = db::select('select * from v_departement_service_entreprise where entreprise_id = ? ',[$entreprise_id]);
+
+
+
+            // $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
+            return view('admin.participant.nouveauParticipant', compact('lieu_travail','service','liste_dep', 'email_error', 'matricule_error'));
         }
         if (Gate::allows('isManager')) {
 
@@ -122,43 +134,46 @@ class ParticipantController extends Controller
     public function store(Request $request)
     {
         //condition de validation de formulaire
-    //    $request->validate(
-    //         [
-    //             'matricule' => ["required"],
-    //             'nom' => ["required"],
-    //             'prenom' =>  ["required"],
-    //             'rue' =>  ["required"],
-    //             'quartier' =>  ["required"],
-    //             'code_postal' =>  ["required"],
-    //             'ville' =>  ["required"],
-    //             'region' =>  ["required"],
-    //             'lot' =>  ["required"],
-    //             'fonction' => ["required"],
-    //             'mail' => ["required", "email"],
-    //             'phone' => ["required"],
-    //             'lieu' => ["required"],
-    //             'image' => ["required"],
-    //             'cin' =>  ["required"],
 
-    //         ],
-    //         [
-    //             'matricule.required' => 'Veuillez remplir le champ',
-    //             'nom.required' => 'Veuillez remplir le champ',
-    //             'prenom.required' => 'Veuillez remplir le champ',
-    //             'fonction.required' =>  'Veuillez remplir le champ',
-    //             'mail.required' =>  'Veuillez remplir le champ',
-    //             'mail.email' => 'Addresse mail non valide',
-    //             'rue.required' => 'Veuillez remplir le champ',
-    //             'quartier.required' => 'Veuillez remplir le champ',
-    //             'ville.required' => 'Veuillez remplir le champ',
-    //             'code_postal.required' => 'Veuillez remplir le champ',
-    //             'lot.required' => 'Veuillez remplir le champ',
-    //             'region.required' => 'Veuillez remplir le champ',
-    //             'phone.required' => 'Veuillez remplir le champ',
-    //             'image.required' => "Veuillez importer une photo",
-    //             'cin.required' => 'Entrer le CIN',
-    //         ]
-    //     );
+   /*     $request->validate(
+            [
+                'matricule' => ["required"],
+                'nom' => ["required"],
+                'prenom' =>  ["required"],
+                'rue' =>  ["required"],
+                'quartier' =>  ["required"],
+                'code_postal' =>  ["required"],
+                'ville' =>  ["required"],
+                'region' =>  ["required"],
+                'lot' =>  ["required"],
+                'fonction' => ["required"],
+                'mail' => ["required", "email"],
+                'phone' => ["required"],
+                'lieu' => ["required"],
+                'image' => ["required"],
+                'cin' =>  ["required"],
+
+            ],
+            [
+                'matricule.required' => 'Veuillez remplir le champ',
+                'nom.required' => 'Veuillez remplir le champ',
+                'prenom.required' => 'Veuillez remplir le champ',
+                'fonction.required' =>  'Veuillez remplir le champ',
+                'mail.required' =>  'Veuillez remplir le champ',
+                'mail.email' => 'Addresse mail non valide',
+                'rue.required' => 'Veuillez remplir le champ',
+                'quartier.required' => 'Veuillez remplir le champ',
+                'ville.required' => 'Veuillez remplir le champ',
+                'code_postal.required' => 'Veuillez remplir le champ',
+                'lot.required' => 'Veuillez remplir le champ',
+                'region.required' => 'Veuillez remplir le champ',
+                'phone.required' => 'Veuillez remplir le champ',
+                'image.required' => "Veuillez importer une photo",
+                'cin.required' => 'Entrer le CIN',
+            ]
+        );
+*/
+
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
@@ -213,30 +228,39 @@ class ParticipantController extends Controller
 
             //stocker logo dans google drive
             //stocker logo dans google drive
-            $dossier = 'stagiaire';
-            $stock_stg = new getImageModel();
-            $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
 
            $participant->photos = $nom_image;
 
             //enregistrer les emails , name et mot de passe dans user
             $user = new User();
-            $user->name = $request->nom;
+            $user->name = $request->nom. " " . $request->prenom;
             $user->email = $request->mail;
-            $ch1 = $request->nom;
-            $ch2 = substr($request->phone, 8, 2);
-            $user->password = Hash::make($ch1 . $ch2);
+
+            $user->cin = $request->cin;
+            $user->telephone = $request->phone;
+
+            $ch1 = '0000';
+            // $ch2 = substr($request->phone, 8, 2);
+            $user->password = Hash::make($ch1);
             $user->role_id = '3';
             $user->save();
             //get user id
             $user_id = User::where('email', $request->mail)->value('id');
             $participant->user_id = $user_id;
-            $participant->departement_id = $request->liste_dep;
+
+            $participant->service_id = $request->service_id;
+            $participant->cin = $request->cin;
+            $participant->date_naissance = $request->naissance;
+            $participant->niveau_etude = $request->niveau;
             $participant->entreprise_id = $entreprise_id;
             $request->image->move(public_path($str), $nom_image);
             $participant->save();
-            return redirect()->route('liste_participant');
+            // $request->image->move(public_path($str), $nom_image);
+            $dossier = 'stagiaire';
+            $stock_stg = new getImageModel();
+            $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
 
+           return redirect()->route('liste_participant');
         }
     }
 
@@ -817,7 +841,7 @@ class ParticipantController extends Controller
         $fonct = new FonctionGenerique();
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            $liste_dep = $fonct->findWhere("v_departement", ["entreprise_id"], [$entreprise_id]);
+            $liste_dep = $fonct->findWhere("departement_entreprises", ["entreprise_id"], [$entreprise_id]);
 
             return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep'));
         }

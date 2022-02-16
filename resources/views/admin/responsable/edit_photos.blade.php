@@ -65,7 +65,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Photos de profile</p>
-        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_photos_resp')}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
@@ -80,7 +80,8 @@
                                 <div class="image-upload">
                                   <label for="file-input">
                                     <div class="upload-icon">
-                                        <img src="{{asset('images/responsables/'.$responsable->photos)}}" id = "photo_stg"  class="image-ronde">
+
+                                        <img src="/responsable-image/{{$responsable->photos}}" id = "photo_stg"  class="image-ronde">
                                       {{-- <input type="text" id = 'vartemp'> --}}
                               </div>
                                   </label>

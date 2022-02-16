@@ -49,7 +49,7 @@ select g.id as groupe_id,
         s.entreprise_id,
         s.user_id,
         s.photos,
-        s.departement_id,
+        (s.departement_entreprise_id) departement_id,
         s.cin,
         s.date_naissance,
         (s.lot) adresse,
@@ -79,7 +79,7 @@ create or replace view  v_responsable_entreprise as
         r.activiter as activiter_responsable,
         e.id as entreprise_id,
         e.nom_etp,
-        e.adresse as adresse_etp,
+        e.adresse_rue as adresse_etp,
         e.logo as logo_entreprise,
         e.nif as nif_etp,
         e.stat as stat_etp,
@@ -117,14 +117,4 @@ create or replace view v_detail_presence as
         end as color_status
     from details d join presences p on d.id = p.detail_id order by p.stagiaire_id asc;
 
--- create or replace view v_apprenants as
---     select
 
--- create or REPLACE view v_projet_entreprise_cfp as
---     select
---         p.id as projet_id,p.nom_projet,p.entreprise_id,p.cfp_id,p.status as status_projet,
---         p.activiter as activiter_projet,e.nom_etp,e.adresse as adresse_etp,
---         e.logo,e.email_etp,e.telephone_etp,
---         c.nom as nom_cfp,c.email as email_cfp,c.telephone as telephone_cfp
---     from projets p join entreprises e on p.entreprise_id = e.id
---                     join cfps c on c.id = p.cfp_id;

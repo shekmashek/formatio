@@ -9,7 +9,7 @@ class Stagiaire extends Model
 {
     protected $table = "stagiaires";
     protected $fillable = [
-        'nom_stagiaire', 'prenom_stagiaire', 'genre_stagiaire', 'fonction_stagiaire', 'mail_stagiaire', 'telephone_stagiaire', 'entreprise_id', 'user_id', 'photos', 'departement_id', 'CIN', 'date_delivrance', 'date_naissance', 'adresse', 'niv_etude'
+        'nom_stagiaire', 'prenom_stagiaire', 'genre_stagiaire', 'fonction_stagiaire', 'mail_stagiaire', 'telephone_stagiaire', 'entreprise_id', 'user_id', 'photos', 'service_id', 'cin', 'date_delivrance', 'date_naissance', 'adresse', 'niv_etude'
     ];
     public function departement()
     {

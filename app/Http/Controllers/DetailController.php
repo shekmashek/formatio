@@ -25,7 +25,7 @@ class DetailController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -65,7 +65,7 @@ class DetailController extends Controller
         $detail = DB::select('select * from v_detailmodule where detail_id = ' . $id);
         return response()->json($detail);
     }
-/*
+    /*
     public function index()
     {
         $user_id = Auth::user()->id;
@@ -85,7 +85,7 @@ class DetailController extends Controller
 */
 
 
-public function index()
+    public function index()
     {
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
@@ -95,20 +95,21 @@ public function index()
 
         $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
         $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-        $formateur = $forma->getFormateur($formateur1,$formateur2);
-        $formation = $fonct->findWhere("formations",["cfp_id"],[$cfp_id]);
+        $formateur = $forma->getFormateur($formateur1, $formateur2);
+        $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
         $projet = $fonct->findWhere("v_projet", ["cfp_id"], [$cfp_id]);
         $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
 
-        return view('admin.detail.nouveauDetail', compact('id', 'projet', 'formation', 'formateur','entreprise'));
+        return view('admin.detail.nouveauDetail', compact('id', 'projet', 'formation', 'formateur', 'entreprise'));
     }
 
 
-    public function show_projet(Request $req){
+    public function show_projet(Request $req)
+    {
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();
-        $projet = $fonct->findWhere("v_projet", ["cfp_id","entreprise_id"], [$cfp_id,$req->id]);
+        $projet = $fonct->findWhere("v_projet", ["cfp_id", "entreprise_id"], [$cfp_id, $req->id]);
         return response()->json($projet);
     }
 
@@ -121,39 +122,37 @@ public function index()
 
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $users)->value('id');
+            $forma = new formateur();
 
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
-            $liste = $fonct->findWhere("v_entreprise_par_projet",["cfp_id"],[$cfp_id]);
-            if(count($datas)<=0){
-                return view('admin.detail.guide');
-              }
-              else{
-            return view('admin.detail.detail', compact('datas', 'liste', 'projet'));
+            $liste = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
+            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            $formateur = $forma->getFormateur($formateur1, $formateur2);
 
-              }
-        }
-        elseif (Gate::allows('isFormateur')) {
+            if (count($datas) <= 0) {
+                return view('admin.detail.guide');
+            } else {
+                return view('admin.detail.detail', compact('formateur', 'datas', 'liste', 'projet'));
+            }
+        } elseif (Gate::allows('isFormateur')) {
             $form_id = formateur::where('user_id', $users)->value('id');
             $datas = $fonct->findWhere("v_detailmodule", ["formateur_id"], [$form_id]);
             $liste = $fonct->findAll("entreprises");
             return view('admin.detail.detail', compact('datas', 'liste', 'projet'));
-        }
-        elseif (Gate::allows('isReferent')) {
+        } elseif (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));
-        }
-        elseif (Gate::allows('isStagiaire')) {
+        } elseif (Gate::allows('isStagiaire')) {
             $entreprise_id = stagiaire::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));
-        }
-        elseif (Gate::allows('isManager')) {
-            $entreprise_id =chefDepartement::where('user_id', $users)->value('entreprise_id');
+        } elseif (Gate::allows('isManager')) {
+            $entreprise_id = chefDepartement::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));
-        }
-        else {
+        } else {
             return back();
         }
 
@@ -180,9 +179,8 @@ public function index()
             ]
         );
 
-        for($i = 0; $i < count($request['lieu']); $i++){
-            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)',[$request['lieu'][$i],$request['debut'][$i],$request['fin'][$i],$request['date'][$i],$request['formateur'][$i],$request->groupe,$request->projet,$cfp_id]);           
-           
+        for ($i = 0; $i < count($request['lieu']); $i++) {
+            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $request['formateur'][$i], $request->groupe, $request->projet, $cfp_id]);
         }
         return back();
     }
@@ -233,16 +231,17 @@ public function index()
     public function destroy(Request $request)
     {
         $id = $request->Id;
-        $detail = detail::find($id);
-        $detail->delete();
+        //  $detail = detail::find($id);
+        //  $detail->delete();
+        DB::delete('delete from details where id = ?', [$id]);
         return redirect()->route('liste_detail');
     }
     //affichage date en fonction session
-    public function showDate(Request $request){
+    public function showDate(Request $request)
+    {
 
         $id_groupe = $request->id;
         $date_groupe = groupe::findOrFail($id_groupe);
         return response()->json($date_groupe);
-
     }
 }

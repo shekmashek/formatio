@@ -159,7 +159,8 @@
 
                                 <td>
                                     <div align="right">
-                                        <h6><img src="/dynamic-image/{{$cfp->logo}}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
+                                        <h6><img src="{{ public_path('lgo/cfps/'.$cfp->logo) }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
+                                        {{-- <h6><img src="{{$rawData}}" alt="logonmk" style="width: 200px; height: 60px;"></h6> --}}
                                         <h5><strong>{{$cfp->nom}}</strong></h5>
                                         <h6>adresse: {{$cfp->adresse_lot}}</h6>
                                         <h6>ville: {{$cfp->adresse_ville}}</h6>
@@ -218,7 +219,7 @@
                             <tr>
                                 <th scope="col">Session</th>
                                 <th>Designation</th>
-                                <th scope="col">(AR)</th>
+                                <th scope="col">PUTH(AR)</th>
                                 <th scope="col">Quantité</th>
                                 <th scope="col">Montant(AR)</th>
                             </tr>
@@ -314,16 +315,6 @@
                                     </td>
                                 </tr>
 
-                                <tr align="right">
-
-                                    <td colspan="5"><strong>Net à Payer TTC(Ariary)</strong></td>
-                                    <td>
-                                        <div align="right">
-                                            <strong>{{number_format($montant_totale->net_ttc,2,",",".")}}</strong>
-                                        </div>
-                                    </td>
-                                </tr>
-
                                 @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
 
                                 <tr align="right">
@@ -336,6 +327,17 @@
                                     </td>
                                 </tr>
                                 @endif
+
+                                <tr align="right">
+
+                                    <td colspan="5"><strong>Net à Payer TTC(Ariary)</strong></td>
+                                    <td>
+                                        <div align="right">
+                                            <strong>{{number_format($montant_totale->montant_total,2,",",".")}}</strong>
+                                        </div>
+                                    </td>
+                                </tr>
+
                                 <tr align="right">
 
                                     <td colspan="5"><strong>Reste à Payer(Ariary)</strong></td>
@@ -349,26 +351,25 @@
                         </table>
                 </div>
                 <div class="row table_facture2 mx-2">
+
+
                     <table class="table table-borderless">
                         <tbody>
                             <tr>
                                 <td>
                                     <h6>Arretée la présente facture à la somme de:</h6>
+                                    <ul>
+                                        Ariary <strong>{{$lettre_montant}}</strong>
+                                    </ul>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    Ariary <strong>{{$lettre_montant}}</strong>
-                                </td>
-                            </tr>
+
                             <tr>
                                 <td>
                                     <h6>Autre Message</h6>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>{{$facture[0]->other_message}}</strong>
+                                    <ul>
+                                        <strong>{{$facture[0]->other_message}}</strong>
+                                    </ul>
                                 </td>
                             </tr>
                         </tbody>

@@ -214,7 +214,7 @@
                             </div><br>
                             @endcan
                             @can('isReferent')
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="etp">Departement</label><br>
                                 <select name="liste_dep" class="form-control" id="liste_dep">
                                     <option value="">Choisissez un département...</option>
@@ -222,16 +222,26 @@
                                     <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
                                     @endforeach
                                 </select>
+                            </div><br> --}}
+                            <div class="form-group">
+                                <label for="etp">Service</label><br>
+                                <select name="service_id" class="form-control" id="service_id">
+                                    <option value="">Choisissez un service...</option>
+                                    @for ($i = 0; $i < count($service); $i++)
+                                        <option value="{{$service[$i]->service_id}}">{{$service[$i]->nom_service}}</option>
+                                    @endfor
+                                </select>
                             </div><br>
                             @endcan
 
                             @can('isManager')
                             <div class="form-group">
-                                <label for="etp">Departement</label><br>
-                                <select name="liste_dep" class="form-control" id="liste_dep">
-                                    @foreach ($liste_dep as $liste)
-                                    <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
-                                    @endforeach
+                                <label for="etp">Service</label><br>
+                                <select name="service_id" class="form-control" id="service_id">
+                                    <option value="">Choisissez un service...</option>
+                                    @for ($i = 0; $i < count($service); $i++)
+                                        <option value="{{$service[$i]->service_id}}">{{$service[$i]->nom_service}}</option>
+                                    @endfor
                                 </select>
                             </div><br>
                             @endcan

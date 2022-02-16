@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Niveau;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class NiveauController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -65,8 +67,9 @@ class NiveauController extends Controller
 
     public function destroy($id)
     {
-        $niveau = Niveau::find($id);
-        $niveau->delete();
+        // $niveau = Niveau::find($id);
+        // $niveau->delete();
+        DB::delete('delete from niveaux where id = ?', [$id]);
         return back();
     }
 }

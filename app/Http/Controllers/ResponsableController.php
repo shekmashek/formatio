@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Mail\ReferentMail;
 use App\Models\getImageModel;
 use PDF;
@@ -31,6 +31,76 @@ class ResponsableController extends Controller
             return $next($request);
         });
     }
+
+    public function show_responsable()
+    {
+        $user_id = Auth::id();
+        $fonct = new FonctionGenerique();
+        if (Gate::allows('isReferent')) {
+            $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+            $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+            return view('admin.entreprise.responsable.nouveau_responsable', compact('resp_etp_connecter', 'responsable'));
+        }
+    }
+
+    public function save_responsable(Request $request){
+        $user_id = Auth::id();
+        $fonct = new FonctionGenerique();
+        $resp = new responsable();
+        $user = new User();
+
+        $user_id = Auth::id();
+        if (Gate::allows('isReferent')) {
+            $resp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+            if ($resp_connecter->prioriter == 1) {
+                $resp->verify_form($request);
+
+                $verify_cin = $resp->verify_cin($request->input());
+                $verify_email = $fonct->findWhere("users", ["email"], [$request->email]);
+                $verify_phone = $fonct->findWhere("users", ["telephone"], [$request->phone]);
+
+                $doner["cin"] = $resp->concat_nb_cin($request->input());
+                $doner["nom"] = $request->nom;
+                $doner["prenom"] = $request->prenom;
+                $doner["sexe"] = $request->sexe;
+                $doner["dte"] = $request->dte;
+                $doner["email"] = $request->email;
+                $doner["phone"] = $request->phone;
+                $doner["fonction"] = $request->fonction;
+
+                if (count($verify_cin) > 0) {
+                    return back()->with('error', 'cin existe déjà');
+                } else {
+                    if (count($verify_email) > 0) {
+                        return back()->with('error', 'mail existe déjà');
+                    } else {
+                        if (count($verify_phone) > 0) {
+                            return back()->with('error', 'télephone existe déjà');
+                        } else {
+                            $user->name = $request->nom . " " . $request->prenom;
+                            $user->email = $request->email;
+                           $user->cin = $resp->concat_nb_cin($request->input());
+                           $user->telephone = $request->phone;
+                            $ch1 = "0000";
+                            $user->password = Hash::make($ch1);
+                            $user->role_id = '2';
+                            $user->save();
+
+                            if (Gate::allows('isReferent')) {
+                                $resp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+                                $result = $resp->insert_resp_ETP($doner, $resp_connecter->entreprise_id, $user->id);
+                                return $result;
+                            }
+                        }
+                    }
+                }
+            } else {
+                return back()->with('error', "seul lre responsable principale a le droit d'ajouter un nouveau responsable");
+            }
+        }
+    }
+
+
     public function index($id = null)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
@@ -123,11 +193,15 @@ class ResponsableController extends Controller
         $resp->photos = $nom_image;
         //enregistrer les emails , name et mot de passe dans user
         $user = new User();
-        $user->name = $request->nom;
+        $user->name = $request->nom . " " . $request->prenom;
         $user->email = $request->mail;
-        $ch1 = $request->nom;
-        $ch2 = substr($request->phone, 8, 2);
-        $user->password = Hash::make($ch1 . $ch2);
+
+        $user->cin = $request->cin;
+        $user->telephone = $request->phone;
+
+        $ch1 = '0000';
+        // $ch2 = substr($request->phone, 8, 2);
+        $user->password = Hash::make($ch1);
         $user->role_id = '2';
         $user->save();
        // DB::insert('insert into users (name,email,password,role_id) VALUES (?,?,?,?)',[$request->nom,$request->mail,0000,2]);
@@ -344,6 +418,37 @@ class ResponsableController extends Controller
     //return redirect()->route('affResponsable');
         }
     }
+    //modification photos
+    public function update_photos_resp(Request $request){
+        //  stocker la photo dans google drive
+        $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' .$request->image->extension());
+        $dossier = 'responsable';
+        $stock_stg = new getImageModel();
+        $nom_image = $request->image->getClientOriginalName();
+        $stock_stg->store_image($dossier,$nom_image , $request->file('image')->getContent());
+        DB::update('update responsables set photos = ? where user_id = ?', [$nom_image,Auth::id()]);
+        return redirect()->route('affResponsable');
+    }
+    //update password
+    public function update_responsable_mdp(Request $request){
+
+       $users =  db::select('select * from users where id = ?',[Auth::id()]);
+       $pwd = $users[0]->password;
+       $new_password = Hash::make($request->new_password);
+       if(Hash::check($request->get('ancien_password'), $pwd)){
+            DB::update('update users set password = ? where id = ?', [$new_password,Auth::id()]);
+            return redirect()->route('affResponsable');
+       }
+        else {
+            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        }
+    }
+    //update e-mail
+    public function update_mail_resp(Request $request){
+        DB::update('update users set email = ? where id = ?', [$request->mail_resp,Auth::id()]);
+        DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp,Auth::id()]);
+        return redirect()->route('affResponsable');
+    }
     public function update(Request $request, $id)
     {
         if (Gate::allows('isReferent')) {
@@ -375,12 +480,14 @@ class ResponsableController extends Controller
 
          //stocker logo dans google drive
             //stocker logo dans google drive
-
-            // $dossier = 'stagiaire';
+            // $dossier = 'responsable';
             // $stock_stg = new getImageModel();
-            //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+            // $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.'. $request->image->extension());
+            // $stock_stg->store_image($dossier,$nom_image , $request->file('image')->getContent());
+
 
             if ($image = $request->file('image')) {
+
                 $destinationPath = 'images/responsables';
                 $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
                 $image->move($destinationPath, $profileImage);
@@ -429,20 +536,6 @@ class ResponsableController extends Controller
                 ]);
 
             }
-            User::where('id', Auth::user()->id)
-                ->update([
-                    'name' => $nom,
-                    'email' => $mail,
-                    'password' => $mdpHash
-                ]);
-
-
-                // Departement::where('id',$id)->update([
-                //     'nom_departement'=>$request->departement
-                // ]);
-                // entreprise::where('id',$id)->update([
-                //     'nom_etp'=>$request->entreprise
-                // ]);
 
             return redirect()->route('affResponsable');
         }
@@ -510,9 +603,15 @@ class ResponsableController extends Controller
     {
         $id = $request->id;
         $resp = Responsable::findOrFail($id);
-
-        $sup = User::where('id', $resp->user_id)->delete();
-        $del = Responsable::where('id', $id)->delete();
+        DB::beginTransaction();
+        try {
+            DB::delete('delete from users where id = ?', [$id]);
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
+        //  $sup = User::where('id', $resp->user_id)->delete();
+        //  $del = Responsable::where('id', $id)->delete();
         File::delete("images/responsables/" . $resp->photos);
 
         return back();

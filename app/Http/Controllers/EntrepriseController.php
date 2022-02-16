@@ -23,7 +23,7 @@ class EntrepriseController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -53,28 +53,28 @@ class EntrepriseController extends Controller
 
         if (Gate::allows('isCFP')) {
             $cfp_id =  cfp::where('user_id', $user_id)->value('id');
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp",["cfp_id"],[$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp",["cfp_id"],[$cfp_id]);
+            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
-                $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-                $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-                $entreprise = $entp->getEntreprise($etp2,$etp1);
+            $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+            $entreprise = $entp->getEntreprise($etp2, $etp1);
 
-            return view('cfp.profile_entreprise', compact('entreprise','refuse_demmande_etp','invitation_etp'));
+            return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp'));
         }
         if (Gate::allows('isSuperAdmin')) {
-            $entreprise =entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
+            $entreprise = entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
             if ($id) $datas = entreprise::orderBy('nom_etp')->take($id)->get();
             else  $datas = entreprise::orderBy("nom_etp")->get();
 
 
             // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
-            return view('admin.entreprise.entreprise',compact('datas','entreprise'));
+            return view('admin.entreprise.entreprise', compact('datas', 'entreprise'));
         }
     }
 
 
-  /*  public function create($id = null)
+    /*  public function create($id = null)
     {
         if (Gate::allows('isCFP')) {
             $user_id = Auth::id();
@@ -165,13 +165,13 @@ class EntrepriseController extends Controller
         $entreprise->secteur_id = $request->secteur;
         $entreprise->site_etp = $request->site;
         $date = date('d-m-Y');
-        $nom_image = str_replace(' ', '_', $request->nom.' '.$request->phone. '' . $date . '.' . $request->image->extension());
+        $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->phone . '' . $date . '.' . $request->image->extension());
 
 
         //stocker logo dans google drive
         $dossier = 'entreprise';
         $stock_etp = new getImageModel();
-        $stock_etp->store_image($dossier,$nom_image,$request->file('image')->getContent());
+        $stock_etp->store_image($dossier, $nom_image, $request->file('image')->getContent());
 
         $entreprise->logo = $nom_image;
         $entreprise->save();
@@ -229,7 +229,8 @@ class EntrepriseController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $del = entreprise::where('id', $id)->delete();
+        //  $del = entreprise::where('id', $id)->delete();
+        DB::delete('delete from entreprises where id = ?', [$id]);
         return back();
     }
 
@@ -241,15 +242,18 @@ class EntrepriseController extends Controller
         return view('admin.entreprise.profile_entreprise', compact('entreprise', 'departement'));
     }
 
-    public function getImage($path){
+    public function getImage($path)
+    {
         $dossier = 'entreprise';
         $etp = new getImageModel();
-        return $etp->get_image($path,$dossier);
+        return $etp->get_image($path, $dossier);
     }
 
-    public function affiche_dep(Request $req){
+    public function affiche_dep(Request $req)
+    {
         $fonct = new FonctionGenerique();
-        $datas1 = $fonct->findWhere("v_departement",["entreprise_id"],[$req->id]);
+        $datas1 = $fonct->findWhere("v_departement", ["entreprise_id"], [$req->id]);
         return response()->json($datas1);
     }
+
 }

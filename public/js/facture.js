@@ -9,7 +9,7 @@ $(document).ready(function(){
     next_fs = $(this).parent().next();
 
     //Add Class Active
-    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+    $("#progressbars li").eq($("fieldset").index(next_fs)).addClass("active");
 
     //show the next fieldset
     next_fs.show();

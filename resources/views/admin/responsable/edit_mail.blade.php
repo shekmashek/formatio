@@ -52,7 +52,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Adresse E-mail</p>
-        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_mail_resp')}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
@@ -77,7 +77,7 @@
 
                           <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input"  name="mail" value="{{ $responsable->email_resp }}" >
+                        <input type="text" class="form-control test input"  name="mail_resp" value="{{ $responsable->email_resp }}" >
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Adrres  E-mail</label>
 
                     </div>

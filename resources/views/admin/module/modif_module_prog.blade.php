@@ -80,11 +80,6 @@
                                                 href="#preview_prestation"><i class='bx bx-hive'
                                                     style="color: #801d68; font-size:2rem"></i><br><span>Prestation</span></a>
                                         </p>
-                                        <p id="changer_programme" onclick="changer_programme();" role="button"
-                                            class="text-center btn_change_form py-2 mb-1"><a
-                                                href="#preview_programme"><i class='bx bx-list-ol'
-                                                    style="color: #801d68; font-size:2rem"></i><br><span>Programme</span></a>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -494,93 +489,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-between">
-                                            <p class="mt-3" style="font-size: 16px;"><button type="button"
-                                                    class="new_list_nouvelle px-5" onclick="retour_equipement();"><a
-                                                        href="#changer_equipement">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5" onclick="suivant_programme();"><a
-                                                        href="#changer_prestation">Suivant</a></button></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-5 apres_preview" id="septieme_vue">
-
-                                        <div id="newProg"></div>
-                                        <br>
-                                        <div class="row detail__formation__item__left__accordion">
-                                            <span role="button" class="accordion accordion_prog"><input type="text"
-                                                    class="form-control" name="titre_prog[]"
-                                                    placeholder="Titre de votre programme"><i id="addProg"
-                                                    class="bx bxs-plus-circle pt-3 ms-3 ps-2 plus_prog"
-                                                    style="font-size: 24px" role="button"
-                                                    title="ajouter un nouveau programme"></i></span>
-                                            <div class="panel" id="heading2">
-                                                <span class="d-flex input_cours"><i
-                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                                        class="form-control" name="cours[]" placeholder="Votre cours"><i
-                                                        id="addCours0" class="bx bx-plus-circle pt-3 ms-3 ps-2"
-                                                        style="font-size: 24px; color: #801D68" role="button"
-                                                        title="ajouter un nouveau cours"></i></span>
-                                                <span class="d-flex input_cours" id="headingcours"><i
-                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                                        class="form-control" name="cours[]" placeholder="Votre cours"><i
-                                                        id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2"
-                                                        style="font-size: 24px; color: #801D68" role="button"
-                                                        title="ajouter un nouveau cours"></i></span>
-                                                <span class="d-flex input_cours" id="headingcours"><i
-                                                        class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                                        class="form-control" name="cours[]" placeholder="Votre cours"><i
-                                                        id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2"
-                                                        style="font-size: 24px; color: #801D68" role="button"
-                                                        title="ajouter un nouveau cours"></i></span>
-                                                <span id="newCours0"></span>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        {{-- <div class="form-row d-flex">
-                                            <div class="col me-1">
-                                                <div class="form-group" id="premier_">
-                                                    <div class="acf-field acf-field-text acf-field-miin is-required">
-                                                        <div class="acf-input">
-                                                            <div class="acf-input-wrap">
-                                                                <input type="text"
-                                                                    class="form-control min min label_placeholder"
-                                                                    id="acf-min" name="min_pers" min="1" max="100"
-                                                                    value="{{$mod->min_pers}}"
-                                                                    onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale"><label
-                                                                    for="acf-min"
-                                                                    class="form-control-placeholder">Nombre personne
-                                                                    min</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group" id="premier_">
-                                                    <div class="acf-field acf-field-text acf-field-max is-required">
-                                                        <div class="acf-input">
-                                                            <div class="acf-input-wrap">
-                                                                <input type="text"
-                                                                    class="form-control max max label_placeholder"
-                                                                    id="acf-max" name="max_pers" min="1" max="100"
-                                                                    value="{{$mod->max_pers}}"
-                                                                    onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale"><label
-                                                                    for="acf-max"
-                                                                    class="form-control-placeholder">Nombre personne
-                                                                    max</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                         <div class="col text-center">
                                             <p class="mt-3" style="font-size: 16px;"><button type="button"
                                                     class="new_list_nouvelle px-5" onclick="retour_prestation();"><a
-                                                        href="#changer_equipement">Retour</a></button></p>
+                                                        href="#changer_prestation">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -1024,7 +936,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        var programme = document.getElementById("septieme_vue");
+
         var mod_preview = document.getElementById("border_premier");
         $('#border_premier').css('border','4px solid #ec008c');
         $('#border_objectif').css('border','none');
@@ -1038,7 +950,6 @@
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_reference').css('border','none');
-        $('#changer_programme').css('border','none');
         if (mod.style.display === "none") {
             mod.style.display = "block";
             mod3.style.display = "block";
@@ -1057,7 +968,6 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             mod_preview.style.color = "#939BA0";
-            programme.style.display = "none";
         } else {
             mod.style.display = "block";
             mod3.style.display = "block";
@@ -1076,7 +986,6 @@
             bon_a_savoir.style.display = "none";
             materiel.style.display = "none";
             mod_preview.style.color = "#939BA0";
-            programme.style.display = "none";
         }
     }
 
@@ -1097,7 +1006,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        var programme = document.getElementById("septieme_vue");
+
         $('#border_objectif').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -1109,7 +1018,6 @@
         $('#changer_cible').css('border','none');
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
-        $('#changer_programme').css('border','none');
         $('#changer_reference').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
@@ -1128,7 +1036,6 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         } else {
             objectif.style.display = "block";
             mod.style.display = "none";
@@ -1146,7 +1053,6 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         }
     }
 
@@ -1167,7 +1073,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        var programme = document.getElementById("septieme_vue");
+
         $('#border_cible').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_objectif').css('border','none');
@@ -1180,7 +1086,6 @@
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_reference').css('border','none');
-        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1198,7 +1103,6 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1216,7 +1120,6 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         }
     }
 
@@ -1237,7 +1140,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        var programme = document.getElementById("septieme_vue");
+
         $('#border_reference').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -1250,7 +1153,6 @@
         $('#changer_equipement').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_module').css('border','none');
-        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1268,7 +1170,6 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1286,7 +1187,6 @@
             materiel.style.display = "none";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         }
     }
 
@@ -1307,7 +1207,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        var programme = document.getElementById("septieme_vue");
+
         $('#border_equipement').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -1320,7 +1220,6 @@
         $('#changer_module').css('border','none');
         $('#changer_prestation').css('border','none');
         $('#changer_reference').css('border','none');
-        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1338,7 +1237,6 @@
             materiel.style.display = "block";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1356,7 +1254,6 @@
             materiel.style.display = "block";
             prestation.style.display = "none";
             bouttons.style.display = "none";
-            programme.style.display = "none";
         }
     }
 
@@ -1377,7 +1274,7 @@
         var materiel = document.getElementById("cinquiem_vue2");
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
-        var programme = document.getElementById("septieme_vue");
+
         $('#border_prestation').css('border','4px solid #ec008c');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
@@ -1390,7 +1287,6 @@
         $('#changer_equipement').css('border','none');
         $('#changer_module').css('border','none');
         $('#changer_reference').css('border','none');
-        $('#changer_programme').css('border','none');
         if (objectif.style.display === "none") {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1408,7 +1304,6 @@
             materiel.style.display = "none";
             prestation.style.display = "block";
             bouttons.style.display = "block";
-            programme.style.display = "none";
         } else {
             mod.style.display = "none";
             mod3.style.display = "none";
@@ -1426,80 +1321,10 @@
             materiel.style.display = "none";
             prestation.style.display = "block";
             bouttons.style.display = "block";
-            programme.style.display = "none";
-
         }
     }
 
-    function changer_programme() {
-        var mod = document.getElementById("premier_vue");
-        var mod3 = document.getElementById("premier_vue3");
-        var mod4 = document.getElementById("premier_vue4");
-        var mod5 = document.getElementById("premier_vue5");
-        var mod6 = document.getElementById("premier_vue6");
-        var mod7 = document.getElementById("premier_vue7");
-        var mod8 = document.getElementById("premier_vue8");
-        var objectif = document.getElementById("second_vue");
-        var public = document.getElementById("troisiem_vue");
-        var prerequis = document.getElementById("troisiem_vue2");
-        var reference = document.getElementById("quatriem_vue");
-        var prix = document.getElementById("quatriem_vue2");
-        var bon_a_savoir = document.getElementById("cinquiem_vue");
-        var materiel = document.getElementById("cinquiem_vue2");
-        var prestation = document.getElementById("sixieme_vue");
-        var bouttons = document.getElementById("sixieme_vue2");
-        var programme = document.getElementById("septieme_vue");
-        $('#border_prestation').css('border','4px solid #ec008c');
-        $('#border_premier').css('border','none');
-        $('#border_cible').css('border','none');
-        $('#border_equipement').css('border','none');
-        $('#border_reference').css('border','none');
-        $('#border_objectif').css('border','none');
-        $('#changer_prestation').css('border','none');
-        $('#changer_objectif').css('border','none');
-        $('#changer_cible').css('border','none');
-        $('#changer_equipement').css('border','none');
-        $('#changer_module').css('border','none');
-        $('#changer_reference').css('border','none');
-        $('#changer_programme').css('border','1px solid #ec008c');
-        if (objectif.style.display === "none") {
-            mod.style.display = "none";
-            mod3.style.display = "none";
-            mod4.style.display = "none";
-            mod5.style.display = "none";
-            mod6.style.display = "none";
-            mod7.style.display = "none";
-            mod8.style.display = "none";
-            objectif.style.display = "none";
-            public.style.display = "none";
-            prerequis.style.display = "none";
-            reference.style.display = "none";
-            prix.style.display = "none";
-            bon_a_savoir.style.display = "none";
-            materiel.style.display = "none";
-            prestation.style.display = "none";
-            bouttons.style.display = "none";
-            programme.style.display = "block";
-        } else {
-            mod.style.display = "none";
-            mod3.style.display = "none";
-            mod4.style.display = "none";
-            mod5.style.display = "none";
-            mod6.style.display = "none";
-            mod7.style.display = "none";
-            mod8.style.display = "none";
-            objectif.style.display = "none";
-            public.style.display = "none";
-            prerequis.style.display = "none";
-            reference.style.display = "none";
-            prix.style.display = "none";
-            bon_a_savoir.style.display = "none";
-            materiel.style.display = "none";
-            prestation.style.display = "none";
-            bouttons.style.display = "none";
-            programme.style.display = "block";
-        }
-    }
+
 
     function resetForm() {
         changer_module();
@@ -1547,96 +1372,9 @@
         changer_equipement();
     }
 
-    function suivant_programme(){
-        changer_programme();
-    }
-
     function retour_prestation(){
         changer_prestation();
     }
-
-    $(document).on('click','#addCour0', function() {
-        var html = '';
-        html += '<span class="d-flex input_cours" id="headingcours">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
-        html += '</span>';
-
-        $('#newCours0').append(html);
-    });
-
-    $(document).on('click','#addCour1', function() {
-        var html = '';
-        html += '<span class="d-flex input_cours" id="headingcours">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
-        html += '</span>';
-
-        $('#newCours1').append(html);
-    });
-
-    // remove row2
-    $(document).on('click', '#removeCours', function() {
-        $(this).closest('#headingcours').remove();
-    });
-    var i = 0;
-
-    $(document).on('click','#addProg', function() {
-
-        var html = '';
-        html += '<div class="row detail__formation__item__left__accordion" id="heading1">';
-
-        html += '<span role="button" class="accordion accordion_prog active">';
-        html += '<input type="text" class="form-control" name="titre_prog[]" placeholder="Titre de votre programme">';
-        html += '<i id="removeProg" class="bx bxs-minus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button" title="ajouter un nouveau programme">';
-        html += '</i>';
-        html += '</span>';
-
-        html += '<div class="panel">';
-        html += '<span class="d-flex input_cours">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
-        html += '<i id="addCours'+i+'" class="bx bx-plus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
-        html += '</span>';
-        html += '<span class="d-flex input_cours" id="headingcours">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
-        html += '</span>';
-        html += '<span class="d-flex input_cours" id="headingcours">';
-        html += '<i class="bx bx-chevron-right pt-4">';
-        html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
-        html += '</span>';
-        html += '<span id="newCours'+i+'">';
-        html += '</span>';
-        html += '</div>';
-
-        html += '</div>';
-
-        $('#newProg').append(html);
-        i = i+1;
-
-    });
-
-    // remove row1
-    $(document).on('click', '#removeProg', function() {
-        $(this).closest('#heading1').remove();
-    });
-
-
 
 </script>
 @endsection

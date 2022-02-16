@@ -10,6 +10,7 @@ use App\groupe;
 use App\projet;
 use App\cfp;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
 
 class GroupeController extends Controller
 {
@@ -45,8 +46,8 @@ class GroupeController extends Controller
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $projet = $fonct->findWhereMulitOne("v_projetentreprise", ["projet_id"], [$idProjet]);
         $groupe = $fonct->findWhere("v_groupe", ["projet_id"], [$idProjet]);
-        $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
-        $module = $fonct->findAll("modules");
+        $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
+        $formation = $fonct->findAll("formations");
         return view('admin.groupe.nouveauGroupe', compact('projet', 'groupe', 'formation', 'module'));
     }
 
@@ -54,7 +55,9 @@ class GroupeController extends Controller
     public function module_formation(Request $rq)
     {
         $fonct = new FonctionGenerique();
-        $module = $fonct->findWhere("modules", ["formation_id"], [$rq->id]);
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $module = $fonct->findWhere("modules", ["formation_id","cfp_id"], [$rq->id,$cfp_id]);
 
         return response()->json($module);
     }
@@ -121,7 +124,8 @@ class GroupeController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id_get;
-        $del = groupe::where('id', $id)->delete();
+       // $del = groupe::where('id', $id)->delete();
+       DB::delete('delete from groupes where id = ?', [$id]);
         return back();
     }
 }

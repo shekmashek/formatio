@@ -163,7 +163,7 @@
                                             </div>
                                             <div class="new_btn_programme">
                                                 <button type="button" class="btn btn-primary"><a
-                                                        href="{{route('select_par_module',$mod->module_id)}}">Completer&nbsp;votre&nbsp;programme</a></button>
+                                                        href="{{route('ajout_programme',$mod->module_id)}}">Completer&nbsp;votre&nbsp;programme</a></button>
                                             </div>
                                         </div>
                                         <div
@@ -177,35 +177,35 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-4" style="font-size: 14px" id="preview_modalite"><i
+                                            <div class="col-4" style="font-size: 12px" id="preview_modalite"><i
                                                     class="bx bxs-devices bx_icon"
                                                     style="color: #801d68 !important;"></i>&nbsp;<span
                                                     class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
-                                            <div class="col-3" style="font-size: 14px" id="preview_niveau">
+                                            <div class="col-3" style="font-size: 12px" id="preview_niveau">
                                                 <i class='bx bx-equalizer bx_icon'
                                                     style="color: #801d68 !important;"></i>&nbsp;<span
                                                     class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn modifier"><a
+                                                <button class="btn modifier pt-0"><a
                                                         href="{{route('modifier_module',$mod->module_id)}}"><i
-                                                            class='bx bx-edit'
-                                                            style="color: #0052D4 !important;font-size: 20px"></i></a></button>
+                                                            class='bx bx-edit background_grey'
+                                                            style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn supprimer" data-toggle="modal"
+                                                <button class="btn supprimer pt-0" data-toggle="modal"
                                                     data-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash"
-                                                        style="color: #ff0000 !important;font-size: 20px"></i></button>
+                                                        class="bx bx-trash background_grey2"
+                                                        style="color: #ff0000 !important;font-size: 15px" title="supprimer le module"></i></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn afficher" data-id="{{$mod->module_id}}"
+                                                <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
                                                     data-toggle="modal" data-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i class='fa fa-eye'
-                                                        style="color: #799F0C !important;font-size: 20px"
-                                                        title="Afficher"></i></a>
+                                                    id="{{$mod->module_id}}"><i class='fa fa-eye background_grey3'
+                                                        style="color: #3b9f0c !important;font-size: 15px"
+                                                        title="afficher les informations"></i></a>
 
                                                 </button>
                                             </div>
@@ -609,35 +609,41 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-4" style="font-size: 14px" id="preview_modalite"><i
+                                            <div class="col-3" style="font-size: 12px" id="preview_modalite"><i
                                                     class="bx bxs-devices bx_icon"
                                                     style="color: #801d68 !important;"></i>&nbsp;<span
                                                     class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
-                                            <div class="col-3" style="font-size: 14px" id="preview_niveau">
+                                            <div class="col-3" style="font-size: 12px" id="preview_niveau">
                                                 <i class='bx bx-equalizer bx_icon'
                                                     style="color: #801d68 !important;"></i>&nbsp;<span
                                                     class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn modifier"><a
+                                                <button class="btn modifier pt-0"><a
                                                         href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                            class='bx bx-edit'
-                                                            style="color: #0052D4 !important;font-size: 20px"></i></a></button>
+                                                            class='bx bx-edit background_grey'
+                                                            style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn supprimer" data-toggle="modal"
+                                                <button class="btn modifier_prog pt-0"><a
+                                                        href="{{route('modif_programmes',$mod->module_id)}}"><i
+                                                            class='bx bx-edit-alt background_grey4'
+                                                            style="color: #801d68 !important;font-size: 15px" title="modifier les programmes"></i></a></button>
+                                            </div>
+                                            <div class="col-1" id="preview_niveau">
+                                                <button class="btn supprimer pt-0" data-toggle="modal"
                                                     data-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash"
-                                                        style="color: #ff0000 !important;font-size: 20px"></i></button>
+                                                        class="bx bx-trash background_grey2"
+                                                        style="color: #ff0000 !important;font-size: 15px" title="supprimer le module"></i></button>
                                             </div>
                                             <div class="col-1" id="preview_niveau">
-                                                <button class="btn afficher" data-id="{{$mod->module_id}}"
+                                                <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
                                                     data-toggle="modal" data-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i class='fa fa-eye'
-                                                        style="color: #799F0C !important;font-size: 20px"
-                                                        title="Afficher"></i></button>
+                                                    id="{{$mod->module_id}}"><i class='fa fa-eye background_grey3'
+                                                        style="color: #799F0C !important;font-size: 15px"
+                                                        title="afficher les informations"></i></button>
                                             </div>
                                             <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
                                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

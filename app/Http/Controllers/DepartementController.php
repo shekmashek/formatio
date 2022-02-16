@@ -13,6 +13,7 @@ use App\DepartementEntreprise;
 use App\chefDepartement;
 use App\chefDepartementEntreprise;
 use App\responsable;
+use App\Models\FonctionGenerique;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -22,7 +23,7 @@ class DepartementController extends Controller
     public function __construct()
     {
         $this->liste_entreprise = entreprise::orderBy('nom_etp')->get();
-        $this->liste_departement =  Departement::all();
+        // $this->liste_departement =  Departement::all();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if(Auth::user()->exists == false) return redirect()->route('sign-in');
@@ -32,11 +33,20 @@ class DepartementController extends Controller
 
     public function index()
     {
+        $fonct = new FonctionGenerique();
+        $liste_entreprise = $this->liste_entreprise;
+        $entreprise_id = entreprise::orderBy('nom_etp')->get();
+        $liste_departement = $fonct->findAll("departement_entreprises");
+        return view('admin.entreprise.departement', compact('liste_entreprise', 'liste_departement'));
+    }
+
+   /* public function index()
+    {
         $liste_entreprise = $this->liste_entreprise;
         $entreprise_id = entreprise::orderBy('nom_etp')->get();
         $liste_departement = $this->liste_departement;
         return view('admin.entreprise.departement', compact('liste_entreprise', 'liste_departement'));
-    }
+    } */
 
   /*  public function liste()
     {
@@ -55,7 +65,24 @@ class DepartementController extends Controller
 
         return view('admin.chefDepartement.liste', compact('chef'));
     }
+
     public function create()
+    {
+        $fonct = new FonctionGenerique();
+
+        if (Gate::allows('isSuperAdmin')) {
+            $liste_entreprise = $this->liste_entreprise;
+            $liste_departement = $fonct->findAll("departement_entreprises");
+            return view('admin.chefDepartement.chef', compact('liste_entreprise', 'liste_departement'));
+        }
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
+            $liste_departement = $fonct->findAll("departement_entreprises");
+            return view('admin.chefDepartement.chef', compact('liste_departement'));
+        }
+    }
+
+   /* public function create()
     {
         if (Gate::allows('isSuperAdmin')) {
             $liste_entreprise = $this->liste_entreprise;
@@ -67,7 +94,7 @@ class DepartementController extends Controller
             $liste_departement = DepartementEntreprise::with('departement')->where('entreprise_id', $entreprise_id)->get();
             return view('admin.chefDepartement.chef', compact('liste_departement'));
         }
-    }
+    } */
 
 
 
