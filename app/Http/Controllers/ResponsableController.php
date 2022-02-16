@@ -424,7 +424,7 @@ class ResponsableController extends Controller
         $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' .$request->image->extension());
         $dossier = 'responsable';
         $stock_stg = new getImageModel();
-        $nom_image = $request->image->getClientOriginalName();
+        // $nom_image = $request->image->getClientOriginalName();
         $stock_stg->store_image($dossier,$nom_image , $request->file('image')->getContent());
         DB::update('update responsables set photos = ? where user_id = ?', [$nom_image,Auth::id()]);
         return redirect()->route('affResponsable');

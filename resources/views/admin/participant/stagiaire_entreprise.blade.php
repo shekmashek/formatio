@@ -111,9 +111,9 @@
                                                     </button>
 
                                                     <div class="dropdown-menu">
-                                                        <a href="{{route('profile_stagiaire',$datas->stagiaire_id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
+                                                        <a href="{{route('profile_stagiaire',$datas->id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
                                                         @canany(['isReferent'])
-                                                        <a href="{{route('destroy_participant',['id'=>$datas->stagiaire_id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
+                                                        <a href="{{route('destroy_participant',['id'=>$datas->id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
                                                         @endcanany
                                                     </div>
                                                 </div>

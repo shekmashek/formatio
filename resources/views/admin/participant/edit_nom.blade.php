@@ -52,7 +52,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Modifier le nom</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->stagiaire_id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
@@ -130,7 +130,7 @@
 
                     <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
 
-                    <input type="hidden" value="{{ $stagiaire->lieu_travail }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
+                    <input type="hidden" value="{{ $branche->nom_branche }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
 
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>

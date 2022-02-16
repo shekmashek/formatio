@@ -36,6 +36,27 @@ CREATE TABLE entreprises (
   telephone_etp varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `departement_entreprises` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom_departement`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+  `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `services` (
+  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  departement_entreprise_id bigint(20) unsigned not null,
+  `nom_service` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  foreign key(departement_entreprise_id) references departement_entreprises (id) on delete cascade
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `branches` (
+  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  entreprise_id bigint(20) unsigned not null,
+  `nom_branche` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  foreign key(entreprise_id) references entreprises (id) on delete cascade
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -52,13 +73,6 @@ CREATE TABLE `abonnements` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `departement_entreprises` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nom_departement`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
-  `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE chef_departements (
@@ -119,7 +133,7 @@ CREATE TABLE responsables (
 
 
 CREATE TABLE stagiaires (
-  id bigint(20) UNSIGNED NOT NULL,
+   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   matricule varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_stagiaire varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_stagiaire varchar(255) COLLATE utf8mb4_unicode_ci,
@@ -133,13 +147,12 @@ CREATE TABLE stagiaires (
   photos varchar(255) COLLATE utf8mb4_unicode_ci,
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL,
-  departement_entreprise_id bigint(20) UNSIGNED,
   service_id bigint(20) UNSIGNED,
   cin varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   date_naissance varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   niveau_etude varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter tinyint(1) NOT NULL DEFAULT '1',
-  lieu_travail varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  branche_id bigint(20) UNSIGNED ,
   quartier varchar(225) COLLATE utf8mb4_unicode_ci,
   code_postal varchar(225) COLLATE utf8mb4_unicode_ci,
   ville varchar(225) COLLATE utf8mb4_unicode_ci,
@@ -162,17 +175,4 @@ CREATE TABLE `historique_stagiaires` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `services` (
-  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
-  departement_entreprise_id bigint(20) unsigned not null,
-  `nom_service` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  foreign key(departement_entreprise_id) references departement_entreprises (id) on delete cascade
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `branches` (
-  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
-  entreprise_id bigint(20) unsigned not null,
-  `nom_branche` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  foreign key(entreprise_id) references entreprises (id) on delete cascade
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

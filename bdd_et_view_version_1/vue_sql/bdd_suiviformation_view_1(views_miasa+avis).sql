@@ -361,7 +361,7 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    (stg.departement_entreprise_id) departement_id,
+    (serv.departement_entreprise_id) departement_id,
     stg.service_id as stg_service_id,
     stg.cin,
     stg.date_naissance,
@@ -373,6 +373,7 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     dept.nom_departement,
     serv.nom_service,
     serv.id as service_id
+
 FROM
     stagiaires as stg,
     entreprises as etp,
@@ -381,7 +382,44 @@ FROM
     branches as branche
 WHERE
     stg.entreprise_id = etp.id and
-    stg.departement_entreprise_id = dept.id and stg.service_id = serv.id;
+    serv.departement_entreprise_id = dept.id and
+    stg.service_id = serv.id;
+
+-- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
+--     stg.id AS stagiaire_id,
+--     stg.matricule,
+--     stg.nom_stagiaire,
+--     stg.prenom_stagiaire,
+--     stg.genre_stagiaire,
+--     stg.fonction_stagiaire,
+--     stg.mail_stagiaire,
+--     stg.telephone_stagiaire,
+--     stg.entreprise_id,
+--     stg.user_id,
+--     stg.photos,
+--     (stg.departement_entreprise_id) departement_entreprises_id,
+--     stg.cin,
+--     stg.date_naissance,
+--     (stg.lot) adresse,
+--     stg.lieu_travail,
+--     stg.niveau_etude,
+--     stg.activiter,
+--     etp.nom_etp,
+--     historique.stagiaire_id AS histo_stagiaire_id,
+--     historique.ancien_entreprise_id AS ancien_entreprise_id,
+--     historique.nouveau_entreprise_id AS nouveau_entreprise_id,
+--     historique.date_depart,
+--     historique.date_arrivee
+-- FROM
+--     stagiaires as stg,
+--     entreprises as etp,
+--     historique_stagiaires as historique,
+--      branches as branche
+-- WHERE
+--     stg.entreprise_id = etp.id and
+--     historique.stagiaire_id = stg.id and    stg.entreprise_id = branche.entreprise_id;
+
+
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.id AS stagiaire_id,
@@ -395,11 +433,9 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    (stg.departement_entreprise_id) departement_entreprises_id,
     stg.cin,
     stg.date_naissance,
     (stg.lot) adresse,
-    stg.lieu_travail,
     stg.niveau_etude,
     stg.activiter,
     etp.nom_etp,
@@ -416,5 +452,3 @@ FROM
 WHERE
     stg.entreprise_id = etp.id and
     historique.stagiaire_id = stg.id and    stg.entreprise_id = branche.entreprise_id;
-
-

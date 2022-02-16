@@ -256,7 +256,7 @@
                                 </div><br>
 
                                     <div class="form-group">
-                                        <label for="lieu">Lieu de travail</label>
+                                        <label for="lieu">Branche</label>
                                         <select name="lieu_travail" class="form-control" id="liste_travail">
                                             <option value="">Choisissez une branche...</option>
                                             @foreach ($lieu_travail as $lieu)

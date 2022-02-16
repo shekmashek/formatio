@@ -100,25 +100,25 @@
                                     <p class="p-1 m-0" style="font-size: 10px;">PHOTO
 
                                     </p>
-                                    <a href="{{route('edit_photos',$stagiaire->stagiaire_id)}} " >
+                                    <a href="{{route('edit_photos',$stagiaire->id)}} " >
                                     <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde"></a>
                                    </div>
                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{route('edit_nom',$stagiaire->stagiaire_id)}} " >
+                                    <a href="{{route('edit_nom',$stagiaire->id)}} " >
                                     <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{ $stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p></a>
 
                                    </div>
                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{route('edit_naissance',$stagiaire->stagiaire_id)}} " >
+                                    <a href="{{route('edit_naissance',$stagiaire->id)}} " >
                                     <p class="p-1 m-0" style="font-size: 10px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($stagiaire->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p></a>
 
                                    </div>
                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{route('edit_genre',$stagiaire->stagiaire_id)}} " >
+                                    <a href="{{route('edit_genre',$stagiaire->id)}} " >
                                     <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$stagiaire->genre_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     </a>
@@ -134,14 +134,14 @@
                                         <p class="text-center">Coordonnées</p>
 
                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_mail',$stagiaire->stagiaire_id)}} " >
+                                            <a href="{{route('edit_mail',$stagiaire->id)}} " >
                                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$stagiaire->mail_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                         </p>
                                             </a>
                                         </div>
                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_phone',$stagiaire->stagiaire_id)}} " >
+                                            <a href="{{route('edit_phone',$stagiaire->id)}} " >
                                         <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$stagiaire->telephone_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                                         </p>
@@ -149,26 +149,26 @@
                                         </div>
 
                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_cin',$stagiaire->stagiaire_id)}} " >
+                                            <a href="{{route('edit_cin',$stagiaire->id)}} " >
                                         <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$stagiaire->cin}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                             </a>
                                         </div>
                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                     {{-- <a href="{{route('edit_adresse',$stagiaire->stagiaire_id)}} " >
+                                     {{-- <a href="{{route('edit_adresse',$stagiaire->id)}} " >
                                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$stagiaire->lot}} &nbsp;{{$stagiaire->quartier}} &nbsp;{{$stagiaire->ville}} &nbsp;{{$stagiaire->code_postal}}&nbsp;{{$stagiaire->region}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                         </p>
                                      </a> --}}
                                         </div>
                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_fonction',$stagiaire->stagiaire_id)}} " >
+                                            <a href="{{route('edit_fonction',$stagiaire->id)}} " >
                                         <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$stagiaire->fonction_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                             </a>
                                         </div>
                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_niveau',$stagiaire->stagiaire_id)}} " >
+                                            <a href="{{route('edit_niveau',$stagiaire->id)}} " >
                                         <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<span style="float: right;">{{$stagiaire->niveau_etude}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                             </a>
@@ -183,7 +183,7 @@
                                     <p class="text-center">Informations professionnelles</p>
 
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_matricule',$stagiaire->stagiaire_id)}} " >
+                                        <a href="{{route('edit_matricule',$stagiaire->id)}} " >
                                     <p class="p-1 m-0" style="font-size: 10px;">MATRICULE<span style="float: right;">{{$stagiaire->matricule}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p>
@@ -191,8 +191,8 @@
                                     </div>
 
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_entreprise',$stagiaire->stagiaire_id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$stagiaire->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        {{-- <a href="{{route('edit_entreprise',$stagiaire->id)}} " > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p>
                                         </a>
@@ -200,15 +200,38 @@
                                     </div>
 
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_departement',$stagiaire->stagiaire_id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{$stagiaire->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
+                                    <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">
+                                        @if ($departement->id==null)
+                                        <strong style="color: red">incomplète</strong>&nbsp;
+                                        @else
+                                        {{$departement->nom_departement}}&nbsp;
+                                        @endif
+                                        <i class="fas fa-angle-right"></i></span>
                                     </p>
                                         </a>
                                     </div>
                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_branche',$stagiaire->stagiaire_id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">BRANCHE<span style="float: right;">{{$stagiaire->nom_branche}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        <a href="{{route('edit_departement',$stagiaire->id)}} " >
+                                    <p class="p-1 m-0" style="font-size: 10px;">SERVICE<span style="float: right;">
+                                        @if ($service->id==null)
+                                        <strong style="color: red">incomplète</strong>&nbsp;
+                                        @else
+                                        {{$service->nom_service}}&nbsp;
+                                        @endif
+                                        <i class="fas fa-angle-right"></i></span>
+                                    </p>
+                                        </a>
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                        <a href="{{route('edit_branche',$stagiaire->id)}} " >
+                                    <p class="p-1 m-0" style="font-size: 10px;">BRANCHE<span style="float: right;">
+                                        @if ($branche->id==null)
+                                        <strong style="color: red">incomplète</strong>&nbsp;
+                                        @else
+                                        {{$branche->nom_branche}}&nbsp;
+                                        @endif
+                                        <i class="fas fa-angle-right"></i></span>
                                     </p>
                                         </a>
                                     </div>
