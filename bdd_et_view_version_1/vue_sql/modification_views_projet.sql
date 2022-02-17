@@ -419,3 +419,7 @@ FROM
     on stg.entreprise_id = e.id
     join v_departement_service_entreprise ds
     on ds.service_id = stg.service_id;
+
+
+
+-- select d.id as detail_id,p.id as presence_id from details d cross join presences p

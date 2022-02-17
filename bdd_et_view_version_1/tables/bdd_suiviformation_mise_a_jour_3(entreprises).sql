@@ -36,6 +36,12 @@ CREATE TABLE entreprises (
   telephone_etp varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+alter table entreprises add adresse_rue varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_code_postal varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_region varchar(191) COLLATE utf8mb4_unicode_ci;
+
 CREATE TABLE `departement_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_departement`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

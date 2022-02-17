@@ -15,7 +15,7 @@
         <hr class="m-2 p-0">
     </div>
     @foreach ($datas as $dt)
-        <form action="#" method="post">
+        <form action="{{ route('insert_presence_detail') }}" method="post">
             @csrf
             <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
             <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
@@ -58,26 +58,25 @@
                                     id="pointage_{{ $dt->detail_id . $liste->stagiaire_id }}">
                                     <div class="col-md-6 text-center p-0 m-0">
                                         <input type="time" class="m-0 pointage_entree"
-                                            name="h_entree[]"
+                                            name="h_entree[{{ $dt->detail_id }}][{{ $liste->stagiaire_id }}]"
                                             style="width: 67.1px" onfocus="(this.type='time')" >
                                     </div>
                                     <div class="col-md-6 text-center p-0 m-0">
                                         <input type="time" class="m-0 pointage_sortie"
-                                            name="h_sortie[]"
+                                            name="h_sortie[{{ $dt->detail_id }}][{{ $liste->stagiaire_id }}]"
                                             style="width: 67.1px" onfocus="(this.type='time')">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2 p-0">
-                                <input type="text" class="mt-0 p-0" name="note_desc[]" placeholder="Note(s)">
+                                <input type="text" class="mt-0 p-0" name="note_desc[{{ $dt->detail_id }}][{{ $liste->stagiaire_id }}]" placeholder="Note(s)">
                             </div>
                             </tr>
                         </div>                
                     @endforeach
 
                     <div align="center">
-                        <button class="btn-success w-25" id="add_presence" data-id="{{ $dt->detail_id }}"
-                            form="myform" name="add_attendance">Enregistrer</button>
+                        <button type="submit" class="btn-success w-25">Enregistrer</button>
                     </div>
                 </div>
             </div>
