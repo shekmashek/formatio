@@ -38,10 +38,10 @@ CREATE TABLE entreprises (
 
 CREATE TABLE `departement_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nom_departement`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+  `nom_departement`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `services` (
