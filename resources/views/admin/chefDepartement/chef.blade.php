@@ -194,9 +194,9 @@
                             <div class="form-group">
                                 <label for="etp">Departement<strong style="color:#ff0000;">*</strong></label>
                                 <select class="form-select" class="form-control" id="liste_dep" name="liste_dep">
-                                    @foreach($liste_departement as $dep)
-                                    <option value="{{$dep->id}}">{{$dep->nom_departement}}</option>
-                                    @endforeach
+                                    @for($i = 0; $i < count($liste_departement);$i++)
+                                    <option value="{{$liste_departement[$i]->id}}">{{$liste_departement[$i]->nom_departement}}</option>
+                                    @endfor
                                     </option>
                                 </select>
                             </div>
