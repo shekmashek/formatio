@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
+use App\Models\getImageModel;
 
 class SessionController extends Controller
 {
@@ -108,13 +109,16 @@ class SessionController extends Controller
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
         // ???--
         $all_frais_annexe = [];
-
+        $documents = [];
         $fonct = new FonctionGenerique();
         if(Gate::allows('isCFP')){
+            $drive = new getImageModel();
             $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+            $cfp_nom = Cfp::where('user_id', $user_id)->value('nom');
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
         if(Gate::allows('isReferent')){
             $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
@@ -156,8 +160,7 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         // dd($competences);
         // ---------evalution fait par les stagiaires
-
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents'));
     }
 
     public function getFormateur(){
@@ -357,6 +360,23 @@ class SessionController extends Controller
             Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
         }
         DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+        return back();
+    }
+
+    public function create_docs(){
+        $user_id = Auth::user()->id;
+        $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        $drive = new getImageModel();
+        $drive->create_sub_folder($cfp,"Mes documents");
+    }
+
+    public function save_documents(Request $request){
+        $user_id = Auth::user()->id;
+        $cfp = Cfp::where('user_id', $user_id)->value('id');
+        $paths = $request->path;
+        for ($i=0; $i < count($paths); $i++) { 
+            DB::insert('insert into mes_documents(path,cfp_id) values(?,?)',[$paths[$i],$cfp]);
+        }
         return back();
     }
 }

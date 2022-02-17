@@ -787,3 +787,6 @@ Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluati
 
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
 Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');
+
+Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
+Route::post('save_documents','SessionController@save_documents')->name('save_documents');

@@ -51,3 +51,9 @@ insert into status('Prévisionnel');
 insert into status('A venir');
 insert into status('En cours');
 insert into status('Terminé');
+
+create table mes_documents(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  path text not null,
+  cfp_id bigint(20) UNSIGNED  NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
