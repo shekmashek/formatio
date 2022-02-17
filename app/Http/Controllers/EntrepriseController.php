@@ -238,7 +238,8 @@ class EntrepriseController extends Controller
     {
 
         $entreprise = entreprise::with('Secteur')->findOrFail($id);
-        $departement = DepartementEntreprise::with('Departement')->where('entreprise_id', $id)->get();
+        // $departement = DepartementEntreprise::with('Departement')->where('entreprise_id', $id)->get();
+        $departement = DB::select('select * from departement_entreprises where entreprise_id = ?', [$id]);
         return view('admin.entreprise.profile_entreprise', compact('entreprise', 'departement'));
     }
 

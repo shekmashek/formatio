@@ -347,8 +347,8 @@ class ProfController extends Controller
     }
     public function profile_formateur( $id = null )
     {
-        $id = formateur::where('user_id', Auth::user()->id)->value('id');
         $formateur = formateur::findOrFail($id);
+
         return view('admin.formateur.profile_formateur', compact('formateur'));
     }
 
@@ -371,13 +371,13 @@ class ProfController extends Controller
     }
     public function misajourFormateur(Request $request,$id)
     {
-       
+
         // $fonct = new FonctionGenerique();
-          
+
         // $resp_etp = $fonct->findWhereMulitOne("formateurs",["user_id"],[ Auth::user()->id]);
        // dd( $resp_etp );
         $nom = $request->nom;
-      
+
         $phone =  $request->phone;
         $mail = $request->mail;
         $cin = $request->cin;
@@ -419,7 +419,7 @@ class ProfController extends Controller
                 'adresse' => $request->adresse,
                 'specialite' => $splt,
                 'niveau' => $nv,
-              
+
             ]);
         }
         $password = $request->password;

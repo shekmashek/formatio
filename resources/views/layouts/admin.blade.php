@@ -301,7 +301,7 @@
                     </li>
                     @endcanany
 
-                    {{-- action de formations --}}
+                    {{-- action de formations
                     @canany(['isSuperAdmin','isCFP','isReferent','isFormateur','isStagiaire'])
                     <li class="my-2">
                         <a href="#actfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-line-chart nav_icon'></i><span class="nav_name">Sessions</span></a>@canany(['isCFP','isReferent'])&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('execution')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau session"></i></a>@endcanany
@@ -323,7 +323,7 @@
                             @endcanany
                         </ul>
                     </li>
-                    @endcanany
+                    @endcanany --}}
                     {{-- calendrire de formations --}}
                     <li class="my-2">
                         <a href="{{route('calendrier')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Calendrier</span></a>
