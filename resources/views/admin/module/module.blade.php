@@ -389,45 +389,7 @@
                                                     </div>
                                                 </div>
 
-                                                {{-- <div class="row detail__formation__item__left">
-                                                    <h3 class="pt-3 pb-3">Programme de la formation</h3>
-                                                    <div></div>
-                                                    <div class="col-lg-12">
-                                                        <div class="row detail__formation__item__left__accordion">
-                                                            <div class="accordion" id="accordion__program">
-                                                                <?php //$i=1 ?>
-                                                                @foreach ($programmes as $prgc)
-                                                                <div class="card">
-                                                                    <div class="card-header" id="heading1">
-                                                                        <h2 class="mb-0"><button
-                                                                                class="btn btn-block text-left"
-                                                                                type="button" data-toggle="collapse"
-                                                                                data-target="#collapse{{$i}}"
-                                                                                aria-expanded="true" id="icon"
-                                                                                aria-controls="collapse1"><i
-                                                                                    class="bx bxs-plus-circle icon-prog-list"
-                                                                                    id="icon"></i>&nbsp;&nbsp;{{$i}} -
-                                                                                {{$prgc->titre}}</button></h2>
-                                                                    </div>
-                                                                    @foreach ($cours as $c)
-                                                                    @if($c->programme_id == $prgc->id)
-                                                                    <div id="collapse{{$i}}" class="collapse show"
-                                                                        aria-labelledby="heading1"
-                                                                        data-parent="#accordion__program">
-                                                                        <div class="card-body"> <i
-                                                                                class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}
-                                                                        </div>
-                                                                    </div>
-                                                                    @endif
-                                                                    @endforeach
-                                                                    <?php //$i++ ?>
-                                                                </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
 
-                                                    </div>
-                                                </div> --}}
                                             </div>
 
                                             <div class="col-lg-4 detail__formation__item__right" id="border_reference">
@@ -912,7 +874,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script type="text/javascript">
-        //separateur de milliers javascript
+    //separateur de milliers javascript
     function numStr(a, b) {
         a = '' + a;
         b = b || ' ';
@@ -959,19 +921,6 @@
                     $("#nom_formation").text(userData[$i].nom_formation);
                     $("#niveau").text(userData[$i].niveau);
                 }
-                // var ul = document.getElementById('programme');
-
-                // // $("#programe").append('<li>ok</li>');
-                // for (var $j = 0; $j < userData[0].length; $j++) {
-
-                //     var li = document.createElement('li');
-                //     li.appendChild(document.createTextNode(userData[0][$j].titre));
-                //     ul.appendChild(li);
-                //     //     li = null;
-                // }
-
-                //parcourir le deuxième tableau contenant les info sur le nom de la formation
-                // $("#nomFormation").text(userData[1]);
 
             }
             , error: function(error) {
@@ -985,39 +934,6 @@
 
     });
 
-    // $('body').on('click', function(e) {
-    //     var ul = document.getElementById('programme');
-    //     ul.innerHTML = '';
-    // });
-
-    // $(".modifier").on('click', function(e) {
-    //     let id = $(this).data("id");
-    //     $.ajax({
-    //         method: "GET"
-    //         , url: "{{route('edit_module')}}"
-    //         , data: {
-    //             Id: id
-    //         }
-    //         , dataType: "html"
-    //         , success: function(response) {
-
-    //             let userData = JSON.parse(response);
-    //             for (let $i = 0; $i < userData.length; $i++) {
-    //                 $("#nomModif").val(userData[$i].nom_module);
-    //                 $("#prixModif").val(userData[$i].prix);
-    //                 $("#dureeModif").val(userData[$i].duree);
-    //                 $("#dureeJourModif").val(userData[$i].duree_jour);
-    //                 $('#id_value').val(userData[$i].id);
-
-    //                 $('#modalite').val(userData[$i].modalite_formation).change();
-
-    //             }
-    //         }
-    //         , error: function(error) {
-    //             console.log(error)
-    //         }
-    //     });
-    // });
     $(".suppression").on('click', function(e) {
         let id = e.target.id;
         $.ajax({

@@ -1,0 +1,97 @@
+:root {
+    --header-height: 3rem;
+    --nav-width: 80px;
+    --first-color: white;
+    --first-color-light: rgba(238, 238, 238, 0.863);
+    --second-color: #b4b4b4dc;
+    --body-font-color: black;
+    --body-font: "Roboto", sans-serif;
+    --normal-font-size: 1rem;
+    --z-fixed: 100;
+    --color-parent: #a55e8e;
+    --color-child: #801d68;
+    --color-child1: #542356;
+    --button-color: #7635dc;
+    --font-sidebar-color: #637381;
+    --font-size-sidebar: 13px;
+}
+
+.projets_card{
+    background: var(--first-color);
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    padding: 20px 0px 20px 0px;
+    color: black;
+    transition: all 0.5s ease;
+}
+
+.projets_card:hover{
+    background: linear-gradient(60deg, #ec008c, #fc6767);
+    color:  white;
+    box-shadow: rgba(238, 40, 5, 0.212) 0px 8px 24px, rgba(238, 40, 5, 0.212) 0px 16px 56px, rgba(238, 40, 5, 0.212) 0px 24px 80px;
+    transform: scale(1.1);
+}
+
+.projets_card:hover h5,
+.projets_card:hover .bx{
+    color: white ;
+}
+
+.projets_card h5{
+    color: #7635dc;
+}
+
+.projets_card .bx{
+    color: #7635dc;
+}
+
+
+.projets_card a:hover{
+    color: white;
+}
+
+.projets_icon{
+    font-size: 5rem;
+    margin-top: 1rem;
+}
+
+
+.projets_card2{
+    background: var(--first-color);
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    padding: 20px 0 20px 0;
+    color: black;
+    transition: all 0.5s ease;
+}
+
+.projets_card2:hover{
+    background: linear-gradient(60deg, #1488CC, #2B32B2);
+    color:  white;
+    box-shadow: rgba(83, 83, 243, 0.185) 0px 8px 24px, rgba(83, 83, 243, 0.185) 0px 16px 56px, rgba(83, 83, 243, 0.185) 0px 24px 80px;
+    transform: scale(1.1);
+}
+
+.projets_card2:hover h5,
+.projets_card2:hover .bx{
+    color: white ;
+}
+
+.projets_card2 h5{
+    color: #7635dc;
+}
+
+.projets_card2 .bx{
+    color: #7635dc;
+}
+
+
+.projets_card2 a:hover{
+    color: white;
+}
+
+.projets_icon2{
+    font-size: 5rem;
+    margin-top: 1rem;
+}
+
+
+

@@ -304,6 +304,7 @@ Route::get('pdf.imprime_liste_statgiaire/{id?}','ParticipantController@generateP
 // ====================  Programme par Modules ===================================
 Route::resource('programme','ProgrammeController')->except([ 'index','create']);
 Route::get('/liste_programme','ProgrammeController@index')->name('liste_programme');
+Route::get('designGeneral','ProgrammeController@redirect')->name('designGeneral');
 Route::get('/nouvelle_programme','ProgrammeController@news')->name('nouvelle_programme');
 
 Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_programme');

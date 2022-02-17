@@ -198,7 +198,6 @@ class ModuleController extends Controller
         $id = $request->Id;
         $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
         $programme = DB::select('select * from v_cours_programmes where module_id = ?',[$id]);
-        dd($programme);
         // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
         return response()->json($module_en_cours,$programme);
     }

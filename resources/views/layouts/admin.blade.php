@@ -82,7 +82,7 @@
                                 </li>
 
                                 <li class="my-2 sousMenu">
-                                    <a href="{{route('liste_programme')}}">Programmes</a>
+                                    <a href="{{route('designGeneral')}}">Design generale</a>
                                 </li>
 
                                 <li class="my-2 sousMenu">

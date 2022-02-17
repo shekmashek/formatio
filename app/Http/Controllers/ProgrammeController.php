@@ -192,4 +192,8 @@ class ProgrammeController extends Controller
         );
     }
 
+    public function redirect(Request $request){
+        return view('admin.testCss');
+    }
+
 }
