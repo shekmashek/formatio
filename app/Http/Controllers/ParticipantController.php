@@ -70,6 +70,9 @@ class ParticipantController extends Controller
         }
     }
 
+
+
+
     public function create($id = null)
     {
 
@@ -84,6 +87,7 @@ class ParticipantController extends Controller
             $datas = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = ' . $entreprise_id);
             $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id =' . $entreprise_id);
             // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
+            $data = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }
         if (Gate::allows('isManager')) {
             $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
@@ -114,7 +118,7 @@ class ParticipantController extends Controller
             'nom_entreprise' => 'Tout'
         ];
         // return view('admin.participant.participant', compact('liste_etp', 'datas', 'info_impression','id_etp'));
-        return view('admin.participant.stagiaire_entreprise', compact('ancien', 'liste_etp', 'datas', 'info_impression', 'id_etp'));
+        return view('admin.participant.stagiaire_entreprise', compact('ancien', 'liste_etp', 'datas', 'info_impression', 'id_etp','data'));
     }
 
     public function store(Request $request)
@@ -234,7 +238,7 @@ class ParticipantController extends Controller
             $request->image->move(public_path($str), $nom_image);
             $participant->save();
             return redirect()->route('liste_participant');
-          
+
         }
     }
 
@@ -685,7 +689,7 @@ class ParticipantController extends Controller
         else
         {
         return view('admin.participant.profile', compact('stagiaires'));
-            
+
         }
     }
     //update_stagiaire connecte
@@ -693,13 +697,13 @@ class ParticipantController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        
+
         // $input = $request->file('image')->getClientOriginalName();
 
 
          //stocker logo dans google drive
             //stocker logo dans google drive
-           
+
             // $dossier = 'stagiaire';
             // $stock_stg = new getImageModel();
             //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
@@ -713,7 +717,7 @@ class ParticipantController extends Controller
         if ($input !=null){
         $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
-            
+
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,

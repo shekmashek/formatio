@@ -203,6 +203,7 @@ Route::resource('participant','ParticipantController')->except([
 ]);
 Route::get('/nouveau_participant','ParticipantController@index')->name('nouveau_participant');
 Route::get('/liste_participant/{id?}','ParticipantController@create')->name('liste_participant');
+
 Route::get('/edit_participant/{id?}','ParticipantController@edit')->name('edit_participant');
 //Route pour modifier chaque champs pour participant
 Route::get('/edit_nom/{id?}','ParticipantController@edit_nom')->name('edit_nom');

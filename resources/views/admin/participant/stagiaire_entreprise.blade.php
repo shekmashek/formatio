@@ -55,10 +55,10 @@
 
     </style>
 
-    <div class="row w-100 bg-none mt-5 font_text">
+    <div class="row w-100 bg-none mt-2 font_text">
 
         <div class="col-md-5">
-            <div class="shadow p-3 mb-5 bg-body rounded ">
+            <div class="shadow-sm p-3 mb-5 bg-body rounded ">
 
                 <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                     <li class="nav-item">
@@ -268,12 +268,46 @@
     {{-- </strong>&nbsp;&nbsp;<button class='btn btn-success dropdown-item' data-toggle='modal' data-target='#ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button> --}}
 
 </div>
-
-
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<div class="container-fluid p-1 m-1">
+	        <div class="panel panel-default" style="font-size: 11px;">
+                <table align="center" id="table_data">
+                    <thead>
+                      <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>a</td>
+                        <td>b</td>
+                        <td>c</td>
+                      </tr>
+                      <tr>
+                        <td>a1</td>
+                        <td>b1</td>
+                        <td>c1</td>
+                      </tr>
+                      <tr>
+                        <td>a2</td>
+                        <td>b2</td>
+                        <td>c2</td>
+                      </tr>
+                    </tbody>
+                  </table>
+	        </div>
+</div>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<link href="//datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="//datatables.net/download/build/nightly/jquery.dataTables.js"></script>
+
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <script>
 $(document).ready(function(){
     $('#ajouter').on('click', function(e) {
@@ -307,8 +341,6 @@ $(document).ready(function(){
                         "<tr><td><div align='left'><strong>" + res + "</strong><strong>"
                     );
                 }
-
-
             }
             , error: function(error) {
                 console.log(error)
@@ -318,6 +350,12 @@ $(document).ready(function(){
     });
 });
 
-
 </script>
+
+<script>
+   $(document).ready( function () {
+      var table = $('#table_data').DataTable();
+    } );
+</script>
+
 @endsection
