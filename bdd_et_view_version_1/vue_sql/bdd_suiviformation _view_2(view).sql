@@ -47,7 +47,6 @@ CREATE OR REPLACE VIEW v_exportcatalogue AS SELECT
     duree,
     formations.nom_formation,
     domaine_id,
-    cfp_id,
     nom_domaine
 FROM
     modules,
@@ -65,7 +64,6 @@ CREATE OR REPLACE VIEW v_exportresponsable AS SELECT
     email_resp,
     telephone_resp,
     nom_etp,
-    adresse,
     email_etp,
     telephone_etp
 FROM
@@ -85,7 +83,11 @@ create or replace view v_exportparticipant as
     s.mail_stagiaire,
     s.telephone_stagiaire,
     nom_etp,
-    entreprises.adresse,
+    entreprises.adresse_rue,
+    entreprises.adresse_quartier,
+    entreprises.adresse_code_postal,
+    entreprises.adresse_ville,
+    entreprises.adresse_region,
     email_etp,
     telephone_etp
     from

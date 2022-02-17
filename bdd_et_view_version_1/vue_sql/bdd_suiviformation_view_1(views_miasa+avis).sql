@@ -87,73 +87,73 @@ JOIN projets pj ON
     dmfp.projet_id = pj.id;
 
 
-CREATE OR REPLACE VIEW v_participantsession AS SELECT
-    g.projet_id,
-	ps.stagiaire_id,
-	ps.groupe_id,
-	g.nom_groupe,
-	g.date_debut,
-	g.date_fin,
-	g.status_groupe,
-	g.activiter_groupe,
-    s.matricule,
-    s.nom_stagiaire,
-    s.prenom_stagiaire,
-    s.fonction_stagiaire,
-    s.genre_stagiaire,
-    s.mail_stagiaire,
-    s.telephone_stagiaire,
-    s.user_id,
-    s.photos,
-    (s.departement_entreprise_id) departement_id,
-    s.cin,
-    s.date_naissance,
-    (s.lot) adresse,
-    s.niveau_etude,
-    (s.activiter) activiter_stagiaire,
-    pe.nom_projet,
-    g.entreprise_id,
-    pe.cfp_id,
-    (pe.status) status_projet,
-    (pe.activiter) activiter_projet
-FROM
-    participant_groupe ps,
- 	stagiaires s,
-    projets pe,
-    v_groupe_entreprise g
-where
-    ps.stagiaire_id = s.id and ps.groupe_id = g.groupe_id and g.projet_id = pe.id and s.entreprise_id = g.entreprise_id;
+-- CREATE OR REPLACE VIEW v_participantsession AS SELECT
+--     g.projet_id,
+-- 	ps.stagiaire_id,
+-- 	ps.groupe_id,
+-- 	g.nom_groupe,
+-- 	g.date_debut,
+-- 	g.date_fin,
+-- 	g.status_groupe,
+-- 	g.activiter_groupe,
+--     s.matricule,
+--     s.nom_stagiaire,
+--     s.prenom_stagiaire,
+--     s.fonction_stagiaire,
+--     s.genre_stagiaire,
+--     s.mail_stagiaire,
+--     s.telephone_stagiaire,
+--     s.user_id,
+--     s.photos,
+--     (s.departement_entreprise_id) departement_id,
+--     s.cin,
+--     s.date_naissance,
+--     (s.lot) adresse,
+--     s.niveau_etude,
+--     (s.activiter) activiter_stagiaire,
+--     pe.nom_projet,
+--     g.entreprise_id,
+--     pe.cfp_id,
+--     (pe.status) status_projet,
+--     (pe.activiter) activiter_projet
+-- FROM
+--     participant_groupe ps,
+--  	stagiaires s,
+--     projets pe,
+--     v_groupe_entreprise g
+-- where
+--     ps.stagiaire_id = s.id and ps.groupe_id = g.groupe_id and g.projet_id = pe.id and s.entreprise_id = g.entreprise_id;
 
-----------------
-CREATE OR REPLACE VIEW v_coursfroidevaluation AS SELECT
-    c.id AS cours_id,
-    c.titre_cours,
-    c.programme_id,
-    IFNULL(fe.status, 0) AS status,
-	fe.cfp_id,
-    fe.projet_id,
-    fe.stagiaire_id,
-     s.matricule,
-    s.nom_stagiaire,
-    s.prenom_stagiaire,
-    s.fonction_stagiaire,
-    s.genre_stagiaire,
-    s.mail_stagiaire,
-    s.telephone_stagiaire,
-    s.user_id,
-    s.photos,
-    (s.departement_entreprise_id) departement_id,
-    s.cin,
-    s.date_naissance,
-    (s.lot) adresse,
-    s.niveau_etude,
-    (s.activiter) activiter_stagiaire
-FROM
-    cours c
-LEFT JOIN froid_evaluations fe ON
-    c.id = fe.cours_id
-JOIN stagiaires s ON
-    fe.stagiaire_id = s.id;
+-- ----------------
+-- CREATE OR REPLACE VIEW v_coursfroidevaluation AS SELECT
+--     c.id AS cours_id,
+--     c.titre_cours,
+--     c.programme_id,
+--     IFNULL(fe.status, 0) AS status,
+-- 	fe.cfp_id,
+--     fe.projet_id,
+--     fe.stagiaire_id,
+--      s.matricule,
+--     s.nom_stagiaire,
+--     s.prenom_stagiaire,
+--     s.fonction_stagiaire,
+--     s.genre_stagiaire,
+--     s.mail_stagiaire,
+--     s.telephone_stagiaire,
+--     s.user_id,
+--     s.photos,
+--     (s.departement_entreprise_id) departement_id,
+--     s.cin,
+--     s.date_naissance,
+--     (s.lot) adresse,
+--     s.niveau_etude,
+--     (s.activiter) activiter_stagiaire
+-- FROM
+--     cours c
+-- LEFT JOIN froid_evaluations fe ON
+--     c.id = fe.cours_id
+-- JOIN stagiaires s ON
+--     fe.stagiaire_id = s.id;
 
 
 CREATE OR REPLACE VIEW v_cours_programme AS SELECT
@@ -356,7 +356,7 @@ create or replace view v_departement_service_entreprise as
         s.nom_service,
         de.nom_departement,
         de.entreprise_id
-    from services s 
+    from services s
     join departement_entreprises de on s.departement_entreprise_id = de.id;
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
@@ -402,7 +402,7 @@ FROM
     stagiaires as stg
     join entreprises e
     on stg.entreprise_id = e.id
-    join v_departement_service_entreprise ds 
+    join v_departement_service_entreprise ds
     on ds.service_id = stg.service_id;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT

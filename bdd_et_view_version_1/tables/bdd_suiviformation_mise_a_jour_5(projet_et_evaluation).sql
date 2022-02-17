@@ -3,6 +3,8 @@ create table type_formations(
   type_formation varchar(250) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `type_formations` (`type_formation`) VALUES ('Intra entreprise'),('Inter entreprise');
+
 CREATE TABLE projets (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_projet varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
