@@ -49,13 +49,13 @@ select g.id as groupe_id,
         s.entreprise_id,
         s.user_id,
         s.photos,
-        (s.departement_entreprise_id) departement_id,
+        (s.service_id) departement_id,
         s.cin,
         s.date_naissance,
         (s.lot) adresse,
         s.niveau_etude,
         s.activiter as activiter_stagiaire,
-        s.lieu_travail
+        s.branche_id
     from
         participant_groupe p
     join

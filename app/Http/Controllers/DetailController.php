@@ -182,6 +182,7 @@ class DetailController extends Controller
         for ($i = 0; $i < count($request['lieu']); $i++) {
             DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $request['formateur'][$i], $request->groupe, $request->projet, $cfp_id]);
         }
+        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
         return back();
     }
 
@@ -210,31 +211,35 @@ class DetailController extends Controller
     public function update(Request $request, $id)
     {
         //modifier les données
-        $lieu = $request->Lieu;
-        $date_debut = $request->Debut;
-        $date_fin = $request->Fin;
+        $lieu = $request->lieu;
+        $h_debut = $request->debut;
+        $h_fin = $request->fin;
+        $formateur = $request->formateur;
+        $date_detail = $request->date;
         detail::where('id', $id)
             ->update([
+                'formateur_id' =>$formateur,
                 'lieu' => $lieu,
-                'date_debut' => $date_debut,
-                'date_fin' => $date_fin,
+                'h_debut' => $h_debut,
+                'h_fin' => $h_fin,
+                'date_detail' => $date_detail,
             ]);
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data updated successfully',
+        // return response()->json(
+        //     [
+        //         'success' => true,
+        //         'message' => 'Data updated successfully',
 
-            ]
-        );
+        //     ]
+        // );
+        return back();
     }
 
     public function destroy(Request $request)
     {
-        $id = $request->Id;
-        //  $detail = detail::find($id);
-        //  $detail->delete();
-        DB::delete('delete from details where id = ?', [$id]);
-        return redirect()->route('liste_detail');
+        $id = $request->id;
+        $detail = detail::find($id);
+        $detail->delete();
+        return back();
     }
     //affichage date en fonction session
     public function showDate(Request $request)

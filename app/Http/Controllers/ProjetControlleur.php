@@ -39,13 +39,12 @@ class ProjetControlleur extends Controller
     {
         $id = Auth::id();
         $cfp_id = cfp::where('user_id', $id)->value('id');
-
         //enregistrer les projets dans la bdd
         $projet = new projet();
-        $projet->nom_projet = $projet->generateNomProjet($request->liste_etp);
-        $projet->entreprise_id = $request->liste_etp;
+        $projet->nom_projet = $projet->generateNomProjet();
         $projet->cfp_id = $cfp_id;
-        $projet->status = "En Cours";
+        $projet->status = "Confirmé";
+        $projet->type_formation_id = $request->type_formation;
         $projet->activiter = TRUE;
         $projet->save();
 

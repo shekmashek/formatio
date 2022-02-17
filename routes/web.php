@@ -330,8 +330,8 @@ Route::get('date_but','DetailController@showDate')->name('date_but');
 
 Route::get('/show/{id}','DetailController@show')->name('show');
 Route::get('/store_detail','DetailController@store')->name('store_detail');
-Route::get('/update_detail/{id}','DetailController@update')->name('update_detail');
-Route::get('/destroy_detail','DetailController@destroy')->name('destroy_detail');
+Route::post('/update_detail/{id}','DetailController@update')->name('update_detail');
+Route::get('/destroy_detail/{id?}','DetailController@destroy')->name('destroy_detail');
 
 //Route execution du projet
 Route::get('/liste_execution','ExecutionController@index')->name('liste_execution');
@@ -763,7 +763,7 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 //     return view('cgv');
 // })->name('condition_generale_de_vente');
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
-Route::get('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
+Route::post('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
 
 //-------------route document----------------///
 Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
@@ -783,3 +783,7 @@ Route::post('save+nouveau+responsable+entreprise','ResponsableController@save_re
 
 Route::post('delete+responsable+cfp','ResponsableController@destroy')->name('delete+responsable+cfp');
 Route::post('delete+responsable+entreprise','ResponsableController@destroy')->name('delete+responsable+entreprise');
+Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluation_stagiaire')->name('modifier_evaluation_stagiaire');
+
+Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
+Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');

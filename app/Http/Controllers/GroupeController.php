@@ -10,6 +10,7 @@ use App\groupe;
 use App\projet;
 use App\cfp;
 use App\Models\FonctionGenerique;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class GroupeController extends Controller
@@ -44,11 +45,13 @@ class GroupeController extends Controller
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
-        $projet = $fonct->findWhereMulitOne("v_projetentreprise", ["projet_id"], [$idProjet]);
-        $groupe = $fonct->findWhere("v_groupe", ["projet_id"], [$idProjet]);
-        $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
-        $formation = $fonct->findAll("formations");
-        return view('admin.groupe.nouveauGroupe', compact('projet', 'groupe', 'formation', 'module'));
+        $projet = $fonct->findWhereMulitOne("v_projet_cfp", ["projet_id"], [$idProjet]);
+        $groupe = $fonct->findWhere("v_groupe_projet_entreprise_module", ["projet_id"], [$idProjet]);
+        $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
+        $module = $fonct->findAll("modules");
+        $entreprise = $fonct->findAll("v_demmande_cfp_etp");
+        $payement = $fonct->findAll("type_payement");
+        return view('admin.groupe.nouveauGroupe', compact('projet', 'groupe', 'formation', 'module','entreprise','payement'));
     }
 
 
@@ -69,30 +72,43 @@ class GroupeController extends Controller
             [
                 'min_part' => "required|numeric|min:0",
                 'max_part' => "required|numeric|min:0",
-                'dte_debut' => "required|date",
-                'dte_fin' => "required|date",
+                'date_debut' => "required|date",
+                'date_fin' => "required|date",
                 'module_id' => "required",
             ],
             [
-                'dte_debut.required' => 'la date du debut de formation ne doit pas être null',
-                'dte_fin.required' => 'la date fin de formation ne doit pas être null',
+                'date_debut.required' => 'la date du debut de formation ne doit pas être null',
+                'date_fin.required' => 'la date fin de formation ne doit pas être null',
                 'module_id.required' => 'le module  de la formation ne doit pas être null',
             ]
         );
-        //enregistrer les projets dans la bdd
-        $groupe = new groupe();
-        $groupe->nom_groupe = $groupe->generateNomSession($request->projet_id);
-        $groupe->min_participant = $request->min_part;
-        $groupe->max_participant = $request->max_part;
-        $groupe->date_debut = $request->dte_debut;
-        $groupe->date_fin = $request->dte_fin;
-        $groupe->status = "En Cour";
-        $groupe->activiter = TRUE;
-        $groupe->module_id = $request->module_id;
-        $groupe->projet_id = $request->projet_id;
-        $groupe->save();
 
-        return back();
+        try{
+            DB::beginTransaction();
+            $groupe = new groupe();
+            $nom_groupe = $groupe->generateNomSession($request->projet_id);
+            DB::insert('insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,"En Cours",TRUE)',
+            [$request->max_part,$request->min_part,$nom_groupe,$request->projet_id,$request->module_id,$request->payement,$request->date_debut,$request->date_fin]);
+
+            $last_insert = DB::table('groupes')->latest('id')->first();
+            $fonct = new FonctionGenerique();
+            $projet = $fonct->findWhereMulitOne("projets", ["id"], [$request->projet_id]);
+            $data = $request->all();
+
+            if($projet->type_formation_id == 1){
+                DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert->id,$request->entreprise]);
+            }
+            if($projet->type_formation_id == 2){
+                for($i = 0; $i < count($data['entreprise']); $i++){
+                    DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert->id,$data['entreprise'][$i]]);
+                }
+            }
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->with('groupe_error',"insertion de la session échouée!");
+        }
     }
 
     public function show($id)
@@ -113,8 +129,7 @@ class GroupeController extends Controller
             'min_participant' => $request->edit_min_part,
             'max_participant' => $request->edit_max_part,
             'date_debut' => $request->edit_dte_debut,
-            'date_fin' => $request->edit_dte_fin,
-            'status' => $request->edit_status
+            'date_fin' => $request->edit_dte_fin
         ]);
 
         // dd($request->input());

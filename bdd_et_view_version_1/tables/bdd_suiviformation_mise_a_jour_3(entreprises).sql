@@ -160,6 +160,7 @@ CREATE TABLE stagiaires (
   lot varchar(225) COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 CREATE TABLE `historique_stagiaires` (
   `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
   stagiaire_id bigint(20) unsigned not null references stagiaires(id) on delete cascade,

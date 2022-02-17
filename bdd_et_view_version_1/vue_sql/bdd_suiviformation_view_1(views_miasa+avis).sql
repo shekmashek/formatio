@@ -349,41 +349,61 @@ JOIN programmes p ON
 -- where groupes.module_id = modules.id and formation_id = formations.id and domaine_id = domaines.id
 -- and projet_id = projets.id and entreprise_id = entreprises.id;
 
+create or replace view v_departement_service_entreprise as
+    select
+        s.id as service_id,
+        s.departement_entreprise_id,
+        s.nom_service,
+        de.nom_departement,
+        de.entreprise_id
+    from services s 
+    join departement_entreprises de on s.departement_entreprise_id = de.id;
+
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.id AS stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
     stg.genre_stagiaire,
+    stg.titre,
     stg.fonction_stagiaire,
     stg.mail_stagiaire,
     stg.telephone_stagiaire,
-    stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    (serv.departement_entreprise_id) departement_id,
-    stg.service_id as stg_service_id,
     stg.cin,
     stg.date_naissance,
-    stg.branche_id,
-    branche.nom_branche,
     stg.niveau_etude,
     stg.activiter,
-    etp.nom_etp,
-    dept.nom_departement,
-    serv.nom_service,
-    serv.id as service_id
-
+    stg.branche_id,
+    stg.quartier,
+    stg.code_postal,
+    stg.ville,
+    stg.region,
+    stg.lot,
+    e.nom_etp,
+    e.adresse_rue,
+    e.adresse_quartier,
+    e.adresse_code_postal,
+    e.adresse_ville,
+    e.adresse_region,
+    e.logo,
+    e.nif,
+    e.stat,
+    e.rcs,
+    e.cif,
+    e.secteur_id,
+    e.email_etp,
+    e.site_etp,
+    (e.activiter) activiter_etp,
+    e.telephone_etp,
+    ds.*
 FROM
-    stagiaires as stg,
-    entreprises as etp,
-    departement_entreprises as dept,
-    services as serv,
-    branches as branche
-WHERE
-    stg.entreprise_id = etp.id and
-    serv.departement_entreprise_id = dept.id and
-    stg.service_id = serv.id;
+    stagiaires as stg
+    join entreprises e
+    on stg.entreprise_id = e.id
+    join v_departement_service_entreprise ds 
+    on ds.service_id = stg.service_id;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
 --     stg.id AS stagiaire_id,
