@@ -234,7 +234,7 @@
 
 
                             <div class="row">
-
+<h4>Facture En Cour</h4>
                                 <table class="table table-striped ">
                                     <thead>
                                         <tr>

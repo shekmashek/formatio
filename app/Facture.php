@@ -423,11 +423,49 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     // ================= recherche par multi critère
 
-    public function search_intervale_dte_generique_cfp($nomTab, $invoice_dte, $due_dte, $cfp_id)
+    public function search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
     {
-        $data = DB::select("select * from " . $nomTab . " where invoice_date>=? or due_date=? and cfp_id=?", [$invoice_dte, $due_dte, $cfp_id]);
+        if($factue_id<=0){
+            $factue_id=1;
+        }
+        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('en_cour') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
         return $data;
     }
+
+    public function search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    {
+        if($factue_id<=0){
+            $factue_id=1;
+        }
+        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=?  and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        return $data;
+    }
+
+    public function search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    {
+        if($factue_id<=0){
+            $factue_id=1;
+        }
+        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        return $data;
+    }
+
+    public function search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    {
+        if($factue_id<=0){
+            $factue_id=1;
+        }
+        $data = DB::select("select * from v_facture_inactif where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('en_cour') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        return $data;
+    }
+
+
+    public function search_intervale_dte_generique_cfp($nomTab, $invoice_dte, $due_dte, $cfp_id,$status)
+    {
+        $data = DB::select("select * from " . $nomTab . " where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('".$status."') ", [$invoice_dte, $due_dte, $cfp_id]);
+        return $data;
+    }
+
 
     public function search_num_factgenerique_cfp($nomTab, $num_fact, $cfp_id)
     {
@@ -490,4 +528,18 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 */
+
+//============== pagination =============
+
+// public function findWherePagination($nomTab,$para=[],$val=[],$name_id,$dernier_id,$nbPage){
+//     $fonction = new FonctionGenerique();
+//     $query= $fonction->queryWhere($nomTab,$para,$val);
+//     if($dernier_id<=0){
+//         $dernier_id=1;
+//     }
+//     $query = $query." and ".$name_id." >= ".$dernier_id." LIMIT ".$nbPage;
+//     $data =  DB::select($fonction->queryWhere($nomTab,$para,$val), $val);
+//     return $data;
+// }
+
 }

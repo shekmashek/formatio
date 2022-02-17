@@ -311,6 +311,7 @@ where
 
 CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     factures.cfp_id,
+    (factures.id) facture_id,
     factures.num_facture,
     entreprise_id,
     other_message,
@@ -338,6 +339,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     WHERE
         v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND  v_facture_existant.num_facture = factures.num_facture AND factures.activiter = TRUE
     GROUP BY
+        factures.id,
         factures.cfp_id,
         entreprise_id,
         factures.num_facture,
@@ -350,6 +352,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
 
 
 CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
+(factures.id) facture_id,
     factures.cfp_id,
     factures.num_facture,
     entreprise_id,
@@ -378,6 +381,7 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
     WHERE
        v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND   v_facture_existant.num_facture = factures.num_facture AND factures.activiter = FALSE
     GROUP BY
+        factures.id,
         factures.cfp_id,
         factures.num_facture,
         entreprise_id,
