@@ -80,7 +80,7 @@ class GroupeController extends Controller
                 'module_id.required' => 'le module  de la formation ne doit pas être null',
             ]
         );
-        
+
         try{
             DB::beginTransaction();
             $groupe = new groupe();
@@ -90,17 +90,17 @@ class GroupeController extends Controller
 
             $last_insert = DB::table('groupes')->latest('id')->first();
             $fonct = new FonctionGenerique();
-            $projet = $fonct->findWhereMulitOne("projets", ["id"], [$request->projet_id]);  
+            $projet = $fonct->findWhereMulitOne("projets", ["id"], [$request->projet_id]);
             $data = $request->all();
 
             if($projet->type_formation_id == 1){
                 DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert->id,$request->entreprise]);
-            }      
+            }
             if($projet->type_formation_id == 2){
                 for($i = 0; $i < count($data['entreprise']); $i++){
                     DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert->id,$data['entreprise'][$i]]);
                 }
-            } 
+            }
             DB::commit();
             return back();
         }catch(Exception $e){
