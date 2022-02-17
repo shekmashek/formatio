@@ -854,9 +854,9 @@ class ParticipantController extends Controller
             'region'=>$request->region,
 
         ]);
-        Departement::where('id',$id)->update([
-            'nom_departement'=>$request->departement
-        ]);
+        // Departement::where('id',$id)->update([
+        //     'nom_departement'=>$request->departement
+        // ]);
         entreprise::where('id',$id)->update([
             'nom_etp'=>$request->entreprise
         ]);
@@ -883,20 +883,20 @@ class ParticipantController extends Controller
 
 
         ]);
-        Departement::where('id',$id)->update([
-            'nom_departement'=>$request->departement
-        ]);
+        // Departement::where('id',$id)->update([
+        //     'nom_departement'=>$request->departement
+        // ]);
         entreprise::where('id',$id)->update([
             'nom_etp'=>$request->entreprise
         ]);
     }
-        $password = $request->password;
-        $nom = $request->nom;
-        $mail = $request->mail;
-        $hashedPwd = Hash::make($password);
-        $user = User::where('id', Auth::user()->id)->update([
-            'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-        ]);
+        // $password = $request->password;
+        // $nom = $request->nom;
+        // $mail = $request->mail;
+        // $hashedPwd = Hash::make($password);
+        // // $user = User::where('id', Auth::user()->id)->update([
+        // //     'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
+        // // ]);
         return redirect()->route('profile_stagiaire', $id);
     }
     public function last_record()

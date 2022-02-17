@@ -555,11 +555,14 @@
                                 <div class="card-title">
                                     <h6 class="mb-0 text-center">Numerika</h6>
                                 </div>
-                                <div class="card-body">
+                                @can('isReferent')
+                                    <div class="card-body">
                                         <a href="{{route('liste_departement')}}">Structure de l'entreprise</a><br>
                                         <a href="{{route('ListeAbonnement')}}">Abonnement</a><br>
                                         <a href="#">Setting</a>
-                                </div>
+                                    </div>
+                                @endcan
+
                             </div>
                         </div>
                     </div>
