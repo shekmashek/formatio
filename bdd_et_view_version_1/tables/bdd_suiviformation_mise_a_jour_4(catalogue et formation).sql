@@ -17,6 +17,7 @@ CREATE TABLE formations (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_formation varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   domaine_id int(11) NOT NULL REFERENCES domaines(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL,
   status boolean not null default true
