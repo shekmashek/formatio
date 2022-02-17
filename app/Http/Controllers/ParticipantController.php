@@ -667,28 +667,75 @@ class ParticipantController extends Controller
     public function profile_stagiaire($id = null)
     {
         $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        if ($stagiaire_connecte) {
-            $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
-            $stagiaires = db::select('select * from v_stagiaire_entreprises where matricule = ?',[$matricule]);
+     //   $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        $fonct = new FonctionGenerique();
+        if (Gate::allows('isStagiaire')) {
+
+          $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
+            $stagiaire = $fonct->findWhereMulitOne("stagiaires",["matricule"],[$matricule]);
+            $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
+            $entreprise = $fonct->findWhereMulitOne("entreprises",["id"],[$stagiaire->entreprise_id]);
+
+            // $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
+            $branche = $fonct->findWhereMulitOne("branches",["entreprise_id"],[$stagiaire->entreprise_id]);
+            return view('admin.participant.profile', compact('entreprise','stagiaire','service','departement','branche'));
+            $stagiaires = db::select('select * from stagiaires where matricule = ?',[$matricule]);
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
 
         } else {
-            $stagiaires = stagiaire::with('entreprise', 'Departement')->where('id', $id)->get();
-        }
-        // $stagiaire=stagiaire::findOrFail($id);
-        if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
-        {
-            return view('admin.participant.profiles', compact('stagiaires'));
+            $stagiaires_tmp = stagiaire::with('entreprise', 'Departement')->where('id', $id)->get();
+            $stagiaire=$stagiaires_tmp[0];
+            $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
+            $entreprise = $fonct->findWhereMulitOne("entreprises",["id"],[$stagiaire->entreprise_id]);
 
+            $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
+            $branche = $fonct->findWhereMulitOne("branches",["entreprise_id"],[$stagiaire->entreprise_id]);
+            if (Gate::allows('isSuperAdmin')){
+            return view('admin.participant.profile', compact('entreprise','stagiaire','service','departement','branche'));
+
+            }
+            else{
+                return view('admin.participant.profiles', compact('entreprise','stagiaire','service','departement','branche'));
+
+            }
         }
-        else
-        {
-        return view('admin.participant.profile', compact('stagiaires'));
-            
-        }
+        
+        // $stagiaire=stagiaire::findOrFail($id);
+        // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
+        // {
+        //     return view('admin.participant.profiles', compact('stagiaires'));
+
+        // }
+        // else
+        // {
+        // $requete = db::select('select * from v_stagiaire_entreprise where stagiaire_id = ?', [$id]);
+        // $stagiaire = $requete[0];
+
+        // return view('admin.participant.profile', compact('stagiaire'));
+
+        // }
     }
-    //update_stagiaire connecte
+    //update password
+    public function update_stg_mdp(Request $request,$id){
+
+        $users =  db::select('select * from users where id = ?',[Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->new_password);
+        if(Hash::check($request->get('ancien_password'), $pwd)){
+             DB::update('update users set password = ? where id = ?', [$new_password,Auth::id()]);
+             return redirect()->route('profile_stagiaire', $id);
+        }
+         else {
+             return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+         }
+     }
+        //update e-mail
+    public function update_email_stg(Request $request){
+        DB::update('update users set email = ? where id = ?', [$request->mail,Auth::id()]);
+        DB::update('update cfps set mail_stagiaire= ? where user_id = ?', [$request->mail,Auth::id()]);
+    
+        return redirect()->route('profile_stagiaire');
+    }
     public function update_stagiaire(Request $request, $id)
     {
         $user_id =  $users = Auth::user()->id;
@@ -770,13 +817,7 @@ class ParticipantController extends Controller
             'nom_etp'=>$request->entreprise
         ]);
     }
-        $password = $request->password;
-        $nom = $request->nom;
-        $mail = $request->mail;
-        $hashedPwd = Hash::make($password);
-        $user = User::where('id', Auth::user()->id)->update([
-            'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-        ]);
+       
         return redirect()->route('profile_stagiaire', $id);
     }
     public function last_record()

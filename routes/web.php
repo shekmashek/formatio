@@ -110,6 +110,12 @@ Route::post('/liste_projet_entreprise','EntrepriseController@listeProjet')->name
 Route::resource('utilisateur','UtilisateurControlleur')->except([
     'index','create'
 ]);
+//update password cfp
+
+Route::post('/update_cfp_mdp/{id}','UtilisateurControlleur@update_cfp_mdp')->name('update_cfp_mdp');
+
+// update e-mail cfp
+Route::post('update_mail_cfp','UtilisateurControlleur@update_email_cfp')->name('update_mail_cfp');
 Route::get('/show_stagiaire/{id?}','UtilisateurControlleur@show_stagiaire')->name('show_stagiaire');
 Route::get('/liste_utilisateur/{id?}','UtilisateurControlleur@index')->name('liste_utilisateur');
 Route::get('/utilisateur_stagiaire/{id?}','UtilisateurControlleur@create')->name('utilisateur_stagiaire');
@@ -125,6 +131,22 @@ Route::get('/utilisateur_new_cfp','UtilisateurControlleur@new_cfp')->name('utili
 Route::get('/profil_cfp/{id}','UtilisateurControlleur@profil_cfp')->name('profil_cfp');
 Route::post('/utilisateur_register_cfp','UtilisateurControlleur@register_cfp')->name('utilisateur_register_cfp');
 Route::post('/utilisateur_update_cfp/{id}','UtilisateurControlleur@update_cfp')->name('utilisateur_update_cfp');
+//route edit cfps a chaque champs
+Route::post('update_pwdcfp/{id?}','UtilisateurControlleur@update_pwd')->name('update_pwdcfp');
+Route::get('/edit_nomcfp/{id}','UtilisateurControlleur@edit_nomcfp')->name('edit_nomcfp');
+Route::get('/edit_logocfp/{id}','UtilisateurControlleur@edit_logocfp')->name('edit_logocfp');
+Route::get('/edit_rcscfp/{id}','UtilisateurControlleur@edit_rcscfp')->name('edit_rcscfp');
+Route::get('/edit_mailcfp/{id}','UtilisateurControlleur@edit_mailcfp')->name('edit_mailcfp');
+Route::get('/edit_phonecfp/{id}','UtilisateurControlleur@edit_phonecfp')->name('edit_phonecfp');
+Route::get('/edit_nifcfp/{id}','UtilisateurControlleur@edit_nifcfp')->name('edit_nifcfp');
+Route::get('/edit_adressecfp/{id}','UtilisateurControlleur@edit_adressecfp')->name('edit_adressecfp');
+Route::get('/edit_domainecfp/{id}','UtilisateurControlleur@edit_domainecfp')->name('edit_domainecfp');
+Route::get('/edit_sitecfp/{id}','UtilisateurControlleur@edit_sitecfp')->name('edit_sitecfp');
+Route::get('/edit_logocfp/{id}','UtilisateurControlleur@edit_logocfp')->name('edit_logocfp');
+Route::get('/edit_statcfp/{id}','UtilisateurControlleur@edit_statcfp')->name('edit_statcfp');
+Route::get('/edit_cifcfp/{id}','UtilisateurControlleur@edit_cifcfp')->name('edit_cifcfp');
+Route::get('/edit_pwdcfp/{id}','UtilisateurControlleur@edit_pwdcfp')->name('edit_pwdcfp');
+
 
 //route superadmin
 Route::get('/utilisateur_superAdmin','UtilisateurControlleur@superAdmin')->name('utilisateur_superAdmin');
@@ -134,8 +156,16 @@ Route::resource('formateur','ProfController')->except([
     'index','edit'
 ]);
 Route::post('/update_prof/{id?}','ProfController@misajourFormateur')->name('update_prof');
+Route::post('update_pwdprof/{id?}','ProfController@update_pwd')->name('update_pwdprof');
+
 //collabforfateur
 Route::get('/collabformateur','ProfController@affiche')->name('collabformateur');
+//update password prof
+
+Route::post('/update_profmdp/{id}','ProfController@update_prof_mdp')->name('update_profmdp');
+
+// update e-mail prof
+Route::post('update_mail_prof','ProfController@update_email_prof')->name('update_mail_prof');
 //route formateur profil
 Route::get('/profile_formateur/{id?}','ProfController@profile_formateur')->name('profile_formateur');
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
@@ -188,6 +218,8 @@ Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name(
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
+Route::post('update_pwdres/{id?}','ResponsableController@update_pwd')->name('update_pwdres');
+
 //Route pour modifier chaque champs pour responsable
 Route::get('/edit_nom/{id}','ResponsableController@edit_nom')->name('edit_nom');
 Route::get('/edit_naissance/{id}','ResponsableController@edit_naissance')->name('edit_naissance');
@@ -222,6 +254,13 @@ Route::resource('participant','ParticipantController')->except([
 Route::get('/nouveau_participant','ParticipantController@index')->name('nouveau_participant');
 Route::get('/liste_participant/{id?}','ParticipantController@create')->name('liste_participant');
 Route::get('/edit_participant/{id?}','ParticipantController@edit')->name('edit_participant');
+Route::post('update_pwd/{id?}','ParticipantController@update_pwd')->name('update_pwd');
+//update password stagiaire
+
+Route::post('/update_stagiaire_mdp/{id}','ParticipantController@update_stg_mdp')->name('update_stagiaire_mdp');
+
+// update e-mail stagiaire
+Route::post('update_mail_stagiaire','ParticipantController@update_mail_stg')->name('update_mail_stagiaire');
 //Route pour modifier chaque champs pour participant
 Route::get('/edit_nom/{id?}','ParticipantController@edit_nom')->name('edit_nom');
 Route::get('/edit_naissance/{id?}','ParticipantController@edit_naissance')->name('edit_naissance');
@@ -245,7 +284,7 @@ Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('d
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
-Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
+Route::get('/profile_stagiaire/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
 // profile_stagiaire
 Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
@@ -509,6 +548,24 @@ Route::get('nouveau_manager','DepartementController@create')->name('nouveau_mana
 Route::get('/show_dep','DepartementController@show')->name('show_dep');
 Route::get('/edit_manager/{id?}','DepartementController@edit')->name('edit_manager');
 Route::post('/update_manager/{id?}','DepartementController@update')->name('update_manager');
+Route::post('update_entreprisechef/{id?}','DepartementController@update_chef')->name('update_entreprisechef');
+//update password chef
+
+Route::post('/update_chef_mdp/{id}','DepartementController@update_chef_mdp')->name('update_chef_mdp');
+
+// update e-mail chef
+Route::post('update_mail_chef','DepartementController@update_mail_chef')->name('update_mail_chef');
+//edit manager par champ
+Route::get('/edit_photoschef/{id}','DepartementController@edit_photoschef')->name('edit_photoschef');
+Route::get('/edit_nomchef/{id}','DepartementController@edit_nomchef')->name('edit_nomchef');
+Route::get('/edit_pwdchef/{id}','DepartementController@edit_pwdchef')->name('edit_pwdchef');
+Route::get('/edit_mailchef/{id}','DepartementController@edit_mailchef')->name('edit_mailchef');
+Route::get('/edit_fonctionchef/{id}','DepartementController@edit_fonctionchef')->name('edit_fonctionchef');
+Route::get('/edit_logochef/{id}','DepartementController@edit_logochef')->name('edit_logochef');
+
+
+Route::get('/edit_phonechef/{id}','DepartementController@edit_phonechef')->name('edit_phonechef');
+Route::get('/edit_entreprisechef/{id}','DepartementController@edit_entreprisechef')->name('edit_entreprisechef');
 // =======================  PLAN DE FORMATION
 // Route::get('demande_formation','PlanFormationController@index')->name('demande_formation');
 Route::resource('planFormation', 'PlanFormationController');
@@ -534,6 +591,9 @@ Route::resource('departement','DepartementController');
 Route::get('/show_dep','DepartementController@show')->name('show_dep');
 Route::get('liste_chefDepartement','DepartementController@liste')->name('liste_chefDepartement');
 Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')->name('affProfilChefDepartement');
+
+Route::post('update_pwdchef/{id?}','DepartementController@update_pwd')->name('update_pwdchef');
+
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement','ChefDepartementController');
 Route::get('/destroy_chefDepartement','ChefDepartementController@destroy')->name('destroy_chefDepartement');

@@ -343,10 +343,17 @@ class ProfController extends Controller
     public function profile_formateur( $id = null )
     {
         $id = formateur::where('user_id', Auth::user()->id)->value('id');
+        if (Gate::allows('isSuperAdmin')) {
         $formateur = formateur::findOrFail($id);
+
+        return view('admin.formateur.profiles_formateur', compact('formateur'));
+    }
+    else{
+        $formateur = formateur::findOrFail($id);
+
         return view('admin.formateur.profile_formateur', compact('formateur'));
     }
-
+    }
     //modification  profil
     public function set_profile_formateur()
     {
@@ -364,6 +371,26 @@ class ProfController extends Controller
         $formateur = formateur::FindOrFail($request->id);
         return view('admin.formateur.modification_profil_formateur', compact('formateur'));
     }
+    public function update_prof_mdp(Request $request,$id){
+
+        $users =  db::select('select * from users where id = ?',[Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->new_password);
+        if(Hash::check($request->get('ancien_password'), $pwd)){
+             DB::update('update users set password = ? where id = ?', [$new_password,Auth::id()]);
+             return redirect()->route('profile_formateur', $id);
+        }
+         else {
+             return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+         }
+     }
+        //update e-mail
+    public function update_email_prof(Request $request){
+        DB::update('update users set email = ? where id = ?', [$request->mail,Auth::id()]);
+        DB::update('update formateurs set mail_formateur= ? where user_id = ?', [$request->mail,Auth::id()]);
+        return redirect()->route('profile_formateur', );
+    }
+    
     public function misajourFormateur(Request $request,$id)
     {
        
@@ -417,11 +444,7 @@ class ProfController extends Controller
               
             ]);
         }
-        $password = $request->password;
-        $hashedPwd = Hash::make($password);
-        $user = User::where('id', Auth::user()->id)->update([
-            'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-        ]);
+        
         return redirect()->route('profile_formateur', $id);
     }
 

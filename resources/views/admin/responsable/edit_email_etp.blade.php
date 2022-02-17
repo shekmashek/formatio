@@ -54,6 +54,7 @@
         <p style="text-align: left">E-mail</p>
         <form   class="btn-submit" action="{{route('update_entreprise',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" class="form-control test input" value="{{ optional(optional($responsable)->user)->password}}"  name="password" placeholder="">  
               
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}

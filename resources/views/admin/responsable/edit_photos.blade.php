@@ -142,6 +142,7 @@
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($responsable)->departement)->nom_departement }}" readonly>
             
                  
+                    <input type="hidden" class="form-control test input" value="{{ optional(optional($responsable)->user)->password}}"  name="password" placeholder="">  
                    
 <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
 </form>

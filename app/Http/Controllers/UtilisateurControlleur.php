@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Gate;
 
 use Illuminate\Http\Request;
 use App\User;
@@ -101,11 +102,25 @@ class UtilisateurControlleur extends Controller
         $liste = entreprise::orderBy('nom_etp')->get();
         return view('admin.utilisateur.new_cfp', compact('liste'));
     }
-    public function profil_cfp($id)
+    public function profil_cfp($id = null)
     {
         // $liste_cfps = cfp::findOrFail($id)->get();
+        
+        $id = cfp::where('user_id', Auth::user()->id)->value('id');
+         
+        if (Gate::allows('isSuperAdmin')) {
         $liste_cfps = DB::select('select * from cfps where id = '.$id);
-        return view('admin.utilisateur.profil_cfp',compact('liste_cfps'));
+
+            return view('admin.utilisateur.profiles_cfp',compact('liste_cfps'));
+
+        }
+        else{
+       
+            $liste_cfps = DB::select('select * from cfps where id = '.$id);
+
+            return view('admin.utilisateur.profil_cfp',compact('liste_cfps'));
+
+        }
     }
     public function register_cfp(Request $request)
     {
@@ -156,23 +171,69 @@ class UtilisateurControlleur extends Controller
         $liste = entreprise::orderBy('nom_etp')->get();
         return view('admin/utilisateur/cfp', compact('cfps', 'liste'));
     }
+    public function update_pwd(Request $request,$id){
+        $nom = $request->nom;
+        $mail = $request->mail;
+        $mdp = $request->password;
+        $mdpHash = Hash::make($mdp);
+        User::where('id', Auth::user()->id)
+            ->update([
+                'name' => $nom,
+                'email' => $mail,
+                'password' => $mdpHash
+            ]);
+    return redirect()->route('profil_cfp',$id);
+
+    }
     public function update_cfp(Request $request, $id)
     {
+        $input = $request->image;
+
+        
+
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/CFP';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input= "$profileImage";
+        }
+        if ($input !=null){
+           
         $update_cfp = cfp::where('id',$id)->update([
             'nom' => $request->get('nom_cfp'),
-            'adresse_lot' => $request->get('adresse_lot'),
+            'adresse_lot' => $request->adresse_lot,
             'adresse_ville' => $request->get('adresse_ville'),
             'adresse_region' => $request->get('adresse_region'),
-            'email' => $request->get('email_cfp'),
-            'telephone' => $request->get('telephone_cfp'),
+            'email' => $request->mail,
+            'telephone' => $request->phone,
             'site_cfp' => $request->get('site_web'),
             'domaine_de_formation' => $request->get('domaine_cfp'),
             'nif' => $request->get('nif_cfp'),
             'stat' => $request->get('stat_cfp'),
             'rcs' => $request->get('rcs_cfp'),
             'cif' => $request->get('cif_cfp'),
+            'logo'=>$input
         ]);
-        return back();
+    }
+    else{
+        $update_cfp = cfp::where('id',$id)->update([
+            'nom' => $request->get('nom_cfp'),
+            'adresse_lot' => $request->adresse_lot,
+            'adresse_ville' => $request->get('adresse_ville'),
+            'adresse_region' => $request->get('adresse_region'),
+            'email' => $request->mail,
+            'telephone' => $request->phone,
+            'site_cfp' => $request->get('site_web'),
+            'domaine_de_formation' => $request->get('domaine_cfp'),
+            'nif' => $request->get('nif_cfp'),
+            'stat' => $request->get('stat_cfp'),
+            'rcs' => $request->get('rcs_cfp'),
+            'cif' => $request->get('cif_cfp'),
+
+        ]);
+    }
+        return redirect()->route('profil_cfp',$id);
+
     }
 
     public function show($id)
@@ -195,7 +256,101 @@ class UtilisateurControlleur extends Controller
         $user= User::where('id',$id)->get();
         return response()->json($user);
     }
+    public function edit_nomcfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_nomcfp', compact('cfp'));
+    }
+    public function edit_logocfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_logocfp', compact('cfp'));
+    }
+    public function edit_adressecfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_adressecfp', compact('cfp'));
+    }
+    public function edit_pwdcfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_pwdcfp', compact('cfp'));
+    }
+    public function edit_mailcfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_mailcfp', compact('cfp'));
+    }
+    public function edit_phonecfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_phonecfp', compact('cfp'));
+    }
+    public function edit_domainecfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_domainecfp', compact('cfp'));
+    }
+    public function edit_sitecfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_sitecfp', compact('cfp'));
+    }
+    public function edit_nifcfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_nifcfp', compact('cfp'));
+    }
+    public function edit_cifcfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_cifcfp', compact('cfp'));
+    }
+    public function edit_statcfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_statcfp', compact('cfp'));
+    }
+    public function edit_rcscfp($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $cfp_connecte = cfp::where('user_id', $user_id)->exists();
+        $cfp = cfp::findOrFail($id);
+        return view('admin.utilisateur.edit_rcscfp', compact('cfp'));
+    }
+    
+     //update password
+     public function update_cfp_mdp(Request $request,$id){
 
+        $users =  db::select('select * from users where id = ?',[Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->new_password);
+        if(Hash::check($request->get('ancien_password'), $pwd)){
+             DB::update('update users set password = ? where id = ?', [$new_password,Auth::id()]);
+             return redirect()->route('profil_cfp',$id);
+        }
+         else {
+             return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+         }
+     }
+        //update e-mail
+    public function update_email_cfp(Request $request){
+        DB::update('update users set email = ? where id = ?', [$request->mail,Auth::id()]);
+        DB::update('update cfps set email= ? where user_id = ?', [$request->mail,Auth::id()]);
+    
+        return redirect()->route('profil_cfp');
+    }
+    
     public function update(Request $request)
     {
         $id = $request->Id;

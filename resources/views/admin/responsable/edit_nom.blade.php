@@ -67,6 +67,7 @@
 
                         </div>
                 </div>
+                <input type="hidden" class="form-control test input" value="{{ optional(optional($responsable)->user)->password}}"  name="password" placeholder="">  
 
                 
                         <select hidden value="{{$responsable->sexe_resp}}" name="genre" class="form-select test" id="genre"  >

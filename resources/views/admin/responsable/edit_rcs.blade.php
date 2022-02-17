@@ -75,6 +75,7 @@
                 
                         <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>
+                        <input type="hidden" class="form-control test input" value="{{ optional(optional($responsable)->user)->password}}"  name="password" placeholder="">  
 
 
                         <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
@@ -125,7 +126,7 @@
                                     
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
-                    <input type="text" class="form-control input test"  name="rcs"  value="  {{ optional(optional($responsable)->entreprise)->nif}}" >
+                    <input type="text" class="form-control input test"  name="rcs"  value="  {{ optional(optional($responsable)->entreprise)->rcs}}" >
                     <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">RCS</label>
 
                 </div>

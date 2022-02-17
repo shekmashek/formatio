@@ -77,34 +77,39 @@
                                  <div class="form-control">
                                      <p class="text-center">Informations générales</p>
                              
-                                     <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
+                                     <div class="d-flex align-items-center justify-content-between " style="border-bottom: solid 1px #d399c2;">
                                      <p class="p-1 m-0" style="font-size: 10px;">PHOTO
-                                         
                                      </p>
-                                     <a href="#" >
+                                     {{-- <a href="{{route('edit_photos',$refs->id)}}" > --}}
                                         <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                                     </a>
                                     </div>
-                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                     <a href="{{route('edit_nom',$refs->id)}} " >
+                                    <div  style="border-bottom: solid 1px #d399c2;">
+                                     {{-- <a href="{{route('edit_nom',$refs->id)}} " > --}}
                                      <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$refs->nom_resp}} {{$refs->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p></a>
                                      
                                     </div>
-                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                     <a href="{{route('edit_naissance',$refs->id)}} " >
+                                    <div  style="border-bottom: solid 1px #d399c2;">
+                                     {{-- <a href="{{route('edit_naissance',$refs->id)}} " > --}}
                                      <p class="p-1 m-0" style="font-size: 10px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($refs->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p></a>
                       
                                     </div>
-                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                     <a href="{{route('edit_genre',$refs->id)}} " >
+                                    <div  style="border-bottom: solid 1px #d399c2;">
+                                     {{-- <a href="{{route('edit_genre',$refs->id)}} " > --}}
                                      <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$refs->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                      </p>
                                      </a>
                                     </div>
+                                    <div  style="border-bottom: solid 1px #d399c2;">
+                                        {{-- <a href="{{route('edit_pwd',$refs->id)}} " > --}}
+                                        <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        </p>
+                                        </a>
+                                       </div>
                                      <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                  </div>
                              </div>
@@ -115,14 +120,14 @@
                                      <div class="form-control">
                                          <p class="text-center">Coordonnées</p>
                                  
-                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                             <a href="{{route('edit_mail',$refs->id)}} " >
+                                         <div style="border-bottom: solid 1px #d399c2;" >
+                                             {{-- <a href="{{route('edit_mail',$refs->id)}} " > --}}
                                          <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                              
                                          </p>
                                              </a>
                                          </div>
-                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                         <div style="border-bottom: solid 1px #d399c2;" >
                                              <a href="{{route('edit_phone',$refs->id)}} " >
                                          <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
                                              
@@ -130,21 +135,21 @@
                                              </a>
                                          </div>
                           
-                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                             <a href="{{route('edit_cin',$refs->id)}} " >
+                                         <div style="border-bottom: solid 1px #d399c2;" >
+                                             {{-- <a href="{{route('edit_cin',$refs->id)}} " > --}}
                                          <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$refs->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          </p>
                                              </a>
                                          </div>                                                         
-                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                      <a href="{{route('edit_adresse',$refs->id)}} " >
+                                         <div style="border-bottom: solid 1px #d399c2;" >
+                                      {{-- <a href="{{route('edit_adresse',$refs->id)}} " > --}}
                                          <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$refs->adresse_lot}} &nbsp;{{$refs->adresse_quartier}} &nbsp;{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                              
                                          </p>
                                       </a>
                                          </div>
-                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                             <a href="{{route('edit_fonction',$refs->id)}} " >
+                                         <div style="border-bottom: solid 1px #d399c2;" >
+                                             {{-- <a href="{{route('edit_fonction',$refs->id)}} " > --}}
                                          <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$refs->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          </p>
                                              </a>
@@ -159,34 +164,105 @@
                                  <div class="form-control">
                                      <p class="text-center">Informations professionnelles</p>
                              
-                                     <div style="border-bottom: solid 1px #d399c2;" class="">
-                                         <a href="#" >
+                                     <div style="border-bottom: solid 1px #d399c2;" >
+                                         {{-- <a href="{{route('edit_poste',$refs->id)}}" > --}}
                                      <p class="p-1 m-0" style="font-size: 10px;">Poste responsable<span style="float: right;">{{$refs->poste_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
                                          </a>
                                      </div>
                       
-                                     <div style="border-bottom: solid 1px #d399c2;" class="">
-                                         <a href="# " >
+                                     <div style="border-bottom: solid 1px #d399c2;" >
+                                         {{-- <a href="{{route('edit_entreprise',$refs->id)}}" > --}}
                                      <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{optional(optional($refs)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
                                          </a>
                                      
                                      </div>
-                                     
-                                     {{-- <div style="border-bottom: solid 1px #d399c2;" class="">
+                                     <div class="d-flex align-items-center justify-content-between " style="border-bottom: solid 1px #d399c2;">
+                                        <p class="p-1 m-0" style="font-size: 10px;">Logo
+                                        </p>
+                                        {{-- <a href="{{route('edit_logo',$refs->id)}}" > --}}
+                                           <img src="{{asset('images/entreprises/'.$refs->entreprise->logo)}}" class="image-ronde">
+                                       </a>
+                                       </div>
+                                     <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_adresse_etp',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">Adresse entreprise<span style="float: right;">{{optional(optional($refs)->entreprise)->adresse}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_site',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">Site web<span style="float: right;">{{optional(optional($refs)->entreprise)->site_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_phone_etp',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">Téléphone entreprise<span style="float: right;">{{optional(optional($refs)->entreprise)->telephone_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_email_etp',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">Email entreprise<span style="float: right;">{{optional(optional($refs)->entreprise)->email_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_nif',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">NIF<span style="float: right;">{{optional(optional($refs)->entreprise)->nif}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_stat',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">Stat<span style="float: right;">{{optional(optional($refs)->entreprise)->stat}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_rcs',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">RCS<span style="float: right;">{{optional(optional($refs)->entreprise)->rcs}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    <div style="border-bottom: solid 1px #d399c2;" >
+                                        {{-- <a href="{{route('edit_cif',$refs->id)}}" > --}}
+                                    <p class="p-1 m-0" style="font-size: 10px;">CIF<span style="float: right;">{{optional(optional($refs)->entreprise)->cif}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    
+                                    </div>
+                                    
+                                     {{-- <div style="border-bottom: solid 1px #d399c2;" >
                                          <a href="#" >
                                      <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
                                          </a>
                                      </div> --}}
+                                     
                                      <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                  </div>
                          </div>
-                            
      </div>
 
 @endsection

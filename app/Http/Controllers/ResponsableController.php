@@ -329,20 +329,62 @@ class ResponsableController extends Controller
         $fonct = new FonctionGenerique();
           
            $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[ Auth::user()->id]);
-      
+           $input = $request->image;
            if ($image = $request->file('image')) {
-            $destinationPath = 'images/responsables';
+            $destinationPath = 'images/entreprises';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input= "$profileImage";
         }
         if ($input !=null){
-        DB::update('update entreprises set nom_etp=?,adresse=?,logo=?,cif=?,nif=?,stat=?,rcs=?,email_etp=?,site_etp=?,telephone_etp=?
-        where id=?',[$request->etp,$request->adresse_etp,$input,$request->cif,$request->nif,
-        $request->stat,$request->rcs,$request->email_etp,$request->site,$request->phone_etp,$resp_etp->entreprise_id]);
-
-    //return redirect()->route('affResponsable');
+            entreprise::where('id',  $resp_etp->entreprise_id)
+            ->update([
+                'nom_etp' => $request->etp,
+                'adresse' => $request->adresse_etp,
+                'nif' => $request->nif,
+                'stat' => $request->stat,
+                'rcs' => $request->rcs,
+                'cif'=>$request->cif,
+                'email_etp'=>$request->email_etp,
+                'site_etp'=>$request->site,
+                'telephone_etp'=>$request->phone_etp,
+                'logo'=>$input
+               
+            ]);
         }
+        else{
+            entreprise::where('id',  $resp_etp->entreprise_id)
+            ->update([
+                'nom_etp' => $request->etp,
+                'adresse' => $request->adresse_etp,
+                'nif' => $request->nif,
+                'stat' => $request->stat,
+                'rcs' => $request->rcs,
+                'cif'=>$request->cif,
+                'email_etp'=>$request->email_etp,
+                'site_etp'=>$request->site,
+                'telephone_etp'=>$request->phone_etp,
+             
+               
+            ]);
+        }
+
+        return redirect()->route('affResponsable');
+        
+    }
+    public function update_pwd(Request $request){
+        $nom = $request->nom;
+        $mail = $request->mail;
+        $mdp = $request->password;
+        $mdpHash = Hash::make($mdp);
+User::where('id', Auth::user()->id)
+            ->update([
+                'name' => $nom,
+                'email' => $mail,
+                'password' => $mdpHash
+            ]);
+    return redirect()->route('affResponsable');
+
     }
     public function update(Request $request, $id)
     {
@@ -367,8 +409,7 @@ class ResponsableController extends Controller
             $poste=$request->poste;
             $fonction = $request->fonction;
             $phone =  $request->phone;
-            $mdp = $request->password;
-            $mdpHash = Hash::make($mdp);
+           
             $input = $request->image;
 
         
@@ -428,12 +469,7 @@ class ResponsableController extends Controller
                 ]);
 
             }
-            User::where('id', Auth::user()->id)
-                ->update([
-                    'name' => $nom,
-                    'email' => $mail,
-                    'password' => $mdpHash
-                ]);
+           
         
             
                 // Departement::where('id',$id)->update([

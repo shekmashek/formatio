@@ -52,7 +52,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Mot de passe</p>
-        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_pwdres',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
@@ -80,7 +80,7 @@
                        
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="password" class="form-control test input" value=""  name="password" placeholder="">  
+                        <input type="password" class="form-control test input" value="{{ optional(optional($responsable)->user)->password}}"  name="password" placeholder="">  
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Mot de passe</label>
 
                     </div>

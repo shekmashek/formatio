@@ -57,7 +57,9 @@
               
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
+                    <input type="hidden" class="form-control test input" value="{{ optional(optional($responsable)->user)->password}}"  name="password" placeholder="">  
                   
+                    <input type="hidden" class="form-control test input" value=""  name="password" placeholder="{{ optional(optional($responsable)->user)->password}}">  
                 
                         <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>

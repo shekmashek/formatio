@@ -48,7 +48,6 @@
 }
 </style>
 <center>                
-
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Adresse</p>

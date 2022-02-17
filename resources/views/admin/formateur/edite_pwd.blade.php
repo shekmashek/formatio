@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
   .input{
-        width: 175px;
+        width: 200px;
     }
 .test {
     padding: 2px;
@@ -51,16 +51,31 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Nom</p>
-        <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+        <p style="text-align: left">Mot de passe</p>
+        <form   class="btn-submit" action="{{route('update_profmdp',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row px-3 mt-4">
-                <div class="form-group mt-1 mb-1">
-                <input type="password" value="   " class="form-control test input"  name="password">
-                <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Mot de passe</label>
-                    
-                  </div>
-                </div>
+              <div class="form-group mt-1 mb-1">
+
+          <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="">
+          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Ancien mot de passe</label>
+          {{-- si l'ancien mot de passe est incorrect --}}
+          @if (\Session::has('error'))
+            <div class="alert alert-danger">
+                <ul>
+                    <li>{!! \Session::get('error') !!}</li>
+                </ul>
+            </div>
+          @endif
+              {{-- nouveau mot de passe --}}
+          <div class="row px-3 mt-4">
+              <div class="form-group mt-1 mb-1">
+
+              <input type="password" class="form-control test input" name="new_password" value="" >
+                
+              <label class="ml-3 form-control-placeholder " style="font-size:13px;color:#801D68">Nouveau mot de passe</label>
+          </div>
+      </div>
                 <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
               

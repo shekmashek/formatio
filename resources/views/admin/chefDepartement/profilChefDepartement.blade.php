@@ -1,6 +1,122 @@
 @extends('./layouts/admin')
 @section('content')
-    <div class="page-content page-container" id="page-content">
+<style>
+    .image-ronde{
+width : 30px; height : 30px;
+border: none;
+-moz-border-radius : 75px;
+-webkit-border-radius : 75px;
+border-radius : 75px;
+}
+.hover:hover{
+ background-color: rgb(233, 220, 220);
+ cursor: pointer;
+}
+ </style>
+  <div class="row">
+      
+                     <div class="row mt-2">
+                        @foreach ($vars  as $var)
+                         <div class="col-lg-4">
+                            
+                             <div class="form-control">
+                                 <p class="text-center">Informations générales</p>
+                         
+                                 <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
+                                 <p class="p-1 m-0" style="font-size: 10px;">Photos
+                                 </p>
+                                 <a href="{{route('edit_logochef',$var->id)}} " >
+                                    <img src="{{asset('images/chefDepartement/'.$var->photos)}}"  class="image-ronde">
+                             </a>
+                                 
+                                </div>
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                 <a href="{{route('edit_nomchef',$var->id)}}" >
+                                 <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$var->nom_chef}} {{$var->prenom_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     
+                                 </p></a>
+                                 
+                                </div>
+                          
+                              
+                                @can('isManager')
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                 <a href="{{route('edit_pwdchef',$var->id)}}" >
+                                 <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                                 </p>
+                                 </a>
+                                </div>
+                                @endcan
+                               
+                                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                             </div>
+                         </div>
+                     
+
+                             <div class="col-lg-4">
+                            
+                                 <div class="form-control">
+                                     <p class="text-center">Coordonnées</p>
+                             
+                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                        <a href="{{route('edit_mailchef',$var->id)}}" >
+                                    <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$var->mail_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p>
+                                        </a>
+                                    </div>
+                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                         <a href="{{route('edit_phonechef',$var->id)}}" >
+                                     <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$var->telephone_chef}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                         
+                                     </p>
+                                         </a>
+                                     </div>
+                      
+                                     
+                                     <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                                 </div>
+                         </div>
+                         <div class="col-lg-4">
+                            
+                             <div class="form-control">
+                                 <p class="text-center">Informations professionnelles</p>
+                         
+                  
+                                 {{-- <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                    
+                                     {{-- <a href="{{route('edit_departementchef',$cfp->id)}}" > --}}
+                                        {{-- @foreach ($departement as $dep) --}}
+                                 {{-- <p class="p-1 m-0" style="font-size: 10px;"> Departement<span style="float: right;">  {{$dep->departement->nom_departement}} 
+                                    &nbsp;<i class="fas fa-angle-right"></i></span>
+                                   
+                                    @endforeach
+                                 </p>
+                                     </a>
+                                 
+                                 </div> --}} 
+                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                    <a href="{{route('edit_fonctionchef',$var->id)}}" >
+                                <p class="p-1 m-0" style="font-size: 10px;">Fonction<span style="float: right;">{{$var->fonction_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    
+                                </p>
+                                    </a>
+                                </div>
+                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                     <a href="{{route('edit_entreprisechef',$var->id)}}" >
+                                 <p class="p-1 m-0" style="font-size: 10px;">Entreprise<span style="float: right;">{{$var->entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     
+                                 </p>
+                                     </a>
+                                 </div>
+                             
+                                 
+                                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                             </div>
+                     </div>
+                         @endforeach
+ </div>
+    {{-- <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
                 <div class="col-xl-12 col-md-12">
@@ -62,5 +178,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection

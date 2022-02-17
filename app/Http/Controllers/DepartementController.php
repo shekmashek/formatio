@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\getImageModel;
 
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -13,6 +14,7 @@ use App\DepartementEntreprise;
 use App\chefDepartement;
 use App\chefDepartementEntreprise;
 use App\responsable;
+use App\Models\FonctionGenerique;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -89,8 +91,14 @@ class DepartementController extends Controller
             $departement = DepartementEntreprise::with('departement', 'entreprise')->where('id', $depEtpId)->get();
             $vars = chefDepartement::with('entreprise')->where('id', $idChef)->get();
         }
+        if (Gate::allows('isSuperAdmin')){
+        return view('admin/chefDepartement/profilChefDepartements', compact('vars', 'departement'));
 
-        return view('admin/chefDepartement/profilChefDepartement', compact('vars', 'departement'));
+        }
+        else{
+            return view('admin/chefDepartement/profilChefDepartement', compact('vars', 'departement'));
+
+        }
     }
     //enregistrer departement
     public function store(Request $request)
@@ -116,25 +124,175 @@ class DepartementController extends Controller
         $var = chefDepartement::findOrFail($id);
         return view('admin.chefDepartement.update', compact('var'));
     }
+    public function edit_nomchef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+        $chef= chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_nomchef', compact('chef'));
+    }
+    public function edit_logochef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+        $chef= chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_logochef', compact('chef'));
+    }
+    public function edit_photoschef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+        $chef = chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_photoschef', compact('chef '));
+    }
+    public function edit_pwdchef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+       $chef  = chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_pwdchef', compact('chef'));
+    }
+    public function edit_mailchef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+        $chef= chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_mailchef', compact('chef'));
+    }
+    public function edit_fonctionchef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+        $chef= chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_fonctionchef', compact('chef'));
+    }
+    public function edit_phonechef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+       $chef  = chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_phonechef', compact('chef'));
+    }
+    public function edit_entreprisechef($id, Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+       $chef  = chefDepartement::findOrFail($id);
+        return view('admin.chefDepartement.edit_entreprisechef', compact('chef'));
+    }
+    public function update_chef(Request $request, $id){
+        // $fonct = new FonctionGenerique();
+            
+            
+          $entreprise_id=chefDepartement::where('id',$id)->value('entreprise_id');
+        //   dd($entreprise_id);
+    //    $id_etp=chefDepartement::with('entreprise')->where('id',$entreprise_id)->get();
+       
+           $input = $request->image;
+           if ($image = $request->file('image')) {
+            $destinationPath = 'images/entreprises';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input= "$profileImage";
+        }
+        if ($input !=null){
+            entreprise::where('id',$entreprise_id)
+            ->update([
+                'nom_etp' => $request->etp,
+                'adresse' => $request->adresse_etp,
+                'nif' => $request->nif,
+                'stat' => $request->stat,
+                'rcs' => $request->rcs,
+                'cif'=>$request->cif,
+                'email_etp'=>$request->email_etp,
+                'site_etp'=>$request->site,
+                'telephone_etp'=>$request->phone_etp,
+                'logo'=>$input
+               
+            ]);
+        }
+        else{
+            entreprise::where('id',  $entreprise_id)
+            ->update([
+                'nom_etp' => $request->etp,
+                'adresse' => $request->adresse_etp,
+                'nif' => $request->nif,
+                'stat' => $request->stat,
+                'rcs' => $request->rcs,
+                'cif'=>$request->cif,
+                'email_etp'=>$request->email_etp,
+                'site_etp'=>$request->site,
+                'telephone_etp'=>$request->phone_etp,
+             
+               
+            ]);
+        }
+        return redirect()->route('affProfilChefDepartement', $id);
+        
+    }
+    //update password
+    public function update_chef_mdp(Request $request,$id){
 
+        $users =  db::select('select * from users where id = ?',[Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->new_password);
+        if(Hash::check($request->get('ancien_password'), $pwd)){
+             DB::update('update users set password = ? where id = ?', [$new_password,Auth::id()]);
+             return redirect()->route('affProfilChefDepartement', $id);
+        }
+         else {
+             return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+         }
+     }
+        //update e-mail
+    public function update_mail_chef(Request $request){
+        DB::update('update users set email = ? where id = ?', [$request->mail,Auth::id()]);
+        DB::update('update chef_departements set mail_chef= ? where user_id = ?', [$request->mail,Auth::id()]);
+        return redirect()->route('affProfilChefDepartement');
+    }
     public function update(Request $request)
     {
         $id = $request->id;
+        
         $vars = chefDepartement::findOrFail($id);
+        $input = $request->image;
+        // //stockage dans google drive
+        //     $dossier = 'chefDepartement';
+        //     $stock_stg = new getImageModel();
+        //      $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+        if ($image = $request->file('image')) {
+                       $destinationPath = 'images/chefDepartement';
+                       $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                       $image->move($destinationPath, $profileImage);
+                       $input= "$profileImage";
+                   }
+                   if ($input !=null){
+                   chefDepartement::where('id',$id)->update([
+                    'nom_chef' => $request->nom, 
+                    'prenom_chef' => $request->prenom, 
+                    'fonction_chef' => $request->fonction,
+                    'mail_chef' => $request->mail, 
+                    'telephone_chef' => $request->phone,
+                    'photos'=>$input
+                   ]);
+                }
+                else{
+                    chefDepartement::where('id',$id)->update([
+                        'nom_chef' => $request->nom, 
+                        'prenom_chef' => $request->prenom, 
+                        'fonction_chef' => $request->fonction,
+                        'mail_chef' => $request->mail, 
+                        'telephone_chef' => $request->phone,
+                       ]);
+                }
+    //                if ($input !=null){
+    //     $vars->update([
+    //         'nom_chef' => $request->nom, 'prenom_chef' => $request->prenom, 'fonction_chef' => $request->fonction,
+    //         'mail_chef' => $request->mail, 'telephone_chef' => $request->phone,'logo' => $input,
+    //     ]);
+       
+    // }
+    // else{
+    //     $vars->update([
+    //         'nom_chef' => $request->nom, 'prenom_chef' => $request->prenom, 'fonction_chef' => $request->fonction,
+    //         'mail_chef' => $request->mail, 'telephone_chef' => $request->phone,
+    //     ]);
+    // }
+    return redirect()->route('affProfilChefDepartement', $id);
 
-        $vars->update([
-            'nom_chef' => $request->nom, 'prenom_chef' => $request->prenom, 'fonction_chef' => $request->fonction,
-            'mail_chef' => $request->mail, 'telephone_chef' => $request->phone
-        ]);
-        $password = $request->password;
-        $nom = $request->nom;
-        $mail = $request->mail;
-        $hashedPwd = Hash::make($password);
-        $user = User::where('id', Auth::user()->id)->update([
-            'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-        ]);
-        return redirect()->route('affProfilChefDepartement', $id);
-    }
+}
 
     public function destroy($id)
     {

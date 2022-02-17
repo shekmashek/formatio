@@ -1,6 +1,146 @@
 @extends('./layouts/admin')
 @section('content')
-    <div class="page-content page-container" id="page-content">
+<style>
+    .image-ronde{
+width : 30px; height : 30px;
+border: none;
+-moz-border-radius : 75px;
+-webkit-border-radius : 75px;
+border-radius : 75px;
+}
+.hover:hover{
+ background-color: rgb(233, 220, 220);
+ cursor: pointer;
+}
+ </style>
+  <div class="row">
+      
+                     <div class="row mt-2">
+                         @foreach ($liste_cfps as $cfp)
+                         <div class="col-lg-4">
+                            
+                             <div class="form-control">
+                                 <p class="text-center">Informations générales</p>
+                         
+                                 <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
+                                 <p class="p-1 m-0" style="font-size: 10px;">Logo
+                                 </p>
+                                 <a href="{{route('edit_logocfp',$cfp->id)}} " >
+                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}"  class="image-ronde">
+                             </a>
+                                 
+                                </div>
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                 <a href="{{route('edit_nomcfp',$cfp->id)}}" >
+                                 <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{ $cfp->nom }}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     
+                                 </p></a>
+                                 
+                                </div>
+                          
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <a href="{{route('edit_adressecfp',$cfp->id)}}" >
+                                    <p class="p-1 m-0" style="font-size: 10px;">Adresse<span style="float: right;">{{ $cfp->adresse_lot }}, {{ $cfp->adresse_ville }}, {{ $cfp->adresse_region }}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        
+                                    </p></a>
+                                    
+                                   </div>
+                                @can('isCFP')
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                 <a href="{{route('edit_pwdcfp',$cfp->id)}}" >
+                                 <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                                 </p>
+                                 </a>
+                                </div>
+                                @endcan
+                                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                             </div>
+                         </div>
+                     
+
+                             <div class="col-lg-4">
+                            
+                                 <div class="form-control">
+                                     <p class="text-center">Coordonnées</p>
+                             
+                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                         <a href="{{route('edit_mailcfp',$cfp->id)}}" >
+                                     <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{ $cfp->email }}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         
+                                     </p>
+                                         </a>
+                                     </div>
+                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                         <a href="{{route('edit_phonecfp',$cfp->id)}}" >
+                                     <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{ $cfp->telephone }}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                         
+                                     </p>
+                                         </a>
+                                     </div>
+                      
+                                     
+                                     <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                                 </div>
+                         </div>
+                         <div class="col-lg-4">
+                            
+                             <div class="form-control">
+                                 <p class="text-center">Informations professionnelles</p>
+                         
+                  
+                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                     <a href="{{route('edit_domainecfp',$cfp->id)}}" >
+                                 <p class="p-1 m-0" style="font-size: 10px;"> Domaine de formation<span style="float: right;">{{ $cfp->domaine_de_formation }} 
+                                    &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     
+                                 </p>
+                                     </a>
+                                 
+                                 </div>
+                                 
+                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                     <a href="{{route('edit_sitecfp',$cfp->id)}}" >
+                                 <p class="p-1 m-0" style="font-size: 10px;">Site web officiel<span style="float: right;">{{ $cfp->site_cfp }} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     
+                                 </p>
+                                     </a>
+                                 </div>
+                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                    <a href="{{route('edit_nifcfp',$cfp->id)}}" >
+                                <p class="p-1 m-0" style="font-size: 10px;">NIF<span style="float: right;">{{ $cfp->nif }} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    
+                                </p>
+                                    </a>
+                                </div>
+                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                    <a href="{{route('edit_cifcfp',$cfp->id)}}" >
+                                <p class="p-1 m-0" style="font-size: 10px;">CIF<span style="float: right;">{{ $cfp->cif }} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    
+                                </p>
+                                    </a>
+                                </div>
+                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                    <a href="{{route('edit_statcfp',$cfp->id)}}" >
+                                <p class="p-1 m-0" style="font-size: 10px;">STAT<span style="float: right;">{{ $cfp->stat}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    
+                                </p>
+                                    </a>
+                                </div>
+                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                    <a href="{{route('edit_rcscfp',$cfp->id)}}" >
+                                <p class="p-1 m-0" style="font-size: 10px;">RCS<span style="float: right;">{{ $cfp->rcs}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    
+                                </p>
+                                    </a>
+                                </div>
+                                
+                                 
+                                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                             </div>
+                     </div>
+                         @endforeach
+ </div>
+    {{-- <div class="page-content page-container" id="page-content">
         @foreach ($liste_cfps as $cfp)
 
 
@@ -57,5 +197,5 @@
             </div>
         </div>
         @endforeach
-    </div>
+    </div> --}}
 @endsection

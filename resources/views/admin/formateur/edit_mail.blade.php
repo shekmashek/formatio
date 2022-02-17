@@ -52,7 +52,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">E-mail</p>
-        <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_mail_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
         
                     <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input"  name="nom">
