@@ -138,18 +138,24 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
 
                 <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
                     @csrf
                     <ul id="progressbars">
-                        <li class="active" id="etape1"><strong>Entreprise</strong></li>
+                        <li class="active" id="etape1"></li>
+                        <li id="etape2"><strong></strong></li>
+                        <li id="etape3"><strong></strong></li>
+                        <li id="etape4"><strong></strong></li>
+                        <li id="etape5"><strong></strong></li>
+                        <li id="etape6"><strong></strong></li>
+                        {{-- <li class="active" id="etape1"><strong>Entreprise</strong></li>
                         <li id="etape2"><strong>numéro Facture</strong></li>
                         <li id="etape3"><strong>dates</strong></li>
                         <li id="etape4"><strong>mode de paiement</strong></li>
                         <li id="etape5"><strong>frais</strong></li>
-                        <li id="etape6"><strong>sauvegarder</strong></li>
+                        <li id="etape6"><strong>sauvegarder</strong></li> --}}
                     </ul>
 
                     {{-- <ul id="progressbar">
@@ -255,7 +261,7 @@
 
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="invoice_date" class="form-label">Date creation Facture<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="invoice_date" class="form-label">Date création Facture<strong style="color:#ff0000;">*</strong></label>
                                         <input type="date" required class="form-control input_inscription" id="exampleFormControlInput1" placeholder="Invoice Date" name="invoice_date" id="invoice_date">
 
                                     </div>
@@ -331,6 +337,7 @@
                         {{-- etpate 5 --}}
 
                         <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                            <h4 align="left" class="mb-2">Frais:</h4>
 
                             {{-- <div style="background-color: rgb(214, 218, 214);"> --}}
                             <div class="row">
@@ -338,7 +345,7 @@
                                     <h4 align="left" class="my-2">Frais pédagogique:</h4>
                                 </div>
                                 <div class="col-md-2">
-                                    <button id="addRowMontant" type="button" class="btn btn-success"><i class="fa fa-plus">montant</i></button>
+                                    <button id="addRowMontant" type="button" class="btn btn-success"><i class="fa fa-plus">montant(click)</i></button>
                                 </div>
                                 <div class="col-md-7">
 
@@ -354,29 +361,21 @@
                             <hr style="border: 2px solid black;">
 
 
-                            {{-- <div  style="background-color: rgb(182, 184, 185);"> --}}
                             <div class="row mt-5">
                                 <div class="col-md-3 justify-content-text">
                                     <h4 align="left" class="my-2">Frais annexe:</h4>
                                 </div>
-                                <div class="col-md-2">
-                                    <button id="addRow" type="button" class="btn btn-info"><i class="fa fa-plus">frais annexe</i></button>
+                                <div class="col-auto">
+                                    <button id="addRow" type="button" class="btn btn-info"><i class="fa fa-plus">frais annexe(click)</i></button>
                                 </div>
-                                <div class="col-md-7">
-
-                                </div>
+                                {{-- <div class="col-md-7"></div> --}}
                             </div>
 
                             <div class="row my-1">
                                 <div id="newRow"></div>
                             </div>
-                        {{-- </div> --}}
-                            {{-- <h2 align="left" class="my-2">Frais annexe:</h2>
-                            <button id="addRow" type="button" class="btn btn-info"><i class="fa fa-plus">frais annexe</i></button>
 
-                            <div class="row my-1">
-                                <div id="newRow"></div>
-                            </div> --}}
+                            <hr style="border: 2px solid black;">
 
                             <div class="row">
                                 <div class="col-md-4">
@@ -411,6 +410,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-7 text-center">
+                                            <input type="button" name="previous" class="previous action-button" value="Précendent" />
                                             <input type="submit" class="next action-button" value="Sauvegarder" />
                                         </div>
                                     </div>
@@ -543,27 +543,27 @@
             , success: function(response) {
                 var userData = response;
                 var html = '';
+
                 html += '<div class="row justify-content" id="inputFormRow">';
                 html += '<div class="col">';
-                html += '<label class="visually" for="specificSizeSelect">frais annexe</label>';
-                html += '<select class="form-select" id="frais" name="frais_annexe_id[]" id="specificSizeSelect">';
+                html += '<label class="visually" for="specificSizeSelect">Type frais annexe<strong style="color: red">*</strong> </label>';
+                html += '<select class="form-select mt-1" id="frais" name="frais_annexe_id[]" id="specificSizeSelect">';
 
                 for (var $i = 0; $i < userData.length; $i++) {
                     html += '<option value="' + userData[$i].id + '">' + userData[$i].description + '</option>';
                 }
                 html += '</select></div>';
                 html += '<div class="col">';
-                html += '<label class="visually" for="specificSizeInputName">Description</label>';
-                html += '<input type="text" name="description_annexe[]" class="form-control" id="specificSizeInputName" placeholder="description"></div>';
-                html += '<div class="col">';
-                html += '<label class="visually" for="specificSizeInputName">PU(Ariary)</label>';
+                html += '<label class="visually" for="specificSizeInputName">PU(Ariary)<strong style="color: red">*</strong></label>';
                 html += '<input type="number" min="0" value="0" name="montant_frais_annexe[]" class="form-control" id="specificSizeInputName" placeholder="0"></div>';
                 html += '<div class="col">';
-                html += '<label class="visually" for="specificSizeInputName">Qte</label>';
-                html += '<input type="number" min="1" value="1" name="qte_annexe[]" class="form-control" id="specificSizeInputName" placeholder="1"></div>';
-                html += '<div class="col"><div class="input-group-append">';
-                html += '<button id="removeRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>';
-                html += '</div>';
+                html += '<label class="visually" for="specificSizeInputName">Description</label>';
+                html += '<input type="text" name="description_annexe[]" class="form-control" id="specificSizeInputName" placeholder="description"></div>';
+                html += '<div class="col-auto"><div class="input-group-append">';
+                html += '<label class="visually" for="specificSizeInputName">Qte<strong style="color: red">*</strong></label>';
+                html += '<input type="number" min="1" value="1" name="qte_annexe[]" class="form-control" id="specificSizeInputName" placeholder="1"></div></div>';
+                html += '<div class="col-auto">';
+                html += '<button id="removeRow" type="button" class="btn btn-danger"  style="position:relative; top: 2.3rem"><i class="fa fa-trash"></i></button>';
                 html += '</div>';
                 html += '</div><br>';
 
@@ -590,20 +590,6 @@
         $('#montant').empty();
         var id = $("#projet_id").val();
 
-        /*   $.ajax({
-               url:"{{route('groupe_projet')}}",
-               type:'get',
-               data:{id:id},
-               success:function(response){
-                   var userData=response;
-                   for (var $i = 0; $i < userData.length; $i++){
-                       $("#session_id").append('<option value="'+userData[$i].id+'">'+ JSON.stringify(userData[$i].description)+'</option>');
-                   }
-               },
-               error:function(error){
-                   console.log(error);
-               }
-           }); */
 
         $.ajax({
             url: "{{route('groupe_projet')}}"
@@ -615,26 +601,26 @@
                 var userData = response;
 
                 var html = '';
-                html += '<div class="row" id="inputFormRowMontant">';
+                html += '<div class="row justify-content" id="inputFormRowMontant">';
                 html += '<div class="col">';
-                html += '<label class="visually" for="specificSizeSelect">Choisir la Session a Facturé</label>';
-                html += '<select id="session_id" class="form-control" name="session_id[]">';
+                html += '<label class="visually" for="specificSizeSelect">Choisir la Session a Facturé<strong style="color: red">*</strong></label>';
+                html += '<select id="session_id" class="form-control mt-1" name="session_id[]">';
                 for (var $i = 0; $i < userData.length; $i++) {
                     html += '<option value="' + userData[$i].id + '">' + userData[$i].nom_groupe + '</option>';
                 }
                 html += '</select></div>';
                 html += '<div class="col">';
-                html += '<label class="visually" for="specificSizeInputName">PU(Ariary)</label>';
+                html += '<label class="visually" for="specificSizeInputName">PU(Ariary)<strong style="color: red">*</strong></label>';
                 html += '<input type="number" min="0" value="0" name="facture[]" class="form-control" id="specificSizeInputName" placeholder="0"></div>';
                 html += '<div class="col">';
                 html += '<label class="visually" for="specificSizeInputName">Description</label>';
                 html += '<input type="text" name="description[]" class="form-control" id="specificSizeInputName" placeholder="description"></div>';
                 html += '<div class="col-auto"><div class="input-group-append">';
-                html += '<label class="visually" for="specificSizeInputName">Qte</label>';
+                html += '<label class="visually" for="specificSizeInputName">Qte<strong style="color: red">*</strong></label>';
                 html += '<input type="number" min="1" value="1" name="qte[]" class="form-control" id="specificSizeInputName" placeholder="1"></div>';
                 html += '</div>';
                 html += '<div class="col-auto"><div class="input-group-append">';
-                html += '<button id="removeRowMontant" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>';
+                html += '<button id="removeRowMontant" type="button" class="btn btn-danger" style="position:relative; top: 2.3rem"><i class="fa fa-trash"></i></button>';
                 html += '</div>';
                 html += '</div>';
                 html += '</div>';

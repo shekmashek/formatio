@@ -18,6 +18,7 @@ use App\Collaboration;
 use App\Models\getImageModel;
 use Monolog\Handler\IFTTTHandler;
 use Illuminate\Http\Response;
+
 class FactureController extends Controller
 {
 
@@ -73,7 +74,7 @@ class FactureController extends Controller
         $facture_inactif = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
         // $verify = DB::select('select (groupes.id) groupe_id,cfp_id,projet_id from groupes,projets where projets.id=projet_id and cfp_id=?', [$cfp_id]);
 
-        $test = count($facture_inactif)+ count($facture_actif);
+        $test = count($facture_inactif) + count($facture_actif);
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
@@ -254,26 +255,26 @@ class FactureController extends Controller
             "defaultPaperSize" => "a4",
             "dpi" => 130
         ]);
-            //affichage photo
+        //affichage photo
         //   liste des contenues dans drive
         $contents = collect(Storage::cloud()->listContents('/', false));
         //recuperer dossier "entreprise
-         $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', 'entreprise')
-        ->first();
+        $dir = $contents->where('type', '=', 'dir')
+            ->where('filename', '=', 'entreprise')
+            ->first();
 
         $files = collect(Storage::cloud()->listContents($dir['path'], false))
-        ->where('type', '=', 'file')
-        ->where('filename', '=', pathinfo($cfp->logo, PATHINFO_FILENAME))
-        ->where('extension', '=', pathinfo($cfp->logo, PATHINFO_EXTENSION))
-        ->first();
+            ->where('type', '=', 'file')
+            ->where('filename', '=', pathinfo($cfp->logo, PATHINFO_FILENAME))
+            ->where('extension', '=', pathinfo($cfp->logo, PATHINFO_EXTENSION))
+            ->first();
         $rawData = Storage::cloud()->get($files['path']);
 
-        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('rawData','cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('rawData', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
-                    'allow_self_signed'=> TRUE,
+                    'allow_self_signed' => TRUE,
                     'verify_peer' => FALSE,
                     'verify_peer_name' => FALSE,
                 ]
@@ -331,10 +332,10 @@ class FactureController extends Controller
         $contat_pathFA = '';
         $contat_file = '';
 
-        $type_fact = $this->fonct->findWhereMulitOne("type_facture",["id"],[$imput["type_facture"]]);
-        $prj_id = $this->fonct->findWhereMulitOne("groupes",["id"],[$groupe_id[0]])->projet_id;
-        $un_projet = $this->fonct->findWhereMulitOne( "projets",["id"],[$prj_id]);
-        $un_cfp = $this->fonct->findWhereMulitOne( "cfps",["id"],[$un_projet->cfp_id]);
+        $type_fact = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$imput["type_facture"]]);
+        $prj_id = $this->fonct->findWhereMulitOne("groupes", ["id"], [$groupe_id[0]])->projet_id;
+        $un_projet = $this->fonct->findWhereMulitOne("projets", ["id"], [$prj_id]);
+        $un_cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$un_projet->cfp_id]);
 
         for ($i = 0; $i < count($groupe_id); $i++) {
             $groupe_araika = $this->fonct->findWhereMulitOne(
@@ -343,9 +344,9 @@ class FactureController extends Controller
                 [$groupe_id[$i]]
             );
 
-            $contat_pathBC .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
-            $contat_pathFA .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
-            $contat_file .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
+            $contat_pathBC .= '' . $groupe_araika->nom_groupe . '_' . $groupe_id[$i] . '_' . $type_fact->reference . '_' . $imput["type_facture"];
+            $contat_pathFA .= '' . $groupe_araika->nom_groupe . '_' . $groupe_id[$i] . '_' . $type_fact->reference . '_' . $imput["type_facture"];
+            $contat_file .= '' . $groupe_araika->nom_groupe . '_' . $groupe_id[$i] . '_' . $type_fact->reference . '_' . $imput["type_facture"];
             if ($i + 1 < count($groupe_id)) {
                 $contat_pathBC .= '_et_';
                 $contat_pathFA .= '_et_';
@@ -357,14 +358,14 @@ class FactureController extends Controller
         //creation sous dossier Facture/BonCommande/Nom_du_cfp et enregistrement du bc et devis
         $dossier = 'facture';
         $sous_dossier = 'bc';
-        $dossier_cfp = $un_cfp->nom.$un_cfp->id;
-        $projet_folder = $un_projet->nom_projet.$un_projet->id;
+        $dossier_cfp = $un_cfp->nom . $un_cfp->id;
+        $projet_folder = $un_projet->nom_projet . $un_projet->id;
         $bc = new getImageModel();
         //enregistrement du bc
-        $bc->create_sub_directory($dossier,$sous_dossier,$dossier_cfp,$projet_folder,$contat_pathBC,$imput->file('down_bc')->getContent());
+        $bc->create_sub_directory($dossier, $sous_dossier, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_bc')->getContent());
         //enregistrement du devis
         $sous_dossier2 = 'devis';
-        $bc->create_sub_directory($dossier,$sous_dossier2,$dossier_cfp,$projet_folder,$contat_pathBC,$imput->file('down_fa')->getContent());
+        $bc->create_sub_directory($dossier, $sous_dossier2, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_fa')->getContent());
         $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);
         return $res;
     }
@@ -518,6 +519,31 @@ class FactureController extends Controller
     public function lecturePDF($path_file)
     {
         $this->fact->lectureFileProjet($path_file);
+    }
+
+    // ================== Rehcerche Par critère ==================
+
+    public function search_par_date(Request $req)
+    {
+        $invoice_dte = $req->invoice_dte_fact;
+        $due_dte = $req->due_dte_fact;
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
+            $facture =  $this->fact->search_intervale_dte_generique_cfp("v_facture_actif",$invoice_dte, $due_dte,$cfp_id);
+
+            dd($facture);
+
+            return view('admin.facture.liste_facture_en_cour',compact('facture'));
+        }
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id',  Auth::user()->id)->value('entreprise_id');
+            $facture =  $this->fact->search_intervale_dte_generique_etp("v_facture_actif",$invoice_dte, $due_dte,$entreprise_id);
+            dd($facture);
+            return view('admin.facture.liste_facture_en_cour',compact('facture'));
+        }
+
+
     }
 
 

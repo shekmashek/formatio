@@ -389,6 +389,11 @@ Route::get('detail_facture/{num_facture}','FactureController@detail_facture')->n
 Route::get('projetFacturer','FactureController@projetFacturer')->name('projetFacturer');
 Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFacture');
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
+
+//============================== recherche facture ================
+Route::post('search_par_date','FactureController@search_par_date')->name('search_par_date');
+
+
 // ==========================================================================
 
 Route::get('maquette','FactureController@maquette')->name('maquette');
