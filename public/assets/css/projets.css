@@ -49,6 +49,11 @@
     color: white;
 }
 
+.card_projets a:focus{
+    text-decoration-line: none;
+    text-decoration: none;
+}
+
 .projets_icon{
     font-size: 5rem;
     margin-top: 1rem;
@@ -88,9 +93,70 @@
     color: white;
 }
 
-.projets_icon2{
-    font-size: 5rem;
-    margin-top: 1rem;
+.projets_card3{
+    background: var(--first-color);
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    padding: 20px 0 20px 0;
+    color: black;
+    transition: all 0.5s ease;
+}
+
+.projets_card3:hover{
+    background: linear-gradient(60deg, #8E2DE2, #4A00E0);
+    color:  white;
+    box-shadow: rgba(83, 83, 243, 0.185) 0px 8px 24px, rgba(83, 83, 243, 0.185) 0px 16px 56px, rgba(83, 83, 243, 0.185) 0px 24px 80px;
+    transform: scale(1.1);
+}
+
+.projets_card3:hover h5,
+.projets_card3:hover .bx{
+    color: white ;
+}
+
+.projets_card3 h5{
+    color: #7635dc;
+}
+
+.projets_card3 .bx{
+    color: #7635dc;
+}
+
+
+.projets_card3 a:hover{
+    color: white;
+}
+
+.projets_card4{
+    background: var(--first-color);
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    padding: 20px 0 20px 0;
+    color: black;
+    transition: all 0.5s ease;
+}
+
+.projets_card4:hover{
+    background: linear-gradient(60deg, #11998e, #38ef7d);
+    color:  white;
+    box-shadow: rgba(83, 83, 243, 0.185) 0px 8px 24px, rgba(83, 83, 243, 0.185) 0px 16px 56px, rgba(83, 83, 243, 0.185) 0px 24px 80px;
+    transform: scale(1.1);
+}
+
+.projets_card4:hover h5,
+.projets_card4:hover .bx{
+    color: white ;
+}
+
+.projets_card4 h5{
+    color: #7635dc;
+}
+
+.projets_card4 .bx{
+    color: #7635dc;
+}
+
+
+.projets_card4 a:hover{
+    color: white;
 }
 
 

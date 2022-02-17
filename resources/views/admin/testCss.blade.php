@@ -296,34 +296,7 @@
             </li> --}}
             @endcanany
             {{-- action de formations --}}
-            @canany(['isSuperAdmin','isCFP','isReferent','isFormateur','isStagiaire'])
-            @canany(['isCFP','isReferent'])
-            <li>
-                <a href="{{route('execution')}}" class="d-flex nav_linke">
-                    <i class='bx bx-task'></i>
-                    <span class="links_name">Sessions</span>
-                </a>
-                <span class="tooltip">Sessions</span>
-            </li>
-            @endcanany
-            @canany(['isSuperAdmin','isCFP','isReferent'])
-            <li>
-                <a href="{{route('liste_detail')}}" class="d-flex nav_linke">
-                    <i class='bx bx-list-plus'></i>
-                    <span class="links_name">Détails</span>
-                </a>
-                <span class="tooltip">Détails</span>
-            </li>
-            @endcanany
-            @canany(['isStagiaire','isCFP','isReferent','isManager','isFormateur'])
-            <li>
-                <a href="{{route('execution')}}" class="d-flex nav_linke">
-                    <i class='bx bx-extension'></i>
-                    <span class="links_name">Exécution</span>
-                </a>
-                <span class="tooltip">Exécution</span>
-            </li>
-            @endcanany
+
             @canany(['isFormateur'])
             <li>
                 <a href="{{route('presence.index')}}" class="d-flex nav_linke">
@@ -334,7 +307,6 @@
             </li>
             @endcanany
 
-            @endcanany
             {{-- calendrire de formations --}}
             <li>
                 <a href="{{route('calendrier')}}" class="d-flex nav_linke">
@@ -668,9 +640,8 @@
             <div class="container-fluid pb-5 pt-5 content_body">
                 @yield('content')
                 <div class="container">
-                    <div class="row">
+                    <div class="row card_projets">
                         <h3 class="text-center mt-5 mb-5">Formation continue : former en inter et en intra</h3>
-
                         <div class="col-6 ">
                             <a href="#">
                                 <div class="row projets_card me-2">
@@ -692,10 +663,46 @@
                             <a href="#">
                                 <div class="row projets_card2 ms-2">
                                     <div class="col-3">
-                                        <i class='bx bxs-customize projets_icon2'></i>
+                                        <i class='bx bxs-customize projets_icon'></i>
                                     </div>
                                     <div class="col-9">
                                         <h5>Creer un projet en inter</h5>
+                                        <p>
+                                            Découvrez toutes nos formations en présentiel et à distance, en inter, intra
+                                            packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
+                                            certification.
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mt-5 card_projets">
+                        <div class="col-6 ">
+                            <a href="#">
+                                <div class="row projets_card3 me-2">
+                                    <div class="col-3 text-center">
+                                        <i class='bx bxs-grid-alt projets_icon'></i>
+                                    </div>
+                                    <div class="col-9">
+                                        <h5>Session pour un projet en intra</h5>
+                                        <p>
+                                            Découvrez toutes nos formations en présentiel et à distance, en inter, intra
+                                            packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
+                                            certification.
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-6  ">
+                            <a href="#">
+                                <div class="row projets_card4 ms-2">
+                                    <div class="col-3">
+                                        <i class='bx bx-grid-alt projets_icon'></i>
+                                    </div>
+                                    <div class="col-9">
+                                        <h5>Session pour un projet en inter</h5>
                                         <p>
                                             Découvrez toutes nos formations en présentiel et à distance, en inter, intra
                                             packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
