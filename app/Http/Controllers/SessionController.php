@@ -379,7 +379,10 @@ class SessionController extends Controller
         $nom_docs = $request->nom_doc;
         $extensions = $request->extension;
         for ($i=0; $i < count($paths); $i++) { 
-            DB::insert('insert into mes_documents(path,groupe_id,nom_doc,extension) values(?,?,?,?)',[$paths[$i],$groupe,$nom_docs[$i],$extensions[$i]]);
+            $nombre = DB::select('select count(path) as nombre from mes_documents where path = ? and groupe_id = ?',[$paths[$i],$groupe])[0]->nombre;
+            if($nombre <=0){
+                DB::insert('insert into mes_documents(path,groupe_id,nom_doc,extension) values(?,?,?,?)',[$paths[$i],$groupe,$nom_docs[$i],$extensions[$i]]);
+            }
         }
         return back();
     }

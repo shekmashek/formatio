@@ -9,7 +9,7 @@
                     @foreach ($documents as $docs)
                         <div class="form-check me-5">
                             <input class="form-check-input" type="checkbox" name="path[]" value="{{ $docs['path'] }}"
-                                id="flexCheckDefault" required>
+                                id="flexCheckDefault">
                             <input type="hidden" name="nom_doc[]" value="{{ $docs['filename'] }}">
                             <input type="hidden" name="extension[]" value="{{ $docs['extension'] }}">
                             
