@@ -102,12 +102,12 @@ class UtilisateurControlleur extends Controller
         $liste = entreprise::orderBy('nom_etp')->get();
         return view('admin.utilisateur.new_cfp', compact('liste'));
     }
-    public function profil_cfp($id = null)
+    public function profil_cfp()
     {
         // $liste_cfps = cfp::findOrFail($id)->get();
-        
+
         $id = cfp::where('user_id', Auth::user()->id)->value('id');
-         
+
         if (Gate::allows('isSuperAdmin')) {
         $liste_cfps = DB::select('select * from cfps where id = '.$id);
 
@@ -115,7 +115,7 @@ class UtilisateurControlleur extends Controller
 
         }
         else{
-       
+
             $liste_cfps = DB::select('select * from cfps where id = '.$id);
 
             return view('admin.utilisateur.profil_cfp',compact('liste_cfps'));
@@ -197,7 +197,7 @@ class UtilisateurControlleur extends Controller
              $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
         }
              if ($input !=null){
-           
+
                 $update_cfp = cfp::where('id',$id)->update([
                     'nom' => $request->get('nom_cfp'),
                     'adresse_lot' => $request->adresse_lot,
@@ -228,7 +228,7 @@ class UtilisateurControlleur extends Controller
                     'stat' => $request->get('stat_cfp'),
                     'rcs' => $request->get('rcs_cfp'),
                     'cif' => $request->get('cif_cfp'),
-                   
+
                 ]);
             }
         return redirect()->route('profil_cfp',$id);
@@ -239,13 +239,13 @@ class UtilisateurControlleur extends Controller
     {
         // $input = $request->image;
 
-     
+
             // $destinationPath = 'images/CFP';
             // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             // $image->move($destinationPath, $profileImage);
-      
-     
-           
+
+
+
         $update_cfp = cfp::where('id',$id)->update([
             'nom' => $request->get('nom_cfp'),
             'adresse_lot' => $request->adresse_lot,
@@ -261,10 +261,10 @@ class UtilisateurControlleur extends Controller
             'cif' => $request->get('cif_cfp'),
         ]);
         return redirect()->route('profil_cfp',$id);
-  
+
     }
 
-    
+
 
     public function show($id)
     {
@@ -358,7 +358,7 @@ class UtilisateurControlleur extends Controller
         $cfp = cfp::findOrFail($id);
         return view('admin.utilisateur.edit_rcscfp', compact('cfp'));
     }
-    
+
      //update password
      public function update_cfp_mdp(Request $request,$id){
 
@@ -377,10 +377,10 @@ class UtilisateurControlleur extends Controller
     public function update_email_cfp(Request $request){
         DB::update('update users set email = ? where id = ?', [$request->mail,Auth::id()]);
         DB::update('update cfps set email= ? where user_id = ?', [$request->mail,Auth::id()]);
-    
+
         return redirect()->route('profil_cfp');
     }
-    
+
     public function update(Request $request)
     {
         $id = $request->Id;
@@ -406,5 +406,5 @@ class UtilisateurControlleur extends Controller
             ]
         );
     }
-  
+
 }
