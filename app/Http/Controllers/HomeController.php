@@ -21,7 +21,7 @@ use App\cfp;
 use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
-
+use App\Models\getImageModel;
 use function Ramsey\Uuid\v1;
 
 class HomeController extends Controller
@@ -84,6 +84,7 @@ class HomeController extends Controller
                 }
             }
         }
+
         if (Gate::allows('isCFP')) {
             $fonct = new FonctionGenerique();
 
@@ -108,7 +109,10 @@ class HomeController extends Controller
             // debut top 10 par client
             // fin top 10 par client
             // dd($user_id, $centre_fp, $top_10_par_client);
-
+            $user_id = Auth::user()->id;
+            $cfp = Cfp::where('user_id', $user_id)->value('nom');
+            $drive = new getImageModel();
+            $drive->create_sub_folder($cfp,"Mes documents");
             return view('layouts.dashboard');
         }
         // else {

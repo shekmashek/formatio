@@ -364,12 +364,7 @@ class SessionController extends Controller
         return back();
     }
 
-    public function create_docs(){
-        $user_id = Auth::user()->id;
-        $cfp = Cfp::where('user_id', $user_id)->value('nom');
-        $drive = new getImageModel();
-        $drive->create_sub_folder($cfp,"Mes documents");
-    }
+
 
     public function save_documents(Request $request){
         $user_id = Auth::user()->id;
@@ -378,7 +373,7 @@ class SessionController extends Controller
         $paths = $request->path;
         $nom_docs = $request->nom_doc;
         $extensions = $request->extension;
-        for ($i=0; $i < count($paths); $i++) { 
+        for ($i=0; $i < count($paths); $i++) {
             $nombre = DB::select('select count(path) as nombre from mes_documents where path = ? and groupe_id = ?',[$paths[$i],$groupe])[0]->nombre;
             if($nombre <=0){
                 DB::insert('insert into mes_documents(path,groupe_id,nom_doc,extension) values(?,?,?,?)',[$paths[$i],$groupe,$nom_docs[$i],$extensions[$i]]);
@@ -386,7 +381,7 @@ class SessionController extends Controller
         }
         return back();
     }
-    
+
     public function telecharger_fichier(){
         $user_id = Auth::user()->id;
         $cfp = Cfp::where('user_id', $user_id)->value('nom');
