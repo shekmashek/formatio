@@ -12,7 +12,7 @@ Route::get('sign-in', function () {
 Route::get('/', function () {
     return view('index_accueil');
 // return view('page_travaux.plateforme_en_travaux');
-});
+})->name('accueil_perso');
 
 
 
