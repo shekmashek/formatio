@@ -29,3 +29,8 @@ Branche inscription_cfp_etp:
 
 alter table responsables add column  prioriter boolean not null default false;
 alter table responsables_cfp add column  prioriter boolean not null default false;
+
+
+Noam: page_error:
+
+-update view v_facture_actif et view v_facture_inactif

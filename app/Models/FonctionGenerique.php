@@ -43,6 +43,23 @@ class FonctionGenerique extends Model
             }
     }
 
+    public function queryWherePagination($nomTab,$para=[],$val=[]){
+        $query="SELECT * FROM ".$nomTab." WHERE ";
+        if(count($para) != count($val)){
+            return "ERROR: tail des onnees parametre et value est different";
+        } else
+            {
+                for($i=0;$i<count($para);$i++)
+                {
+                $query.="".$para[$i]."= '".$val[$i]."'";
+                if($i+1 < count($para)){
+                    $query.=" AND ";
+                }
+                }
+                return $query;
+            }
+    }
+
     //fonction generique
     public function findWhere($nomTab,$para=[],$val=[]){
         $fonction = new FonctionGenerique();
@@ -50,6 +67,8 @@ class FonctionGenerique extends Model
         $data =  DB::select($fonction->queryWhere($nomTab,$para,$val), $val);
         return $data;
     }
+
+
 
     public function findWhereMulitOne($nomTab,$para=[],$val=[]){
         $fonction = new FonctionGenerique();
@@ -72,6 +91,26 @@ class FonctionGenerique extends Model
     public function findAll($nomTab){
         $query = "SELECT * FROM ".$nomTab;
         return DB::select($query);
+    }
+
+
+    public function findAllPagination($nomTab,$nom_id,$dernier_id,$nbPage){
+        if($dernier_id<=0){
+            $dernier_id=1;
+        }
+        $query = "SELECT * FROM ".$nomTab." WHERE ".$nom_id.">=".$dernier_id." LIMIT ".$nbPage;
+        return DB::select($query);
+    }
+
+    public function findWherePagination($nomTab,$para=[],$val=[],$name_id,$dernier_id,$nbPage){
+        $fonction = new FonctionGenerique();
+        $query= $fonction->queryWherePagination($nomTab,$para,$val);
+        if($dernier_id<=0){
+            $dernier_id=1;
+        }
+        $query = $query." and ".$name_id." >= ".$dernier_id." LIMIT ".$nbPage;
+        $data =  DB::select($query);
+        return $data;
     }
 
     public function findAllQuery($query){

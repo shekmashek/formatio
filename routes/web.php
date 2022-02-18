@@ -11,11 +11,11 @@ Route::get('sign-in', function () {
 
 Route::get('/', function () {
     return view('index_accueil');
-})->name('accueil_perso');
+// return view('page_travaux.plateforme_en_travaux');
+});
 
-// Route::get('/home', function () {
-//     return view('index_accueil');
-// });
+
+
 //Route contact
 Route::get('contact',function(){
     return view('contact');
@@ -452,6 +452,12 @@ Route::get('detail_facture/{num_facture}','FactureController@detail_facture')->n
 Route::get('projetFacturer','FactureController@projetFacturer')->name('projetFacturer');
 Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFacture');
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
+
+//============================== recherche facture ================
+Route::post('search_par_date','FactureController@search_par_date')->name('search_par_date');
+Route::post('search_par_num_fact','FactureController@search_par_num_fact')->name('search_par_num_fact');
+
+
 // ==========================================================================
 
 Route::get('maquette','FactureController@maquette')->name('maquette');
@@ -788,3 +794,4 @@ Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluati
 
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
 Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');
+

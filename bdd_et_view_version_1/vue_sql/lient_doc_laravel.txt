@@ -1,0 +1,7 @@
+(Laravel)
+https://www.software-developer-india.com/fr/avantages-et-inconvenients-de-laravel/#:~:text=Selon%20Taylor%20Otwell%2C%20%C2%AB%20Laravel%20est,pour%20cr%C3%A9er%20de%20grandes%20applications.
+
+(Visual studio code)
+https://programadoresbrasil.com.br/fr/2021/05/pycharm-ou-vscode-pros-e-contras/#:~:text=M%C3%A9rites%20VSCode&text=VS%20Code%20est%20gratuit%20%3B%20par,%2FC%23%2C%20Python%2C%20JavaScript.
+
+

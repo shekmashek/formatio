@@ -295,108 +295,112 @@ WHERE
     v_facture.cfp_id = v_temp_facture.cfp_id AND  v_facture.num_facture = v_temp_facture.num_facture;
 
 
--- CREATE OR REPLACE VIEW v_facture_existant AS SELECT
---     v_facture_existant_tmp.*,
---     projets.entreprise_id,
---      entreprises.nom_etp,
---     (
---         CASE WHEN(payement_totale - montant_total) < 0 AND payement_totale <= 0 THEN 'valider' WHEN(payement_totale - montant_total) < 0 AND payement_totale > 0 THEN 'en_cour' WHEN(payement_totale - montant_total) >= 0 THEN 'terminer'
---     END
--- ) facture_encour
--- FROM
---     v_facture_existant_tmp, v_groupe_projet_entreprise projets,entreprises
--- where
---     v_facture_existant_tmp.projet_id = projets.projet_id and projets.entreprise_id = entreprises.id;
+CREATE OR REPLACE VIEW v_facture_existant AS SELECT
+    v_facture_existant_tmp.*,
+    projets.entreprise_id,
+     entreprises.nom_etp,
+    (
+        CASE WHEN(payement_totale - montant_total) < 0 AND payement_totale <= 0 THEN 'valider' WHEN(payement_totale - montant_total) < 0 AND payement_totale > 0 THEN 'en_cour' WHEN(payement_totale - montant_total) >= 0 THEN 'terminer'
+    END
+) facture_encour
+FROM
+    v_facture_existant_tmp, v_groupe_projet_entreprise projets,entreprises
+where
+    v_facture_existant_tmp.projet_id = projets.projet_id and projets.entreprise_id = entreprises.id;
 
 
--- CREATE OR REPLACE VIEW v_facture_actif AS SELECT
---     factures.cfp_id,
---     factures.num_facture,
---     entreprise_id,
---     other_message,
---     (
---         DATEDIFF(
---             v_facture_existant.due_date,
---             v_facture_existant.invoice_date
---         )
---     ) totale_jour,
---     (
---         IFNULL(
---             (
---                 DATEDIFF(v_facture_existant.due_date, NOW())),
---                 0
---             )
---         ) jour_restant,
---         v_facture_existant.facture_encour,
---         v_facture_existant.due_date,v_facture_existant.invoice_date,
---         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
---         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
---         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
---     FROM
---         v_facture_existant,
---         factures
---     WHERE
---         v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND  v_facture_existant.num_facture = factures.num_facture AND factures.activiter = TRUE
---     GROUP BY
---         factures.cfp_id,
---         entreprise_id,
---         factures.num_facture,
---         factures.other_message,
---         facture_encour,
---         v_facture_existant.due_date,v_facture_existant.invoice_date,
---         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
---         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
---         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture;
+CREATE OR REPLACE VIEW v_facture_actif AS SELECT
+    factures.cfp_id,
+    (factures.id) facture_id,
+    factures.num_facture,
+    entreprise_id,
+    other_message,
+    (
+        DATEDIFF(
+            v_facture_existant.due_date,
+            v_facture_existant.invoice_date
+        )
+    ) totale_jour,
+    (
+        IFNULL(
+            (
+                DATEDIFF(v_facture_existant.due_date, NOW())),
+                0
+            )
+        ) jour_restant,
+        v_facture_existant.facture_encour,
+        v_facture_existant.due_date,v_facture_existant.invoice_date,
+        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
+        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
+        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+    FROM
+        v_facture_existant,
+        factures
+    WHERE
+        v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND  v_facture_existant.num_facture = factures.num_facture AND factures.activiter = TRUE
+    GROUP BY
+        factures.id,
+        factures.cfp_id,
+        entreprise_id,
+        factures.num_facture,
+        factures.other_message,
+        facture_encour,
+        v_facture_existant.due_date,v_facture_existant.invoice_date,
+        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
+        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
+        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture;
 
 
--- CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
---     factures.cfp_id,
---     factures.num_facture,
---     entreprise_id,
---     other_message,
---     (
---         DATEDIFF(
---             v_facture_existant.due_date,
---             v_facture_existant.invoice_date
---         )
---     ) totale_jour,
---     (
---         IFNULL(
---             (
---                 DATEDIFF(v_facture_existant.due_date, NOW())),
---                 0
---             )
---         ) jour_restant,
---         facture_encour,
---         v_facture_existant.due_date,v_facture_existant.invoice_date,
---         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
---         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
---         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
---     FROM
---         v_facture_existant,
---         factures
---     WHERE
---        v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND   v_facture_existant.num_facture = factures.num_facture AND factures.activiter = FALSE
---     GROUP BY
---         factures.cfp_id,
---         factures.num_facture,
---         entreprise_id,
---         factures.other_message,
---         facture_encour,
---         v_facture_existant.due_date,v_facture_existant.invoice_date,
---         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
---         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
---         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture;
+CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
+(factures.id) facture_id,
+    factures.cfp_id,
+    factures.num_facture,
+    entreprise_id,
+    other_message,
+    (
+        DATEDIFF(
+            v_facture_existant.due_date,
+            v_facture_existant.invoice_date
+        )
+    ) totale_jour,
+    (
+        IFNULL(
+            (
+                DATEDIFF(v_facture_existant.due_date, NOW())),
+                0
+            )
+        ) jour_restant,
+        facture_encour,
+        v_facture_existant.due_date,v_facture_existant.invoice_date,
+        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
+        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
+        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+    FROM
+        v_facture_existant,
+        factures
+    WHERE
+       v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND   v_facture_existant.num_facture = factures.num_facture AND factures.activiter = FALSE
+    GROUP BY
+        factures.id,
+        factures.cfp_id,
+        factures.num_facture,
+        entreprise_id,
+        factures.other_message,
+        facture_encour,
+        v_facture_existant.due_date,v_facture_existant.invoice_date,
+        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
+        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
+        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture;
 
--- create or replace view v_compte_facture_actif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_actif group by entreprise_id,cfp_id;
--- create or replace view v_compte_facture_inactif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_inactif group by entreprise_id,cfp_id;
--- create or replace view v_compte_facture_en_cour as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_existant where facture_encour='en_cour' group by entreprise_id,cfp_id;
--- create or replace view v_compte_facture_payer as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_existant where facture_encour='terminer' group by entreprise_id,cfp_id;
+create or replace view v_compte_facture_actif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_actif group by entreprise_id,cfp_id;
+create or replace view v_compte_facture_inactif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_inactif group by entreprise_id,cfp_id;
+create or replace view v_compte_facture_en_cour as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_existant where facture_encour='en_cour' group by entreprise_id,cfp_id;
+create or replace view v_compte_facture_payer as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_existant where facture_encour='terminer' group by entreprise_id,cfp_id;
 
--- create or replace view v_compte_facture_actif_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_actif group by cfp_id;
--- create or replace view v_compte_facture_inactif_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_inactif group by cfp_id;
--- create or replace view v_compte_facture_en_cour_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_en_cour group by cfp_id;
--- create or replace view v_compte_facture_payer_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_payer  group by cfp_id;
+create or replace view v_compte_facture_actif_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_actif group by cfp_id;
+create or replace view v_compte_facture_inactif_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_inactif group by cfp_id;
+create or replace view v_compte_facture_en_cour_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_en_cour group by cfp_id;
+create or replace view v_compte_facture_payer_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_payer  group by cfp_id;
 
 
 CREATE OR REPLACE VIEW v_encaissement AS SELECT

@@ -18,6 +18,7 @@ use App\Collaboration;
 use App\Models\getImageModel;
 use Monolog\Handler\IFTTTHandler;
 use Illuminate\Http\Response;
+
 class FactureController extends Controller
 {
 
@@ -69,11 +70,77 @@ class FactureController extends Controller
 
         $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
+
+        $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
+        $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
+        $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0, 10);
+        $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0, 10);
+
+        $facture_actif_guide = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
+        $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
+        $test = count($facture_inactif_guide) + count($facture_actif_guide);
+        if ($test <= 0) {
+            return view('admin.facture.guide');
+        } else {
+            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+        }
+    }
+
+
+    // ================== Rehcerche Par critère ==================
+
+    public function search_par_date(Request $req)
+    {
+        $invoice_dte = $req->invoice_dte_fact;
+        $due_dte = $req->due_dte_fact;
+        $totale_invitation = $this->collaboration->count_invitation();
+        $mode_payement = DB::select('select * from mode_financements');
+
+        if($invoice_dte == null || $due_dte==null){
+            if (Gate::allows('isCFP')) {
+                $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
+                $facture_actif =  $this->fact->search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                $facture_inactif =  $this->fact->search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                $facture_payer =  $this->fact->search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                $facture_encour = $this->fact->search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                // dd($facture_actif);
+                return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            }
+        } else {
+            return back();
+        }
+    }
+
+    public function search_par_num_fact(Request $req)
+    {
+        $num_fact = $req->num_fact;
+        $totale_invitation = $this->collaboration->count_invitation();
+        $mode_payement = DB::select('select * from mode_financements');
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
+            $facture_actif =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "valider", $cfp_id);
+            $facture_inactif =  $this->fact->search_num_fact_inactif_cfp($num_fact, $cfp_id);
+            $facture_payer =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "terminer", $cfp_id);
+            $facture_encour = $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "en_cour", $cfp_id);
+            // dd($facture_encour);
+            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+        }
+    }
+
+    /* public function listeFacture($id)
+    {
+
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+
+        $totale_invitation = $this->collaboration->count_invitation();
+        $mode_payement = DB::select('select * from mode_financements');
         $facture_actif = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
         // $verify = DB::select('select (groupes.id) groupe_id,cfp_id,projet_id from groupes,projets where projets.id=projet_id and cfp_id=?', [$cfp_id]);
 
-        $test = count($facture_inactif)+ count($facture_actif);
+        $test = count($facture_inactif) + count($facture_actif);
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
@@ -123,6 +190,7 @@ class FactureController extends Controller
         }
     }
 
+    */
 
     public function listeFacture_referent($id)
     {
@@ -254,12 +322,26 @@ class FactureController extends Controller
             "defaultPaperSize" => "a4",
             "dpi" => 130
         ]);
+        //affichage photo
+        //   liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //recuperer dossier "entreprise
+        $dir = $contents->where('type', '=', 'dir')
+            ->where('filename', '=', 'entreprise')
+            ->first();
 
-        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $files = collect(Storage::cloud()->listContents($dir['path'], false))
+            ->where('type', '=', 'file')
+            ->where('filename', '=', pathinfo($cfp->logo, PATHINFO_FILENAME))
+            ->where('extension', '=', pathinfo($cfp->logo, PATHINFO_EXTENSION))
+            ->first();
+        $rawData = Storage::cloud()->get($files['path']);
+
+        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('rawData', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
-                    'allow_self_signed'=> TRUE,
+                    'allow_self_signed' => TRUE,
                     'verify_peer' => FALSE,
                     'verify_peer_name' => FALSE,
                 ]
@@ -312,10 +394,10 @@ class FactureController extends Controller
         $contat_pathFA = '';
         $contat_file = '';
 
-        $type_fact = $this->fonct->findWhereMulitOne("type_facture",["id"],[$imput["type_facture"]]);
-        $prj_id = $this->fonct->findWhereMulitOne("groupes",["id"],[$groupe_id[0]])->projet_id;
-        $un_projet = $this->fonct->findWhereMulitOne( "projets",["id"],[$prj_id]);
-        $un_cfp = $this->fonct->findWhereMulitOne( "cfps",["id"],[$un_projet->cfp_id]);
+        $type_fact = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$imput["type_facture"]]);
+        $prj_id = $this->fonct->findWhereMulitOne("groupes", ["id"], [$groupe_id[0]])->projet_id;
+        $un_projet = $this->fonct->findWhereMulitOne("projets", ["id"], [$prj_id]);
+        $un_cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$un_projet->cfp_id]);
 
         for ($i = 0; $i < count($groupe_id); $i++) {
             $groupe_araika = $this->fonct->findWhereMulitOne(
@@ -324,9 +406,9 @@ class FactureController extends Controller
                 [$groupe_id[$i]]
             );
 
-            $contat_pathBC .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
-            $contat_pathFA .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
-            $contat_file .= ''.$groupe_araika->nom_groupe.'_' . $groupe_id[$i] . '_'.$type_fact->reference.'_' . $imput["type_facture"];
+            $contat_pathBC .= '' . $groupe_araika->nom_groupe . '_' . $groupe_id[$i] . '_' . $type_fact->reference . '_' . $imput["type_facture"];
+            $contat_pathFA .= '' . $groupe_araika->nom_groupe . '_' . $groupe_id[$i] . '_' . $type_fact->reference . '_' . $imput["type_facture"];
+            $contat_file .= '' . $groupe_araika->nom_groupe . '_' . $groupe_id[$i] . '_' . $type_fact->reference . '_' . $imput["type_facture"];
             if ($i + 1 < count($groupe_id)) {
                 $contat_pathBC .= '_et_';
                 $contat_pathFA .= '_et_';
@@ -338,14 +420,14 @@ class FactureController extends Controller
         //creation sous dossier Facture/BonCommande/Nom_du_cfp et enregistrement du bc et devis
         $dossier = 'facture';
         $sous_dossier = 'bc';
-        $dossier_cfp = $un_cfp->nom.$un_cfp->id;
-        $projet_folder = $un_projet->nom_projet.$un_projet->id;
+        $dossier_cfp = $un_cfp->nom . $un_cfp->id;
+        $projet_folder = $un_projet->nom_projet . $un_projet->id;
         $bc = new getImageModel();
         //enregistrement du bc
-        $bc->create_sub_directory($dossier,$sous_dossier,$dossier_cfp,$projet_folder,$contat_pathBC,$imput->file('down_bc')->getContent());
+        $bc->create_sub_directory($dossier, $sous_dossier, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_bc')->getContent());
         //enregistrement du devis
         $sous_dossier2 = 'devis';
-        $bc->create_sub_directory($dossier,$sous_dossier2,$dossier_cfp,$projet_folder,$contat_pathBC,$imput->file('down_fa')->getContent());
+        $bc->create_sub_directory($dossier, $sous_dossier2, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_fa')->getContent());
         $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);
         return $res;
     }
@@ -501,5 +583,50 @@ class FactureController extends Controller
         $this->fact->lectureFileProjet($path_file);
     }
 
+    /* // ================== Rehcerche Par critère ==================
 
+    public function search_par_date(Request $req)
+    {
+        $invoice_dte = $req->invoice_dte_fact;
+        $due_dte = $req->due_dte_fact;
+
+
+        $totale_invitation = $this->collaboration->count_invitation();
+        $mode_payement = DB::select('select * from mode_financements');
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
+            if ($this->fonct->findWhere("v_compte_facture_actif", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_actif = 0;
+            } else {
+                $compte_facture_actif = $this->fonct->findWhere("v_compte_facture_actif", ["cfp_id"], [$cfp_id])[0];
+            }
+            if ($this->fonct->findWhere("v_compte_facture_inactif", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_inactif = null;
+            } else {
+                $compte_facture_inactif = $this->fonct->findWhere("v_compte_facture_inactif", ["cfp_id"], [$cfp_id])[0];
+            }
+            if ($this->fonct->findWhere("v_compte_facture_en_cour", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_en_cour = null;
+            } else {
+                $compte_facture_en_cour = $this->fonct->findWhere("v_compte_facture_en_cour", ["cfp_id"], [$cfp_id])[0];
+            }
+            if ($this->fonct->findWhere("v_compte_facture_payer", ["cfp_id"], [$cfp_id]) == null) {
+                $compte_facture_payer = null;
+            } else {
+                $compte_facture_payer = $this->fonct->findWhere("v_compte_facture_payer", ["cfp_id"], [$cfp_id])[0];
+            }
+            $facture =  $this->fact->search_intervale_dte_generique_cfp("v_facture_actif", $invoice_dte, $due_dte, $cfp_id,"en_cour");
+
+            // dd($facture);
+
+            return view('admin.facture.facture', compact('facture','compte_facture_actif','compte_facture_inactif','compte_facture_en_cour','compte_facture_payer','mode_payement'));
+        }
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id',  Auth::user()->id)->value('entreprise_id');
+            $facture =  $this->fact->search_intervale_dte_generique_etp("v_facture_actif", $invoice_dte, $due_dte, $entreprise_id);
+            dd($facture);
+            return view('admin.facture.liste_facture_en_cour', compact('facture'));
+        }
+    } */
 }

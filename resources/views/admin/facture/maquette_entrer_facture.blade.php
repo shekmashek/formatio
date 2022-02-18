@@ -449,7 +449,7 @@ $(document).on('change','#entreprise_id',function(){
                 html +='<div class="row" id="inputFormRow">';
                 html += '<div class="col">';
                 html += '<label class="visually" for="specificSizeSelect">frais annexe</label>';
-                html += '<select class="form-select" id="frais" name="frais_annexe_id[]" id="specificSizeSelect">';
+                html += '<select class="form-select mt-0" id="frais" name="frais_annexe_id[]" id="specificSizeSelect">';
 
                 for (var $i = 0; $i < userData.length; $i++){
                     html += '<option value="'+userData[$i].id+'">'+userData[$i].description+'</option>';
@@ -464,7 +464,7 @@ $(document).on('change','#entreprise_id',function(){
                 html += '<div class="col">';
                 html += '<label class="visually" for="specificSizeInputName">Qte</label>';
                 html += '<input type="number" min="1" value="1" name="qte_annexe[]" class="form-control" id="specificSizeInputName" placeholder="1"></div>';
-                html += '<div class="col"><div class="input-group-append">';
+                html += '<div class="col pt-4"><div class="input-group-append  mb-0">';
                 html += '<button id="removeRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>';
                 html += '</div>';
                 html += '</div>';
@@ -519,7 +519,7 @@ $(document).on('click','#addRowMontant',function () {
                 html +='<div class="row" id="inputFormRowMontant">';
                 html += '<div class="col">';
                 html += '<label class="visually" for="specificSizeSelect">Choisir la Session a Facturé</label>';
-                html+='<select id="session_id" class="form-control" name="session_id[]">';
+                html+='<select id="session_id" class="form-control mt-0" name="session_id[]">';
                 for (var $i = 0; $i < userData.length; $i++){
                     html += '<option value="'+userData[$i].id+'">'+userData[$i].nom_groupe+'</option>';
                 }
