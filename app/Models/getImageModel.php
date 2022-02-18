@@ -262,6 +262,51 @@ class getImageModel extends Model
     //    });
 
    }
+   //suppression d'un fichier dans google drive
+    public function delete_file($folder_parent,$sub_folder,$filename){
+        //liste des contenues dans drive
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == $folder_parent)
+                $root = $value['path'];
+        }
+        $dir = '/'.$root;
 
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        foreach ($sub_directory as $key => $value) {
+            if($value['name'] == $sub_folder)
+                $root1 = $value['path'];
+        }
+        $dir2 = '/'.$root1;
+        // Get the files inside the folder...
+        $files = collect(Storage::cloud()->listContents($dir2, false))
+            ->where('type', '=', 'file')
+            ->where('filename', '=', pathinfo($filename, PATHINFO_FILENAME))
+            ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
+            ->first(); // there can be duplicate file names!
+        Storage::cloud()->delete($files['path']);
+        return 'File was deleted from Google Drive';
+    }
+    //suppression d'un dossier dans google drive
+    public function delete_folder($folder_parent,$sub_folder){
+        $contents = collect(Storage::cloud()->listContents('/', false));
+        //parcourir sous dossier:facture par exemple
+        foreach ($contents as $key => $value) {
+            if($value['name'] == $folder_parent)
+                 $root = $value['path'];
+        }
 
+        $dir = '/'.$root;
+
+        $recursive = true; // Get subdirectories also?
+        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
+        //on teste si le sous dossier exiiste déjà
+        $directory = $sub_directory->where('type', '=', 'dir')
+        ->where('filename', '=', $sub_folder)
+        ->first();
+
+        Storage::cloud()->deleteDirectory($directory['path']);
+    }
 }
