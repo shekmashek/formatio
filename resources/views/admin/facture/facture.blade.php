@@ -128,21 +128,21 @@
                     @endif
                 </a>
             </li>
-                <li class="nav-item">
-                    <a style="color: #9C27B0" href="#" class=" " id="nav-invitation-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="false">
-                        Recherce par intervale de date
-                    </a>
-                </li>
-                <li class="nav-item ms-5">
-                    <a  style="color: #9C27B0"  href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                        Recherche par numero
-                    </a>
-                </li>
-                {{-- <li class="nav-item ms-5">
+            <li class="nav-item">
+                <a style="color: #9C27B0" href="#" class=" " id="nav-invitation-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="false">
+                    Recherce par intervale de date
+                </a>
+            </li>
+            <li class="nav-item ms-5">
+                <a style="color: #9C27B0" href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                    Recherche par numero
+                </a>
+            </li>
+            {{-- <li class="nav-item ms-5">
                     <a href="{{route('liste_facture',2)}}">
-                        Full facture
-                    </a>
-                </li> --}}
+            Full facture
+            </a>
+            </li> --}}
         </ul>
     </div>
 </nav>
@@ -572,6 +572,92 @@
     </div>
 
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-secondary">1</button>
+                        <button type="button" class="btn btn-outline-secondary">2</button>
+                        <button type="button" class="btn btn-outline-secondary">3</button>
+                        <button type="button" class="btn btn-outline-secondary">4</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- debut modal encaissement --}}
+    <div id="modal" class="modal fade" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h5>Reste à payer : <label id="montant"></label> Ar</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="card p-3 cardPayement">
+                        <form action="{{ route('encaisser') }}" id="formPayement" method="POST">
+                            @csrf
+                            <h6 class="text-uppercase">Payment details</h6>
+                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="text" name="libelle" class="form-control formPayement" required="required"> <span>Description</span> </div>
+                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" required="required"> <span>Montant à facturer</span> </div>
+                            <select class="form-select selectP" name="mode_payement" aria-label="Default select example">
+                                @foreach ($mode_payement as $mp)
+                                <option value="{{ $mp->id }}">{{ $mp->description }}</option>
+                                @endforeach
+                            </select>
+                            <div class="inputbox inputboxP mt-3"> <input type="date" name="date_encaissement" class="form-control formPayement" required="required" value="{{ date('d/m/Y') }}"></div>
+                            <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
+                        </form>
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn-success btnP px-3">Valider</button> </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{-- fin --}}
+
+    {{-- debut modal encaissement --}}
+    <div id="modal" class="modal fade" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h5>Reste à payer : <label id="montant"></label> Ar</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="card p-3 cardPayement">
+                        <form action="{{ route('encaisser') }}" id="formPayement" method="POST">
+                            @csrf
+                            <h6 class="text-uppercase">Payment details</h6>
+                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="text" name="libelle" class="form-control formPayement" required="required"> <span>Description</span> </div>
+                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" required="required"> <span>Montant à facturer</span> </div>
+                            <select class="form-select selectP" name="mode_payement" aria-label="Default select example">
+                                @foreach ($mode_payement as $mp)
+                                <option value="{{ $mp->id }}">{{ $mp->description }}</option>
+                                @endforeach
+                            </select>
+                            <div class="inputbox inputboxP mt-3"> <input type="date" name="date_encaissement" class="form-control formPayement" required="required" value="{{ date('d/m/Y') }}"></div>
+                            <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
+                        </form>
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn-success btnP px-3">Valider</button> </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{-- fin --}}
+
     {{-- modal reussi --}}
     @if (Session::has('encaissement_ok'))
     <div id="myModal" class="modal fade">
@@ -595,7 +681,7 @@
     </div>
     @endif
     {{-- fin --}}
-{{--
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -631,7 +717,7 @@
 
     </script>
 
-</div> --}}
+</div>
 
 
 
