@@ -1,37 +1,3 @@
--- CREATE OR REPLACE VIEW v_projetentreprise AS
--- SELECT
---     p.id AS projet_id,
---     p.nom_projet,
---     p.created_at as date_projet,
---     t_se.totale_session,
---     p.cfp_id,
---     p.status,
---     p.activiter,
---     p.created_at,
---     e.nom_etp,
---     e.adresse,
---     e.logo,
---     e.nif,
---     e.stat,
---     e.rcs,
---     e.cif,
---     e.secteur_id,
---     (se.nom_secteur)secteur_activite,
---     e.email_etp,
---     e.site_etp,
---     (e.activiter) activiter_etp,
---     e.telephone_etp,
---     (cf.nom) nom_cfp,
---     (cf.logo) logo_cfp,
---     (cf.adresse_ville) adresse_ville_cfp,
---     (cf.adresse_region) adresse_region_cfp,
---     (cf.email) email_cfp,
---     (cf.telephone) telephone_cfp,
---     (cf.domaine_de_formation) domaine_de_formation_cfp
--- FROM
---     projets p,
---     entreprises e , secteurs se,v_totale_session t_se,cfps cf
--- where e.secteur_id = se.id and p.id = t_se.projet_id and p.cfp_id = cf.id;
 
 create or replace view v_projet_session as
     select
@@ -107,7 +73,7 @@ create or replace view v_groupe_entreprise as
         g.activiter as activiter_groupe,
         g.type_payement_id,
         tp.type as type_payement
-    from groupe_entreprise ge
+    from groupe_entreprises ge
     join groupes g on ge.groupe_id = g.id
     join entreprises e on ge.entreprise_id = e.id
     join type_payement tp on g.type_payement_id = tp.id;
