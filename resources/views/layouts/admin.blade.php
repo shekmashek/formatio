@@ -402,9 +402,9 @@
                         <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
                     </span> --}}
 
-                    </ul>
+                    {{-- </ul>
                     </li>
-                    @endcanany
+                    @endcanany --}}
 
                     {{-- competence --}}
                     @canany(['isSuperAdmin','isReferent','isManager'])
