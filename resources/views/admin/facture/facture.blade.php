@@ -99,33 +99,45 @@
             <li class="nav-item me-5">
                 <a href="#" class="active" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="true">
                     Facture Brouillon
+                    @if (count($facture_inactif) > 0)
+                    <strong style="color: red">({{count($facture_inactif)}})</strong>
+                    @endif
                 </a>
             </li>
             <li class="nav-item me-5">
                 <a href="#" class="" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
                     Facture Valide
+                    @if (count($facture_actif) > 0)
+                    <strong style="color: red">({{count($facture_actif)}})</strong>
+                    @endif
                 </a>
             </li>
             <li class="nav-item me-5">
                 <a href="#" class="" id="nav-encour-tab" data-bs-toggle="tab" data-bs-target="#nav-encour" type="button" role="tab" aria-controls="nav-encour" aria-selected="false">
                     Facture En Cour
+                    @if (count($facture_encour) > 0)
+                    <strong style="color: red">({{count($facture_encour)}})</strong>
+                    @endif
                 </a>
             </li>
             <li class="nav-item me-5">
                 <a href="#" class="" id="nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
                     Facture Payer
+                    @if (count($facture_payer) > 0)
+                    <strong style="color: red">({{count($facture_payer)}})</strong>
+                    @endif
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class=" " id="nav-invitation-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="false">
-                    recherce par intervale de date
-                </a>
-            </li>
-            <li class="nav-item ms-5">
-                <a href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                    recherche par numero
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a style="color: #9C27B0" href="#" class=" " id="nav-invitation-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="false">
+                        recherce par intervale de date
+                    </a>
+                </li>
+                <li class="nav-item ms-5">
+                    <a  style="color: #9C27B0"  href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                        recherche par numero
+                    </a>
+                </li>
         </ul>
     </div>
 </nav>
@@ -139,16 +151,16 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col-8">
-                    <h5>Recherche par Date</h5>
+                    <h5>Recherche par Date de Création Date</h5>
                     <form class="d-flex mt-3" method="POST" action="{{route('search_par_date')}}">
                         @csrf
                         <div class="form-group">
                             <input name="invoice_dte_fact" id="fact_dte" class="form-control input_inscription me-2" type="date" aria-label="Search">
-                            <label for="fact_dte" class="form-control-placeholder">Invoice Date<strong style="color:#ff0000;">*</strong></label>
+                            <label for="fact_dte" class="form-control-placeholder">début<strong style="color:#ff0000;">*</strong></label>
                         </div>
                         <div class="form-group">
                             <input name="due_dte_fact" id="fact_dte2" class="form-control input_inscription me-2" type="date" aria-label="Search">
-                            <label for="fact_dte2" class="form-control-placeholder">Due Date<strong style="color:#ff0000;">*</strong></label>
+                            <label for="fact_dte2" class="form-control-placeholder">fin<strong style="color:#ff0000;">*</strong></label>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="form-control input_inscription mt-1" style="background: #9C27B0; color:white" id="exampleFormControlInput1" placeholder="Invoice Date" value="recherce" />
@@ -167,7 +179,7 @@
                 <div class="col"></div>
                 <div class="col-4">
                     <h5>Recherche par Numero Facture</h5>
-                    <form class="d-flex mt-3">
+                    <form class="d-flex mt-3" method="POST" action="{{route('search_par_num_fact')}}">
                         <div class="form-group">
                             <input name="num_fact" id="num_fact" required class="form-control input_inscription me-2" type="text" aria-label="Search">
                             <label for="num_fact" class="form-control-placeholder">Numéro de facture<strong style="color:#ff0000;">*</strong></label>
@@ -510,17 +522,17 @@
                                 @elseif ($actif->facture_encour == "en_cour")
                                 <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
                                 @canany(['isCFP'])]
-                                    <td>
-                                        <div class="btn-group dropleft">
-                                            <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="dropdown-item btn btn-default btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-toggle="modal" data-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
-                                                <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class=" btn btn-default btn-block mb-2"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
-                                            </div>
+                                <td>
+                                    <div class="btn-group dropleft">
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button class="dropdown-item btn btn-default btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-toggle="modal" data-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
+                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class=" btn btn-default btn-block mb-2"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
                                         </div>
-                                    </td>
+                                    </div>
+                                </td>
                                 @endcanany
                                 @else
                                 <td style="color:rgb(15, 221, 67);"><i class="fa fa-check-circle"></i><i class="fa fa-check-circle"></i> {{$actif->facture_encour}}</td>
@@ -554,64 +566,64 @@
     </div>
 
 
-      {{-- modal reussi --}}
-      @if (Session::has('encaissement_ok'))
-      <div id="myModal" class="modal fade">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-                  <div class="modal-body">
-                      <fieldset>
-                          <div class="form-card">
-                              <h2 class="fs-title text-center">{{ Session::get('encaissement_ok') }}</h2> <br><br>
-                              <div class="row justify-content-center">
-                                  <div class="col-3"> <img src="{{ asset('img/images/ok.png') }}" class="fit-image"> </div>
-                              </div> <br>
-                          </div>
-                      </fieldset>
-                  </div>
-              </div>
-          </div>
-      </div>
-      @endif
-      {{-- fin --}}
+    {{-- modal reussi --}}
+    @if (Session::has('encaissement_ok'))
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <div class="form-card">
+                            <h2 class="fs-title text-center">{{ Session::get('encaissement_ok') }}</h2> <br><br>
+                            <div class="row justify-content-center">
+                                <div class="col-3"> <img src="{{ asset('img/images/ok.png') }}" class="fit-image"> </div>
+                            </div> <br>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    {{-- fin --}}
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-      <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-      <script type="text/javascript">
-          $(".payement").on('click', function(e) {
-              $('#montant').html('');
-              $("#numero_facture").html('')
-              var id = $(this).data("id");
-              $.ajax({
-                  method: "GET"
-                  , url: "{{route('montant_restant')}}"
-                  , data: {
-                      num_facture: id
-                  }
-                  , dataType: "html"
-                  , success: function(response) {
-                      var userData = JSON.parse(response);
-                      $("#montant").append(userData[0]);
-                      var html = '<input type="hidden" name="num_facture" value="' + userData[1] + '" required>';
-                      $('#numero_facture').append(html);
-                  }
-                  , error: function(error) {
-                      console.log(error)
-                  }
-              });
-          });
+    <script type="text/javascript">
+        $(".payement").on('click', function(e) {
+            $('#montant').html('');
+            $("#numero_facture").html('')
+            var id = $(this).data("id");
+            $.ajax({
+                method: "GET"
+                , url: "{{route('montant_restant')}}"
+                , data: {
+                    num_facture: id
+                }
+                , dataType: "html"
+                , success: function(response) {
+                    var userData = JSON.parse(response);
+                    $("#montant").append(userData[0]);
+                    var html = '<input type="hidden" name="num_facture" value="' + userData[1] + '" required>';
+                    $('#numero_facture').append(html);
+                }
+                , error: function(error) {
+                    console.log(error)
+                }
+            });
+        });
 
-      </script>
-      <script>
-          $(document).ready(function() {
-              $("#myModal").modal('show');
-          });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#myModal").modal('show');
+        });
 
-      </script>
+    </script>
 
 </div>
 

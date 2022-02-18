@@ -392,6 +392,7 @@ Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('ver
 
 //============================== recherche facture ================
 Route::post('search_par_date','FactureController@search_par_date')->name('search_par_date');
+Route::post('search_par_num_fact','FactureController@search_par_num_fact')->name('search_par_num_fact');
 
 
 // ==========================================================================

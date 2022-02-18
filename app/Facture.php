@@ -428,7 +428,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if($factue_id<=0){
             $factue_id=1;
         }
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('en_cour') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_actif where invoice_date>='".$invoice_dte."' and invoice_date<='".$due_dte."' and cfp_id=? and facture_encour='en_cour' and facture_id>=? limit ".$nbPage, [ $cfp_id,$factue_id]);
         return $data;
     }
 
@@ -437,7 +437,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if($factue_id<=0){
             $factue_id=1;
         }
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=?  and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
         return $data;
     }
 
@@ -446,7 +446,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if($factue_id<=0){
             $factue_id=1;
         }
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
         return $data;
     }
 
@@ -455,91 +455,31 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if($factue_id<=0){
             $factue_id=1;
         }
-        $data = DB::select("select * from v_facture_inactif where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('en_cour') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
         return $data;
     }
 
 
-    public function search_intervale_dte_generique_cfp($nomTab, $invoice_dte, $due_dte, $cfp_id,$status)
+    // public function search_intervale_dte_generique_cfp($nomTab, $invoice_dte, $due_dte, $cfp_id,$status)
+    // {
+    //     $data = DB::select("select * from " . $nomTab . " where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('".$status."') ", [$invoice_dte, $due_dte, $cfp_id]);
+    //     return $data;
+    // }
+
+
+    public function search_num_fact_inactif_cfp($num_fact, $cfp_id)
     {
-        $data = DB::select("select * from " . $nomTab . " where invoice_date>=? or due_date=? and cfp_id=? and UPPER(facture_encour)=UPPER('".$status."') ", [$invoice_dte, $due_dte, $cfp_id]);
+        $data = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?", [$cfp_id]);
         return $data;
     }
-
-
-    public function search_num_factgenerique_cfp($nomTab, $num_fact, $cfp_id)
+    public function search_num_fact_actif_cfp($nomTab, $num_fact,$satut_fact, $cfp_id)
     {
-        $data = DB::select("select * from " . $nomTab . " where num_facture like %" . $num_fact . "% and cfp_id=?", [$num_fact, $cfp_id]);
+        $data = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and cfp_id=?", [$satut_fact, $cfp_id]);
         return $data;
     }
+
 
     // ---------------------------------
 
-
-    public function search_intervale_dte_generique_etp($nomTab, $invoice_dte, $due_dte, $entreprise_id)
-    {
-        $data = DB::select("select * from " . $nomTab . " where invoice_date>=? or due_date=? and entreprise_id=?", [$invoice_dte, $due_dte, $entreprise_id]);
-        return $data;
-    }
-
-    public function search_num_factgenerique_etp($nomTab, $num_fact, $entreprise_id)
-    {
-        $data = DB::select("select * from " . $nomTab . " where num_facture like %" . $num_fact . "% and entreprise_id=?", [$num_fact, $entreprise_id]);
-        return $data;
-    }
-
-    /*
-    public function search_intervale_dte_en_cour($invoice_dte,$due_dte,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=?",[$invoice_dte,$due_dte,$cfp_id]);
-        return $data;
-    }
-
-    public function search_num_fact_en_cour($num_fact,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where num_facture like %".$num_fact."% and cfp_id=?",[$cfp_id]);
-        return $data;
-    }
-
-    public function search_intervale_dte_payer($invoice_dte,$due_dte,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=?",[$invoice_dte,$due_dte,$cfp_id]);
-        return $data;
-    }
-
-    public function search_num_fact_payer($num_fact,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where num_facture like %".$num_fact."% and cfp_id=?",[$cfp_id]);
-        return $data;
-    }
-
-    public function search_intervale_dte_actif($invoice_dte,$due_dte,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=?",[$invoice_dte,$due_dte,$cfp_id]);
-        return $data;
-    }
-
-    public function search_num_fact_actif($num_fact,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where num_facture like %".$num_fact."% and cfp_id=?",[$cfp_id]);
-        return $data;
-    }
-    public function search_intervale_dte_actif($invoice_dte,$due_dte,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? or due_date=? and cfp_id=?",[$invoice_dte,$due_dte,$cfp_id]);
-        return $data;
-    }
-
-    public function search_num_fact_actif($num_fact,$cfp_id){
-        $data = DB::select("select * from v_facture_actif where num_facture like %".$num_fact."% and cfp_id=?",[$cfp_id]);
-        return $data;
-    }
-*/
-
-//============== pagination =============
-
-// public function findWherePagination($nomTab,$para=[],$val=[],$name_id,$dernier_id,$nbPage){
-//     $fonction = new FonctionGenerique();
-//     $query= $fonction->queryWhere($nomTab,$para,$val);
-//     if($dernier_id<=0){
-//         $dernier_id=1;
-//     }
-//     $query = $query." and ".$name_id." >= ".$dernier_id." LIMIT ".$nbPage;
-//     $data =  DB::select($fonction->queryWhere($nomTab,$para,$val), $val);
-//     return $data;
-// }
 
 }
