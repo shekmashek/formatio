@@ -234,7 +234,7 @@ class ParticipantController extends Controller
             $request->image->move(public_path($str), $nom_image);
             $participant->save();
             return redirect()->route('liste_participant');
-          
+
         }
     }
 
@@ -678,8 +678,9 @@ class ParticipantController extends Controller
 
             // $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
             $branche = $fonct->findWhereMulitOne("branches",["entreprise_id"],[$stagiaire->entreprise_id]);
-            return view('admin.participant.profiles', compact('entreprise','stagiaire','service','departement','branche'));
             $stagiaires = db::select('select * from stagiaires where matricule = ?',[$matricule]);
+           
+            return view('admin.participant.profiles', compact('entreprise','stagiaires','service','branche'));
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
 
         } else {
@@ -699,7 +700,7 @@ class ParticipantController extends Controller
 
             }
         }
-        
+
         // $stagiaire=stagiaire::findOrFail($id);
         // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
         // {
@@ -733,7 +734,7 @@ class ParticipantController extends Controller
     public function update_email_stg(Request $request){
         DB::update('update users set email = ? where id = ?', [$request->mail,Auth::id()]);
         DB::update('update cfps set mail_stagiaire= ? where user_id = ?', [$request->mail,Auth::id()]);
-    
+
         return redirect()->route('profile_stagiaire');
     }
     public function update_photo_stg(Request $request, $id)
@@ -751,7 +752,7 @@ class ParticipantController extends Controller
         if ($input !=null){
         $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
-            
+
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
@@ -780,11 +781,11 @@ class ParticipantController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        
-        
+
+
         $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
-            
+
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
@@ -793,7 +794,7 @@ class ParticipantController extends Controller
             'fonction_stagiaire' => $request->fonction,
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
-            
+
             'lieu_travail' => $request->lieu,
             'cin' => $request->cin,
             'niveau_etude' => $request->niveau,
@@ -811,14 +812,14 @@ class ParticipantController extends Controller
         entreprise::where('id',$id)->update([
             'nom_etp'=>$request->entreprise
         ]);
-       
-     
-    
+
+
+
         return redirect()->route('profile_stagiaire', $id);
 
     }
-       
-  
+
+
     public function last_record()
     {
         $last_record_historique = DB::select(' SELECT *
