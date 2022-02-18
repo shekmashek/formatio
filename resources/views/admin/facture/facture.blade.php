@@ -226,10 +226,9 @@
                             <tr>
                                 <td class="text-center" style="color:red;">O</td>
                                 <th>
-                                    <strong>
-                                        <i class="fa fa-barcode"></i>
-                                        {{$actif->num_facture}}
-                                    </strong>
+                                    <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
+                                    </a>
                                 </th>
                                 <td>{{$actif->other_message}}</td>
                                 <td>{{$actif->invoice_date}}</td>
@@ -237,7 +236,39 @@
                                 <td>{{$actif->totale_jour.' jour(s)'}}</td>
                                 <td style="color:red;">{{$actif->jour_restant.' jour(s)'}}</td>
                                 <td>
+
                                     <div class="btn-group dropleft">
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            {{-- <li  class="dropdown-item">
+                                                <form action="{{route('valid_facture')}}" method="POST">
+                                                    @csrf
+                                                    <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
+                                                    <button type="submit" class="btn"> <i class="fa fa-save">valid</i></button>
+                                                </form>
+
+                                            </li> --}}
+                                            <li class="dropdown-item">
+                                                <form action="{{route('valid_facture')}}" method="POST">
+                                                    @csrf
+                                                    <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
+                                                    <button type="submit" class="btn btn"> valider facture</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('delete_facture',$actif->num_facture)}}">
+                                                    <button type="submit"> <i class="fa fa-trash" style="color:red">supprimer</i></button>
+                                                </a>
+                                            </li>
+
+                                            <hr class="dropdown-divider">
+                                            <a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a>
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="btn-group dropleft">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v"></i>
                                         </a>
@@ -246,7 +277,7 @@
                                                 <form action="{{route('valid_facture')}}" method="POST">
                                                     @csrf
                                                     <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn btn-dark"> <i class="fa fa-save"></i></button>
+                                                    <button type="submit" class="btn"> <i class="fa fa-save"></i></button>
                                                 </form>
 
                                             </li>
@@ -254,7 +285,7 @@
                                                 <form action="{{route('valid_facture')}}" method="POST">
                                                     @csrf
                                                     <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn btn-primary"> valider facture</button>
+                                                    <button type="submit" class="btn btn"> valider facture</button>
                                                 </form>
                                             </li>
                                             <li>
@@ -267,7 +298,7 @@
                                             </li>
                                             <li><a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </td>
                             </tr>
                             @endforeach

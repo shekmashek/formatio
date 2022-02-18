@@ -65,15 +65,3 @@ create table refuse_demmande_etp_cfp(
     foreign key(inviter_cfp_id) references cfps(id) on delete cascade,
     foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
--- create table demmande_etp_stg(
---     id bigint(20) unsigned primary key not null auto_increment,
---     demmandeur_etp_id bigint(20) unsigned not null,
---     inviter_stg_id bigint(20) unsigned not null,
---     activiter boolean not null default false,
---     created_at timestamp NULL DEFAULT NULL,
---     updated_at timestamp NULL DEFAULT NULL,
---     foreign key(inviter_stg_id) references stagiaires(id) on delete cascade,
---     foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
--- )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,5 +1,5 @@
 create or replace view v_evaluation_stagiaire_competence as
-    select 
+    select
         c.titre_competence,
         c.module_id,
         c.objectif,

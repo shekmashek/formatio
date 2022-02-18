@@ -508,7 +508,7 @@
                 } else {
                     document.getElementById("projet_id_err").innerHTML = "";
                     for (var $i = 0; $i < userData.length; $i++) {
-                        $("#projet_id").append('<option value="' + userData[$i].id + '">' + userData[$i].nom_projet + '</option>');
+                        $("#projet_id").append('<option value="' + userData[$i].projet_id + '">' + userData[$i].nom_projet + '</option>');
                     }
                 }
 
@@ -589,13 +589,14 @@
     $(document).on('click', '#addRowMontant', function() {
         $('#montant').empty();
         var id = $("#projet_id").val();
-
+        var etp_id = $("#entreprise_id").val();
 
         $.ajax({
             url: "{{route('groupe_projet')}}"
             , type: 'get'
             , data: {
-                id: id
+                id: id,
+                entreprise_id: etp_id
             }
             , success: function(response) {
                 var userData = response;
@@ -606,7 +607,7 @@
                 html += '<label class="visually" for="specificSizeSelect">Choisir la Session a Facturé<strong style="color: red">*</strong></label>';
                 html += '<select id="session_id" class="form-control mt-1" name="session_id[]">';
                 for (var $i = 0; $i < userData.length; $i++) {
-                    html += '<option value="' + userData[$i].id + '">' + userData[$i].nom_groupe + '</option>';
+                    html += '<option value="' + userData[$i].groupe_id + '">' + userData[$i].nom_groupe + '</option>';
                 }
                 html += '</select></div>';
                 html += '<div class="col">';
