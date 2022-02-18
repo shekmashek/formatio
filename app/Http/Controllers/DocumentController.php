@@ -21,7 +21,7 @@ class DocumentController extends Controller
         $nom_cfp = $rqt[0]->nom;
         $document->create_folder($nom_cfp);
         $get_nom_cfp = $document->get_folder($nom_cfp);
-      
+
         $get_sub_folder =  $document->get_sub_folder($nom_cfp);
         $nb_sub_folder = count($get_sub_folder);
         return view('document.gestion_document',compact('get_nom_cfp','get_sub_folder','nb_sub_folder'));
@@ -133,5 +133,12 @@ class DocumentController extends Controller
         $nb_sub_folder = count($get_sub_folder);
         $listes = new getImageModel();
         return $listes->download_file($nom_cfp,$id,$namefile);
+    }
+    public function delete_folder(Request $request){
+        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
+        $nom_cfp = $rqt[0]->nom;
+        $docs = new getImageModel();
+        $docs->delete_folder($nom_cfp,$request->id);
+        return back();
     }
 }

@@ -60,15 +60,6 @@
                     @for($i = 0; $i < $nb_res; $i++)
                     <div class="col-6 justify-content-around">
                          <div class = "liste_fichier">
-                            @if($res[$i]['extension'] == "txt")
-                            <span>Fichier texte</span>
-                            @endif
-                            @if($res[$i]['extension'] == "html")
-                                <span>Fichier html</span>
-                            @endif
-                            @if($res[$i]['extension'] == "pdf")
-                                <span>Fichier pdf</span>
-                            @endif
 
                             <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('download_file',['id'=>$id,'filename'=>$res[$i]['filename']])}}"> {{$res[$i]['filename'].'.'.$res[$i]['extension']}} </a> </span> &nbsp;&nbsp;
                             <br>
