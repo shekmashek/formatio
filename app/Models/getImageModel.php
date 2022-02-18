@@ -219,7 +219,7 @@ class getImageModel extends Model
 
     }
     //download file
-    public function download_file($folder_parent,$sub_folder,$filename){
+    public function download_file($folder_parent,$sub_folder,$filename,$extension){
 
     //     //liste des contenues dans drive
         $contents = collect(Storage::cloud()->listContents('/', false));
@@ -249,7 +249,7 @@ class getImageModel extends Model
 
         return response($rawData, 200)
                ->header('ContentType', $files['mimetype'])
-               ->header('Content-Disposition', "attachment; filename='$filename'");
+               ->header('Content-Disposition', 'attachment; filename="'.$filename.'.'.$extension.'"');
 
     //    return $files->mapWithKeys(function($file) {
     //        $filename = $file['filename'].'.'.$file['extension'];

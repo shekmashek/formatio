@@ -126,6 +126,7 @@ class SessionController extends Controller
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
+            $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);
         }
         if(Gate::allows('isFormateur')){
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
@@ -372,11 +373,24 @@ class SessionController extends Controller
 
     public function save_documents(Request $request){
         $user_id = Auth::user()->id;
-        $cfp = Cfp::where('user_id', $user_id)->value('id');
+        $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        $groupe = $request->groupe;
         $paths = $request->path;
+        $nom_docs = $request->nom_doc;
+        $extensions = $request->extension;
         for ($i=0; $i < count($paths); $i++) { 
-            DB::insert('insert into mes_documents(path,cfp_id) values(?,?)',[$paths[$i],$cfp]);
+            DB::insert('insert into mes_documents(path,groupe_id,nom_doc,extension) values(?,?,?,?)',[$paths[$i],$groupe,$nom_docs[$i],$extensions[$i]]);
         }
         return back();
+    }
+    
+    public function telecharger_fichier(){
+        $user_id = Auth::user()->id;
+        $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        $namefile = request()->filename;
+        $cfp = request()->cfp;
+        $extension = request()->extension;
+        $drive = new getImageModel();
+        return $drive->download_file($cfp,"Mes documents",$namefile,$extension);
     }
 }

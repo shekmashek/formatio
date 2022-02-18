@@ -775,6 +775,7 @@ Route::get('competence_stagiaire','SessionController@get_competence_stagiaire')-
 Route::post('importation_fichier','DocumentController@importation_fichier')->name('importation_fichier');
 Route::get('download_file','DocumentController@download_file')->name('download_file');
 
+
 Route::get('liste+responsable+cfp','ResponsableCfpController@index')->name('liste+responsable+cfp');
 Route::get('liste+responsable+entreprise','ResponsableController@show_responsable')->name('liste+responsable+entreprise');
 
@@ -790,3 +791,4 @@ Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name
 
 Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
 Route::post('save_documents','SessionController@save_documents')->name('save_documents');
+Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name('telecharger_fichier');

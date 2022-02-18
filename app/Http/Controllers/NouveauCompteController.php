@@ -111,8 +111,6 @@ class NouveauCompteController extends Controller
                             if (count($verify_resp_mail) <= 0) {
                                 if (count($verify_resp_tel) <= 0) {
 
-
-
                                     $this->user->name = $req->nom_resp_cfp . " " . $req->prenom_resp_cfp;
                                     $this->user->email = $req->email_resp_cfp;
                                     $this->user->cin = $req->cin_resp_cfp;

@@ -159,7 +159,7 @@ class HomeController extends Controller
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             // $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
-            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?', [$entreprise_id]);
+            $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data', 'stagiaires'));
         }
         if (Gate::allows('isManager')) {
