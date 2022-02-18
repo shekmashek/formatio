@@ -233,8 +233,14 @@ class ResponsableController extends Controller
     public function affReferent($id = null)
     {
         if (Gate::allows('isReferent')) {
-            $id = responsable::where('user_id', Auth::user()->id)->value('id');
-            $refs = responsable::findOrFail($id);
+            if ($id!=null) {
+                $refs = responsable::findOrFail($id);
+            }
+            else{
+                $id = responsable::where('user_id', Auth::user()->id)->value('id');
+                $refs = responsable::findOrFail($id);
+            }
+
             return view('admin.responsable.profilResponsables', compact('refs'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
