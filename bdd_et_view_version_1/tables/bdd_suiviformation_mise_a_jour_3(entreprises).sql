@@ -36,6 +36,12 @@ CREATE TABLE entreprises (
   telephone_etp varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+alter table entreprises add adresse_rue varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_code_postal varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci;
+alter table entreprises add adresse_region varchar(191) COLLATE utf8mb4_unicode_ci;
+
 CREATE TABLE `departement_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_departement`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -142,12 +148,12 @@ CREATE TABLE stagiaires (
   fonction_stagiaire varchar(255) COLLATE utf8mb4_unicode_ci,
   mail_stagiaire varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_stagiaire varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  entreprise_id bigint(20) UNSIGNED NOT NULL,
+  entreprise_id bigint(20) UNSIGNED NOT NULL references entreprises(id) on delete cascade,
   user_id bigint(20) UNSIGNED NOT NULL,
   photos varchar(255) COLLATE utf8mb4_unicode_ci,
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL,
-  service_id bigint(20) UNSIGNED,
+  service_id bigint(20) UNSIGNED  not null references services(id) on delete cascade,
   cin varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   date_naissance varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   niveau_etude varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -159,6 +165,7 @@ CREATE TABLE stagiaires (
   region varchar(225) COLLATE utf8mb4_unicode_ci,
   lot varchar(225) COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 CREATE TABLE `historique_stagiaires` (

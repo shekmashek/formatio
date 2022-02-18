@@ -159,7 +159,7 @@ class HomeController extends Controller
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             // $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
-            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?', [$entreprise_id]);
+            $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data', 'stagiaires'));
         }
         if (Gate::allows('isManager')) {
@@ -183,11 +183,11 @@ class HomeController extends Controller
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
             $formation = $fonct->findAll("formations");
-            $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
+            // $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
 
             $type_formation = DB::select('select * from type_formations');
 
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module','type_formation'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation','type_formation'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');

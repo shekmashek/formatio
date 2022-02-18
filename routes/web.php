@@ -782,6 +782,7 @@ Route::post('importation_fichier','DocumentController@importation_fichier')->nam
 Route::get('download_file','DocumentController@download_file')->name('download_file');
 Route::post('delete_folder','DocumentController@delete_folder')->name('delete_folder');
 
+
 Route::get('liste+responsable+cfp','ResponsableCfpController@index')->name('liste+responsable+cfp');
 Route::get('liste+responsable+entreprise','ResponsableController@show_responsable')->name('liste+responsable+entreprise');
 
@@ -795,3 +796,6 @@ Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluati
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
 Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');
 
+Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
+Route::post('save_documents','SessionController@save_documents')->name('save_documents');
+Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name('telecharger_fichier');

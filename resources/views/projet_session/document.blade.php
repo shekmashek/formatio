@@ -1,9 +1,40 @@
-<div>
-    <span class="pb-4"><h5>Règlement intérieur</h5></span>
-    <ul>
-        <li class="pb-2"><i class="far fa-check-circle"></i>&nbsp; Tout apprentis doit porter une tenue correcte en tant que professionnel</li>
-        <li class="pb-2"><i class="far fa-check-circle"></i>&nbsp; Tout apprentis doit être en avance de 15 minutes.</li>
-        <li class="pb-2"><i class="far fa-check-circle"></i>&nbsp; Tout retard est peut conduire à une sanction.</li>
-        <li class="pb-2"><i class="far fa-check-circle"></i>&nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur iusto sapiente dicta nihil, quo neque a repellat. Consequatur nihil itaque qui, eos alias non eius beatae, iure quibusdam nam autem.</li>
-    </ul>
+<div class="row">
+    @can('isCFP')
+        <h6>Choisissez le(s) fichier(s) pour cette session</h6>
+        <div class="col-12 d-flex flex-wrap">
+            <form action="{{ route('save_documents') }}" method="post">
+                @csrf
+                <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+                <div class="d-flex flex-row">
+                    @foreach ($documents as $docs)
+                        <div class="form-check me-5">
+                            <input class="form-check-input" type="checkbox" name="path[]" value="{{ $docs['path'] }}"
+                                id="flexCheckDefault">
+                            <input type="hidden" name="nom_doc[]" value="{{ $docs['filename'] }}">
+                            <input type="hidden" name="extension[]" value="{{ $docs['extension'] }}">
+                            
+                            <label class="form-check-label" for="flexCheckDefault">
+                                <span>
+                                    {{ $docs['filename'] . '.' . $docs['extension'] }} </a> </span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </form>
+        </div>
+    @endcan
+    @can('isReferent')
+        <h6>Le(s) fichier(s) pour cette session</h6>
+        <div class="col-12 d-flex flex-wrap">
+            <div class="d-flex flex-row">
+                @foreach ($documents as $docs)
+                    <div class="form-check me-5">
+                        <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('telecharger_fichier',['cfp'=>$projet[0]->nom_cfp,'filename'=>$docs->nom_doc,'extension'=>$docs->extension])}}"> {{$docs->nom_doc.'.'.$docs->extension}} </a> </span>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endcan
+    
 </div>
