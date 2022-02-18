@@ -143,7 +143,7 @@
                                             <i class="fa fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('profile_entreprise',$etp->cfp_id)}}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
+                                            <a class="dropdown-item" href="{{route('affResponsableCfp',$etp->id)}}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
                                             <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
                                         </div>
                                     </div>

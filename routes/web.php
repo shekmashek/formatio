@@ -194,7 +194,7 @@ Route::post('/update_responsable/{id?}','ResponsableController@update')->name('u
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
-Route::get('/affResponsableCfp', 'ResponsableCfpController@affReferent')->name('affResponsableCfp');
+Route::get('/affResponsableCfp/{id?}', 'ResponsableCfpController@affReferent')->name('affResponsableCfp');
 
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
