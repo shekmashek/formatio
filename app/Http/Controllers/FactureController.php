@@ -71,10 +71,10 @@ class FactureController extends Controller
         $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
 
-        $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id],"facture_id",0,10);
-        $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id],"facture_id",0,10);
-        $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id],"facture_id",0,10);
-        $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id],"facture_id",0,10);
+        $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
+        $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
+        $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0, 10);
+        $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0, 10);
 
         $facture_actif_guide = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
@@ -82,7 +82,7 @@ class FactureController extends Controller
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
-                return view('admin.facture.facture', compact('mode_payement','totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
         }
     }
 
@@ -96,14 +96,18 @@ class FactureController extends Controller
         $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
 
-        if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
-            $facture_actif =  $this->fact->search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id,0,10);
-            $facture_inactif =  $this->fact->search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id,0,10);
-            $facture_payer =  $this->fact->search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id,0,10);
-            $facture_encour = $this->fact->search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id,0,10);
-            // dd($facture_actif);
-            return view('admin.facture.facture', compact('mode_payement','totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+        if($invoice_dte == null || $due_dte==null){
+            if (Gate::allows('isCFP')) {
+                $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
+                $facture_actif =  $this->fact->search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                $facture_inactif =  $this->fact->search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                $facture_payer =  $this->fact->search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                $facture_encour = $this->fact->search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
+                // dd($facture_actif);
+                return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            }
+        } else {
+            return back();
         }
     }
 
@@ -115,16 +119,16 @@ class FactureController extends Controller
 
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
-            $facture_actif =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "valider",$cfp_id);
-            $facture_inactif =  $this->fact->search_num_fact_inactif_cfp($num_fact,$cfp_id);
-            $facture_payer =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "terminer",$cfp_id);
-            $facture_encour = $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "en_cour",$cfp_id);
-            dd($facture_actif);
-            return view('admin.facture.facture', compact('mode_payement','totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            $facture_actif =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "valider", $cfp_id);
+            $facture_inactif =  $this->fact->search_num_fact_inactif_cfp($num_fact, $cfp_id);
+            $facture_payer =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "terminer", $cfp_id);
+            $facture_encour = $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "en_cour", $cfp_id);
+            // dd($facture_encour);
+            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
         }
     }
 
-   /* public function listeFacture($id)
+    /* public function listeFacture($id)
     {
 
         $user_id = Auth::user()->id;
@@ -584,7 +588,7 @@ class FactureController extends Controller
         $this->fact->lectureFileProjet($path_file);
     }
 
-   /* // ================== Rehcerche Par critère ==================
+    /* // ================== Rehcerche Par critère ==================
 
     public function search_par_date(Request $req)
     {

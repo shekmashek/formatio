@@ -130,14 +130,19 @@
             </li>
                 <li class="nav-item">
                     <a style="color: #9C27B0" href="#" class=" " id="nav-invitation-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="false">
-                        recherce par intervale de date
+                        Recherce par intervale de date
                     </a>
                 </li>
                 <li class="nav-item ms-5">
                     <a  style="color: #9C27B0"  href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                        recherche par numero
+                        Recherche par numero
                     </a>
                 </li>
+                {{-- <li class="nav-item ms-5">
+                    <a href="{{route('liste_facture',2)}}">
+                        Full facture
+                    </a>
+                </li> --}}
         </ul>
     </div>
 </nav>
@@ -180,6 +185,7 @@
                 <div class="col-4">
                     <h5>Recherche par Numero Facture</h5>
                     <form class="d-flex mt-3" method="POST" action="{{route('search_par_num_fact')}}">
+                        @csrf
                         <div class="form-group">
                             <input name="num_fact" id="num_fact" required class="form-control input_inscription me-2" type="text" aria-label="Search">
                             <label for="num_fact" class="form-control-placeholder">Numéro de facture<strong style="color:#ff0000;">*</strong></label>
@@ -589,7 +595,7 @@
     </div>
     @endif
     {{-- fin --}}
-
+{{--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -625,7 +631,7 @@
 
     </script>
 
-</div>
+</div> --}}
 
 
 
