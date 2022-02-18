@@ -297,6 +297,17 @@ create or replace view v_projet_cfp as
     join type_formations tf on tf.id = p.type_formation_id;
 
 
+create or replace view v_departement_service_entreprise as
+    select
+        s.id as service_id,
+        s.departement_entreprise_id,
+        s.nom_service,
+        de.nom_departement,
+        de.entreprise_id
+    from services s
+    join departement_entreprises de on s.departement_entreprise_id = de.id;
+
+
 create or replace view v_stagiaire_groupe as
 select g.id as groupe_id,
         g.max_participant,
@@ -364,15 +375,6 @@ create or replace view v_detail_presence as
 
 
 
-create or replace view v_departement_service_entreprise as
-    select
-        s.id as service_id,
-        s.departement_entreprise_id,
-        s.nom_service,
-        de.nom_departement,
-        de.entreprise_id
-    from services s
-    join departement_entreprises de on s.departement_entreprise_id = de.id;
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.id AS stagiaire_id,

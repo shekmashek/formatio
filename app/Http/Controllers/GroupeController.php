@@ -40,18 +40,17 @@ class GroupeController extends Controller
         return view('admin.groupe.groupe', compact('groupe', 'users'));
     }
 
-    public function create($idProjet)
+    public function create()
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
-        $projet = $fonct->findWhereMulitOne("v_projet_cfp", ["projet_id"], [$idProjet]);
-        $groupe = $fonct->findWhere("v_groupe_projet_entreprise_module", ["projet_id"], [$idProjet]);
-        $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
-        $module = $fonct->findAll("modules");
+        $type_formation = request()->type_formation;
+        $formations = $fonct->findWhere("formations", [1], [1]);
+        $modules = $fonct->findAll("modules");
         $entreprise = $fonct->findAll("v_demmande_cfp_etp");
         $payement = $fonct->findAll("type_payement");
-        return view('admin.groupe.nouveauGroupe', compact('projet', 'groupe', 'formation', 'module','entreprise','payement'));
+        return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules','entreprise','payement'));
     }
 
 
@@ -67,6 +66,9 @@ class GroupeController extends Controller
 
     public function store(Request $request)
     {
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $type_formation = $request->type_formation;
         //condition de validation de formulaire
         $request->validate(
             [
@@ -85,26 +87,22 @@ class GroupeController extends Controller
 
         try{
             DB::beginTransaction();
+            $projet = new projet();
+            $nom_projet = $projet->generateNomProjet();
+            DB::insert('insert into projets(nom_projet,cfp_id,type_formation_id,status,activiter) values(?,?,?,?,TRUE)',[$nom_projet,$cfp_id,$type_formation,'Confirmé']);
+
+            $last_insert_projet = DB::table('projets')->latest('id')->first();
             $groupe = new groupe();
-            $nom_groupe = $groupe->generateNomSession($request->projet_id);
+            $nom_groupe = $groupe->generateNomSession($last_insert_projet->id);
             DB::insert('insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,"En Cours",TRUE)',
-            [$request->max_part,$request->min_part,$nom_groupe,$request->projet_id,$request->module_id,$request->payement,$request->date_debut,$request->date_fin]);
+            [$request->max_part,$request->min_part,$nom_groupe,$last_insert_projet->id,$request->module_id,$request->payement,$request->date_debut,$request->date_fin]);
 
-            $last_insert = DB::table('groupes')->latest('id')->first();
+            $last_insert_groupe = DB::table('groupes')->latest('id')->first();
             $fonct = new FonctionGenerique();
-            $projet = $fonct->findWhereMulitOne("projets", ["id"], [$request->projet_id]);
             $data = $request->all();
-
-            if($projet->type_formation_id == 1){
-                DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert->id,$request->entreprise]);
-            }
-            if($projet->type_formation_id == 2){
-                for($i = 0; $i < count($data['entreprise']); $i++){
-                    DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert->id,$data['entreprise'][$i]]);
-                }
-            }
+            DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert_groupe->id,$request->entreprise]);
             DB::commit();
-            return back();
+            return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id]);
         }catch(Exception $e){
             DB::rollback();
             return back()->with('groupe_error',"insertion de la session échouée!");

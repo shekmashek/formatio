@@ -16,7 +16,6 @@
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
     <link href='https://unpkg.com/boxicons@2.1.1/dist/boxicons.js' rel='stylesheet'>
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 </head>
 
 <body>
@@ -119,7 +118,7 @@
             @endcanany
             @canany(['isCFP','isFormateur'])
             <li>
-                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
+                <a href="{{route('accueil_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
@@ -637,83 +636,8 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid pb-5 pt-5 content_body">
+            <div class="container-fluid content_body" style="padding-bottom: 2.5rem; padding-top: 2.5rem;">
                 @yield('content')
-                <div class="container">
-                    <div class="row card_projets">
-                        <h3 class="text-center mt-5 mb-5">Formation continue : former en inter et en intra</h3>
-                        <div class="col-6 ">
-                            <a href="#">
-                                <div class="row projets_card me-2">
-                                    <div class="col-3 text-center">
-                                        <i class='bx bx-customize projets_icon'></i>
-                                    </div>
-                                    <div class="col-9">
-                                        <h5>Creer un projet en intra</h5>
-                                        <p>
-                                            Découvrez toutes nos formations en présentiel et à distance, en inter, intra
-                                            packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
-                                            certification.
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6  ">
-                            <a href="#">
-                                <div class="row projets_card2 ms-2">
-                                    <div class="col-3">
-                                        <i class='bx bxs-customize projets_icon'></i>
-                                    </div>
-                                    <div class="col-9">
-                                        <h5>Creer un projet en inter</h5>
-                                        <p>
-                                            Découvrez toutes nos formations en présentiel et à distance, en inter, intra
-                                            packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
-                                            certification.
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row mt-5 card_projets">
-                        <div class="col-6 ">
-                            <a href="#">
-                                <div class="row projets_card3 me-2">
-                                    <div class="col-3 text-center">
-                                        <i class='bx bxs-grid-alt projets_icon'></i>
-                                    </div>
-                                    <div class="col-9">
-                                        <h5>Session pour un projet en intra</h5>
-                                        <p>
-                                            Découvrez toutes nos formations en présentiel et à distance, en inter, intra
-                                            packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
-                                            certification.
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6  ">
-                            <a href="#">
-                                <div class="row projets_card4 ms-2">
-                                    <div class="col-3">
-                                        <i class='bx bx-grid-alt projets_icon'></i>
-                                    </div>
-                                    <div class="col-9">
-                                        <h5>Session pour un projet en inter</h5>
-                                        <p>
-                                            Découvrez toutes nos formations en présentiel et à distance, en inter, intra
-                                            packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
-                                            certification.
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
             {{-- content --}}
             {{-- footer --}}
