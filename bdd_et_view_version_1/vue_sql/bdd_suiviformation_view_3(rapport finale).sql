@@ -29,29 +29,29 @@ GROUP BY
     user_id;
 
 
-CREATE OR REPLACE VIEW v_liste_stagiaire_groupe AS SELECT
-    v_participantsession.cfp_id,
-    stagiaire_id,
-    stagiaires.nom_stagiaire,
-    stagiaires.prenom_stagiaire,
-    v_participantsession.groupe_id,
-    groupes.nom_groupe,
-    groupes.date_debut,
-    groupes.date_fin,
-    (groupes.status) status_groupe,
-    (groupes.activiter) activiter_groupe,
-    module_id,
-    nom_module,
-    reference,
-    v_detailmoduleformation.projet_id
-FROM
-    stagiaires,
-    v_participantsession,
-    groupes,
-    v_detailmoduleformation
-WHERE
-    stagiaire_id = stagiaires.id AND v_detailmoduleformation.projet_id = v_participantsession.projet_id AND v_participantsession.groupe_id = groupes.id
-    AND v_participantsession.cfp_id = v_detailmoduleformation.cfp_id;
+-- CREATE OR REPLACE VIEW v_liste_stagiaire_groupe AS SELECT
+--     v_participantsession.cfp_id,
+--     stagiaire_id,
+--     stagiaires.nom_stagiaire,
+--     stagiaires.prenom_stagiaire,
+--     v_participantsession.groupe_id,
+--     groupes.nom_groupe,
+--     groupes.date_debut,
+--     groupes.date_fin,
+--     (groupes.status) status_groupe,
+--     (groupes.activiter) activiter_groupe,
+--     module_id,
+--     nom_module,
+--     reference,
+--     v_detailmoduleformation.projet_id
+-- FROM
+--     stagiaires,
+--     v_participantsession,
+--     groupes,
+--     v_detailmoduleformation
+-- WHERE
+--     stagiaire_id = stagiaires.id AND v_detailmoduleformation.projet_id = v_participantsession.projet_id AND v_participantsession.groupe_id = groupes.id
+--     AND v_participantsession.cfp_id = v_detailmoduleformation.cfp_id;
 
 
 

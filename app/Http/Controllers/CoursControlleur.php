@@ -35,22 +35,41 @@ class CoursControlleur extends Controller
 
     public function store(Request $request)
     {
+        // $request->validate(
+        //     [
+        //         'titre_cours' => ["required"]
+        //     ],
+        //     [
+        //         'titre_cours.required' => 'Veuillez remplir le champ'
+        //     ]
+        // );
+        // //enregistrer les formations dans la bdd
+        // $id_programme = $request->programme_id;
+        // $cours = new Cours();
+        // $cours->titre_cours = $request->titre_cours;
+        // $cours->programme_id = $request->programme_id;
+        // $cours->save();
+        // $datas = DB::select('select * from v_cours_programme where programme_id = ?', [$id_programme]);
+        // return view('admin.cours.liste_cours', compact('datas', 'id_programme'));
         $request->validate(
             [
-                'titre_cours' => ["required"]
+                'cours' => ["required"]
             ],
             [
-                'titre_cours.required' => 'Veuillez remplir le champ'
+                'cours.required' => 'Veuillez remplir le champ'
             ]
         );
-        //enregistrer les formations dans la bdd
-        $id_programme = $request->programme_id;
-        $cours = new Cours();
-        $cours->titre_cours = $request->titre_cours;
-        $cours->programme_id = $request->programme_id;
-        $cours->save();
-        $datas = DB::select('select * from v_cours_programme where programme_id = ?', [$id_programme]);
-        return view('admin.cours.liste_cours', compact('datas', 'id_programme'));
+
+        $id = $request->id_prog;
+        $donnees = $request->all();
+
+        for($i = 0; $i < count($donnees['cours']); $i++){
+            if ($donnees['cours'][$i] != null) {
+                $cours = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)',[$donnees['cours'][$i],$id]);
+            }
+        }
+
+        return back();
     }
 
     public function show($id)
@@ -93,5 +112,17 @@ class CoursControlleur extends Controller
         $id_programme = $request->id_prog;
         $datas = DB::select('select * from v_cours_programme where programme_id = ?', [$id_programme]);
         return view('admin.cours.liste_cours', compact('datas', 'id_programme'));
+    }
+
+    public function suppre_cours(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from cours where id = ?', [$id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
     }
 }

@@ -100,7 +100,7 @@
                             <div class="col-md-4 p-0">
                                 <div class="row">
                                     <div class="col-md-5 p-0">
-                                        <input type="date" name="date[]" placeholder="" class="form-control m-1" required>
+                                        <input type="date" min="{{ $projet[0]->date_debut }}" max="{{ $projet[0]->date_fin }}" name="date[]" placeholder="" class="form-control m-1" required>
                                     </div>
                                     <div class="col-md-7 ps-1 d-flex">
                                         <input type="time" name="debut[]" class="form-control my-1 ms-1" required>
@@ -115,11 +115,11 @@
                                             {{-- <div class="input-group-prepend my-1">
                                     <div class="input-group-text"><i class="fa fa-user"></i></div>
                                 </div> --}}
-                                            <select name="formateur[]" id="" class="form-control  my-1" required>
+                                            <select name="formateur[]" style="height: 2.361rem" id="" class="form-control  my-1" required>
                                                 <option value="" selected hidden> Choisir formateur </option>
                                                 @foreach ($formateur as $format)
                                                     <option value="{{ $format->formateur_id }}">
-                                                        {{ $format->prenom_formateur }}</option>
+                                                        {{ $format->nom_formateur.' '.$format->prenom_formateur }}</option>
                                                 @endforeach
                                             </select>
 
@@ -228,6 +228,15 @@
 
 
         <div class="row">
+            @if (count($datas) != 0 && $projet[0]->status_groupe == 1)
+                @can('isReferent')
+                <div class="col-md-12 m-1">
+                    Confirmer la session "<Strong style="color: #822164">{{ $projet[0]->nom_groupe }}</Strong>" du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les details ci-dessous
+                    <a href="{{ route('acceptation_session',[$projet[0]->groupe_id]) }}"><button type="button" class="btn btn-success" data-dismiss="modal">Accepter</button></a>
+                    {{-- <a href=""><button type="button" class="btn  btn-danger" data-dismiss="modal">Refuser</button></a> --}}
+                </div>
+                @endcan
+            @endif
             <div class="col-lg-12">
                 <div class="panel panel-default">
 
@@ -236,8 +245,8 @@
                             <nav class="d-flex justify-content-end mb-1">
                                 <a class="nouveau_detail btn" aria-current="page" data-toggle="modal"
                                     data-target="#modal_nouveau_detail">
-                                    <i class="far fa-plus-circle p-1"
-                                        style="background-color: white; border-radius: 50%; font-weight: bold;"></i>
+                                    <i class="far fa-plus p-1"
+                                        style="background-color: rgb(255, 255, 255); border-radius: 50%; font-weight: bold; color:#822164"></i>
                                     <small class="text-white">Nouveau détail</small class="text-white"></a>
                             </nav>
                         @endcanany
@@ -271,7 +280,11 @@
                                             {{-- test commit --}}
                                             <td>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}</td>
                                             @canany(['isCFP'])
-                                                <td><i class="fa fa-trash-alt" style="color:rgb(130,33,100);"></i></td>
+                                                <td>
+                                                    <a href="" aria-current="page" data-toggle="modal"
+                                                    data-target="#modal_modifier_detail_{{ $d->detail_id }}"><i class="fa fa-edit ms-2" style="color:rgb(130,33,100);"></i></a>
+                                                    <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a>
+                                                </td>
                                             @endcanany
                                             {{-- @canany(['isFormateur'])
                                                 <td><i data-toggle="collapse" href="#stagiaire_presence" class="fa fa-edit"
@@ -282,29 +295,20 @@
                                         </td>
                                         <td><button class="btn btn-success modifier" id="{{$d->detail_id}}" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
                                         <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
-                                        
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            
-                        </div>
-                        </tbody>
-                        </table>
-                        @canany('isCFP')
-                            <div class="modal fade" id="modal_nouveau_detail">
+                                        @canany('isCFP')
+                            <div class="modal fade" id="modal_modifier_detail_{{ $d->detail_id }}">
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-content p-3">
                                         <div class="modal-title pt-3" style="height: 50px; align-items: center;">
-                                            <h5 class="text-center my-auto">Nouveau detail</h5>
+                                            <h5 class="text-center my-auto">Modifier detail</h5>
                                         </div>
-                                        <form class="btn-submit" action="{{ route('detail.store') }}" method="post">
+                                        <form class="btn-submit" action="{{ route('update_detail',[$d->detail_id]) }}" method="post">
                                             @csrf
-                                            <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
-                                            <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+                                            <input type="hidden" name="detail" value="{{ $d->detail_id }}">
                                             <div class="form-group mx-auto">
                                                 <label for="formateur">Formateur</label><br>
                                                 <select class="form-control" id="formateur" name="formateur">
+                                                    <option value="{{ $d->formateur_id }}">{{ $d->nom_formateur.' '.$d->prenom_formateur }}</option>
                                                     @foreach ($formateur as $format)
                                                         <option value="{{ $format->formateur_id }}">
                                                             {{ $format->nom_formateur }}
@@ -315,23 +319,83 @@
                                             </div>
                                             <div class="form-group mx-auto">
                                                 <label for="lieu">Lieu</label>
-                                                <input type="text" class="form-control" id="lieu" name="lieu"
-                                                    placeholder="Lieu">
+                                                <input type="text" class="form-control"  id="lieu" name="lieu"
+                                                    placeholder="Lieu" value="{{ $d->lieu }}">
 
                                             </div>
                                             <div class="form-group mx-auto">
                                                 <label for="date">Date</label>
                                                 <input type="date" class="form-control" id="date_detail" name="date"
-                                                    min="" max="">
+                                                min="{{ $projet[0]->date_debut }}" max="{{ $projet[0]->date_fin }}" value="{{ $d->date_detail }}">
                                             </div>
                                             <div class="form-group mx-auto">
                                                 <label for="debut">Heure début</label>
                                                 <input type="time" class="form-control" id="debut" name="debut"
-                                                    min="07:00" max="17:00">
+                                                    min="07:00" max="17:00" value="{{ $d->h_debut }}">
                                             </div>
                                             <div class="form-group mx-auto">
                                                 <label for="fin">Heure fin</label>
                                                 <input type="time" class="form-control" id="fin" name="fin" min="08:00"
+                                                    max="18:08" value="{{ $d->h_fin }}">
+                                            </div>
+                                            <div class="d-flex justify-content-around mb-3">
+                                                <button class="btn btn-danger"  data-dismiss="modal">Annuler</button>
+                                                <input type="submit" id="ajouter" style="background-color: #822164" class="btn btn-primary" value="Modifier">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endcanany
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+                        </tbody>
+                        </table>
+                        @canany('isCFP')
+                            <div class="modal fade" id="modal_nouveau_detail">
+                                <div class="modal-dialog">
+                                    <div class="modal-content p-3">
+                                        <div class="modal-title pt-3" style="height: 50px; align-items: center;">
+                                            <h5 class="text-center my-auto">Nouveau detail</h5>
+                                        </div>
+                                        <form class="btn-submit" action="{{ route('detail.store') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
+                                            <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+                                            <div class="form-group mx-auto">
+                                                <label for="formateur">Formateur</label><br>
+                                                <select class="form-control" id="formateur" name="formateur[]">
+                                                    @foreach ($formateur as $format)
+                                                        <option value="{{ $format->formateur_id }}">
+                                                            {{ $format->nom_formateur }}
+                                                            {{ $format->prenom_formateur }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <p><strong style="color: red" id="err_formateur"></strong></p>
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="lieu">Lieu</label>
+                                                <input type="text" class="form-control"  id="lieu" name="lieu[]"
+                                                    placeholder="Lieu">
+
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="date">Date</label>
+                                                <input type="date" class="form-control" id="date_detail" name="date[]"
+                                                min="{{ $projet[0]->date_debut }}" max="{{ $projet[0]->date_fin }}">
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="debut">Heure début</label>
+                                                <input type="time" class="form-control" id="debut" name="debut[]"
+                                                    min="07:00" max="17:00">
+                                            </div>
+                                            <div class="form-group mx-auto">
+                                                <label for="fin">Heure fin</label>
+                                                <input type="time" class="form-control" id="fin" name="fin[]" min="08:00"
                                                     max="18:08">
                                             </div>
                                             <div class="d-flex justify-content-center mb-3">
@@ -393,6 +457,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endif

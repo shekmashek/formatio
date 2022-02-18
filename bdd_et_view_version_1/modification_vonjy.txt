@@ -9,3 +9,8 @@ creation de view v_detail_presence(bdd_suiviformation_view_9)
 
 ----9 feb
 creation du view v_evaluation_stagiaire_competence(competences_evaluation)
+
+----14 feb
+ALTER TABLE groupes Modify column status int(2) not null;
+
+creation table status(Modification_bdd(projet))

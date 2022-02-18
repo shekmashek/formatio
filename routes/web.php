@@ -71,6 +71,7 @@ Route::get('admin_count_etp','AdminController@admin_etp')->name('admin_count_etp
 Route::get('collaboration_cfp','HomeController@collaboration_cfps')->name('collaboration_cfp');
 Route::get('collaboration_etp','HomeController@collaboration_etp')->name('collaboration_etp');
 Route::get('collaboration_frmt','HomeController@collaboration_frmt')->name('collaboration_frmt');
+Route::get('/image-cfp/{logo_cfp}','CfpController@img_cfp')->name('image-cfp');
 
 Route::get('listes_notifs','HomeController@liste_notification')->name('listes_notifs');
 Route::get('listes_messages','HomeController@liste_message')->name('listes_messages');
@@ -140,13 +141,28 @@ Route::get('/utilisateur_superAdmin','UtilisateurControlleur@superAdmin')->name(
 Route::resource('formateur','ProfController')->except([
     'index','edit'
 ]);
+Route::post('/update_prof/{id?}','ProfController@misajourFormateur')->name('update_prof');
 //collabforfateur
 Route::get('/collabformateur','ProfController@affiche')->name('collabformateur');
 //route formateur profil
-Route::get('/profile_formateur/{id}','ProfController@profile_formateur')->name('profile_formateur');
+Route::get('/profile_formateur/{id?}','ProfController@profile_formateur')->name('profile_formateur');
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
 });
+//Route update par champs prof
+Route::get('/editer_nom/{id}','ProfController@editer_nom')->name('editer_nom');
+Route::get('/editer_naissance/{id}','ProfController@editer_naissance')->name('editer_naissance');
+Route::get('/editer_genre/{id}','ProfController@editer_genre')->name('editer_genre');
+Route::get('/editer_mail/{id}','ProfController@editer_mail')->name('editer_mail');
+Route::get('/editer_phone/{id}','ProfController@editer_phone')->name('editer_phone');
+Route::get('/editer_cin/{id}','ProfController@editer_cin')->name('editer_cin');
+Route::get('/edit_adresse/{id}','ProfController@edit_adresse')->name('edit_adresse');
+Route::get('/editer_photos/{id}','ProfController@editer_photos')->name('editer_photos');
+Route::get('/editer_pwd/{id}','ProfController@editer_pwd')->name('editer_pwd');
+Route::get('/editer_adresse/{id}','ProfController@editer_adresse')->name('editer_adresse');
+Route::get('/editer_etp/{id}','ProfController@editer_etp')->name('editer_etp');
+Route::get('/editer_niveau/{id}','ProfController@editer_niveau')->name('editer_niveau');
+
 
 // Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
 //     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
@@ -174,29 +190,38 @@ Route::get('/edit_responsable','ResponsableController@edit')->name('edit_respons
 
 Route::get('/destroy_responsable','ResponsableController@destroy')->name('destroy_responsable');
 
-Route::post('/update_responsable','ResponsableController@update')->name('update_responsable');
+Route::post('/update_responsable/{id?}','ResponsableController@update')->name('update_responsable');
+Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
+Route::get('/affResponsableCfp', 'ResponsableCfpController@affReferent')->name('affResponsableCfp');
+
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
 //Route pour modifier chaque champs pour responsable
-Route::get('/edit_nom/{id}','ResponsableController@edit_nom')->name('edit_nom');
-Route::get('/edit_naissance/{id}','ResponsableController@edit_naissance')->name('edit_naissance');
-Route::get('/edit_genre/{id}','ResponsableController@edit_genre')->name('edit_genre');
-Route::get('/edit_mail/{id}','ResponsableController@edit_mail')->name('edit_mail');
-Route::get('/edit_phone/{id}','ResponsableController@edit_phone')->name('edit_phone');
-Route::get('/edit_cin/{id}','ResponsableController@edit_cin')->name('edit_cin');
-Route::get('/edit_adresse/{id}','ResponsableController@edit_adresse')->name('edit_adresse');
-Route::get('/edit_fonction/{id}','ResponsableController@edit_fonction')->name('edit_fonction');
-Route::get('/edit_matricule/{id}','ResponsableController@edit_matricule')->name('edit_matricule');
-Route::get('/edit_entreprise/{id}','ResponsableController@edit_entreprise')->name('edit_entreprise');
-Route::get('/edit_niveau/{id}','ResponsableController@edit_niveau')->name('edit_niveau');
-Route::get('/edit_departement/{id}','ResponsableController@edit_departement')->name('edit_departement');
-Route::get('/edit_branche/{id}','ResponsableController@edit_branche')->name('edit_branche');
-Route::get('/edit_photos/{id}','ResponsableController@edit_photos')->name('edit_photos');
-Route::get('/edit_pwd/{id}','ResponsableController@edit_pwd')->name('edit_pwd');
-Route::get('/edit_poste/{id}','ResponsableController@edit_poste')->name('edit_poste');
+Route::get('/edit_nom_resp/{id}','ResponsableController@edit_nom')->name('edit_nom_resp');
+Route::get('/edit_naissance_resp/{id}','ResponsableController@edit_naissance')->name('edit_naissance_resp');
+Route::get('/edit_genre_resp/{id}','ResponsableController@edit_genre')->name('edit_genre_resp');
+Route::get('/edit_mail_resp/{id}','ResponsableController@edit_mail')->name('edit_mail_resp');
+Route::get('/edit_phone_resp/{id}','ResponsableController@edit_phone')->name('edit_phone_resp');
+Route::get('/edit_cin_resp/{id}','ResponsableController@edit_cin')->name('edit_cin_resp');
+Route::get('/edit_adresse_resp/{id}','ResponsableController@edit_adresse')->name('edit_adresse_resp');
+Route::get('/edit_fonction_resp/{id}','ResponsableController@edit_fonction')->name('edit_fonction_resp');
+Route::get('/edit_matricule_resp/{id}','ResponsableController@edit_matricule')->name('edit_matricule_resp');
+Route::get('/edit_entreprise_resp/{id}','ResponsableController@edit_entreprise')->name('edit_entreprise_resp');
+Route::get('/edit_niveau_resp/{id}','ResponsableController@edit_niveau')->name('edit_niveau_resp');
+Route::get('/edit_departement_resp/{id}','ResponsableController@edit_departement')->name('edit_departement_resp');
+Route::get('/edit_branche_resp/{id}','ResponsableController@edit_branche')->name('edit_branche_resp');
+Route::get('/edit_photos_resp/{id}','ResponsableController@edit_photos')->name('edit_photos_resp');
+Route::get('/edit_pwd_resp/{id}','ResponsableController@edit_pwd')->name('edit_pwd_resp');
+Route::get('/edit_poste_resp/{id}','ResponsableController@edit_poste')->name('edit_poste_resp');
 
+// update password
+Route::post('/update_responsable_mdp/{id}','ResponsableController@update_responsable_mdp')->name('update_responsable_mdp');
+//update image
+Route::post('update_photos_resp','ResponsableController@update_photos_resp')->name('update_photos_resp');
+// update e-mail
+Route::post('update_mail_resp','ResponsableController@update_mail_resp')->name('update_mail_resp');
 //route----------------- STAGIAIRE
 Route::resource('participant','ParticipantController')->except([
     'create','edit','destroy','update'
@@ -205,21 +230,21 @@ Route::get('/nouveau_participant','ParticipantController@index')->name('nouveau_
 Route::get('/liste_participant/{id?}','ParticipantController@create')->name('liste_participant');
 Route::get('/edit_participant/{id?}','ParticipantController@edit')->name('edit_participant');
 //Route pour modifier chaque champs pour participant
-Route::get('/edit_nom/{id?}','ParticipantController@edit_nom')->name('edit_nom');
-Route::get('/edit_naissance/{id?}','ParticipantController@edit_naissance')->name('edit_naissance');
-Route::get('/edit_genre/{id?}','ParticipantController@edit_genre')->name('edit_genre');
-Route::get('/edit_mail/{id?}','ParticipantController@edit_mail')->name('edit_mail');
-Route::get('/edit_phone/{id?}','ParticipantController@edit_phone')->name('edit_phone');
-Route::get('/edit_cin/{id?}','ParticipantController@edit_cin')->name('edit_cin');
-Route::get('/edit_adresse/{id?}','ParticipantController@edit_adresse')->name('edit_adresse');
-Route::get('/edit_fonction/{id?}','ParticipantController@edit_fonction')->name('edit_fonction');
-Route::get('/edit_matricule/{id?}','ParticipantController@edit_matricule')->name('edit_matricule');
-Route::get('/edit_entreprise/{id?}','ParticipantController@edit_entreprise')->name('edit_entreprise');
-Route::get('/edit_niveau/{id?}','ParticipantController@edit_niveau')->name('edit_niveau');
-Route::get('/edit_departement/{id?}','ParticipantController@edit_departement')->name('edit_departement');
-Route::get('/edit_branche/{id?}','ParticipantController@edit_branche')->name('edit_branche');
-Route::get('/edit_photos/{id?}','ParticipantController@edit_photos')->name('edit_photos');
-Route::get('/edit_pwd/{id?}','ParticipantController@edit_pwd')->name('edit_pwd');
+Route::get('/edit_nom/{id}','ParticipantController@edit_nom')->name('edit_nom');
+Route::get('/edit_naissance/{id}','ParticipantController@edit_naissance')->name('edit_naissance');
+Route::get('/edit_genre/{id}','ParticipantController@edit_genre')->name('edit_genre');
+Route::get('/edit_mail/{id}','ParticipantController@edit_mail')->name('edit_mail');
+Route::get('/edit_phone/{id}','ParticipantController@edit_phone')->name('edit_phone');
+Route::get('/edit_cin/{id}','ParticipantController@edit_cin')->name('edit_cin');
+Route::get('/edit_adresse/{id}','ParticipantController@edit_adresse')->name('edit_adresse');
+Route::get('/edit_fonction/{id}','ParticipantController@edit_fonction')->name('edit_fonction');
+Route::get('/edit_matricule/{id}','ParticipantController@edit_matricule')->name('edit_matricule');
+Route::get('/edit_entreprise/{id}','ParticipantController@edit_entreprise')->name('edit_entreprise');
+Route::get('/edit_niveau/{id}','ParticipantController@edit_niveau')->name('edit_niveau');
+Route::get('/edit_departement/{id}','ParticipantController@edit_departement')->name('edit_departement');
+Route::get('/edit_branche/{id}','ParticipantController@edit_branche')->name('edit_branche');
+Route::get('/edit_photos/{id}','ParticipantController@edit_photos')->name('edit_photos');
+Route::get('/edit_pwd/{id}','ParticipantController@edit_pwd')->name('edit_pwd');
 
 //atreto ny page eediter par champs stagiaire
 
@@ -227,7 +252,7 @@ Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('d
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
 // profile_stagiaire
-Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
+// Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
 // profile_stagiaire
 Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
@@ -268,6 +293,7 @@ Route::resource('module','ModuleController')->except([
 Route::get('/afficher_module','ModuleController@affichage')->name('afficher_module');
 Route::get('/liste_module/{id?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
+Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('/destroy_module','ModuleController@destroy')->name('destroy_module');
 Route::post('update_module/{id}','ModuleController@update')->name('update_module');
@@ -275,6 +301,7 @@ Route::post('publier_module','ModuleController@module_publier')->name('publier_m
 Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifier_module');
 Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->name('modifier_module_prog');
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
+Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
 
 // route recherche par référence
 Route::get('rechercheReference/{reference?}','ModuleController@rechercheReference')->name('rechercheReference');
@@ -303,8 +330,8 @@ Route::get('date_but','DetailController@showDate')->name('date_but');
 
 Route::get('/show/{id}','DetailController@show')->name('show');
 Route::get('/store_detail','DetailController@store')->name('store_detail');
-Route::get('/update_detail/{id}','DetailController@update')->name('update_detail');
-Route::get('/destroy_detail','DetailController@destroy')->name('destroy_detail');
+Route::post('/update_detail/{id}','DetailController@update')->name('update_detail');
+Route::get('/destroy_detail/{id?}','DetailController@destroy')->name('destroy_detail');
 
 //Route execution du projet
 Route::get('/liste_execution','ExecutionController@index')->name('liste_execution');
@@ -352,15 +379,23 @@ Route::get('/edit_programme','ProgrammeController@info_data')->name('edit_progra
 Route::post('/destroy_programme/{id}','ProgrammeController@destroy')->name('destroy_programme');
 Route::post('/update_programme/{id}','ProgrammeController@update')->name('update_programme/{id}');
 Route::post('insert_prog_cours','ProgrammeController@store')->name('insert_prog_cours');
+Route::post('/update_prog_cours','ProgrammeController@update_pgc')->name('update_prog_cours');
 Route::get('/create_programme','ProgrammeController@create')->name('create_programme');
+Route::get('modif_programmes/{id}','ProgrammeController@ajout_programme')->name('modif_programmes');
+Route::get('suppression_programme','ProgrammeController@suppre_programme')->name('suppression_programme');
+Route::get('editer_programme','ProgrammeController@edit')->name('editer_programme');
+
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');
-Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+// Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
+Route::post('insertion_cours','CoursControlleur@store')->name('insertion_cours');
 Route::get('modifier_cours/{id_cours?}/','CoursControlleur@update')->name('modifier_cours');
 Route::get('liste_cours/{id_prog?}','CoursControlleur@liste_cours')->name('liste_cours');
 Route::get('supprimer_cours/{id_cours?}/{id_programme?}', 'CoursControlleur@destroy')->name('supprimer_cours');
 Route::get('edit_cours','CoursControlleur@edit')->name('edit_cours');
+Route::get('suppression_cours','CoursControlleur@suppre_cours')->name('suppression_cours');
+
 
 Route::get('/agenda',function(){
     return view('admin.agenda.agenda');
@@ -642,6 +677,13 @@ Route::get('inscription_save',function(){
 })->name('inscription_save');
 
 Route::get('verify_nif_cfp','NouveauCompteController@verify_nif_cfp')->name('verify_nif_cfp');
+Route::get('verify_nif_etp','NouveauCompteController@verify_nif_etp')->name('verify_nif_etp');
+Route::get('verify_mail_user','NouveauCompteController@verify_mail_user')->name('verify_mail_user');
+Route::get('verify_tel_user','NouveauCompteController@verify_tel_user')->name('verify_tel_user');
+Route::get('verify_cin_user','NouveauCompteController@verify_cin_user')->name('verify_cin_user');
+Route::get('verify_name_cfp','NouveauCompteController@verify_name_cfp')->name('verify_name_cfp');
+Route::get('verify_name_etp','NouveauCompteController@verify_name_etp')->name('verify_name_etp');
+
 
 
 Route::post('create_compte_cfp','NouveauCompteController@create_compte_cfp')->name('create_compte_cfp');
@@ -682,6 +724,9 @@ Route::get('supprimer_ressource','SessionController@supprimer_ressource')->name(
 Route::get('liste_departement','DepartementController@show_departement')->name('liste_departement');
 //enregistrement service
 Route::post('enregistrement_service','DepartementController@enregistrement_service')->name('enregistrement_service');
+//enregistrement de branche
+Route::post('enregistrement_branche','DepartementController@enregistrement_branche')->name('enregistrement_branche');
+
 Route::get('affiche_departement','DepartementController@liste_dep')->name('affiche_departement');
 // ======= export excel copier coller participant
 Route::get('export_excel_new_participant','ParticipantController@export_excel_new_participant')->name('export_excel_new_participant');
@@ -718,7 +763,7 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 //     return view('cgv');
 // })->name('condition_generale_de_vente');
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
-Route::get('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
+Route::post('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
 
 //-------------route document----------------///
 Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
@@ -729,3 +774,16 @@ Route::post('insert_evaluation_stagiaire_apres','SessionController@insert_evalua
 Route::get('competence_stagiaire','SessionController@get_competence_stagiaire')->name('competence_stagiaire');
 Route::post('importation_fichier','DocumentController@importation_fichier')->name('importation_fichier');
 Route::get('download_file','DocumentController@download_file')->name('download_file');
+
+Route::get('liste+responsable+cfp','ResponsableCfpController@index')->name('liste+responsable+cfp');
+Route::get('liste+responsable+entreprise','ResponsableController@show_responsable')->name('liste+responsable+entreprise');
+
+Route::post('save+nouveau+responsable+cfp','ResponsableCfpController@store')->name('save+nouveau+responsable+cfp');
+Route::post('save+nouveau+responsable+entreprise','ResponsableController@save_responsable')->name('save+nouveau+responsable+entreprise');
+
+Route::post('delete+responsable+cfp','ResponsableController@destroy')->name('delete+responsable+cfp');
+Route::post('delete+responsable+entreprise','ResponsableController@destroy')->name('delete+responsable+entreprise');
+Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluation_stagiaire')->name('modifier_evaluation_stagiaire');
+
+Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
+Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');

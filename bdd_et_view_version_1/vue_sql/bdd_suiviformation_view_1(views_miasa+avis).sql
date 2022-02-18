@@ -6,7 +6,7 @@ CREATE OR REPLACE VIEW v_moduleformation AS SELECT
     m.duree,
     f.id AS formation_id,
     f.nom_formation,
-    f.cfp_id
+    m.cfp_id
 FROM
     modules m
 JOIN formations f ON
@@ -42,55 +42,21 @@ FROM
 GROUP BY
     projets.id;
 
-CREATE OR REPLACE VIEW v_projetentreprise AS
-SELECT
-    p.id AS projet_id,
-    p.nom_projet,
-    p.created_at as date_projet,
-    t_se.totale_session,
-    p.entreprise_id,
-    p.cfp_id,
-    p.status,
-    p.activiter,
-    p.created_at,
-    e.nom_etp,
-    e.adresse,
-    e.logo,
-    e.nif,
-    e.stat,
-    e.rcs,
-    e.cif,
-    e.secteur_id,
-    (se.nom_secteur)secteur_activite,
-    e.email_etp,
-    e.site_etp,
-    (e.activiter) activiter_etp,
-    e.telephone_etp,
-    (cf.nom) nom_cfp,
-    (cf.logo) logo_cfp,
-    (cf.adresse_ville) adresse_ville_cfp,
-    (cf.adresse_region) adresse_region_cfp,
-    (cf.email) email_cfp,
-    (cf.telephone) telephone_cfp,
-    (cf.domaine_de_formation) domaine_de_formation_cfp
-FROM
-    projets p,
-    entreprises e , secteurs se,v_totale_session t_se,cfps cf
-where    p.entreprise_id = e.id and e.secteur_id = se.id and p.id = t_se.projet_id and p.cfp_id = cf.id;
-
-
 CREATE OR REPLACE VIEW v_detailmoduleformationprojet AS SELECT
     dmf.*,
-    pe.nom_projet,
     pe.entreprise_id,
     pe.nom_etp,
-    pe.adresse,
+    pe.adresse_rue,
+    pe.adresse_quartier,
+    pe.adresse_code_postal,
+    pe.adresse_ville,
+    pe.adresse_region,
     pe.logo
 FROM
     v_detailmoduleformation dmf,
-    v_projetentreprise pe
+    v_groupe_entreprise pe
 where
-    dmf.projet_id = pe.projet_id and dmf.cfp_id = pe.cfp_id;
+    dmf.projet_id = pe.projet_id;
 
 
 CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
@@ -107,80 +73,87 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     f.specialite,
     f.niveau,
     (f.activiter) activiter_formateur,
+    pj.id,
+    pj.nom_projet,
+    pj.type_formation_id,
+    pj.status,
+    pj.activiter,
     user_id
 FROM
     v_detailmoduleformationprojet dmfp
 JOIN formateurs f ON
-    dmfp.formateur_id = f.id;
+    dmfp.formateur_id = f.id
+JOIN projets pj ON
+    dmfp.projet_id = pj.id;
 
 
-CREATE OR REPLACE VIEW v_participantsession AS SELECT
-    g.projet_id,
-	ps.stagiaire_id,
-	ps.groupe_id,
-	g.nom_groupe,
-	g.date_debut,
-	g.date_fin,
-	(g.status) status_groupe,
-	(g.activiter) activiter_groupe,
-    s.matricule,
-    s.nom_stagiaire,
-    s.prenom_stagiaire,
-    s.fonction_stagiaire,
-    s.genre_stagiaire,
-    s.mail_stagiaire,
-    s.telephone_stagiaire,
-    s.user_id,
-    s.photos,
-    s.departement_id,
-    s.cin,
-    s.date_naissance,
-    (s.lot) adresse,
-    s.niveau_etude,
-    (s.activiter) activiter_stagiaire,
-    pe.nom_projet,
-    pe.entreprise_id,
-    pe.cfp_id,
-    (pe.status) status_projet,
-    (pe.activiter) activiter_projet
-FROM
-    participant_groupe ps,
- 	stagiaires s,
-     projets pe,
-	 groupes g
-where
-    ps.stagiaire_id = s.id and ps.groupe_id = g.id and g.projet_id = pe.id and s.entreprise_id = pe.entreprise_id;
+-- CREATE OR REPLACE VIEW v_participantsession AS SELECT
+--     g.projet_id,
+-- 	ps.stagiaire_id,
+-- 	ps.groupe_id,
+-- 	g.nom_groupe,
+-- 	g.date_debut,
+-- 	g.date_fin,
+-- 	g.status_groupe,
+-- 	g.activiter_groupe,
+--     s.matricule,
+--     s.nom_stagiaire,
+--     s.prenom_stagiaire,
+--     s.fonction_stagiaire,
+--     s.genre_stagiaire,
+--     s.mail_stagiaire,
+--     s.telephone_stagiaire,
+--     s.user_id,
+--     s.photos,
+--     (s.departement_entreprise_id) departement_id,
+--     s.cin,
+--     s.date_naissance,
+--     (s.lot) adresse,
+--     s.niveau_etude,
+--     (s.activiter) activiter_stagiaire,
+--     pe.nom_projet,
+--     g.entreprise_id,
+--     pe.cfp_id,
+--     (pe.status) status_projet,
+--     (pe.activiter) activiter_projet
+-- FROM
+--     participant_groupe ps,
+--  	stagiaires s,
+--     projets pe,
+--     v_groupe_entreprise g
+-- where
+--     ps.stagiaire_id = s.id and ps.groupe_id = g.groupe_id and g.projet_id = pe.id and s.entreprise_id = g.entreprise_id;
 
-
-CREATE OR REPLACE VIEW v_coursfroidevaluation AS SELECT
-    c.id AS cours_id,
-    c.titre_cours,
-    c.programme_id,
-    IFNULL(fe.status, 0) AS status,
-	fe.cfp_id,
-    fe.projet_id,
-    fe.stagiaire_id,
-     s.matricule,
-    s.nom_stagiaire,
-    s.prenom_stagiaire,
-    s.fonction_stagiaire,
-    s.genre_stagiaire,
-    s.mail_stagiaire,
-    s.telephone_stagiaire,
-    s.user_id,
-    s.photos,
-    s.departement_id,
-    s.cin,
-    s.date_naissance,
-    (s.lot) adresse,
-    s.niveau_etude,
-    (s.activiter) activiter_stagiaire
-FROM
-    cours c
-LEFT JOIN froid_evaluations fe ON
-    c.id = fe.cours_id
-JOIN stagiaires s ON
-    fe.stagiaire_id = s.id;
+-- ----------------
+-- CREATE OR REPLACE VIEW v_coursfroidevaluation AS SELECT
+--     c.id AS cours_id,
+--     c.titre_cours,
+--     c.programme_id,
+--     IFNULL(fe.status, 0) AS status,
+-- 	fe.cfp_id,
+--     fe.projet_id,
+--     fe.stagiaire_id,
+--      s.matricule,
+--     s.nom_stagiaire,
+--     s.prenom_stagiaire,
+--     s.fonction_stagiaire,
+--     s.genre_stagiaire,
+--     s.mail_stagiaire,
+--     s.telephone_stagiaire,
+--     s.user_id,
+--     s.photos,
+--     (s.departement_entreprise_id) departement_id,
+--     s.cin,
+--     s.date_naissance,
+--     (s.lot) adresse,
+--     s.niveau_etude,
+--     (s.activiter) activiter_stagiaire
+-- FROM
+--     cours c
+-- LEFT JOIN froid_evaluations fe ON
+--     c.id = fe.cours_id
+-- JOIN stagiaires s ON
+--     fe.stagiaire_id = s.id;
 
 
 CREATE OR REPLACE VIEW v_cours_programme AS SELECT
@@ -270,7 +243,7 @@ create or replace view v_statistique_avis as
 select mn.id as module_id,mn.nombre,ifnull(pa.pourcentage_note,0) as pourcentage_note
 from v_module_nombre mn left join v_pourcentage_avis pa
 on mn.id = pa.module_id and mn.nombre = pa.note order by mn.id;
-
+-----
 CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.id AS module_id,
     m.reference,
@@ -288,13 +261,13 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.prestation,
     m.bon_a_savoir,
     m.status,
+    m.cfp_id,
     ifnull(m.max,0) as max_pers,
     ifnull(m.min,0) as min_pers,
     n.niveau,
     f.id AS formation_id,
     f.nom_formation,
     f.domaine_id,
-    f.cfp_id,
     cfps.nom,
     cfps.logo,
     cfps.email,
@@ -304,7 +277,7 @@ FROM
     modules m
 JOIN formations f ON
     m.formation_id = f.id
-JOIN cfps ON f.cfp_id = cfps.id
+JOIN cfps ON m.cfp_id = cfps.id
 JOIN niveaux n ON
     n.id = m.niveau_id
 left join v_moyenne_avis_module a on m.id = a.module_id;
@@ -328,7 +301,7 @@ CREATE OR REPLACE VIEW cfpcours AS SELECT
     f.id AS formation_id,
     f.nom_formation,
     f.domaine_id,
-    f.cfp_id,
+    m.cfp_id,
     cfps.nom,
     cfps.logo,
     cfps.email,
@@ -339,7 +312,7 @@ FROM
     modules m
 JOIN formations f ON
     m.formation_id = f.id
-JOIN cfps ON f.cfp_id = cfps.id
+JOIN cfps ON m.cfp_id = cfps.id
 JOIN niveaux n ON
     n.id = m.niveau_id
 JOIN programmes p ON
@@ -347,33 +320,44 @@ JOIN programmes p ON
 
 
 
-create or replace view v_detail_projet_groupe as
-    select d.id as detail_id,d.lieu,d.h_debut,d.h_fin,d.date_detail,d.formateur_id,d.groupe_id,d.projet_id,
-    d.cfp_id,p.nom_projet,p.entreprise_id,p.status as status_projet,p.activiter as activiter_projet,
-    g.max_participant,g.min_participant,g.nom_groupe,g.module_id,g.date_debut,g.date_fin,
-    g.status as status_groupe,g.activiter as activiter_groupe
-    from details d join projets p on d.projet_id = p.id
-    join groupes g on d.groupe_id = g.id;
-create or replace view v_groupe as
-select
-groupes.id,
-min_participant,
-max_participant,
-nom_groupe,
-projet_id,
-module_id,
-date_debut,
-date_fin,
-groupes.status,
-groupes.activiter,
-projets.nom_projet,
-reference,nom_module,formation_id,prix,duree,duree_jour,objectif,
-nom_formation,domaine_id,
-nom_domaine
-from
-groupes,modules,formations,domaines,projets,entreprises
-where groupes.module_id = modules.id and formation_id = formations.id and domaine_id = domaines.id
-and projet_id = projets.id and entreprise_id = entreprises.id;
+-- create or replace view v_detail_projet_groupe as
+--     select d.id as detail_id,d.lieu,d.h_debut,d.h_fin,d.date_detail,d.formateur_id,d.groupe_id,d.projet_id,
+--     d.cfp_id,p.nom_projet,p.entreprise_id,p.status as status_projet,p.activiter as activiter_projet,
+--     g.max_participant,g.min_participant,g.nom_groupe,g.module_id,g.date_debut,g.date_fin,
+--     g.status as status_groupe,g.activiter as activiter_groupe
+--     from details d join projets p on d.projet_id = p.id
+--     join groupes g on d.groupe_id = g.id;
+
+-- create or replace view v_groupe as
+-- select
+-- groupes.id,
+-- min_participant,
+-- max_participant,
+-- nom_groupe,
+-- projet_id,
+-- module_id,
+-- date_debut,
+-- date_fin,
+-- groupes.status,
+-- groupes.activiter,
+-- projets.nom_projet,
+-- reference,nom_module,formation_id,prix,duree,duree_jour,objectif,
+-- nom_formation,domaine_id,
+-- nom_domaine
+-- from
+-- groupes,modules,formations,domaines,projets,entreprises
+-- where groupes.module_id = modules.id and formation_id = formations.id and domaine_id = domaines.id
+-- and projet_id = projets.id and entreprise_id = entreprises.id;
+
+create or replace view v_departement_service_entreprise as
+    select
+        s.id as service_id,
+        s.departement_entreprise_id,
+        s.nom_service,
+        de.nom_departement,
+        de.entreprise_id
+    from services s
+    join departement_entreprises de on s.departement_entreprise_id = de.id;
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.id AS stagiaire_id,
@@ -381,32 +365,81 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
     stg.genre_stagiaire,
+    stg.titre,
     stg.fonction_stagiaire,
     stg.mail_stagiaire,
     stg.telephone_stagiaire,
-    stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    stg.departement_entreprises_id,
-    stg.service_id as stg_service_id,
     stg.cin,
     stg.date_naissance,
-    (stg.lot) adresse,
-    stg.lieu_travail,
     stg.niveau_etude,
     stg.activiter,
-    etp.nom_etp,
-    dept.nom_departement,
-    serv.nom_service,
-    serv.id as service_id
+    stg.branche_id,
+    stg.quartier,
+    stg.code_postal,
+    stg.ville,
+    stg.region,
+    stg.lot,
+    e.nom_etp,
+    e.adresse_rue,
+    e.adresse_quartier,
+    e.adresse_code_postal,
+    e.adresse_ville,
+    e.adresse_region,
+    e.logo,
+    e.nif,
+    e.stat,
+    e.rcs,
+    e.cif,
+    e.secteur_id,
+    e.email_etp,
+    e.site_etp,
+    (e.activiter) activiter_etp,
+    e.telephone_etp,
+    ds.*
 FROM
-    stagiaires as stg,
-    entreprises as etp,
-    departement_entreprises as dept,
-    services as serv
-WHERE
-    stg.entreprise_id = etp.id and
-    stg.departement_entreprises_id = dept.id and stg.service_id = serv.id;
+    stagiaires as stg
+    join entreprises e
+    on stg.entreprise_id = e.id
+    join v_departement_service_entreprise ds
+    on ds.service_id = stg.service_id;
+
+-- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
+--     stg.id AS stagiaire_id,
+--     stg.matricule,
+--     stg.nom_stagiaire,
+--     stg.prenom_stagiaire,
+--     stg.genre_stagiaire,
+--     stg.fonction_stagiaire,
+--     stg.mail_stagiaire,
+--     stg.telephone_stagiaire,
+--     stg.entreprise_id,
+--     stg.user_id,
+--     stg.photos,
+--     (stg.departement_entreprise_id) departement_entreprises_id,
+--     stg.cin,
+--     stg.date_naissance,
+--     (stg.lot) adresse,
+--     stg.lieu_travail,
+--     stg.niveau_etude,
+--     stg.activiter,
+--     etp.nom_etp,
+--     historique.stagiaire_id AS histo_stagiaire_id,
+--     historique.ancien_entreprise_id AS ancien_entreprise_id,
+--     historique.nouveau_entreprise_id AS nouveau_entreprise_id,
+--     historique.date_depart,
+--     historique.date_arrivee
+-- FROM
+--     stagiaires as stg,
+--     entreprises as etp,
+--     historique_stagiaires as historique,
+--      branches as branche
+-- WHERE
+--     stg.entreprise_id = etp.id and
+--     historique.stagiaire_id = stg.id and    stg.entreprise_id = branche.entreprise_id;
+
+
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.id AS stagiaire_id,
@@ -420,11 +453,9 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.entreprise_id,
     stg.user_id,
     stg.photos,
-    stg.departement_entreprises_id,
     stg.cin,
     stg.date_naissance,
-    stg.adresse,
-    stg.lieu_travail,
+    (stg.lot) adresse,
     stg.niveau_etude,
     stg.activiter,
     etp.nom_etp,
@@ -436,9 +467,8 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
 FROM
     stagiaires as stg,
     entreprises as etp,
-    historique_stagiaires as historique
+    historique_stagiaires as historique,
+     branches as branche
 WHERE
     stg.entreprise_id = etp.id and
-    historique.stagiaire_id = stg.id;
-
-
+    historique.stagiaire_id = stg.id and    stg.entreprise_id = branche.entreprise_id;

@@ -54,7 +54,7 @@
             <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
             <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
             <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span>
-            <span class="span_ajout" id="boutton_add"> 
+            <span class="span_ajout" id="boutton_add">
                 <i class="boutton fa fa-plus-circle" id="ajouter_participant"></i>
              </span>
         </div>
@@ -78,6 +78,7 @@
                 <th>E-mail</th>
                 <th>Fonction</th>
                 <th>Département</th>
+                <th>Service</th>
                 <th></th>
             </thead>
             <tbody id="participant_groupe">
@@ -90,7 +91,8 @@
                     <td>{{ $stg->telephone_stagiaire }}</td>
                     <td>{{ $stg->mail_stagiaire }}</td>
                     <td>{{ $stg->fonction_stagiaire }}</td>
-                    <td>{{ $stg->departement_id }}</td>
+                    <td>{{ $stg->nom_departement }}</td>
+                    <td>{{ $stg->nom_service }}</td>
                     <td><button type="button" class="supprimer" data-toggle="modal" data-target="#exampleModal_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
                 </tr>
                 <div class="modal fade" id="exampleModal_{{$stg->stagiaire_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -213,7 +215,7 @@ td{
     $('#stagiaire').on('change', function() {
        id_stagiaire = $(this).val();
     });
-    
+
     $(".rechercher").on('click',function(e){
         var id = $("#matricule_search").val();
         $.ajax({
@@ -265,28 +267,29 @@ td{
                     html += '<td>'+userData[i].telephone_stagiaire+'</td>';
                     html += '<td>'+userData[i].mail_stagiaire+'</td>';
                     html += '<td>'+userData[i].fonction_stagiaire+'</td>';
-                    html += '<td>'+userData[i].departement_id+'</td>';
+                    html += '<td>'+userData[i].nom_departement+'</td>';
+                    html += '<td>'+userData[i].nom_service+'</td>';
                     html += '<td><button type="button" class="supprimer" data-toggle="modal" data-target="#exampleModal_'+userData[i].stagiaire_id+'"><i class="fa fa-trash-alt supprimer"></i></button></td>';
                     html += '</tr>';
                     html += '<div class="modal fade" id="exampleModal_'+userData[i].stagiaire_id+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                     html += '<div class="modal-dialog modal-dialog-centered" role="document">';
                     html += '<div class="modal-content">';
-                    html += '<div class="modal-header  d-flex justify-content-center" style="background-color:rgb(224,182,187);">';    
+                    html += '<div class="modal-header  d-flex justify-content-center" style="background-color:rgb(224,182,187);">';
                     html += '<h6 class="modal-title">Avertissement !</h6>';
                     html += '</div>';
-                    html += '<div class="modal-body">';            
-                    html += '<small>Vous êtes sur le point d\'effacer une donnée, cette action est irréversible. Continuer ?</small>';        
+                    html += '<div class="modal-body">';
+                    html += '<small>Vous êtes sur le point d\'effacer une donnée, cette action est irréversible. Continuer ?</small>';
                     html += '</div>';
-                    html += '<div class="modal-footer">';            
-                    html += '<button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>';        
-                    html += '<button type="button" class="btn btn-secondary supprimer_stg" id="'+userData[i].stagiaire_id+'" data-dismiss="modal"> Oui </button>'            
-                    html += '</div>';            
-                    html += '</div>';        
-                    html += '</div>';  
+                    html += '<div class="modal-footer">';
+                    html += '<button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>';
+                    html += '<button type="button" class="btn btn-secondary supprimer_stg" id="'+userData[i].stagiaire_id+'" data-dismiss="modal"> Oui </button>'
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
                     html += '</div>';
                 }
                 $('#participant_groupe').append(html);
-                
+
            },
            error:function(error){
               console.log(error)
@@ -343,6 +346,7 @@ td{
         });
     });
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -379,6 +383,6 @@ td{
         });
     });
 
-    
+
 
 </script>

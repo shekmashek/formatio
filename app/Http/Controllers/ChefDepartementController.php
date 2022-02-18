@@ -58,13 +58,17 @@ class ChefDepartementController extends Controller
             $chefDepart->mail_chef = $request->mail;
             $chefDepart->telephone_chef = $request->phone;
             $chefDepart->entreprise_id = $entreprise_id;
+            $chefDepart->cin_chef = $request->cin;
             $user = new User();
-            $user->name = $request->nom;
+            $user->name = $request->nom. " " . $request->prenom;
             $user->email = $request->mail;
 
-            $ch1 = $request->nom;
-            $ch2 = substr($request->phone, 8, 2);
-            $user->password = Hash::make($ch1 . $ch2);
+            $user->cin = $request->cin;
+            $user->telephone = $request->phone;
+
+            $ch1 = '0000';
+            // $ch2 = substr($request->phone, 8, 2);
+            $user->password = Hash::make($ch1);
             $user->role_id = '5';
             $user->save();
 
@@ -87,7 +91,7 @@ class ChefDepartementController extends Controller
             $idDep = $request->liste_dep;
 
             $idEtp = $request->liste_etp;
-            $departement_entreprise_id = DepartementEntreprise::where(['departement_id' => $idDep], ['entreprise_id' => $idEtp])->value('id');
+            $departement_entreprise_id = DepartementEntreprise::where(['id' => $idDep], ['entreprise_id' => $idEtp])->value('id');
 
             $chefParEtp->departement_entreprise_id = $departement_entreprise_id;
             $chefParEtp->chef_departement_id = $chef_id;
@@ -122,9 +126,13 @@ class ChefDepartementController extends Controller
         $id = $request->id_get;
         $chef = chefDepartement::findOrFail($id);
         $user_id = chefDepartement::where('id', $id)->value('user_id');
-        $del = chefDepartement::where('id', $id)->delete();
-        $del_user = User::where('id', $user_id)->delete();
-        $huhu = chefDepartementEntreprise::where('chef_departement_id',$id)->delete();
+       DB::delete('delete from chef_departements where id = ?', [$id]);
+       DB::delete('delete from user where id = ?', [$user_id]);
+       DB::delete('delete from chef_dep_entreprises where id = ?', [$id]);
+
+       // $del = chefDepartement::where('id', $id)->delete();
+       // $del_user = User::where('id', $user_id)->delete();
+     //   $huhu = chefDepartementEntreprise::where('chef_departement_id',$id)->delete();
         File::delete("images/chefDepartement/".$chef->photos);
 
         return back();

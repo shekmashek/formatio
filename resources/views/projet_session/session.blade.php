@@ -20,7 +20,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ url('projet_session') }}"> <i class="fa fa-arrow-alt-circle-left mt-4 me-3" href="{{ url('projet_session') }}">&nbsp; projet</i> </a>
+            <a href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}"> <i class="fa fa-circle-xmark mt-4 me-3" href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}">&nbsp;Annuler</i> </a>
         </div>
     </nav>
     <section class="bg-light py-1">
@@ -39,7 +39,7 @@
                         </div>
                         <div>
                             <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>
-                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_cfp }}</strong></p>
+                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -55,12 +55,15 @@
                 </div>
             </div>
             <div class="d-flex me-2 flex-wrap">
-                <div class="status_grise">Prévisionnel</div>
+                <div class="{{ $projet[0]->class_status_groupe }}">{{ $projet[0]->item_status_groupe }}</div>
+                {{--
+                    <div class="status_grise">Confirmé</div>
+                <div class="status_confirme">Confirmé</div>
                 <div class="status_confirme">Confirmé</div>
                 <div class="statut_active">En cours</div>
-                <div class="status_termine">Terminé</div>
-                <div class="status_archive">Archivé</div>
-                <div class="status_annule">Annulé</div>
+                <div class="status_termine">Terminé</div> --}}
+                {{-- <div class="status_archive">Archivé</div> --}}
+                {{-- <div class="status_annule">Annulé</div> --}}
             </div>
         </div>
     </section>
@@ -101,12 +104,14 @@
                             @endif
                         </button>
                     </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
-                            <p class="m-0 p-0">FRAIS ANNEXES</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
+                    @can('isReferent')
+                        <div>
+                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
+                                <p class="m-0 p-0">FRAIS ANNEXES</p>
+                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                            </button>
+                        </div>
+                    @endcan
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
                             <p class="m-0 p-0">DOCUMENT</p>
@@ -128,7 +133,13 @@
                     </div>
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
-                            <p class="m-0 p-0">EVALUATION DES STAGIAIRES</p>
+                            <p class="m-0 p-0">PRE EVALUATION</p>
+                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
+                            <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
                         </button>
                     </div>
@@ -181,6 +192,9 @@
                       </div>
                       <div id="emargement" class="tabcontent">
                         @include('projet_session.emargement')
+                      </div>
+                      <div id="evaluation_pre_formation" class="tabcontent">
+                        @include('projet_session.evaluation_stagiaires_pre')
                       </div>
                       <div id="evaluation" class="tabcontent">
                         @include('projet_session.evaluation_stagiaires')

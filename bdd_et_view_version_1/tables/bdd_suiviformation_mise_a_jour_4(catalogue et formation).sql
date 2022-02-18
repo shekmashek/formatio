@@ -1,11 +1,11 @@
-CREATE TABLE `domaines` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nom_domaine` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+CREATE TABLE domaines (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nom_domaine varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `domaines` (`id`, `nom_domaine`, `created_at`, `updated_at`) VALUES
+INSERT INTO domaines (id, nom_domaine, created_at, updated_at) VALUES
 (1, 'Bureautique', '2021-11-16 10:22:43', '2021-11-16 10:22:43'),
 (2, 'Développement Personnel', '2021-11-16 10:22:43', '2021-11-16 10:22:43'),
 (3, 'Management', '2021-11-16 10:22:43', '2021-11-16 10:22:43'),
@@ -13,87 +13,89 @@ INSERT INTO `domaines` (`id`, `nom_domaine`, `created_at`, `updated_at`) VALUES
 (5, 'Ressources Humaines', '2021-11-16 10:22:43', '2021-11-16 10:22:43'),
 (6, 'Communication - WebMarketing', '2021-11-16 10:22:43', '2021-11-16 10:22:43');
 
-CREATE TABLE `formations` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nom_formation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `domaine_id` int(11) NOT NULL REFERENCES domaines(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `status` boolean not null default true
+CREATE TABLE formations (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nom_formation varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  domaine_id int(11) NOT NULL REFERENCES domaines(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  status boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `formations` (`id`, `nom_formation`, `domaine_id`, `created_at`, `updated_at`, `cfp_id`) VALUES
-(1, 'MS Excel', 1, NULL, NULL, 1),
-(2, 'Ms Power BI', 1, NULL, NULL, 1),
-(5, 'Autres logiciels', 1, '2021-11-17 04:00:01', '2021-11-17 04:00:01', 1),
-(6, 'Affirmation de soi et changement', 2, '2021-11-17 04:00:27', '2021-11-17 04:00:27', 1),
-(7, 'Gestion du stress et des émotions', 2, '2021-11-17 04:00:41', '2021-11-17 04:00:41', 1),
-(8, 'Leadership', 2, '2021-11-17 04:06:54', '2021-11-17 04:06:54', 1),
-(9, "Management d'équipe", 3, '2021-11-17 04:07:18', '2021-11-17 04:07:18', 1),
-(10, 'Leadership, changement, gestion des conflits', 3, '2021-11-17 04:07:28', '2021-11-17 04:07:28', 0),
-(11, 'Gestion de projet', 4, '2021-11-17 04:07:45', '2021-11-17 04:07:45', 0),
-(12, 'Management de projet', 4, '2021-11-17 04:07:55', '2021-11-17 04:07:55', 0),
-(13, 'Paie', 5, '2021-11-17 04:08:21', '2021-11-17 04:08:21', 0),
-(14, 'Droit social', 5, '2021-11-17 04:08:31', '2021-11-17 04:08:31', 0),
-(15, 'Webmarketing', 6, '2021-11-17 04:08:53', '2021-11-17 04:08:53', 0),
-(16, 'PAO et Multimédia', 6, '2021-11-17 04:09:04', '2021-11-17 04:09:04', 0);
+INSERT INTO formations (id, nom_formation, domaine_id, created_at, updated_at) VALUES
+(1, 'MS Excel', 1, NULL, NULL),
+(2, 'Ms Power BI', 1, NULL, NULL),
+(5, 'Autres logiciels', 1, '2021-11-17 04:00:01', '2021-11-17 04:00:01'),
+(6, 'Affirmation de soi et changement', 2, '2021-11-17 04:00:27', '2021-11-17 04:00:27'),
+(7, 'Gestion du stress et des émotions', 2, '2021-11-17 04:00:41', '2021-11-17 04:00:41'),
+(8, 'Leadership', 2, '2021-11-17 04:06:54', '2021-11-17 04:06:54'),
+(9, "Management d'équipe", 3, '2021-11-17 04:07:18', '2021-11-17 04:07:18'),
+(10, 'Leadership, changement, gestion des conflits', 3, '2021-11-17 04:07:28', '2021-11-17 04:07:28'),
+(11, 'Gestion de projet', 4, '2021-11-17 04:07:45', '2021-11-17 04:07:45'),
+(12, 'Management de projet', 4, '2021-11-17 04:07:55', '2021-11-17 04:07:55'),
+(13, 'Paie', 5, '2021-11-17 04:08:21', '2021-11-17 04:08:21'),
+(14, 'Droit social', 5, '2021-11-17 04:08:31', '2021-11-17 04:08:31'),
+(15, 'Webmarketing', 6, '2021-11-17 04:08:53', '2021-11-17 04:08:53'),
+(16, 'PAO et Multimédia', 6, '2021-11-17 04:09:04', '2021-11-17 04:09:04');
 
 
-CREATE TABLE `modules` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `reference` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom_module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `formation_id` bigint(20) UNSIGNED NOT NULL REFERENCES formations(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `prix` int(11) NOT NULL,
-  `duree` int(11) NOT NULL,
-  `duree_jour` int(11) NOT NULL,
-  `prerequis` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  `objectif` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  `modalite_formation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  `niveau_id` bigint(20) NOT NULL REFERENCES niveaux(id) ON DELETE CASCADE,
-  `materiel_necessaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cible` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `min` int(11) NOT NULL,
-  `max` int(11) NOT NULL,
-  `bon_a_savoir` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prestation` TEXT COLLATE utf8mb4_unicode_ci NOT NULL
+CREATE TABLE modules (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  reference varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  nom_module varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  formation_id bigint(20) UNSIGNED NOT NULL REFERENCES formations(id) ON DELETE CASCADE,
+  cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  prix int(11) NOT NULL,
+  duree int(11) NOT NULL,
+  duree_jour int(11) NOT NULL,
+  prerequis TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  objectif TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  modalite_formation varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  description TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  niveau_id bigint(20) NOT NULL REFERENCES niveaux(id) ON DELETE CASCADE,
+  materiel_necessaire varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  cible varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  min int(11) NOT NULL,
+  max int(11) NOT NULL,
+  bon_a_savoir TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+alter table modules add status int(11) default 0;
 
-INSERT INTO `modules` (`id`, `reference`, `nom_module`, `formation_id`, `created_at`, `updated_at`, `prix`, `duree`,`duree_jour`,`prerequis`, `objectif`, `modalite_formation`, `description` ,`niveau_id`,`materiel_necessaire`,`cible`,`min`,`max`,`bon_a_savoir`,`prestation`) VALUES
-(2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'',''),
-(3, 'MOD_EX03', 'NIII.Organisation et gestion des données', 1, NULL, NULL, 300000, 12, 4,'', '', '','',1,'pc','RH',0,0,'',''),
-(4, 'MOD_EX04', 'NIV.Business Intelligence', 1, NULL, NULL, 350000, 12, 4,'', '', '','',1,'pc','RH',0,0,'',''),
-(5, 'MOD_EX05', 'NV.VBA', 1, NULL, NULL, 450000, 18,4,'', '', '','',1,'pc','RH',0,0,'',''),
-(6, 'MOD_BI01', 'NI.Fondamentaux', 2, NULL, '2021-08-31 09:07:56', 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'',''),
-(7, 'MOD_BI02', 'NII.Perfectionnement Dax', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'',''),
-(8, 'MOD_BI03', 'NIII.Dataviz et analytics', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'',''),
-(9, 'MOD_EX01', 'NI.Fondamentaux', 1, '2021-09-01 03:25:44', '2021-09-01 03:25:44', 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','');
-
-
-CREATE TABLE `programmes` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `module_id` bigint(20) UNSIGNED NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO modules (id, reference, nom_module, formation_id, created_at, updated_at, prix, duree,duree_jour,prerequis, objectif, modalite_formation, description ,niveau_id,materiel_necessaire,cible,min,max,bon_a_savoir,prestation,cfp_id) VALUES
+(2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1),
+(3, 'MOD_EX03', 'NIII.Organisation et gestion des données', 1, NULL, NULL, 300000, 12, 4,'', '', '','',1,'pc','RH',0,0,'','',1),
+(4, 'MOD_EX04', 'NIV.Business Intelligence', 1, NULL, NULL, 350000, 12, 4,'', '', '','',1,'pc','RH',0,0,'','',1),
+(5, 'MOD_EX05', 'NV.VBA', 1, NULL, NULL, 450000, 18,4,'', '', '','',1,'pc','RH',0,0,'','',1),
+(6, 'MOD_BI01', 'NI.Fondamentaux', 2, NULL, '2021-08-31 09:07:56', 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1),
+(7, 'MOD_BI02', 'NII.Perfectionnement Dax', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1),
+(8, 'MOD_BI03', 'NIII.Dataviz et analytics', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1),
+(9, 'MOD_EX01', 'NI.Fondamentaux', 1, '2021-09-01 03:25:44', '2021-09-01 03:25:44', 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1);
 
 
-CREATE TABLE `cours` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `titre_cours` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `programme_id` bigint(20) UNSIGNED NOT NULL REFERENCES programmes(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+CREATE TABLE programmes (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  titre varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  module_id bigint(20) UNSIGNED NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-INSERT INTO `programmes` (`id`, `titre`, `module_id`, `created_at`, `updated_at`) VALUES
+CREATE TABLE cours (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  titre_cours varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  programme_id bigint(20) UNSIGNED NOT NULL REFERENCES programmes(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+INSERT INTO programmes (id, titre, module_id, created_at, updated_at) VALUES
 (3, 'Reference', 9, NULL, NULL),
 (4, 'Operateur', 9, NULL, NULL),
 (5, 'Valeurs', 9, NULL, NULL),
@@ -166,7 +168,7 @@ INSERT INTO `programmes` (`id`, `titre`, `module_id`, `created_at`, `updated_at`
 
 
 
-INSERT INTO `cours` (`id`, `titre_cours`, `programme_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO cours (id, titre_cours, programme_id, created_at, updated_at) VALUES
 (8, '$', 3, '2021-10-18 09:55:04', '2021-10-18 09:55:04'),
 (12, 'Référence nommée', 3, '2021-10-18 10:56:11', '2021-10-18 10:56:11'),
 (15, 'Mathématique', 4, '2021-10-19 03:45:41', '2021-10-19 03:45:41'),

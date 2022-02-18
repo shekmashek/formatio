@@ -56,6 +56,7 @@ function evaluation_froid(){
 </nav>
 <div id="evaluation_chaud" style="display: block">
     {{-- @include('admin.evaluation.evaluationChaud.evaluationChaud') --}}
+    evaluation_chaud
 </div>
 <div id="evaluation_froid" style="display: none">
     Evaluation a froid

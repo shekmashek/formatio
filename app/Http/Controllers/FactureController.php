@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Collaboration;
 use App\Models\getImageModel;
 use Monolog\Handler\IFTTTHandler;
-
+use Illuminate\Http\Response;
 class FactureController extends Controller
 {
 
@@ -51,8 +51,9 @@ class FactureController extends Controller
             $taxe = $this->fonct->findAll("taxes");
             $type_facture = $this->fonct->findAll("type_facture");
             $mode_payement = $this->fonct->findAll("mode_financements");
+            return view('admin.facture.nouveau_facture', compact('totale_invitation', 'project', 'entreprise', 'typePayement', 'message', 'taxe', 'mode_payement', 'type_facture'));
 
-            return view('admin.facture.maquette_entrer_facture', compact('totale_invitation', 'project', 'entreprise', 'typePayement', 'message', 'taxe', 'mode_payement', 'type_facture'));
+            // return view('admin.facture.maquette_entrer_facture', compact('totale_invitation', 'project', 'entreprise', 'typePayement', 'message', 'taxe', 'mode_payement', 'type_facture'));
         }
 
         if (Gate::allows(['isSuperAdmin', 'isAdmin', 'isReferent'])) {
@@ -187,6 +188,7 @@ class FactureController extends Controller
             return $this->listeFacture_referent($id);
         }
     }
+
     public function detail_facture($numero_fact)
     {
         $user_id = Auth::user()->id;
@@ -214,6 +216,7 @@ class FactureController extends Controller
         } else {
             $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
         }
+
 
         return view("admin.facture.detail_facture", compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }

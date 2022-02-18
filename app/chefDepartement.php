@@ -9,7 +9,7 @@ class ChefDepartement extends Model
     protected $table = "chef_departements";
     protected $fillable = [
         'nom_chef','prenom_chef','genre_chef','fonction_chef','mail_chef','telephone_chef','entreprise_id',
-        'user_id','photos','departement_id'
+        'user_id','photos','departement_id','cin_chef'
     ];
 
     public function checkEmail($email){

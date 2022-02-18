@@ -68,7 +68,7 @@
                             </div>
                             <div>
                                 <div class="form-group mt-4 mb-2" align="center">
-                                    <button type="submit" class="btn btn-primary btn-center btn-login_creer ">{{__('Creer votre compte pro')}}</button>
+                                    <a href="{{route('create+compte+client')}}"><button type="button" class="btn btn-primary btn-center btn-login_creer ">{{__('Creer votre compte pro')}}</button></a>
                                 </div>
                             </div>
                         </div>

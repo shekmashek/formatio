@@ -13,6 +13,7 @@ use App\DepartementEntreprise;
 use App\chefDepartement;
 use App\chefDepartementEntreprise;
 use App\responsable;
+use App\Models\FonctionGenerique;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -22,7 +23,7 @@ class DepartementController extends Controller
     public function __construct()
     {
         $this->liste_entreprise = entreprise::orderBy('nom_etp')->get();
-        $this->liste_departement =  Departement::all();
+        // $this->liste_departement =  Departement::all();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if(Auth::user()->exists == false) return redirect()->route('sign-in');
@@ -32,11 +33,20 @@ class DepartementController extends Controller
 
     public function index()
     {
+        $fonct = new FonctionGenerique();
+        $liste_entreprise = $this->liste_entreprise;
+        $entreprise_id = entreprise::orderBy('nom_etp')->get();
+        $liste_departement = $fonct->findAll("departement_entreprises");
+        return view('admin.entreprise.departement', compact('liste_entreprise', 'liste_departement'));
+    }
+
+   /* public function index()
+    {
         $liste_entreprise = $this->liste_entreprise;
         $entreprise_id = entreprise::orderBy('nom_etp')->get();
         $liste_departement = $this->liste_departement;
         return view('admin.entreprise.departement', compact('liste_entreprise', 'liste_departement'));
-    }
+    } */
 
   /*  public function liste()
     {
@@ -55,7 +65,26 @@ class DepartementController extends Controller
 
         return view('admin.chefDepartement.liste', compact('chef'));
     }
+
     public function create()
+    {
+        $fonct = new FonctionGenerique();
+
+        if (Gate::allows('isSuperAdmin')) {
+            $liste_entreprise = $this->liste_entreprise;
+            $liste_departement = $fonct->findAll("departement_entreprises");
+            return view('admin.chefDepartement.chef', compact('liste_entreprise', 'liste_departement'));
+        }
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
+            // $liste_departement = $fonct->findAll("departement_entreprises");
+            $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?',[$entreprise_id]);
+
+            return view('admin.chefDepartement.chef', compact('liste_departement'));
+        }
+    }
+
+   /* public function create()
     {
         if (Gate::allows('isSuperAdmin')) {
             $liste_entreprise = $this->liste_entreprise;
@@ -67,7 +96,7 @@ class DepartementController extends Controller
             $liste_departement = DepartementEntreprise::with('departement')->where('entreprise_id', $entreprise_id)->get();
             return view('admin.chefDepartement.chef', compact('liste_departement'));
         }
-    }
+    } */
 
 
 
@@ -140,7 +169,7 @@ class DepartementController extends Controller
     {
         //
     }
-    //fonction qui montre les départements et services de l'entreprise connecté
+    //fonction qui montre les départements, services,branches de l'entreprise connecté
     public function show_departement(Request $request){
         $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
         $id_etp = $rqt[0]->entreprise_id;
@@ -148,9 +177,11 @@ class DepartementController extends Controller
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
         $nb_serv = count($service_departement);
+        $branches = DB::select('select * from branches where entreprise_id = ?',[$id_etp]);
+        $nb_branche = count($branches);
         if($rqt != null){
             // $liste_departement = $rqt[3]->nom_departement;
-            return view('admin.departememnt.nouveau_departement',compact('rqt','nb','nb_serv','service_departement'));
+            return view('admin.departememnt.nouveau_departement',compact('rqt','nb','nb_serv','service_departement','branches','nb_branche'));
         }
         else{
             return view('admin.departememnt.nouveau_departement');
@@ -166,6 +197,17 @@ class DepartementController extends Controller
 
         for ($i = 0; $i < count($input['service']); $i++) {
             DB::insert('insert into services (departement_entreprise_id, nom_service) values (?, ?)', [ $input['departement_id'][$i], $input['service'][$i] ]);
+        }
+        return back();
+    }
+    //fonction quii enregistre les branches
+    public function enregistrement_branche(Request $request){
+        $input = $request->all();
+        $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $id_etp = $rqt[0]->entreprise_id;
+
+        for ($i = 0; $i < count($input['nom_branche']); $i++) {
+            DB::insert('insert into branches (entreprise_id, nom_branche) values (?, ?)', [$id_etp, $input['nom_branche'][$i]]);
         }
         return back();
     }

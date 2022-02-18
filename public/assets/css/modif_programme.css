@@ -1,0 +1,345 @@
+.accordion {
+    background-color: rgba(236, 235, 235, 0.521);
+    color: black;
+    cursor: pointer;
+    height: 3rem;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.accordion_prog input {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    height: inherit;
+    width: 90%;
+    margin-top: 0;
+    margin-left: 1rem;
+    color: #542356;
+}
+
+.accordion_prog2 input {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    height: inherit;
+    margin-top: 0;
+    margin-left: 1rem;
+    color: #542356;
+}
+
+.accordion_prog input:focus {
+    background-color: transparent;
+    border-bottom: 2px solid #801D68;
+}
+
+.accordion_prog2 input:focus {
+    background-color: transparent;
+    border-bottom: 2px solid #801D68;
+}
+
+.input_cours input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(155, 155, 155, 0.801);
+    border-radius: 0;
+    height: inherit;
+    width: 90%;
+    margin-top: 0;
+    margin-left: 1rem;
+    color: black;
+}
+
+.input_cours input:focus {
+    background-color: transparent;
+    border-bottom: 2px solid #801D68;
+    font-size: 14px
+}
+
+.input_cours2 input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(155, 155, 155, 0.801);
+    border-radius: 0;
+    height: inherit;
+    width: 90%;
+    margin-top: 0;
+    margin-left: 1rem;
+    color: black;
+    text-transform: capitalize
+}
+
+.input_cours2 input:focus {
+    background-color: transparent;
+    border-bottom: 2px solid #801D68;
+    font-size: 14px
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-block input {
+    width: 100% !important;
+    text-transform: capitalize;
+}
+
+.btn-block .input_cours {
+    text-transform: capitalize;
+}
+
+/* .active,
+.accordion:hover {
+    background-color: #ccc;
+} */
+
+.plus_prog {
+    color: #801D68;
+    float: right;
+    position: relative;
+    bottom: 3rem;
+    padding-right: 1rem;
+    padding-left: .5rem;
+    transition: all .5s ease
+}
+
+.plus_prog:hover {
+    color: #801D68;
+    transform: scale(1.5);
+    padding-bottom: 1rem;
+}
+
+.accordion:after {
+    /* content: '\002B'; */
+    color: #801D68;
+    font-weight: bold;
+    float: left;
+    position: relative;
+    bottom: 2.5rem;
+    font-size: 24px;
+    padding-right: 1rem;
+    padding-left: .5rem;
+}
+
+.btn_enregistrer {
+    background-color: #801D68;
+}
+
+.btn_enregistrer:hover {
+    background-color: white;
+    color: #801D68;
+    border: 1px solid #801D68;
+}
+
+/* .active:after {
+    content: "\2212";
+} */
+
+/* .panel {
+    padding: 0 18px;
+    background-color: rgba(255, 255, 255, 0.548);
+    height: auto;
+    overflow: hidden;
+    transition: height 0.2s ease-out;
+} */
+
+.background_plus {
+    padding-top: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 5px;
+    background-color: rgba(197, 197, 197, 0.192);
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    transition: all 200ms;
+    margin-left: 2.2rem
+}
+
+.background_plus:hover {
+    /* background-color: rgba(92, 92, 241, 0.61); */
+    background-color: #801d6725;
+    transform: scale(1.05);
+}
+
+.background_grey6 {
+    padding-top: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: rgba(197, 197, 197, 0.192);
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    transition: all 200ms;
+    margin-left: 2.2rem;
+    color: #801D68;
+}
+
+.background_grey6:hover {
+    /* background-color: rgba(92, 92, 241, 0.61); */
+    background-color: #801d6725;
+    transform: scale(1.05);
+    color: #801D68;
+}
+
+.background_grey3 {
+    padding: 5px;
+    background-color: rgba(197, 197, 197, 0.192);
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    transition: all 200ms;
+    color: green;
+}
+
+.background_grey3:hover {
+    /* background-color: rgba(92, 92, 241, 0.61); */
+    background-color: #3b9f0c31;
+    transform: scale(1.05);
+    color: green;
+}
+
+.background_red {
+    padding: 5px;
+    background-color: rgba(197, 197, 197, 0.192);
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    transition: all 200ms;
+    color: red;
+}
+
+.background_red:hover {
+    /* background-color: rgba(92, 92, 241, 0.61); */
+    background-color: rgba(255, 0, 0, 0.158);
+    transform: scale(1.05);
+    color: red;
+}
+
+.marge_inferieur {
+    margin-bottom: 400px;
+}
+
+/*  */
+.accordionWrapper {
+    width: 100%;
+    margin-right: 15px;
+}
+
+.accordionItem {
+    float: left;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.accordionItemHeading {
+    cursor: pointer;
+    margin: 0px 0px 10px 0px;
+    padding: 10px;
+    background: rgba(197, 197, 197, 0.192);
+    color: black;
+    width: 100%;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.close .accordionItemContent {
+    height: 0px;
+    transition: height 2s ease-out;
+    -webkit-transform: scaleY(0);
+    -o-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    transform: scaleY(0);
+    float: left;
+    display: block;
+}
+
+.open .accordionItemContent {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+    display: block;
+    -webkit-transform: scaleY(1);
+    -o-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    transform: scaleY(1);
+    -webkit-transform-origin: top;
+    -o-transform-origin: top;
+    -ms-transform-origin: top;
+    transform-origin: top;
+
+    -webkit-transition: -webkit-transform 0.4s ease-out;
+    -o-transition: -o-transform 0.4s ease;
+    -ms-transition: -ms-transform 0.4s ease;
+    transition: transform 0.4s ease;
+    box-sizing: border-box;
+}
+
+.open .accordionItemHeading {
+    margin: 0px;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-topright: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -moz-border-radius-bottomleft: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: rgba(197, 197, 197, 0.192);
+    color: black;
+}
+
+.cours_hover:hover {
+    background-color: rgba(247, 221, 238, 0.295);
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+}
+
+.form_modif {
+    padding: 10px;
+}
+
+.form_modif input {
+    border: none;
+    border-bottom: 1px solid #801D68;
+    font-size: 14px;
+    text-transform: capitalize
+}
+
+.form_modif input:focus {
+    border: none;
+    border-bottom: 2px solid #801D68;
+    font-size: 16px;
+    transition: all .5s ease;
+    background-color: rgba(247, 221, 238, 0.295);
+    border-radius: 5px;
+    text-transform: capitalize
+}
+
+.modal-header {
+    background-color: rgba(247, 221, 238, 0.452);
+}

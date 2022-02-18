@@ -11,7 +11,7 @@ class entreprise extends Model
 
     protected $fillable = [
         'nom_etp', 'adresse', 'logo', 'nif', 'stat', 'rcs', 'cif', 'secteur_id', 'email_etp', 'site_etp', 'telephone_etp',
-        'adresse_rue', 'adresse_quartier', 'adresse_code_postal', 'adresse_ville', 'adresse_region'
+        
     ];
 
     public function secteur()

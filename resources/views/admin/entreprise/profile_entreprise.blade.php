@@ -41,7 +41,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-home"></i>&nbsp;Adresse</p>
-                                            <h6 class="text-muted f-w-400">{{$entreprise->adresse}}</h6>
+                                            <h6 class="text-muted f-w-400">{{$entreprise->adresse_rue}} {{$entreprise->adresse_quartier}} {{$entreprise->adresse_code_postal}} {{$entreprise->adresse_ville}} {{$entreprise->adresse_region}}</h6>
                                         </div>
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;RCS</p>
@@ -67,9 +67,9 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-briefcase"></i>&nbsp;Départements</p>
-                                            @foreach ($departement as $dp)
-                                                <h6 class="text-muted f-w-400">{{$dp->departement->nom_departement}}</h6>
-                                            @endforeach
+                                            @for($i = 0;$i<count($departement);$i++)
+                                                <h6 class="text-muted f-w-400">{{$departement[$i]->nom_departement}}</h6>
+                                            @endfor
                                         </div>
                                     </div>
                                     <ul class="social-link list-unstyled m-t-40 m-b-10">
