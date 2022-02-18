@@ -26,7 +26,7 @@ border-radius : 75px;
                                  <p class="p-1 m-0" style="font-size: 10px;">Logo
                                  </p>
                                  {{-- <a href="{{route('edit_logocfp',$cfp->id)}} " > --}}
-                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}"  class="image-ronde">
+                                    <img src="/dynamic-image/{{$cfp->logo}}"  class="image-ronde">
                              </a>
                                  
                                 </div>

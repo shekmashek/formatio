@@ -678,7 +678,7 @@ class ParticipantController extends Controller
 
             // $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
             $branche = $fonct->findWhereMulitOne("branches",["entreprise_id"],[$stagiaire->entreprise_id]);
-            return view('admin.participant.profile', compact('entreprise','stagiaire','service','departement','branche'));
+            return view('admin.participant.profiles', compact('entreprise','stagiaire','service','departement','branche'));
             $stagiaires = db::select('select * from stagiaires where matricule = ?',[$matricule]);
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
 
@@ -736,26 +736,17 @@ class ParticipantController extends Controller
     
         return redirect()->route('profile_stagiaire');
     }
-    public function update_stagiaire(Request $request, $id)
+    public function update_photo_stg(Request $request, $id)
     {
-        $user_id =  $users = Auth::user()->id;
-        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-        
-        // $input = $request->file('image')->getClientOriginalName();
-
-
-         //stocker logo dans google drive
-            //stocker logo dans google drive
-           
-            // $dossier = 'stagiaire';
-            // $stock_stg = new getImageModel();
-            //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
-            $input = $request->image;
+        $input = $request->image;
         if ($image = $request->file('image')) {
-            $destinationPath = 'images/stagiaires';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input= "$profileImage";
+            $dossier = 'stagiaire';
+            $stock_stg = new getImageModel();
+             $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+            // $destinationPath = 'images/stagiaires';
+            // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            // $image->move($destinationPath, $profileImage);
+            // $input= "$profileImage";
         }
         if ($input !=null){
         $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
@@ -781,15 +772,19 @@ class ParticipantController extends Controller
             'region'=>$request->region,
 
         ]);
-        Departement::where('id',$id)->update([
-            'nom_departement'=>$request->departement
-        ]);
-        entreprise::where('id',$id)->update([
-            'nom_etp'=>$request->entreprise
-        ]);
-        }
-        else{
+    }
+    return redirect()->route('profile_stagiaire', $id);
+
+}
+    public function update_stagiaire(Request $request, $id)
+    {
+        $user_id =  $users = Auth::user()->id;
+        $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
+        
+        
+        $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
         stagiaire::where('id', $id)->update([
+            
             'matricule' => $request->matricule,
             'nom_stagiaire' => $request->nom,
             'prenom_stagiaire' => $request->prenom,
@@ -798,6 +793,7 @@ class ParticipantController extends Controller
             'fonction_stagiaire' => $request->fonction,
             'telephone_stagiaire' => $request->phone,
             'mail_stagiaire' => $request->mail,
+            
             'lieu_travail' => $request->lieu,
             'cin' => $request->cin,
             'niveau_etude' => $request->niveau,
@@ -808,7 +804,6 @@ class ParticipantController extends Controller
             'lot'=>$request->lot,
             'region'=>$request->region,
 
-
         ]);
         Departement::where('id',$id)->update([
             'nom_departement'=>$request->departement
@@ -816,10 +811,14 @@ class ParticipantController extends Controller
         entreprise::where('id',$id)->update([
             'nom_etp'=>$request->entreprise
         ]);
+       
+     
+    
+        return redirect()->route('profile_stagiaire', $id);
+
     }
        
-        return redirect()->route('profile_stagiaire', $id);
-    }
+  
     public function last_record()
     {
         $last_record_historique = DB::select(' SELECT *

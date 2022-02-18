@@ -2,7 +2,7 @@
 @section('content')
 <style>
    .input{
-        width: 170px;
+        width: 300px;
     }
 .test {
     padding: 2px;
@@ -43,7 +43,7 @@
   transform: translate3d(0, -100%, 0);
   opacity: 1;
   background-color: white;
-  margin-left: 105px;
+  margin-left: 50px;
 
 }
 </style>

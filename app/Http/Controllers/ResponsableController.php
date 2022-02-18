@@ -325,18 +325,43 @@ class ResponsableController extends Controller
         $responsable = responsable::findOrFail($id);
         return view('admin.responsable.edit_poste', compact('responsable'));
     }
+    public function update_logo_etp(Request $request){
+        $fonct = new FonctionGenerique();
+          
+        $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[ Auth::user()->id]);
+        $input = $request->file('image')->getClientOriginalName();
+        $dossier = 'entreprise';
+         $stock_stg = new getImageModel();
+        $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+        if ($image = $request->file('image')) {
+         $dossier = 'entreprise';
+         $stock_stg = new getImageModel();
+          $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+     }
+     if ($input !=null){
+         entreprise::where('id',  $resp_etp->entreprise_id)
+         ->update([
+             'nom_etp' => $request->etp,
+             'adresse' => $request->adresse_etp,
+             'nif' => $request->nif,
+             'stat' => $request->stat,
+             'rcs' => $request->rcs,
+             'cif'=>$request->cif,
+             'email_etp'=>$request->email_etp,
+             'site_etp'=>$request->site,
+             'telephone_etp'=>$request->phone_etp,
+             'logo'=>$input
+            
+         ]);
+     }
+     return redirect()->route('affResponsable');
+
+    }
     public function update_etp(Request $request, $id){
         $fonct = new FonctionGenerique();
           
            $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[ Auth::user()->id]);
-           $input = $request->image;
-           if ($image = $request->file('image')) {
-            $destinationPath = 'images/entreprises';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input= "$profileImage";
-        }
-        if ($input !=null){
+           
             entreprise::where('id',  $resp_etp->entreprise_id)
             ->update([
                 'nom_etp' => $request->etp,
@@ -348,44 +373,83 @@ class ResponsableController extends Controller
                 'email_etp'=>$request->email_etp,
                 'site_etp'=>$request->site,
                 'telephone_etp'=>$request->phone_etp,
-                'logo'=>$input
-               
+              
             ]);
-        }
-        else{
-            entreprise::where('id',  $resp_etp->entreprise_id)
-            ->update([
-                'nom_etp' => $request->etp,
-                'adresse' => $request->adresse_etp,
-                'nif' => $request->nif,
-                'stat' => $request->stat,
-                'rcs' => $request->rcs,
-                'cif'=>$request->cif,
-                'email_etp'=>$request->email_etp,
-                'site_etp'=>$request->site,
-                'telephone_etp'=>$request->phone_etp,
-             
-               
-            ]);
-        }
-
         return redirect()->route('affResponsable');
-        
-    }
-    public function update_pwd(Request $request){
-        $nom = $request->nom;
-        $mail = $request->mail;
-        $mdp = $request->password;
-        $mdpHash = Hash::make($mdp);
-User::where('id', Auth::user()->id)
-            ->update([
-                'name' => $nom,
-                'email' => $mail,
-                'password' => $mdpHash
-            ]);
-    return redirect()->route('affResponsable');
 
+        }
+        
+     
+
+        
+ 
+//     public function update_pwd(Request $request){
+//         $nom = $request->nom;
+//         $mail = $request->mail;
+//         $mdp = $request->password;
+//         $mdpHash = Hash::make($mdp);
+// User::where('id', Auth::user()->id)
+//             ->update([
+//                 'name' => $nom,
+//                 'email' => $mail,
+//                 'password' => $mdpHash
+//             ]);
+//     return redirect()->route('affResponsable');
+
+//     }
+public function update_image(Request $request, $id){
+    $nom = $request->nom;
+    $prenom = $request->prenom;
+    $date = $request->date;
+    $cin = $request->cin;
+    $genre = $request->genre;
+    $code_postal = $request->code_postal;
+    $ville = $request->ville;
+    $region = $request->region;
+    $quartier = $request->quartier;
+    $lot = $request->lot;
+    $mail = $request->mail;
+    $poste=$request->poste;
+    $fonction = $request->fonction;
+    $phone =  $request->phone;
+   
+    $input = $request->file('image')->getClientOriginalName();
+    $dossier = 'responsable';
+     $stock_stg = new getImageModel();
+    $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+    if ($image = $request->file('image')) {
+        $dossier = 'responsable';
+        $stock_stg = new getImageModel();
+         $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+        // $destinationPath = 'images/responsables';
+        // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        // $image->move($destinationPath, $profileImage);
+        // $input= "$profileImage";
     }
+    if ($input !=null){
+        responsable::where('id', $id)
+                ->update([
+                    'nom_resp' => $nom,
+                    'prenom_resp' => $prenom,
+                    'fonction_resp' => $fonction,
+                    'email_resp' => $mail,
+                    'telephone_resp' => $phone,
+                    'date_naissance_resp'=>$date,
+                    'sexe_resp'=>$genre,
+                    'cin_resp'=>$cin,
+                    'adresse_lot'=>$lot,
+                    'adresse_code_postal'=>$code_postal,
+                    'adresse_quartier'=>$quartier,
+                    'adresse_ville'=>$ville,
+                    'adresse_region'=>$region,
+                    'poste_resp'=>$poste,
+                    'photos'=>$input
+                ]);
+             
+            }
+       
+ return redirect()->route('affResponsable');
+}
     public function update(Request $request, $id)
     {
         if (Gate::allows('isReferent')) {
@@ -410,24 +474,14 @@ User::where('id', Auth::user()->id)
             $fonction = $request->fonction;
             $phone =  $request->phone;
            
-            $input = $request->image;
+            // $input = $request->image;
 
+       // $input = $request->file('image')->getClientOriginalName();
         
          //stocker logo dans google drive
             //stocker logo dans google drive
            
-            // $dossier = 'stagiaire';
-            // $stock_stg = new getImageModel();
-            //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
- 
-            if ($image = $request->file('image')) {
-                $destinationPath = 'images/responsables';
-                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $profileImage);
-                $input= "$profileImage";
-            }
-            if ($input !=null){
-               
+          
             responsable::where('id', $id)
                 ->update([
                     'nom_resp' => $nom,
@@ -444,31 +498,31 @@ User::where('id', Auth::user()->id)
                     'adresse_ville'=>$ville,
                     'adresse_region'=>$region,
                     'poste_resp'=>$poste,
-                    'photos'=>$input
+                  
                 ]);
              
-            }
-            else{
-                responsable::where('id', $id)
-                ->update([
-                    'nom_resp' => $nom,
-                    'prenom_resp' => $prenom,
-                    'fonction_resp' => $fonction,
-                    'email_resp' => $mail,
-                    'telephone_resp' => $phone,
-                    'date_naissance_resp'=>$date,
-                    'sexe_resp'=>$genre,
-                    'cin_resp'=>$cin,
-                    'adresse_lot'=>$lot,
-                    'adresse_code_postal'=>$code_postal,
-                    'adresse_quartier'=>$quartier,
-                    'adresse_ville'=>$ville,
-                    'adresse_region'=>$region,
-                    'poste_resp'=>$poste,
+            // }
+            // else{
+            //     responsable::where('id', $id)
+            //     ->update([
+            //         'nom_resp' => $nom,
+            //         'prenom_resp' => $prenom,
+            //         'fonction_resp' => $fonction,
+            //         'email_resp' => $mail,
+            //         'telephone_resp' => $phone,
+            //         'date_naissance_resp'=>$date,
+            //         'sexe_resp'=>$genre,
+            //         'cin_resp'=>$cin,
+            //         'adresse_lot'=>$lot,
+            //         'adresse_code_postal'=>$code_postal,
+            //         'adresse_quartier'=>$quartier,
+            //         'adresse_ville'=>$ville,
+            //         'adresse_region'=>$region,
+            //         'poste_resp'=>$poste,
                     
-                ]);
+            //     ]);
 
-            }
+            // }
            
         
             
@@ -486,15 +540,15 @@ User::where('id', Auth::user()->id)
             $id = $request->Id;
             $user_id = responsable::where('id', $id)->value('user_id');
             //modifier les données
-             // $dossier = 'stagiaire';
-            // $stock_stg = new getImageModel();
-            //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+            $input = $request->file('image')->getClientOriginalName();
+            $dossier = 'responsable';
+             $stock_stg = new getImageModel();
+            $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
             $input = $request->image;
             if ($image = $request->file('image')) {
-                $destinationPath = 'images/stagiaires';
-                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $profileImage);
-                $input= "$profileImage";
+                $dossier = 'responsable';
+                $stock_stg = new getImageModel();
+                 $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
             }
             $nom = $request->Nom;
             $prenom = $request->Prenom;

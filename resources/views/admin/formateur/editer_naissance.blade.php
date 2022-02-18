@@ -51,7 +51,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Nom</p>
+        <p style="text-align: left">Anniversaire</p>
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
             

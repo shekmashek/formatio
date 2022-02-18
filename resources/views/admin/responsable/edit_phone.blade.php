@@ -43,7 +43,7 @@
   transform: translate3d(0, -100%, 0);
   opacity: 1;
   background-color: white;
-  margin-left: 105px;
+  margin-left:105px;
 
 }
 </style>
@@ -75,14 +75,19 @@
                    
                           
                         <input type="hidden" class="form-control test input"  name="mail" value="{{ $responsable->email_resp }}" >
-                   
-                <div class="row px-3 mt-4">
+                        <div class="row px-3 mt-4">
+                          <div class="form-group mt-1 mb-1">
+                          <input type="text" value="   {{ $responsable->telephone_resp }}" class="form-control test input"  name="phone">
+                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Téléphone</label>
+                          </div>
+                      </div>
+                {{-- <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control tes input"  name="phone" value="{{ $responsable->telephone_resp }}"> 
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Téléphone</label> 
                         
                     </div>
-                </div>
+                </div> --}}
                         <input type="hidden" class="form-control test" value=""  name="password" placeholder="">  
                           <input type="hidden" class="form-control test" id="lot" name="lot" placeholder="Lot" value="{{ $responsable->adresse_lot}}">
 

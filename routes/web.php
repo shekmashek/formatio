@@ -111,6 +111,8 @@ Route::resource('utilisateur','UtilisateurControlleur')->except([
     'index','create'
 ]);
 //update password cfp
+//update_logo cfp
+Route::post('update_logo_cfp/{id?}','UtilisateurControlleur@update_logo_cfp')->name('update_logo_cfp');
 
 Route::post('/update_cfp_mdp/{id}','UtilisateurControlleur@update_cfp_mdp')->name('update_cfp_mdp');
 
@@ -219,6 +221,12 @@ Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
 Route::post('update_pwdres/{id?}','ResponsableController@update_pwd')->name('update_pwdres');
+//responsable update_image
+
+Route::post('update_image_referent/{id?}','ResponsableController@update_image')->name('update_image_referent');
+//update logo entreprise
+
+Route::post('update_logo_entreprise/{id?}','ResponsableController@update_logo_etp')->name('update_logo_entreprise');
 
 //Route pour modifier chaque champs pour responsable
 Route::get('/edit_nom/{id}','ResponsableController@edit_nom')->name('edit_nom');
@@ -258,6 +266,9 @@ Route::post('update_pwd/{id?}','ParticipantController@update_pwd')->name('update
 //update password stagiaire
 
 Route::post('/update_stagiaire_mdp/{id}','ParticipantController@update_stg_mdp')->name('update_stagiaire_mdp');
+//update photo stagiaire
+
+Route::post('update_photo_stagiaire/{id?}','UtilisateurControlleur@update_photo_stg')->name('update_photo_stagiaire');
 
 // update e-mail stagiaire
 Route::post('update_mail_stagiaire','ParticipantController@update_mail_stg')->name('update_mail_stagiaire');
@@ -349,6 +360,8 @@ Route::get('show_formateur','ProfController@show_formateur')->name('show_formate
 Route::resource('detail','DetailController')->except([
     'create','edit','index'
 ]);
+//update photo formateur
+Route::post('update_photo_formateur/{id?}','ProfController@update_photo_prof')->name('update_photo_formateur');
 
 Route::get('/liste_detail/{id?}','DetailController@create')->name('liste_detail');
 Route::get('/edit_detail','DetailController@edit')->name('edit_detail');
@@ -549,6 +562,9 @@ Route::get('/show_dep','DepartementController@show')->name('show_dep');
 Route::get('/edit_manager/{id?}','DepartementController@edit')->name('edit_manager');
 Route::post('/update_manager/{id?}','DepartementController@update')->name('update_manager');
 Route::post('update_entreprisechef/{id?}','DepartementController@update_chef')->name('update_entreprisechef');
+//update_photos chef
+Route::post('update_photo_chef/{id?}','DepartementController@update_photo_chef')->name('update_photo_chef');
+
 //update password chef
 
 Route::post('/update_chef_mdp/{id}','DepartementController@update_chef_mdp')->name('update_chef_mdp');

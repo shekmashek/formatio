@@ -82,7 +82,7 @@
                                          
                                      </p>
                                      {{-- <a href="{{route('editer_photos',$formateur->id)}}" > --}}
-                                        <img src="{{asset('images/formateurs/'.$formateur->photos)}}" class="image-ronde">
+                                        <img src="/formateur-image/{{$formateur->photos}}" class="image-ronde">
                                     </a>
                                     </div>
                                     <div  style="border-bottom: solid 1px #d399c2;">

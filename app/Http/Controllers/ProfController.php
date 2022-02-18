@@ -390,6 +390,52 @@ class ProfController extends Controller
         DB::update('update formateurs set mail_formateur= ? where user_id = ?', [$request->mail,Auth::id()]);
         return redirect()->route('profile_formateur', );
     }
+    public function update_photo_prof(Request $request,$id){
+     
+        $nom = $request->nom;
+      
+        $phone =  $request->phone;
+        $mail = $request->mail;
+        $cin = $request->cin;
+        $datenais = $request->dateNais;
+        // $input = $request->image;
+        $splt = $request->specialite;
+        $nv = $request->niveau;
+        $input = $request->file('image')->getClientOriginalName();
+        
+        //stocker logo dans google drive
+          //stocker logo dans google drive
+           $dossier = 'formateur';
+          $stock_stg = new getImageModel();
+           $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+      if ($image = $request->file('image')) {
+          $dossier = 'formateur';
+          $stock_stg = new getImageModel();
+           $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+          // $destinationPath = 'images/formateurs';
+          // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+          // $image->move($destinationPath, $profileImage);
+          // $input= "$profileImage";
+      }
+      if ($input !=null){
+      formateur::where('id',  $id)
+          ->update([
+              'nom_formateur' => $nom,
+              'prenom_formateur' => $request->prenom,
+              'numero_formateur' => $phone,
+              'mail_formateur' => $mail,
+              'cin' => $cin,
+              'genre' =>  $request->genre,
+              'date_naissance' => $datenais,
+              'adresse' => $request->adresse,
+              'specialite' => $splt,
+              'niveau' => $nv,
+              'photos' => $input,
+          ]);
+      }
+      return redirect()->route('profile_formateur', $id);
+
+    }
     
     public function misajourFormateur(Request $request,$id)
     {
@@ -404,16 +450,10 @@ class ProfController extends Controller
         $mail = $request->mail;
         $cin = $request->cin;
         $datenais = $request->dateNais;
-        $input = $request->image;
+        // $input = $request->image;
         $splt = $request->specialite;
         $nv = $request->niveau;
-        if ($image = $request->file('image')) {
-            $destinationPath = 'images/formateurs';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input= "$profileImage";
-        }
-        if ($input !=null){
+      
         formateur::where('id',  $id)
             ->update([
                 'nom_formateur' => $nom,
@@ -426,25 +466,9 @@ class ProfController extends Controller
                 'adresse' => $request->adresse,
                 'specialite' => $splt,
                 'niveau' => $nv,
-                'photos' => $input,
+                
             ]);
-        }else{
-            formateur::where('id',  $id)
-            ->update([
-                'nom_formateur' => $nom,
-                'prenom_formateur' => $request->prenom,
-                'numero_formateur' => $phone,
-                'mail_formateur' => $mail,
-                'cin' => $cin,
-                'genre' =>$request->genre,
-                'date_naissance' => $datenais,
-                'adresse' => $request->adresse,
-                'specialite' => $splt,
-                'niveau' => $nv,
-              
-            ]);
-        }
-        
+       
         return redirect()->route('profile_formateur', $id);
     }
 

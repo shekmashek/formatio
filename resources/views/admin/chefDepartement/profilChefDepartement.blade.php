@@ -26,7 +26,7 @@ border-radius : 75px;
                                  <p class="p-1 m-0" style="font-size: 10px;">Photos
                                  </p>
                                  <a href="{{route('edit_logochef',$var->id)}} " >
-                                    <img src="{{asset('images/chefDepartement/'.$var->photos)}}"  class="image-ronde">
+                                    <img src="/stagiaire-image/{{$var->photos}}"   class="image-ronde">
                              </a>
                                  
                                 </div>

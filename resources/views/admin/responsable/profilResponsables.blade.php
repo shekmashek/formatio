@@ -81,7 +81,7 @@
                                      <p class="p-1 m-0" style="font-size: 10px;">PHOTO
                                      </p>
                                      <a href="{{route('edit_photos',$refs->id)}}" >
-                                        <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
+                                        <img src="/responsable-image/{{$refs->photos}}" class="image-ronde">
                                     </a>
                                     </div>
                                     <div class="hover" style="border-bottom: solid 1px #d399c2;">
@@ -184,7 +184,7 @@
                                         <p class="p-1 m-0" style="font-size: 10px;">Logo
                                         </p>
                                         <a href="{{route('edit_logo',$refs->id)}}" >
-                                           <img src="{{asset('images/entreprises/'.$refs->entreprise->logo)}}" class="image-ronde">
+                                           <img src="/dynamic-image/{{$refs->entreprise->logo}}" class="image-ronde">
                                        </a>
                                        </div>
                                      <div style="border-bottom: solid 1px #d399c2;" class="hover">

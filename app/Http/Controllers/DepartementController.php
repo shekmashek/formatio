@@ -180,14 +180,7 @@ class DepartementController extends Controller
         //   dd($entreprise_id);
     //    $id_etp=chefDepartement::with('entreprise')->where('id',$entreprise_id)->get();
        
-           $input = $request->image;
-           if ($image = $request->file('image')) {
-            $destinationPath = 'images/entreprises';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input= "$profileImage";
-        }
-        if ($input !=null){
+   
             entreprise::where('id',$entreprise_id)
             ->update([
                 'nom_etp' => $request->etp,
@@ -199,26 +192,10 @@ class DepartementController extends Controller
                 'email_etp'=>$request->email_etp,
                 'site_etp'=>$request->site,
                 'telephone_etp'=>$request->phone_etp,
-                'logo'=>$input
                
             ]);
-        }
-        else{
-            entreprise::where('id',  $entreprise_id)
-            ->update([
-                'nom_etp' => $request->etp,
-                'adresse' => $request->adresse_etp,
-                'nif' => $request->nif,
-                'stat' => $request->stat,
-                'rcs' => $request->rcs,
-                'cif'=>$request->cif,
-                'email_etp'=>$request->email_etp,
-                'site_etp'=>$request->site,
-                'telephone_etp'=>$request->phone_etp,
-             
-               
-            ]);
-        }
+        
+        
         return redirect()->route('affProfilChefDepartement', $id);
         
     }
@@ -242,54 +219,53 @@ class DepartementController extends Controller
         DB::update('update chef_departements set mail_chef= ? where user_id = ?', [$request->mail,Auth::id()]);
         return redirect()->route('affProfilChefDepartement');
     }
+    public function update_photo_chef(Request $request){
+        $id = $request->id;
+
+        $input = $request->file('image')->getClientOriginalName();
+        $dossier = 'stagiaire ';
+         $stock_stg = new getImageModel();
+        if ($image = $request->file('image')) {
+            $dossier = 'stagiaire';
+            $stock_stg = new getImageModel();
+             $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
+        }
+        if ($input !=null){
+            chefDepartement::where('id',$id)->update([
+             'nom_chef' => $request->nom, 
+             'prenom_chef' => $request->prenom, 
+             'fonction_chef' => $request->fonction,
+             'mail_chef' => $request->mail, 
+             'telephone_chef' => $request->phone,
+             'photos'=>$input
+            ]);
+         }
+    return redirect()->route('affProfilChefDepartement', $id);
+
+    }
     public function update(Request $request)
     {
         $id = $request->id;
         
         $vars = chefDepartement::findOrFail($id);
-        $input = $request->image;
+        
         // //stockage dans google drive
-        //     $dossier = 'chefDepartement';
-        //     $stock_stg = new getImageModel();
-        //      $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
-        if ($image = $request->file('image')) {
-                       $destinationPath = 'images/chefDepartement';
-                       $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                       $image->move($destinationPath, $profileImage);
-                       $input= "$profileImage";
-                   }
-                   if ($input !=null){
+        
+                    //    $destinationPath = 'images/chefDepartement';
+                    //    $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                    //    $image->move($destinationPath, $profileImage);
+                    //    $input= "$profileImage";
+                  
                    chefDepartement::where('id',$id)->update([
                     'nom_chef' => $request->nom, 
                     'prenom_chef' => $request->prenom, 
                     'fonction_chef' => $request->fonction,
                     'mail_chef' => $request->mail, 
                     'telephone_chef' => $request->phone,
-                    'photos'=>$input
+                   
                    ]);
-                }
-                else{
-                    chefDepartement::where('id',$id)->update([
-                        'nom_chef' => $request->nom, 
-                        'prenom_chef' => $request->prenom, 
-                        'fonction_chef' => $request->fonction,
-                        'mail_chef' => $request->mail, 
-                        'telephone_chef' => $request->phone,
-                       ]);
-                }
-    //                if ($input !=null){
-    //     $vars->update([
-    //         'nom_chef' => $request->nom, 'prenom_chef' => $request->prenom, 'fonction_chef' => $request->fonction,
-    //         'mail_chef' => $request->mail, 'telephone_chef' => $request->phone,'logo' => $input,
-    //     ]);
-       
-    // }
-    // else{
-    //     $vars->update([
-    //         'nom_chef' => $request->nom, 'prenom_chef' => $request->prenom, 'fonction_chef' => $request->fonction,
-    //         'mail_chef' => $request->mail, 'telephone_chef' => $request->phone,
-    //     ]);
-    // }
+              
+    
     return redirect()->route('affProfilChefDepartement', $id);
 
 }

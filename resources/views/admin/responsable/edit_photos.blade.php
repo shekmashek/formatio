@@ -1,18 +1,10 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
 @extends('./layouts/admin')
 @section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/svg-with-js.min.css" rel="stylesheet" />
+
 <style>
    .input{
         width: 170px;
@@ -59,13 +51,67 @@
   margin-left: 105px;
 
 }
+/* image style */
+.profilepic {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgb(116, 111, 111);
+}
+
+.profilepic:hover .profilepic__content {
+  opacity: 1;
+}
+
+.profilepic:hover .profilepic__image {
+  opacity: .5;
+}
+
+.profilepic__image {
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+}
+
+.profilepic__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.profilepic__icon {
+  color: white;
+  padding-bottom: 8px;
+}
+
+.fas {
+  font-size: 20px;
+}
+
+.profilepic__text {
+  text-transform: uppercase;
+  font-size: 12px;
+  width: 50%;
+  text-align: center;
+}
 </style>
 <center>                
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photos de profile</p>
-        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
+        <p style="text-align: left">Modifier la photo</p>
+        <form   class="btn-submit" action="{{route('update_image_referent',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
               
                     <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
@@ -79,9 +125,13 @@
                             <center>
                                 <div class="image-upload">
                                   <label for="file-input">
-                                    <div class="upload-icon">
-                                        <img src="{{asset('images/responsables/'.$responsable->photos)}}" id = "photo_stg"  class="image-ronde"> 
+                                    <div class="upload-icon profilepic">
+                                        <img src="/responsable-image/{{$responsable->photos}}" id = "photo_stg"  class="image-ronde profilepic__image"> 
                                       {{-- <input type="text" id = 'vartemp'> --}}
+                                      <div class="profilepic__content">
+                                        <span class="profilepic__icon"><i class="fas fa-camera"></i></span>
+                                        <span class="profilepic__text">Modifier photo</span>
+                                      </div>
                               </div>
                                   </label>
                                      <input id="file-input" type="file" name="image" value="{{$responsable->photos}}"/>
@@ -160,6 +210,8 @@
       -webkit-border-radius : 75px;
       border-radius : 75px;
       cursor: pointer;
+      margin-top: -6px;
+     margin-left: -15px;
     }
         .image-upload > input
         {

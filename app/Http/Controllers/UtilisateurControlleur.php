@@ -185,19 +185,66 @@ class UtilisateurControlleur extends Controller
     return redirect()->route('profil_cfp',$id);
 
     }
-    public function update_cfp(Request $request, $id)
-    {
-        $input = $request->image;
-
-        
+    public function update_logo_cfp(Request $request, $id){
+        $input = $request->file('image')->getClientOriginalName();
+        $dossier = 'entreprise';
+         $stock_stg = new getImageModel();
+        $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
 
         if ($image = $request->file('image')) {
-            $destinationPath = 'images/CFP';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input= "$profileImage";
+            $dossier = 'entreprise';
+            $stock_stg = new getImageModel();
+             $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
         }
-        if ($input !=null){
+             if ($input !=null){
+           
+                $update_cfp = cfp::where('id',$id)->update([
+                    'nom' => $request->get('nom_cfp'),
+                    'adresse_lot' => $request->adresse_lot,
+                    'adresse_ville' => $request->get('adresse_ville'),
+                    'adresse_region' => $request->get('adresse_region'),
+                    'email' => $request->mail,
+                    'telephone' => $request->phone,
+                    'site_cfp' => $request->get('site_web'),
+                    'domaine_de_formation' => $request->get('domaine_cfp'),
+                    'nif' => $request->get('nif_cfp'),
+                    'stat' => $request->get('stat_cfp'),
+                    'rcs' => $request->get('rcs_cfp'),
+                    'cif' => $request->get('cif_cfp'),
+                    'logo'=>$input
+                ]);
+            }
+            else{
+                $update_cfp = cfp::where('id',$id)->update([
+                    'nom' => $request->get('nom_cfp'),
+                    'adresse_lot' => $request->adresse_lot,
+                    'adresse_ville' => $request->get('adresse_ville'),
+                    'adresse_region' => $request->get('adresse_region'),
+                    'email' => $request->mail,
+                    'telephone' => $request->phone,
+                    'site_cfp' => $request->get('site_web'),
+                    'domaine_de_formation' => $request->get('domaine_cfp'),
+                    'nif' => $request->get('nif_cfp'),
+                    'stat' => $request->get('stat_cfp'),
+                    'rcs' => $request->get('rcs_cfp'),
+                    'cif' => $request->get('cif_cfp'),
+                   
+                ]);
+            }
+        return redirect()->route('profil_cfp',$id);
+
+
+    }
+    public function update_cfp(Request $request, $id)
+    {
+        // $input = $request->image;
+
+     
+            // $destinationPath = 'images/CFP';
+            // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            // $image->move($destinationPath, $profileImage);
+      
+     
            
         $update_cfp = cfp::where('id',$id)->update([
             'nom' => $request->get('nom_cfp'),
@@ -212,29 +259,12 @@ class UtilisateurControlleur extends Controller
             'stat' => $request->get('stat_cfp'),
             'rcs' => $request->get('rcs_cfp'),
             'cif' => $request->get('cif_cfp'),
-            'logo'=>$input
         ]);
-    }
-    else{
-        $update_cfp = cfp::where('id',$id)->update([
-            'nom' => $request->get('nom_cfp'),
-            'adresse_lot' => $request->adresse_lot,
-            'adresse_ville' => $request->get('adresse_ville'),
-            'adresse_region' => $request->get('adresse_region'),
-            'email' => $request->mail,
-            'telephone' => $request->phone,
-            'site_cfp' => $request->get('site_web'),
-            'domaine_de_formation' => $request->get('domaine_cfp'),
-            'nif' => $request->get('nif_cfp'),
-            'stat' => $request->get('stat_cfp'),
-            'rcs' => $request->get('rcs_cfp'),
-            'cif' => $request->get('cif_cfp'),
-
-        ]);
-    }
         return redirect()->route('profil_cfp',$id);
-
+  
     }
+
+    
 
     public function show($id)
     {
@@ -376,4 +406,5 @@ class UtilisateurControlleur extends Controller
             ]
         );
     }
+  
 }

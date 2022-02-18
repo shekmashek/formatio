@@ -63,7 +63,7 @@
                       
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
+                        <input type="text" class="form-control test input" value="   {{ $formateur->adresse }}"  name="adresse">
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Adresse</label>
                          
                     </div>
