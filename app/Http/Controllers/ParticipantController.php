@@ -784,7 +784,7 @@ class ParticipantController extends Controller
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
 
         } else {
-            $stagiaires_tmp = DB::select('SELECTT * FROM stagiaires where id = ?',[$id]);
+            $stagiaires_tmp = DB::select('SELECT * FROM stagiaires where id = ?',[$id]);
             $stagiaire=$stagiaires_tmp[0];
             $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
             $entreprise = $fonct->findWhereMulitOne("entreprises",["id"],[$stagiaire->entreprise_id]);
