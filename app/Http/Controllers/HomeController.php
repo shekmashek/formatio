@@ -136,7 +136,7 @@ class HomeController extends Controller
         $totale_invitation = $this->collaboration->count_invitation();
         $entp = new entreprise();
 
-
+        $type_formation = $request->type_formation;
         //récupérer id de l'utilisateur en fonction de l'email
         $role_id = User::where('email', Auth::user()->email)->value('role_id');
 
@@ -144,7 +144,7 @@ class HomeController extends Controller
 
             //on récupère tous les projets de formation
             $projet = projet::get()->unique('nom_projet');
-            $data = $fonct->findAll("v_projetentreprise");
+            $data = $fonct->findAll("v_projet_session");
             $cfp = $fonct->findAll("cfps");
             $entreprise = entreprise::all();
             return view('admin.projet.home', compact('data', 'cfp', 'projet', 'totale_invitation', 'entreprise'));
@@ -174,8 +174,8 @@ class HomeController extends Controller
         } elseif (Gate::allows('isCFP')) {
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $projet = $fonct->findWhere("v_projet_session", ["cfp_id"], [$cfp_id]);
-            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
+            $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation]);
+            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation]);
 
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
@@ -192,8 +192,9 @@ class HomeController extends Controller
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?", [$user_id])[0]->cfp_id;
-            $projet = $fonct->findWhere("v_projet_session", ["cfp_id"], [$cfp_id]);
-            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
+            $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation]);
+            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation]);
+
 
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);

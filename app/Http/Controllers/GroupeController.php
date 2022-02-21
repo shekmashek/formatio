@@ -53,6 +53,17 @@ class GroupeController extends Controller
         return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules','entreprise','payement'));
     }
 
+    public function createInter()
+    {
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $type_formation = request()->type_formation;
+        $formations = $fonct->findWhere("formations", [1], [1]);
+        $modules = $fonct->findAll("modules");
+        return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
+    }
+
 
     public function module_formation(Request $rq)
     {
@@ -102,6 +113,47 @@ class GroupeController extends Controller
             $data = $request->all();
             DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert_groupe->id,$request->entreprise]);
             DB::commit();
+            return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id]);
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->with('groupe_error',"insertion de la session échouée!");
+        }
+    }
+
+    public function storeInter(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $type_formation = $request->type_formation;
+        //condition de validation de formulaire
+        $request->validate(
+            [
+                'min_part' => "required|numeric|min:0",
+                'max_part' => "required|numeric|min:0",
+                'date_debut' => "required|date",
+                'date_fin' => "required|date",
+                'module_id' => "required",
+            ],
+            [
+                'date_debut.required' => 'la date du debut de formation ne doit pas être null',
+                'date_fin.required' => 'la date fin de formation ne doit pas être null',
+                'module_id.required' => 'le module  de la formation ne doit pas être null',
+            ]
+        );
+
+        try{
+            DB::beginTransaction();
+            $projet = new projet();
+            $nom_projet = $projet->generateNomProjet();
+            DB::insert('insert into projets(nom_projet,cfp_id,type_formation_id,status,activiter) values(?,?,?,?,TRUE)',[$nom_projet,$cfp_id,$type_formation,'Confirmé']);
+
+            $last_insert_projet = DB::table('projets')->latest('id')->first();
+            $groupe = new groupe();
+            $nom_groupe = $groupe->generateNomSession($last_insert_projet->id);
+            DB::insert('insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,"En Cours",TRUE)',
+            [$request->max_part,$request->min_part,$nom_groupe,$last_insert_projet->id,$request->module_id,1,$request->date_debut,$request->date_fin]);
+
+            $last_insert_groupe = DB::table('groupes')->latest('id')->first();
             return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id]);
         }catch(Exception $e){
             DB::rollback();

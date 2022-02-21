@@ -1,104 +1,72 @@
 @extends('./layouts/admin')
 @section('content')
 
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-<div class="d-flex justify-content-end mb-3 me-2">
-    <a href="#" class="m-0 p-0" style="font-size: 16px;" data-toggle="modal" data-target="#new_projet"> <i class="fa fa-folder-plus ms-2" style="font-size: 13px; color:rgb(130,33,100);">&nbsp; Ajouter un nouveau projet</i> </a>
-</div>
-
-{{-- nouveau projet --}}
-@canany(['isCFP'])
-
-<div id="new_projet" class="modal fade" data-backdrop="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title text-md">
-                    <h5>Nouveau Projet</h5>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="card p-3 cardPayement">
-                    <form action="{{ route('projet.store') }}" id="zsxsq" method="POST">
-                        @csrf
-
-                        <label for="etp">Entreprise</label><br>
-                        <select name="type_formation" class=" form-control inputbox inputboxP mt-3" id="liste_etp" required>
-                            @foreach($type_formation as $tf)
-                            <option value="{{$tf->id}}">{{$tf->type_formation}}</option>
-                            @endforeach
-                        </select>
-                        @if(count($entreprise) <=0) <P><strong style="color: red">désoler,vous ne pouver pas créer un projet si vous n'avez pas encore collaborer avec des entreprises,merci!</strong> </p>
-                            @endif
-
-
-                            <div class="mt-4 mb-4">
-                                <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" class="btn btn-success btnP px-3">Ajouter</button> </div>
-                            </div>
-                    </form>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-@endcanany
-{{-- fin --}}
-
+{{-- <div class="d-flex justify-content-end mb-3 me-2">
+    <a href="#" class="m-0 p-0" style="font-size: 16px;" data-toggle="modal" data-target="#new_projet"> <i
+            class="fa fa-folder-plus ms-2" style="font-size: 13px; color:rgb(130,33,100);">&nbsp; Ajouter un nouveau
+            projet</i> </a>
+</div> --}}
 {{-- <div class="card shadow mx-3 my-3 px-3 pt-3"> --}}
-<div class="shadow p-3 mb-5 bg-body rounded">
-    <i class="far fa-caret-circle-down pb-3" data-toggle="collapse" href="#corps" role="button" aria-expanded="false"><a data-toggle="collapse" href="#corps" role="button" aria-expanded="false" aria-controls="collapseExample"> Janvier </a> </i>
-    @canany(['isCFP','isFormateur'])
-    <div class="collapse" id="corps">
-        @foreach ($projet as $prj)
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        {{-- <i class=" pb-3" data-toggle="collapse" href="#corps" role="button" aria-expanded="false"><a
+                data-toggle="collapse" href="#corps" role="button" aria-expanded="false"
+                aria-controls="collapseExample"> Janvier </a> </i> --}}
+        @canany(['isCFP','isFormateur'])
+        <div class="m" id="corps">
+            @foreach ($projet as $prj)
 
-        <h6> {{$prj->nom_projet.'('.$prj->totale_session.')'}}</h6>
+            <div class="justify-content-between d-flex mt-3">
+                <h6 class="m-0 changer_carret" data-bs-toggle="collapse" href="#collapseprojet_{{$prj->projet_id}}"
+                    role="button" aria-expanded="false" aria-controls="collapseprojet"><i
+                        class="bx bxs-caret-down-circle carret-icon"></i>&nbsp;{{$prj->nom_projet.'('.$prj->totale_session.')'}}
+                </h6>
+                <i type="button" class="bx bx-plus pb-3 i_carret" data-bs-toggle="modal"
+                    data-bs-target="#modal_{{$prj->projet_id}}"></i>
+            </div>
 
-        <table class="table table-stroped m-0 p-0">
-            <thead class="thead_projet">
-                <th> Session </th>
-                @can('isCFP')
-                <th> Entreprise </th>
-                @endcan
-                @can('isReferent')
-                <th> Centre de formation </th>
-                @endcan
-                <th> Date du projet</th>
+            <table class="table table-stroped m-0 p-0 collapse" id="collapseprojet_{{$prj->projet_id}}">
+                <thead class="thead_projet">
+                    <th> Session </th>
+                    @can('isCFP')
+                    <th> Entreprise </th>
+                    @endcan
+                    @can('isReferent')
+                    <th> Centre de formation </th>
+                    @endcan
+                    <th> Date du projet</th>
 
-                <th> Statut </th>
-                <th></th>
-                <th class="th_top_right" style="border-top: none; border-right: none;"> Nouveau session </th>
-            </thead>
-            <tbody>
+                    <th> Statut </th>
+                    <th></th>
+                </thead>
+                <tbody>
 
-                @if($prj->totale_session<=0) <tr>
-                    <td colspan="5"> Aucun session</td>
-                    <td> <a href="{{route('nouveau_groupe',$prj->projet_id)}}"> <i class="far fa-plus pb-3 i_carret"></i> </a>
+                    @if($prj->totale_session<=0) <tr>
+                        <td colspan="5"> Aucun session</td>
 
-                    </td>
-                    </tr>
+                        </tr>
 
-                    @else
+                        @else
 
-                    @foreach ($data as $pj)
-                    @if($prj->projet_id == $pj->projet_id)
+                        @foreach ($data as $pj)
+                        @if($prj->projet_id == $pj->projet_id)
 
-                    <tr>
-                        <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
-                        @can('isCFP')
-                        <td> {{ $pj->nom_etp }} </td>
-                        @endcan
-                        @can('isReferent')
-                        <td> {{ $pj->nom_cfp }} </td>
-                        @endcan
-                        <td> {{ $pj->date_projet }} </td>
-                        <td>
-                            <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
-                        </td>
-                        <td>
-                            <a href="#" class="" data-toggle="modal" data-target="#edit_prj_{{ $pj->projet_id }}"><i class="fa fa-edit"></i></a>
+                        <tr>
+                            <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
+                            @can('isCFP')
+                            <td> {{ $pj->nom_etp }} </td>
+                            @endcan
+                            @can('isReferent')
+                            <td> {{ $pj->nom_cfp }} </td>
+                            @endcan
+                            <td> {{ $pj->date_debut.' au '.$pj->date_fin }} </td>
+                            <td>
+                                <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
+                            </td>
+                            <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
+                                    data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td>
 
                             {{-- debut modal edit projet --}}
                             <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade" data-backdrop="true">
@@ -111,13 +79,17 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="card p-3 cardPayement">
-                                                <form action="{{ route('update_projet',$pj->projet_id) }}" id="zsxsq" method="POST">
+                                                <form action="{{ route('update_projet',$pj->projet_id) }}" id="zsxsq"
+                                                    method="POST">
                                                     @csrf
                                                     <strong>{{ $pj->nom_projet }}</strong>
 
                                                     <span>Status du projet</span>
                                                     <div class="inputbox inputboxP mt-3">
-                                                        <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status_projet" value="{{ $pj->status_projet }}" name="edit_status_projet" />
+                                                        <input type="text" class="form-control formPayement"
+                                                            id="exampleFormControlInput1" placeholder="status du projet"
+                                                            list="edit_status_projet" value="{{ $pj->status_projet }}"
+                                                            name="edit_status_projet" />
                                                         <datalist id="edit_status_projet">
                                                             <option>En Cours</option>
                                                             <option>Fini</option>
@@ -128,7 +100,12 @@
 
 
                                                     <div class="mt-4 mb-4">
-                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" class="btn btn-success btnP px-3">Valider</button> </div>
+                                                        <div class="mt-4 mb-4 d-flex justify-content-between">
+                                                            <span><button type="button" class="btn btn-danger annuler"
+                                                                    data-dismiss="modal">Annuler</button></span> <button
+                                                                type="submit"
+                                                                class="btn btn-success btnP px-3">Valider</button>
+                                                        </div>
                                                     </div>
                                                 </form>
 
@@ -140,64 +117,88 @@
                             </div>
                             {{-- fin --}}
 
-                        </td>
-                        <td>
-                            {{-- <a href="#" class="" data-id="{{ $pj->projet_id }}" id="modal" data-toggle="modal" data-target="#modal_{{ $pj->projet_id }}"> <i class="far fa-plus pb-3 i_carret"></i> </a> --}}
-
-                            <a href="{{route('nouveau_groupe',$prj->projet_id)}}"> <i class="far fa-plus pb-3 i_carret"></i> </a>
+                            {{-- <a href="#" class="" data-id="{{ $pj->projet_id }}" id="modal" data-toggle="modal"
+                                data-target="#modal_{{ $pj->projet_id }}"> <i class="far fa-plus pb-3 i_carret"></i>
+                            </a> --}}
 
 
-                            {{-- debut modal nouveau session  --}}
+
+
+                            {{-- debut modal nouveau session --}}
                             <div id="modal_{{ $pj->projet_id }}" class="modal fade" data-backdrop="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <div class="modal-title text-md">
-                                                <h5>Nouveau Session pour</h5>
+                                                <h5>Nouveau Session pour {{ $pj->projet_id }}</h5>
                                             </div>
                                         </div>
                                         <div class="modal-body">
                                             <div class="card p-3 cardPayement">
-                                                <form action="{{ route('groupe.store') }}" id="formPayement" method="POST">
+                                                <form action="{{ route('groupe.store') }}" id="formPayement"
+                                                    method="POST">
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col">
                                                             <span>min participant</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="number" value="0" min="0" pattern="[0-9]" name="min_part" class="form-control formPayement" required="required"> </div>
+                                                            <div class="inputbox inputboxP mt-3"> <input
+                                                                    autocomplete="off" type="number" value="0" min="0"
+                                                                    pattern="[0-9]" name="min_part"
+                                                                    class="form-control formPayement"
+                                                                    required="required"> </div>
                                                         </div>
                                                         <div class="col">
                                                             <span>max participant</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="number" value="0" min="0" pattern="[0-9]" name="max_part" class="form-control formPayement" required="required"> </div>
+                                                            <div class="inputbox inputboxP mt-3"> <input
+                                                                    autocomplete="off" type="number" value="0" min="0"
+                                                                    pattern="[0-9]" name="max_part"
+                                                                    class="form-control formPayement"
+                                                                    required="required"> </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
                                                         <div class="col">
                                                             <span>date début</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="date" name="dte_debut" class="form-control formPayement" required="required"> </div>
+                                                            <div class="inputbox inputboxP mt-3"> <input
+                                                                    autocomplete="off" type="date" name="dte_debut"
+                                                                    class="form-control formPayement"
+                                                                    required="required"> </div>
                                                         </div>
                                                         <div class="col">
                                                             <span>date fin</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="date" name="dte_fin" class="form-control formPayement" required="required"> </div>
+                                                            <div class="inputbox inputboxP mt-3"> <input
+                                                                    autocomplete="off" type="date" name="dte_fin"
+                                                                    class="form-control formPayement"
+                                                                    required="required"> </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="inputbox inputboxP mt-3"><span>formation</span> </div>
-                                                    <select class="form-select selectP" id="formation_id" name="formation_id" aria-label="Default select example">
+                                                    <select class="form-select selectP" id="formation_id"
+                                                        name="formation_id" aria-label="Default select example">
                                                         <option onselected>choisir la formation du session</option>
                                                         @foreach ($formation as $form)
-                                                        <option value="{{ $form->id }}">{{ $form->nom_formation }}</option>
+                                                        <option value="{{ $form->id }}">{{ $form->nom_formation }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
 
                                                     <span>module</span>
                                                     <input hidden name="projet_id" value="{{ $prj->projet_id }}">
-                                                    <select class="form-select selectP" id="module_id" name="module_id" aria-label="Default select example">
+                                                    <select class="form-select selectP" id="module_id" name="module_id"
+                                                        aria-label="Default select example">
 
                                                     </select>
-                                                    <span style="color:#ff0000;" id="module_id_err">Aucun module détecté! veuillez choisir la formation</span>
+                                                    <span style="color:#ff0000;" id="module_id_err">Aucun module
+                                                        détecté! veuillez choisir la formation</span>
                                                     <div class="mt-4 mb-4">
-                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn-success btnP px-3">Valider</button> </div>
+                                                        <div class="mt-4 mb-4 d-flex justify-content-between">
+                                                            <span><button type="button" class="btn btn-danger annuler"
+                                                                    data-dismiss="modal">Annuler</button></span> <button
+                                                                type="submit" form="formPayement"
+                                                                class="btn btn-success btnP px-3">Valider</button>
+                                                        </div>
                                                     </div>
                                                 </form>
 
@@ -208,37 +209,37 @@
                                 </div>
                             </div>
                             {{-- fin --}}
-                        </td>
-                    </tr>
+
+                        </tr>
 
 
-                    @endif
+                        @endif
 
-                    @endforeach
+                        @endforeach
 
-                    @endif
+                        @endif
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
 
-        @endforeach
+            @endforeach
 
-    </div>
-    @endcanany
-    @canany(['isReferent'])
-    <div class="collapse" id="corps">
-        <table class="table table-stroped m-0 p-0">
-            <thead class="thead_projet">
-                <th>Projet</th>
-                <th> Session </th>
-                <th> Centre de formation </th>
-                <th> Date du projet</th>
+        </div>
+        @endcanany
+        @canany(['isReferent'])
+        <div class="collapse" id="corps">
+            <table class="table table-stroped m-0 p-0">
+                <thead class="thead_projet">
+                    <th>Projet</th>
+                    <th> Session </th>
+                    <th> Centre de formation </th>
+                    <th> Date du projet</th>
 
-                <th> Statut </th>
-            </thead>
-            <tbody>
-                @foreach ($data as $pj)
+                    <th> Statut </th>
+                </thead>
+                <tbody>
+                    @foreach ($data as $pj)
                     <tr>
                         <td>{{ $pj->nom_projet }}</td>
                         <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
@@ -248,19 +249,19 @@
                             <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
                         </td>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    @endcanany
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endcanany
 
-</div><br>
-
-
+    </div><br>
 
 
-<style>
-    .table-stroped>tbody>tr:nth-child(2n+1)>td,
+
+
+    <style>
+        /* .table-stroped>tbody>tr:nth-child(2n+1)>td,
     .table-stroped>tbody>tr:nth-child(2n+1)>th {
         background-color: rgb(255, 249, 224);
     }
@@ -310,22 +311,21 @@
         font-weight: bold;
         font-family: 'Open Sans';
         background-color: rgb(38, 205, 210);
-    }
+    } */
+    </style>
 
-</style>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
+    {{-- <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.js')}}"></script>
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
 
-{{-- <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.js')}}"></script>
-<script src="{{ asset('assets/js/jquery.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
-
-<script type="text/javascript">
-    $(".modifier").on('click', function(e) {
+    <script type="text/javascript">
+        $(".modifier").on('click', function(e) {
         var id = $(this).data("id");
 
         $.ajax({
@@ -434,6 +434,26 @@
         }
     });
 
-</script>
+    let caret = document.querySelector(".carret_up");
 
-@endsection
+$(caret).ready('click', function (e) {
+    console.log("eto");
+    $(caret).removeClass("carret_up");
+        $(this).addClass("carret_down");
+        $(".carret_down").classList.toggle("bxs-caret-up-circle");
+});
+
+$(document).ready(function () {
+                $('.changer_carret').on('click', function () {
+                    if ($(this).find('.carret-icon').hasClass('bxs-caret-down-circle')) {
+                        $(this).find('.carret-icon').removeClass('bxs-caret-down-circle').addClass('bxs-caret-up-circle');
+                    } else {
+                        $(this).find('.carret-icon').removeClass('bxs-caret-up-circle').addClass('bxs-caret-down-circle');
+                    }
+                });
+            });
+
+
+    </script>
+
+    @endsection

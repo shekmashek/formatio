@@ -2,7 +2,7 @@
 @section('content')
 <div class="container p-0">
     <div class="row">
-        <h5 class="my-3 text-center">Le Projet de Formation intra entreprise</h5>
+        <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5>
         <form action="{{ route('groupe.store') }}" id="formPayement" method="POST">
             @csrf
             <div class="row">
