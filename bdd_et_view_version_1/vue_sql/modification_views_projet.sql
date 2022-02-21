@@ -423,3 +423,42 @@ FROM
 
 
 -- select d.id as detail_id,p.id as presence_id from details d cross join presences p
+
+create or replace view v_detail_presence_stagiaire as
+    select
+        dp.*,
+        stg.matricule,
+        stg.nom_stagiaire,
+        stg.prenom_stagiaire,
+        stg.genre_stagiaire,
+        stg.titre,
+        stg.fonction_stagiaire,
+        stg.mail_stagiaire,
+        stg.telephone_stagiaire,
+        stg.user_id,
+        stg.photos,
+        stg.cin,
+        stg.date_naissance,
+        stg.niveau_etude,
+        stg.activiter,
+        stg.branche_id,
+        stg.quartier,
+        stg.code_postal,
+        stg.ville,
+        stg.region,
+        stg.lot
+    from v_detail_presence dp 
+    join stagiaires stg on dp.stagiaire_id = stg.id;
+
+
+create or replace view v_participant_groupe_detail as
+    select 
+        sg.*,
+        d.id as detail_id,
+        d.lieu,
+        d.h_debut,
+        d.h_fin,
+        d.formateur_id,
+        d.cfp_id
+    from v_stagiaire_groupe sg
+    join details d on sg.groupe_id = d.groupe_id group by stagiaire_id;

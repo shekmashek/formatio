@@ -154,8 +154,8 @@ class SessionController extends Controller
         // ---ressources
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
-        $presence_detail = DB::select("select * from v_detail_presence where groupe_id = ?", [$projet[0]->groupe_id]);
-
+        $presence_detail = DB::select("select * from v_detail_presence_stagiaire where groupe_id = ?", [$projet[0]->groupe_id]);
+        
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
