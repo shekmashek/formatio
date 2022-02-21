@@ -80,10 +80,13 @@ class FactureController extends Controller
         $facture_actif_guide = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
         $test = count($facture_inactif_guide) + count($facture_actif_guide);
+
+        $data= $this->fact->pagination($cfp_id);
+// dd($data);
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
-            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour','data'));
         }
     }
 

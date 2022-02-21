@@ -603,7 +603,7 @@
     </div>
 
 
-    <div class="container-fluid">
+    {{-- <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
@@ -612,6 +612,21 @@
                         <button type="button" class="btn btn-outline-secondary">2</button>
                         <button type="button" class="btn btn-outline-secondary">3</button>
                         <button type="button" class="btn btn-outline-secondary">4</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col justify-content center" align="center">
+                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        @if ($data["pagination"] != null &&  $data["pagination"]->totale_pagination>0)
+                        @for ($i=1;$i<=$data["pagination"]->totale_pagination;$i+=1)
+                        <a href="{{$data['totale']}}" class="nav-item"> <button type="button" class="btn btn-secondary">{{$i}}</button></a>
+                        @endfor
+                        @endif
                     </div>
                 </div>
             </div>

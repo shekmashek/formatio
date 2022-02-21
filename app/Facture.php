@@ -479,7 +479,15 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     }
 
 
-    // ---------------------------------
+    // --------------------------------- show facture pagination
+    public function pagination($cfp_id)
+    {
+        $fonction = new FonctionGenerique();
+        $tmp = $fonction->findWhereMulitOne("v_pagination_facture",["cfp_id"],[$cfp_id]);
+        $data["pagination"] =$tmp;
+        $data["totale"]=10;
+        return $data;
+    }
 
 
 }
