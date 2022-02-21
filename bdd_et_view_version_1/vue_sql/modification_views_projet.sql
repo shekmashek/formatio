@@ -423,3 +423,4 @@ FROM
 
 
 -- select d.id as detail_id,p.id as presence_id from details d cross join presences p
+-- create or replace view
