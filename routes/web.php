@@ -445,7 +445,7 @@ Route::get('groupe_projet','FactureController@getGroupe_projet')->name('groupe_p
 Route::get('taxe','FactureController@getTaxe')->name('taxe');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');
-Route::get('liste_facture/{id}','FactureController@redirection_facture')->name('liste_facture');
+Route::get('liste_facture/{nbPagination?}','FactureController@redirection_facture')->name('liste_facture');
 // Route::get('liste_facture','FactureController@get_facture')->name('liste_facture');
 
 
@@ -456,8 +456,8 @@ Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFactu
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
 
 //============================== recherche facture ================
-Route::post('search_par_date','FactureController@search_par_date')->name('search_par_date');
-Route::post('search_par_num_fact','FactureController@search_par_num_fact')->name('search_par_num_fact');
+Route::post('search_par_date/{nbPagination?}','FactureController@search_par_date')->name('search_par_date');
+Route::post('search_par_num_fact/{nbPagination?}','FactureController@search_par_num_fact')->name('search_par_num_fact');
 
 
 // ==========================================================================

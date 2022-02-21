@@ -423,6 +423,52 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     // ================= recherche par multi critère
 
+    public function search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, $nbPage)
+    {
+        $data = DB::select("select * from v_facture_actif where invoice_date>='" . $invoice_dte . "' and invoice_date<='" . $due_dte . "' and cfp_id=? and facture_encour='en_cour' limit " . $nbPage . ",10", [$cfp_id]);
+        return $data;
+    }
+
+    public function search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, $nbPage)
+    {
+        $data = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  limit " . $nbPage . ",10", [$invoice_dte, $due_dte, $cfp_id]);
+        return $data;
+    }
+
+
+    public function search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, $nbPage)
+    {
+        $data = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer')  limit " . $nbPage . ",10", [$invoice_dte, $due_dte, $cfp_id]);
+        return $data;
+    }
+
+    public function search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, $nbPage)
+    {
+        $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? limit " . $nbPage . ",10", [$invoice_dte, $due_dte, $cfp_id]);
+        return $data;
+    }
+
+
+
+    public function search_num_fact_inactif_cfp($num_fact, $cfp_id, $nbPage)
+    {
+        $data = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=? limit " . $nbPage . ", 10", [$cfp_id]);
+        return $data;
+    }
+    public function search_num_fact_actif_cfp($nomTab, $num_fact, $satut_fact, $cfp_id, $nbPage)
+    {
+        $data = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and cfp_id=? limit " . $nbPage . ", 10", [$satut_fact, $cfp_id]);
+        return $data;
+    }
+
+
+
+
+
+    // ------------------------- code ancien ------------------
+
+    /*
+
     public function search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
     {
         if($factue_id<=0){
@@ -431,63 +477,52 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $data = DB::select("select * from v_facture_actif where invoice_date>='".$invoice_dte."' and invoice_date<='".$due_dte."' and cfp_id=? and facture_encour='en_cour' and facture_id>=? limit ".$nbPage, [ $cfp_id,$factue_id]);
         return $data;
     }
-
-    public function search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    */
+    /*public function search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
     {
         if($factue_id<=0){
             $factue_id=1;
         }
         $data = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
         return $data;
-    }
+    } */
 
-    public function search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    /* public function search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
     {
         if($factue_id<=0){
             $factue_id=1;
         }
         $data = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
         return $data;
-    }
-
-    public function search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    } */
+    /* public function search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
     {
         if($factue_id<=0){
             $factue_id=1;
         }
         $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
         return $data;
-    }
+    } */
 
-
-    // public function search_intervale_dte_generique_cfp($nomTab, $invoice_dte, $due_dte, $cfp_id,$status)
-    // {
-    //     $data = DB::select("select * from " . $nomTab . " where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('".$status."') ", [$invoice_dte, $due_dte, $cfp_id]);
-    //     return $data;
-    // }
-
-
+    /*
     public function search_num_fact_inactif_cfp($num_fact, $cfp_id)
     {
         $data = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?", [$cfp_id]);
         return $data;
     }
-    public function search_num_fact_actif_cfp($nomTab, $num_fact,$satut_fact, $cfp_id)
+    public function search_num_fact_actif_cfp($nomTab, $num_fact, $satut_fact, $cfp_id)
     {
         $data = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and cfp_id=?", [$satut_fact, $cfp_id]);
         return $data;
-    }
-
+    } */
 
     // --------------------------------- show facture pagination
     public function pagination($cfp_id)
     {
         $fonction = new FonctionGenerique();
-        $tmp = $fonction->findWhereMulitOne("v_pagination_facture",["cfp_id"],[$cfp_id]);
-        $data["pagination"] =$tmp;
-        $data["totale"]=10;
+        $tmp = $fonction->findWhereMulitOne("v_pagination_facture", ["cfp_id"], [$cfp_id]);
+        $data["pagination"] = $tmp;
+        $data["totale"] = 10;
         return $data;
     }
-
-
 }

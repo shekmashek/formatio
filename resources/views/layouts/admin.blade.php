@@ -350,7 +350,7 @@
                                 <a href="{{route('liste_facture',3)}}">Facturation</a>
                     </li> --}}
                     <span class="sousMenu me-2 d-flex justify-content-between my-0">
-                        <a href="{{route('liste_facture',3)}}">Total facture</a>
+                        <a href="{{route('liste_facture')}}">Total facture</a>
                         {{-- <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p> --}}
                     </span>
                     {{-- <span class="sousMenu me-2 d-flex justify-content-between my-0">

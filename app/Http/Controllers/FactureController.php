@@ -63,7 +63,7 @@ class FactureController extends Controller
         }
     }
 
-    public function listeFacture($id)
+    public function listeFacture($nbPagination = null)
     {
 
         $user_id = Auth::user()->id;
@@ -71,51 +71,73 @@ class FactureController extends Controller
 
         $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
-
+        /*
         $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
         $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
         $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0, 10);
         $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0, 10);
+*/
+
+        if ($nbPagination != null) {
+            $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", $nbPagination);
+            $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", $nbPagination);
+            $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", $nbPagination);
+            $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", $nbPagination);
+        } else {
+            $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", 0);
+            $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", 0);
+            $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0);
+            $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0);
+        }
 
         $facture_actif_guide = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
         $test = count($facture_inactif_guide) + count($facture_actif_guide);
 
-        $data= $this->fact->pagination($cfp_id);
-// dd($data);
+        $data = $this->fact->pagination($cfp_id);
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
-            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour','data'));
+            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour', 'data'));
         }
     }
 
 
     // ================== Rehcerche Par critère ==================
 
-    public function search_par_date(Request $req)
+    public function search_par_date($nbPagination = null, Request $req)
     {
         $invoice_dte = $req->invoice_dte_fact;
         $due_dte = $req->due_dte_fact;
         $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
 
-        if($invoice_dte == null || $due_dte==null){
+        if ($invoice_dte != null || $due_dte != null) {
             if (Gate::allows('isCFP')) {
                 $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
-                $facture_actif =  $this->fact->search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
-                $facture_inactif =  $this->fact->search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
-                $facture_payer =  $this->fact->search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
-                $facture_encour = $this->fact->search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
-                // dd($facture_actif);
-                return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+                if ($nbPagination != null) {
+                    $facture_actif =  $this->fact->search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, $nbPagination);
+                    $facture_inactif =  $this->fact->search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, $nbPagination);
+                    $facture_payer =  $this->fact->search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, $nbPagination);
+                    $facture_encour = $this->fact->search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, $nbPagination);
+                } else {
+                    // dd($nbPagination);
+                    $facture_actif =  $this->fact->search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, 0);
+                    $facture_inactif =  $this->fact->search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, 0);
+                    $facture_payer =  $this->fact->search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, 0);
+                    $facture_encour = $this->fact->search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, 0);
+                }
+                $data = $this->fact->pagination($cfp_id);
+
+                return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour', 'data'));
             }
         } else {
+
             return back();
         }
     }
 
-    public function search_par_num_fact(Request $req)
+    public function search_par_num_fact($nbPagination = null, Request $req)
     {
         $num_fact = $req->num_fact;
         $totale_invitation = $this->collaboration->count_invitation();
@@ -123,12 +145,21 @@ class FactureController extends Controller
 
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
-            $facture_actif =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "valider", $cfp_id);
-            $facture_inactif =  $this->fact->search_num_fact_inactif_cfp($num_fact, $cfp_id);
-            $facture_payer =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "terminer", $cfp_id);
-            $facture_encour = $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "en_cour", $cfp_id);
+            if ($nbPagination != null) {
+                $facture_actif =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "valider", $cfp_id, $nbPagination);
+                $facture_inactif =  $this->fact->search_num_fact_inactif_cfp($num_fact, $cfp_id, $nbPagination);
+                $facture_payer =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "terminer", $cfp_id, $nbPagination);
+                $facture_encour = $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "en_cour", $cfp_id, $nbPagination);
+            } else {
+                $facture_actif =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "valider", $cfp_id, 0);
+                $facture_inactif =  $this->fact->search_num_fact_inactif_cfp($num_fact, $cfp_id, 0);
+                $facture_payer =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "terminer", $cfp_id, 0);
+                $facture_encour = $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "en_cour", $cfp_id, 0);
+            }
+            $data = $this->fact->pagination($cfp_id);
+
             // dd($facture_encour);
-            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour', 'data'));
         }
     }
 
@@ -188,13 +219,13 @@ class FactureController extends Controller
         }
     }
 
-    public function redirection_facture($id)
+    public function redirection_facture($nbPagination = null)
     {
         if (Gate::allows('isCFP')) {
-            return $this->listeFacture($id);
+            return $this->listeFacture($nbPagination);
         }
         if (Gate::allows('isReferent')) {
-            return $this->listeFacture_referent($id);
+            return $this->listeFacture_referent($nbPagination);
         }
     }
 
@@ -290,7 +321,7 @@ class FactureController extends Controller
         );
 
         return $pdf->download('facture de ' . $facture[0]->nom_etp . ' sur le project  ' . $facture[0]->nom_projet . '.pdf');
-      //   return view('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        //   return view('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }
 
     public function valid_facture(Request $req)
@@ -301,8 +332,7 @@ class FactureController extends Controller
 
         $totale_invitation = $this->collaboration->count_invitation();
         $this->fact->valider_facture_inactif($req->num_facture, $cfp_id);
-        return redirect()->route('liste_facture',2);
-
+        return redirect()->route('liste_facture', 2);
     }
 
 
@@ -470,7 +500,7 @@ class FactureController extends Controller
     public function getGroupe_projet(Request $req)
     {
         // $data = $this->fonct->findWhere("v_groupe", ["projet_id"], [$req->id]);
-        $data = $this->fonct->findWhere("v_groupe_projet_entreprise", ["projet_id","entreprise_id"], [$req->id,$req->entreprise_id]);
+        $data = $this->fonct->findWhere("v_groupe_projet_entreprise", ["projet_id", "entreprise_id"], [$req->id, $req->entreprise_id]);
 
         return response()->json($data);
     }
@@ -504,5 +534,4 @@ class FactureController extends Controller
     {
         $this->fact->lectureFileProjet($path_file);
     }
-
 }

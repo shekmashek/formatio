@@ -102,16 +102,25 @@ class FonctionGenerique extends Model
         return DB::select($query);
     }
 
-    public function findWherePagination($nomTab,$para=[],$val=[],$name_id,$dernier_id,$nbPage){
+  /*  public function findWherePagination($nomTab,$para=[],$val=[],$name_id,$dernier_id,$nbPage){
         $fonction = new FonctionGenerique();
         $query= $fonction->queryWherePagination($nomTab,$para,$val);
         if($dernier_id<=0){
             $dernier_id=1;
         }
-        $query = $query." and ".$name_id." >= ".$dernier_id." LIMIT ".$nbPage;
+        $query = $query." and ".$name_id." >= ".$dernier_id." LIMIT ".$nbPage.",10";
+        $data =  DB::select($query);
+        return $data;
+    } */
+
+    public function findWherePagination($nomTab,$para=[],$val=[],$name_id,$nbPage){
+        $fonction = new FonctionGenerique();
+        $query= $fonction->queryWherePagination($nomTab,$para,$val);
+        $query = $query." LIMIT ".$nbPage.",10";
         $data =  DB::select($query);
         return $data;
     }
+
 
     public function findAllQuery($query){
         return DB::select($query);
