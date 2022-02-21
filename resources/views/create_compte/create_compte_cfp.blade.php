@@ -211,13 +211,9 @@
                         <div class="col-sm-3"></div>
                     </div>
 
-
-
                     <input type="button" name="previous" class="previous action-button" value="Précendent" />
                     <input type="button" name="make_payment" class="next action-button" value="Suivant" />
                 </fieldset>
-
-
 
                 {{-- --}}
 
