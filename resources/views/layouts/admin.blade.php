@@ -117,7 +117,8 @@
                         </ul>
                     </li>
                     @endcan
-                    @canany(['isReferent','isCFP'])
+                    {{-- @canany(['isReferent','isCFP']) --}}
+                    @if (Gate::allows('isReferent'))
                     <li class="my-2">
                         <a href="#etpSubMenu_resp_cfp" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Centre</span></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu_resp_cfp">
@@ -133,7 +134,9 @@
                             @endcan
                         </ul>
                     </li>
-                    @endcanany
+                    @endif
+
+                    {{-- @endcanany --}}
 
                     {{-- projet de formation --}}
                     @canany(['isSuperAdmin'])

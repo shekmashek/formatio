@@ -34,3 +34,12 @@ alter table responsables_cfp add column  prioriter boolean not null default fals
 Noam: page_error:
 
 -update view v_facture_actif et view v_facture_inactif
+
+//delete role_id at users
+ALTER TABLE USERS DROP COLUMN role_id
+create table role_users at bdd_suivi_formation_mis_a_jour_1(table mere)
+
+INSERT INTO role_users(user_id,role_id) values (7,2) ;
+INSERT INTO role_users(user_id,role_id) values (4,2) ;
+INSERT INTO role_users(user_id,role_id) values (17,3) ;
+INSERT INTO role_users(user_id,role_id) values (17,2) ;
