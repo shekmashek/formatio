@@ -92,7 +92,7 @@
                                                         <li>{{ Session::get('groupe_error') }}</li>
                                                     </ul>
                                                 </div>
-                                            @endif    
+                                            @endif
                                             <h6 class="card-title my-2">Nom du projet: <strong
                                                     style="color: green">{{ $projet->nom_projet }}</strong> </h6>
                                             <h6 class="card-title my-2">Type de la formation: <strong
@@ -102,7 +102,7 @@
                                                 {{ date('M j, Y', strtotime($projet->date_projet)) }}</p>
                                         </div>
                                     </div>
-                                    
+
                                     @canany(['isCFP'])
                                         @if ($projet->type_formation_id == 2 && count($groupe)<=0)
                                             <button class="btn btn-success mb-2 payement" data-toggle="modal"
@@ -417,7 +417,7 @@
                                                                     type="button" class="btn btn-danger annuler"
                                                                     data-dismiss="modal">Annuler</button></span> <button
                                                                 type="submit" form="formPayement"
-                                                                class="btn btn-success btnP px-3">Valider</button> 
+                                                                class="btn btn-success btnP px-3">Valider</button>
                                                         </div>
                                                     </div>
                                                 </form>

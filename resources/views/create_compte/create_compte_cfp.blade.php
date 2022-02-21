@@ -115,68 +115,6 @@
                         <span style = "color:#ff0000;" id="nif_cfp_err"></span>
                     </div>
 
-                    {{-- <div class="row mt-2">
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" name="lot_cfp" required class="form-control input_inscription" id="lot_cfp" />
-                                <label for="lot_cfp" class="form-control-placeholder">Lot ou Rue<strong style="color:#ff0000;">*</strong></label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" name="quartier_cfp" required class="form-control input_inscription" id="quartier_cfp" />
-                                <label for="quartier_cfp" class="form-control-placeholder">Quartier<strong style="color:#ff0000;">*</strong></label>
-
-                            </div>
-                        </div>
-
-                    </div> --}}
-
-                    {{-- <div class="row mt-2">
-
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" required name="ville" class="form-control input_inscription" id="ville" />
-                                <label for="ville" class="form-control-placeholder" align="left">Ville<strong style="color:#ff0000;">*</strong></label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" name="code_postal_cfp" required class="form-control input_inscription" id="code_postal_cfp" />
-                                <label for="code_postal_cfp" class="form-control-placeholder">Code Postal<strong style="color:#ff0000;">*</strong></label>
-
-                            </div>
-                        </div>
-                    </div> --}}
-                    {{-- <div class="form-group m-0">
-                        <label for="#" class="form-control-label">Région<strong style="color:#ff0000;">*</strong></label>
-                        <select class="form-select" aria-label="Default select example" name="region" required id="region">
-                            <option value="Diana">Diana</option>
-                            <option value="Sava">Sava</option>
-                            <option value="Itasy">Itasy</option>
-                            <option value="Analamanga">Analamanga</option>
-                            <option value="Vakinankaratra">Vakinankaratra</option>
-                            <option value="Bongolava">Bongolava</option>
-                            <option value="Sofia">Sofia</option>
-                            <option value="Boeny">Boeny</option>
-                            <option value="Betsiboka">Betsiboka</option>
-                            <option value="Melaky">Melaky</option>
-                            <option value="Alaotra-Mangoro">Alaotra-Mangoro</option>
-                            <option value="Atsinanana">Atsinanana</option>
-                            <option value="Analanjirofo">Analanjirofo</option>
-                            <option value="Amoron'i Mania">Amoron'i Mania</option>
-                            <option value="Haute Matsiatra">Haute Matsiatra</option>
-                            <option value="Vatovay">Vatovay</option>
-                            <option value="Fitovinany">Fitovinany</option>
-                            <option value="Atsimo-Atsinanana">Atsimo-Atsinanana</option>
-                            <option value="Ihorombe">Ihorombe</option>
-                            <option value="Menabe">Menabe</option>
-                            <option value="Atsimo-Andrefana">Atsimo-Andrefana</option>
-                            <option value="Androy">Androy</option>
-                            <option value="Anôsy">Anôsy</option>
-                        </select>
-                    </div> --}}
-
                     <input type="button" name="next" class="next action-button" value="Suivant" />
                 </fieldset>
 
@@ -244,7 +182,7 @@
                         </div>
                         <div class="col-md-11">
                             <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                J'ai lu et accepter les termes de confidentiels du plateforme
+                                <a href="{{route('condition_generale_de_vente')}}" class="nav-item">J'ai lu et accepter les termes de confidentiels du plateforme</a>
                             </label>
                         </div>
                     </div>
@@ -273,30 +211,9 @@
                         <div class="col-sm-3"></div>
                     </div>
 
-                    {{-- <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="dte_resp_cfp" class="form-control-label" align="left">Date de Naissance<strong style="color:#ff0000;">*</strong></label>
-                                <input type="date" required name="dte_resp_cfp" class="form-control input_inscription" id="dte_resp_cfp" />
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <select class="form-select" aria-label="Default select example" name="sexe_resp_cfp" required id="sexe_resp_cfp">
-                                    <option value="null" disabled selected hidden>Genre ou Sexe<strong style="color:#ff0000;">*</strong></option>
-
-                                    <option value="H">Homme</option>
-                                    <option value="S">Femme</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div> --}}
-
                     <input type="button" name="previous" class="previous action-button" value="Précendent" />
                     <input type="button" name="make_payment" class="next action-button" value="Suivant" />
                 </fieldset>
-
-                {{-- --}}
 
                 {{-- --}}
 
@@ -308,37 +225,6 @@
                     <input type="button" name="previous" class="previous action-button" value="Précedent" />
                     <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
                 </fieldset>
-
-
-
-                  {{--  <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h4 align="left" class="mb-2">Veuillez renseigner votre information l'égale de votre organisation</h4>
-
-                 <div class="form-group">
-                        <input type="text" name="nif" required class="form-control input_inscription" id="name_entreprise" />
-                        <label for="name_entreprise" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="stat" required class="form-control input_inscription" id="stat" />
-                        <label for="stat" required class="form-control-placeholder">STAT</label>
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="rcs" required class="form-control input_inscription" id="rcs" />
-                        <label for="rcs" required class="form-control-placeholder">RCS</label>
-
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="cif" class="form-control input_inscription" id="cif" />
-                        <label for="cif" class="form-control-placeholder">CIF à jour</label>
-
-                    </div>
-                    <input type="button" name="previous" class="previous action-button" value="Précedent" />
-                    <input type="button" name="next" class="next action-button" value="Confirmer" />
-
-                </fieldset>   --}}
-
 
 
                 {{-- --}}

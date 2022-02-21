@@ -226,10 +226,9 @@
                             <tr>
                                 <td class="text-center" style="color:red;">O</td>
                                 <th>
-                                    <strong>
-                                        <i class="fa fa-barcode"></i>
-                                        {{$actif->num_facture}}
-                                    </strong>
+                                    <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
+                                    </a>
                                 </th>
                                 <td>{{$actif->other_message}}</td>
                                 <td>{{$actif->invoice_date}}</td>
@@ -237,7 +236,39 @@
                                 <td>{{$actif->totale_jour.' jour(s)'}}</td>
                                 <td style="color:red;">{{$actif->jour_restant.' jour(s)'}}</td>
                                 <td>
+
                                     <div class="btn-group dropleft">
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            {{-- <li  class="dropdown-item">
+                                                <form action="{{route('valid_facture')}}" method="POST">
+                                                    @csrf
+                                                    <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
+                                                    <button type="submit" class="btn"> <i class="fa fa-save">valid</i></button>
+                                                </form>
+
+                                            </li> --}}
+                                            <li class="dropdown-item">
+                                                <form action="{{route('valid_facture')}}" method="POST">
+                                                    @csrf
+                                                    <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
+                                                    <button type="submit" class="btn btn"> valider facture</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('delete_facture',$actif->num_facture)}}">
+                                                    <button type="submit"> <i class="fa fa-trash" style="color:red">supprimer</i></button>
+                                                </a>
+                                            </li>
+
+                                            <hr class="dropdown-divider">
+                                            <a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a>
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="btn-group dropleft">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v"></i>
                                         </a>
@@ -246,7 +277,7 @@
                                                 <form action="{{route('valid_facture')}}" method="POST">
                                                     @csrf
                                                     <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn btn-dark"> <i class="fa fa-save"></i></button>
+                                                    <button type="submit" class="btn"> <i class="fa fa-save"></i></button>
                                                 </form>
 
                                             </li>
@@ -254,7 +285,7 @@
                                                 <form action="{{route('valid_facture')}}" method="POST">
                                                     @csrf
                                                     <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn btn-primary"> valider facture</button>
+                                                    <button type="submit" class="btn btn"> valider facture</button>
                                                 </form>
                                             </li>
                                             <li>
@@ -267,7 +298,7 @@
                                             </li>
                                             <li><a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </td>
                             </tr>
                             @endforeach
@@ -572,7 +603,7 @@
     </div>
 
 
-    <div class="container-fluid">
+    {{-- <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
@@ -581,6 +612,21 @@
                         <button type="button" class="btn btn-outline-secondary">2</button>
                         <button type="button" class="btn btn-outline-secondary">3</button>
                         <button type="button" class="btn btn-outline-secondary">4</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col justify-content center" align="center">
+                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        @if ($data["pagination"] != null &&  $data["pagination"]->totale_pagination>0)
+                        @for ($i=1;$i<=$data["pagination"]->totale_pagination;$i+=1)
+                        <a href="{{$data['totale']}}" class="nav-item"> <button type="button" class="btn btn-secondary">{{$i}}</button></a>
+                        @endfor
+                        @endif
                     </div>
                 </div>
             </div>

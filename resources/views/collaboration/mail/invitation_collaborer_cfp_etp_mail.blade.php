@@ -19,7 +19,7 @@
         Pour tout demande d’information et assistance concernant <strong>{{$nom_cfp}}</strong>,<br>
         Merci de prendre contact avec : <br>
 
-        {{-- @foreach ($responsables_cfp as $rep) --}}
+        {{-- @foreach ($responsables_cfp as $responsables_cfp) --}}
         <p>
             <strong>{{$responsables_cfp->nom_resp_cfp.' '.$responsables_cfp->prenom_resp_cfp}}</strong> responsable {{$responsables_cfp->fonction_resp_cfp}}<br>
             tél: {{$responsables_cfp->telephone_resp_cfp}}<br>

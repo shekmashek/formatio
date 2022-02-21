@@ -44,7 +44,7 @@ class CollaborationController extends Controller
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
         $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["cfp_id", "user_id"], [$cfp_id, $user_id]);
 
-        $responsable = $this->fonct->findWhereMulitOne("responsables", ["email_resp"], [$req->email_resp]);
+       $responsable = $this->fonct->findWhereMulitOne("responsables", ["email_resp"], [$req->email_resp]);
 
         if ($responsable != null) {
             $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp_id, $responsable->id]);

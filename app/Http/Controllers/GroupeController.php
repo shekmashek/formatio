@@ -40,7 +40,22 @@ class GroupeController extends Controller
         return view('admin.groupe.groupe', compact('groupe', 'users'));
     }
 
+
     public function create($idProjet)
+    {
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $projet = $fonct->findWhereMulitOne("v_projet_cfp", ["projet_id"], [$idProjet]);
+        $groupe = $fonct->findWhere("v_groupe_projet_entreprise_module", ["projet_id"], [$idProjet]);
+        $module = $fonct->findWhere("v_module", ["cfp_id"], [$cfp_id]);
+        $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
+        $entreprise = $fonct->findAll("v_demmande_cfp_etp");
+        $payement = $fonct->findAll("type_payement");
+        return view('admin.groupe.nouveauGroupe', compact('projet', 'groupe', 'formation', 'module','entreprise','payement'));
+    }
+
+  /*  public function create($idProjet)
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
@@ -52,7 +67,7 @@ class GroupeController extends Controller
         $entreprise = $fonct->findAll("v_demmande_cfp_etp");
         $payement = $fonct->findAll("type_payement");
         return view('admin.groupe.nouveauGroupe', compact('projet', 'groupe', 'formation', 'module','entreprise','payement'));
-    }
+    } */
 
 
     public function module_formation(Request $rq)

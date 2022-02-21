@@ -45,7 +45,7 @@ create or replace view v_groupe_entreprise as
         g.activiter as activiter_groupe,
         g.type_payement_id,
         tp.type as type_payement
-    from groupe_entreprise ge
+    from groupe_entreprises ge
     join groupes g on ge.groupe_id = g.id
     join entreprises e on ge.entreprise_id = e.id
     join type_payement tp on g.type_payement_id = tp.id;

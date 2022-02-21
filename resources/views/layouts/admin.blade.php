@@ -102,50 +102,49 @@
                         @canany(['isReferent'])
                         <li class="my-2">
                             <a href="{{route('liste+responsable+entreprise')}}" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Responsables</span></a>&nbsp;&nbsp;
+                        </li>
+                        @endcanany
+                        @can('isCFP')
+                        <li class="my-2">
+                            {{-- <a href="{{route('liste_entreprise')}}" class="nav_linke liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprises</span></a> --}}
+                            <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
+                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
+                                <li class="sousMenu me-2 d-flex justify-content-between">
+                                    <a href="{{route('liste_entreprise')}}">Entreprises</a>
+                                    <p class="my-1" id="entreprise" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                                </li>
+                            </ul>
+                        </li>
+                        @endcan
+                        @canany(['isReferent','isCFP'])
+                        <li class="my-2">
+                            <a href="#etpSubMenu_resp_cfp" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Centre</span></a>
+                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu_resp_cfp">
+                                @can('isReferent')
+                                <li class="sousMenu me-2 d-flex justify-content-between">
+                                    <a href="{{route('list_cfp')}}">Centre</a>
+                                </li>
+                                @endcan
+                                @can('isCFP')
+                                <li class="sousMenu me-2 d-flex justify-content-between">
+                                    <a href="{{route('liste+responsable+cfp')}}">Notre Responsable</a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcanany
 
-                    </li>
-                    @endcanany
-                    @can('isCFP')
-                    <li class="my-2">
-                        {{-- <a href="{{route('liste_entreprise')}}" class="nav_linke liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprises</span></a> --}}
-                        <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
-                        <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
-                            <li class="sousMenu me-2 d-flex justify-content-between">
-                                <a href="{{route('liste_entreprise')}}">Entreprises</a>
-                                <p class="my-1" id="entreprise" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                            </li>
-                        </ul>
-                    </li>
-                    @endcan
-                    @canany(['isReferent','isCFP'])
-                    <li class="my-2">
-                        <a href="#etpSubMenu_resp_cfp" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Centre</span></a>
-                        <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu_resp_cfp">
-                            @can('isReferent')
-                            <li class="sousMenu me-2 d-flex justify-content-between">
-                                <a href="{{route('list_cfp')}}">Centre</a>
-                            </li>
-                            @endcan
-                            @can('isCFP')
-                            <li class="sousMenu me-2 d-flex justify-content-between">
-                                <a href="{{route('liste+responsable+cfp')}}">Notre Responsable</a>
-                            </li>
-                            @endcan
-                        </ul>
-                    </li>
-                    @endcanany
-
-                    {{-- projet de formation --}}
-                    @canany(['isSuperAdmin'])
-                    <li class="my-2">
-                        <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
-                        <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                            <span class="sousMenu me-2 d-flex justify-content-between">
-                                <a href="{{route('liste_projet')}}">Projets</a>
-                    </li>
-                    <li class="my-1 sousMenu">
-                        <a href="{{route('liste_groupe')}}">Groupes</a>
-                    </li>
+                        {{-- projet de formation --}}
+                        @canany(['isSuperAdmin'])
+                        <li class="my-2">
+                            <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
+                            <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
+                                <span class="sousMenu me-2 d-flex justify-content-between">
+                                    <a href="{{route('liste_projet')}}">Projets</a>
+                        </li>
+                        <li class="my-1 sousMenu">
+                            <a href="{{route('liste_groupe')}}">Groupes</a>
+                        </li>
                     </ul>
                     </li>
                     @endcanany
@@ -305,23 +304,23 @@
                     @canany(['isSuperAdmin','isCFP','isReferent','isFormateur','isStagiaire'])
                     <li class="my-2">
                         <a href="#actfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-line-chart nav_icon'></i><span class="nav_name">Sessions</span></a>@canany(['isCFP','isReferent'])&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('execution')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau session"></i></a>@endcanany
-                        <ul class="collapse lisst-unstyled submenuColor" id="actfSubMenu">
-                            @canany(['isSuperAdmin','isCFP','isReferent'])
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('liste_detail')}}">Listes</a>
-                            </li>
-                            @endcanany
-                            @canany(['isStagiaire','isCFP','isReferent','isManager','isFormateur'])
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('execution')}}">execution</a>
-                            </li>
-                            @endcanany
-                            @canany(['isFormateur'])
-                            <li class="my-1 sousMenu">
-                                <a href="{{route('presence.index')}}">Feuille d'Emargement</a>
-                            </li>
-                            @endcanany
-                        </ul>
+                    <ul class="collapse lisst-unstyled submenuColor" id="actfSubMenu">
+                        @canany(['isSuperAdmin','isCFP','isReferent'])
+                        <li class="my-1 sousMenu">
+                            <a href="{{route('liste_detail')}}">Listes</a>
+                        </li>
+                        @endcanany
+                        @canany(['isStagiaire','isCFP','isReferent','isManager','isFormateur'])
+                        <li class="my-1 sousMenu">
+                            <a href="{{route('execution')}}">execution</a>
+                        </li>
+                        @endcanany
+                        @canany(['isFormateur'])
+                        <li class="my-1 sousMenu">
+                            <a href="{{route('presence.index')}}">Feuille d'Emargement</a>
+                        </li>
+                        @endcanany
+                    </ul>
                     </li>
                     @endcanany --}}
                     {{-- calendrire de formations --}}
@@ -460,9 +459,9 @@
                         <a href="{{route('recherche_admin')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Reporting</span></a>
                     </li>
                     @can('isCFP')
-                        <li class="my-2">
-                            <a href="{{route('gestion_documentaire')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Document</span></a>
-                        </li>
+                    <li class="my-2">
+                        <a href="{{route('gestion_documentaire')}}" class="nav_linke liste"><i class='bx bxs-calendar nav_icon'></i><span class="nav_name">Document</span></a>
+                    </li>
                     @endcan
 
                     </ul>
@@ -556,11 +555,11 @@
                                     <h6 class="mb-0 text-center">Numerika</h6>
                                 </div>
                                 @can('isReferent')
-                                    <div class="card-body">
-                                        <a href="{{route('liste_departement')}}">Structure de l'entreprise</a><br>
-                                        <a href="{{route('ListeAbonnement')}}">Abonnement</a><br>
-                                        <a href="#">Setting</a>
-                                    </div>
+                                <div class="card-body">
+                                    <a href="{{route('liste_departement')}}">Structure de l'entreprise</a><br>
+                                    <a href="{{route('ListeAbonnement')}}">Abonnement</a><br>
+                                    <a href="#">Setting</a>
+                                </div>
                                 @endcan
 
                             </div>
@@ -609,8 +608,7 @@
                                         <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                         @can('isFormateur')
-                                        <a href="{{route('profile_formateur')}}"><button
-                                                class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        <a href="{{route('profile_formateur')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                         @can('isStagiaire')
                                         <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
@@ -661,7 +659,7 @@
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
-                                    <a  href="{{url('info_legale')}}" target="_blank" >
+                                    <a href="{{url('info_legale')}}" target="_blank">
                                         <p>Informations légales</p>
                                     </a>
                                 </div>
@@ -681,7 +679,7 @@
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
-                                    <a href="{{url('tarifs')}}"  style="color:#801D68 !important" target="_blank">
+                                    <a href="{{url('tarifs')}}" style="color:#801D68 !important" target="_blank">
                                         <p>Tarifs</p>
                                     </a>
                                 </div>

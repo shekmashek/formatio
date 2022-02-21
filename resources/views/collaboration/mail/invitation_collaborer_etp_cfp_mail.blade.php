@@ -19,13 +19,13 @@
         Pour tout demande d’information et assistance concernant <strong>{{$nom_etp}}</strong>,<br>
         Merci de prendre contact avec : <br>
 
-        @foreach ($responsables_etp as $rep)
+        {{-- @foreach ($responsables_etp as $responsables_etp) --}}
         <p>
-            <strong>{{$rep->nom_resp.' '.$rep->prenom_resp}}</strong> responsable {{$rep->fonction_resp}}<br>
-            tél: {{$rep->telephone_resp}}<br>
-            {{$rep->email_resp}}
+            <strong>{{$responsables_etp->nom_resp.' '.$responsables_etp->prenom_resp}}</strong> responsable {{$responsables_etp->fonction_resp}}<br>
+            tél: {{$responsables_etp->telephone_resp}}<br>
+            {{$responsables_etp->email_resp}}
         </p>
-        @endforeach
+        {{-- @endforeach --}}
 
         Bonne continuation, <br><br>
 
