@@ -11,11 +11,11 @@ Route::get('sign-in', function () {
 
 Route::get('/', function () {
     return view('index_accueil');
+// return view('page_travaux.plateforme_en_travaux');
 })->name('accueil_perso');
 
-// Route::get('/home', function () {
-//     return view('index_accueil');
-// });
+
+
 //Route contact
 Route::get('contact',function(){
     return view('contact');
@@ -194,7 +194,7 @@ Route::post('/update_responsable/{id?}','ResponsableController@update')->name('u
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
-Route::get('/affResponsableCfp', 'ResponsableCfpController@affReferent')->name('affResponsableCfp');
+Route::get('/affResponsableCfp/{id?}', 'ResponsableCfpController@affReferent')->name('affResponsableCfp');
 
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
@@ -452,6 +452,12 @@ Route::get('detail_facture/{num_facture}','FactureController@detail_facture')->n
 Route::get('projetFacturer','FactureController@projetFacturer')->name('projetFacturer');
 Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFacture');
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
+
+//============================== recherche facture ================
+Route::post('search_par_date','FactureController@search_par_date')->name('search_par_date');
+Route::post('search_par_num_fact','FactureController@search_par_num_fact')->name('search_par_num_fact');
+
+
 // ==========================================================================
 
 Route::get('maquette','FactureController@maquette')->name('maquette');
@@ -776,6 +782,7 @@ Route::post('importation_fichier','DocumentController@importation_fichier')->nam
 Route::get('download_file','DocumentController@download_file')->name('download_file');
 Route::post('delete_folder','DocumentController@delete_folder')->name('delete_folder');
 
+
 Route::get('liste+responsable+cfp','ResponsableCfpController@index')->name('liste+responsable+cfp');
 Route::get('liste+responsable+entreprise','ResponsableController@show_responsable')->name('liste+responsable+entreprise');
 
@@ -788,3 +795,7 @@ Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluati
 
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
 Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');
+
+Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
+Route::post('save_documents','SessionController@save_documents')->name('save_documents');
+Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name('telecharger_fichier');

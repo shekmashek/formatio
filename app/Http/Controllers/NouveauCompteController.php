@@ -111,8 +111,6 @@ class NouveauCompteController extends Controller
                             if (count($verify_resp_mail) <= 0) {
                                 if (count($verify_resp_tel) <= 0) {
 
-
-
                                     $this->user->name = $req->nom_resp_cfp . " " . $req->prenom_resp_cfp;
                                     $this->user->email = $req->email_resp_cfp;
                                     $this->user->cin = $req->cin_resp_cfp;
@@ -229,7 +227,7 @@ class NouveauCompteController extends Controller
                                     $fonct = new FonctionGenerique();
                                     $etp = $fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp]);
 
-                                    Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($req->nom_resp_etp . ' ' . $req->prenom_resp_etp, $req->email_resp_etp, $etp->nom_etp));
+                                    // Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($req->nom_resp_etp . ' ' . $req->prenom_resp_etp, $req->email_resp_etp, $etp->nom_etp));
                                     return redirect()->route('inscription_save');
                                 } else {
                                     return back()->with('error', 'télephone existe déjà!');

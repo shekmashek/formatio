@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
+use App\Models\getImageModel;
 
 class SessionController extends Controller
 {
@@ -108,13 +109,16 @@ class SessionController extends Controller
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
         // ???--
         $all_frais_annexe = [];
-
+        $documents = [];
         $fonct = new FonctionGenerique();
         if(Gate::allows('isCFP')){
+            $drive = new getImageModel();
             $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+            $cfp_nom = Cfp::where('user_id', $user_id)->value('nom');
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
         if(Gate::allows('isReferent')){
             $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
@@ -122,6 +126,7 @@ class SessionController extends Controller
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
+            $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);
         }
         if(Gate::allows('isFormateur')){
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
@@ -156,8 +161,7 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         // dd($competences);
         // ---------evalution fait par les stagiaires
-
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents'));
     }
 
     public function getFormateur(){
@@ -260,30 +264,28 @@ class SessionController extends Controller
     }
 
     public function insert_presence(Request $request){
-        $presence = $request->presence;
+        $presence = $request->attendance;
         $groupe_id = $request->groupe;
         $detail_id = $request->detail_id;
         $h_entree = $request->entree;
         $h_sortie = $request->sortie;
-        // $note = $request->note_desc;
+        $note = $request->note_desc;
         $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
         $detail = DB::select('select h_debut,h_fin from details where id = ?',[$detail_id]);
-        $i = 0;
         foreach($stagiaire as $stg){
-            if(empty($h_entree[$i])){
-                $h_entree[$i] = $detail[0]->h_debut;
+            if(empty($h_entree[$detail_id][$stg->stagiaire_id])){
+                $h_entree[$detail_id][$stg->stagiaire_id] = $detail[0]->h_debut;
             }
-            if(empty($h_sortie[$i])){
-                $h_sortie[$i] = $detail[0]->h_fin;
+            if(empty($h_sortie[$detail_id][$stg->stagiaire_id])){
+                $h_sortie[$detail_id][$stg->stagiaire_id] = $detail[0]->h_fin;
             }
-            // if(empty($note[$i])){
-            //     $note[$i] = "";
-            // }
-            DB::insert('insert into presences(stagiaire_id,detail_id,status,h_entree,h_sortie) values(?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$i],$h_entree[$i],$h_sortie[$i]]);
-            $i++;
+            if(empty($note[$detail_id][$stg->stagiaire_id])){
+                $note[$detail_id][$stg->stagiaire_id] = "";
+            }
+            DB::insert('insert into presences(stagiaire_id,detail_id,status,h_entree,h_sortie,note) values(?,?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$detail_id][$stg->stagiaire_id],$h_entree[$detail_id][$stg->stagiaire_id],$h_sortie[$detail_id][$stg->stagiaire_id],$note[$detail_id][$stg->stagiaire_id]]);
         }
-        $presence_detail = DB::select("select * from v_detail_presence where detail_id = ? order by stagiaire_id asc", [$detail_id]);
-        return response()->json($presence_detail);
+        // $presence_detail = DB::select("select * from v_detail_presence where detail_id = ? order by stagiaire_id asc", [$detail_id]);
+        return back();
     }
 
     public function insert_evaluation_stagiaire(Request $request){
@@ -360,5 +362,33 @@ class SessionController extends Controller
         }
         DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
         return back();
+    }
+
+
+
+    public function save_documents(Request $request){
+        $user_id = Auth::user()->id;
+        $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        $groupe = $request->groupe;
+        $paths = $request->path;
+        $nom_docs = $request->nom_doc;
+        $extensions = $request->extension;
+        for ($i=0; $i < count($paths); $i++) {
+            $nombre = DB::select('select count(path) as nombre from mes_documents where path = ? and groupe_id = ?',[$paths[$i],$groupe])[0]->nombre;
+            if($nombre <=0){
+                DB::insert('insert into mes_documents(path,groupe_id,nom_doc,extension) values(?,?,?,?)',[$paths[$i],$groupe,$nom_docs[$i],$extensions[$i]]);
+            }
+        }
+        return back();
+    }
+
+    public function telecharger_fichier(){
+        $user_id = Auth::user()->id;
+        $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        $namefile = request()->filename;
+        $cfp = request()->cfp;
+        $extension = request()->extension;
+        $drive = new getImageModel();
+        return $drive->download_file($cfp,"Mes documents",$namefile,$extension);
     }
 }

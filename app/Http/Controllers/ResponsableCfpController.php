@@ -30,8 +30,16 @@ class ResponsableCfpController extends Controller
         $fonct = new FonctionGenerique();
 
         if (Gate::allows('isCFP')) {
-            $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
+            if ($id!=null) {
+                $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
+
+            }
+            else{
+                $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
+
+            }
             return view('cfp.responsable_cfp.profile', compact('refs'));
+
         }
 
     }
@@ -91,6 +99,8 @@ class ResponsableCfpController extends Controller
                         } else {
                             $user->name = $request->nom . " " . $request->prenom;
                             $user->email = $request->email;
+                            $user->cin = $resp->concat_nb_cin($request->input());
+                            $user->telephone =  $request->phone;
                             $ch1 = "0000";
                             $user->password = Hash::make($ch1);
                             $user->role_id = '7';

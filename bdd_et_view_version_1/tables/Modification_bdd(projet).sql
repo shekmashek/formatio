@@ -51,3 +51,11 @@ insert into status('Prévisionnel');
 insert into status('A venir');
 insert into status('En cours');
 insert into status('Terminé');
+
+create table mes_documents(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  path text not null,
+  nom_doc text not null,
+  extension varchar(8) not null,
+  groupe_id bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

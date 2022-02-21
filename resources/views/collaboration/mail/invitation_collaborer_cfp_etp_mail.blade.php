@@ -19,13 +19,13 @@
         Pour tout demande d’information et assistance concernant <strong>{{$nom_cfp}}</strong>,<br>
         Merci de prendre contact avec : <br>
 
-        @foreach ($responsables_cfp as $rep)
+        {{-- @foreach ($responsables_cfp as $rep) --}}
         <p>
-            <strong>{{$rep->nom_resp_cfp.' '.$rep->prenom_resp_cfp}}</strong> responsable {{$rep->fonction_resp_cfp}}<br>
-            tél: {{$rep->telephone_resp_cfp}}<br>
-            {{$rep->email_resp_cfp}}
+            <strong>{{$responsables_cfp->nom_resp_cfp.' '.$responsables_cfp->prenom_resp_cfp}}</strong> responsable {{$responsables_cfp->fonction_resp_cfp}}<br>
+            tél: {{$responsables_cfp->telephone_resp_cfp}}<br>
+            {{$responsables_cfp->email_resp_cfp}}
         </p>
-        @endforeach
+        {{-- @endforeach --}}
 
         Bonne continuation, <br><br>
 

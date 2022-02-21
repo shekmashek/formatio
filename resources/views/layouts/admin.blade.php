@@ -343,17 +343,17 @@
                         <a href="{{route('liste_facture',3)}}" class="nav_linke liste"><i class='bx bxs-wallet-alt nav_icon'></i><span class="nav_name">Factures</span></a>
                     </li>
                     @endcanany --}}
-                    @canany(['isCFP','isReferent'])
+                    {{-- @canany(['isCFP','isReferent'])
                     <li class="my-2">
                         <a href="#gstfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-money nav_icon'></i><span class="nav_name">Facture</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('facture')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="gstfSubMenu">
                             {{-- <li class="my-1 sousMenu">
                                 <a href="{{route('liste_facture',3)}}">Facturation</a>
                     </li> --}}
-                    <span class="sousMenu me-2 d-flex justify-content-between my-0">
+                    {{-- <span class="sousMenu me-2 d-flex justify-content-between my-0">
                         <a href="{{route('liste_facture',3)}}">Total facture</a>
                         {{-- <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p> --}}
-                    </span>
+                    {{-- </span> --}}
                     {{-- <span class="sousMenu me-2 d-flex justify-content-between my-0">
                         <a href="#">Facture en retard</a>
                         <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
@@ -402,9 +402,9 @@
                         <p class="my-1" style="background-color: white; border-radius: 2rem; padding: 0 8px;">7</p>
                     </span> --}}
 
-                    </ul>
+                    {{-- </ul>
                     </li>
-                    @endcanany
+                    @endcanany --}}
 
                     {{-- competence --}}
                     @canany(['isSuperAdmin','isReferent','isManager'])

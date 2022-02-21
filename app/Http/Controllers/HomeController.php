@@ -21,7 +21,7 @@ use App\cfp;
 use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
-
+use App\Models\getImageModel;
 use function Ramsey\Uuid\v1;
 
 class HomeController extends Controller
@@ -84,6 +84,7 @@ class HomeController extends Controller
                 }
             }
         }
+
         if (Gate::allows('isCFP')) {
             $fonct = new FonctionGenerique();
 
@@ -91,10 +92,10 @@ class HomeController extends Controller
             $centre_fp = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
             // $centre_fp = cfp::where('user_id', $user_id)->value('id');
 
-            $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
-                year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
-                INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
-                year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
+            // $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
+            //     year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
+            //     INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
+            //     year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
 
             // $CA_actuel = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where YEAR(invoice_date)=year(now()) and cfp_id = ' . $centre_fp . ' ');
             // $CA_precedent = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' ');
@@ -108,7 +109,10 @@ class HomeController extends Controller
             // debut top 10 par client
             // fin top 10 par client
             // dd($user_id, $centre_fp, $top_10_par_client);
-
+            $user_id = Auth::user()->id;
+            $cfp = Cfp::where('user_id', $user_id)->value('nom');
+            $drive = new getImageModel();
+            $drive->create_sub_folder($cfp,"Mes documents");
             return view('layouts.dashboard');
         }
         // else {
@@ -159,7 +163,7 @@ class HomeController extends Controller
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             // $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
-            $stagiaires = DB::select('select * from v_participant_groupe where entreprise_id = ?', [$entreprise_id]);
+            $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data', 'stagiaires'));
         }
         if (Gate::allows('isManager')) {
@@ -183,11 +187,11 @@ class HomeController extends Controller
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
             $formation = $fonct->findAll("formations");
-            $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
+            // $module = $fonct->findWhere("modules", ["cfp_id"], [$cfp_id]);
 
             $type_formation = DB::select('select * from type_formations');
 
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module','type_formation'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation','type_formation'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
