@@ -79,7 +79,7 @@ class DepartementController extends Controller
             $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
             // $liste_departement = $fonct->findAll("departement_entreprises");
             $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?',[$entreprise_id]);
-
+            
             return view('admin.chefDepartement.chef', compact('liste_departement'));
         }
     }

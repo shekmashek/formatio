@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
-<div class="container-fluid justify-content-center pb-3">
+<div class="container-fluid justify-content-center pb-3 ">
 
     <div class="row">
         @if(Session::has('error'))
@@ -55,7 +55,7 @@
 
     </style>
 
-    <div class="row w-100 bg-none mt-5 font_text">
+    <div  class=" row w-100 bg-none mt-5 font_text">
 
         <div class="col-md-5">
             <div class="shadow p-3 mb-5 bg-body rounded ">
@@ -271,7 +271,6 @@
 
 
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
@@ -295,8 +294,7 @@ $(document).ready(function(){
                         $('#stg').val(res[i].id);
                         $('#resultat').append(
                             "<tr><td><div align='left'><strong>" + res[i].nom_stagiaire +
-                            "</strong><strong>&nbsp;&nbsp;" + res[i].prenom_stagiaire +
-                            "</strong><strong>&nbsp;&nbsp;" + res[i].cin +
+                            "</strong><strong>&nbsp;&nbsp;" +
                             "</strong>&nbsp;&nbsp;<button class='btn btn-success' data-toggle='modal' data-target='#modal_ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button>"
                         );
 
