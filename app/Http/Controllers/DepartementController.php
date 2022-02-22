@@ -171,8 +171,19 @@ class DepartementController extends Controller
     }
     //fonction qui montre les départements, services,branches de l'entreprise connecté
     public function show_departement(Request $request){
-        $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-        $id_etp = $rqt[0]->entreprise_id;
+        if (Gate::allows('isReferentPrincipale')) {
+            $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isStagiairePrincipale')) {
+            $rqt= DB::select('select * from stagiaires where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isManagerPrincipale')) {
+            $rqt= DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+
         $rqt = db::select('select * from departement_entreprises where entreprise_id = ?',[$id_etp]);
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);

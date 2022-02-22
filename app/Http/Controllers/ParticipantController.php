@@ -109,7 +109,7 @@ class ParticipantController extends Controller
             $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id =' . $entreprise_id);
             // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManagerPrincipale')) {
             $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
             $fonct = new FonctionGenerique();
             $chef = $fonct->findWhereMulitOne(
