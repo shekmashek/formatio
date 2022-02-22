@@ -288,6 +288,13 @@ class SessionController extends Controller
         return back();
     }
 
+    public function modifier_presence(Request $request){
+        $presence = $request->attendance;
+        $groupe_id = $request->groupe;
+        $detail_id = $request->detail_id;
+        dd($request->all());
+    }
+
     public function insert_evaluation_stagiaire(Request $request){
         $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$request->groupe]);
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$request->module]);

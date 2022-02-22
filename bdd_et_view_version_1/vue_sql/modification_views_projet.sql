@@ -473,3 +473,6 @@ create or replace view v_emargement as
     on pgd.detail_id = dps.detail_id
     and pgd.stagiaire_id = dps.stagiaire_id;
 
+
+ALTER TABLE presences
+ADD CONSTRAINT presence_constraint UNIQUE (detail_id,stagiaire_id);

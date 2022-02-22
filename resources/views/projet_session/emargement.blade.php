@@ -18,7 +18,7 @@
     @php
         $status = '';
     @endphp
-        <form action="{{ route('insert_presence_detail') }}" method="post">
+        <form action="{{ route('insert_presence_detail') }}" method="post" id="insert_form">
             @csrf
             <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
             <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
@@ -97,7 +97,7 @@
                     @endforeach  
                     @if ($status == 'non')
                         <div align="center">
-                            <button type="submit" class="btn-success w-25">Enregistrer</button>
+                            <button type="submit" form="insert_form" class="btn-success w-25">Enregistrer</button>
                         </div>
                     @elseif ($status == 'oui')
                         <div align="center">
@@ -111,7 +111,7 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body w-auto">
-                                    <form action="">
+                                    <form action="{{ route('modifier_presence') }}" method="POST">
                                         <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
                                         <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
                                         @foreach ($stagiaire as $stg)
@@ -140,7 +140,7 @@
                                             </div>
                                         @endforeach
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuller</button>
-                                        <button type="button" class="btn btn-primary">Modifier</button>
+                                        <button type="submit" class="btn btn-primary">Modifier</button>
                                     </form>
                                 </div>
                               </div>

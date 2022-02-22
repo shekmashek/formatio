@@ -594,7 +594,7 @@
                 html += '<div class="row">';
                 html += '<div class="col-md-5 px-2">';
                 html += '<div class="input-group">';
-                html += '<select name="formateur[]" id="" class="form-control  my-1" required>';
+                html += '<select name="formateur[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
                 html += '<option value="" selected hidden> Choisir formateur </option>';
                 for (var $i = 0; $i < userData.length; $i++) {
                     html += '<option value="' + userData[$i].formateur_id + '">' + userData[$i]

@@ -770,7 +770,7 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 // })->name('condition_generale_de_vente');
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
 Route::post('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
-
+Route::post('modifier_presence','SessionController@modifier_presence')->name('modifier_presence');
 //-------------route document----------------///
 Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
 Route::post('nouveau_dossier','DocumentController@store')->name('nouveau_dossier');
