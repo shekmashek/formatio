@@ -47,6 +47,11 @@ class HomeController extends Controller
 
     // }
     //affichage role
+    public function affichage_role(Request  $request) {
+        $user_id = $request->id_user;
+        $liste_role = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
+        return response()->json($liste_role);
+    }
     public function index(Request $request)
     {
 

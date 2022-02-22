@@ -584,27 +584,11 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
-                                        @if(Auth::user()->role_id == 1)
-                                        <span class="text-muted d-block mb-2">Admin</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 2)
-                                        <span class="text-muted d-block mb-2">Référent</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 3)
-                                        <span class="text-muted d-block mb-2">Stagiaire</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 4)
-                                        <span class="text-muted d-block mb-2">Formateur</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 5)
-                                        <span class="text-muted d-block mb-2">Manager</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 6)
-                                        <span class="text-muted d-block mb-2">Super Admin</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 7)
-                                        <span class="text-muted d-block mb-2">Centre de Formation</span>
-                                        @endif
+                                        <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
+                                        <ul id="liste_role">
+                                            Accès:
+                                        </ul>
+
 
                                     </div>
                                     <div class="text-center">
@@ -913,6 +897,7 @@
 </script>
 <script>
     $(document).ready(function() {
+        var id_user = $('#id_user').val();
         $.ajax({
             url: '{{ route("profil_user") }}'
             , type: 'get'
@@ -922,6 +907,43 @@
                 img = img.replace(':pdp', profil);
                 $("#photo_profil").append(img);
                 $("#profil_usesr").append(img);
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+        $.ajax({
+            url: '{{ route("affichage_role") }}'
+            , type: 'get'
+            ,data: {
+                id_user: id_user
+            }
+            , success: function(response) {
+                var userData = response;
+
+                for (var $i = 0; $i < userData.length; $i++) {
+                    document.getElementById('liste_role').innerHTML += "<li>" + userData[$i].role_description+ "</li>"
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+
+        $.ajax({
+            url: '{{route("verify_tel_user")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("phone_err").innerHTML = "Télephone existes déjà";
+                } else {
+                    document.getElementById("phone_err").innerHTML = "";
+                }
             }
             , error: function(error) {
                 console.log(error);
