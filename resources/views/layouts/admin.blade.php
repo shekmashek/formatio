@@ -542,7 +542,7 @@
                 <div class="col text-right d-flex flex-row" style="align-items: left; text-align:center">
                     <div class="header_etp_cfp mt-2 pt-1 d-flex flex-row" style="">
                         <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68; font-size: 24px"></i></p>
-                        <p style="text-transform: capitalize; text-align: center;color: #801D68">&nbsp;Numerika</p>&nbsp;&nbsp;&nbsp;
+                        <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
                         <div class="d-flex pro_plan">
                             <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
                             <p class="" style="text-transform: capitalize">&nbsp;&nbsp;rubi</p>
@@ -551,9 +551,6 @@
                     <div class="pdp_etp_cfp" id="box_etp_cfp">
                         <div class="container pdp_etp_cfp_card ">
                             <div class="card">
-                                <div class="card-title">
-                                    <h6 class="mb-0 text-center">Numerika</h6>
-                                </div>
                                 @can('isReferent')
                                 <div class="card-body">
                                     <a href="{{route('liste_departement')}}">Structure de l'entreprise</a><br>
@@ -561,7 +558,6 @@
                                     <a href="#">Setting</a>
                                 </div>
                                 @endcan
-
                             </div>
                         </div>
                     </div>
@@ -970,6 +966,76 @@
 
     $(document).ready(function() {
         $('.ui-helper-hidden-accessible').hide();
+    });
+
+    $(document).ready(function() {
+        var nom_entreprise="";
+        $.ajax({
+            url: '{{ route("admin_nom_etp") }}'
+            , type: 'get'
+            , success: function(response) {
+               
+        //        alert("tonga "+JSON.stringify(response));
+                if(response.status == "RESP"){
+                nom_entreprise = response.donner.nom_etp;
+             
+                }
+                if(response.status == "CHEF"){
+                    nom_entreprise = response.donner.nom_etp;
+                }
+                if(response.status == "STG"){
+                    nom_entreprise = response.donner.nom_etp;
+                }
+                if(response.status == "CFP"){
+                    nom_entreprise = response.donner.nom_etp;
+                }
+             
+                if(response.status == "FORMT"){
+                    nom_entreprise = response.donner.nom_etp;
+                }
+                document.getElementById("nom_etp").innerHTML=nom_entreprise;
+              //  alert(document.getElementById("nom_etp"));
+                }
+                     
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+        
+     /*    $.ajax({
+            url: '{{ route("admin_nom_etp") }}'
+            , type: 'get'
+            , success: function(response) {
+                alert("tonga "+JSON.stringify(response));
+       
+                if(response.donner!=null){
+                    if(response.status == "ETP"){
+                        nom_entreprise = response.donner.nom_etp;
+                    }
+                    if(response.status == "CHEF"){
+                        nom_entreprise = response.donner.nom_etp;
+                    }
+                    if(response.status == "STG"){
+                        nom_entreprise = response.donner.nom_etp;
+                    }
+                    if(response.status == "CFP"){
+                        nom_entreprise = response.donner.nom_etp;
+                    }
+                    if(response.status == "RESP"){
+                        nom_entreprise = response.donner.nom_etp;
+                    }
+                    if(response.status == "FORMT"){
+                        nom_entreprise = response.donner.nom_etp;
+                    }
+             }
+        }
+               
+               $("#etp_nom").innerHTML = nom_entreprise;
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        }); */
     });
 
 </script>

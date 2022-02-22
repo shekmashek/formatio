@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\cfp;
 use App\responsable;
-
+use App\role;
+use App\entreprise;
+use App\chefDepartement;
+use App\stagiaire;
+use App\formateur;
 class AdminController extends Controller
 {
     public function __construct()
@@ -60,4 +64,49 @@ class AdminController extends Controller
 
         return response()->json([$cfp, $projet_en_cours_etp,$projet_termime_etp,$projet_a_venir_etp,$projet_etp,$stagiaire,$manager]);
     }
+    public function get_name_etp(){
+        $id_user = Auth::user()->id;
+        if (Gate::allows('isReferent')) {
+            $etp_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+            $etp = DB::select('select *  from entreprises where id=?',[$etp_id]);
+            $data["donner"] = $etp[0];
+            $data["status"] = "RESP";
+           return response()->json($data);
+        }
+        if (Gate::allows('isManager')) {
+           $etp_id=chefDepartement::where('user_id',$id_user)->value('entreprise_id');
+           $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
+           $data["donner"]=$etp[0];
+           $data["status"]="CHEF";
+           return response()->json($data);
+           
+        }
+        if (Gate::allows('isStagiaire')) {
+            $etp_id=stagiaire::where('user_id',$id_user)->value('entreprise_id');
+            $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
+            $data["donner"]=$etp[0];
+            $data["status"]="STG";
+            return response()->json($data);
+           
+         }
+         if (Gate::allows('isCFP')) {
+            $etp_id=cfp::where('user_id',$id_user)->value('entreprise_id');
+            $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
+            $data["donner"]=$etp[0];
+            $data["status"]="CFP";
+            return response()->json($data);
+            
+         }
+     
+         if (Gate::allows('isFormateur')) {
+            $etp_id=formateur::where('user_id',$id_user)->value('entreprise_id');
+            $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
+            $data["donner"]=$etp[0];
+            $data["status"]="FORMT";
+            return response()->json($data);
+            
+         }
+
+    }
+   
 }

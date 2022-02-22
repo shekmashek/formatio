@@ -122,6 +122,8 @@ class HomeController extends Controller
 
         if (Gate::allows('isReferent')) {
             $user_id = User::where('id', Auth::user()->id)->value('id');
+            $resp_id=responsable::where('user_id',$user_id)->value('id');
+            $nom_etp=entreprise::where('id',$resp_id)->value('nom_etp');
 
             return view('layouts.dashboard_referent');
 
@@ -129,6 +131,7 @@ class HomeController extends Controller
             $totale_invitation = $this->collaboration->count_invitation();
             return view('layouts.accueil_admin', compact('totale_invitation'));
         }
+        
     }
 
 
@@ -375,5 +378,20 @@ class HomeController extends Controller
         DB::update("update historique_stagiaires set particulier = ? where stagiaire_id = ?", [1, $id_stg]);
         $totale_invitation = $this->collaboration->count_invitation();
         return view('layouts.accueil_admin', compact('totale_invitation'));
+    }
+
+    public function get_name_entiter(){
+        $id_user = Auth::user()->id;
+        if (Gate::allows('isReferent')) {
+            $etp_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+            $etp = DB::select('select *  from entreprises where id=?',[$etp_id]);
+            $data["donner"] = $etp;
+            $data["status"] = "ETP";
+           return response()->json($data);
+        }
+        if (Gate::allows('isManager')) {
+            // $photo_manager = chefDepartement::where('user_id', $id_user)->value('photos');
+            // $profil_user = 'images/chefDepartement/' . $photo_manager;
+        }
     }
 }
