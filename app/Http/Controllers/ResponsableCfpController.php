@@ -82,8 +82,8 @@ class ResponsableCfpController extends Controller
                 $doner["cin"] = $resp->concat_nb_cin($request->input());
                 $doner["nom"] = $request->nom;
                 $doner["prenom"] = $request->prenom;
-                $doner["sexe"] = $request->sexe;
-                $doner["dte"] = $request->dte;
+                // $doner["sexe"] = $request->sexe;
+                // $doner["dte"] = $request->dte;
                 $doner["email"] = $request->email;
                 $doner["phone"] = $request->phone;
                 $doner["fonction"] = $request->fonction;
@@ -104,6 +104,7 @@ class ResponsableCfpController extends Controller
                             $ch1 = "0000";
                             $user->password = Hash::make($ch1);
                             $user->role_id = '7';
+                            //   $user->role_id = '3' stagiaire;
                             $user->save();
 
                             if (Gate::allows('isCFP')) {
