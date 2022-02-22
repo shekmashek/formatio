@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\cfp;
+use App\ChefDepartement;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -121,7 +122,15 @@ class SessionController extends Controller
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
         if(Gate::allows('isReferent')){
-            $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            if (Gate::allows('isReferentPrincipale')) {
+                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            }
+            if (Gate::allows('isStagiairePrincipale')) {
+                $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
+            }
+            if (Gate::allows('isManagerPrincipale')) {
+                $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
+            }
             $formateur = NULL;
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);

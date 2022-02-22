@@ -322,7 +322,7 @@ class CollaborationController extends Controller
 */
     public function collaboration()
     {
-        $role_id = User::where('email', Auth::user()->email)->value('role_id');
+        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
         if (Gate::allows('isFormateur')) {
             return $this->collaboration_formateur_cfp();
         } elseif (Gate::allows('isCFP')) {

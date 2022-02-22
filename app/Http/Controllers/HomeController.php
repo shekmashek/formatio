@@ -151,7 +151,7 @@ class HomeController extends Controller
 
 
         //récupérer id de l'utilisateur en fonction de l'email
-        $role_id = User::where('email', Auth::user()->email)->value('role_id');
+        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
 
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
 
@@ -169,7 +169,16 @@ class HomeController extends Controller
             // $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
             // $cfp = $fonct->findAll("cfps");
             // return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
-            $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            if (Gate::allows('isReferentPrincipale')) {
+                $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            }
+            if (Gate::allows('isStagiairePrincipale')) {
+                $entreprise_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
+            }
+            if (Gate::allows('isManagerPrincipale')) {
+                $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
+            }
+
             $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             // $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);

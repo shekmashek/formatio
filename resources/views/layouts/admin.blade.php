@@ -99,11 +99,11 @@
                         </li>
                         @endcanany
                         {{-- entreprise --}}
+
                         @canany(['isReferent'])
                         <li class="my-2">
                             <a href="{{route('liste+responsable+entreprise')}}" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Responsables</span></a>&nbsp;&nbsp;
-
-                    </li>
+                         </li>
                     @endcanany
                     @can('isCFP')
                     <li class="my-2">
