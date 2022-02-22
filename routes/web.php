@@ -35,7 +35,6 @@ Route::get('/projet_session', function () {
     return view('projet_session/index2');
 });
 
-
 // nouvelle session
 Route::get('detail_session/{id_session?}','SessionController@detail_session')->name('detail_session');
 
@@ -88,6 +87,12 @@ Route::get('projet/result', 'ProjetControlleur@show')->name('projet.show');
 Route::get('edit_projet','ProjetControlleur@edit')->name('edit_projet');
 Route::post('destroy_projet','ProjetControlleur@destroy')->name('destroy_projet');
 Route::post('update_projet/{id?}','ProjetControlleur@update')->name('update_projet');
+Route::get('accueil_projet','ProjetControlleur@accueilProjet')->name('accueil_projet');
+Route::get('projet_intra','ProjetControlleur@intraFormProjet')->name('projet_intra');
+Route::get('projet_inter','ProjetControlleur@interFormProjet')->name('projet_inter');
+Route::get('module_formation_intra','GroupeController@module_formation_intra')->name('module_formation_intra');
+
+
 
 //route groupe
 Route::resource('groupe','GroupeController')->except([
@@ -95,10 +100,13 @@ Route::resource('groupe','GroupeController')->except([
 ]);
 Route::get('liste_groupe','GroupeController@index')->name('liste_groupe');
 // Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
-Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
+// Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
+Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
+Route::get('nouveau_groupe_inter','GroupeController@createInter')->name('nouveau_groupe_inter');
 Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
 Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
 Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
+Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
 //route entreprise
 Route::resource('entreprise','EntrepriseController')->except([
     'create','edit','destroy','update'

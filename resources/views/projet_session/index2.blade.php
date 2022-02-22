@@ -1,62 +1,69 @@
 @extends('./layouts/admin')
 @section('content')
-
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-
-<div class="d-flex justify-content-end mb-3 me-2">
-    <a href="#" class="m-0 p-0" style="font-size: 16px;" data-toggle="modal" data-target="#new_projet"> <i class="fa fa-folder-plus ms-2" style="font-size: 13px; color:rgb(130,33,100);">&nbsp; Ajouter un nouveau projet</i> </a>
-</div>
-
-{{-- nouveau projet --}}
-@canany(['isCFP'])
-
-<div id="new_projet" class="modal fade" data-backdrop="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title text-md">
-                    <h5>Nouveau Projet</h5>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="card p-3 cardPayement">
-                    <form action="{{ route('projet.store') }}" id="zsxsq" method="POST">
-                        @csrf
-
-                        <label for="etp">Entreprise</label><br>
-                        <select name="type_formation" class=" form-control inputbox inputboxP mt-3" id="liste_etp" required>
-                            @foreach($type_formation as $tf)
-                            <option value="{{$tf->id}}">{{$tf->type_formation}}</option>
-                            @endforeach
-                        </select>
-                        @if(count($entreprise) <=0) <P><strong style="color: red">désoler,vous ne pouver pas créer un projet si vous n'avez pas encore collaborer avec des entreprises,merci!</strong> </p>
-                            @endif
-
-
-                            <div class="mt-4 mb-4">
-                                <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" class="btn btn-success btnP px-3">Ajouter</button> </div>
-                            </div>
-                    </form>
-
-                </div>
-            </div>
-
+<div class="container mb-3">
+    <div class="row text-center">
+        <div class="col">
+                <select name="mois" id="mois" class="filtre_projet">
+                    <option value="null" selected hidden>Mois</option>
+                    <option style="background-color: red;color: red;" value="1">Janvier</option>
+                    <option value="2">Février</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Avril</option>
+                    <option value="5">Mai</option>
+                    <option value="6">Juin</option>
+                    <option value="7">Juillet</option>
+                    <option value="8">Août</option>
+                    <option value="9">Septembre</option>
+                    <option value="10">Octobre</option>
+                    <option value="11">Novembre</option>
+                    <option value="12">Décembre</option>
+                </select>
+            </button>
+        </div>
+        <div class="col">
+            <select name="trimestre" id="trimestre" class="filtre_projet">
+                <option value="null" selected hidden>Trimestres</option>
+                <option value="1">1e Trimestre</option>
+                <option value="2">2e Trimestre</option>
+                <option value="3">3e Trimestre</option>
+                <option value="4">4e Trimestre</option>
+            </select>
+        </div>
+        <div class="col">
+            <select name="semestre" id="semestre" class="filtre_projet">
+                <option value="null" selected hidden>Semestres</option>
+                <option value="1">1e Semestre</option>
+                <option value="2">2e Semestre</option>
+            </select>
+        </div>
+        <div class="col">
+            <select name="annee" id="annee" class="filtre_projet">
+                <option value="null" selected hidden>Années</option>
+            </select>
+        </div>
+        <div class="col">
+            <button class="btn btn_filtre filtre_appliquer" type="button">Appliquer</button>
         </div>
     </div>
 </div>
-@endcanany
-{{-- fin --}}
-
-{{-- <div class="card shadow mx-3 my-3 px-3 pt-3"> --}}
 <div class="shadow p-3 mb-5 bg-body rounded">
-    <i class="far fa-caret-circle-down pb-3" data-toggle="collapse" href="#corps" role="button" aria-expanded="false"><a data-toggle="collapse" href="#corps" role="button" aria-expanded="false" aria-controls="collapseExample"> Janvier </a> </i>
+
     @canany(['isCFP','isFormateur'])
-    <div class="collapse" id="corps">
+    <div class="m" id="corps">
         @foreach ($projet as $prj)
 
-        <h6> {{$prj->nom_projet.'('.$prj->totale_session.')'}}</h6>
+        <div class="d-flex mt-3 titre_projet p-1 mb-1 justify-content-between">
+            <h6 class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse"
+                href="#collapseprojet_{{$prj->projet_id}}" role="button" aria-expanded="false"
+                aria-controls="collapseprojet"><i
+                    class="bx bx-caret-down carret-icon"></i>&nbsp;{{$prj->nom_projet.'('.$prj->totale_session.')'}}&nbsp;&nbsp;&#10148;&nbsp;@php
+                setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($prj->date_projet)); @endphp
+            </h6>
+            <span type="button" class="btn_plus m-0" data-bs-toggle="modal"
+                data-bs-target="#modal_{{$prj->projet_id}}">Nouvelle Session</span>
+        </div>
 
-        <table class="table table-stroped m-0 p-0">
+        <table class="table table-stripped m-0 p-0 collapse" id="collapseprojet_{{$prj->projet_id}}">
             <thead class="thead_projet">
                 <th> Session </th>
                 @can('isCFP')
@@ -69,15 +76,12 @@
 
                 <th> Statut </th>
                 <th></th>
-                <th class="th_top_right" style="border-top: none; border-right: none;"> Nouveau session </th>
             </thead>
-            <tbody>
+            <tbody class="tbody_projet">
 
                 @if($prj->totale_session<=0) <tr>
                     <td colspan="5"> Aucun session</td>
-                    <td> <a href="{{route('nouveau_groupe',$prj->projet_id)}}"> <i class="far fa-plus pb-3 i_carret"></i> </a>
 
-                    </td>
                     </tr>
 
                     @else
@@ -93,137 +97,146 @@
                         @can('isReferent')
                         <td> {{ $pj->nom_cfp }} </td>
                         @endcan
-                        <td> {{ $pj->date_projet }} </td>
+                        <td> {{ $pj->date_debut.' au '.$pj->date_fin }} </td>
                         <td>
                             <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
                         </td>
-                        <td>
-                            <a href="#" class="" data-toggle="modal" data-target="#edit_prj_{{ $pj->projet_id }}"><i class="fa fa-edit"></i></a>
+                        <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
+                                data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td>
 
-                            {{-- debut modal edit projet --}}
-                            <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade" data-backdrop="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <div class="modal-title text-md">
-                                                <h5>Modification Projet</h5>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="card p-3 cardPayement">
-                                                <form action="{{ route('update_projet',$pj->projet_id) }}" id="zsxsq" method="POST">
-                                                    @csrf
-                                                    <strong>{{ $pj->nom_projet }}</strong>
-
-                                                    <span>Status du projet</span>
-                                                    <div class="inputbox inputboxP mt-3">
-                                                        <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status_projet" value="{{ $pj->status_projet }}" name="edit_status_projet" />
-                                                        <datalist id="edit_status_projet">
-                                                            <option>En Cours</option>
-                                                            <option>Fini</option>
-                                                            <option>Stopper la formation</option>
-                                                        </datalist>
-
-                                                    </div>
-
-
-                                                    <div class="mt-4 mb-4">
-                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" class="btn btn-success btnP px-3">Valider</button> </div>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
+                        {{-- debut modal edit projet --}}
+                        <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade modal_projets" data-backdrop="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="text-center w-100">Modification de la Status du Session dans
+                                            le&nbsp;{{
+                                            $pj->nom_projet }}</h5>
 
                                     </div>
-                                </div>
-                            </div>
-                            {{-- fin --}}
-
-                        </td>
-                        <td>
-                            {{-- <a href="#" class="" data-id="{{ $pj->projet_id }}" id="modal" data-toggle="modal" data-target="#modal_{{ $pj->projet_id }}"> <i class="far fa-plus pb-3 i_carret"></i> </a> --}}
-
-                            <a href="{{route('nouveau_groupe',$prj->projet_id)}}"> <i class="far fa-plus pb-3 i_carret"></i> </a>
-
-
-                            {{-- debut modal nouveau session  --}}
-                            <div id="modal_{{ $pj->projet_id }}" class="modal fade" data-backdrop="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <div class="modal-title text-md">
-                                                <h5>Nouveau Session pour</h5>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="card p-3 cardPayement">
-                                                <form action="{{ route('groupe.store') }}" id="formPayement" method="POST">
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <span>min participant</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="number" value="0" min="0" pattern="[0-9]" name="min_part" class="form-control formPayement" required="required"> </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <span>max participant</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="number" value="0" min="0" pattern="[0-9]" name="max_part" class="form-control formPayement" required="required"> </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <span>date début</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="date" name="dte_debut" class="form-control formPayement" required="required"> </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <span>date fin</span>
-                                                            <div class="inputbox inputboxP mt-3"> <input autocomplete="off" type="date" name="dte_fin" class="form-control formPayement" required="required"> </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="inputbox inputboxP mt-3"><span>formation</span> </div>
-                                                    <select class="form-select selectP" id="formation_id" name="formation_id" aria-label="Default select example">
-                                                        <option onselected>choisir la formation du session</option>
-                                                        @foreach ($formation as $form)
-                                                        <option value="{{ $form->id }}">{{ $form->nom_formation }}</option>
+                                    <div class="modal-body">
+                                        <form action="{{ route('update_projet',$pj->projet_id) }}" id="zsxsq"
+                                            method="POST">
+                                            @csrf
+                                            <div class="row px-3 mt-2">
+                                                <div class="form-group mt-1 mb-1">
+                                                    <select class="form-select selectP input" id="formation_id"
+                                                        name="formation_id" aria-label="Default select example">
+                                                        <option onselected hidden>choisir la status du session</option>
+                                                        @foreach ($status as $stat)
+                                                        <option value="{{$stat->id}}">{{$stat->status}}</option>
                                                         @endforeach
                                                     </select>
-
-                                                    <span>module</span>
-                                                    <input hidden name="projet_id" value="{{ $prj->projet_id }}">
-                                                    <select class="form-select selectP" id="module_id" name="module_id" aria-label="Default select example">
-
-                                                    </select>
-                                                    <span style="color:#ff0000;" id="module_id_err">Aucun module détecté! veuillez choisir la formation</span>
-                                                    <div class="mt-4 mb-4">
-                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-dismiss="modal">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn-success btnP px-3">Valider</button> </div>
-                                                    </div>
-                                                </form>
-
+                                                    <label class="ml-3 form-control-placeholder"
+                                                        for="formation_id">Status</label>
+                                                </div>
                                             </div>
-                                        </div>
+
+
+                                            <div class="mt-4 mb-4">
+                                                <div class="mt-4 mb-4 d-flex justify-content-around">
+                                                    <div class="text-center px-3"><button type="submit"
+                                                            form="formPayement"
+                                                            class="btn btn_enregistrer">Valider</button></div>
+                                                    <div class="text-center px-3"><button type="button"
+                                                            class="btn btn_annuler" data-bs-dismiss="modal"
+                                                            aria-label="Close">Annuler</button></div>
+                                                </div>
+                                            </div>
+                                        </form>
 
                                     </div>
                                 </div>
+
                             </div>
-                            {{-- fin --}}
-                        </td>
+                        </div>
+
+                        {{-- fin --}}
+                        {{-- debut modal nouveau session --}}
+                        <div id="modal_{{ $pj->projet_id }}" class="modal fade modal_projets" data-backdrop="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="w-100 text-center">Nouvelle Session pour le&nbsp;{{ $pj->nom_projet
+                                            }}</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('groupe.store') }}" id="formPayement" method="POST"
+                                            class="justify-content-center me-5">
+                                            @csrf
+                                            <div class="row">
+                                                <h5 class="mb-4 text-center">Ajouter votre nouvelle Session</h5>
+                                                <div class="form-group">
+                                                    <div class="form-row d-flex">
+                                                        <div class="col">
+                                                            <div class="row px-3 mt-2">
+                                                                <div class="form-group mt-1 mb-1">
+                                                                    <input type="text" id="min"
+                                                                        class="form-control input" min="1" max="20"
+                                                                        name="nb_participant_max" required
+                                                                        onfocus="(this.type='number')">
+                                                                    <label class="form-control-placeholder"
+                                                                        for="min">Participant
+                                                                        maximal</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row px-3 mt-2">
+                                                                <div class="form-group mt-1 mb-1">
+                                                                    <input type="text" id="min"
+                                                                        class="form-control input"
+                                                                        name="date_debut_session" required
+                                                                        onfocus="(this.type='date')">
+                                                                    <label class="form-control-placeholder"
+                                                                        for="min">Date debut</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center px-3"><button type="submit"
+                                                                    form="formPayement"
+                                                                    class="btn btn_enregistrer">Valider</button></div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row px-3 mt-2">
+                                                                <div class="form-group mt-1 mb-1">
+                                                                    <input type="text" id="min"
+                                                                        class="form-control input" min="1" max="10"
+                                                                        name="nb_participant_min" required
+                                                                        onfocus="(this.type='number')">
+                                                                    <label class="form-control-placeholder"
+                                                                        for="min">Participant
+                                                                        minimal</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row px-3 mt-2">
+                                                                <div class="form-group mt-1 mb-1">
+                                                                    <input type="text" id="min"
+                                                                        class="form-control input"
+                                                                        name="date_fin_session" required
+                                                                        onfocus="(this.type='date')">
+                                                                    <label class=" form-control-placeholder"
+                                                                        for="min">Date fin</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="text-center px-3"><button type="button"
+                                                                    class="btn btn_annuler" data-bs-dismiss="modal"
+                                                                    aria-label="Close">Annuler</button></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {{-- fin --}}
                     </tr>
-
-
                     @endif
-
                     @endforeach
-
                     @endif
-
             </tbody>
         </table>
-
-
         @endforeach
-
     </div>
     @endcanany
     @canany(['isReferent'])
@@ -239,201 +252,21 @@
             </thead>
             <tbody>
                 @foreach ($data as $pj)
-                    <tr>
-                        <td>{{ $pj->nom_projet }}</td>
-                        <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
-                        <td> {{ $pj->nom_cfp }} </td>
-                        <td> {{ date("d-m-Y",strtotime($pj->date_projet)) }} </td>
-                        <td>
-                            <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>{{ $pj->nom_projet }}</td>
+                    <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
+                    <td> {{ $pj->nom_cfp }} </td>
+                    <td> {{ date("d-m-Y",strtotime($pj->date_projet)) }} </td>
+                    <td>
+                        <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
     @endcanany
-
 </div><br>
-
-
-
-
-<style>
-    .table-stroped>tbody>tr:nth-child(2n+1)>td,
-    .table-stroped>tbody>tr:nth-child(2n+1)>th {
-        background-color: rgb(255, 249, 224);
-    }
-
-    .thead_projet {
-        background-color: rgb(15, 126, 145);
-        color: whitesmoke;
-    }
-
-    tr {
-        font-size: 14px;
-        padding-top: 4px;
-    }
-
-    .th_top_left {
-        border-radius: 15px 0 0 0;
-    }
-
-    .th_top_right {
-        border-radius: 0 15px 0 0;
-    }
-
-    th {
-        border-right: 2px solid whitesmoke;
-        text-align: center;
-    }
-
-    td {
-        text-align: center;
-    }
-
-    .i_carret {
-        color: rgb(130, 33, 100);
-        transition: all 0.5s ease;
-    }
-
-    .i_carret:hover {
-        color: rgb(130, 33, 100);
-        transform: scale(1.1);
-    }
-
-    .en_cours {
-        font-size: 12px;
-        padding: 2px 8px;
-        border-radius: 2rem;
-        color: blue;
-        font-weight: bold;
-        font-family: 'Open Sans';
-        background-color: rgb(38, 205, 210);
-    }
-
-</style>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-
-{{-- <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.js')}}"></script>
-<script src="{{ asset('assets/js/jquery.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
-
-<script type="text/javascript">
-    $(".modifier").on('click', function(e) {
-        var id = $(this).data("id");
-
-        $.ajax({
-            method: "GET"
-            , url: "{{route('edit_projet')}}"
-            , data: {
-                Id: id
-            }
-            , dataType: "html"
-            , success: function(response) {
-
-                var userData = JSON.parse(response);
-                for (var $i = 0; $i < userData.length; $i++) {
-                    $("#projetModif").val(userData[$i].nom_projet);
-
-                    $('#id_value').val(userData[$i].id);
-
-                }
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
-    });
-
-    $(".supprimer").on('click', function(e) {
-        var id = e.target.id;
-        $.ajax({
-            type: "GET"
-            , url: "{{route('destroy_projet')}}"
-            , data: {
-                Id: id
-            }
-            , success: function(response) {
-                if (response.success) {
-                    window.location.reload();
-                } else {
-                    alert("Error")
-                }
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
-    });
-
-    $("#action1").click(function(e) {
-        e.preventDefault();
-        var projet = $("#projetModif").val();
-
-        var id = $('#id_value').val();
-        $.ajax({
-            url: "{{route('update_projet')}}"
-            , method: 'get'
-            , data: {
-                Id: id
-                , Nom_projet: projet,
-
-            }
-            , success: function(response) {
-                if (response.success) {
-                    window.location.reload();
-                } else {
-                    alert("Error")
-                }
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
-    });
-
-
-    $('#formation_id').on('change', function() {
-        var id = $('#formation_id').val();
-        $("#module_id option").remove();
-        $.ajax({
-            method: "GET"
-            , url: "{{route('module_formation')}}"
-            , data: {
-                id: id
-            }
-            , dataType: "html"
-            , _token: "{{ csrf_token() }}"
-            , success: function(response) {
-                var data = JSON.parse(response);
-                if (data.length <= 0) {
-                    document.getElementById("module_id_err").innerHTML = "Aucun module a été détecter! veuillez choisir la formation";
-                } else {
-                    document.getElementById("module_id_err").innerHTML = "";
-                    for (var $i = 0; $i < data.length; $i++) {
-                        $("#module_id").append('<option value="' + data[$i].id + '">' + data[$i].nom_module + '</option>');
-                    }
-                }
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
-
-    });
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-</script>
-
+<script src="{{asset('js/index2.js')}}"></script>
 @endsection

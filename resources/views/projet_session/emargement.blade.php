@@ -29,8 +29,8 @@
                     <div class="col-md-2 text-center">{{ $dt->date_detail }}</div>
                     <div class="col-md-1 text-center">{{ $dt->h_debut }}</div>
                     <div class="col-md-1 text-center">{{ $dt->h_fin }}</div>
-                    <div class="col-md-2 text-center fermer_collapse"><i id="faire_presence" data-toggle="collapse"
-                            href="#stagiaire_presence_{{ $dt->detail_id }}" class="fa fa-edit reset_radio">Emargement</i></div>
+                    <div class="col-md-2 text-center fermer_collapse"><i id="faire_presence" data-bs-toggle="collapse"
+                            href="#stagiaire_presence_{{ $dt->detail_id }}" class="bx bx-edit reset_radio">Emargement</i></div>
                 </div>
                 <hr class="m-2 p-0">
                 <div class="collapse" id="stagiaire_presence_{{ $dt->detail_id }}">

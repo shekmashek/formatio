@@ -13,6 +13,7 @@ use App\User;
 use App\Mail\ProjetMail;
 use App\Facture;
 use App\cfp;
+use App\Models\FonctionGenerique;
 
 class ProjetControlleur extends Controller
 {
@@ -95,4 +96,30 @@ class ProjetControlleur extends Controller
         $del = DB::delete('delete from projets where id = ?', [$id]);
         return back();
     }
+
+    public function accueilProjet(){
+        return view('projet_session.projetAccueil');
+    }
+
+    public function module_formation_intra(Request $rq)
+    {
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $module = $fonct->findWhere("modules", ["formation_id","cfp_id"], [$rq->id,$cfp_id]);
+
+        return response()->json($module);
+    }
+
+    public function intraFormProjet(){
+        $modules = DB::select('select * from modules');
+        $formations = DB::select('select * from formations');
+        return view('projet_session.projet_intra_form', compact('modules','formations'));
+    }
+
+    public function interFormProjet(){
+        return view('projet_session.projet_inter_form');
+    }
+
+
 }
