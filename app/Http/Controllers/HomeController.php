@@ -56,7 +56,6 @@ class HomeController extends Controller
     {
 
         if (Gate::allows('isStagiairePrincipale')) {
-
             $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
             $activiter = $valeur[0]->activiter;
             $stg_id =  $valeur[0]->id;
@@ -120,6 +119,7 @@ class HomeController extends Controller
             $user_id = Auth::user()->id;
             $cfp = Cfp::where('user_id', $user_id)->value('nom');
             $drive = new getImageModel();
+            $drive->create_folder($cfp);
             $drive->create_sub_folder($cfp,"Mes documents");
             return view('layouts.dashboard');
         }
@@ -129,8 +129,27 @@ class HomeController extends Controller
         // }
 
         if (Gate::allows('isReferentPrincipale')) {
-
-             $user_id = User::where('id', Auth::user()->id)->value('id');
+            //get the column with null value
+            $databaseName = DB::connection()->getDatabaseName();
+            $testNull = DB::select('select * from responsables where user_id  = ? ',[Auth::user()->id]);
+            $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'responsables']);
+             // $tempo = $colonnes[5]->COLUMN_NAME;
+            $res = [];
+            $j = 0;
+            for ($i=0; $i < count($colonnes); $i++) {
+                $tempo =  $colonnes[$i]->COLUMN_NAME;
+                if ($testNull[0]-> $tempo== null) {
+                    $j+=1;
+                    $res[$j] = $colonnes[$i]->COLUMN_NAME ;
+                }
+            }
+            if (count($res)>0) {
+                return view('formulaire',compact('res'));
+            }
+            //  for ($i=1; $i <= count($res); $i++) {
+            //     echo $res[$i];
+            // }
+            $user_id = User::where('id', Auth::user()->id)->value('id');
 
             return view('layouts.dashboard_referent');
 
