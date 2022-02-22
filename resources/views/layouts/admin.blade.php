@@ -636,7 +636,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body" style="padding-bottom: 2.5rem; padding-top: 2.5rem;">
+            <div class="container-fluid content_body" style="padding-bottom: 2.5rem; padding-top: 3.5rem;">
                 @yield('content')
             </div>
             {{-- content --}}

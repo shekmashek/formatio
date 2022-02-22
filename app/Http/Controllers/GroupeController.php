@@ -100,7 +100,7 @@ class GroupeController extends Controller
             DB::beginTransaction();
             $projet = new projet();
             $nom_projet = $projet->generateNomProjet();
-            DB::insert('insert into projets(nom_projet,cfp_id,type_formation_id,status,activiter) values(?,?,?,?,TRUE)',[$nom_projet,$cfp_id,$type_formation,'Confirmé']);
+            DB::insert('insert into projets(nom_projet,cfp_id,type_formation_id,status,activiter,created_at) values(?,?,?,?,TRUE,current_timestamp())',[$nom_projet,$cfp_id,$type_formation,'Confirmé']);
 
             $last_insert_projet = DB::table('projets')->latest('id')->first();
             $groupe = new groupe();
@@ -145,7 +145,7 @@ class GroupeController extends Controller
             DB::beginTransaction();
             $projet = new projet();
             $nom_projet = $projet->generateNomProjet();
-            DB::insert('insert into projets(nom_projet,cfp_id,type_formation_id,status,activiter) values(?,?,?,?,TRUE)',[$nom_projet,$cfp_id,$type_formation,'Confirmé']);
+            DB::insert('insert into projets(nom_projet,cfp_id,type_formation_id,status,activiter,created_at) values(?,?,?,?,TRUE,current_timestamp())',[$nom_projet,$cfp_id,$type_formation,'Confirmé']);
 
             $last_insert_projet = DB::table('projets')->latest('id')->first();
             $groupe = new groupe();

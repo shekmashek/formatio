@@ -3,7 +3,7 @@
 <div class="container p-0">
     <div class="row">
         <h5 class="my-3 text-center">Le Projet de Formation intra entreprise</h5>
-        <form action="{{ route('groupe.store') }}" id="formPayement" method="POST">
+        <form action="{{ route('groupe.store') }}" id="formPayement" method="POST" class="form_session">
             @csrf
             <input type="hidden" name="type_formation" value="{{ $type_formation }}">
             <div class="row">
