@@ -55,7 +55,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        if (Gate::allows('isStagiairePrincipale')) {
+        if (Gate::allows('isStagiaire')) {
 
             $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
             $activiter = $valeur[0]->activiter;
@@ -92,7 +92,7 @@ class HomeController extends Controller
             }
         }
 
-        if (Gate::allows('isCFPPrincipale')) {
+        if (Gate::allows('isCFP')) {
 
             $fonct = new FonctionGenerique();
 
@@ -128,7 +128,7 @@ class HomeController extends Controller
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
         // }
 
-        if (Gate::allows('isReferentPrincipale')) {
+        if (Gate::allows('isReferent')) {
 
              $user_id = User::where('id', Auth::user()->id)->value('id');
 
