@@ -26,7 +26,6 @@ class ResponsableCfpModel extends Model
             'cin_12.required' => 'invalid',
             'phone.required' => 'le numero de télephone ne doit pas être null',
             'email.required' => 'le mail ne doit pas être null',
-            'dte.required' => 'la date de naissance ne doit pas être null',
             'fonction.required' => 'le fonction ne doit pas être null'
         ];
         $critereForm = [
@@ -43,7 +42,6 @@ class ResponsableCfpModel extends Model
             'cin_10' => 'required',
             'cin_11' => 'required',
             'cin_12' => 'required',
-            'dte' => 'required|date',
             'fonction' => 'required',
             'email' => 'required|email',
             'phone' => 'required'
@@ -68,14 +66,13 @@ class ResponsableCfpModel extends Model
     public function insert_resp_CFP($doner, $cfp_id, $user_id)
     {
         $data = [
-            $doner["nom"], $doner["prenom"], $doner["sexe"],
-            $doner["dte"], $doner["cin"], $doner["email"], $doner["phone"], $doner["fonction"],
+            $doner["nom"], $doner["prenom"], $doner["cin"], $doner["email"], $doner["phone"], $doner["fonction"],
             $cfp_id, $user_id
         ];
         DB::beginTransaction();
         try {
-            DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,sexe_resp_cfp,date_naissance_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
-        ,cfp_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,?,1,NOW())', $data);
+            DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
+        ,cfp_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,1,NOW())', $data);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

@@ -83,9 +83,10 @@ CREATE TABLE `abonnements` (
 
 CREATE TABLE chef_departements (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_chef varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_chef varchar(255) COLLATE utf8mb4_unicode_ci,
-  genre_chef varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  genre_chef varchar(255) COLLATE utf8mb4_unicode_ci,
   fonction_chef varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   mail_chef varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   telephone_chef varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -110,6 +111,7 @@ CREATE TABLE `chef_dep_entreprises` (
 
 CREATE TABLE responsables (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
   nom_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_resp varchar(255) COLLATE utf8mb4_unicode_ci,
   sexe_resp varchar(255) COLLATE utf8mb4_unicode_ci,
@@ -155,8 +157,8 @@ CREATE TABLE stagiaires (
   updated_at timestamp NULL DEFAULT NULL,
   service_id bigint(20) UNSIGNED  not null references services(id) on delete cascade,
   cin varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  date_naissance varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  niveau_etude varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  date_naissance varchar(255) COLLATE utf8mb4_unicode_ci,
+  niveau_etude varchar(255) COLLATE utf8mb4_unicode_ci,
   activiter tinyint(1) NOT NULL DEFAULT '1',
   branche_id bigint(20) UNSIGNED ,
   quartier varchar(225) COLLATE utf8mb4_unicode_ci,

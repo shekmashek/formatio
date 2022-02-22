@@ -1,18 +1,19 @@
-CREATE TABLE `roles` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+CREATE TABLE roles (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  role_name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `roles` (`role_name`, `created_at`, `updated_at`) VALUES
-('admin', '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
-('referent', '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
-('stagiaire', '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
-('formateur', '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
-('manager', '2021-11-08 05:47:18', '2021-11-08 05:47:18'),
-('SuperAdmin', '2021-11-10 02:59:59', '2021-11-10 02:59:59'),
-('CFP', '2021-11-22 09:27:38', '2021-11-22 09:27:38');
+INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES
+(1,'admin','admnistrateur', '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
+(2,'referent',"referent", '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
+(3,'stagiaire',"employé" ,'2021-10-26 05:45:24', '2021-10-26 05:45:24'),
+(4,'formateur',"consultant de formation", '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
+(5,'manager',"chef de département", '2021-11-08 05:47:18', '2021-11-08 05:47:18'),
+(6,'SuperAdmin',"super admin", '2021-11-10 02:59:59', '2021-11-10 02:59:59'),
+(7,'CFP',"organisme de formation", '2021-11-22 09:27:38', '2021-11-22 09:27:38');
 
 
 CREATE TABLE `niveaux` (
@@ -96,7 +97,7 @@ CREATE TABLE users (
   updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO users (id, name, email, email_verified_at, password, remember_token, created_at, updated_at, role_id,cin,telephone) VALUES
+INSERT INTO users (id, name, email, email_verified_at, password, remember_token, created_at, updated_at,cin,telephone) VALUES
 (1, 'Nicole', 'contact@formation.mg', NULL, '$2y$10$9i0uUmJpIwVtYX1dlEdM5.bNcYXU8CrD8QXDS5loPVAurII6BmbFm', NULL, '2021-08-04 05:53:44', '2021-08-04 05:53:44','301051027178','0321122233');
 
 CREATE TABLE role_users(

@@ -802,3 +802,7 @@ Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name(
 
 //affichage role utilisateur
 Route::get('affichage_role','HomeController@affichage_role')->name('affichage_role');
+
+//================ saisir employé,responsable,chef de département
+
+Route::resource('employeur','EmployeurController');
