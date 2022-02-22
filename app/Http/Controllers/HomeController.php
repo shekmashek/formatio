@@ -146,9 +146,7 @@ class HomeController extends Controller
             if (count($res)>0) {
                 return view('formulaire',compact('res'));
             }
-            //  for ($i=1; $i <= count($res); $i++) {
-            //     echo $res[$i];
-            // }
+
             $user_id = User::where('id', Auth::user()->id)->value('id');
 
             return view('layouts.dashboard_referent');
