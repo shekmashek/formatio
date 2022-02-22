@@ -129,7 +129,7 @@
                                         <div class="input-group">
                                             <input type="text" name="lieu[]" class="form-control my-1" required>
                                             <button id="removeRow" type="button"><i
-                                                    class="far fa-minus-circle mx-1 my-3"></i></button>
+                                                    class="bx bx-minus-circle mx-1 my-3"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@
 
                 <div id="newRow"></div>
                 <div class="text-end ms-4">
-                    <button id="addRow" type="button"><i class="far fa-plus-circle"></i></button>
+                    <button id="addRow" type="button"><i class="bx bx-plus-circle"></i></button>
                 </div>
 
 
@@ -607,7 +607,7 @@
                 html += '<div class="input-group">';
                 html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
                 html +=
-                    '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
+                    '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
                 html += '</div>';
                 html += '</div>';
 

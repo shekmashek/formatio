@@ -108,6 +108,7 @@ class SessionController extends Controller
         $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
         // ???--
+        $competences = [];
         $all_frais_annexe = [];
         $documents = [];
         $fonct = new FonctionGenerique();

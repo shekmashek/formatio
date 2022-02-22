@@ -57,7 +57,7 @@
                 href="#collapseprojet_{{$prj->projet_id}}" role="button" aria-expanded="false"
                 aria-controls="collapseprojet"><i
                     class="bx bx-caret-down carret-icon"></i>&nbsp;{{$prj->nom_projet.'('.$prj->totale_session.')'}}&nbsp;&nbsp;&#10148;&nbsp;@php
-                setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($prj->date_projet)); @endphp
+                setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($prj->date_projet)); @endphp {{ $data[0]->nom_etp }}
             </h6>
             <span type="button" class="btn_plus m-0" data-bs-toggle="modal"
                 data-bs-target="#modal_{{$prj->projet_id}}">Nouvelle Session</span>

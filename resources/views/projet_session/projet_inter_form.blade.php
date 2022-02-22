@@ -12,10 +12,10 @@
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="20" name="nb_participant_max"
+                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="nb_participant_min"
                                         required onfocus="(this.type='number')">
                                     <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                        maximal</label>
+                                        minimal</label>
                                 </div>
                             </div>
                             <div class="row px-3 mt-2">
@@ -42,10 +42,10 @@
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="10" name="nb_participant_min"
+                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="nb_participant_max"
                                         required onfocus="(this.type='number')">
                                     <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                        minimal</label>
+                                        maximal</label>
                                 </div>
                             </div>
                             <div class="row px-3 mt-2">
