@@ -262,43 +262,17 @@
                                                     <button type="submit"> <i class="fa fa-trash" style="color:red">supprimer</i></button>
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <button type="submit"> <i class="fa fa-download">PDF liste Encaissement</i></button>
+                                                </a>
+                                            </li>
 
                                             <hr class="dropdown-divider">
                                             <a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a>
                                         </div>
                                     </div>
 
-                                    {{-- <div class="btn-group dropleft">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v"></i>
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li>
-                                                <form action="{{route('valid_facture')}}" method="POST">
-                                                    @csrf
-                                                    <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn"> <i class="fa fa-save"></i></button>
-                                                </form>
-
-                                            </li>
-                                            <li>
-                                                <form action="{{route('valid_facture')}}" method="POST">
-                                                    @csrf
-                                                    <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn btn"> valider facture</button>
-                                                </form>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link" href="{{route('delete_facture',$actif->num_facture)}}">
-                                                    <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i></button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a></li>
-                                        </ul>
-                                    </div> --}}
                                 </td>
                             </tr>
                             @endforeach
@@ -380,8 +354,13 @@
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <button class="btn btn-success btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-toggle="modal" data-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
-                                                <a href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class="btn btn-info"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
+                                                <button class="btn  btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-toggle="modal" data-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
+                                                <a href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class="btn"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        <button type="submit"> <i class="fa fa-download">PDF liste Encaissement</i></button>
+                                                    </a>
+                                                </li>
                                                 <hr class="dropdown-divider">
                                                 <a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a>
                                             </div>
@@ -483,6 +462,11 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <button class="dropdown-item btn btn-default btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-toggle="modal" data-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <button type="submit"> <i class="fa fa-download">PDF liste Encaissement</i></button>
+                                                </a>
+                                            </li>
                                             <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class=" btn btn-default btn-block mb-2"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
                                         </div>
                                     </div>

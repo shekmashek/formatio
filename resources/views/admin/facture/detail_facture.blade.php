@@ -20,7 +20,7 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                             <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">
+                                <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
                                     <i class="fa fa-list">Liste des Factures</i></a>
                             </li>
 
@@ -90,10 +90,10 @@
 
                             </div>
 
-                            <div class="row my-5"></div>
+                            <div class="row"></div>
                         </div>
 
-                        <div class="container-fluid my-5">
+                        <div class="container-fluid">
 
                             <div class="row">
                                 <h5><strong>Facturé à</strong></h5>
