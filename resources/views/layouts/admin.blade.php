@@ -341,11 +341,11 @@
 
 
                     {{-- route facture pour référent --}}
-                    {{-- @canany(['isSuperAdmin','isAdmin'])
+                    @canany(['isCFP'])
                     <li class="my-2">
                         <a href="{{route('liste_facture',3)}}" class="nav_linke liste"><i class='bx bxs-wallet-alt nav_icon'></i><span class="nav_name">Factures</span></a>
                     </li>
-                    @endcanany --}}
+                    @endcanany
                     {{-- @canany(['isCFP','isReferent'])
                     <li class="my-2">
                         <a href="#gstfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-money nav_icon'></i><span class="nav_name">Facture</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('facture')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>

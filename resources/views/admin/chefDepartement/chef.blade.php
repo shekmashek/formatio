@@ -63,13 +63,20 @@
 <div id="page-wrapper">
     {{-- <div class="shadow-sm p-3 mb-5 bg-body rounded"> --}}
         <div class="container-fluid">
-            <div class="panel-heading d-flex justify-content-between mb-5">
-                <div>
+            <div class="panel-heading d-flex mb-5">
+                <div class="mx-2">
+                    <li class="{{ Route::currentRouteNamed('liste_participant') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste_participant')}}"><span class="bx bx-list-ul"></span>Liste des participants</a></li>&nbsp;
+                </div>
+                <div class="mx-2">
                     <li class="{{ Route::currentRouteNamed('liste_chefDepartement') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste_chefDepartement')}}"><span class="bx bx-list-ul"></span>Liste des Manager</a></li>&nbsp;
                 </div>
-                <div>
-                    <button class="btn btn_nouveau_color"><a href="{{route('departement.create')}}"><span class="bx bxs-plus-circle"></span> Nouveau Manager</a></button>
+                <div class="mx-2">
+                    <li class="{{ Route::currentRouteNamed('liste+responsable+entreprise') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste+responsable+entreprise')}}"><span class="bx bx-list-ul"></span>Liste des responsables</a></li>&nbsp;
                 </div>
+
+                         {{-- <div>
+                    <button class="btn btn_nouveau_color"><a href="{{route('departement.create')}}"><span class="bx bxs-plus-circle"></span> Nouveau Manager</a></button>
+                </div> --}}
             </div>
             @if (Session::has('error'))
             <div class="alert alert-danger">
@@ -84,7 +91,7 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <div class="shadow p-3 mb-5 bg-body rounded">
-                        <h2>Nouveau Employer</h2>
+                        <h2>Nouveau Employé</h2>
 
                         <form action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
