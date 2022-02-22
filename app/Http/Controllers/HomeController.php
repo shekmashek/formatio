@@ -46,7 +46,7 @@ class HomeController extends Controller
     //     }
 
     // }
-
+    //affichage role
     public function index(Request $request)
     {
 

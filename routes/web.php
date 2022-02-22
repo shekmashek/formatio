@@ -799,3 +799,6 @@ Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name
 Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
 Route::post('save_documents','SessionController@save_documents')->name('save_documents');
 Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name('telecharger_fichier');
+
+//affichage role utilisateur
+Route::get('affichage_role','HomeController@affichage_role')->name('affichage_role');
