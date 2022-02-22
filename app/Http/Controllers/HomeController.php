@@ -55,42 +55,42 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        if (Gate::allows('isStagiaire')) {
+        // if (Gate::allows('isStagiaire')) {
 
-            $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
-            $activiter = $valeur[0]->activiter;
-            $stg_id =  $valeur[0]->id;
+        //     $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
+        //     $activiter = $valeur[0]->activiter;
+        //     $stg_id =  $valeur[0]->id;
 
-            //si le compte stagiaire est actif
-            if ($activiter == 1) {
-                if (Auth::user()->exists) {
-                    $totale_invitation = $this->collaboration->count_invitation();
-                    return view('layouts.accueil_admin', compact('totale_invitation'));
-                }
-            }
-            //si le compte est inactif, on vérifie d'abord si le stagiaire est déjà dans une autre entreprise
-            if ($activiter == 0) {
-                $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = ' . $stg_id);
-                $etp_nouveau_id = $value_etp[0]->nouveau_entreprise_id;
-                $particulier = $value_etp[0]->particulier;
-                if ($etp_nouveau_id == 0 && $particulier == 0) {
-                    $msg = 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre adresse e-mail personnelle';
-                    return view('auth.email_nouveau', compact('msg'));
-                }
-                if ($etp_nouveau_id == 0  && $particulier == 1) {
-                    if (Auth::user()->exists) {
-                        $totale_invitation = $this->collaboration->count_invitation();
-                        return view('layouts.accueil_admin', compact('totale_invitation'));
-                    }
-                }
-                if ($etp_nouveau_id == 1) {
-                    if (Auth::user()->exists) {
-                        $totale_invitation = $this->collaboration->count_invitation();
-                        return view('layouts.accueil_admin', compact('totale_invitation'));
-                    }
-                }
-            }
-        }
+        //     //si le compte stagiaire est actif
+        //     if ($activiter == 1) {
+        //         if (Auth::user()->exists) {
+        //             $totale_invitation = $this->collaboration->count_invitation();
+        //             return view('layouts.accueil_admin', compact('totale_invitation'));
+        //         }
+        //     }
+        //     //si le compte est inactif, on vérifie d'abord si le stagiaire est déjà dans une autre entreprise
+        //     if ($activiter == 0) {
+        //         $value_etp = DB::select('select nouveau_entreprise_id,particulier from historique_stagiaires where stagiaire_id = ' . $stg_id);
+        //         $etp_nouveau_id = $value_etp[0]->nouveau_entreprise_id;
+        //         $particulier = $value_etp[0]->particulier;
+        //         if ($etp_nouveau_id == 0 && $particulier == 0) {
+        //             $msg = 'Vous n\'êtes plus employé en ce moment,veuillez ajouter votre adresse e-mail personnelle';
+        //             return view('auth.email_nouveau', compact('msg'));
+        //         }
+        //         if ($etp_nouveau_id == 0  && $particulier == 1) {
+        //             if (Auth::user()->exists) {
+        //                 $totale_invitation = $this->collaboration->count_invitation();
+        //                 return view('layouts.accueil_admin', compact('totale_invitation'));
+        //             }
+        //         }
+        //         if ($etp_nouveau_id == 1) {
+        //             if (Auth::user()->exists) {
+        //                 $totale_invitation = $this->collaboration->count_invitation();
+        //                 return view('layouts.accueil_admin', compact('totale_invitation'));
+        //             }
+        //         }
+        //     }
+        // }
 
         if (Gate::allows('isCFP')) {
 
@@ -129,10 +129,12 @@ class HomeController extends Controller
         // }
 
         if (Gate::allows('isReferent')) {
+            if (Gate::allows('isStagiairePrincipale')) {
+                $user_id = User::where('id', Auth::user()->id)->value('id');
 
-             $user_id = User::where('id', Auth::user()->id)->value('id');
+                return view('layouts.dashboard_referent');
 
-            return view('layouts.dashboard_referent');
+            }
 
         } else {
             $totale_invitation = $this->collaboration->count_invitation();
