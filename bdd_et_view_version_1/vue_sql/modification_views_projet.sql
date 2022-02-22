@@ -461,4 +461,15 @@ create or replace view v_participant_groupe_detail as
         d.formateur_id,
         d.cfp_id
     from v_stagiaire_groupe sg
-    join details d on sg.groupe_id = d.groupe_id group by stagiaire_id;
+    join details d on sg.groupe_id = d.groupe_id;
+
+create or replace view v_emargement as
+    select
+        pgd.*,
+        ifnull(dps.text_status,"non") as text_status,
+        ifnull(dps.color_status,"non") as color_status
+    from v_participant_groupe_detail pgd
+    left join v_detail_presence_stagiaire dps 
+    on pgd.detail_id = dps.detail_id
+    and pgd.stagiaire_id = dps.stagiaire_id;
+
