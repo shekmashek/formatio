@@ -78,9 +78,12 @@ class AuthServiceProvider extends ServiceProvider
         //autres roles
         Gate::define('isAdmin',function($users_roles){
             $rqt =  DB::select('select * from role_users where  user_id = ?', [Auth::id()]);
-            if($rqt!=null)
-                if( $rqt[0]->role_id == 1)
-                    return "admin";
+            if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 1)
+                        return "admin";
+                }
+            }
             // return $users_roles->role_id == 1;
         });
 
@@ -96,42 +99,57 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isStagiaire',function($users_roles){
             $rqt =  DB::select('select * from role_users where  user_id = ?', [Auth::id()]);
-            if($rqt!=null)
-                if( $rqt[0]->role_id == 3)
-                    return "stagiaire";
+            if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 3)
+                        return "stagiaire";
+                }
+            }
             // return $users_roles->role_id == 3;
         });
 
         Gate::define('isFormateur',function($users_roles){
             // return $users_roles->role_id == 4;
             $rqt =  DB::select('select * from role_users where  user_id = ?', [Auth::id()]);
-            if($rqt!=null)
-                if( $rqt[0]->role_id == 4)
-                    return "formateur";
+            if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 4)
+                        return "formateur";
+                }
+            }
         });
 
         Gate::define('isManager',function($users_roles){
             // return $users_roles->role_id == 5;
             $rqt =  DB::select('select * from role_users where  user_id = ?', [Auth::id()]);
-            if($rqt!=null)
-                if( $rqt[0]->role_id == 5)
-                    return "manager";
+            if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 5)
+                        return "manager";
+                }
+            }
         });
 
         Gate::define('isSuperAdmin',function($users_roles){
             // return $users_roles->role_id == 6;
             $rqt =  DB::select('select * from role_users where  user_id = ?', [Auth::id()]);
-            if($rqt!=null)
-                if( $rqt[0]->role_id == 6)
-                    return "superAdmin";
+            if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 6)
+                        return "superAdmin";
+                }
+            }
         });
 
         Gate::define('isCFP',function($users_roles){
             // return $users_roles->role_id == 7;
            $rqt =  DB::select('select * from role_users where  user_id = ?', [Auth::id()]);
-           if($rqt!=null)
-                if( $rqt[0]->role_id == 7)
-                    return  "cfp";
+           if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 7)
+                        return "cfp";
+                }
+            }
         });
     }
 }

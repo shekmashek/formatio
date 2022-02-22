@@ -608,20 +608,20 @@
 
                                     </div>
                                     <div class="text-center">
-                                        @can('isManager')
+                                        @can('isManagerPrincipale')
                                         <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isFormateur')
+                                        @can('isFormateurPrincipale')
                                         <a href="{{route('profile_formateur')}}"><button
                                                 class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isStagiaire')
+                                        @can('isStagiairePrincipale')
                                         <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isReferent')
+                                        @can('isReferentPrincipale')
                                         <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isCFP')
+                                        @can('isCFPPrincipale')
                                         <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                     </div>
