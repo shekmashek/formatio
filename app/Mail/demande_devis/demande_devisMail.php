@@ -25,9 +25,9 @@ class demande_devisMail extends Mailable
      */
     public function build()
     {
-        return $this->from('contact@formation.mg')
+        return $this->from($this->resp_cfp->email_resp_cfp)
             ->subject('Demmande de devis')
-            ->view('collaboration.mail.save_new_compte_cfp_Mail')
+            ->view('demande_devis.demande_devis')
             ->with([
                 'module' => $this->module,
                 'resp_etp' => $this->resp_etp,
