@@ -481,3 +481,50 @@ ADD CONSTRAINT presence_constraint UNIQUE (detail_id,stagiaire_id);
 
 
 ---view inter
+create or replace view v_projet_session_inter as    
+    select 
+        p.nom_projet,
+        p.cfp_id,
+        p.type_formation_id,
+        p.status as status_projet,
+        p.activiter as activiter_projet,
+        p.created_at as date_projet,
+        g.projet_id,
+        g.id as groupe_id,
+        g.min_participant,
+        g.max_participant,
+        g.nom_groupe,
+        g.module_id,
+        g.type_payement_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        g.activiter as activiter_groupe,
+        case g.status
+            when 0 then 'Créer'
+            when 1 then 'Prévisionnel'
+            when 2 then 'A venir'
+            when 3 then 'En cours'
+            when 4 then 'Terminé'
+        end item_status_groupe,
+        case g.status
+            when 0 then 'Créer'
+            when 1 then 'status_grise'
+            when 2 then 'status_confirme'
+            when 3 then 'statut_active'
+            when 4 then 'status_termine'
+        end class_status_groupe,
+        (cfps.nom) nom_cfp,
+        (cfps.adresse_lot) adresse_lot_cfp,
+        (cfps.adresse_ville) adresse_ville_cfp,
+        (cfps.adresse_region) adresse_region_cfp,
+        (cfps.email) mail_cfp,
+        (cfps.telephone) tel_cfp,
+        cfps.domaine_de_formation as domaine_de_formation_cfp,
+        (cfps.nif) nif_cfp,
+        (cfps.stat) stat_cfp,
+        (cfps.rcs) rcs_cfp,
+        (cfps.cif) cif_cfp,
+        (cfps.logo) logo_cfp
+    from groupes g join projets p on g.projet_id = p.id
+    join cfps on cfps.id = p.cfp_id;

@@ -57,7 +57,9 @@
                 href="#collapseprojet_{{$prj->projet_id}}" role="button" aria-expanded="false"
                 aria-controls="collapseprojet"><i
                     class="bx bx-caret-down carret-icon"></i>&nbsp;{{$prj->nom_projet.'('.$prj->totale_session.')'}}&nbsp;&nbsp;&#10148;&nbsp;@php
-                setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($prj->date_projet)); @endphp {{ $data[0]->nom_etp }}
+                setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($prj->date_projet)); @endphp @if ($type_formation_id == 1)
+                    {{ $data[0]->nom_etp }}
+                @endif
             </h6>
             <span type="button" class="btn_plus m-0" data-bs-toggle="modal"
                 data-bs-target="#modal_{{$prj->projet_id}}">Nouvelle Session</span>
@@ -67,10 +69,10 @@
             <thead class="thead_projet">
                 <th> Session </th>
                 @can('isCFP')
-                <th> Entreprise </th>
+                @if ($type_formation_id == 1)<th> Entreprise </th>@endif
                 @endcan
                 @can('isReferent')
-                <th> Centre de formation </th>
+                @if ($type_formation_id == 1)<th> Centre de formation </th>@endif
                 @endcan
                 <th> Date du projet</th>
 
@@ -90,12 +92,14 @@
                     @if($prj->projet_id == $pj->projet_id)
 
                     <tr>
-                        <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
+                        <td> <a href="{{ route('detail_session',[$pj->groupe_id,$type_formation_id]) }}">{{ $pj->nom_groupe }}</a></td>
                         @can('isCFP')
-                        <td> {{ $pj->nom_etp }} </td>
+                        @if ($type_formation_id == 1)
+                            <td> {{ $pj->nom_etp }} </td>
+                        @endif
                         @endcan
                         @can('isReferent')
-                        <td> {{ $pj->nom_cfp }} </td>
+                        @if ($type_formation_id == 1)<td> {{ $pj->nom_cfp }} </td>@endif
                         @endcan
                         <td> {{ $pj->date_debut.' au '.$pj->date_fin }} </td>
                         <td>

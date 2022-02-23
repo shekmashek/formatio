@@ -26,11 +26,13 @@
     <section class="bg-light py-1">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex flex-wrap">
-                <div class="chiffre_d_affaire">
-                    <p class="p-0 m-0 text-center"> Referent entreprise </p>
-                    <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                    <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                </div>
+                @if ($type_formation_id == 1)
+                    <div class="chiffre_d_affaire">
+                        <p class="p-0 m-0 text-center"> Referent entreprise </p>
+                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                    </div>
+                @endif
                 <div class="chiffre_d_affaire">
                     <p class="p-0 m-0 text-center"> Organisme de formation </p>
                     <div class="d-flex">
@@ -82,17 +84,19 @@
                             @endif
                         </button>
                     </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
-                            <p class="m-0 p-0">APPRENANTS</p>
-                            @if(count($stagiaire) == 0)
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                            @endif
-                            @if(count($stagiaire) != 0)
-                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
-                            @endif
-                        </button>
-                    </div>
+                    @if ($type_formation_id == 1)
+                        <div>
+                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
+                                <p class="m-0 p-0">APPRENANTS</p>
+                                @if(count($stagiaire) == 0)
+                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                @endif
+                                @if(count($stagiaire) != 0)
+                                <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                @endif
+                            </button>
+                        </div>
+                    @endif
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'ressource')" style="width: 100%">
                             <p class="m-0 p-0">RESSOURCES</p>
@@ -175,9 +179,12 @@
                     <div id="planning" class="tabcontent" style="display: block;">
                             @include('admin.detail.detail')
                       </div>
-                      <div id="apprenant" class="tabcontent">
-                        @include('admin.stagiaire.ajout_stagiaire')
-                      </div>
+                      @if ($type_formation_id == 1)
+                        <div id="apprenant" class="tabcontent">
+                            @include('admin.stagiaire.ajout_stagiaire')
+                        </div>
+                      @endif
+                      
                       <div id="ressource" class="tabcontent">
                         @include('projet_session.ressource')
                       </div>

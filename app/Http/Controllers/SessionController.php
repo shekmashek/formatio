@@ -104,6 +104,7 @@ class SessionController extends Controller
     public function detail_session(){
         $user_id = Auth::user()->id;
         $id = request()->id_session;
+        $type_formation_id = request()->type_formation;
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
@@ -118,7 +119,13 @@ class SessionController extends Controller
             $cfp_nom = Cfp::where('user_id', $user_id)->value('nom');
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-            $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            if($type_formation_id  == 1){
+                $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            }
+            elseif($type_formation_id  == 2) {
+                $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            }
+            
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
         if(Gate::allows('isReferent')){
@@ -162,7 +169,7 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         // dd($competences);
         // ---------evalution fait par les stagiaires
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id'));
     }
 
     public function getFormateur(){
