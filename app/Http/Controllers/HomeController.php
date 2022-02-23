@@ -111,7 +111,9 @@ class HomeController extends Controller
             // dd($user_id, $centre_fp, $top_10_par_client);
             $user_id = Auth::user()->id;
             $cfp = Cfp::where('user_id', $user_id)->value('nom');
+
             $drive = new getImageModel();
+            $drive->create_folder($cfp);
             $drive->create_sub_folder($cfp,"Mes documents");
             return view('layouts.dashboard');
         }

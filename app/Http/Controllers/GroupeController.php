@@ -112,7 +112,7 @@ class GroupeController extends Controller
             $fonct = new FonctionGenerique();
             $data = $request->all();
             DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert_groupe->id,$request->entreprise]);
-            // DB::commit();
+            DB::commit();
             return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id]);
         }catch(Exception $e){
             DB::rollback();
@@ -154,6 +154,7 @@ class GroupeController extends Controller
             [$request->max_part,$request->min_part,$nom_groupe,$last_insert_projet->id,$request->module_id,1,$request->date_debut,$request->date_fin]);
 
             $last_insert_groupe = DB::table('groupes')->latest('id')->first();
+            DB::commit();
             return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id]);
         }catch(Exception $e){
             DB::rollback();

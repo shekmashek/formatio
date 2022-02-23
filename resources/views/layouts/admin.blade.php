@@ -14,7 +14,6 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
-    <link href='https://unpkg.com/boxicons@2.1.1/dist/boxicons.js' rel='stylesheet'>
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 </head>
 
@@ -31,7 +30,7 @@
         <ul class="nav_list mb-5" onclick="activer(event);" id="menu">
 
             <li>
-                <a href="{{ route('home') }}" class="d-flex active nav_linke">
+                <a href="{{ route('home') }}" class="d-flex nav_linke">
                     <i class="bx bxs-dashboard"></i>
                     <span class="links_name">Tableau de bord</span>
                 </a>
