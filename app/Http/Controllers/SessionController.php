@@ -406,4 +406,12 @@ class SessionController extends Controller
         $drive = new getImageModel();
         return $drive->download_file($cfp,"Mes documents",$namefile,$extension);
     }
+
+    public function get_presence_stg(Request $request){
+        $stg = $request->stagiaire;
+        $detail = $request->detail;
+        $fonct = new FonctionGenerique();
+        $data = $fonct->findWhereMulitOne('v_detail_presence_stagiaire',['stagiaire_id','detail_id'],[$stg,$detail]);
+        return response()->json($data);
+    }
 }
