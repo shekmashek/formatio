@@ -478,3 +478,6 @@ create or replace view v_emargement as
 
 ALTER TABLE presences
 ADD CONSTRAINT presence_constraint UNIQUE (detail_id,stagiaire_id);
+
+
+---view inter

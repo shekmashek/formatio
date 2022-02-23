@@ -3,7 +3,7 @@
 <div class="container p-0">
     <div class="row">
         <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5>
-        <form action="{{ route('groupe.store') }}" id="formPayement" method="POST" class="form_session">
+        <form action="{{ route('nouveau_session_inter',['type_formation'=>2]) }}" id="formPayement" method="POST" class="form_session">
             @csrf
             <div class="row">
                 <h5 class="mb-4 text-center">Ajouter votre nouvelle Session</h5>
@@ -12,7 +12,7 @@
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="nb_participant_min"
+                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="min_part"
                                         required onfocus="(this.type='number')">
                                     <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
                                         minimal</label>
@@ -20,7 +20,7 @@
                             </div>
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_debut_session"
+                                    <input type="text" id="min" class="form-control input" name="date_debut"
                                         required onfocus="(this.type='date')">
                                     <label class="ml-3 form-control-placeholder" for="min">Date debut du session</label>
                                 </div>
@@ -42,7 +42,7 @@
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="nb_participant_max"
+                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="max_part"
                                         required onfocus="(this.type='number')">
                                     <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
                                         maximal</label>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_fin_session"
+                                    <input type="text" id="min" class="form-control input" name="date_fin"
                                         required onfocus="(this.type='date')">
                                     <label class="ml-3 form-control-placeholder" for="min">Date fin du session</label>
                                 </div>
