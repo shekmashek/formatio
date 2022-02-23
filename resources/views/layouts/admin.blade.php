@@ -471,7 +471,7 @@
     </div>
 
     <div class="home_content">
-        <div class="container-fluid ps-0 height-100 bg-light" id="content" style="padding-top: 1rem">
+        <div class="container-fluid ps-0 height-100 bg-light" id="content" >
             <!-- <div class="text">Home</div> -->
             {{-- header --}}
             <header class="header row align-items-center g-0" id="header">
@@ -636,7 +636,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body" style="padding-bottom: 2.5rem; padding-top: 3.5rem;">
+            <div class="container-fluid content_body" style="padding-bottom: 1rem; padding-top: 2.7rem;">
                 @yield('content')
             </div>
             {{-- content --}}
