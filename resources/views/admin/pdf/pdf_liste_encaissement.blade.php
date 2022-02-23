@@ -7,8 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <title>Login</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <title>export pdf liste d'encaissement</title>
 </head>
 <body>
 
@@ -55,6 +56,11 @@
 
             font-size: 80%;
         }
+        table,
+        th,
+        td {
+            font-size: 10px;
+        }
 
         .logo {
             width: 138px;
@@ -85,72 +91,83 @@
 
     </style>
 
-    <h3>Liste(s) de(s) Responsable(s)</h3>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h3>Facture à payé</h3>
+
+                <table border="1" width="auto" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Numero Facture</th>
+                            <th scope="col">date de création de facture</th>
+                            <th scope="col">date fin du facture</th>
+                            <th scope="col">Montant facture(Ariary)</th>
+                            <th scope="col">Payer(Ariary)</th>
+                            <th scope="col">Reste à payer(Ariary)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $montant_totale->num_facture }}</td>
+                            <td>{{ $montant_totale->invoice_date }}</td>
+                            <td>{{ $montant_totale->due_date }}</td>
+                            <td class="text-end">{{ number_format($montant_totale->montant_total, 2, ',', ' ') }}</td>
+                            <td class="text-end">{{ number_format($montant_totale->payement_totale, 2, ',', ' ') }}</td>
+                            <td class="text-end">{{ number_format($montant_totale->dernier_montant_ouvert, 2, ',', ' ') }}</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 
     {{-- Ouverture de container --}}
-    <div class="container my-5">
-
-        @foreach ($entreprises as $entreprise)
-
-        {{-- Ouverture derow --}}
-
+    <div class="container-fluid">
         <div class="row">
-
-            {{-- Ouverture de col--}}
-
             <div class="col-md-12">
+                <h3>Liste(s) de(s) Encaissement(s)</h3>
 
-                <div class="navbar-brand">
-                    <h4> <img src="{{ public_path('images/entreprises/'.$entreprise->logo) }}" alt="logo-{{$entreprise->nom_etp}}" class="logo">{{$entreprise->nom_etp}}
-                        ({{$entreprise->adresse}})
-                    </h4>
-                </div>
-
-                <h4>Responsable(s):</h4>
-
-                @foreach ($responsables as $responsable)
-                @if ($entreprise->id == $responsable->entreprise_id)
-
-                <p><strong>{{$responsable->nom_resp}}</strong> {{$responsable->prenom_resp}}</p>
-
-                <div class="card my-2" style="width: auto;">
-                    <ul>
-                        <li>fonction : <strong>{{$responsable->fonction_resp}}</strong></li>
-                        <li>email: <a href="#">{{$responsable->email_resp}}</a></li>
-                        <li>tél: {{$responsable->telephone_resp}}</li>
-                    </ul>
-                </div>
-
-                @endif
-                @endforeach
+                <table border="1" width="auto"  class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date payement</th>
+                            <th scope="col">Libellé</th>
+                            <th scope="col">Facture</th>
+                            <th scope="col">Montant facture(Ariary)</th>
+                            <th scope="col">Paiement(Ariary)</th>
+                            <th scope="col">Montant ouvert(Ariary)</th>
+                            <th scope="col">Mode de payement</th>
+                            <th colspan="2">Encaisseur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($encaissement as $info)
+                        <tr>
+                            <td>{{ $info->date_encaissement }}</td>
+                            <td>{{ $info->libelle }}</td>
+                            <td>{{ $info->num_facture }}</td>
+                            <td class="text-end">{{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
+                            <td class="text-end">{{ number_format($info->payement, 2, ',', ' ') }}</td>
+                            <td class="text-end">{{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
+                            <td>{{ $info->description }}</td>
+                            <td>{{ $info->nom_resp_cfp}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
                 {{-- Fermeture de row et col --}}
             </div>
         </div>
-        {{-- </div> --}}
-
-        <hr>
-        <?php $id+=1; ?>
-        @endforeach
-
-        {{-- Fermeture de container --}}
     </div>
 
 
-    <footer class="my-5 navbar-pdf bg-dark">
-
-        <table class="table" width="auto">
-            <tr>
-                <th>&copy;20{{date('y')}}</th>
-                <th>contact@numerika.center</th>
-                <th>0332313563</th>
-                <th>www.numerika.center</th>
-            </tr>
-        </table>
-
-    </footer>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script> --}}
 </body>
 </html>

@@ -432,6 +432,7 @@ Route::get('page_modification/{encaissement_id?}','EncaissementController@modifi
 
 Route::get('montant_restant/{num_facture?}','EncaissementController@montant_reste_payer')->name('montant_restant');
 
+Route::get('pdf+liste+encaissement/{num_facture}','EncaissementController@generatePDF')->name('pdf+liste+encaissement');
 // ===========================  creation du facture
 
 Route::get('page_facture','FactureController@index')->name('page_facture');

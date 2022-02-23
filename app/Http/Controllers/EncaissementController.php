@@ -76,7 +76,7 @@ class EncaissementController extends Controller
         return view('admin.encaissement.liste_encaissement', compact('encaissement','numero_fact'));
     }
 
-    public function generatePDF(Request $request)
+    public function generatePDF($numero_fact,Request $request)
     {
         // $user_id = Auth::user()->id;
         // $cfp_id = cfp::where('user_id', $user_id)->value('id');
@@ -85,8 +85,8 @@ class EncaissementController extends Controller
         $cfp_id = $resp->cfp_id;
 
 
-        $numero_fact = $request->num_facture;
-        $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+        // $numero_fact = $request->num_facture;
+        $montant_totale = $fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
 
         PDF::setOptions([
@@ -96,7 +96,7 @@ class EncaissementController extends Controller
         ]);
 
 
-    /*    $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
+        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -105,9 +105,11 @@ class EncaissementController extends Controller
                     'verify_peer_name' => FALSE,
                 ]
             ])
-        ); */
+        );
 
-        return view('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
+            return $pdf->download("liste d'encaissment de la facture numero " . $numero_fact.".pdf");
+
+    //    return view('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
     }
 
     public function supprimer(Request $request)

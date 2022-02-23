@@ -33,7 +33,7 @@
                             </li>
                             @canany(['isSuperAdmin','isCFP'])
                             <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('facture') ? 'active' : '' }}" href="{{route('facture')}}">
+                                <a class="nav-link  {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
                                     <i class="fa fa-download">PDF liste encaissement</i></a>
                             </li>
                             @endcanany
