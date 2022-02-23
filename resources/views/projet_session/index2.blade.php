@@ -75,7 +75,7 @@
                 <th> Date du projet</th>
 
                 <th> Statut </th>
-                <th></th>
+                {{-- <th></th> --}}
             </thead>
             <tbody class="tbody_projet">
 
@@ -99,10 +99,10 @@
                         @endcan
                         <td> {{ $pj->date_debut.' au '.$pj->date_fin }} </td>
                         <td>
-                            <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
+                            <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
                         </td>
-                        <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
-                                data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td>
+                        {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
+                                data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
 
                         {{-- debut modal edit projet --}}
                         <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade modal_projets" data-backdrop="true">
