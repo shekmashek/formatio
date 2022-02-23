@@ -52,6 +52,16 @@ class HomeController extends Controller
         $liste_role = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
         return response()->json($liste_role);
     }
+    //remplissage des info manquantes
+    public function remplir_info_resp(Request $request){
+        // for ($i=0; $i < count($request->input()); $i++) {
+        //     dd($request->input());
+        // }
+        // if ($request->input() = 'naissance') {
+        //     dd('ok');
+        // }
+        dd($request->input());
+    }
     public function index(Request $request)
     {
 
@@ -132,29 +142,33 @@ class HomeController extends Controller
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from responsables where user_id  = ? ',[Auth::user()->id]);
-            $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'responsables']);
-             // $tempo = $colonnes[5]->COLUMN_NAME;
-            $res = [];
-            $j = 0;
-            for ($i=0; $i < count($colonnes); $i++) {
-                $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($testNull[0]-> $tempo== null) {
-                    $j+=1;
-                    $res[$j] = $colonnes[$i]->COLUMN_NAME ;
-                }
-            }
-            if (count($res)>0) {
-                return view('formulaire',compact('res'));
+            $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
+
+            $departement = DB::select('select * from departement_entreprises where id  = ? ',[$testNull[0]->departement_entreprises_id]);
+           // $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'responsables']);
+            //  // $tempo = $colonnes[5]->COLUMN_NAME;
+            // $res = [];
+            // $j = 0;
+            // for ($i=0; $i < count($colonnes); $i++) {
+            //     $tempo =  $colonnes[$i]->COLUMN_NAME;
+            //     if ($testNull[0]-> $tempo== null) {
+            //         $j+=1;
+            //         $res[$j] = $colonnes[$i]->COLUMN_NAME ;
+            //     }
+            // }
+            if (count($testNull)>0) {
+                return view('formulaire',compact('testNull','entreprise','departement'));
             }
 
             $user_id = User::where('id', Auth::user()->id)->value('id');
 
             return view('layouts.dashboard_referent');
 
-        } else {
-            $totale_invitation = $this->collaboration->count_invitation();
-            return view('layouts.accueil_admin', compact('totale_invitation'));
         }
+        // else {
+        //     $totale_invitation = $this->collaboration->count_invitation();
+        //     return view('layouts.accueil_admin', compact('totale_invitation'));
+        // }
     }
 
 

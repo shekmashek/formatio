@@ -41,3 +41,24 @@ create table role_users at bdd_suivi_formation_mis_a_jour_1(table mere)
 
 //Create view v_user_role : view 0
 ALTER TABLE roles add column role_description varchar(255)
+
+//select table name as
+SELECT
+Case
+when Column_Name='id' then 'id responsable'
+When Column_Name='nom_resp' then 'Nom'
+When Column_Name='prenom_resp' then 'Prenom'
+When Column_Name='sexe_resp' then 'Genre'
+When Column_Name='date_naissance_resp' then 'Date de naissance'
+When Column_Name='cin_resp' then 'CIN'
+When Column_Name='email_resp' then 'E-mail'
+When Column_Name='telephone_resp' then 'Telephone'
+When Column_Name='fonction_resp' then 'Fonction'
+When Column_Name='adresse_quartier' then 'Quartier'
+When Column_Name='adresse_code_postal' then 'Code postal'
+When Column_Name='adresse_lot' then 'Lot'
+When Column_Name='adresse_ville' then 'Ville'
+When Column_Name='adresse_region' then 'Region'
+End
+FROM INFORMATION_SCHEMA.columns
+WHERE table_schema = 'bdd_suivi_formation_version_1.1'  AND TABLE_NAME = 'responsables'

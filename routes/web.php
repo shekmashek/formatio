@@ -802,3 +802,5 @@ Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name(
 
 //affichage role utilisateur
 Route::get('affichage_role','HomeController@affichage_role')->name('affichage_role');
+//remplir information manquante
+Route::post('remplir_info_resp','HomeController@remplir_info_resp')->name('remplir_info_resp');
