@@ -498,11 +498,20 @@
                     </div>
                 </div>
                 <hr class="hr">
-                <div class="row detail__formation__item__main">
-                    <div class="col-lg-12 detail__prix__main__btn py-5">
+              @can('isReferent')
+              <div class="row detail__formation__item__main">
+                <div class="col-lg-12 detail__prix__main__btn py-5">
+                    <form action="{{route('demande_devis.store')}}" method="post">
+                        @csrf
+                        <input type="text" hidden name="module_id" value="{{$res->module_id}}">
                         <button type="submit" class="btn">Demander un dévis</button>
-                    </div>
+                    </form>
+
                 </div>
+            </div>
+              @endcan
+
+
             </div>
         </div>
     </div>

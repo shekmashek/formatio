@@ -124,7 +124,6 @@
         </div>
     </div>
 
-
     {{-- Ouverture de container --}}
     <div class="container-fluid">
         <div class="row">

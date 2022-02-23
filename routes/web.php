@@ -807,3 +807,6 @@ Route::get('affichage_role','HomeController@affichage_role')->name('affichage_ro
 //================ saisir employé,responsable,chef de département
 
 Route::resource('employeur','EmployeurController');
+
+// ============== demande de devis
+Route::resource('demande_devis', 'DemandeDevisController');
