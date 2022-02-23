@@ -9,7 +9,7 @@ class Encaissement extends Model
 {
     protected $table = "encaissements";
     protected $fillable = [
-       'num_facture','montant_facture','payement','libelle','montant_ouvert','date_encaissement','admin_id','mode_financement_id','cfp_id'
+       'num_facture','montant_facture','payement','libelle','montant_ouvert','date_encaissement','admin_id','mode_financement_id','cfp_id','resp_cfp_id','nom_resp_cfp'
     ];
 
     public static function validation($input){
@@ -74,7 +74,7 @@ class Encaissement extends Model
         return $montantOuvert;
     }
 
-    public static function insert($imput,$cfp_id){
+    public static function insert($imput,$cfp_id,$id_resp,$nom_resp){
         $num_facture = $imput['num_facture'];
         $montantOuvert = encaissement::getMontantOuvert($num_facture,$cfp_id)[0]->dernier_montant_ouvert;
         $montantFacture = $montantOuvert;
@@ -88,6 +88,8 @@ class Encaissement extends Model
         $encaissement->date_encaissement = $imput->date_encaissement;
         $encaissement->mode_financement_id = $imput->mode_payement;
         $encaissement->cfp_id = $cfp_id;
+        $encaissement->resp_cfp_id = $id_resp;
+        $encaissement->nom_resp_cfp = $nom_resp;
 
         $encaissement->save();
     }

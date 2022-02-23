@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\cfp;
 use Illuminate\Support\Facades\Auth;
+use PDF;
+use App\Models\FonctionGenerique;
 
 class EncaissementController extends Controller
 {
@@ -18,7 +20,7 @@ class EncaissementController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -46,13 +48,16 @@ class EncaissementController extends Controller
 
     public function encaissement(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        // $user_id = Auth::user()->id;
+        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
+        $cfp_id = $resp->cfp_id;
 
         DB::beginTransaction();
         try {
             encaissement::validation($request);
-            encaissement::insert($request, $cfp_id);
+            encaissement::insert($request, $cfp_id, $resp->id, $resp->nom_resp_cfp . " " . $resp->prenom_resp_cfp);
             DB::commit();
             return back()->with('encaissement_ok', 'Paiement réussi');
         } catch (Exception $e) {
@@ -63,12 +68,46 @@ class EncaissementController extends Controller
 
     public function liste_encaissement(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
 
         $numero_fact = $request->num_facture;
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        return view('admin.encaissement.liste_encaissement', compact('encaissement'));
+        return view('admin.encaissement.liste_encaissement', compact('encaissement','numero_fact'));
+    }
+
+    public function generatePDF(Request $request)
+    {
+        // $user_id = Auth::user()->id;
+        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
+        $cfp_id = $resp->cfp_id;
+
+
+        $numero_fact = $request->num_facture;
+        $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+        $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
+
+        PDF::setOptions([
+            "defaultFont" => "Courier",
+            "defaultPaperSize" => "a4",
+            "dpi" => 130
+        ]);
+
+
+    /*    $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
+        $pdf->getDomPDF()->setHttpContext(
+            stream_context_create([
+                'ssl' => [
+                    'allow_self_signed' => TRUE,
+                    'verify_peer' => FALSE,
+                    'verify_peer_name' => FALSE,
+                ]
+            ])
+        ); */
+
+        return view('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
     }
 
     public function supprimer(Request $request)
