@@ -53,19 +53,144 @@ class HomeController extends Controller
         return response()->json($liste_role);
     }
     //remplissage des info manquantes
+    public function remplir_info_stagiaire(Request $request){
+        $id_stg = $request->input('id_stg');
+
+        if ($request->input('nom_stg') != null) {
+            DB::update('update stagiaires set nom_stagiaire = ? where id = ?', [$request->input('nom_stg'),$id_stg]);
+        }
+        if ($request->input('titre_stg') != null) {
+            DB::update('update stagiaires set titre = ? where id = ?', [$request->input('titre_stg'),$id_stg]);
+        }
+        if ($request->input('date_naissance_stg') != null) {
+            DB::update('update stagiaires set date_naissance = ? where id = ?', [$request->input('date_naissance'),$id_stg]);
+        }
+        if ($request->input('genre_stg') != null) {
+            DB::update('update stagiaires set genre_stagiaire = ? where id = ?', [$request->input('genre_stg'),$id_stg]);
+        }
+        if ($request->input('tel_stg') != null) {
+            DB::update('update stagiaires set telephone_stagiaire = ? where id = ?', [$request->input('tel_stg'),$id_stg]);
+        }
+        if ($request->input('cin_stg') != null) {
+            DB::update('update stagiaires set cin = ? where id = ?', [$request->input('cin'),$id_stg]);
+        }
+        if ($request->input('lot') != null) {
+            DB::update('update stagiaires set lot = ? where id = ?', [$request->input('lot'),$id_stg]);
+        }
+        if ($request->input('quartier') != null) {
+            DB::update('update stagiaires set quartier = ? where id = ?', [$request->input('quartier'),$id_stg]);
+        }
+        if ($request->input('ville') != null) {
+            DB::update('update stagiaires set ville = ? where id = ?', [$request->input('ville'),$id_stg]);
+        }
+        if ($request->input('code_postal') != null) {
+            DB::update('update stagiaires set code_postal = ? where id = ?', [$request->input('code_postal'),$id_stg]);
+        }
+        if ($request->input('region') != null) {
+            DB::update('update stagiaires set region = ? where id = ?', [$request->input('region'),$id_stg]);
+        }
+        if ($request->input('niveau_stg') != null) {
+            DB::update('update stagiaires set niveau_etude = ? where id = ?', [$request->input('niveau_stg'),$id_stg]);
+        }
+        if(count($request->input()) > 2){
+            return redirect()->back()->with('error','Remplissez les champs vides');
+        }
+        else{
+            $totale_invitation = $this->collaboration->count_invitation();
+            return view('layouts.accueil_admin', compact('totale_invitation'));
+        }
+    }
+    public function remplir_info_manager(Request $request){
+        $id_chef = $request->input('id_chef');
+
+        if ($request->input('nom_chef') != null) {
+            DB::update('update chef_departements set nom_chef = ? where id = ?', [$request->input('nom_chef'),$id_chef]);
+        }
+        if ($request->input('genre_chef') != null) {
+            DB::update('update chef_departements set genre_chef = ? where id = ?', [$request->input('genre_chef'),$id_chef]);
+        }
+        if ($request->input('tel_chef') != null) {
+            DB::update('update chef_departements set telephone_chef = ? where id = ?', [$request->input('tel_chef'),$id_chef]);
+        }
+        if ($request->input('cin_chef') != null) {
+            DB::update('update chef_departements set cin_chef = ? where id = ?', [$request->input('cin_chef'),$id_chef]);
+        }
+
+
+        if(count($request->input()) > 2){
+            return redirect()->back()->with('error','Remplissez les champs vides');
+        }
+        else{
+            $totale_invitation = $this->collaboration->count_invitation();
+            return view('layouts.accueil_admin', compact('totale_invitation'));
+        }
+    }
     public function remplir_info_resp(Request $request){
-        // for ($i=0; $i < count($request->input()); $i++) {
-        //     dd($request->input());
-        // }
-        // if ($request->input() = 'naissance') {
-        //     dd('ok');
-        // }
-        dd($request->input());
+        $id_resp = $request->input('id_resp');
+
+        if ($request->input('nom_resp') != null) {
+            DB::update('update responsables set nom_resp = ? where id = ?', [$request->input('nom_resp'),$id_resp]);
+        }
+        if ($request->input('date_naissance_resp') != null) {
+            DB::update('update responsables set date_naissance_resp = ? where id = ?', [$request->input('date_naissance_resp'),$id_resp]);
+        }
+        if ($request->input('genre') != null) {
+            DB::update('update responsables set sexe_resp = ? where id = ?', [$request->input('genre'),$id_resp]);
+        }
+        if ($request->input('tel_resp') != null) {
+            DB::update('update responsables set telephone_resp = ? where id = ?', [$request->input('tel_resp'),$id_resp]);
+        }
+        if ($request->input('cin_resp') != null) {
+            DB::update('update responsables set cin_resp = ? where id = ?', [$request->input('cin_resp'),$id_resp]);
+        }
+        if ($request->input('lot') != null) {
+            DB::update('update responsables set adresse_lot = ? where id = ?', [$request->input('lot'),$id_resp]);
+        }
+        if ($request->input('quartier') != null) {
+            DB::update('update responsables set adresse_quartier = ? where id = ?', [$request->input('quartier'),$id_resp]);
+        }
+        if ($request->input('ville') != null) {
+            DB::update('update responsables set adresse_ville = ? where id = ?', [$request->input('ville'),$id_resp]);
+        }
+        if ($request->input('code_postal') != null) {
+            DB::update('update responsables set adresse_code_postal = ? where id = ?', [$request->input('code_postal'),$id_resp]);
+        }
+        if ($request->input('region') != null) {
+            DB::update('update responsables set adresse_region = ? where id = ?', [$request->input('region'),$id_resp]);
+        }
+        if(count($request->input()) > 2){
+            return redirect()->back()->with('error','Remplissez les champs vides');
+        }
+        else{
+            $user_id = User::where('id', Auth::user()->id)->value('id');
+            return view('layouts.dashboard_referent');
+        }
+
     }
     public function index(Request $request)
     {
 
         if (Gate::allows('isStagiairePrincipale')) {
+             //get the column with null value
+            $databaseName = DB::connection()->getDatabaseName();
+            $testNull = DB::select('select * from stagiaires where user_id  = ? ',[Auth::user()->id]);
+            $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
+
+            $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'stagiaires']);
+            $nb = 0;
+            for ($i=0; $i < count($colonnes); $i++) {
+                $tempo =  $colonnes[$i]->COLUMN_NAME;
+                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and $colonnes[$i]->COLUMN_NAME != "matricule"){
+                    if ($testNull[0]-> $tempo== null) {
+                        $nb+=1;
+                    }
+                }
+            }
+            //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
+            if ($nb>0) {
+                return view('formulaire_stagiaire',compact('testNull','entreprise'));
+            }
+
             $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
             $activiter = $valeur[0]->activiter;
             $stg_id =  $valeur[0]->id;
@@ -140,35 +265,58 @@ class HomeController extends Controller
 
         if (Gate::allows('isReferentPrincipale')) {
             //get the column with null value
-            $databaseName = DB::connection()->getDatabaseName();
+
             $testNull = DB::select('select * from responsables where user_id  = ? ',[Auth::user()->id]);
             $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
-
             $departement = DB::select('select * from departement_entreprises where id  = ? ',[$testNull[0]->departement_entreprises_id]);
-           // $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'responsables']);
-            //  // $tempo = $colonnes[5]->COLUMN_NAME;
-            // $res = [];
-            // $j = 0;
-            // for ($i=0; $i < count($colonnes); $i++) {
-            //     $tempo =  $colonnes[$i]->COLUMN_NAME;
-            //     if ($testNull[0]-> $tempo== null) {
-            //         $j+=1;
-            //         $res[$j] = $colonnes[$i]->COLUMN_NAME ;
-            //     }
-            // }
-            if (count($testNull)>0) {
+
+            $databaseName = DB::connection()->getDatabaseName();
+
+            $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'responsables']);
+            $nb = 0;
+            for ($i=0; $i < count($colonnes); $i++) {
+                $tempo =  $colonnes[$i]->COLUMN_NAME;
+                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp"){
+                    if ($testNull[0]-> $tempo== null) {
+                        $nb+=1;
+                    }
+                }
+            }
+            //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
+
+            if ($nb>0) {
                 return view('formulaire',compact('testNull','entreprise','departement'));
             }
+            else{
 
             $user_id = User::where('id', Auth::user()->id)->value('id');
-
             return view('layouts.dashboard_referent');
+            }
+
 
         }
-        // else {
-        //     $totale_invitation = $this->collaboration->count_invitation();
-        //     return view('layouts.accueil_admin', compact('totale_invitation'));
-        // }
+        else {
+             //get the column with null value
+             $databaseName = DB::connection()->getDatabaseName();
+             $testNull = DB::select('select * from chef_departements where user_id  = ? ',[Auth::user()->id]);
+             $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
+
+             $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'chef_departements']);
+             $nb = 0;
+             for ($i=0; $i < count($colonnes); $i++) {
+                 $tempo =  $colonnes[$i]->COLUMN_NAME;
+                 if ($testNull[0]-> $tempo== null) {
+                         $nb+=1;
+                     }
+
+             }
+             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
+             if ($nb>0) {
+                 return view('formulaire_manager',compact('testNull','entreprise'));
+             }
+            $totale_invitation = $this->collaboration->count_invitation();
+            return view('layouts.accueil_admin', compact('totale_invitation'));
+        }
     }
 
 

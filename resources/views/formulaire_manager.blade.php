@@ -83,41 +83,30 @@
             <div class="row ">
                 <div class="container">
                     <div class="col-12">
-                        <form action="{{route('remplir_info_resp')}}" method="POST" class="w-50" style="margin-left: auto; margin-right: auto">
+                        <form action="{{route('remplir_info_manager')}}" method="POST" class="w-50" style="margin-left: auto; margin-right: auto">
                             @csrf
                             <div class="form-control mb-5">
                                 <p class="text-center">Informations générales</p>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <input type="text" name="id_resp" style="float: right;" value="{{$testNull[0]->id}}" hidden>
-                                    @if ($testNull[0]->nom_resp!=null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$testNull[0]->nom_resp}} {{$testNull[0]->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <input type="text" name="id_chef" style="float: right;" value="{{$testNull[0]->id}}" hidden>
+                                    @if ($testNull[0]->nom_chef!=null)
+                                    <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$testNull[0]->nom_chef}} {{$testNull[0]->prenom_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_resp" style="float: right;"></p>
+                                        <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_chef" style="float: right;"></p>
                                     @endif
-
-
-
                                 </div>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    @if ($testNull[0]->date_naissance_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<span style="float: right;">{{date('j \\ F Y', strtotime($testNull[0]->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                    @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<input type="date" name="date_naissance_resp" style="float: right;"></p>
-                                    @endif
-
-
-                                </div>
-                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    @if ($testNull[0]->sexe_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$testNull[0]->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if ($testNull[0]->genre_chef!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$testNull[0]->genre_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                     @else
-                                        <select  value="" name="genre" class="form-select test input" id="genre"  >
+                                    <p class="p-1 m-0" style="font-size: 10px;">GENRE
+                                        <select  value="" name="genre_chef" class="" style="float: right" id="genre"  >
                                             <option value="Homme"  >Homme</option>
                                             <option value="Femme">Femme</option>
                                         </select>
+                                    </p>
                                     @endif
                                 </div>
 
@@ -129,55 +118,32 @@
 
 
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->email_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$testNull[0]->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if ($testNull[0]->mail_chef!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$testNull[0]->mail_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<input type="text" name="email_resp" style="float: right;"></p>
+                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<input type="text" name="email_stg" style="float: right;"></p>
                                     @endif
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->telephone_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$testNull[0]->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                    @if ($testNull[0]->telephone_chef!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$testNull[0]->telephone_chef}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                                         </p>
                                     @else
-                                    <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<input type="text" name="tel_resp" style="float: right;"></p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<input type="text" name="tel_chef" style="float: right;"></p>
                                     @endif
                                 </div>
 
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->cin_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$testNull[0]->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if ($testNull[0]->cin_chef!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$testNull[0]->cin_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<input type="text" name="cin_resp" style="float: right;"></p>
+                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<input type="text" name="cin_chef" style="float: right;"></p>
                                     @endif
                                 </div>
-                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->adresse_lot!=null and $testNull[0]->adresse_quartier!=null and $testNull[0]->adresse_ville!=null and $testNull[0]->adresse_code_postal!=null and $testNull[0]->adresse_region!=null )
-                                    <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$testNull[0]->adresse_lot}} &nbsp;{{$testNull[0]->adresse_quartier}} &nbsp;{{$testNull[0]->adresse_ville}} &nbsp;{{$testNull[0]->adresse_code_postal}}&nbsp;{{$testNull[0]->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
-                                    </p>
-                                    @else
-                                    @if($testNull[0]->adresse_lot==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">LOT<input type="text" name="lot" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_quartier==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">QUARTIER<input type="text" name="quartier" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_ville==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">VILLE<input type="text" name="ville" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_code_postal==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">CODE POSTAL<input type="text" name="code_postal" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_region==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">REGION<input type="text" name="region" style="float: right;"></p>
-                                    @endif
-                                    @endif
-
-                                </div>
 
 
 
@@ -199,7 +165,7 @@
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
 
-                                    <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$testNull[0]->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$testNull[0]->fonction_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
 
                                 </div>

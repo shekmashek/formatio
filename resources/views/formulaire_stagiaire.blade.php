@@ -83,41 +83,53 @@
             <div class="row ">
                 <div class="container">
                     <div class="col-12">
-                        <form action="{{route('remplir_info_resp')}}" method="POST" class="w-50" style="margin-left: auto; margin-right: auto">
+                        <form action="{{route('remplir_info_stagiaire')}}" method="POST" class="w-50" style="margin-left: auto; margin-right: auto">
                             @csrf
                             <div class="form-control mb-5">
                                 <p class="text-center">Informations générales</p>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <input type="text" name="id_resp" style="float: right;" value="{{$testNull[0]->id}}" hidden>
-                                    @if ($testNull[0]->nom_resp!=null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$testNull[0]->nom_resp}} {{$testNull[0]->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <input type="text" name="id_stg" style="float: right;" value="{{$testNull[0]->id}}" hidden>
+                                    @if ($testNull[0]->nom_stagiaire!=null)
+                                    <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$testNull[0]->nom_stagiaire}} {{$testNull[0]->prenom_stagiaire}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_resp" style="float: right;"></p>
+                                        <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_stg" style="float: right;"></p>
                                     @endif
-
+                                </div>
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <input type="text" name="titre_stg" style="float: right;" value="{{$testNull[0]->titre}}" hidden>
+                                    @if ($testNull[0]->titre!=null)
+                                    <p class="p-1 m-0" style="font-size: 10px;">TITRE<span style="float: right;">{{$testNull[0]->titre}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    </p>
+                                    @else
+                                        <select  value="" name="titre_stg" class="" id="titre_stg"  >
+                                            <option value="Mr">Mr</option>
+                                            <option value="Mme">Mme</option>
+                                            <option value="Mme">Mlle</option>
+                                        </select>
+                                    @endif
+                                </div>
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    @if ($testNull[0]->date_naissance!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<span style="float: right;">{{date('j \\ F Y', strtotime($testNull[0]->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    </p>
+                                    @else
+                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<input type="date" name="date_naissance_stg" style="float: right;"></p>
+                                    @endif
 
 
                                 </div>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    @if ($testNull[0]->date_naissance_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<span style="float: right;">{{date('j \\ F Y', strtotime($testNull[0]->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                    @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<input type="date" name="date_naissance_resp" style="float: right;"></p>
-                                    @endif
-
-
-                                </div>
-                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    @if ($testNull[0]->sexe_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$testNull[0]->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if ($testNull[0]->genre_stagiaire!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$testNull[0]->genre_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                     @else
-                                        <select  value="" name="genre" class="form-select test input" id="genre"  >
+                                    <p class="p-1 m-0" style="font-size: 10px;">GENRE
+                                        <select  value="" name="genre_stg" class="" style="float: right" id="genre"  >
                                             <option value="Homme"  >Homme</option>
                                             <option value="Femme">Femme</option>
                                         </select>
+                                    </p>
                                     @endif
                                 </div>
 
@@ -129,50 +141,50 @@
 
 
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->email_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$testNull[0]->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if ($testNull[0]->mail_stagiaire!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$testNull[0]->mail_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<input type="text" name="email_resp" style="float: right;"></p>
+                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<input type="text" name="email_stg" style="float: right;"></p>
                                     @endif
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->telephone_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$testNull[0]->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                    @if ($testNull[0]->telephone_stagiaire!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$testNull[0]->telephone_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                                         </p>
                                     @else
-                                    <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<input type="text" name="tel_resp" style="float: right;"></p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<input type="text" name="tel_stg" style="float: right;"></p>
                                     @endif
                                 </div>
 
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->cin_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$testNull[0]->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if ($testNull[0]->cin!=null)
+                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$testNull[0]->cin}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<input type="text" name="cin_resp" style="float: right;"></p>
+                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<input type="text" name="cin_stg" style="float: right;"></p>
                                     @endif
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->adresse_lot!=null and $testNull[0]->adresse_quartier!=null and $testNull[0]->adresse_ville!=null and $testNull[0]->adresse_code_postal!=null and $testNull[0]->adresse_region!=null )
-                                    <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$testNull[0]->adresse_lot}} &nbsp;{{$testNull[0]->adresse_quartier}} &nbsp;{{$testNull[0]->adresse_ville}} &nbsp;{{$testNull[0]->adresse_code_postal}}&nbsp;{{$testNull[0]->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if ($testNull[0]->lot!=null and $testNull[0]->quartier!=null and $testNull[0]->ville!=null and $testNull[0]->code_postal!=null and $testNull[0]->region!=null )
+                                    <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$testNull[0]->lot}} &nbsp;{{$testNull[0]->quartier}} &nbsp;{{$testNull[0]->ville}} &nbsp;{{$testNull[0]->code_postal}}&nbsp;{{$testNull[0]->region}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p>
                                     @else
-                                    @if($testNull[0]->adresse_lot==null)
+                                    @if($testNull[0]->lot==null)
                                     <p class="p-1 m-0" style="font-size: 10px;">LOT<input type="text" name="lot" style="float: right;"></p>
                                     @endif
-                                    @if($testNull[0]->adresse_quartier==null)
+                                    @if($testNull[0]->quartier==null)
                                     <p class="p-1 m-0" style="font-size: 10px;">QUARTIER<input type="text" name="quartier" style="float: right;"></p>
                                     @endif
-                                    @if($testNull[0]->adresse_ville==null)
+                                    @if($testNull[0]->ville==null)
                                     <p class="p-1 m-0" style="font-size: 10px;">VILLE<input type="text" name="ville" style="float: right;"></p>
                                     @endif
-                                    @if($testNull[0]->adresse_code_postal==null)
+                                    @if($testNull[0]->code_postal=null)
                                     <p class="p-1 m-0" style="font-size: 10px;">CODE POSTAL<input type="text" name="code_postal" style="float: right;"></p>
                                     @endif
-                                    @if($testNull[0]->adresse_region==null)
+                                    @if($testNull[0]->region==null)
                                     <p class="p-1 m-0" style="font-size: 10px;">REGION<input type="text" name="region" style="float: right;"></p>
                                     @endif
                                     @endif
@@ -199,11 +211,18 @@
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
 
-                                    <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$testNull[0]->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$testNull[0]->fonction_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
 
                                 </div>
-
+                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                    @if($testNull[0]->niveau_etude!=null)
+                                    <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<span style="float: right;">{{$testNull[0]->niveau_etude}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    </p>
+                                    @else
+                                    <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<input type="date" name="niveau_stg" style="float: right;"></p>
+                                    @endif
+                                </div>
 
                                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                             </div><br>
