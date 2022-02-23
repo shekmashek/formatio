@@ -49,3 +49,4 @@ INSERT INTO role_users(user_id,role_id) values (17,2) ;
 Branche nouveau_entiter.1.0:
         ALTER TABLE roles ADD COLUMN role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
         ALTER TABLE responsables ADD COLUMN matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+           ALTER TABLE chef_departements ADD COLUMN matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
