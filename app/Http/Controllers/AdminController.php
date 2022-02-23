@@ -75,6 +75,7 @@ class AdminController extends Controller
         }
         if (Gate::allows('isManager')) {
            $etp_id=chefDepartement::where('user_id',$id_user)->value('entreprise_id');
+           
            $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
            $data["donner"]=$etp[0];
            $data["status"]="CHEF";
