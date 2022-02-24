@@ -207,6 +207,12 @@
                     </li>
                     @endcanany
                     {{-- utilisateurs --}}
+                    @canany(['isCFP','isReferent','isManager'])
+                    <li class="my-2">
+                        <a href="{{route('appel_offre.index')}}"  class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Appel d'Offre</span></a>
+                    </li>
+                    @endcanany
+
                     @canany(['isSuperAdmin','isAdmin'])
                     <li class="my-2">
                         <a href="#gsutSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Utilisateurs</span></a>
