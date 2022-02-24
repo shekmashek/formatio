@@ -93,14 +93,23 @@ class ParticipantController extends Controller
             $datas = stagiaire::with('entreprise', 'User')->where('activiter', [true])->get();
         }
         if (Gate::allows('isReferent')) {
-            $entreprise_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+            if (Gate::allows('isReferentPrincipale')) {
+                $entreprise_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+            }
+            if (Gate::allows('isStagiairePrincipale')) {
+                $entreprise_id = stagiaire::where('user_id', [$user_id])->value('entreprise_id');
+            }
+            if (Gate::allows('isManagerPrincipale')) {
+                $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
+            }
+
             // $rqt = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = ' . $entreprise_id);
             $rqt = DB::select('SELECT * from stagiaires WHERE entreprise_id = ' . $entreprise_id);
             $datas = $rqt[0];
             $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id =' . $entreprise_id);
             // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManagerPrincipale')) {
             $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
             $fonct = new FonctionGenerique();
             $chef = $fonct->findWhereMulitOne(

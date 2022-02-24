@@ -99,52 +99,56 @@
                         </li>
                         @endcanany
                         {{-- entreprise --}}
+
                         @canany(['isReferent'])
                         <li class="my-2">
                             <a href="{{route('liste+responsable+entreprise')}}" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Responsables</span></a>&nbsp;&nbsp;
-                        </li>
-                        @endcanany
-                        @can('isCFP')
-                        <li class="my-2">
-                            {{-- <a href="{{route('liste_entreprise')}}" class="nav_linke liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprises</span></a> --}}
-                            <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
-                                <li class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('liste_entreprise')}}">Entreprises</a>
-                                    <p class="my-1" id="entreprise" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
-                                </li>
-                            </ul>
-                        </li>
-                        @endcan
-                        @canany(['isReferent','isCFP'])
-                        <li class="my-2">
-                            <a href="#etpSubMenu_resp_cfp" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Centre</span></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu_resp_cfp">
-                                @can('isReferent')
-                                <li class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('list_cfp')}}">Centre</a>
-                                </li>
-                                @endcan
-                                @can('isCFP')
-                                <li class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('liste+responsable+cfp')}}">Notre Responsable</a>
-                                </li>
-                                @endcan
-                            </ul>
-                        </li>
-                        @endcanany
+                         </li>
+                    @endcanany
+                    @can('isCFP')
+                    <li class="my-2">
+                        {{-- <a href="{{route('liste_entreprise')}}" class="nav_linke liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprises</span></a> --}}
+                        <a href="#etpSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Entreprise</span></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu">
+                            <li class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_entreprise')}}">Entreprises</a>
+                                <p class="my-1" id="entreprise" style="background-color: white; border-radius: 2rem; padding: 0 8px;"></p>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcan
+                    {{-- @canany(['isReferent','isCFP']) --}}
+                    @if (Gate::allows('isReferent'))
+                    <li class="my-2">
+                        <a href="#etpSubMenu_resp_cfp" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bx-building-house nav_icon'></i><span class="nav_name">Centre</span></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="etpSubMenu_resp_cfp">
+                            @can('isReferent')
+                            <li class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('list_cfp')}}">Centre</a>
+                            </li>
+                            @endcan
+                            @can('isCFP')
+                            <li class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste+responsable+cfp')}}">Notre Responsable</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endif
 
-                        {{-- projet de formation --}}
-                        @canany(['isSuperAdmin'])
-                        <li class="my-2">
-                            <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
-                            <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
-                                <span class="sousMenu me-2 d-flex justify-content-between">
-                                    <a href="{{route('liste_projet')}}">Projets</a>
-                        </li>
-                        <li class="my-1 sousMenu">
-                            <a href="{{route('liste_groupe')}}">Groupes</a>
-                        </li>
+                    {{-- @endcanany --}}
+
+                    {{-- projet de formation --}}
+                    @canany(['isSuperAdmin'])
+                    <li class="my-2">
+                        <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
+                        <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
+                            <span class="sousMenu me-2 d-flex justify-content-between">
+                                <a href="{{route('liste_projet')}}">Projets</a>
+                    </li>
+                    <li class="my-1 sousMenu">
+                        <a href="{{route('liste_groupe')}}">Groupes</a>
+                    </li>
                     </ul>
                     </li>
                     @endcanany
@@ -580,43 +584,28 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
-                                        @if(Auth::user()->role_id == 1)
-                                        <span class="text-muted d-block mb-2">Admin</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 2)
-                                        <span class="text-muted d-block mb-2">Référent</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 3)
-                                        <span class="text-muted d-block mb-2">Stagiaire</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 4)
-                                        <span class="text-muted d-block mb-2">Formateur</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 5)
-                                        <span class="text-muted d-block mb-2">Manager</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 6)
-                                        <span class="text-muted d-block mb-2">Super Admin</span>
-                                        @endif
-                                        @if(Auth::user()->role_id == 7)
-                                        <span class="text-muted d-block mb-2">Centre de Formation</span>
-                                        @endif
+                                        <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
+                                        <ul id="liste_role">
+                                            Accès:
+                                        </ul>
+
 
                                     </div>
                                     <div class="text-center">
-                                        @can('isManager')
+                                        @can('isManagerPrincipale')
                                         <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isFormateur')
-                                        <a href="{{route('profile_formateur')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @can('isFormateurPrincipale')
+                                        <a href="{{route('profile_formateur')}}"><button
+                                                class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isStagiaire')
+                                        @can('isStagiairePrincipale')
                                         <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isReferent')
+                                        @can('isReferentPrincipale')
                                         <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isCFP')
+                                        @can('isCFPPrincipale')
                                         <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                     </div>
@@ -908,6 +897,7 @@
 </script>
 <script>
     $(document).ready(function() {
+        var id_user = $('#id_user').val();
         $.ajax({
             url: '{{ route("profil_user") }}'
             , type: 'get'
@@ -917,6 +907,43 @@
                 img = img.replace(':pdp', profil);
                 $("#photo_profil").append(img);
                 $("#profil_usesr").append(img);
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+        $.ajax({
+            url: '{{ route("affichage_role") }}'
+            , type: 'get'
+            ,data: {
+                id_user: id_user
+            }
+            , success: function(response) {
+                var userData = response;
+
+                for (var $i = 0; $i < userData.length; $i++) {
+                    document.getElementById('liste_role').innerHTML += "<li>" + userData[$i].role_description+ "</li>"
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+
+        $.ajax({
+            url: '{{route("verify_tel_user")}}'
+            , type: 'get'
+            , data: {
+                valiny: result
+            }
+            , success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("phone_err").innerHTML = "Télephone existes déjà";
+                } else {
+                    document.getElementById("phone_err").innerHTML = "";
+                }
             }
             , error: function(error) {
                 console.log(error);

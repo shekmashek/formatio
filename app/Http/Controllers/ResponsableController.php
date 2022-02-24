@@ -37,8 +37,21 @@ class ResponsableController extends Controller
         $user_id = Auth::id();
         $fonct = new FonctionGenerique();
         if (Gate::allows('isReferent')) {
-            $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
-            $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+            if (Gate::allows('isReferentPrincipale')) {
+                $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+                $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+
+            }
+            if (Gate::allows('isStagiairePrincipale')) {
+                $resp_etp_connecter = $fonct->findWhereMulitOne('stagiaires', ["user_id"], [$user_id]);
+                $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+
+            }
+            if (Gate::allows('isManagerPrincipale')) {
+                $resp_etp_connecter = $fonct->findWhereMulitOne('chef_departements', ["user_id"], [$user_id]);
+                $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+
+            }
             return view('admin.entreprise.responsable.nouveau_responsable', compact('resp_etp_connecter', 'responsable'));
         }
     }

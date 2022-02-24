@@ -186,7 +186,7 @@ class AbonnementController extends Controller
     public function ListeAbonnement()
     {
 
-        $role_id = User::where('Email', Auth::user()->email)->value('role_id');
+        // $role_id = User::where('Email', Auth::user()->email)->value('role_id');
 
         if (Gate::allows('isReferent')) {
             $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 2)->get();

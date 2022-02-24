@@ -801,3 +801,10 @@ Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name
 Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
 Route::post('save_documents','SessionController@save_documents')->name('save_documents');
 Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name('telecharger_fichier');
+
+//affichage role utilisateur
+Route::get('affichage_role','HomeController@affichage_role')->name('affichage_role');
+//remplir information manquante
+Route::post('remplir_info_resp','HomeController@remplir_info_resp')->name('remplir_info_resp');
+Route::post('remplir_info_stagiaire','HomeController@remplir_info_stagiaire')->name('remplir_info_stagiaire');
+Route::post('remplir_info_manager','HomeController@remplir_info_manager')->name('remplir_info_manager');
