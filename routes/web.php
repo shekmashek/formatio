@@ -816,3 +816,10 @@ Route::resource('employeur','EmployeurController');
 
 // ============== demande de devis
 Route::resource('demande_devis', 'DemandeDevisController');
+
+
+//====================== APPEL D'OFFRE
+
+Route::get('appel+offre',function(){
+    return view('admin.appel_offre.nouveau_appel_offre');
+});
