@@ -68,7 +68,7 @@
                     <li class="{{ Route::currentRouteNamed('liste_participant') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste_participant')}}"><span class="bx bx-list-ul"></span>Liste des participants</a></li>&nbsp;
                 </div>
                 <div class="mx-2">
-                    <li class="{{ Route::currentRouteNamed('liste_chefDepartement') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste_chefDepartement')}}"><span class="bx bx-list-ul"></span>Liste des Manager</a></li>&nbsp;
+                    <li class="{{ Route::currentRouteNamed('employes') ? 'active' : '' }}" style="list-style: none"><a href="{{route('employes')}}"><span class="bx bx-list-ul"></span>Liste des Manager</a></li>&nbsp;
                 </div>
                 <div class="mx-2">
                     <li class="{{ Route::currentRouteNamed('liste+responsable+entreprise') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste+responsable+entreprise')}}"><span class="bx bx-list-ul"></span>Liste des responsables</a></li>&nbsp;

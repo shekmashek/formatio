@@ -147,6 +147,12 @@ class DepartementController extends Controller
 
     public function edit($id)
     {
+        $rqt = DB::select('select * from chef_departements where id = ?', [$id]);
+        $user_id = $rqt[0]->user_id;
+        $role_id = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
+        $roles = DB::select('select * from roles where id != ?',[1]);
+        // dd($roles);
+
         $var = chefDepartement::findOrFail($id);
         return view('admin.chefDepartement.update', compact('var'));
     }

@@ -29,11 +29,6 @@
               <input type="text" class="form-control"  name="phone" value="{{ $var->telephone_chef}}">
             </div>
           <br>
-           <div class="form-group">
-              <label for="password">Mot de passe</label>
-              <input type="password" class="form-control" value=""  name="password" placeholder="">
-            </div>
-            <button class="btn btn-outline-success btn-lg modification " id="action1"><span class = "glyphicon glyphicon-pencil"></span> Modifier</button>
-        </form>
+          </form>
 
 @endsection
