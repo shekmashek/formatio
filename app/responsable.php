@@ -41,7 +41,6 @@ class Responsable extends Model
             'cin_12.required' => 'invalid',
             'phone.required' => 'le numero de télephone ne doit pas être null',
             'email.required' => 'le mail ne doit pas être null',
-            'dte.required' => 'la date de naissance ne doit pas être null',
             'fonction.required' => 'le fonction ne doit pas être null'
         ];
         $critereForm = [
@@ -58,7 +57,6 @@ class Responsable extends Model
             'cin_10' => 'required',
             'cin_11' => 'required',
             'cin_12' => 'required',
-            'dte' => 'required|date',
             'fonction' => 'required',
             'email' => 'required|email',
             'phone' => 'required'
@@ -83,14 +81,13 @@ class Responsable extends Model
     public function insert_resp_ETP($doner, $entreprise_id, $user_id)
     {
         $data = [
-            $doner["nom"], $doner["prenom"], $doner["sexe"],
-            $doner["dte"], $doner["cin"], $doner["email"], $doner["phone"], $doner["fonction"],
+            $doner["nom"], $doner["prenom"], $doner["cin"], $doner["email"], $doner["phone"], $doner["fonction"],
             $entreprise_id, $user_id
         ];
         DB::beginTransaction();
         try {
-            DB::insert('insert into responsables(nom_resp,prenom_resp,sexe_resp,date_naissance_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-        ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,?,1,NOW())', $data);
+            DB::insert('insert into responsables(nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
+        ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,1,NOW())', $data);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

@@ -290,7 +290,7 @@
                     </div>
                 </div>
 
-                <div class="form-row d-flex">
+                {{-- <div class="form-row d-flex">
                     <div class="col">
                         <label for="dte_resp" class="form-control-label" align="left">Date de Naissance<strong style="color:#ff0000;">*</strong></label>
                         <input required type="date" class="form-control mb-2" id="inlineFormInput" name="dte" />
@@ -303,7 +303,7 @@
                             <option value="S">Femme</option>
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-row d-flex">
                     <div class="col ms-2">

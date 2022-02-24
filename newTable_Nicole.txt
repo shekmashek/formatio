@@ -62,3 +62,16 @@ When Column_Name='adresse_region' then 'Region'
 End
 FROM INFORMATION_SCHEMA.columns
 WHERE table_schema = 'bdd_suivi_formation_version_1.1'  AND TABLE_NAME = 'responsables'
+INSERT INTO role_users(user_id,role_id) values (7,2) ;
+INSERT INTO role_users(user_id,role_id) values (4,2) ;
+INSERT INTO role_users(user_id,role_id) values (17,3) ;
+INSERT INTO role_users(user_id,role_id) values (17,2) ;
+
+
+
+Branche nouveau_entiter.1.0:
+        ALTER TABLE roles ADD COLUMN role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+        ALTER TABLE responsables ADD COLUMN matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+           ALTER TABLE chef_departements ADD COLUMN matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+            ALTER TABLE encaissements ADD COLUMN resp_cfp_id bigint(20) NOT NULL REFERENCES responsables_cfp(id) ON DELETE CASCADE;
+             ALTER TABLE encaissements ADD COLUMN nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;

@@ -104,8 +104,8 @@ class ParticipantController extends Controller
             }
 
             // $rqt = DB::select('SELECT * from v_stagiaire_entreprise WHERE entreprise_id = ' . $entreprise_id);
-            $rqt = DB::select('SELECT * from stagiaires WHERE entreprise_id = ' . $entreprise_id);
-            $datas = $rqt[0];
+            $datas = DB::select('SELECT * from stagiaires WHERE entreprise_id = ' . $entreprise_id);
+
             $ancien = DB::select('select * from v_historique_stagiaires where ancien_entreprise_id =' . $entreprise_id);
             // $datas = stagiaire::with('entreprise', 'User')->where('entreprise_id',[$entreprise_id])->get();
         }

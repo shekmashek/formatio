@@ -65,6 +65,13 @@
                 </div>
             </nav>
         </div> --}}
+
+        @if(Session::has('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        @endif
+
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">

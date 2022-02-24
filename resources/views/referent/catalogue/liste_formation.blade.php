@@ -4,7 +4,7 @@
     <div class="col-lg-3">
     </div>
 <div class="col-lg-9">
- 
+
 <div class="formation__search">
     <div class="formation__search__form">
         <form class="" method="GET" action="{{route('result_formation')}}">
@@ -25,7 +25,7 @@
     .btn{background-color: #801D68;color: white}
     .btn:hover{color:white}
 </style>
-   </div>   
+   </div>
 </div>
 <section class="liste__formation">
     <div class="container py-5">
@@ -35,6 +35,11 @@
                 <h2>{{$nom_formation}}</h2>
             @endisset
         </div>
+        @if(Session::has('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        @endif
         <div class="row">
             <div class="col-lg-3">
                 <div class="row liste__formation__recherche">
@@ -71,9 +76,15 @@
 
                             <div class="col-lg-6 col-md-6 liste__formation__result__content">
                                 <div class="liste__formation__result__item2">
-                                    <a href="#">
+                                    <form action="{{route('demande_devis.store')}}" method="post">
+                                        @csrf
+                                        <input type="text" hidden name="module_id" value="{{$info->module_id}}">
+                                        <button type="submit" class=" btn devis_form" style="background-color: : red">Démander un devis&nbsp;<i class="bx bxs-cart-add bx_icon"></i></button>
+                                    </form>
+
+                                    {{-- <a href="#">
                                         <h6 class="devis_form">Démander un devis&nbsp;<i class="bx bxs-cart-add bx_icon"></i></h6>
-                                    </a>
+                                    </a> --}}
                                     <p class="prix_ht"><span class="prix_ar">
                                         @php
                                             echo number_format($info->prix, 0, ' ', ' ');

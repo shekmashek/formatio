@@ -432,6 +432,7 @@ Route::get('page_modification/{encaissement_id?}','EncaissementController@modifi
 
 Route::get('montant_restant/{num_facture?}','EncaissementController@montant_reste_payer')->name('montant_restant');
 
+Route::get('pdf+liste+encaissement/{num_facture}','EncaissementController@generatePDF')->name('pdf+liste+encaissement');
 // ===========================  creation du facture
 
 Route::get('page_facture','FactureController@index')->name('page_facture');
@@ -808,3 +809,10 @@ Route::get('affichage_role','HomeController@affichage_role')->name('affichage_ro
 Route::post('remplir_info_resp','HomeController@remplir_info_resp')->name('remplir_info_resp');
 Route::post('remplir_info_stagiaire','HomeController@remplir_info_stagiaire')->name('remplir_info_stagiaire');
 Route::post('remplir_info_manager','HomeController@remplir_info_manager')->name('remplir_info_manager');
+
+//================ saisir employé,responsable,chef de département
+
+Route::resource('employeur','EmployeurController');
+
+// ============== demande de devis
+Route::resource('demande_devis', 'DemandeDevisController');
