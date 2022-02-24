@@ -1,50 +1,53 @@
 @extends('./layouts/admin')
 @section('content')
 <div class="container mb-3">
-    <div class="row text-center">
-        <div class="col">
-                <select name="mois" id="mois" class="filtre_projet">
-                    <option value="null" selected hidden>Mois</option>
-                    <option style="background-color: red;color: red;" value="1">Janvier</option>
-                    <option value="2">Février</option>
-                    <option value="3">Mars</option>
-                    <option value="4">Avril</option>
-                    <option value="5">Mai</option>
-                    <option value="6">Juin</option>
-                    <option value="7">Juillet</option>
-                    <option value="8">Août</option>
-                    <option value="9">Septembre</option>
-                    <option value="10">Octobre</option>
-                    <option value="11">Novembre</option>
-                    <option value="12">Décembre</option>
-                </select>
-            </button>
+    <form action="{{ route('liste_projet') }}" method="GET">
+        <input type="hidden" name="type_formation" value="{{ $type_formation_id }}">
+        <div class="row text-center">
+                <div class="col">
+                        <select name="mois" id="mois" class="filtre_projet">
+                            <option value="null" selected>Mois</option>
+                            <option style="background-color: red;color: red;" value="1">Janvier</option>
+                            <option value="2">Février</option>
+                            <option value="3">Mars</option>
+                            <option value="4">Avril</option>
+                            <option value="5">Mai</option>
+                            <option value="6">Juin</option>
+                            <option value="7">Juillet</option>
+                            <option value="8">Août</option>
+                            <option value="9">Septembre</option>
+                            <option value="10">Octobre</option>
+                            <option value="11">Novembre</option>
+                            <option value="12">Décembre</option>
+                        </select>
+                    </button>
+                </div>
+                <div class="col">
+                    <select name="trimestre" id="trimestre" class="filtre_projet">
+                        <option value="null" selected>Trimestres</option>
+                        <option value="1">1e Trimestre</option>
+                        <option value="2">2e Trimestre</option>
+                        <option value="3">3e Trimestre</option>
+                        <option value="4">4e Trimestre</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select name="semestre" id="semestre" class="filtre_projet">
+                        <option value="null" selected>Semestres</option>
+                        <option value="1">1e Semestre</option>
+                        <option value="2">2e Semestre</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select name="annee" id="annee" class="filtre_projet">
+                        <option value="null" selected >Années</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button class="btn btn_filtre filtre_appliquer" type="submit">Appliquer</button>
+                </div>
         </div>
-        <div class="col">
-            <select name="trimestre" id="trimestre" class="filtre_projet">
-                <option value="null" selected hidden>Trimestres</option>
-                <option value="1">1e Trimestre</option>
-                <option value="2">2e Trimestre</option>
-                <option value="3">3e Trimestre</option>
-                <option value="4">4e Trimestre</option>
-            </select>
-        </div>
-        <div class="col">
-            <select name="semestre" id="semestre" class="filtre_projet">
-                <option value="null" selected hidden>Semestres</option>
-                <option value="1">1e Semestre</option>
-                <option value="2">2e Semestre</option>
-            </select>
-        </div>
-        <div class="col">
-            <select name="annee" id="annee" class="filtre_projet">
-                <option value="null" selected hidden>Années</option>
-            </select>
-        </div>
-        <div class="col">
-            <button class="btn btn_filtre filtre_appliquer" type="button">Appliquer</button>
-        </div>
-    </div>
+    </form>
 </div>
 <div class="shadow p-3 mb-5 bg-body rounded">
 
@@ -58,7 +61,7 @@
                 aria-controls="collapseprojet"><i
                     class="bx bx-caret-down carret-icon"></i>&nbsp;{{$prj->nom_projet.'('.$prj->totale_session.')'}}&nbsp;&nbsp;&#10148;&nbsp;@php
                 setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($prj->date_projet)); @endphp @if ($type_formation_id == 1)
-                    {{ $data[0]->nom_etp }}
+                    {{-- {{ $data[0]->nom_etp }} --}}
                 @endif
             </h6>
             <span type="button" class="btn_plus m-0" data-bs-toggle="modal"

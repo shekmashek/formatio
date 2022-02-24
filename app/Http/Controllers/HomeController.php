@@ -134,6 +134,8 @@ class HomeController extends Controller
 
     public function liste_projet(Request $request, $id = null)
     {
+        $projet_model = new projet();
+
         $fonct = new FonctionGenerique();
 
         $user_id = Auth::user()->id;
@@ -143,7 +145,7 @@ class HomeController extends Controller
         $type_formation_id = $request->type_formation;
         //récupérer id de l'utilisateur en fonction de l'email
         $role_id = User::where('email', Auth::user()->email)->value('role_id');
-
+        $data = [];
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
 
             //on récupère tous les projets de formation
@@ -178,7 +180,10 @@ class HomeController extends Controller
         } elseif (Gate::allows('isCFP')) {
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
+            $sql = $projet_model->build_requette($cfp_id,$type_formation_id,"v_projet_session",$request);
+            // dd($sql);
+            $projet = DB::select($sql);
+            // $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
             if($type_formation_id == 1){
                 $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
             }

@@ -257,8 +257,8 @@
                     <div class="panel-body">
                         @canany(['isCFP'])
                             <nav class="d-flex justify-content-end mb-1">
-                                <a class="nouveau_detail btn" aria-current="page" data-toggle="modal"
-                                    data-target="#modal_nouveau_detail">
+                                <a class="nouveau_detail btn" aria-current="page" data-bs-toggle="modal"
+                                    data-bs-target="#modal_nouveau_detail">
                                     <i class="bx bx-plus p-1"></i>
                                     <small>Nouveau détail</small></a>
                             </nav>
@@ -294,8 +294,8 @@
                                             <td>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}</td>
                                             @canany(['isCFP'])
                                                 <td>
-                                                    <a href="" aria-current="page" data-toggle="modal"
-                                                    data-target="#modal_modifier_detail_{{ $d->detail_id }}"><i class="fa fa-edit ms-2" style="color:rgb(130,33,100);"></i></a>
+                                                    <a href="" aria-current="page" data-bs-toggle="modal"
+                                                    data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i class="fa fa-edit ms-2" style="color:rgb(130,33,100);"></i></a>
                                                     <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a>
                                                 </td>
                                             @endcanany
@@ -352,7 +352,7 @@
                                                     max="18:08" value="{{ $d->h_fin }}">
                                             </div>
                                             <div class="d-flex justify-content-around mb-3">
-                                                <button class="btn btn-danger"  data-dismiss="modal">Annuler</button>
+                                                <button class="btn btn-danger"  data-bs-dismiss="modal">Annuler</button>
                                                 <input type="submit" id="ajouter" style="background-color: #822164" class="btn btn-primary" value="Modifier">
                                             </div>
                                         </form>
@@ -411,8 +411,8 @@
                                                 <input type="time" class="form-control" id="fin" name="fin[]" min="08:00"
                                                     max="18:08">
                                             </div>
-                                            <div class="d-flex justify-content-center mb-3">
-                                                <input type="submit" id="ajouter" class="btn btn-primary" value="Ajouter">
+                                            <div class="d-flex justify-content-center mt-2 mb-3 ">
+                                                <input type="submit" id="ajouter" class="btn inserer_emargement" value="Ajouter">
                                             </div>
                                         </form>
                                     </div>
