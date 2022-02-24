@@ -102,11 +102,13 @@
                                     <p class="p-1 m-0" style="font-size: 10px;">TITRE<span style="float: right;">{{$testNull[0]->titre}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     @else
-                                        <select  value="" name="titre_stg" class="" id="titre_stg"  >
+                                    <p class="p-1 m-0" style="font-size: 10px;">TITRE
+                                        <select  value="" name="titre_stg" class="" id="titre_stg" style="float: right;" >
                                             <option value="Mr">Mr</option>
                                             <option value="Mme">Mme</option>
                                             <option value="Mme">Mlle</option>
                                         </select>
+                                    </p>
                                     @endif
                                 </div>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
@@ -181,7 +183,7 @@
                                     @if($testNull[0]->ville==null)
                                     <p class="p-1 m-0" style="font-size: 10px;">VILLE<input type="text" name="ville" style="float: right;"></p>
                                     @endif
-                                    @if($testNull[0]->code_postal=null)
+                                    @if($testNull[0]->code_postal==null)
                                     <p class="p-1 m-0" style="font-size: 10px;">CODE POSTAL<input type="text" name="code_postal" style="float: right;"></p>
                                     @endif
                                     @if($testNull[0]->region==null)
@@ -220,7 +222,7 @@
                                     <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<span style="float: right;">{{$testNull[0]->niveau_etude}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     @else
-                                    <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<input type="date" name="niveau_stg" style="float: right;"></p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<input type="text" name="niveau_stg" style="float: right;"></p>
                                     @endif
                                 </div>
 
