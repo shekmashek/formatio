@@ -558,7 +558,7 @@ Route::get('ajoutPlan', 'PlanFormationController@afficherDetail')->name('ajoutPl
 // =======================  DEPARTEMENT
 Route::resource('departement','DepartementController');
 Route::get('/show_dep','DepartementController@show')->name('show_dep');
-Route::get('liste_chefDepartement','DepartementController@liste')->name('liste_chefDepartement');
+Route::get('employes','DepartementController@liste')->name('employes');
 Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')->name('affProfilChefDepartement');
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement','ChefDepartementController');

@@ -58,12 +58,17 @@ class DepartementController extends Controller
 
     public function liste()
     {
+        //on va récupérer la liste des employes
         $user_id = Auth::user()->id;
         $etp_id = responsable::where('user_id',[$user_id])->value('entreprise_id');
+
+        $referent = DB::select('select * from responsables where entreprise_id = ?', [$etp_id]);
         $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
+        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
 
-
-        return view('admin.chefDepartement.liste', compact('chef'));
+        $user_role = DB::select('select * from v_user_role');
+        $roles = DB::select('select * from roles');
+        return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
     }
 
     public function create()
