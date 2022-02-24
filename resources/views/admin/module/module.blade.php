@@ -18,21 +18,10 @@
                                     class="btn_enregistrer text-center {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
                                     href="{{route('liste_formation')}}">Precedent</a> --}}
                             </div>
-                            {{-- <div class="col search_formatiom"> --}}
-                                <div class="col">
-                                    <form action="">
-                                        <div class="row w-100">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control"
-                                                    placeholder="Chercher des formations...">
-                                                <span class="input-group-addon success"><a href="#ici"><span
-                                                            class="bx bx-search" role="button"></span></a></span>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col text-center">
-                                    <a href="{{route('nouveau_module')}}" class="btn_enregistrer">Nouvelle Module</a>
+
+
+                                <div class="col text-end">
+                                    <a href="{{route('nouveau_module')}}" class="btn_enregistrer text-center">Nouvelle Module</a>
                                 </div>
                                 @endcan
                             </div>
@@ -57,6 +46,14 @@
                 <li class="nav-item">
                     <a href="#listes_publiees" class="nav-link" data-bs-toggle="tab">Listes Modules
                         Publiées&nbsp;({{count($mod_publies)}})</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#listes_publiees" class="nav-link" data-bs-toggle="tab">Modules
+                        Intra&nbsp;({{count($mod_publies)}})</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#listes_publiees" class="nav-link" data-bs-toggle="tab">Modules
+                        Inter&nbsp;({{count($mod_publies)}})</a>
                 </li>
             </ul>
 
@@ -231,9 +228,9 @@
                             <div class="container-fluid">
                                 <div class="col-lg-12" id="preview_haut">
                                     <div class="container py-4 bg-light">
-                                        <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5"
+                                        <div class="row  bg-light justify-content-space-between py-3 px-5"
                                             id="border_premier">
-                                            <div class="col-lg-6 col-md-6 detail__formation__result__content new_back">
+                                            <div class="col-lg-6 col-md-6 new_back">
                                                 <div class="detail__formation__result__item ">
                                                     <h4><span id="preview_categ"><span class="py-4 acf-categorie"
                                                                 id="nom_formation"></span></span><span
@@ -434,18 +431,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <hr class="hr">
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="col-lg-12 detail__prix__main__btn py-5">
-                                                        <button type="button" class="btn">Demander un dévis</button>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary " id="fermer"
+                                    <button type="button" class="btn btn_next " id="fermer"
                                         data-bs-dismiss="modal">
                                         Fermer </button>
                                 </div>
@@ -538,7 +530,7 @@
                                         <div
                                             class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
                                             <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
+                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important; font-size: 0.800rem"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>

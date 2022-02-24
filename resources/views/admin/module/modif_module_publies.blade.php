@@ -1,5 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <div id="page-wrapper">
     <div class="container-fluid bg-light">
         <nav class="navbar navbar-expand-lg w-100">

@@ -14,7 +14,6 @@
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
-    <link href='https://unpkg.com/boxicons@2.1.1/dist/boxicons.js' rel='stylesheet'>
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 </head>
 
@@ -636,7 +635,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body" style="padding-bottom: 1rem; padding-top: 2.7rem;">
+            <div class="container-fluid content_body" style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
             </div>
             {{-- content --}}

@@ -612,7 +612,7 @@ function Cours() {
     html +=     '<div class="col-11">';
     html +=         '<div class="form-group">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="text" name="cours[]" id="cours" class="form-control label_placeholder" required>';
+    html +=                 '<input type="text" name="cours[]" id="cours" class="form-control input" required>';
     html +=                 '<label for="cours" class="form-control-placeholder">Nouveau Cours';
     html +=                 '</label>';
     html +=             '</div>';
@@ -622,7 +622,7 @@ function Cours() {
     html +=     '<div class="col-1">';
     html +=         '<div class="mt-3">';
     html +=             '<div class="form-row">';
-    html +=                 '<button id="removeRow" class="form-control btn" type="button">';
+    html +=                 '<button id="removeRow" class="form-control btn_previous button_plus" type="button">';
     html +=                     '<i class="bx bx-minus" style="font-size: 20px">';
     html +=                     '</i>';
     html +=                 '</button>';

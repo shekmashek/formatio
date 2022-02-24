@@ -917,9 +917,9 @@ input:-webkit-autofill:active {
 
 .btn_enregistrer:hover {
     /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: #7535dc2f;
+    background-color: #7635dc;
     transform: scale(1.05);
-    color: #7635dc;
+    color: White;
 }
 .btn_annuler {
     padding: 5px;
@@ -939,9 +939,9 @@ input:-webkit-autofill:active {
 
 .btn_annuler:hover {
     /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: rgba(255, 0, 0, 0.151);
+    background-color: red;
     transform: scale(1.05);
-    color: red;
+    color: white;
 }
 
 
@@ -986,3 +986,50 @@ input:-webkit-autofill:active {
     fin footer
 -----------------------*/
 
+
+.detail__formation__result {
+
+    box-sizing: border-box;
+    background-color: #7635dc;
+    width: 25rem;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin: auto;
+    margin-top: 20px;
+    height: 20rem;
+    border-radius: 5px;
+}
+
+.detail__formation__result h4{
+    font-size: 1rem;
+    font-weight: 300;
+    color: #7635dc !important;
+}
+
+.detail__formation__result h4 span{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #7635dc !important;
+}
+
+.detail__formation__result__avis .bx{
+    color: #7635dc;
+}
+
+.detail__prix__head {
+    color: white;
+    background-color: red;
+    text-align: center;
+}
+
+.btn_competence{
+    background: #7635dc;
+    color: #f1f1f1;
+    transition: all 0.5s ease;
+}
+
+.btn_competence:hover{
+    color: #7635dc;
+    transform: scale(1.1);
+    background: #7535dc28;
+}

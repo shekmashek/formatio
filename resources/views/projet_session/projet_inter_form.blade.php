@@ -1,5 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container p-0">
     <div class="row">
         <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5>

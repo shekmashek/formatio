@@ -1,5 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container">
     <div class="row card_projets">
         <h3 class="text-center mt-5 mb-5">Formation continue : former en inter et en intra</h3>

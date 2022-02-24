@@ -1,5 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <div id="page-wrapper">
     <div class="container-fluid bg-light">
         <nav class="navbar navbar-expand-lg w-100">
@@ -8,8 +9,8 @@
                     <div class="row g-0 m-0" style="align-items: center">
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            <div class="col">
-                                <h3 class="mt-2">Modification modules avec aperçu</h3>
+                            <div class="col titre_page">
+                                <h3 class="mt-2">Modification Modules</h3>
                             </div>
                             <div class="col search_formatiom">
                                 {{-- <form action="">

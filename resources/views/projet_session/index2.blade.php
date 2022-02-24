@@ -1,5 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container mb-3">
     <div class="row text-center">
         <div class="col">
