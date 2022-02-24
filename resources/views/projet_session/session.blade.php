@@ -20,7 +20,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}"> <i class="fa fa-circle-xmark mt-4 me-3" href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}">&nbsp;Annuler</i> </a>
+            <a href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}"> <i class="bx bx-x mt-4 me-3" href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}">&nbsp;Annuler</i> </a>
         </div>
     </nav>
     <section class="bg-light py-1">
@@ -245,7 +245,7 @@
 }
 
 .body_nav{
-    background-color: rgb(130,33,100);
+    background-color: #7635dc;
     color: whitesmoke;
     padding: 6px 8px;
     border-radius: 4px 4px 0 0;

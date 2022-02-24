@@ -369,8 +369,9 @@ create or replace view v_detail_presence as
              when p.status = 1 then 'Présent'
         end as text_status,
         case when p.status = 0 then '#ff0000'
-             when p.status = 1 then '#00ff00'
-        end as color_status
+             when p.status = 1 then '#7635dc'
+        end as color_status,
+        p.note
     from details d join presences p on d.id = p.detail_id order by p.stagiaire_id asc;
 
 

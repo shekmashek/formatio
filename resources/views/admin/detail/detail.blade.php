@@ -57,6 +57,20 @@
     p {
         text-align: center !important;
     }
+    .nouveau_detail{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        border-radius: 10px;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .nouveau_detail:hover{
+        color: #7635dc;
+        border-radius: 10px;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
 
 </style>
 
@@ -245,9 +259,8 @@
                             <nav class="d-flex justify-content-end mb-1">
                                 <a class="nouveau_detail btn" aria-current="page" data-toggle="modal"
                                     data-target="#modal_nouveau_detail">
-                                    <i class="far fa-plus p-1"
-                                        style="background-color: rgb(255, 255, 255); border-radius: 50%; font-weight: bold; color:#822164"></i>
-                                    <small class="text-white">Nouveau détail</small class="text-white"></a>
+                                    <i class="bx bx-plus p-1"></i>
+                                    <small>Nouveau détail</small></a>
                             </nav>
                         @endcanany
                         <div class="table-responsive">

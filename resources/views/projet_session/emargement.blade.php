@@ -15,9 +15,9 @@
         <hr class="m-2 p-0">
     </div>
     @foreach ($datas as $dt)
-    @php
-        $status = '';
-    @endphp
+        @php
+            $status = '';
+        @endphp
         <form action="{{ route('insert_presence_detail') }}" method="post" id="insert_form">
             @csrf
             <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
@@ -44,14 +44,14 @@
                                 <div class="col-md-2 text-center">{{ $pre->nom_stagiaire }}</div>
                                 <div class="col-md-2 text-center">{{ $pre->prenom_stagiaire }}</div>
                                 <div class="col-md-3 text-center" id="resultat_presence_{{ $dt->detail_id . $pre->stagiaire_id }}">
-                                    <label style="color: green;">
+                                    <label class="present_label">
                                         <input class="m-2 present" type="radio" id="present"
                                             data-id="{{ $dt->detail_id . $pre->stagiaire_id }}"
                                             name="attendance[{{ $dt->detail_id }}][{{ $pre->stagiaire_id }}]" value="1"
                                             required>
                                         Présent
                                     </label>
-                                    <label style="color: red;">
+                                    <label class="absent_label">
                                         <input class="m-2 absent" type="radio" id="absent"
                                             data-id="{{ $dt->detail_id . $pre->stagiaire_id }}"
                                             name="attendance[{{ $dt->detail_id }}][{{ $pre->stagiaire_id }}]" value="0"
@@ -100,55 +100,8 @@
                     @endforeach  
                     @if ($status == 'non')
                         <div align="center">
-                            <button type="submit" form="insert_form" class="btn-success w-25">Enregistrer</button>
+                            <input type="submit" name="insert_form"  class="btn inserer_emargement w-25" value="Enregistrer">
                         </div>
-                    @elseif ($status == 'oui')
-                        {{-- <div align="center">
-                            <button type="button" class="btn btn-inverse-light w-25" data-bs-toggle="modal" data-bs-target="#modifier_presence_{{ $dt->detail_id }}"><i class="fa fa-edit"></i>&nbsp;Modifier </button>
-                        </div>
-                        <div class="modal fade" id="modifier_presence_{{ $dt->detail_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                              <div class="modal-content w-auto">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Modification presence</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body w-auto">
-                                    <form action="{{ route('modifier_presence') }}" method="POST">
-                                        <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
-                                        <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
-                                        @foreach ($stagiaire as $stg)
-                                            <div class="row m-0 p-0 d-flex flex-grow">
-                                                <div class="col-md-1 text-center">{{ $stg->matricule }}</div>
-                                                <div class="col-md-2 text-center">{{ $stg->nom_stagiaire }}</div>
-                                                <div class="col-md-2 text-center">{{ $stg->prenom_stagiaire }}</div>
-                                                <div class="col-md-3 text-center" id="resultat_presence_{{ $dt->detail_id . $stg->stagiaire_id }}">
-                                                    <label style="color: green;">
-                                                        <input class="m-2 present" type="radio" id="present"
-                                                            data-id="{{ $dt->detail_id . $stg->stagiaire_id }}"
-                                                            name="attendance[{{ $dt->detail_id }}][{{ $stg->stagiaire_id }}]" value="1"
-                                                            required>
-                                                        Présent
-                                                    </label>
-                                                    <label style="color: red;">
-                                                        <input class="m-2 absent" type="radio" id="absent"
-                                                            data-id="{{ $dt->detail_id . $pre->stagiaire_id }}"
-                                                            name="attendance[{{ $dt->detail_id }}][{{ $stg->stagiaire_id }}]" value="0"
-                                                            required>
-                                                        Absent
-                                                    </label>
-                                                </div>
-                                                
-                                                </tr>
-                                            </div>
-                                        @endforeach
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuller</button>
-                                        <button type="submit" class="btn btn-primary">Modifier</button>
-                                    </form>
-                                </div>
-                              </div>
-                            </div>
-                          </div> --}}
                     @endif
                 </div>
             </div>
@@ -164,7 +117,36 @@
     .answer~.answer {
         display: none;
     }
-
+    .edit_pointage{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .edit_pointage:hover{
+        color: #7635dc;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
+    .inserer_emargement{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .inserer_emargement:hover{
+        color: #7635dc;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
+    .present_label{
+        color: #7635dc !important;
+    }
+    .absent_label{
+        color: red;
+    }
 </style>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -204,7 +186,7 @@
     $(document).ready(function() {
         $(".edit_presence").click(function() {
             var $toggle = $(this);
-            var id = "#edit_emargement_" + $toggle.data('detail')+$toggle.data('stagiaire');
+            var id = "#edit_emargement_" + $toggle.data('detail')+$toggle.data('stagiaire');;
             var stg = $toggle.data('stagiaire');
             var detail = $toggle.data('detail');
             $.ajax({
@@ -217,43 +199,49 @@
                 dataType: "html",
                 success: function(response) {
                     var userData = JSON.parse(response);
-                    alert(userData['nom_stagiaire']);
                     var html = '';
                     html += '<div class="row m-0 p-0 d-flex flex-grow">';
                     html += '<div class="col-md-1 text-center">'+userData['matricule']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['nom_stagiaire']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['prenom_stagiaire']+'</div>';
-                    html += '<div class="col-md-3 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';            
-                    html += '<label style="color: green;">';
-                    html += '<input class="m-2 present" type="radio" id="present" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="1" required>';
-                    html += 'Présent';
+                    html += '<div class="col-md-2 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';            
+                    html += '<label class="present_label">';
+                    html += '<input class="m-2 present" type="radio" id="present" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance" value="1" required>';
+                    html += '<span class="present_label">Présent</span>';
                     html += '</label>';
-                    html += '<label style="color: red;">';
-                    html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" required>';          
+                    html += '<label class="absent_label">';
+                    html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance" value="0" required>';          
                     html += 'Absent';
                     html += '</label>';
                     html += '</div>';
                     html += '<div class="col-md-2">';
-                    html += '<div class="row" class="pointage" id="pointage_'+userData['detail_id']+userData['stagiaire_id']+'">';         
+                    html += '<div class="row" class="pointage" id="pointage">';         
                     html += '<div class="col-md-6 text-center p-0 m-0">';
-                    html += '<input type="time" class="m-0 pointage_entree" name="h_entree['+userData['detail_id']+']['+userData['stagiaire_id']+']" style="width: 67.1px" onfocus="(this.type="time")" >';                 
+                    html += '<input type="time" class="m-0 pointage_entree" value="'+userData['h_debut']+'" name="edit_h_entree" style="width: 67.1px" onfocus="(this.type="time")" >';                 
                     html += '</div>';            
                     html += '<div class="col-md-6 text-center p-0 m-0">';            
-                    html += '<input type="time" class="m-0 pointage_sortie" name="h_sortie['+userData['detail_id']+']['+userData['stagiaire_id']+']" style="width: 67.1px" onfocus="(this.type="time")" >';                            
+                    html += '<input type="time" class="m-0 pointage_sortie" value="'+userData['h_fin']+'" name="edit_h_sortie" style="width: 67.1px" onfocus="(this.type="time")" >';                            
                     html += '</div>';                    
                     html += '</div>';
                     html += '</div>';                            
                     html += '<div class="col-md-2 p-0">';
-                    html += '<input type="text" class="mt-0 p-0" name="note_desc['+userData['detail_id']+']['+userData['stagiaire_id']+']" placeholder="Note(s)">';                    
+                    html += '<input type="text" class="mt-0 p-0 m-0" value="'+userData['note']+'"  name="edit_note_desc" placeholder="Note(s)">';                    
                     html += '</div>';
-                    html += '</tr>';                    
-                    html += '</div>';            
-
-                    // if(userData['status'] == 1){
-                    //     $(id+'>present').find(':radio[name^=attendance][value="1"]').prop('checked', true);
-                    // }elseif(userData['status'] == 0){
-                    //     $(id+'>absent').find(':radio[name^=attendance][value="0"]').prop('checked', true);
-                    // }                  
+                    html += '<input type="hidden" name="edit_stg_id" value="'+userData['stagiaire_id']+'">';  
+                    html += '<input type="hidden" name="edit_detail_id" value="'+userData['detail_id']+'">';
+                    html += '<div class="col-md-1 mt-0 p-0">';  
+                    html += '<input type="submit" name="edit_form"  class="btn edit_pointage" value="Modifier">';                   
+                    html += '</div>';
+                    html += '</tr>';              
+                    html += '</div>';
+                    
+                    
+                    if(userData['status'] == 1){
+                        $('#present').prop("checked", true);
+                    }
+                    if(userData['status'] == 0){
+                        $('#absent').prop("checked", true);
+                    }                  
 
                     $(id).html(html);
                 },
@@ -265,59 +253,59 @@
         });
     });
 
-    $(document).on('click', '#add_presence', function(e) {
-        var id_detail = $(this).data('id');
-        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
-        var attendance = [];
-        $("input[type='radio'][name^='attendance']:checked").map(function() {
-            attendance.push($(this).val());
-        });
-        var pointage_entree = $("input[name^='h_entree[]']").map(function() {
-            return $(this).val();
-        }).get();
-        var pointage_sortie = $("input[name^='h_sortie[]']").map(function() {
-            return $(this).val();
-        }).get();
-        var note = $("input[name^='note_desc[]']").map(function() {
-            return $(this).val();
-        }).get();
-        $.ajax({
-            type: "GET",
-            url: "{{route('insert_presence_detail')}}",
-            data:{
-                presence:attendance,
-                groupe:groupe_id,
-                detail_id:id_detail,
-                entree:pointage_entree,
-                sortie:pointage_sortie,
-                note_desc:note
-            },
-            dataType: "html",
-            success: function(response) {
-                alert('eto');
-                var userData = JSON.parse(response);
-                for (let i = 0; i < userData.length; i++) {
-                    var html = '';
-                    var div_presence = 'resultat_presence_';
-                    var div_pointage = 'pointage_';
-                    html += '<label style="color:'+userData[i].color_status+'">';
-                    html += userData[i].text_status;
-                    html += '</label>';
+    // $(document).on('click', '#add_presence', function(e) {
+    //     var id_detail = $(this).data('id');
+    //     var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+    //     var attendance = [];
+    //     $("input[type='radio'][name^='attendance']:checked").map(function() {
+    //         attendance.push($(this).val());
+    //     });
+    //     var pointage_entree = $("input[name^='h_entree[]']").map(function() {
+    //         return $(this).val();
+    //     }).get();
+    //     var pointage_sortie = $("input[name^='h_sortie[]']").map(function() {
+    //         return $(this).val();
+    //     }).get();
+    //     var note = $("input[name^='note_desc[]']").map(function() {
+    //         return $(this).val();
+    //     }).get();
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "{{route('insert_presence_detail')}}",
+    //         data:{
+    //             presence:attendance,
+    //             groupe:groupe_id,
+    //             detail_id:id_detail,
+    //             entree:pointage_entree,
+    //             sortie:pointage_sortie,
+    //             note_desc:note
+    //         },
+    //         dataType: "html",
+    //         success: function(response) {
+    //             alert('eto');
+    //             var userData = JSON.parse(response);
+    //             for (let i = 0; i < userData.length; i++) {
+    //                 var html = '';
+    //                 var div_presence = 'resultat_presence_';
+    //                 var div_pointage = 'pointage_';
+    //                 html += '<label style="color:'+userData[i].color_status+'">';
+    //                 html += userData[i].text_status;
+    //                 html += '</label>';
 
-                    div_presence +=  userData[i].detail_id;
-                    div_presence += userData[i].stagiaire_id;
+    //                 div_presence +=  userData[i].detail_id;
+    //                 div_presence += userData[i].stagiaire_id;
 
-                    div_pointage +=  userData[i].detail_id;
-                    div_pointage += userData[i].stagiaire_id;
+    //                 div_pointage +=  userData[i].detail_id;
+    //                 div_pointage += userData[i].stagiaire_id;
 
-                    $("'#"+div_presence+"'").append(html);
-                    $("'#"+div_pointage+"'").hide();
-                }
+    //                 $("'#"+div_presence+"'").append(html);
+    //                 $("'#"+div_pointage+"'").hide();
+    //             }
 
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
+    //         },
+    //         error: function(error) {
+    //             console.log(error);
+    //         }
+    //     });
+    // });
 </script>

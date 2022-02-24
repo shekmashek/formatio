@@ -25,6 +25,7 @@ use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
 use App\Models\getImageModel;
+use App\Presence;
 
 class SessionController extends Controller
 {
@@ -272,25 +273,36 @@ class SessionController extends Controller
     }
 
     public function insert_presence(Request $request){
-        $presence = $request->attendance;
-        $groupe_id = $request->groupe;
-        $detail_id = $request->detail_id;
-        $h_entree = $request->entree;
-        $h_sortie = $request->sortie;
-        $note = $request->note_desc;
-        $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
-        $detail = DB::select('select h_debut,h_fin from details where id = ?',[$detail_id]);
-        foreach($stagiaire as $stg){
-            if(empty($h_entree[$detail_id][$stg->stagiaire_id])){
-                $h_entree[$detail_id][$stg->stagiaire_id] = $detail[0]->h_debut;
+        if(isset($request->edit_form)){
+            $presence = $request->edit_attendance;
+            $h_entree = $request->edit_h_entree;
+            $h_sortie = $request->edit_h_sortie;
+            $note = $request->edit_note_desc;
+            $detail_id = $request->edit_detail_id;
+            $stg_id = $request->edit_stg_id;
+            DB::update('update presences set status = ? , h_entree = ? , h_sortie = ? , note = ? where detail_id = ? and stagiaire_id = ?', [$presence,$h_entree,$h_sortie,$note,$detail_id,$stg_id]);
+        }
+        if(isset($request->insert_form)){
+            $groupe_id = $request->groupe;
+            $detail_id = $request->detail_id;
+            $presence = $request->attendance;
+            $h_entree = $request->entree;
+            $h_sortie = $request->sortie;
+            $note = $request->note_desc;
+            $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
+            $detail = DB::select('select h_debut,h_fin from details where id = ?',[$detail_id]);
+            foreach($stagiaire as $stg){
+                if(empty($h_entree[$detail_id][$stg->stagiaire_id])){
+                    $h_entree[$detail_id][$stg->stagiaire_id] = $detail[0]->h_debut;
+                }
+                if(empty($h_sortie[$detail_id][$stg->stagiaire_id])){
+                    $h_sortie[$detail_id][$stg->stagiaire_id] = $detail[0]->h_fin;
+                }
+                if(empty($note[$detail_id][$stg->stagiaire_id])){
+                    $note[$detail_id][$stg->stagiaire_id] = "";
+                }
+                DB::insert('insert into presences(stagiaire_id,detail_id,status,h_entree,h_sortie,note) values(?,?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$detail_id][$stg->stagiaire_id],$h_entree[$detail_id][$stg->stagiaire_id],$h_sortie[$detail_id][$stg->stagiaire_id],$note[$detail_id][$stg->stagiaire_id]]);
             }
-            if(empty($h_sortie[$detail_id][$stg->stagiaire_id])){
-                $h_sortie[$detail_id][$stg->stagiaire_id] = $detail[0]->h_fin;
-            }
-            if(empty($note[$detail_id][$stg->stagiaire_id])){
-                $note[$detail_id][$stg->stagiaire_id] = "";
-            }
-            DB::insert('insert into presences(stagiaire_id,detail_id,status,h_entree,h_sortie,note) values(?,?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$detail_id][$stg->stagiaire_id],$h_entree[$detail_id][$stg->stagiaire_id],$h_sortie[$detail_id][$stg->stagiaire_id],$note[$detail_id][$stg->stagiaire_id]]);
         }
         // $presence_detail = DB::select("select * from v_detail_presence where detail_id = ? order by stagiaire_id asc", [$detail_id]);
         return back();
