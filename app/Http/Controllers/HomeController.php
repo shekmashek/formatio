@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\abonnement_cfp;
+use App\abonnement;
+use App\offre_gratuit;
+use App\type_abonnement;
+use App\tarif_categorie;
+use App\type_abonne;
+use App\type_abonnement_role;
 use App\Facture;
 use App\detail;
 use App\entreprise;
@@ -13,6 +20,7 @@ use App\formation;
 use App\module;
 use App\projet;
 use App\responsable;
+use App\ResponsableCfpModel;
 use App\stagiaire;
 use App\User;
 use Illuminate\Support\Facades\Gate;
@@ -47,7 +55,7 @@ class HomeController extends Controller
 
     // }
 
-    public function index(Request $request)
+    public function index(Request $request, $id = null)
     {
         if (Gate::allows('isStagiaire')) {
             $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
@@ -88,17 +96,22 @@ class HomeController extends Controller
         if (Gate::allows('isCFP')) {
             $fonct = new FonctionGenerique();
 
+            $user_id = Auth::user()->id;
+            $cfp = Cfp::where('user_id', $user_id)->value('nom');
+            // cfp_id
+            $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
             // $centre_fp = cfp::where('user_id', $user_id)->value('id');
 
-            // $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
-            //     year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
-            //     INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
-            //     year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
+            $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
+                year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
+                INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
+                year(invoice_date) order by MONTH( invoice_date),year(invoice_date) desc');
 
-            // $CA_actuel = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where YEAR(invoice_date)=year(now()) and cfp_id = ' . $centre_fp . ' ');
-            // $CA_precedent = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' ');
+            $CA_actuel = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where YEAR(invoice_date)=year(now()) and cfp_id = ' . $centre_fp . ' ');
+            $CA_precedent = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as total_ht,ROUND(IFNULL(SUM(net_ttc),0),2) as total_ttc from v_facture_existant where year(invoice_date)=YEAR(DATE_SUB(now(), INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' ');
 
             // debut
             // $formations = formation::where('cfp_id', $centre_fp)->value('id');
@@ -109,11 +122,47 @@ class HomeController extends Controller
             // debut top 10 par client
             // fin top 10 par client
             // dd($user_id, $centre_fp, $top_10_par_client);
-            $user_id = Auth::user()->id;
-            $cfp = Cfp::where('user_id', $user_id)->value('nom');
+
+
+
+
             $drive = new getImageModel();
             $drive->create_sub_folder($cfp,"Mes documents");
-            return view('layouts.dashboard');
+
+            $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
+            $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
+            $resp_cfp = DB::select('select * from responsables_cfp where user_id = ' . $user_id . ' ');
+
+            $module_publié = DB::select('select * from modules where status = 2 and cfp_id = ' . $cfp_id . ' ');
+            $module_encours_publié = DB::select('select * from modules where status = 1 and cfp_id = ' . $cfp_id . ' ');
+
+            $facture_paye = DB::select('select * from v_facture_actif where facture_encour = "terminer" and cfp_id = ' . $cfp_id . ' ');
+            $facture_non_echu = DB::select('select * from v_facture_actif where facture_encour = "en_cours" and cfp_id = ' . $cfp_id . ' ');
+            $facture_brouillon = DB::select('select * from v_facture_inactif where cfp_id = ' . $cfp_id . ' ');
+
+            $session_intra_terminer = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 4 and cfp_id = ' . $cfp_id . ' ');
+            $session_intra_previ = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 1 and cfp_id = ' . $cfp_id . ' ');
+            $session_intra_en_cours = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 3 and cfp_id = ' . $cfp_id . ' ');
+            $session_intra_avenir = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 2 and cfp_id = ' . $cfp_id . ' ');
+
+            $nom_profil_organisation = cfp::where('user_id', $user_id)->value('nom');
+
+
+            $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
+            // $abn =type_abonnement::all();
+
+            $typeAbonne_id = 2;
+            $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
+            $name = DB::select('select nom_type from type_abonnements where id = '. $typeAbonnement .' ');
+
+            if ($id!=null) {
+                $ref = $fonct->findWhereMulitOne("cfps",["id"],[$id]);
+            }
+            else{
+                $ref = $fonct->findWhereMulitOne("cfps",["user_id"],[Auth::user()->id]);
+            }
+
+            return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation','ref','formateur','dmd_cfp_etp','resp_cfp','module_publié','module_encours_publié','facture_paye','facture_non_echu','facture_brouillon','session_intra_terminer','session_intra_previ','session_intra_en_cours','session_intra_avenir','name'));
         }
         // else {
         //     $totale_invitation = $this->collaboration->count_invitation();
@@ -121,9 +170,60 @@ class HomeController extends Controller
         // }
 
         if (Gate::allows('isReferent')) {
-            $user_id = User::where('id', Auth::user()->id)->value('id');
+            $fonct = new FonctionGenerique();
 
-            return view('layouts.dashboard_referent');
+            $user_id = User::where('id', Auth::user()->id)->value('id');
+            $ref = $fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->user_id;
+
+            $nom_profil_referent = responsable::where('user_id', $user_id)->value('id');
+            $etp = entreprise::where('id',$nom_profil_referent)->value('nom_etp');
+            $etp_id = entreprise::where('id',$nom_profil_referent)->value('id');
+
+            // $refs = DB::select('select nif,stat,rcs from entreprises where id = ' . $nom_profil_referent . ' ');
+
+            $refs_tmp = DB::select('select nif,stat,rcs from entreprises where id = ?',[$nom_profil_referent]);
+            $refs =$refs_tmp[0];
+
+            $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
+
+            $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
+            $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+            $cfps = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
+
+            $facture_paye = DB::select('select * from v_facture_actif where facture_encour = "terminer" and entreprise_id = ' . $ref . ' ');
+            $facture_non_echu = DB::select('select * from v_facture_actif where facture_encour = "en_cours" and entreprise_id = ' . $ref . ' ');
+
+            $session_intra_terminer = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 4 and entreprise_id = ' . $ref . ' ');
+            $session_intra_previ = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 1 and entreprise_id = ' . $ref . ' ');
+            $session_intra_en_cours = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 3 and entreprise_id = ' . $ref . ' ');
+            $session_intra_avenir = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 2 and entreprise_id = ' . $ref . ' ');
+
+            $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
+            $nb_stagiaire = count($stagiaires);
+            $responsables = DB::select('select * from responsables where entreprise_id = ?', [$etp_id]);
+            $nb_responsable = count($responsables);
+            $chef_departements = DB::select('select * from v_chef_departement_entreprise where entreprise_id = ?', [$etp_id]);
+            $nb_cDepartement = count($chef_departements);
+            $total = $nb_stagiaire + $nb_responsable + $nb_cDepartement ;
+
+
+            // $test_abonne = abonnement::where('user_id', $etp_id)->exists();
+            // $abn =type_abonnement::all();
+
+            $typeAbonne_id = 1;
+            $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
+            $name = DB::select('select nom_type from type_abonnements where id = ?', [$typeAbonnement] );
+
+
+            if ($id!=null) {
+                $referent = $fonct->findWhereMulitOne("responsables",["id"],[$id]);
+            }
+            else{
+                $referent = $fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id]);
+            }
+
+            return view('referent.dashboard_referent.dashboard_referent',compact('etp','referent','refs','formateur_referent','cfps','facture_paye','facture_non_echu','session_intra_terminer','session_intra_previ','session_intra_en_cours','session_intra_avenir','nb_stagiaire','total','name'));
 
         } else {
             $totale_invitation = $this->collaboration->count_invitation();

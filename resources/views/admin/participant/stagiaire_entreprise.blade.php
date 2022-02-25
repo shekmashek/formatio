@@ -296,8 +296,7 @@ $(document).ready(function(){
                         $('#resultat').append(
                             "<tr><td><div align='left'><strong>" + res[i].nom_stagiaire +
                             "</strong><strong>&nbsp;&nbsp;" + res[i].prenom_stagiaire +
-                            "</strong><strong>&nbsp;&nbsp;" + res[i].cin +
-                            "</strong>&nbsp;&nbsp;<button class='btn btn-success' data-toggle='modal' data-target='#modal_ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button>"
+                            "</strong><strong>&nbsp;&nbsp;" + res[i].cin +                            "</strong>&nbsp;&nbsp;<button class='btn btn-success' data-toggle='modal' data-target='#modal_ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button>"
                         );
 
                     }

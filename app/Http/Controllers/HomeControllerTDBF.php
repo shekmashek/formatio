@@ -56,7 +56,7 @@ class HomeControllerTDBF extends Controller
             // fin top 10 par client
 
             // dd($user_id, $centre_fp, $top_10_par_client);
-            return view('layouts.dashboardTDBF', compact('GChart', 'CA_actuel', 'CA_precedent'));
+            return view('cfp.dashboard_cfp.dashboardTDBF', compact('GChart', 'CA_actuel', 'CA_precedent'));
         }
     }
 
