@@ -37,6 +37,11 @@ class AppelOffreController extends Controller
             $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["entreprise_id", "publier"], [$resp_connecter->entreprise_id, true]);
             return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier'));
         }
+        if (Gate::allows('isCFP')) {
+            $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [false]);
+            $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
+            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier'));
+        }
     }
 
     public function publier($id){
@@ -47,7 +52,6 @@ class AppelOffreController extends Controller
     public function recherche_reference(Request $req)
     {
         $reference = $req->reference_search;
-        // dd($req->input());
         if (Gate::allows('isReferent')) {
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
 
@@ -63,13 +67,11 @@ class AppelOffreController extends Controller
 
         if (Gate::allows('isCFP')) {
             if ($reference != null) {
-                $appel_offre_non_publier =  DB::select("select * from v_appel_offre where UPPER(prestation_demande) LIKE UPPER('%" . $reference . "%') and publier=false");
                 $appel_offre_publier =  DB::select("select * from v_appel_offre where UPPER(prestation_demande) LIKE UPPER('%" . $reference . "%') and  publier=true");
             } else {
-                $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [false]);
                 $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
             }
-            return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier'));
+            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier'));
         }
 
     }
