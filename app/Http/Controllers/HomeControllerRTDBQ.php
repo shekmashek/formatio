@@ -38,7 +38,7 @@ class HomeControllerRTDBQ extends Controller
         if (Gate::allows('isReferent')) {
             $user_id = User::where('id', Auth::user()->id)->value('id');
 
-            return view('layouts.dashboard_referentTDBQ');
+            return view('referent.dashboard_referent.dashboard_referentTDBQ');
 
         }
     }

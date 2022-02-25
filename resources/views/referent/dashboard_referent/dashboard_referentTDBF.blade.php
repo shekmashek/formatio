@@ -1,81 +1,13 @@
 @extends('./layouts/admin')
 @section('content')
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 {{-- <link rel="stylesheet" href="ttps://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"> --}}
 
 
-    <style>
-        .nav .btn{
-            background-color: #f7f7f7;
-            border: none;
-        }
-
-        .nav .btn:hover{
-            background-color: #dddddd;
-            border: none;
-        }
-
-        .nav .c{
-            background-color: #dddddd;
-            color: #801D68;
-        }
-
-
-        .system_{
-            text-align: left;
-            border: none;
-            border-bottom: 1px solid #c22d9d;
-        }
-        .system_num{
-            text-align: right;
-            color: #801d68;
-            font-size: 20px;
-            border-radius: 10px;
-            float: right;
-            position: relative;
-            bottom: .5rem;
-        }
-
-        .system_numero{
-            text-align: right;
-            color: white;
-            background-color: #9d207d;
-            border: none;
-            border-radius: 5px;
-            float: right;
-            padding-left: 5px;
-            padding-right: 5px
-        }
-
-
-        .system_numeroAlert{
-            text-align: right;
-            color: white;
-            background-color: #d32727;
-            border: none;
-            border-radius: 5px;
-            float: right;
-            padding-left: 5px;
-            padding-right: 5px
-        }
-
-
-        .system_numeroSuccess{
-            text-align: right;
-            color: white;
-            background-color: #25d315;
-            border: none;
-            border-radius: 5px;
-            float: right;
-            padding-left: 5px;
-            padding-right: 5px
-        }
-    </style>
-
 <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">
         <a href="{{ route('home') }}" type="button" class="btn" style="font-size: 12px;"> <i class="fad fa-sliders-v" style="font-size: 10px;"></i>&nbsp;TDB système</a>
-        <a href="{{ route('hometdbf')}}" type="button" class="btn me-2 ms-2" style="font-size: 12px;"><i class="far fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
-        <a href="{{ route('hometdbq')}}" type="button" class="btn c active" style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
+        <a href="{{ route('homertdbf')}}" type="button" class="btn b active me-2 ms-2" style="font-size: 12px;"><i class="far fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
+        <a href="{{ route('homertdbq')}}" type="button" class="btn " style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
 </div>
 
 
@@ -83,60 +15,51 @@
     <div class="container-fluid">
         <div class="row mt-2">
             <div class="col-lg-4">
-                <div class="form-control" style="font-size: 11px;">
-                    <p class="text-center">Tableau de bord financier</p>
-                    <p class="p-0 m-0 ">C.A actuel:
+                <div class="form-control">
+                    <p class="text-center" style="font-size: 11px;">TDB financier</p>
+                    <p class="p-0 m-0 " style="font-size: 10px; font-weight: bold;">C.A actuel:
                         {{-- @php
                             foreach ($CA_actuel as $total) {
-                                $total = $total->total;
+                                $total = $total->total_ttc;
                                 echo $total . ' ';
                             }
                         @endphp --}}
                         Ar TTC</p>
-
                     <p class="p-1 m-0" style="font-size: 10px;">C.A précedent:
                         {{-- @php
                             foreach ($CA_precedent as $totals) {
-                                $totals = $totals->total;
+                                $totals = $totals->total_ttc;
                                 echo $totals . ' ';
                             }
-                        @endphp  --}}
+                        @endphp --}}
                         Ar TTC</p>
                     <hr>
-                    <div id="3" ></div>
+                    <div id="chart_div"></div>
+                </div>
+            </div>
+            <div class=" p-0 col-lg-4">
+                <div class="form-control">
+                    <p class="text-center" style="font-size: 11px;">CA par module</p>
+                    <p class="p-0 m-0 " style="font-size: 10px;">Top 10 modules</p>
+                    <hr>
+                    <div id="1"></div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-control">
-                    <p class="text-center" style="font-size: 11px;">Chiffre d'affaires par module</p>
-                    <p class="p-0 m-0 " style="font-size: 10px; ">Top 10 modules</p>
+                    <p class="text-center" style="font-size: 11px;">CA par client</p>
+                    <p class="p-0 m-0 " style="font-size: 10px;">Top 10 clients</p>
                     <hr>
-                    <div id="4" ></div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="form-control">
-                    <p class="text-center" style="font-size: 11px;" >Chiffre d'affaires par client</p>
-                    <p class="p-0 m-0 " style="font-size: 10px; ">Top 10 clients</p>
-                    <hr>
-                    <div id="5" ></div>
+                    <div id="2" ></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
     <script type="text/javascript">
         google.charts.load('current', {
@@ -147,7 +70,7 @@
         function drawStuff() {
 
             // var button = document.getElementById('change-chart');
-            var chartDiv = document.getElementById('3');
+            var chartDiv = document.getElementById('chart_div');
 
             var data = google.visualization.arrayToDataTable([
                 ['mois', 'prix', 'annee'],
@@ -187,7 +110,7 @@
             };
 
             var classicOptions = {
-                width: 320,
+                width: 300,
                 series: {
                     0: {
                         targetAxisIndex: 0
@@ -232,11 +155,11 @@
 
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses', 'Profit'],
-                ['2014', 1000, 400, 200],
-                ['2015', 1170, 460, 250],
-                ['2016', 660, 1120, 300],
-                ['2017', 1030, 540, 350]
+                ['Year', 'Sales', 'Expenses','ee'],
+                ['2014', 1000, 400,100],
+                ['2015', 1170, 460,150],
+                ['2016', 660, 1120,200],
+                ['2017', 1030, 540,20]
                 ]);
 
                 var options = {
@@ -249,7 +172,7 @@
                 bars: 'horizontal' // Required for Material Bar Charts.
                 };
 
-                var chart = new google.charts.Bar(document.getElementById('4'));
+                var chart = new google.charts.Bar(document.getElementById('1'));
 
                 chart.draw(data, google.charts.Bar.convertOptions(options));
             }
@@ -279,7 +202,7 @@
                 bars: 'horizontal' // Required for Material Bar Charts.
                 };
 
-                var chart = new google.charts.Bar(document.getElementById('5'));
+                var chart = new google.charts.Bar(document.getElementById('2'));
 
                 chart.draw(data, google.charts.Bar.convertOptions(options));
             }

@@ -144,6 +144,7 @@ class getImageModel extends Model
     public function create_sub_folder($folder_parent,$sub_folder){
         $contents = collect(Storage::cloud()->listContents('/', false));
         //parcourir sous dossier:facture par exemple
+       $root=null;
         foreach ($contents as $key => $value) {
             if($value['name'] == $folder_parent)
                  $root = $value['path'];

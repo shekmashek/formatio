@@ -56,7 +56,7 @@ class HomeControllerTDBQ extends Controller
             // fin top 10 par client
 
             // dd($user_id, $centre_fp, $top_10_par_client);
-            return view('layouts.dashboardTDBQ');
+            return view('cfp.dashboard_cfp.dashboardTDBQ');
         }
     }
 
