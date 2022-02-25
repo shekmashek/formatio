@@ -288,7 +288,6 @@ float: right;
 
   </div>
 
-      
   <div id="seul_personne" style="display: none;">
     <div class="d-flex justify-content-between">
       <div class="d-flex">
