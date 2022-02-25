@@ -54,7 +54,7 @@
                                             <th>Référent</th>
                                             <th>Formateur</th>
                                             <th>Chef de département</th>
-                                            <th>Actions</th>
+                                            {{-- <th>Actions</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -102,7 +102,7 @@
                                                     @endif
                                                 @endfor
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,10 +111,10 @@
                                                         <div class="dropdown-menu">
                                                             <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
                                                             {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
-                                                        </div>
+                                                        {{-- </div>
                                                     </div>
                                                 </center>
-                                            </td>
+                                            </td> --}} 
                                         </tr>
 
 
@@ -214,7 +214,7 @@
 
                                             <th>Formateur</th>
                                             <th>Chef de département</th>
-                                            <th>Actions</th>
+                                            {{-- <th>Actions</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -263,7 +263,7 @@
                                                             @endif
                                                         @endfor
                                                     </td>
-                                            <td>
+                                            {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -272,10 +272,10 @@
                                                         <div class="dropdown-menu">
                                                             <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
                                                             {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
-                                                        </div>
-                                                    </div>
-                                                </center>
-                                            </td>
+                                                        {{-- </div>
+                                                    </div> --}}
+                                                {{-- </center>
+                                            </td> --}}
 
                                         </tr>
 
@@ -378,7 +378,7 @@
 
                                             <th>Formateur</th>
                                             <th>Chef de département</th>
-                                            <th>Actions</th>
+                                            {{-- <th>Actions</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -429,7 +429,7 @@
                                                     @endif
                                                 @endfor
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -438,10 +438,10 @@
                                                         <div class="dropdown-menu">
                                                               <li type="button" style="font-size:15px;"> <a href="" data-toggle="modal"  data-target="#exampleModal_{{$chefs->id}}" class="modifier" title="Modifier le profil" id="" ><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
                                                             {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_{{$chefs->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
-                                                        </div>
+                                                        {{-- </div>
                                                     </div>
                                                 </center>
-                                            </td>
+                                            </td> --}}
                                         </tr>
 
 
