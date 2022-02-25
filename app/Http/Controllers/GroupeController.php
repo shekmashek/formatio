@@ -194,4 +194,15 @@ class GroupeController extends Controller
        DB::delete('delete from groupes where id = ?', [$id]);
         return back();
     }
+
+    public function insert_session(Request $request){
+        $projet = $request->projet;
+        $type_formation = $request->type_formation;
+        $fonct = new FonctionGenerique();
+        $session = $fonct->findWhereMulitOne('groupes',['projet_id'],[$projet]);
+        $groupe = new groupe();
+        $nom_groupe = $groupe->generateNomSession($projet);
+        DB::insert('insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,1,TRUE)',
+        [$request->max_part,$request->min_part,$nom_groupe,$projet,$session->module_id,$session->type_payement_id,$request->date_debut,$request->date_fin]);
+    }
 }

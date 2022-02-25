@@ -173,9 +173,11 @@
                                             }}</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('groupe.store') }}" id="formPayement" method="POST"
+                                        <form action="{{ route('insert_session') }}" id="formPayement" method="POST"
                                             class="justify-content-center me-5">
                                             @csrf
+                                            <input type="hidden" name="type_formation" value="1">
+                                            <input type="hidden" name="projet" value="{{ $pj->projet_id }}">
                                             <div class="row">
                                                 <h5 class="mb-4 text-center">Ajouter votre nouvelle Session</h5>
                                                 <div class="form-group">
@@ -184,19 +186,19 @@
                                                             <div class="row px-3 mt-2">
                                                                 <div class="form-group mt-1 mb-1">
                                                                     <input type="text" id="min"
-                                                                        class="form-control input" min="1" max="20"
-                                                                        name="nb_participant_max" required
+                                                                        class="form-control input" min="1" max="50"
+                                                                        name="min_part" required
                                                                         onfocus="(this.type='number')">
                                                                     <label class="form-control-placeholder"
                                                                         for="min">Participant
-                                                                        maximal</label>
+                                                                        minimal</label>
                                                                 </div>
                                                             </div>
                                                             <div class="row px-3 mt-2">
                                                                 <div class="form-group mt-1 mb-1">
                                                                     <input type="text" id="min"
                                                                         class="form-control input"
-                                                                        name="date_debut_session" required
+                                                                        name="date_debut" required
                                                                         onfocus="(this.type='date')">
                                                                     <label class="form-control-placeholder"
                                                                         for="min">Date debut</label>
@@ -210,19 +212,19 @@
                                                             <div class="row px-3 mt-2">
                                                                 <div class="form-group mt-1 mb-1">
                                                                     <input type="text" id="min"
-                                                                        class="form-control input" min="1" max="10"
-                                                                        name="nb_participant_min" required
+                                                                        class="form-control input" min="1" max="50"
+                                                                        name="max_part" required
                                                                         onfocus="(this.type='number')">
                                                                     <label class="form-control-placeholder"
                                                                         for="min">Participant
-                                                                        minimal</label>
+                                                                        maximal</label>
                                                                 </div>
                                                             </div>
                                                             <div class="row px-3 mt-2">
                                                                 <div class="form-group mt-1 mb-1">
                                                                     <input type="text" id="min"
                                                                         class="form-control input"
-                                                                        name="date_fin_session" required
+                                                                        name="date_fin" required
                                                                         onfocus="(this.type='date')">
                                                                     <label class=" form-control-placeholder"
                                                                         for="min">Date fin</label>

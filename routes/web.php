@@ -808,3 +808,6 @@ Route::get('get_presence_stg','SessionController@get_presence_stg')->name('get_p
 Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
 Route::post('save_documents','SessionController@save_documents')->name('save_documents');
 Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name('telecharger_fichier');
+
+
+Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
