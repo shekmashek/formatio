@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\cfp;
 use App\responsable;
-
+use App\Stagiaire;
+use App\ChefDepartement;
+use App\Formateur;
 class AdminController extends Controller
 {
     public function __construct()
@@ -42,7 +44,7 @@ class AdminController extends Controller
     public function admin_etp()
     {
         $id_user = Auth::user()->id;
-        
+
         $id_etp = responsable::where('user_id',$id_user)->value('id');
 
         $cfp_etp = DB::select('select COUNT(*) as cfp_etp FROM `demmande_cfp_etp` where inviter_etp_id = ? and activiter = ?',[$id_etp,1])[0]->cfp_etp;
@@ -59,5 +61,52 @@ class AdminController extends Controller
         $manager = DB::select('select count(*) as manager_entreprise from chef_departements where entreprise_id = ?',[$id_etp])[0]->manager_entreprise;
 
         return response()->json([$cfp, $projet_en_cours_etp,$projet_termime_etp,$projet_a_venir_etp,$projet_etp,$stagiaire,$manager]);
+    }
+    public function get_name_etp(){
+        $id_user = Auth::user()->id;
+
+        if (Gate::allows('isReferent')) {
+            $etp_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+            $etp = DB::select('select *  from entreprises where id=?',[$etp_id]);
+            $data["donner"] = $etp[0];
+            $data["status"] = "RESP";
+           return response()->json($data);
+        }
+        if (Gate::allows('isManager')) {
+           $etp_id=chefDepartement::where('user_id',$id_user)->value('entreprise_id');
+
+           $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
+           $data["donner"]=$etp[0];
+           $data["status"]="CHEF";
+           return response()->json($data);
+
+        }
+        if (Gate::allows('isStagiaire')) {
+            $etp_id=stagiaire::where('user_id',$id_user)->value('entreprise_id');
+            $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
+            $data["donner"]=$etp[0];
+            $data["status"]="STG";
+            return response()->json($data);
+
+         }
+         if (Gate::allows('isCFP')) {
+            $rqt=DB::select('select * from responsables_cfp where user_id = ?', [$id_user]);
+            $cfp_id = $rqt[0]->cfp_id;
+            $etp= DB::select('select * from cfps where id=?',[$cfp_id]);
+            $data["donner"]=$etp[0];
+            $data["status"]="CFP";
+            return response()->json($data);
+
+         }
+
+         if (Gate::allows('isFormateur')) {
+            $etp_id=formateur::where('user_id',$id_user)->value('entreprise_id');
+            $etp= DB::select('select * from entreprises where id=?',[$etp_id]);
+            $data["donner"]=$etp[0];
+            $data["status"]="FORMT";
+            return response()->json($data);
+
+         }
+
     }
 }

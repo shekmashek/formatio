@@ -828,3 +828,6 @@ Route::resource('demande_devis', 'DemandeDevisController');
 
 //ajout role
 Route::post('role_manager','DepartementController@role_manager')->name('role_manager');
+
+//Route get nom entreprise user connecter
+Route::get('admin_nom_etp','AdminController@get_name_etp')->name('admin_nom_etp');

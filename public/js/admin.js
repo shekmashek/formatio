@@ -71,7 +71,25 @@
 //         });
 //     }
 // });
-
+$(document).ready(function() {
+    var id_user = $('#id_user').val();
+$.ajax({
+    url: "/affichage_role"
+    , type: 'get'
+    ,data: {
+        id_user: id_user
+    }
+    , success: function(response) {
+        var userData = response;
+        for (var $i = 0; $i < userData.length; $i++) {
+            document.getElementById('liste_role').innerHTML += "<li>" + userData[$i].role_description+ "</li>"
+        }
+    }
+    , error: function(error) {
+        console.log(error);
+    }
+});
+});
 $(document).ready(function() {
     var down = false;
     var down2 = false;
@@ -155,8 +173,11 @@ $(document).ready(function() {
             console.log(error);
         },
     });
+
+});
+$(document).ready(function() {
     $.ajax({
-        url: '{{ route("affichage_role") }}'
+        url: "/affichage_role"
         , type: 'get'
         ,data: {
             id_user: id_user
@@ -223,4 +244,39 @@ $(document).ready(function() {
         $("li a").removeClass("active");
         $(this).addClass("active");
     });
+});
+$(document).ready(function() {
+    var nom_entreprise="";
+    $.ajax({
+        url: "/admin_nom_etp"
+        , type: 'get'
+        , success: function(response) {
+
+    //        alert("tonga "+JSON.stringify(response));
+            if(response.status == "RESP"){
+            nom_entreprise = response.donner.nom_etp;
+
+            }
+            if(response.status == "CHEF"){
+                nom_entreprise = response.donner.nom_etp;
+            }
+            if(response.status == "STG"){
+                nom_entreprise = response.donner.nom_etp;
+            }
+            if(response.status == "CFP"){
+                nom_entreprise = response.donner.nom;
+            }
+
+            if(response.status == "FORMT"){
+                nom_entreprise = response.donner.nom_etp;
+            }
+            document.getElementById("nom_etp").innerHTML=nom_entreprise;
+          //  alert(document.getElementById("nom_etp"));
+            }
+
+        , error: function(error) {
+            console.log(error);
+        }
+    });
+
 });

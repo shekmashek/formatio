@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Document test</title>
+    <title>Formation.mg</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
@@ -538,14 +538,14 @@
                         <div class="header_etp_cfp d-flex flex-row" style="">
                             <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68;"></i>
                             </p>
-                            <p style="text-transform: capitalize; text-align: center;color: #801D68">&nbsp;Numerika</p>
+                                    <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;
                             <div class="d-flex pro_plan">
                                 <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
                                 <p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
                             </div>
                         </div>
-                        <div class="pdp_etp_cfp" id="box_etp_cfp">
+                        {{-- <div class="pdp_etp_cfp" id="box_etp_cfp">
                             <div class="container pdp_etp_cfp_card ">
                                 <div class="card">
                                     <div class="card-title">
@@ -557,7 +557,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     {{-- user --}}
                     <div class="col">
@@ -732,5 +732,4 @@
     </script>
     <script src="{{asset('js/admin.js')}}"></script>
 </body>
-
 </html>
