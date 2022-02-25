@@ -36,7 +36,7 @@ class CollaborationController extends Controller
 
     public function create_cfp_etp(Request $req)
     {
-
+        // dd($req->input());
         $user_id = Auth::user()->id;
         // $cfp_id = cfp::where('user_id', $user_id)->value('id');
         // dd($user_id);
@@ -44,7 +44,7 @@ class CollaborationController extends Controller
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
         $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["cfp_id", "user_id"], [$cfp_id, $user_id]);
 
-       $responsable = $this->fonct->findWhereMulitOne("responsables", ["email_resp"], [$req->email_resp]);
+        $responsable = $this->fonct->findWhereMulitOne("responsables", ["email_resp"], [$req->email_resp]);
 
         if ($responsable != null) {
             $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp_id, $responsable->id]);
@@ -54,14 +54,14 @@ class CollaborationController extends Controller
             if ($verify <= 0) {
 
                 $msg = $this->collaboration->verify_collaboration_cfp_etp($cfp_id, $responsable->entreprise_id, $req->nom_format);
-                Mail::to($req->email_resp)->send(new invitation_cfp_etp_mail($cfp->nom, $responsable_cfp->nom_resp_cfp, $responsable_cfp->prenom_resp_cfp, $responsable_cfp->email_resp_cfp));
+                Mail::to($responsable_cfp->email_resp_cfp)->send(new invitation_cfp_etp_mail($cfp->nom, $responsable_cfp, $responsable->nom_resp . " " . $responsable->prenom_resp, $req->email_resp));
                 return $msg;
             } else {
                 return back()->with('error', "une invitation a été déjà envoyer sur ce responsable!");
             }
         } else { // demande de creer un compte
 
-            Mail::to($req->email_resp)->send(new inscription_cfp_etp_mail($cfp->nom, $responsable_cfp->nom_resp_cfp, $responsable_cfp->prenom_resp_cfp, $responsable_cfp->email_resp_cfp));
+            Mail::to($responsable_cfp->email_resp_cfp)->send(new inscription_cfp_etp_mail($cfp->nom, $responsable_cfp->nom_resp_cfp, $responsable_cfp->prenom_resp_cfp, $responsable_cfp->email_resp_cfp, $req->email_resp));
             return back()->with('success', "une invitation a été envoyé sur l'adresse mail en démandant!");
         }
     }
@@ -69,29 +69,31 @@ class CollaborationController extends Controller
 
     public function create_etp_cfp(Request $req)
     {
+        // dd($req->input());
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
         $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
-        $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id","user_id"], [$entreprise_id,$user_id]);
+        $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
+        $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["email_resp_cfp"], [$req->email_cfp]);
 
-        $cfp = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp]);
+        // $cfp = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_cfp]);
 
-        if ($cfp != null) {
-            $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$cfp->id, $entreprise_id]);
-            $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$entreprise_id, $cfp->id]);
+        if ($responsable_cfp != null) {
+            $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$responsable_cfp->cfp_id, $entreprise_id]);
+            $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$entreprise_id, $responsable_cfp->cfp_id]);
             $verify = $verify1->id + $verify2->id;
 
             if ($verify <= 0) {
 
-                $msg = $this->collaboration->verify_collaboration_etp_cfp($cfp->id, $entreprise_id, $req->nom_cfp);
-                Mail::to($req->email_resp)->send(new invitation_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp));
+                $msg = $this->collaboration->verify_collaboration_etp_cfp($responsable_cfp->cfp_id, $entreprise_id, $req->nom_cfp);
+                Mail::to($responsable_etp->email_resp)->send(new invitation_etp_cfp_mail($entreprise->nom_etp, $responsable_etp, $responsable_cfp->nom_resp_cfp . " " . $responsable_cfp->prenom_resp_cfp, $req->email_cfp));
                 return $msg;
             } else {
                 return back()->with('error', "une invitation a été déjà envoyer sur ce Centre de Formation Professionel!");
             }
         } else { // send mail inscription
 
-            Mail::to($req->email_resp)->send(new inscription_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp));
+            Mail::to($responsable_etp->email_resp)->send(new inscription_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp, $req->email_cfp));
             return back()->with('success', "une invitation a été envoyeé sur l'adresse mail en démandant!");
         }
     }

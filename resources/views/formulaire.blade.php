@@ -66,6 +66,12 @@
             </div>
         </nav>
     </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+
     <main>
 
         <div class="row dashboard">
@@ -217,7 +223,9 @@
 
 
     </main>
-    <footer class="footer_container" style="position:fixed; bottom:0; width:100%">
+
+
+    {{-- <footer class="footer_container" style="position:fixed; bottom:0; width:100%">
         <div class="container-fluid d-flex justify-content-center pt-3">
             <div class="bordure">&copy; Copyright 2022</div>
             <div class="bordure"><a href="{{url('info_legale')}}" style="color:#801D68 !important" target="_blank">Informations légales</a></div>
@@ -228,5 +236,9 @@
             <div class="bordure">Crédits</div>
             <div> &nbsp; Version 0.9</div>
         </div>
-    </footer>
+    </footer> --}}
+
+</div>
+</div>
+</div>
 </body>

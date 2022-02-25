@@ -146,6 +146,11 @@
                 <span class="tooltip">Projets</span>
             </li>
             @endcanany
+            @canany(['isCFP','isReferent','isManager'])
+            <li class="my-2">
+                <a href="{{route('appel_offre.index')}}"  class="nav_linke liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Appel d'Offre</span></a>&nbsp;&nbsp;
+            </li>
+            @endcanany
             {{-- utilisateurs --}}
             @canany(['isSuperAdmin','isAdmin'])
             <li>
@@ -227,7 +232,7 @@
             <li>
                 <a href="{{route('employes')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Manager</span>
+                    <span class="links_name">Equipe admnistrative</span>
                 </a>
                 <span class="tooltip">Manager</span>
             </li>
@@ -276,7 +281,7 @@
                 <span class="tooltip">Nouveau Stagiaire</span>
             </li> --}}
             @endcanany
-            @canany(['isReferent'])
+            {{-- @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_participant')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
@@ -292,7 +297,7 @@
                 </a>
                 <span class="tooltip">Nouveau Stagiaire</span>
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}}
             {{-- action de formations --}}
 
             @canany(['isFormateur'])

@@ -831,3 +831,13 @@ Route::post('role_manager','DepartementController@role_manager')->name('role_man
 
 //Route get nom entreprise user connecter
 Route::get('admin_nom_etp','AdminController@get_name_etp')->name('admin_nom_etp');
+
+//====================== APPEL D'OFFRE
+
+Route::resource('appel_offre', 'AppelOffreController')->except(['update']);
+Route::get('nouveau+appel+offre','AppelOffreController@nouveau')->name('nouveau+appel+offre');
+Route::post('appel_offre.update/{id}','AppelOffreController@update')->name('appel_offre.update');
+Route::get('appel_offre.publier/{id}','AppelOffreController@publier')->name('appel_offre.publier');
+
+Route::post('result_recherche_appel_offre','AppelOffreController@recherche_reference')->name('result_recherche_appel_offre');
+
