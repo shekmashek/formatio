@@ -55,6 +55,16 @@ class DepartementController extends Controller
 
         return view('admin.chefDepartement.liste', compact('chef'));
     } */
+    //ajout nouveau role
+    public function role_manager(Request $request){
+        $id_chef = $request->id_chef;
+        $user_id = chefDepartement::where('id',$id_chef)->value('user_id');
+        $roles = $request->role_id;
+        for ($i=0; $i < count($roles); $i++) {
+             DB::insert('insert into role_users (user_id, role_id) values (?, ?)', [$user_id, $roles[$i]]);
+        }
+        return back();
+    }
 
     public function liste()
     {
@@ -68,6 +78,7 @@ class DepartementController extends Controller
 
         $user_role = DB::select('select * from v_user_role');
         $roles = DB::select('select * from roles');
+        // dd($user_role);
         return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
     }
 
@@ -150,11 +161,9 @@ class DepartementController extends Controller
         $rqt = DB::select('select * from chef_departements where id = ?', [$id]);
         $user_id = $rqt[0]->user_id;
         $role_id = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
-        $roles = DB::select('select * from roles where id != ?',[1]);
-        // dd($roles);
-
+        $roles = DB::select('select * from roles');
         $var = chefDepartement::findOrFail($id);
-        return view('admin.chefDepartement.update', compact('var'));
+        return view('admin.chefDepartement.update', compact('var','roles','role_id'));
     }
 
     public function update(Request $request)

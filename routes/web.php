@@ -816,3 +816,6 @@ Route::resource('employeur','EmployeurController');
 
 // ============== demande de devis
 Route::resource('demande_devis', 'DemandeDevisController');
+
+//ajout role
+Route::post('role_manager','DepartementController@role_manager')->name('role_manager');
