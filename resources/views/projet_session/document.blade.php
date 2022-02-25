@@ -20,7 +20,7 @@
                         </div>
                     @endforeach
                 </div>
-                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <button type="submit" class="btn inserer_emargement">Enregistrer</button>
             </form>
         </div>
     @endcan

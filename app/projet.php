@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Gate;
 class Projet extends Model
 {
     protected $table = "projets";
@@ -27,5 +27,52 @@ class Projet extends Model
 
     //get find by id
     public function findById($id){  return projet::where('id',$id)->get()[0];    }
+
+    //recherche projet
+    public function build_requette($role,$type,$table,$request){
+        $sql = "select * from ".$table." where type_formation_id = ".$type;
+        if (Gate::allows('isCFP') || Gate::allows('isFormateur')){
+            $sql = $sql." and cfp_id = ".$role;
+        }elseif(Gate::allows('isReferent') || Gate::allows('isManager') || Gate::allows('isStagiaire')){
+            $sql = $sql." and entreprise_id = ".$role;
+        }
+         
+        if(empty($request->annee) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
+            return $sql;
+        }
+        if (!empty($request->annee)) {
+            if($request->annee == 'null'){
+                $request->annee = date("Y");
+                $sql = $sql." and year(date_projet) = ".$request->annee;
+            }
+            else{
+                $sql = $sql." and year(date_projet) = ".$request->annee;
+            }
+            if($request->mois != 'null'){
+                $sql = $sql." and month(date_projet) = ".$request->mois;
+            }else{
+                if($request->trimestre != 'null'){
+                    if($request->trimestre == 1){
+                        $sql = $sql." and 1 <= month(date_projet) and month(date_projet) <= 3";
+                    }if($request->trimestre == 2){
+                        $sql = $sql." and 4 <= month(date_projet) and month(date_projet) <= 6";
+                    }if($request->trimestre == 3){
+                        $sql = $sql." and 7 <= month(date_projet) and month(date_projet) <= 9";
+                    }if($request->trimestre == 4){
+                        $sql = $sql." and 10 <= month(date_projet) and month(date_projet) <= 12";
+                    }
+                }else{
+                    if($request->semestre != 'null'){
+                        if($request->semestre == 1){
+                            $sql = $sql." and 1 <= month(date_projet) and month(date_projet) <= 6";
+                        }if($request->semestre == 2){
+                            $sql = $sql." and 7 <= month(date_projet) and month(date_projet) <= 12";
+                        }
+                    }
+                }
+            }
+        }
+        return $sql;
+    }
 
 }

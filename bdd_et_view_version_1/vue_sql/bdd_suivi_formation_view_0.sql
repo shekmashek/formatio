@@ -21,7 +21,7 @@ create or replace view v_groupe_entreprise as
         e.adresse_quartier,
         e.adresse_code_postal,
         e.adresse_ville,
-         e.adresse_region,
+        e.adresse_region,
         e.logo,
         e.nif,
         e.stat,

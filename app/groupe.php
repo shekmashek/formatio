@@ -15,7 +15,7 @@ class Groupe extends Model
     }
 
     public function generateNomSession($projet_id){
-        $num_projet = DB::select("select max(nom_groupe) as nom_groupe from groupes where projet_id='".$projet_id."'");
+        $num_projet = DB::select("select max(nom_groupe) as nom_groupe from groupes where projet_id=?",[$projet_id]);
        $num_session = 0;
         if($num_projet[0]->nom_groupe==NULL){
             $num_session=1;

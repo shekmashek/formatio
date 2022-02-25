@@ -35,9 +35,8 @@ Route::get('/projet_session', function () {
     return view('projet_session/index2');
 });
 
-
 // nouvelle session
-Route::get('detail_session/{id_session?}','SessionController@detail_session')->name('detail_session');
+Route::get('detail_session/{id_session?}/{type_formation?}','SessionController@detail_session')->name('detail_session');
 
 Route::get('all_formateurs','SessionController@getFormateur')->name('all_formateurs');
 // end
@@ -88,6 +87,12 @@ Route::get('projet/result', 'ProjetControlleur@show')->name('projet.show');
 Route::get('edit_projet','ProjetControlleur@edit')->name('edit_projet');
 Route::post('destroy_projet','ProjetControlleur@destroy')->name('destroy_projet');
 Route::post('update_projet/{id?}','ProjetControlleur@update')->name('update_projet');
+Route::get('accueil_projet','ProjetControlleur@accueilProjet')->name('accueil_projet');
+Route::get('projet_intra','ProjetControlleur@intraFormProjet')->name('projet_intra');
+Route::get('projet_inter','ProjetControlleur@interFormProjet')->name('projet_inter');
+Route::get('module_formation_intra','GroupeController@module_formation_intra')->name('module_formation_intra');
+
+
 
 //route groupe
 Route::resource('groupe','GroupeController')->except([
@@ -95,10 +100,13 @@ Route::resource('groupe','GroupeController')->except([
 ]);
 Route::get('liste_groupe','GroupeController@index')->name('liste_groupe');
 // Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
-Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
+// Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
+Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
+Route::get('nouveau_groupe_inter','GroupeController@createInter')->name('nouveau_groupe_inter');
 Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
 Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
 Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
+Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
 //route entreprise
 Route::resource('entreprise','EntrepriseController')->except([
     'create','edit','destroy','update'
@@ -773,7 +781,7 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 // })->name('condition_generale_de_vente');
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
 Route::post('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
-
+Route::post('modifier_presence','SessionController@modifier_presence')->name('modifier_presence');
 //-------------route document----------------///
 Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
 Route::post('nouveau_dossier','DocumentController@store')->name('nouveau_dossier');
@@ -798,6 +806,7 @@ Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluati
 
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
 Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');
+Route::get('get_presence_stg','SessionController@get_presence_stg')->name('get_presence_stg');
 
 Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
 Route::post('save_documents','SessionController@save_documents')->name('save_documents');

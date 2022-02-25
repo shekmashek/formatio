@@ -263,6 +263,17 @@ create or replace view v_projet_cfp as
     join type_formations tf on tf.id = p.type_formation_id;
 
 
+create or replace view v_departement_service_entreprise as
+    select
+        s.id as service_id,
+        s.departement_entreprise_id,
+        s.nom_service,
+        de.nom_departement,
+        de.entreprise_id
+    from services s
+    join departement_entreprises de on s.departement_entreprise_id = de.id;
+
+
 create or replace view v_stagiaire_groupe as
 select g.id as groupe_id,
         g.max_participant,
@@ -324,21 +335,13 @@ create or replace view v_detail_presence as
              when p.status = 1 then 'Présent'
         end as text_status,
         case when p.status = 0 then '#ff0000'
-             when p.status = 1 then '#00ff00'
-        end as color_status
+             when p.status = 1 then '#7635dc'
+        end as color_status,
+        p.note
     from details d join presences p on d.id = p.detail_id order by p.stagiaire_id asc;
 
 
 
-create or replace view v_departement_service_entreprise as
-    select
-        s.id as service_id,
-        s.departement_entreprise_id,
-        s.nom_service,
-        de.nom_departement,
-        de.entreprise_id
-    from services s
-    join departement_entreprises de on s.departement_entreprise_id = de.id;
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.id AS stagiaire_id,
@@ -388,5 +391,106 @@ FROM
 
 
 
--- select d.id as detail_id,p.id as presence_id from details d cross join presences p
--- create or replace view
+
+create or replace view v_detail_presence_stagiaire as
+    select
+        dp.*,
+        stg.matricule,
+        stg.nom_stagiaire,
+        stg.prenom_stagiaire,
+        stg.genre_stagiaire,
+        stg.titre,
+        stg.fonction_stagiaire,
+        stg.mail_stagiaire,
+        stg.telephone_stagiaire,
+        stg.user_id,
+        stg.photos,
+        stg.cin,
+        stg.date_naissance,
+        stg.niveau_etude,
+        stg.activiter,
+        stg.branche_id,
+        stg.quartier,
+        stg.code_postal,
+        stg.ville,
+        stg.region,
+        stg.lot
+    from v_detail_presence dp
+    join stagiaires stg on dp.stagiaire_id = stg.id;
+
+
+create or replace view v_participant_groupe_detail as
+    select
+        sg.*,
+        d.id as detail_id,
+        d.lieu,
+        d.h_debut,
+        d.h_fin,
+        d.formateur_id,
+        d.cfp_id
+    from v_stagiaire_groupe sg
+    join details d on sg.groupe_id = d.groupe_id;
+
+create or replace view v_emargement as
+    select
+        pgd.*,
+        ifnull(dps.text_status,"non") as text_status,
+        ifnull(dps.color_status,"non") as color_status
+    from v_participant_groupe_detail pgd
+    left join v_detail_presence_stagiaire dps
+    on pgd.detail_id = dps.detail_id
+    and pgd.stagiaire_id = dps.stagiaire_id;
+
+
+ALTER TABLE presences
+ADD CONSTRAINT presence_constraint UNIQUE (detail_id,stagiaire_id);
+
+
+---view inter
+create or replace view v_projet_session_inter as
+    select
+        p.nom_projet,
+        p.cfp_id,
+        p.type_formation_id,
+        p.status as status_projet,
+        p.activiter as activiter_projet,
+        p.created_at as date_projet,
+        g.projet_id,
+        g.id as groupe_id,
+        g.min_participant,
+        g.max_participant,
+        g.nom_groupe,
+        g.module_id,
+        g.type_payement_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        g.activiter as activiter_groupe,
+        case g.status
+            when 0 then 'Créer'
+            when 1 then 'Prévisionnel'
+            when 2 then 'A venir'
+            when 3 then 'En cours'
+            when 4 then 'Terminé'
+        end item_status_groupe,
+        case g.status
+            when 0 then 'Créer'
+            when 1 then 'status_grise'
+            when 2 then 'status_confirme'
+            when 3 then 'statut_active'
+            when 4 then 'status_termine'
+        end class_status_groupe,
+        (cfps.nom) nom_cfp,
+        (cfps.adresse_lot) adresse_lot_cfp,
+        (cfps.adresse_ville) adresse_ville_cfp,
+        (cfps.adresse_region) adresse_region_cfp,
+        (cfps.email) mail_cfp,
+        (cfps.telephone) tel_cfp,
+        cfps.domaine_de_formation as domaine_de_formation_cfp,
+        (cfps.nif) nif_cfp,
+        (cfps.stat) stat_cfp,
+        (cfps.rcs) rcs_cfp,
+        (cfps.cif) cif_cfp,
+        (cfps.logo) logo_cfp
+    from groupes g join projets p on g.projet_id = p.id
+    join cfps on cfps.id = p.cfp_id;

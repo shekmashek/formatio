@@ -11,12 +11,15 @@
                     <div class="row g-0 m-0" style="align-items: center">
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            <div class="col">
-                                <h3 class="mt-2">Modules</h3>
+                            <div class="col d-flex">
+                                <h5 class="mt-3 me-5">Modules</h5>
+                                {{-- <a class="btn_enregistrer text-center {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
+                                    href="{{route('liste_formation')}}">Precedent</a> --}}
                             </div>
-                            <div class="col search_formatiom">
+                            {{-- <div class="col search_formatiom"> --}}
+                            <div class="col">
                                 <form action="">
-                                    <div class="row w-100 form-group">
+                                    <div class="row w-100">
                                         <div class="input-group">
                                             <input type="text" class="form-control"
                                                 placeholder="Chercher des formations...">
@@ -26,13 +29,9 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col" align="right">
-                                <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-                                    href="{{route('liste_formation')}}">
-                                    <span><span style="font-size: 20px">
-                                            << </span>&nbsp;Retour
-                                        </span>
-                                </a>
+                            <div class="col text-center">
+
+                                <a href="{{route('nouveau_module')}}" class="btn_enregistrer">Nouvelle Module</a>
                             </div>
                             @endcan
                         </div>
