@@ -765,6 +765,13 @@ Route::get('/info_legale', function () {
 Route::get('/tarifs', function (){
     return view('/tarif');
 });
+//route politque confidentialité
+Route::get('/politique_confidentialite',function(){
+return view('/politique_confidentialite');
+});
+Route::get('/politique_confidentialites',function(){
+    return view('/politique_confidentialites');
+    });
 //route conditions generales de vente
 Route::get('condition_generale_de_vente','ConditionController@index')->name('condition_generale_de_vente');
 // Route::get('condition_generale_de_vente',function(){

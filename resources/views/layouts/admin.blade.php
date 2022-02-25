@@ -566,6 +566,8 @@
                         </div>
                     </div>
                 </div>
+           
+    
                 {{-- user --}}
                 <div class="col">
                     <div class="header_img ms-5 mb-2 text-center d-flex flex-row" style="text-align: center">
@@ -669,7 +671,7 @@
                                     </a>
                                 </div>
                                 <div class="footer_list ms-2 me-2">
-                                    <a href="#">
+                                    <a href="{{url('politique_confidentialite')}}" target="_blank">
                                         <p>Politique de confidentialité</p>
                                     </a>
                                 </div>

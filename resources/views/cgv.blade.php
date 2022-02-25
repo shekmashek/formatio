@@ -20,6 +20,9 @@
         h6{
             text-align: justify;
         }
+        h2 {
+        color: #801D68;
+    }
         .navperso{
             position: sticky;
             top: 5rem;
@@ -201,12 +204,12 @@
         <footer class="footer_container">
 
             <div class="d-flex justify-content-center pt-3">
-                <div class="bordure">&copy; Copyright 2022</div>
-                <div class="bordure">Informations légales</div>
-                <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none">Contactez-nous</a></div>
-                <div class="bordure">Politique de confidentialités</div>
-                <div class="bordure" > <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
-                <div class="bordure">Tarifs</div>
+                <div class="bordure">&copy; Copyright 2022</div>&nbsp;
+                <div class="bordure">Informations légales</div>&nbsp;
+                <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;">Contactez-nous</a></div>&nbsp;
+                <div class="bordure"><a href="{{url('politique_confidentialites')}}" class="bordure" style="color: #801D62;" target="_blank">Politique de confidentialités</a></div>&nbsp;
+                <div class="bordure" > <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>&nbsp;
+                <div class="bordure">Tarifs</div>&nbsp;
                 <div class="bordure">Crédits</div>
                 <div> &nbsp; Version 0.9</div>
             </div>

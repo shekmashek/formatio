@@ -2,7 +2,19 @@
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <link rel="stylesheet" href="{{ asset('reporting/index.css') }}">
-
+<style>
+  .vertical {
+      border-left: 1px solid rgba(214, 198, 198, 0.801);
+      height: 150px;
+      position:absolute;
+      left: 50%;
+      margin-left: -198px;
+  }
+  .appliquer{
+float: right;
+  
+  }
+</style>
 <div class="d-flex">
   <button id="btn_plusieurs" class="titre_nombre_personne_active" onclick="plusieurs()">
     <i class="fal fa-users"></i>&nbsp; &nbsp; Rechercher plusieurs personnes
@@ -11,260 +23,272 @@
     <i class="fas fa-user"></i>&nbsp; &nbsp; Rechercher une seule personne
   </button>
 </div>
-
+<br>
 <div id="toute_personne" style="display: block;">
-  <div class="d-flex justify-content-between align-items-center">
-    <div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="personne_hover">Personne &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content" onmouseleave="quit()" onmouseover="personne()">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="tous"  checked>
-            <label class="form-check-label" for="tous">
-              Tous
-            </label>
+  <div class="">
+    <div>  
+       
+          <div class="row">          
+                <div class="col-lg-4">
+                
+                  <h4>Structures</h4>
+                  <div class="dropdown">
+                    <p class="menu_google p-0 m-0" id="personne_hover">Branche &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                       
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="personne()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="tous" checked >
+                        <label class="form-check-label" for="tous">Tous </label>
+                        @foreach ($branches as $branche)
+                        <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="tous"  >
+                        <label class="form-check-label" for="tous">
+                          {{$branche->nom_branche}}
+                          
+                        
+                        </label>
+                      @endforeach
+
+                      </div>
+                        
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2  m-0" id="fonction_hover">Fonction &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="fonction()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_fonction" checked>
+                        <label class="form-check-label" for="tous_fonction">
+                          Tous
+                        </label>
+                        @foreach ($stagiaire as $stg )
+                        <input class="form-check-input" type="checkbox" value="" id="tous_fonction" >
+                        <label class="form-check-label" for="tous_fonction">
+                          {{$stg->fonction_stagiaire}}
+                          @endforeach
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2 m-0" id="domaine_hover">Departement &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="domaine()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" checked>
+                        <label class="form-check-label" for="tous_domaine">
+                          Tous
+                        </label>
+                        @foreach ($departement as $dept)
+                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" >
+                        <label class="form-check-label" for="tous_domaine">
+                          {{$dept->nom_departement}}
+                          @endforeach
+                      </div>
+                   
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2 m-0 " id="domaine_hover">Service &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="domaine()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" checked>
+                        <label class="form-check-label" for="tous_domaine">
+                          Tous
+                        </label>
+                        @foreach($service as $srv )
+                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" >
+                        <label class="form-check-label" for="tous_domaine">
+                          {{$srv->nom_service}}
+                          @endforeach
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-8">
+                <div class="vertical"></div>
+                  
+                    
+                  <h4 >Modules</h4>
+                  <div class="dropdown ">
+                    <p class="menu_google p-2 m-0" id="date_hover">Date &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content pb-3" onmouseleave="quit()" onmouseover="date_hover()">
+                      <div class="d-flex align-items-center">
+                        <p class="m-0 p-0 mt-1"> Du &nbsp;</p>
+                         <input type="date" name="" id="">
+                          <p class="m-0 p-0 mt-1">&nbsp; au &nbsp; </p>
+                          <input type="date" name="" id="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2 m-0" id="qualite_hover">Domaine &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="qualite()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" checked>
+                        <label class="form-check-label" for="tous_qualite">
+                          Tous
+                        </label>
+                        @foreach($dom as $dm )
+                          
+                        
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" >
+                        <label class="form-check-label" for="tous_qualite">
+                          {{$dm->nom_domaine}}
+                          @endforeach
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2 m-0" id="qualite_hover">Module &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="qualite()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" checked>
+                        <label class="form-check-label" for="tous_qualite">
+                          Tous
+                        </label>
+                        @foreach ($module as $mod )
+                       
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" >
+                        <label class="form-check-label" for="tous_qualite">
+                             {{$mod->nom_module}}
+                        @endforeach
+                      </div>
+                   
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2 m-0" id="qualite_hover">Thématique &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="qualite()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" checked>
+                        <label class="form-check-label" for="tous_qualite">
+                          Tous
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="qualite1">
+                        <label class="form-check-label" for="qualite1">
+                          Thématique 1
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="qualite2">
+                        <label class="form-check-label" for="qualite2">
+                          Thématique 2
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="qualite3">
+                        <label class="form-check-label" for="qualite3">
+                          Thématique 3
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="qualite4">
+                        <label class="form-check-label" for="qualite4">
+                          Thématique 4
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2 m-0" id="niveau_hover">Niveau &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="niveau()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_niveau" checked>
+                        <label class="form-check-label" for="tous_niveau">
+                          Tous
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="niveau1">
+                        <label class="form-check-label" for="niveau1">
+                         Débutante(e) 
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="niveau2">
+                        <label class="form-check-label" for="niveau2">
+                          Intermediaire 
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="niveau3">
+                        <label class="form-check-label" for="niveau3">
+                         Avancée 
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="niveau4">
+                        <label class="form-check-label" for="niveau4">
+                          Expert 
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-2 m-0" id="status_hover">Status &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="status()">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="tous_status" checked>
+                        <label class="form-check-label" for="tous_status">
+                          Tous
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="status1">
+                        <label class="form-check-label" for="status1">
+                          Anuller
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="status2">
+                        <label class="form-check-label" for="status2">
+                          A venir
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="status3">
+                        <label class="form-check-label" for="status3">
+                          A completer
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="status4">
+                        <label class="form-check-label" for="status4">
+                      Previsionnelle
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dropdown">
+                    <p class="menu_google p-0 m-0" id="modalite_hover">Modalité &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
+                    <div class="dropdown-content" onmouseleave="quit()" onmouseover="modalite()">
+                   
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="modalite1">
+                        <label class="form-check-label" for="modalite1">
+                         En ligne
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="modalite2">
+                        <label class="form-check-label" for="modalite2">
+                          Présentielle
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-success appliquer">Appliquer</button>
+                </div> 
+              </div>
+            </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="homme">
-            <label class="form-check-label" for="homme">
-              Homme
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="femme">
-            <label class="form-check-label" for="femme">
-              Femme
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="fonction_hover">Fonction &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content" onmouseleave="quit()" onmouseover="fonction()">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="tous_fonction" checked>
-            <label class="form-check-label" for="tous_fonction">
-              Tous
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="fonction1">
-            <label class="form-check-label" for="fonction1">
-              Fonction 1
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="fonction2">
-            <label class="form-check-label" for="fonction2">
-              Fonction 2
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="fonction3">
-            <label class="form-check-label" for="fonction3">
-              Fonction 3
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="fonction4">
-            <label class="form-check-label" for="fonction4">
-              Fonction 4
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="domaine_hover">Domaine &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content" onmouseleave="quit()" onmouseover="domaine()">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="tous_domaine" checked>
-            <label class="form-check-label" for="tous_domaine">
-              Tous
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="domaine1">
-            <label class="form-check-label" for="domaine1">
-              Domaine 1
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="domaiine2">
-            <label class="form-check-label" for="domaiine2">
-              Domaine 2
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="domaine3">
-            <label class="form-check-label" for="domaine3">
-              Domaine 3
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="domaine4">
-            <label class="form-check-label" for="domaine4">
-              Domaine 4
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="date_hover">Date &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content pb-3" onmouseleave="quit()" onmouseover="date_hover()">
-          <div class="d-flex align-items-center">
-            <p class="m-0 p-0 mt-1"> Du &nbsp;</p>
-             <input type="date" name="" id="">
-              <p class="m-0 p-0 mt-1">&nbsp; au &nbsp; </p>
-              <input type="date" name="" id="">
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="qualite_hover">Qualité &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content" onmouseleave="quit()" onmouseover="qualite()">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="tous_qualite" checked>
-            <label class="form-check-label" for="tous_qualite">
-              Tous
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="qualite1">
-            <label class="form-check-label" for="qualite1">
-              Qualité 1
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="qualite2">
-            <label class="form-check-label" for="qualite2">
-              Qualité 2
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="qualite3">
-            <label class="form-check-label" for="qualite3">
-              Qualité 3
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="qualite4">
-            <label class="form-check-label" for="qualite4">
-              Qualité 4
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="niveau_hover">Niveau &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content" onmouseleave="quit()" onmouseover="niveau()">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="tous_niveau" checked>
-            <label class="form-check-label" for="tous_niveau">
-              Tous
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="niveau1">
-            <label class="form-check-label" for="niveau1">
-              Niveau 1
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="niveau2">
-            <label class="form-check-label" for="niveau2">
-              Niveau 2
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="niveau3">
-            <label class="form-check-label" for="niveau3">
-              Niveau 3
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="niveau4">
-            <label class="form-check-label" for="niveau4">
-              Niveau 4
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="status_hover">Status &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content" onmouseleave="quit()" onmouseover="status()">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="tous_status" checked>
-            <label class="form-check-label" for="tous_status">
-              Tous
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="status1">
-            <label class="form-check-label" for="status1">
-              Status 1
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="status2">
-            <label class="form-check-label" for="status2">
-              Status 2
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="status3">
-            <label class="form-check-label" for="status3">
-              Status 3
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="status4">
-            <label class="form-check-label" for="status4">
-              Status 4
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p class="menu_google m-0" id="modalite_hover">Modalité &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
-        <div class="dropdown-content" onmouseleave="quit()" onmouseover="modalite()">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="tous_modalite" checked>
-            <label class="form-check-label" for="tous_modalite">
-              Tous
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="modalite1">
-            <label class="form-check-label" for="modalite1">
-              Modalité 1
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="modalite2">
-            <label class="form-check-label" for="modalite2">
-              Modalité 2
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="modalite3">
-            <label class="form-check-label" for="modalite3">
-              Modalité 3
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="modalite4">
-            <label class="form-check-label" for="modalite4">
-              Modalité 4
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <button class="btn btn-success">Appliquer</button>
-    </div>
+
   </div>
-</div>
+
+      
   <div id="seul_personne" style="display: none;">
     <div class="d-flex justify-content-between">
       <div class="d-flex">
