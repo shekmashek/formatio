@@ -178,7 +178,7 @@ ul li a {
     transition: 0s;
     opacity: 0;
     display: block;
-    z-index: inherit;
+    z-index: 1000;
 }
 
 .sidebar.active ul li .tooltip {

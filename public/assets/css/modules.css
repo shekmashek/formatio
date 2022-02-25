@@ -347,104 +347,6 @@
 .pading_bas {
     padding-bottom: 8rem;
 }
-
-.new_duree {
-    color: black;
-    background: transparent;
-    padding: 10px 20px 10px 20px;
-    position: relative;
-    border: #801d68 1px solid;
-    border-radius: 0;
-}
-
-.new_duree:hover {
-    background-color: #801d68;
-    color: white;
-    border-color: white;
-}
-
-.new_duree::before {
-    content: "";
-    border-top: 3.5rem solid white;
-    border-right: 2rem solid transparent;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-}
-
-.new_duree::after {
-    content: "";
-    border-bottom: 3.5rem solid white;
-    border-left: 2rem solid transparent;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-/* .new_btn_programme .btn {
-    color: white;
-    background-image: linear-gradient(60deg, #aa076b, #61045f);
-    padding: 10px 20px 10px 20px;
-    position: relative;
-    border-radius: 0;
-    transition: all 0.2s ease;
-}
-
-.new_btn_programme .publiees {
-    color: white;
-    background-image: linear-gradient(60deg, #11998e, #38ef7d);
-    padding: 10px 20px 10px 20px;
-    position: relative;
-    border-radius: 0;
-    transition: all 0.2s ease;
-    cursor: normal;
-    width: 10rem;
-}
-
-.new_btn_programme .non_pub {
-    color: white;
-    background-image: linear-gradient(60deg, #fc6767, #ec008c);
-    padding: 10px 20px 10px 20px;
-    position: relative;
-    border-radius: 0;
-    transition: all 0.2s ease;
-}
-
-.new_btn_programme .btn:hover {
-    transform: scale(1.1);
-    border-color: white;
-    background-color: white;
-    color: white;
-}
-
-.new_btn_programme .btn::before {
-    content: "";
-    border-top: 3.5rem solid rgba(247, 247, 247);
-    border-right: 2rem solid transparent;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-}
-
-.new_btn_programme .non_pub::before,
-.new_btn_programme .publiees::before {
-    content: "";
-    border-top: 3.5rem solid rgba(247, 247, 247);
-    border-right: 2rem solid transparent;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-}
-
-.new_btn_programme .btn::after {
-    content: "";
-    border-bottom: 3.5rem solid white;
-    border-left: 2rem solid transparent;
-    position: absolute;
-    right: 0;
-    top: 0;
-} */
-
 .new_module_prix {
     font-size: 1.5rem;
     letter-spacing: 0;
@@ -740,4 +642,8 @@ font-size: 0.850rem;
 }
 .text_black{
     color: black;
+}
+.btn_enregistrer a:hover{
+    color: white;
+    text-decoration: none;
 }

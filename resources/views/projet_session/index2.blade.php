@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
-<div class="container mb-3">
+<div class="container mb-3 pt-5">
     <div class="row text-center">
         <div class="col">
                 <select name="mois" id="mois" class="filtre_projet">
@@ -47,6 +47,38 @@
         </div>
     </div>
 </div>
+{{-- <div class="col-2 filtre_cours ps-3">
+    <h5 class="mt-3">Filtrer les modules</h5>
+    <div class="row">
+        <form action="">
+            <div class="form-row">
+                <div class="searchBoxMod">
+                    <input class="searchInputMod mb-2" type="text" name=""
+                        placeholder="Rechercher">
+                    <button class="searchButtonMod" href="#">
+                        <i class="bx bx-search">
+                        </i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <p class="mt-2">En cours</p>
+    <div class="container p-0">
+        <ul class="ps-2">
+            <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
+                    class="ms-2">Excel</label></li>
+            <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
+                    class="ms-2">Power BI</label></li>
+            <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
+                    class="ms-2">Bureautique</label></li>
+            <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
+                    class="ms-2">Management</label></li>
+            <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
+                    class="ms-2">Comptabilite</label></li>
+        </ul>
+    </div>
+</div> --}}
 <div class="shadow p-3 mb-5 bg-body rounded">
 
     @canany(['isCFP','isFormateur'])

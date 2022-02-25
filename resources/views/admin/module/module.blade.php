@@ -20,14 +20,15 @@
                             </div>
 
 
-                                <div class="col text-end">
-                                    <a href="{{route('nouveau_module')}}" class="btn_enregistrer text-center">Nouvelle Module</a>
-                                </div>
-                                @endcan
+                            <div class="col text-end">
+                                <a href="{{route('nouveau_module')}}" class="btn_enregistrer text-center">Nouvelle
+                                    Module</a>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 </div>
+            </div>
         </nav>
         <hr>
         <div class="m-4">
@@ -44,15 +45,15 @@
                     <a href="#publies" class="nav-link" data-bs-toggle="tab">Publiées&nbsp;({{count($mod_publies)}})</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#listes_publiees" class="nav-link" data-bs-toggle="tab">Listes Modules
+                    <a href="#List_publies" class="nav-link" data-bs-toggle="tab">Listes Modules
                         Publiées&nbsp;({{count($mod_publies)}})</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#listes_publiees" class="nav-link" data-bs-toggle="tab">Modules
+                    <a href="#listes_p" class="nav-link" data-bs-toggle="tab">Modules
                         Intra&nbsp;({{count($mod_publies)}})</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#listes_publiees" class="nav-link" data-bs-toggle="tab">Modules
+                    <a href="#listes_publ" class="nav-link" data-bs-toggle="tab">Modules
                         Inter&nbsp;({{count($mod_publies)}})</a>
                 </li>
             </ul>
@@ -96,131 +97,134 @@
                             <div class="row pading_bas">
                                 @foreach($mod_en_cours as $mod)
                                 <div class="col-6 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
+                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
                                         id="border_premier">
-                                        <div class="col-lg-6 col-md-6 detail__formation__result__content">
+                                        <div class=" detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
-                                                <h4 class="mt-2"><span id="preview_categ"><span
-                                                            class="py-4 acf-categorie">{{$mod->nom_formation}}</span></span><span
-                                                        style="color: #801d68">&nbsp;-&nbsp;</span>
+                                                <h4 class="mt-3"><span id="preview_categ"><span
+                                                            class=" acf-categorie">{{$mod->nom_formation}}</span></span><span>&nbsp;-&nbsp;</span>
                                                     <span></span>
                                                     <span id="preview_module"><span
                                                             class="acf-nom_module">{{$mod->nom_module}}</span></span>
                                                 </h4>
-                                                <br>
-                                                <p id="preview_descript"><span
-                                                        class="acf-description">{{$mod->description}}</span></p>
-                                                <div class="detail__formation__result__avis"
-                                                    style="color: black !important;">
-                                                    <div style="--note: 4.5;">
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star-half'></i>
+                                                <p id="preview_descript"><span class="acf-description"
+                                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
+                                                <div class="d-flex ">
+                                                    <div class="col-6 detail__formation__result__avis">
+                                                        <div style="--note: 4.5;">
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star-half'></i>
+                                                        </div>
+                                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                     </div>
-                                                    <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                    <div class="col-6 ms-3 w-100">
+                                                        <p class="m-0">
+                                                            <span class="new_module_prix">
+                                                                @php
+                                                                echo number_format($mod->prix, 0, ' ', ' ');
+                                                                @endphp
+                                                                &nbsp;AR</span>&nbsp;HT
+                                                        </p>
+                                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                        <span
+                                                            class="">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 detail__formation__result__content text-end">
-                                            <div>
-                                                @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                <button
-                                                    class="btn btn-warning new_duree">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</button>
-                                                @endif
-                                            </div>
-                                            <div>
-                                                <p style="margin: 0"><span class="new_module_prix">
-                                                        @php
-                                                        echo number_format($mod->prix, 0, ' ', ' ');
-                                                        @endphp
-                                                        &nbsp;AR</span>&nbsp;HT</p><span></span>
-                                                <span>par personne</span>
-                                            </div>
-                                            <div class="new_btn_programme">
-                                                <button type="button" class="btn btn-primary"><a
-                                                        href="{{route('ajout_programme',$mod->module_id)}}">Completer&nbsp;votre&nbsp;programme</a></button>
-                                            </div>
-                                        </div>
                                         <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-2" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #801d68 !important;"></i>
-                                                <span id="preview_jour" style="font-size: 12px"><span class="acf-jour">
+                                            class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
+                                                    class="bx bxs-alarm bx_icon"
+                                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
+                                                <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
                                                 <span id="preview_heur">/<span class="acf-heur">
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-4" style="font-size: 12px" id="preview_modalite"><i
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
                                                     class="bx bxs-devices bx_icon"
-                                                    style="color: #801d68 !important;"></i>&nbsp;<span
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
                                                     class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
-                                            <div class="col-3" style="font-size: 12px" id="preview_niveau">
+                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
                                                 <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #801d68 !important;"></i>&nbsp;<span
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
                                                     class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
+
+                                        </div>
+                                        <div class="d-flex flex-row">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-1" id="preview_niveau">
+                                            <div class="" id="preview_niveau">
                                                 <button class="btn modifier pt-0"><a
                                                         href="{{route('modifier_module',$mod->module_id)}}"><i
                                                             class='bx bx-edit background_grey'
                                                             style="color: #0052D4 !important;font-size: 15px"
                                                             title="modifier les informations"></i></a></button>
                                             </div>
-                                            <div class="col-1" id="preview_niveau">
+                                            <div class="" id="preview_niveau">
                                                 <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal_{{$mod->module_id}}"><i
                                                         class="bx bx-trash background_grey2"
                                                         style="color: #ff0000 !important;font-size: 15px"
                                                         title="supprimer le module"></i></button>
                                             </div>
-                                            <div class="col-1" id="preview_niveau">
+                                            <div class="" id="preview_niveau">
                                                 <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
                                                     data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i class='fa fa-eye background_grey3'
+                                                    id="{{$mod->module_id}}"><i
+                                                        class='bx bx-low-vision background_grey3'
                                                         style="color: #3b9f0c !important;font-size: 15px"
                                                         title="afficher les informations"></i></a>
 
                                                 </button>
                                             </div>
-                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header  d-flex justify-content-center"
-                                                            style="background-color:rgb(224,182,187);">
-                                                            <h6 class="modal-title">Avertissement !</h6>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée, cette
-                                                                action
-                                                                est irréversible. Continuer ?</small>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal"> Non
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary suppression"
-                                                                id="{{$mod->module_id}}"> Oui</button>
-                                                        </div>
+                                            <div class=" new_btn_programme text-center">
+                                                <button type="button" class="btn btn_next"><a
+                                                        href="{{route('ajout_programme',$mod->module_id)}}">Completer&nbsp;votre&nbsp;programme</a></button>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center"
+                                                        style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous êtes sur le point d'effacer une donnée, cette
+                                                            action
+                                                            est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal"> Non
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary suppression"
+                                                            id="{{$mod->module_id}}"> Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endcanany
                                         </div>
+                                        @endcanany
                                     </div>
                                 </div>
-
-                                @endforeach
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
+
 
                 <div class="modal" id="ModalAffichage">
                     <div class="modal-dialog">
@@ -437,8 +441,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn_next " id="fermer"
-                                        data-bs-dismiss="modal">
+                                    <button type="button" class="btn btn_next " id="fermer" data-bs-dismiss="modal">
                                         Fermer </button>
                                 </div>
                             </div>
@@ -494,8 +497,8 @@
                                                     <span id="preview_module"><span
                                                             class="acf-nom_module">{{$mod->nom_module}}</span></span>
                                                 </h4>
-                                                <p id="preview_descript"><span
-                                                        class="acf-description" style="font-size: 0.850rem">{{$mod->description}}</span></p>
+                                                <p id="preview_descript"><span class="acf-description"
+                                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
                                                 <div class="d-flex ">
                                                     <div class="col-6 detail__formation__result__avis">
                                                         <div style="--note: 4.5;">
@@ -515,6 +518,9 @@
                                                                 @endphp
                                                                 &nbsp;AR</span>&nbsp;HT
                                                         </p>
+                                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                        <span>{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -530,7 +536,8 @@
                                         <div
                                             class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
                                             <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important; font-size: 0.800rem"></i>
+                                                    class="bx bxs-alarm bx_icon"
+                                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
@@ -577,7 +584,8 @@
                                             <div class="col-3" id="preview_niveau">
                                                 <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
                                                     data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i class='bx bx-low-vision background_grey3'
+                                                    id="{{$mod->module_id}}"><i
+                                                        class='bx bx-low-vision background_grey3'
                                                         style="color: #799F0C !important;font-size: 15px"
                                                         title="afficher les informations"></i></button>
                                             </div>
@@ -722,12 +730,12 @@
                             </div>
                         </div>
                         <div class="col-10 ps-3">
-                            <div class="row pading_bas">
+                            <div class="row pading_bas d-flex flex-wrap">
                                 @foreach($mod_publies as $mod)
                                 <div class="col-6 list_module">
                                     <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
                                         id="border_premier">
-                                        <div class="col-lg-6 col-md-6 detail__formation__result__content">
+                                        <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-2"><span id="preview_categ"><span
                                                             class="py-4 acf-categorie">{{$mod->nom_formation}}</span></span><span
@@ -735,47 +743,50 @@
                                                     <span></span>
                                                     <span id="preview_module"><span
                                                             class="acf-nom_module">{{$mod->nom_module}}</span></span>
+
                                                 </h4>
-                                                <br>
                                                 <p id="preview_descript"><span
                                                         class="acf-description">{{$mod->description}}</span></p>
-                                                <div class="detail__formation__result__avis"
-                                                    style="color: black !important;">
-                                                    <div style="--note: 4.5;">
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star-half'></i>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="detail__formation__result__avis"
+                                                        style="color: black !important;">
+                                                        <div style="--note: 4.5;">
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star-half'></i>
+                                                        </div>
+                                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                     </div>
-                                                    <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="detail__formation__result__content text-end">
+                                                        <div>
+                                                            @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                            <span
+                                                                style="color: #7635dc">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                            @endif
+                                                        </div>
+                                                        <div>
+                                                            <p style="margin: 0"><span class="new_module_prix">
+                                                                    @php
+                                                                    echo number_format($mod->prix, 0, ' ', ' ');
+                                                                    @endphp
+                                                                    &nbsp;AR</span>&nbsp;HT</p><span></span>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 detail__formation__result__content text-end">
-                                            <div>
-                                                @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                <button
-                                                    class="btn btn-warning new_duree">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</button>
-                                                @endif
-                                            </div>
-                                            <div>
-                                                <p style="margin: 0"><span class="new_module_prix">
-                                                        @php
-                                                        echo number_format($mod->prix, 0, ' ', ' ');
-                                                        @endphp
-                                                        &nbsp;AR</span>&nbsp;HT</p><span></span>
-                                                <span>par personne</span>
-                                            </div>
-                                            <div class="new_btn_programme">
-                                                <button type="button" class="btn btn-primary publiees"
-                                                    style="font-weight: bolder">Publié</button>
-                                            </div>
-                                        </div>
+
                                         <div
                                             class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-2" style="font-size: 14px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #801d68 !important;"></i>
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
+                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
@@ -783,63 +794,81 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-4" style="font-size: 14px" id="preview_modalite"><i
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
                                                     class="bx bxs-devices bx_icon"
-                                                    style="color: #801d68 !important;"></i>&nbsp;<span
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
                                                     class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
-                                            <div class="col-3" style="font-size: 14px" id="preview_niveau">
+                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
                                                 <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #801d68 !important;"></i>&nbsp;<span
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
                                                     class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-1" id="preview_niveau">
-                                                <button class="btn modifier"><a
-                                                        href="{{route('modifier_module_pub',$mod->module_id)}}"><i
-                                                            class='bx bx-edit'
-                                                            style="color: #0052D4 !important;font-size: 20px"></i></a></button>
+                                            <div class="col-8 d-flex flex-row">
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn modifier pt-0"><a
+                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
+                                                                class='bx bx-edit background_grey'
+                                                                style="color: #0052D4 !important;font-size: 15px"
+                                                                title="modifier les informations"></i></a></button>
+                                                </div>
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn modifier_prog pt-0"><a
+                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
+                                                                class='bx bx-edit-alt background_grey4'
+                                                                style="color: #801d68 !important;font-size: 15px"
+                                                                title="modifier les programmes"></i></a></button>
+                                                </div>
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal_{{$mod->module_id}}"><i
+                                                            class="bx bx-trash background_grey2"
+                                                            style="color: #ff0000 !important;font-size: 15px"
+                                                            title="supprimer le module"></i></button>
+                                                </div>
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
+                                                        data-bs-toggle="modal" data-bs-target="#ModalAffichage"
+                                                        id="{{$mod->module_id}}"><i
+                                                            class='bx bx-low-vision background_grey3'
+                                                            style="color: #799F0C !important;font-size: 15px"
+                                                            title="afficher les informations"></i></button>
+                                                </div>
                                             </div>
-                                            <div class="col-1" id="preview_niveau">
-                                                <button class="btn supprimer" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash"
-                                                        style="color: #ff0000 !important;font-size: 20px"></i></button>
+                                            <div class="col-4">
+                                                <div class="new_btn_programme text-center">
+                                                    <span class="btn btn_next">Publiées</span>
+                                                </div>
                                             </div>
-                                            <div class="col-1" id="preview_niveau">
-                                                <button class="btn afficher " data-id="{{$mod->module_id}}"
-                                                    data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i class='fa fa-eye'
-                                                        style="color: #799F0C !important;font-size: 20px"
-                                                        title="Afficher"></i></button>
-                                            </div>
-
-                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header  d-flex justify-content-center"
-                                                            style="background-color:rgb(224,182,187);">
-                                                            <h6 class="modal-title">Avertissement !</h6>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée,
-                                                                cette
-                                                                action
-                                                                est irréversible. Continuer ?</small>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal"> Non
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary suppression"
-                                                                id="{{$mod->module_id}}"> Oui</button>
-                                                        </div>
+                                        </div>
+                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center"
+                                                        style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous êtes sur le point d'effacer une donnée,
+                                                            cette
+                                                            action
+                                                            est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal"> Non
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary suppression"
+                                                            id="{{$mod->module_id}}"> Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endcanany
                                         </div>
+                                        @endcanany
                                     </div>
                                 </div>
                                 @endforeach
@@ -848,7 +877,8 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="listes_publiees">
+
+                <div class="tab-pane fade" id="List_publies">
                     <div class="container-fluid d-flex p-0 mt-3 me-3">
                         <div class="col-2 filtre_cours ps-3">
                             <h5 class="mt-3">Filtrer les modules</h5>
@@ -884,12 +914,12 @@
                             </div>
                         </div>
                         <div class="col-10 ps-3">
-                            <div class="row pading_bas">
+                            <div class="row pading_bas d-flex flex-wrap">
                                 @foreach($mod_publies as $mod)
                                 <div class="col-6 list_module">
                                     <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
                                         id="border_premier">
-                                        <div class="col-lg-6 col-md-6 detail__formation__result__content">
+                                        <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-2"><span id="preview_categ"><span
                                                             class="py-4 acf-categorie">{{$mod->nom_formation}}</span></span><span
@@ -897,47 +927,50 @@
                                                     <span></span>
                                                     <span id="preview_module"><span
                                                             class="acf-nom_module">{{$mod->nom_module}}</span></span>
+
                                                 </h4>
-                                                <br>
                                                 <p id="preview_descript"><span
                                                         class="acf-description">{{$mod->description}}</span></p>
-                                                <div class="detail__formation__result__avis"
-                                                    style="color: black !important;">
-                                                    <div style="--note: 4.5;">
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star-half'></i>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="detail__formation__result__avis"
+                                                        style="color: black !important;">
+                                                        <div style="--note: 4.5;">
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star-half'></i>
+                                                        </div>
+                                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                     </div>
-                                                    <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="detail__formation__result__content text-end">
+                                                        <div>
+                                                            @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                            <span
+                                                                style="color: #7635dc">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                            @endif
+                                                        </div>
+                                                        <div>
+                                                            <p style="margin: 0"><span class="new_module_prix">
+                                                                    @php
+                                                                    echo number_format($mod->prix, 0, ' ', ' ');
+                                                                    @endphp
+                                                                    &nbsp;AR</span>&nbsp;HT</p><span></span>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 detail__formation__result__content text-end">
-                                            <div>
-                                                @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                <button
-                                                    class="btn btn-warning new_duree">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</button>
-                                                @endif
-                                            </div>
-                                            <div>
-                                                <p style="margin: 0"><span class="new_module_prix">
-                                                        @php
-                                                        echo number_format($mod->prix, 0, ' ', ' ');
-                                                        @endphp
-                                                        &nbsp;AR</span>&nbsp;HT</p><span></span>
-                                                <span>par personne</span>
-                                            </div>
-                                            <div class="new_btn_programme">
-                                                <button type="button" class="btn btn-primary publiees"
-                                                    style="font-weight: bolder">Publié</button>
-                                            </div>
-                                        </div>
+
                                         <div
                                             class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-2" style="font-size: 14px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #801d68 !important;"></i>
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
+                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
@@ -945,63 +978,81 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-4" style="font-size: 14px" id="preview_modalite"><i
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
                                                     class="bx bxs-devices bx_icon"
-                                                    style="color: #801d68 !important;"></i>&nbsp;<span
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
                                                     class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
-                                            <div class="col-3" style="font-size: 14px" id="preview_niveau">
+                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
                                                 <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #801d68 !important;"></i>&nbsp;<span
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
                                                     class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-1" id="preview_niveau">
-                                                <button class="btn modifier"><a
-                                                        href="{{route('modifier_module_pub',$mod->module_id)}}"><i
-                                                            class='bx bx-edit'
-                                                            style="color: #0052D4 !important;font-size: 20px"></i></a></button>
+                                            <div class="col-8 d-flex flex-row">
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn modifier pt-0"><a
+                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
+                                                                class='bx bx-edit background_grey'
+                                                                style="color: #0052D4 !important;font-size: 15px"
+                                                                title="modifier les informations"></i></a></button>
+                                                </div>
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn modifier_prog pt-0"><a
+                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
+                                                                class='bx bx-edit-alt background_grey4'
+                                                                style="color: #801d68 !important;font-size: 15px"
+                                                                title="modifier les programmes"></i></a></button>
+                                                </div>
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal_{{$mod->module_id}}"><i
+                                                            class="bx bx-trash background_grey2"
+                                                            style="color: #ff0000 !important;font-size: 15px"
+                                                            title="supprimer le module"></i></button>
+                                                </div>
+                                                <div class="col-3" id="preview_niveau">
+                                                    <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
+                                                        data-bs-toggle="modal" data-bs-target="#ModalAffichage"
+                                                        id="{{$mod->module_id}}"><i
+                                                            class='bx bx-low-vision background_grey3'
+                                                            style="color: #799F0C !important;font-size: 15px"
+                                                            title="afficher les informations"></i></button>
+                                                </div>
                                             </div>
-                                            <div class="col-1" id="preview_niveau">
-                                                <button class="btn supprimer" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash"
-                                                        style="color: #ff0000 !important;font-size: 20px"></i></button>
+                                            <div class="col-4">
+                                                <div class="new_btn_programme text-center">
+                                                    <span class="btn btn_next">Publiées</span>
+                                                </div>
                                             </div>
-                                            <div class="col-1" id="preview_niveau">
-                                                <button class="btn afficher " data-id="{{$mod->module_id}}"
-                                                    data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i class='fa fa-eye'
-                                                        style="color: #799F0C !important;font-size: 20px"
-                                                        title="Afficher"></i></button>
-                                            </div>
-
-                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header  d-flex justify-content-center"
-                                                            style="background-color:rgb(224,182,187);">
-                                                            <h6 class="modal-title">Avertissement !</h6>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée,
-                                                                cette
-                                                                action
-                                                                est irréversible. Continuer ?</small>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal"> Non
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary suppression"
-                                                                id="{{$mod->module_id}}"> Oui</button>
-                                                        </div>
+                                        </div>
+                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center"
+                                                        style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous êtes sur le point d'effacer une donnée,
+                                                            cette
+                                                            action
+                                                            est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal"> Non
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary suppression"
+                                                            id="{{$mod->module_id}}"> Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endcanany
                                         </div>
+                                        @endcanany
                                     </div>
                                 </div>
                                 @endforeach
