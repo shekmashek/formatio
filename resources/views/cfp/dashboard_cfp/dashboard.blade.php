@@ -110,24 +110,5 @@
             </div>
         </div>
     </div>
-    {{-- <div class="container-fluid" style="font-size: 10px;">
-        <div class="row mt-2">
-            <div class="col-lg-4">
-                <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68"><b><i class="far fa-user-cog"></i>&nbsp; Profil de l'utilisateur ( {{Auth::user()->name}} ) </b>
-
-                    @if ($resp->nom_resp==null or $resp->nom_resp==null)
-                        <p class="p-0 m-1 system_ pb-1">Informations générales<span class="system_numeroAlert">Incomplet</span></p>
-                    @else
-                        <p class="m-1 system_ pb-1">Informations générales<span class="system_numeroSuccess">Complet</span></p>
-                    @endif
-
-
-                    <p class="p-0 m-1 system_ pb-1">Informations générales<span class="system_numeroAlert">Incomplet</span></p>
-                    <p class="m-1 system_ pb-1">Coordonnées<span class="system_numeroSuccess">Complet</span></p>
-                    <p class="m-1 system_ pb-1">Informations professionnelles<span class="system_numeroAlert">Incomplet</span></p>
-                </div>
-            </div>
-        </div>
-
-    </div> --}}
+    
 @endsection

@@ -2,75 +2,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 {{-- <link rel="stylesheet" href="ttps://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"> --}}
-<div class="container-fluid pt-5">
 
-    <style>
-        .nav .btn{
-            background-color: #f7f7f7;
-            border: none;
-        }
-
-        .nav .btn:hover{
-            background-color: #dddddd;
-            border: none;
-        }
-
-        .nav .b{
-            background-color: #dddddd;
-            color: #801D68;
-        }
-
-
-        .system_{
-            text-align: left;
-            border: none;
-            border-bottom: 1px solid #c22d9d;
-        }
-        .system_num{
-            text-align: right;
-            color: #801d68;
-            font-size: 20px;
-            border-radius: 10px;
-            float: right;
-            position: relative;
-            bottom: .5rem;
-        }
-
-        .system_numero{
-            text-align: right;
-            color: white;
-            background-color: #9d207d;
-            border: none;
-            border-radius: 5px;
-            float: right;
-            padding-left: 5px;
-            padding-right: 5px
-        }
-
-
-        .system_numeroAlert{
-            text-align: right;
-            color: white;
-            background-color: #d32727;
-            border: none;
-            border-radius: 5px;
-            float: right;
-            padding-left: 5px;
-            padding-right: 5px
-        }
-
-
-        .system_numeroSuccess{
-            text-align: right;
-            color: white;
-            background-color: #25d315;
-            border: none;
-            border-radius: 5px;
-            float: right;
-            padding-left: 5px;
-            padding-right: 5px
-        }
-    </style>
 
 <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">
         <a href="{{ route('home') }}" type="button" class="btn" style="font-size: 12px;"> <i class="fad fa-sliders-v" style="font-size: 10px;"></i>&nbsp;TDB système</a>
@@ -123,7 +55,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
