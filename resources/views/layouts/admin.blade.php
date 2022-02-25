@@ -209,7 +209,7 @@
                     {{-- utilisateurs --}}
                     @canany(['isCFP','isReferent','isManager'])
                     <li class="my-2">
-                        <a href="{{route('appel_offre.index')}}"  class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Appel d'Offre</span></a>
+                        <a href="{{route('appel_offre.index')}}"  class="nav_linke dropdown-toggle liste"><i class='bx bxs-user-account nav_icon'></i><span class="nav_name">Appel d'Offre</span></a>&nbsp;&nbsp; @canany(['isReferent']) <a class='nouveau_icon_lien' href="{{route('nouveau+appel+offre')}}"><i class='bx bxs-user-plus nouveau_icon' title="nouveau formateur"></i></a> @endcanany
                     </li>
                     @endcanany
 

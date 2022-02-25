@@ -14,3 +14,21 @@ create table appel_offres(
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+create or replace view v_appel_offre as
+SELECT
+    appel_offres.*,
+    DATE_FORMAT(date_fin, "%d %M  %Y") date_name,
+    entreprises.nom_etp,
+    entreprises.logo,
+    entreprises.site_etp,
+    entreprises.email_etp,
+    entreprises.secteur_id,
+    secteurs.nom_secteur
+FROM
+    appel_offres,
+    entreprises,
+    secteurs
+WHERE
+    appel_offres.entreprise_id = entreprises.id AND entreprises.secteur_id = secteurs.id;

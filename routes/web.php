@@ -820,8 +820,10 @@ Route::resource('demande_devis', 'DemandeDevisController');
 
 //====================== APPEL D'OFFRE
 
-Route::resource('appel_offre', 'AppelOffreController');
+Route::resource('appel_offre', 'AppelOffreController')->except(['update']);
+Route::get('nouveau+appel+offre','AppelOffreController@nouveau')->name('nouveau+appel+offre');
+Route::post('appel_offre.update/{id}','AppelOffreController@update')->name('appel_offre.update');
+Route::get('appel_offre.publier/{id}','AppelOffreController@publier')->name('appel_offre.publier');
 
-Route::get('appel+offre',function(){
-    return view('admin.appel_offre.nouveau_appel_offre');
-});
+Route::post('result_recherche_appel_offre','AppelOffreController@recherche_reference')->name('result_recherche_appel_offre');
+
