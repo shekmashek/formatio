@@ -59,8 +59,9 @@ class GroupeController extends Controller
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $type_formation = request()->type_formation;
-        $formations = $fonct->findWhere("formations", [1], [1]);
-        $modules = $fonct->findAll("modules");
+        $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
+        $modules = $fonct->findWhere("v_module", ["cfp_id","status"], [$cfp_id,2]);
+
         return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
     }
 

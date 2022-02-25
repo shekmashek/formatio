@@ -1,95 +1,3 @@
-// let mybutton = document.getElementById("btn-back-to-top");
-// window.onscroll = function() {
-//     scrollFunction();
-// };
-// function scrollFunction() {
-//     if (
-//         document.body.scrollTop > 300 ||
-//         document.documentElement.scrollTop > 300
-//     ) {
-//         mybutton.style.display = "block";
-//         mybutton.style.bottom = "90px";
-//     } else {
-//         mybutton.style.display = "none";
-//     }
-// }
-// mybutton.addEventListener("click", backToTop);
-// function backToTop() {
-//     document.body.scrollTop = 0;
-//     document.documentElement.scrollTop = 0;
-// }
-
-// document.addEventListener("DOMContentLoaded", function(event) {
-//     const afficheNavbar = (toggleId, navId, bodyId, headerId) => {
-//         const toggle = document.getElementById(toggleId),
-//             nav = document.getElementById(navId),
-//             bodypd = document.getElementById(bodyId),
-//             headerpd = document.getElementById(headerId),
-//             marginimg = document.getElementById(img);
-
-//         // valider tous les variables
-//         if (toggle && nav && bodypd && headerpd) {
-//             toggle.addEventListener("click", () => {
-//                 // afficher navigateur
-//                 nav.classList.toggle("showing");
-//                 // changer icon
-//                 toggle.classList.toggle("bx-menu-alt-right");
-//                 // ajouter padding body
-//                 bodypd.classList.toggle("body-pd");
-//                 // ajouter margin logo
-//                 // marginimg.classList.toggle('imag_marge')
-//                 // ajouter padding header
-//                 headerpd.classList.toggle("body-pd");
-//             });
-//         }
-//     };
-
-//     afficheNavbar("header-toggle", "nav-bar", "body-pd", "header");
-//     /*===== Lien active =====*/
-//     const linkColor = document.querySelectorAll(".nav_link");
-
-//     function colorLink() {
-//         if (linkColor) {
-//             linkColor.forEach((l) => l.classList.remove("active"));
-//             this.classList.add("active");
-//         }
-//     }
-//     linkColor.forEach((l) => l.addEventListener("click", colorLink));
-
-//     var dropdown = document.getElementsByClassName("dropdown-menu");
-//     var i;
-
-//     for (i = 0; i < dropdown.length; i++) {
-//         dropdown[i].addEventListener("click", function() {
-//             this.classList.toggle("active");
-//             var dropdownContent = this.nextElementSibling;
-//             if (dropdownContent.style.display === "block") {
-//                 dropdownContent.style.display = "none";
-//             } else {
-//                 dropdownContent.style.display = "block";
-//             }
-//         });
-//     }
-// });
-$(document).ready(function() {
-    var id_user = $('#id_user').val();
-$.ajax({
-    url: "/affichage_role"
-    , type: 'get'
-    ,data: {
-        id_user: id_user
-    }
-    , success: function(response) {
-        var userData = response;
-        for (var $i = 0; $i < userData.length; $i++) {
-            document.getElementById('liste_role').innerHTML += "<li>" + userData[$i].role_description+ "</li>"
-        }
-    }
-    , error: function(error) {
-        console.log(error);
-    }
-});
-});
 $(document).ready(function() {
     var down = false;
     var down2 = false;
@@ -230,7 +138,6 @@ var Tawk_API = Tawk_API || {},
     s0.parentNode.insertBefore(s1, s0);
 })();
 
-let btn = document.querySelector("#btn_menu");
 let sidebar = document.querySelector(".sidebar");
 let menu = document.querySelector(".bx-menu");
 

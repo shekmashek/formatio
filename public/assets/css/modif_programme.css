@@ -34,12 +34,12 @@
 
 .accordion_prog input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #801D68;
+    border-bottom: 2px solid #7635dc;
 }
 
 .accordion_prog2 input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #801D68;
+    border-bottom: 2px solid #7635dc;
 }
 
 .input_cours input {
@@ -56,7 +56,7 @@
 
 .input_cours input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #801D68;
+    border-bottom: 2px solid #7635dc;
     font-size: 14px
 }
 
@@ -75,7 +75,7 @@
 
 .input_cours2 input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #801D68;
+    border-bottom: 2px solid #7635dc;
     font-size: 14px
 }
 
@@ -98,7 +98,7 @@
 } */
 
 .plus_prog {
-    color: #801D68;
+    color: #7635dc;
     float: right;
     position: relative;
     bottom: 3rem;
@@ -108,14 +108,14 @@
 }
 
 .plus_prog:hover {
-    color: #801D68;
+    color: #7535dc3f;
     transform: scale(1.5);
     padding-bottom: 1rem;
 }
 
 .accordion:after {
     /* content: '\002B'; */
-    color: #801D68;
+    color: #7635dc;
     font-weight: bold;
     float: left;
     position: relative;
@@ -125,34 +125,12 @@
     padding-left: .5rem;
 }
 
-.btn_enregistrer {
-    background-color: #801D68;
-}
-
-.btn_enregistrer:hover {
-    background-color: white;
-    color: #801D68;
-    border: 1px solid #801D68;
-}
-
-/* .active:after {
-    content: "\2212";
-} */
-
-/* .panel {
-    padding: 0 18px;
-    background-color: rgba(255, 255, 255, 0.548);
-    height: auto;
-    overflow: hidden;
-    transition: height 0.2s ease-out;
-} */
-
 .background_plus {
     padding-top: 6px;
     padding-left: 6px;
     padding-right: 6px;
     padding-bottom: 5px;
-    background-color: rgba(197, 197, 197, 0.192);
+    background-color: #7535dc46;
     border-radius: 5px;
     border-width: 0;
     cursor: pointer;
@@ -165,7 +143,7 @@
 
 .background_plus:hover {
     /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: #801d6725;
+    background-color: #63738167;
     transform: scale(1.05);
 }
 
@@ -182,54 +160,14 @@
     font-size: 1em;
     transition: all 200ms;
     margin-left: 2.2rem;
-    color: #801D68;
+    color: #7635dc;
 }
 
 .background_grey6:hover {
     /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: #801d6725;
+    background-color: #7535dc2d;
     transform: scale(1.05);
-    color: #801D68;
-}
-
-.background_grey3 {
-    padding: 5px;
-    background-color: rgba(197, 197, 197, 0.192);
-    border-radius: 5px;
-    border-width: 0;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: 1em;
-    transition: all 200ms;
-    color: green;
-}
-
-.background_grey3:hover {
-    /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: #3b9f0c31;
-    transform: scale(1.05);
-    color: green;
-}
-
-.background_red {
-    padding: 5px;
-    background-color: rgba(197, 197, 197, 0.192);
-    border-radius: 5px;
-    border-width: 0;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: 1em;
-    transition: all 200ms;
-    color: red;
-}
-
-.background_red:hover {
-    /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: rgba(255, 0, 0, 0.158);
-    transform: scale(1.05);
-    color: red;
+    color: #7635dc;
 }
 
 .marge_inferieur {
@@ -325,14 +263,14 @@
 
 .form_modif input {
     border: none;
-    border-bottom: 1px solid #801D68;
+    border-bottom: 1px solid #7635dc;
     font-size: 14px;
     text-transform: capitalize
 }
 
 .form_modif input:focus {
     border: none;
-    border-bottom: 2px solid #801D68;
+    border-bottom: 2px solid #7635dc;
     font-size: 16px;
     transition: all .5s ease;
     background-color: rgba(247, 221, 238, 0.295);
@@ -343,3 +281,19 @@
 .modal-header {
     background-color: rgba(247, 221, 238, 0.452);
 }
+
+.button_plus{
+position: relative;
+bottom: 0.5rem;
+border: none;
+box-shadow: none;
+outline: none;
+margin-left: 3px;
+padding-bottom: 1px;
+}
+.button_plus:focus{
+    border: none;
+box-shadow: none;
+outline: none;
+}
+

@@ -1,4 +1,4 @@
-@import url("projet_intra_inter.css");
+@import url("inputControl.css");
 :root {
     --header-height: 3rem;
     --nav-width: 80px;
@@ -15,6 +15,13 @@
     --button-color: #7635dc;
     --font-sidebar-color: #637381;
     --font-size-sidebar: 13px;
+}
+
+.form_session {
+    background: white;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    padding: 3rem 2rem;
+    border-radius: 5px
 }
 
 .projets_card {
@@ -306,5 +313,34 @@
     background-color: #63738131;
     color: #7635dc;
     transform: scale(1.2);
+}
+
+.navigation_module .nav-link {
+    color: #7635dc;
+    border: none;
+    padding: 5px;
+    background-color: #7535dc25;
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: rgba(172, 172, 172, 0.397);
+    color: #7635dc;
+    border-radius: 5px;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgba(245, 243, 243, 0.418);
+    transform: scale(1.1);
+    border: rgba(128, 128, 128, 0.692) 1px solid;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
 }
 

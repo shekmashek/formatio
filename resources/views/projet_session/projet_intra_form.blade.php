@@ -1,6 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
-<div class="container p-0">
+<link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
+<div class="container pt-5">
     <div class="row">
         <h5 class="my-3 text-center">Le Projet de Formation intra entreprise</h5>
         <form action="{{ route('groupe.store') }}" id="formPayement" method="POST" class="form_session">
