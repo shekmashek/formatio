@@ -53,6 +53,11 @@
 
     @canany(['isCFP','isFormateur'])
     <div class="m" id="corps">
+        @if (count($projet) <= 0)
+        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+            <span class="text-center">Aucun résultat pour votre recherche.</span>
+        </div>
+        @endif
         @foreach ($projet as $prj)
 
         <div class="d-flex mt-3 titre_projet p-1 mb-1 justify-content-between">

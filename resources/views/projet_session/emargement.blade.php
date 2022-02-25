@@ -204,15 +204,27 @@
                     html += '<div class="col-md-1 text-center">'+userData['matricule']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['nom_stagiaire']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['prenom_stagiaire']+'</div>';
-                    html += '<div class="col-md-2 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';            
-                    html += '<label class="present_label">';
-                    html += '<input class="m-2 present" type="radio" id="present" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance" value="1" required>';
-                    html += '<span class="present_label">Présent</span>';
-                    html += '</label>';
-                    html += '<label class="absent_label">';
-                    html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance" value="0" required>';          
-                    html += 'Absent';
-                    html += '</label>';
+                    html += '<div class="col-md-2 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';                
+                    if(userData['status'] == 1){
+                        html += '<label class="present_label">';
+                        html += '<input class="m-2 present" type="radio" id="present" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="1" checked required>';
+                        html += '<span class="present_label">Présent</span>';
+                        html += '</label>';
+                        html += '<label class="absent_label">';
+                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" required>';          
+                        html += 'Absent';
+                        html += '</label>';
+                    }
+                    if(userData['status'] == 0){
+                        html += '<label class="present_label">';
+                        html += '<input class="m-2 present" type="radio" id="present" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="1" required>';
+                        html += '<span class="present_label">Présent</span>';
+                        html += '</label>';
+                        html += '<label class="absent_label">';
+                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" checked required>';          
+                        html += 'Absent';
+                        html += '</label>';
+                    }    
                     html += '</div>';
                     html += '<div class="col-md-2">';
                     html += '<div class="row" class="pointage" id="pointage">';         
@@ -234,15 +246,7 @@
                     html += '</div>';
                     html += '</tr>';              
                     html += '</div>';
-                    
-                    
-                    if(userData['status'] == 1){
-                        $('#present').prop("checked", true);
-                    }
-                    if(userData['status'] == 0){
-                        $('#absent').prop("checked", true);
-                    }                  
-
+                                  
                     $(id).html(html);
                 },
                 error: function(error) {

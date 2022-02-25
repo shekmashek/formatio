@@ -280,7 +280,7 @@ class SessionController extends Controller
             $note = $request->edit_note_desc;
             $detail_id = $request->edit_detail_id;
             $stg_id = $request->edit_stg_id;
-            DB::update('update presences set status = ? , h_entree = ? , h_sortie = ? , note = ? where detail_id = ? and stagiaire_id = ?', [$presence,$h_entree,$h_sortie,$note,$detail_id,$stg_id]);
+            DB::update('update presences set status = ? , h_entree = ? , h_sortie = ? , note = ? where detail_id = ? and stagiaire_id = ?', [$presence[$detail_id][$stg_id],$h_entree,$h_sortie,$note,$detail_id,$stg_id]);
         }
         if(isset($request->insert_form)){
             $groupe_id = $request->groupe;
