@@ -110,7 +110,6 @@
             </div>
         </div>
     </div>
-
     {{-- <div class="container-fluid" style="font-size: 10px;">
         <div class="row mt-2">
             <div class="col-lg-4">
