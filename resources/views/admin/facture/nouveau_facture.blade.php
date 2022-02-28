@@ -1,8 +1,11 @@
 @extends('./layouts/admin')
 @section('content')
 
+<link rel="stylesheet" href="{{asset('css/facture.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
+
 <style>
-    .input_inscription {
+    /* .input {
         padding: 2px;
         border-radius: 100px;
         box-sizing: border-box;
@@ -16,7 +19,7 @@
 
     }
 
-    .input_inscription:focus {
+    .input:focus {
         -moz-box-shadow: none !important;
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
@@ -39,8 +42,8 @@
         left: 2rem;
     }
 
-    .input_inscription:focus+.form-control-placeholder,
-    .input_inscription:valid+.form-control-placeholder {
+    .input:focus+.form-control-placeholder,
+    .input:valid+.form-control-placeholder {
         font-size: 95%;
         font-weight: bolder;
         top: 1rem;
@@ -55,7 +58,7 @@
     input:-webkit-autofill:active {
         box-shadow: 0 0 0 30px white inset !important;
         -webkit-box-shadow: 0 0 0 30px white inset !important;
-    }
+    } */
 
 </style>
 
@@ -206,14 +209,14 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" required name="num_facture" class="form-control  input_inscription" id="num_facture" />
+                                        <input type="text" required name="num_facture" class="form-control  input" id="num_facture" />
                                         <label for="num_facture" class="form-control-placeholder">Numéro de facture<strong style="color:#ff0000;">*</strong></label>
                                         <span style="color:#ff0000;" id="num_facture_err"></span>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" required class="form-control input_inscription reference_bc" id="reference_bc" name="reference_bc">
+                                        <input type="text" required class="form-control input reference_bc" id="reference_bc" name="reference_bc">
                                         <label for="reference_bc" class="form-control-placeholder">Reference Bon de Commande<strong style="color:#ff0000;">*</strong></label>
                                         @error('reference_bc')
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -262,14 +265,14 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="invoice_date" class="form-label">Date création Facture<strong style="color:#ff0000;">*</strong></label>
-                                        <input type="date" required class="form-control input_inscription" id="exampleFormControlInput1" placeholder="Invoice Date" name="invoice_date" id="invoice_date">
+                                        <input type="date" required class="form-control input" id="exampleFormControlInput1" placeholder="Invoice Date" name="invoice_date" id="invoice_date">
 
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="due_date" class="form-label">Durer de Date<strong style="color:#ff0000;">*</strong></label>
-                                        <input type="date" required class="form-control input_inscription" placeholder="Due Date" name="due_date" id="due_date">
+                                        <input type="date" required class="form-control input" placeholder="Due Date" name="due_date" id="due_date">
                                     </div>
                                 </div>
                             </div>
@@ -381,7 +384,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="remise" class="form-label">Remise</label>
-                                        <input type="number" min="0" value="0" placeholder="remise(facultatif)" class="form-control input_inscription" name="remise" id="remise">
+                                        <input type="number" min="0" value="0" placeholder="remise(facultatif)" class="form-control input" name="remise" id="remise">
                                     </div>
                                 </div>
 
@@ -438,6 +441,7 @@
 
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{asset('js/facture.js')}}"></script>
 
 
 <script type="text/javascript">

@@ -848,5 +848,8 @@ Route::get('appel_offre.publier/{id}','AppelOffreController@publier')->name('app
 Route::post('result_recherche_appel_offre','AppelOffreController@recherche_reference')->name('result_recherche_appel_offre');
 
 //=================== Recherche de thématique par rapport à une formation
-
 Route::get('get_thematique','ModuleController@get_thematique')->name('get_thematique');
+// ============ Recherche multi critère ===============
+Route::post('recherche_thematique_formation','AppelOffreController@recherche_thematique_formation')->name('recherche_thematique_formation');
+Route::post('recherche_intervale_date_appel_offre','AppelOffreController@recherche_intervale_date_appel_offre')->name('recherche_intervale_date_appel_offre');
+

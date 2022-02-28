@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use App\Models\FonctionGenerique;
 
 class Appel_offre extends Model
 {
@@ -32,5 +35,6 @@ class Appel_offre extends Model
           ];
         $input->validate($critere,$rules);
     }
+
 
 }

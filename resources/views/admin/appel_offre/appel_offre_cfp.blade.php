@@ -45,6 +45,10 @@
         border-bottom: 2px solid black;
     }
 
+    .filtre{
+        overflow-y: scroll;
+    }
+
 </style>
 
 <div id="page-wrapper">
@@ -100,52 +104,65 @@
 {{-- <div class="tab-pane fade" id="nav-offre_publier" role="tabpanel" aria-labelledby="nav-offre_publier-tab"> --}}
 
 <div class="row">
-    <div class="col-2 shadow">
+    <div class="col-2 shadow mt-2 filtre">
         <h5>Critère</h5>
         <div class="row mt-0">
-            <h6>Recherche par thématique de formation</h6>
-            <form class="mt-5 form_colab" action="{{route('result_recherche_appel_offre')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <label for="domaine" class="form-label" align="left">domaine<strong style="color:#ff0000;">*</strong></label>
-                <select class="form-select" aria-label="Default select example" name="domaine" id="domaine">
-                    @foreach ($domaines as $domaine )
-                    <option value="{{$domaine->id}}">{{$domaine->nom_domaine}}</option>
-                    @endforeach
-                </select>
-                <br>
-                <label for="domaine" class="form-label" align="left">thématique<strong style="color:#ff0000;">*</strong></label>
-                <select class="form-select" aria-label="Default select example" name="thematique" id="thematique">
-                </select>
-                <span style="color:#ff0000;" id="thematique_id_err"></span>
-                <br>
-                <button type="submit" class="btn_enregistrer">recherche</button>
-            </form>
+            <h6>
+                <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par thématique de formation</a>
+            </h6>
+            <div class="collapse multi-collapse" id="detail_par_thematique">
+                <form class="mt-5 form_colab" action="{{route('recherche_thematique_formation')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <label for="domaine" class="form-label" align="left">domaine<strong style="color:#ff0000;">*</strong></label>
+                    <select class="form-select" aria-label="Default select example" name="domaine" id="domaine">
+                        @foreach ($domaines as $domaine )
+                        <option value="{{$domaine->id}}">{{$domaine->nom_domaine}}</option>
+                        @endforeach
+                    </select>
+                    <br>
+                    <label for="domaine" class="form-label" align="left">thématique<strong style="color:#ff0000;">*</strong></label>
+                    <select class="form-select" aria-label="Default select example" name="thematique" id="thematique">
+                    </select>
+                    <span style="color:#ff0000;" id="thematique_id_err"></span>
+                    <br>
+                    <button type="submit" class="btn_enregistrer">recherche</button>
+                </form>
+            </div>
         </div>
+
         <hr class="mt-1">
         <div class="row mt-0">
-            <h6>Recherche par indication de thématique</h6>
-            <form class="mt-5 form_colab" action="{{route('result_recherche_appel_offre')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <label for="dte_debut" class="form-label" align="left">nom thématique <strong style="color:#ff0000;">*</strong></label> <br>
-                <input required type="text" class="form-control" name="reference_search" placeholder="nom thématique" />
-                <br>
-                <button type="submit" class="btn_enregistrer">recherche</button>
-            </form>
+            <h6>
+                <a data-bs-toggle="collapse" href="#indice_thematique" role="button" aria-expanded="false" aria-controls="indice_thematique">
+                    Recherche par indication de thématique</a>
+            </h6>
+            <div class="collapse multi-collapse" id="indice_thematique">
+                <form class="mt-5 form_colab" action="{{route('result_recherche_appel_offre')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <label for="dte_debut" class="form-label" align="left">nom thématique <strong style="color:#ff0000;">*</strong></label> <br>
+                    <input required type="text" class="form-control" name="reference_search" placeholder="nom thématique" />
+                    <br>
+                    <button type="submit" class="btn_enregistrer">recherche</button>
+                </form>
+            </div>
         </div>
         <hr class="mt-1">
 
         <div class="row mt-0">
-            <h6>Recherche par intervale des dates</h6>
+            <h6>    <a data-bs-toggle="collapse" href="#intervale_date" role="button" aria-expanded="false" aria-controls="intervale_date">
+                Recherche par intervale des dates </a></h6>
+                <div class="collapse multi-collapse" id="intervale_date">
+                    <form class="mt-5 form_colab" action="{{route('recherche_intervale_date_appel_offre')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <label for="dte_debut" class="form-label" align="left">entre date <strong style="color:#ff0000;">*</strong></label> <br>
+                        <input required type="date" name="dte_debut" class="form-control" />
+                        <br>
+                        <label for="dte_fin" class="form-label" align="left">à date <strong style="color:#ff0000;">*</strong></label> <br>
+                        <input required type="date" name="dte_fin" class="form-control" /> <br>
+                        <button type="submit" class="btn_enregistrer">recherche</button>
+                    </form>
+                </div>
 
-            <form class="mt-5 form_colab" action="{{route('appel_offre.store')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <label for="dte_debut" class="form-label" align="left">entre date <strong style="color:#ff0000;">*</strong></label> <br>
-                <input required type="date" name="dte_debut" class="form-control" />
-                <br>
-                <label for="dte_fin" class="form-label" align="left">à date <strong style="color:#ff0000;">*</strong></label> <br>
-                <input required type="date" name="dte_fin" class="form-control" /> <br>
-                <button type="submit" class="btn_enregistrer">recherche</button>
-            </form>
         </div>
     </div>
     <div class="col mx-1 shadow">
@@ -249,7 +266,6 @@
                         $("#thematique").append('<option value="' + userData[$i].id + '">' + userData[$i].nom_formation + '</option>');
                     }
                 }
-
             }
             , error: function(error) {
                 console.log(error);

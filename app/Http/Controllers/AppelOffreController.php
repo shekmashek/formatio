@@ -77,7 +77,27 @@ class AppelOffreController extends Controller
             }
             return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
         }
+    }
 
+    public function recherche_thematique_formation(Request $req){
+        $domaines = $this->fonct->findAll("domaines");
+
+        if($req->thematique!=null){
+            $appel_offre_publier =  DB::select("select * from v_appel_offre where formation_id=?",[$req->thematique]);
+        } else {
+            $appel_offre_publier =  DB::select("select * from v_appel_offre");
+        }
+        return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
+    }
+
+    public function recherche_intervale_date_appel_offre(Request $req){
+        $domaines = $this->fonct->findAll("domaines");
+        if($req->dte_debut!=null && $req->dte_fin!=null){
+          $appel_offre_publier =  DB::select("select * from v_appel_offre where date_fin>=? and date_fin<=?",[$req->dte_debut,$req->dte_fin]);
+        } else {
+            $appel_offre_publier =  DB::select("select * from v_appel_offre");
+        }
+        return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
     }
 
     /**
