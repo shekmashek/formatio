@@ -689,7 +689,7 @@
                                         </a>
                                     </div>
                                     <div class="footer_list ms-2 me-2">
-                                        <a href="#">
+                                        <a href="{{url('politique_confidentialite')}}" target="_blank">
                                             <p>Politique de confidentialité</p>
                                         </a>
                                     </div>

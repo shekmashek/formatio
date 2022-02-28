@@ -765,7 +765,13 @@ Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name(
 
 ///////__________RECHERCHE MULTICRITERE_____________________\\\\\\\\\
 Route::get('recherche_admin','RecherchemultiController@index')->name('recherche_admin');
-
+//route politque confidentialité
+Route::get('/politique_confidentialite',function(){
+    return view('/politique_confidentialite');
+    });
+    Route::get('/politique_confidentialites',function(){
+        return view('/politique_confidentialites');
+        });
 // route information légales
 Route::get('/info_legale', function () {
     return view('/info_legale');
