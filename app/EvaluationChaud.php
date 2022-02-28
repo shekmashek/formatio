@@ -44,15 +44,15 @@ class EvaluationChaud extends Model
     }
 
 
-    public function findDetailProject($matricule){
+    public function findDetailProject($matricule,$session_id){
         $fonction = new FonctionGenerique();
 
-        $stagiaire = $fonction->findWhereOne("v_participant_groupe","matricule","=",$matricule);
-        $detail = $fonction->findWhereOne("v_participant_groupe","detail_id","=",$stagiaire->detail_id);
+        // $stagiaire = $fonction->findWhereOne("v_stagiaire_groupe","matricule","=",$matricule);
+        // dd($stagiaire);
+        $detail = $fonction->findWhereMulitOne("v_participant_groupe_detail",['matricule','groupe_id'],[$matricule,$session_id]);
 
-        $data['stagiaire'] = $stagiaire;
-        $data['detail'] = $detail;
-        return $data;
+        // $data['stagiaire'] = $stagiaire;
+        return $detail;
     }
 
     //=============== ajout reponse formulaire de l'evaluation  à chaud par le stagiaire

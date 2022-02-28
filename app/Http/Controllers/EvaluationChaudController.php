@@ -17,10 +17,10 @@ class EvaluationChaudController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
-            return $next($request);
-        });
+        // $this->middleware(function ($request, $next) {
+        //     if(Auth::user()->exists == false) return redirect()->route('sign-in');
+        //     return $next($request);
+        // });
     }
     public function formulaire()
     {
@@ -29,20 +29,22 @@ class EvaluationChaudController extends Controller
         return view('admin.evaluation.evaluationChaud.formulaireEvaluationChaud', compact('type_champ'));
     }
 
-    public function index($matricule)
+    public function index()
     {
+        $matricule = "ETU001";
+        $session_id = 1;
         $fact = new Facture();
         $evaluation = new EvaluationChaud();
 
         $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
         $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
         $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-        $data = $evaluation->findDetailProject($matricule); // return les information du project avec detail et information du stagiaire
+        $data = $evaluation->findDetailProject($matricule,$session_id); // return les information du project avec detail et information du stagiaire
 
-        $stagiaire = $data['stagiaire'];
+        // $stagiaire = $data['stagiaire'];
         $detail = $data['detail'];
 
-        return view("admin.evaluation.evaluationChaud.evaluationChaud", compact('detail', 'stagiaire', 'champ_reponse', 'qst_mere', 'qst_fille'));
+        return view("admin.evaluation.evaluationChaud.evaluationChaud", compact('detail', 'champ_reponse', 'qst_mere', 'qst_fille'));
     }
 
     public function create($detail_id, $stagiaire_id, Request $request)

@@ -1,5 +1,5 @@
-@extends('./layouts/admin')
-@section('content')
+{{-- @extends('./layouts/admin')
+@section('content') --}}
 {{-- <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,63 +15,59 @@
 </head>
 <body> --}}
 
-    <div class="container-fluid mt-5">
+    {{-- <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h4 class="btn-warning">Evaluation à Chaud Par Stagiaire</h4>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="container mt-4">
-        <div class="row">
+    {{-- <div class="container mt-4">
+        <div class="row"> --}}
 
-            <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
-
-                {{-- <div class="card shadow p-3 mb-5 bg-body rounded"> --}}
+            {{-- <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
                 <h4 class="card-title"> Information de l'entreprise et Formateur</h4>
                 <div class="card-body">
-                    {{-- <h4 class="card-title"><img src=" {{asset('storage/'.$detail->logo)}} " class="profil-entreprise" alt="..."/> {{$detail->nom_etp}}</h4> --}}
-
-                    <h6 class="card-title my-1">Project: {{$detail->nom_projet}}</h6>
+                    
+                    <h6 class="card-title my-1">Project: {{$detail->projet_id}}</h6>
                     <h6 class="card-title my-1">Groupe: {{$detail->groupe_id}}</h6>
-                    {{-- <h6 class="card-title my-1">Session: de 2021/02/13 à 2021/02/26(static)  id session: {{$detail->session_id}}</h6> --}}
-                    <h6 class="card-title my-1">Formation: {{$detail->nom_formation}} Module: {{$detail->nom_module}}</h6>
+                    <h6 class="card-title my-1">Formation: {{$detail->module_id}} Module: {{$detail->module_id}}</h6>
                 </div>
-                {{-- </div> --}}
 
-            </div>
+            </div> --}}
 
-            <div class="col-md-2"></div>
+            {{-- <div class="col-md-2"></div> --}}
 
-            <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
+            {{-- <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded"> --}}
 
                 {{-- <div class="card shadow p-3 mb-5 bg-body rounded"> --}}
-                <h4 class="card-title"> Information du Stagiaire</h4>
+                {{-- <h4 class="card-title"> Information du Stagiaire</h4>
                 <div class="card-body">
-                    <h5 class="card-title"><img src=" {{asset('storage/'.$stagiaire->photos)}}" class="profil-stagiaire" alt="..."> {{$stagiaire->nom_stagiaire.' '.$stagiaire->prenom_stagiaire}}</h5>
-                    <h6 class="card-title my-1">Matricule: {{$stagiaire->matricule}} Genre: {{$stagiaire->genre_stagiaire}}</h6>
-                    <h6 class="card-title my-1">Foncion: {{$stagiaire->fonction_stagiaire}} </h6>
-                    <h6 class="card-title my-1">Mail: <a href="#">{{$stagiaire->mail_stagiaire}}</a> </h6>
-                    <h6 class="card-title my-1">Tel: {{$stagiaire->telephone_stagiaire}}</h6>
-                </div>
+                    <h5 class="card-title"><img src="" class="profil-stagiaire" alt="..."> {{$detail->nom_stagiaire.' '.$detail->prenom_stagiaire}}</h5>
+                    <h6 class="card-title my-1">Matricule: {{$detail->matricule}}</h6>
+                    <h6 class="card-title my-1">Foncion: {{$detail->fonction_stagiaire}} </h6>
+                    <h6 class="card-title my-1">Mail: <a href="#">{{$detail->mail_stagiaire}}</a> </h6>
+                    <h6 class="card-title my-1">Tel: {{$detail->telephone_stagiaire}}</h6>
+                </div> --}}
                 {{-- </div> --}}
 
-            </div>
+            {{-- </div>
 
-            <h4 class="card-title text-center">Formateur: <img src=" {{asset('storage/'.$detail->photos)}} " class="profil-stagiaire" alt="..." /> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5>
+            <h4 class="card-title text-center">Formateur: <img src="" class="profil-stagiaire" alt="..." /> Nom formateur</h5> --}}
 
-        </div>
-    </div>
+        {{-- </div>
+    </div> --}}
 
-    <div class="container">
+    {{-- <div class="container"> --}}
 
-        <h5 class="text-center">Evaluation</h5>
+        {{-- <h5 class="text-center">Evaluation</h5> --}}
 
-        <form method="POST" action="{{ route('createEvaluationChaud',[$stagiaire->detail_id,$stagiaire->stagiaire_id])}}">
-            @csrf
+        
             <div class="row">
-                <div class="col-md-12 card shadow p-3 mb-5 bg-body rounded">
+                <form method="POST" action="{{ route('createEvaluationChaud',[$detail->detail_id,$detail->stagiaire_id])}}">
+                    @csrf
+                <div class="col-md-9 card shadow p-3 mb-5 bg-body rounded">
 
                     @foreach ($qst_mere as $qst_mere)
 
@@ -154,11 +150,12 @@
                     </div>
 
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+        
+    {{-- </div> --}}
 
 
 {{-- </body>
 </html> --}}
-@endsection
+{{-- @endsection --}}

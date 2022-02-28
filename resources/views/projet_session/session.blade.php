@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-<div class="shadow p-3 mb-5 bg-body rounded h-100">
+<div class="shadow p-3 mb-5 bg-body rounded ">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
             <h5>Session </h5>
@@ -195,7 +195,8 @@
                         @include('projet_session.document')
                       </div>
                       <div id="chaud" class="tabcontent">
-                        @include('projet_session.index_evaluation')
+                        {{-- @include('projet_session.index_evaluation') --}}
+                        @include('admin.evaluation.evaluationChaud.evaluationChaud')
                       </div>
                       <div id="emargement" class="tabcontent">
                         @include('projet_session.emargement')
@@ -228,6 +229,10 @@
 
 
 <style>
+.shadow{
+    height: auto;
+}
+
 *{
     font-family: 'Open Sans';
     font-size: .9rem;

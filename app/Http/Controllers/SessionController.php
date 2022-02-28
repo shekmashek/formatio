@@ -158,7 +158,7 @@ class SessionController extends Controller
             $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
             $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
             $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-            $data = $evaluation->findDetailProject($matricule); // return les information du project avec detail et information du stagiaire
+            $data = $evaluation->findDetailProject($matricule,$id); // return les information du project avec detail et information du stagiaire
 
             $stagiaire = $data['stagiaire'];
             $detail = $data['detail'];
@@ -179,7 +179,15 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         // dd($competences);
         // ---------evalution fait par les stagiaires
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id'));
+        $evaluation = new EvaluationChaud();
+        $matricule = "ETU001";
+        $session_id = 1;
+        $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
+        $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
+        $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
+        $detail = $evaluation->findDetailProject($matricule,$session_id); // return les information du project avec detail et information du stagiaire
+        // dd($detail);
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','detail','champ_reponse', 'qst_mere', 'qst_fille'));
     }
 
     public function getFormateur(){
