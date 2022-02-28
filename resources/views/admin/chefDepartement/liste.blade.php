@@ -55,11 +55,11 @@
                                         @for($i = 0; $i < count($referent); $i++)
                                         <tr class="text-center content_table">
                                             <td>
-                                                @if($referent[$i]->photos == null)
+                                                {{-- @if($referent[$i]->photos == null)
                                                 <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
                                                 @else
                                                 <img src="/responsable-image/{{$referent[$i]->photos}}" width="50" height="50"></td>
-                                                @endif
+                                                @endif --}}
                                             <td>{{$referent[$i]->matricule}}</td>
                                             <td>{{$referent[$i]->nom_resp}}</td>
                                             <td>{{$referent[$i]->prenom_resp}}</td>
@@ -73,6 +73,13 @@
                                                     @if($referent[$i]->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "referent")
                                                             <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @else
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                <label class="form-check-label" for="flexCheckDefault">
+
+                                                                </label>
+                                                            </div>
                                                         @endif
                                                     @endif
                                                 @endfor
@@ -83,7 +90,14 @@
                                                     @if($referent[$i]->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "consultant formateur")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @endif
+                                                        @else
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                <label class="form-check-label" for="flexCheckDefault">
+
+                                                                </label>
+                                                            </div>
+                                                    @endif
                                                     @endif
                                                 @endfor
                                             </td>
@@ -92,6 +106,13 @@
                                                     @if($referent[$i]->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "chef de département")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @else
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+
+                                                            </label>
+                                                        </div>
                                                         @endif
                                                     @endif
                                                 @endfor
@@ -215,11 +236,11 @@
                                        @for($i = 0; $i < count($stagiaires); $i++)
                                         <tr class="text-center content_table">
                                             <td>
-                                                @if($stagiaires[$i]->photos == null)
+                                                {{-- @if($stagiaires[$i]->photos == null)
                                                     <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
                                                 @else
                                                     <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50" height="50"></td>
-                                                @endif
+                                                @endif --}}
                                             </td>
                                             <td>{{$stagiaires[$i]->matricule}}</td>
                                             <td>{{$stagiaires[$i]->nom_stagiaire}}</td>
@@ -234,6 +255,13 @@
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
                                                                 @if($user_role[$j]->role_description == "referent")
                                                                     <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                @else
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+
+                                                                        </label>
+                                                                    </div>
                                                                 @endif
                                                             @endif
                                                         @endfor
@@ -253,6 +281,13 @@
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
                                                                 @if($user_role[$j]->role_description == "chef de département")
                                                                 <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                @else
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+
+                                                                    </label>
+                                                                </div>
                                                                 @endif
                                                             @endif
                                                         @endfor
@@ -378,13 +413,13 @@
                                     <tbody>
                                         @foreach($chef as $chefs)
                                         <tr class="text-center content_table">
-                                            <td>
+                                            {{-- <td>
                                                 @if($chefs->photos == null)
                                                 <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
                                                 @else
                                                 <img src="/stagiaire-image/{{$chefs->photos}}" width="50" height="50"></td>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td>{{$chefs->matricule}}</td>
                                             <td>{{$chefs->nom_chef}}</td>
                                             <td>{{$chefs->prenom_chef}}</td>
@@ -399,8 +434,14 @@
                                                     @if($chefs->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "referent")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @else
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
 
-                                                        @endif
+                                                            </label>
+                                                        </div>
+                                                    @endif
                                                     @endif
                                                 @endfor
                                             </td>
@@ -410,7 +451,14 @@
                                                     @if($chefs->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "formateur")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @endif
+                                                        @else
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+
+                                                            </label>
+                                                        </div>
+                                                    @endif
                                                     @endif
                                                 @endfor
                                             </td>
@@ -419,7 +467,14 @@
                                                     @if($chefs->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "chef de département")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @endif
+                                                        @else
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+
+                                                            </label>
+                                                        </div>
+                                                    @endif
                                                     @endif
                                                 @endfor
                                             </td>
