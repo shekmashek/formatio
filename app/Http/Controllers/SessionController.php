@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\cfp;
+use App\ChefDepartement;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
 use App\Models\getImageModel;
+use App\Presence;
 
 class SessionController extends Controller
 {
@@ -104,10 +106,12 @@ class SessionController extends Controller
     public function detail_session(){
         $user_id = Auth::user()->id;
         $id = request()->id_session;
+        $type_formation_id = request()->type_formation;
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
         // ???--
+        $competences = [];
         $all_frais_annexe = [];
         $documents = [];
         $fonct = new FonctionGenerique();
@@ -117,11 +121,24 @@ class SessionController extends Controller
             $cfp_nom = Cfp::where('user_id', $user_id)->value('nom');
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-            $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            if($type_formation_id  == 1){
+                $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            }
+            elseif($type_formation_id  == 2) {
+                $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            }
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
         if(Gate::allows('isReferent')){
-            $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            if (Gate::allows('isReferentPrincipale')) {
+                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            }
+            if (Gate::allows('isStagiairePrincipale')) {
+                $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
+            }
+            if (Gate::allows('isManagerPrincipale')) {
+                $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
+            }
             $formateur = NULL;
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
@@ -146,6 +163,7 @@ class SessionController extends Controller
             $stagiaire = $data['stagiaire'];
             $detail = $data['detail'];
         }
+
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
@@ -154,14 +172,14 @@ class SessionController extends Controller
         // ---ressources
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
-        $presence_detail = DB::select("select * from v_detail_presence where groupe_id = ?", [$projet[0]->groupe_id]);
+        $presence_detail = DB::select("select * from v_emargement where groupe_id = ?", [$projet[0]->groupe_id]);
 
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         // dd($competences);
         // ---------evalution fait par les stagiaires
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id'));
     }
 
     public function getFormateur(){
@@ -264,28 +282,46 @@ class SessionController extends Controller
     }
 
     public function insert_presence(Request $request){
-        $presence = $request->attendance;
-        $groupe_id = $request->groupe;
-        $detail_id = $request->detail_id;
-        $h_entree = $request->entree;
-        $h_sortie = $request->sortie;
-        $note = $request->note_desc;
-        $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
-        $detail = DB::select('select h_debut,h_fin from details where id = ?',[$detail_id]);
-        foreach($stagiaire as $stg){
-            if(empty($h_entree[$detail_id][$stg->stagiaire_id])){
-                $h_entree[$detail_id][$stg->stagiaire_id] = $detail[0]->h_debut;
+        if(isset($request->edit_form)){
+            $presence = $request->edit_attendance;
+            $h_entree = $request->edit_h_entree;
+            $h_sortie = $request->edit_h_sortie;
+            $note = $request->edit_note_desc;
+            $detail_id = $request->edit_detail_id;
+            $stg_id = $request->edit_stg_id;
+            DB::update('update presences set status = ? , h_entree = ? , h_sortie = ? , note = ? where detail_id = ? and stagiaire_id = ?', [$presence[$detail_id][$stg_id],$h_entree,$h_sortie,$note,$detail_id,$stg_id]);
+        }
+        if(isset($request->insert_form)){
+            $groupe_id = $request->groupe;
+            $detail_id = $request->detail_id;
+            $presence = $request->attendance;
+            $h_entree = $request->entree;
+            $h_sortie = $request->sortie;
+            $note = $request->note_desc;
+            $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
+            $detail = DB::select('select h_debut,h_fin from details where id = ?',[$detail_id]);
+            foreach($stagiaire as $stg){
+                if(empty($h_entree[$detail_id][$stg->stagiaire_id])){
+                    $h_entree[$detail_id][$stg->stagiaire_id] = $detail[0]->h_debut;
+                }
+                if(empty($h_sortie[$detail_id][$stg->stagiaire_id])){
+                    $h_sortie[$detail_id][$stg->stagiaire_id] = $detail[0]->h_fin;
+                }
+                if(empty($note[$detail_id][$stg->stagiaire_id])){
+                    $note[$detail_id][$stg->stagiaire_id] = "";
+                }
+                DB::insert('insert into presences(stagiaire_id,detail_id,status,h_entree,h_sortie,note) values(?,?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$detail_id][$stg->stagiaire_id],$h_entree[$detail_id][$stg->stagiaire_id],$h_sortie[$detail_id][$stg->stagiaire_id],$note[$detail_id][$stg->stagiaire_id]]);
             }
-            if(empty($h_sortie[$detail_id][$stg->stagiaire_id])){
-                $h_sortie[$detail_id][$stg->stagiaire_id] = $detail[0]->h_fin;
-            }
-            if(empty($note[$detail_id][$stg->stagiaire_id])){
-                $note[$detail_id][$stg->stagiaire_id] = "";
-            }
-            DB::insert('insert into presences(stagiaire_id,detail_id,status,h_entree,h_sortie,note) values(?,?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$detail_id][$stg->stagiaire_id],$h_entree[$detail_id][$stg->stagiaire_id],$h_sortie[$detail_id][$stg->stagiaire_id],$note[$detail_id][$stg->stagiaire_id]]);
         }
         // $presence_detail = DB::select("select * from v_detail_presence where detail_id = ? order by stagiaire_id asc", [$detail_id]);
         return back();
+    }
+
+    public function modifier_presence(Request $request){
+        $presence = $request->attendance;
+        $groupe_id = $request->groupe;
+        $detail_id = $request->detail_id;
+        dd($request->all());
     }
 
     public function insert_evaluation_stagiaire(Request $request){
@@ -390,5 +426,13 @@ class SessionController extends Controller
         $extension = request()->extension;
         $drive = new getImageModel();
         return $drive->download_file($cfp,"Mes documents",$namefile,$extension);
+    }
+
+    public function get_presence_stg(Request $request){
+        $stg = $request->stagiaire;
+        $detail = $request->detail;
+        $fonct = new FonctionGenerique();
+        $data = $fonct->findWhereMulitOne('v_detail_presence_stagiaire',['stagiaire_id','detail_id'],[$stg,$detail]);
+        return response()->json($data);
     }
 }

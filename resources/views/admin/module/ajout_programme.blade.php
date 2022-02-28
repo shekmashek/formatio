@@ -1,101 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
-<style>
-    .accordion {
-        background-color: rgba(236, 235, 235, 0.521);
-        color: black;
-        cursor: pointer;
-        height: 3rem;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-        transition: 0.4s;
-    }
-
-    .accordion_prog input {
-        background-color: transparent;
-        border: none;
-        border-radius: 0;
-        height: inherit;
-        width: 90%;
-        margin-top: 0;
-        margin-left: 1rem;
-        color: #542356;
-    }
-
-    .accordion_prog input:focus {
-        background-color: transparent;
-        border-bottom: 2px solid #801D68;
-    }
-
-    .input_cours input {
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid rgba(155, 155, 155, 0.801);
-        border-radius: 0;
-        height: inherit;
-        width: 90%;
-        margin-top: 0;
-        margin-left: 1rem;
-        color: black;
-    }
-
-    .input_cours input:focus {
-        background-color: transparent;
-        border-bottom: 2px solid #801D68;
-        font-size: 14px
-    }
-
-    /* .active,
-    .accordion:hover {
-        background-color: #ccc;
-    } */
-
-    .plus_prog {
-        color: #801D68;
-        float: right;
-        position: relative;
-        bottom: 3rem;
-        padding-right: 1rem;
-        padding-left: .5rem;
-    }
-
-    .accordion:after {
-        /* content: '\002B'; */
-        color: #801D68;
-        font-weight: bold;
-        float: left;
-        position: relative;
-        bottom: 2.5rem;
-        font-size: 24px;
-        padding-right: 1rem;
-        padding-left: .5rem;
-    }
-
-    .btn_enregistrer{
-        background-color: #801D68;
-    }
-
-    .btn_enregistrer:hover{
-        background-color: white;
-        color: #801D68;
-        border: 1px solid #801D68;
-    }
-
-    /* .active:after {
-        content: "\2212";
-    } */
-
-    .panel {
-        padding: 0 18px;
-        background-color: rgba(255, 255, 255, 0.548);
-        max-height: auto;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-    }
-</style>
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/ajoutProgramme.css')}}">
 <div class="row">
     <div class="col-lg-3">
     </div>
@@ -498,11 +404,20 @@
                     </div>
                 </div>
                 <hr class="hr">
-                <div class="row detail__formation__item__main">
-                    <div class="col-lg-12 detail__prix__main__btn py-5">
+              @can('isReferent')
+              <div class="row detail__formation__item__main">
+                <div class="col-lg-12 detail__prix__main__btn py-5">
+                    <form action="{{route('demande_devis.store')}}" method="post">
+                        @csrf
+                        <input type="text" hidden name="module_id" value="{{$res->module_id}}">
                         <button type="submit" class="btn">Demander un dévis</button>
-                    </div>
+                    </form>
+
                 </div>
+            </div>
+              @endcan
+
+
             </div>
         </div>
     </div>

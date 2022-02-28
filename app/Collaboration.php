@@ -301,7 +301,7 @@ class Collaboration extends Model
     {
         $fonct = new FonctionGenerique();
         $id = Auth::id();
-        $role_id = User::where('email',Auth::user()->email)->value('role_id');
+        // $role_id = User::where('email',Auth::user()->email)->value('role_id');
         $totale_invitation =0;
         if (Gate::allows('isFormateur'))
         {

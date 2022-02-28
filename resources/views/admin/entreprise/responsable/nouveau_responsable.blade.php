@@ -78,22 +78,37 @@
                         <tr>
                             <td>
                                 <div align="left">
-                                    <strong>{{$resp_etp_connecter->nom_resp." ".$resp_etp_connecter->prenom_resp}}</strong>
-                                    <p style="color: rgb(238, 150, 18)">{{$resp_etp_connecter->email_resp}}</p>
+                                    @can('isReferentPrincipale')
+                                        <strong>{{$resp_etp_connecter->nom_resp." ".$resp_etp_connecter->prenom_resp}}</strong>
+                                        <p style="color: rgb(238, 150, 18)">{{$resp_etp_connecter->email_resp}}</p>
+                                    @endcan
+                                    @can('isStagiairePrincipale')
+                                        <strong>{{$resp_etp_connecter->nom_stagiaire." ".$resp_etp_connecter->prenom_stagiaire}}</strong>
+                                        <p style="color: rgb(238, 150, 18)">{{$resp_etp_connecter->mail_stagiaire}}</p>
+                                    @endcan
+                                    @can('isManagerPrincipale')
+                                        <strong>{{$resp_etp_connecter->nom_chef." ".$resp_etp_connecter->prenom_chef}}</strong>
+                                        <p style="color: rgb(238, 150, 18)">{{$resp_etp_connecter->mail_chef}}</p>
+                                    @endcan
+
                                 </div>
                             </td>
                             <td>
                                 <div align="center">
-                                    <strong>{{$resp_etp_connecter->fonction_resp}}</strong>
+                                    @can('isReferentPrincipale')
+                                        <strong>{{$resp_etp_connecter->fonction_resp}}</strong>
+                                    @endcan
                                 </div>
                             </td>
                             <td>
                                 <div align="center">
-                                    @if ($resp_etp_connecter->prioriter == 1)
-                                    <strong style="color: rgb(18, 238, 66)">{{"principale"}}</strong>
-                                    @else
-                                    <strong style="color: rgb(9, 10, 10)">{{"responsable"}}</strong>
-                                    @endif
+                                    @can('isReferentPrincipale')
+                                        @if ($resp_etp_connecter->prioriter == 1)
+                                        <strong style="color: rgb(18, 238, 66)">{{"principale"}}</strong>
+                                        @else
+                                        <strong style="color: rgb(9, 10, 10)">{{"responsable"}}</strong>
+                                        @endif
+                                    @endcan
                                 </div>
                             </td>
 
@@ -189,7 +204,7 @@
         <div class="col-md-7">
 
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
-
+        @can('isReferentPrincipale')
             @if($resp_etp_connecter->prioriter == 1)
             <h2>Créer un nouveau responsable dans votre organisation</h2>
             <p>
@@ -275,7 +290,7 @@
                     </div>
                 </div>
 
-                <div class="form-row d-flex">
+                {{-- <div class="form-row d-flex">
                     <div class="col">
                         <label for="dte_resp" class="form-control-label" align="left">Date de Naissance<strong style="color:#ff0000;">*</strong></label>
                         <input required type="date" class="form-control mb-2" id="inlineFormInput" name="dte" />
@@ -288,7 +303,7 @@
                             <option value="S">Femme</option>
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-row d-flex">
                     <div class="col ms-2">
@@ -308,7 +323,7 @@
                 @endif
             </form>
             @endif
-
+        @endcan
 
         </div>
 

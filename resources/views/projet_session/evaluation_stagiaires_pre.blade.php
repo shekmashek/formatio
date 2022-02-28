@@ -70,7 +70,7 @@
                     </table>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button class="btn btn-success" type="submit">Sauvegarder</button>
+                    <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
                 </div>
             </form>
         </div>

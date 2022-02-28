@@ -69,8 +69,8 @@
                 <div class="col-md-7  py-0 px-1">
                     <input type="text" id="description_ressource" class="form-control ajout_form" required>
                 </div>
-                <div class="col-md-1 mt-3 p-0">
-                    <button type="button" id="ajouter_ressource" class="btn-ajout mb-1"> Ajouter </button>
+                <div class="col-md-1 mt-2 p-0">
+                    <button type="button" id="ajouter_ressource" class="btn inserer_emargement mb-1"> Ajouter </button>
                 </div>
             </section>
         </form>

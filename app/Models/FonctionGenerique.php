@@ -214,4 +214,11 @@ class FonctionGenerique extends Model
         return $data;
     }
 // ------------------------------
+
+    public function insert_role_user($user_id,$role_id){
+        DB::insert('insert into role_users (user_id, role_id) values (?, ?)', [$user_id, $role_id]);
+    }
+
+
+
 }

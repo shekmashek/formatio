@@ -1,3 +1,15 @@
+create or replace view v_user_role as
+    select
+        rl_usr.user_id,
+        rl_usr.role_id,
+        usr.name,
+        usr.email,
+        usr.cin,
+        usr.telephone,
+        rl.role_name,
+        rl.role_description
+    from users as usr,roles as rl, role_users as rl_usr
+    where rl_usr.user_id = usr.id and rl_usr.role_id = rl.id
 
 create or replace view v_groupe_entreprise as
     select
@@ -9,7 +21,7 @@ create or replace view v_groupe_entreprise as
         e.adresse_quartier,
         e.adresse_code_postal,
         e.adresse_ville,
-         e.adresse_region,
+        e.adresse_region,
         e.logo,
         e.nif,
         e.stat,

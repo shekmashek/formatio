@@ -82,8 +82,8 @@ class ResponsableCfpController extends Controller
                 $doner["cin"] = $resp->concat_nb_cin($request->input());
                 $doner["nom"] = $request->nom;
                 $doner["prenom"] = $request->prenom;
-                $doner["sexe"] = $request->sexe;
-                $doner["dte"] = $request->dte;
+              //  $doner["sexe"] = $request->sexe;
+              //  $doner["dte"] = $request->dte;
                 $doner["email"] = $request->email;
                 $doner["phone"] = $request->phone;
                 $doner["fonction"] = $request->fonction;
@@ -103,8 +103,20 @@ class ResponsableCfpController extends Controller
                             $user->telephone =  $request->phone;
                             $ch1 = "0000";
                             $user->password = Hash::make($ch1);
-                            $user->role_id = '7';
+                         //   $user->role_id = '7';
                             $user->save();
+                            $use_id_inserer = $fonct->findWhereMulitOne("users",["email"],[$request->email])->id;
+
+                            DB::beginTransaction();
+                            try {
+                                $fonct->insert_role_user($use_id_inserer,"7"); // cfp
+                                // $fonct->insert_role_user($use_id_inserer,"3"); // stagiaire
+                                DB::commit();
+                            } catch (Exception $e) {
+                                DB::rollback();
+                                echo $e->getMessage();
+                            }
+
 
                             if (Gate::allows('isCFP')) {
                                 $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);

@@ -28,12 +28,21 @@
               <label for="date">Téléphone</label>
               <input type="text" class="form-control"  name="phone" value="{{ $var->telephone_chef}}">
             </div>
+            <label for="date">Attribuer d'autre rôle</label>
+            @for($i = 0; $i < count($roles); $i++)
+              @for($j = 0; $j < count($role_id); $j++)
+                  @if($roles[$i]->id != $role_id[$j]->role_id and $roles[$i]->id!=1 and $roles[$i]->id!=6 and $roles[$i]->id!=7)
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                           {{$roles[$i]->role_description}}
+                        </label>
+                      </div>
+                  @endif
+              @endfor
+            @endfor
+            
           <br>
-           <div class="form-group">
-              <label for="password">Mot de passe</label>
-              <input type="password" class="form-control" value=""  name="password" placeholder="">
-            </div>
-            <button class="btn btn-outline-success btn-lg modification " id="action1"><span class = "glyphicon glyphicon-pencil"></span> Modifier</button>
-        </form>
+          </form>
 
 @endsection

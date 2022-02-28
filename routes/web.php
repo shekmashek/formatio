@@ -35,9 +35,8 @@ Route::get('/projet_session', function () {
     return view('projet_session/index2');
 });
 
-
 // nouvelle session
-Route::get('detail_session/{id_session?}','SessionController@detail_session')->name('detail_session');
+Route::get('detail_session/{id_session?}/{type_formation?}','SessionController@detail_session')->name('detail_session');
 
 Route::get('all_formateurs','SessionController@getFormateur')->name('all_formateurs');
 // end
@@ -88,6 +87,12 @@ Route::get('projet/result', 'ProjetControlleur@show')->name('projet.show');
 Route::get('edit_projet','ProjetControlleur@edit')->name('edit_projet');
 Route::post('destroy_projet','ProjetControlleur@destroy')->name('destroy_projet');
 Route::post('update_projet/{id?}','ProjetControlleur@update')->name('update_projet');
+Route::get('accueil_projet','ProjetControlleur@accueilProjet')->name('accueil_projet');
+Route::get('projet_intra','ProjetControlleur@intraFormProjet')->name('projet_intra');
+Route::get('projet_inter','ProjetControlleur@interFormProjet')->name('projet_inter');
+Route::get('module_formation_intra','GroupeController@module_formation_intra')->name('module_formation_intra');
+
+
 
 //route groupe
 Route::resource('groupe','GroupeController')->except([
@@ -95,10 +100,13 @@ Route::resource('groupe','GroupeController')->except([
 ]);
 Route::get('liste_groupe','GroupeController@index')->name('liste_groupe');
 // Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
-Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
+// Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
+Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
+Route::get('nouveau_groupe_inter','GroupeController@createInter')->name('nouveau_groupe_inter');
 Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
 Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
 Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
+Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
 //route entreprise
 Route::resource('entreprise','EntrepriseController')->except([
     'create','edit','destroy','update'
@@ -432,6 +440,7 @@ Route::get('page_modification/{encaissement_id?}','EncaissementController@modifi
 
 Route::get('montant_restant/{num_facture?}','EncaissementController@montant_reste_payer')->name('montant_restant');
 
+Route::get('pdf+liste+encaissement/{num_facture}','EncaissementController@generatePDF')->name('pdf+liste+encaissement');
 // ===========================  creation du facture
 
 Route::get('page_facture','FactureController@index')->name('page_facture');
@@ -557,7 +566,7 @@ Route::get('ajoutPlan', 'PlanFormationController@afficherDetail')->name('ajoutPl
 // =======================  DEPARTEMENT
 Route::resource('departement','DepartementController');
 Route::get('/show_dep','DepartementController@show')->name('show_dep');
-Route::get('liste_chefDepartement','DepartementController@liste')->name('liste_chefDepartement');
+Route::get('employes','DepartementController@liste')->name('employes');
 Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')->name('affProfilChefDepartement');
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement','ChefDepartementController');
@@ -756,7 +765,13 @@ Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name(
 
 ///////__________RECHERCHE MULTICRITERE_____________________\\\\\\\\\
 Route::get('recherche_admin','RecherchemultiController@index')->name('recherche_admin');
-
+//route politque confidentialité
+Route::get('/politique_confidentialite',function(){
+    return view('/politique_confidentialite');
+    });
+    Route::get('/politique_confidentialites',function(){
+        return view('/politique_confidentialites');
+        });
 // route information légales
 Route::get('/info_legale', function () {
     return view('/info_legale');
@@ -772,7 +787,7 @@ Route::get('condition_generale_de_vente','ConditionController@index')->name('con
 // })->name('condition_generale_de_vente');
 Route::get('insert_frais_annexe','SessionController@insert_frais_annexe')->name('insert_frais_annexe');
 Route::post('insert_presence_detail','SessionController@insert_presence')->name('insert_presence_detail');
-
+Route::post('modifier_presence','SessionController@modifier_presence')->name('modifier_presence');
 //-------------route document----------------///
 Route::get('gestion_documentaire','DocumentController@index')->name('gestion_documentaire');
 Route::post('nouveau_dossier','DocumentController@store')->name('nouveau_dossier');
@@ -797,7 +812,38 @@ Route::post('modifier_evaluation_stagiaire','SessionController@modifier_evaluati
 
 Route::get('acceptation_session/{groupe}','SessionController@acceptation_session')->name('acceptation_session');
 Route::get('annuler_session/{groupe}','SessionController@annuler_session')->name('annuler_session');
+Route::get('get_presence_stg','SessionController@get_presence_stg')->name('get_presence_stg');
 
 Route::get('creation_mes_documents','SessionController@create_docs')->name('creation_mes_documents');
 Route::post('save_documents','SessionController@save_documents')->name('save_documents');
 Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name('telecharger_fichier');
+
+//affichage role utilisateur
+Route::get('affichage_role','HomeController@affichage_role')->name('affichage_role');
+//remplir information manquante
+Route::post('remplir_info_resp','HomeController@remplir_info_resp')->name('remplir_info_resp');
+Route::post('remplir_info_stagiaire','HomeController@remplir_info_stagiaire')->name('remplir_info_stagiaire');
+Route::post('remplir_info_manager','HomeController@remplir_info_manager')->name('remplir_info_manager');
+
+//================ saisir employé,responsable,chef de département
+
+Route::resource('employeur','EmployeurController');
+
+// ============== demande de devis
+Route::resource('demande_devis', 'DemandeDevisController');
+
+//ajout role
+Route::post('role_manager','DepartementController@role_manager')->name('role_manager');
+
+//Route get nom entreprise user connecter
+Route::get('admin_nom_etp','AdminController@get_name_etp')->name('admin_nom_etp');
+
+//====================== APPEL D'OFFRE
+
+Route::resource('appel_offre', 'AppelOffreController')->except(['update']);
+Route::get('nouveau+appel+offre','AppelOffreController@nouveau')->name('nouveau+appel+offre');
+Route::post('appel_offre.update/{id}','AppelOffreController@update')->name('appel_offre.update');
+Route::get('appel_offre.publier/{id}','AppelOffreController@publier')->name('appel_offre.publier');
+
+Route::post('result_recherche_appel_offre','AppelOffreController@recherche_reference')->name('result_recherche_appel_offre');
+

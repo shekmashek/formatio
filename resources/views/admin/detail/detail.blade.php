@@ -57,6 +57,20 @@
     p {
         text-align: center !important;
     }
+    .nouveau_detail{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        border-radius: 10px;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .nouveau_detail:hover{
+        color: #7635dc;
+        border-radius: 10px;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
 
 </style>
 
@@ -129,7 +143,7 @@
                                         <div class="input-group">
                                             <input type="text" name="lieu[]" class="form-control my-1" required>
                                             <button id="removeRow" type="button"><i
-                                                    class="far fa-minus-circle mx-1 my-3"></i></button>
+                                                    class="bx bx-minus-circle mx-1 my-3"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +157,7 @@
 
                 <div id="newRow"></div>
                 <div class="text-end ms-4">
-                    <button id="addRow" type="button"><i class="far fa-plus-circle"></i></button>
+                    <button id="addRow" type="button"><i class="bx bx-plus-circle"></i></button>
                 </div>
 
 
@@ -243,11 +257,10 @@
                     <div class="panel-body">
                         @canany(['isCFP'])
                             <nav class="d-flex justify-content-end mb-1">
-                                <a class="nouveau_detail btn" aria-current="page" data-toggle="modal"
-                                    data-target="#modal_nouveau_detail">
-                                    <i class="far fa-plus p-1"
-                                        style="background-color: rgb(255, 255, 255); border-radius: 50%; font-weight: bold; color:#822164"></i>
-                                    <small class="text-white">Nouveau détail</small class="text-white"></a>
+                                <a class="nouveau_detail btn" aria-current="page" data-bs-toggle="modal"
+                                    data-bs-target="#modal_nouveau_detail">
+                                    <i class="bx bx-plus p-1"></i>
+                                    <small>Nouveau détail</small></a>
                             </nav>
                         @endcanany
                         <div class="table-responsive">
@@ -281,8 +294,8 @@
                                             <td>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}</td>
                                             @canany(['isCFP'])
                                                 <td>
-                                                    <a href="" aria-current="page" data-toggle="modal"
-                                                    data-target="#modal_modifier_detail_{{ $d->detail_id }}"><i class="fa fa-edit ms-2" style="color:rgb(130,33,100);"></i></a>
+                                                    <a href="" aria-current="page" data-bs-toggle="modal"
+                                                    data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i class="fa fa-edit ms-2" style="color:rgb(130,33,100);"></i></a>
                                                     <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a>
                                                 </td>
                                             @endcanany
@@ -339,7 +352,7 @@
                                                     max="18:08" value="{{ $d->h_fin }}">
                                             </div>
                                             <div class="d-flex justify-content-around mb-3">
-                                                <button class="btn btn-danger"  data-dismiss="modal">Annuler</button>
+                                                <button class="btn btn-danger"  data-bs-dismiss="modal">Annuler</button>
                                                 <input type="submit" id="ajouter" style="background-color: #822164" class="btn btn-primary" value="Modifier">
                                             </div>
                                         </form>
@@ -398,8 +411,8 @@
                                                 <input type="time" class="form-control" id="fin" name="fin[]" min="08:00"
                                                     max="18:08">
                                             </div>
-                                            <div class="d-flex justify-content-center mb-3">
-                                                <input type="submit" id="ajouter" class="btn btn-primary" value="Ajouter">
+                                            <div class="d-flex justify-content-center mt-2 mb-3 ">
+                                                <input type="submit" id="ajouter" class="btn inserer_emargement" value="Ajouter">
                                             </div>
                                         </form>
                                     </div>
@@ -594,7 +607,7 @@
                 html += '<div class="row">';
                 html += '<div class="col-md-5 px-2">';
                 html += '<div class="input-group">';
-                html += '<select name="formateur[]" id="" class="form-control  my-1" required>';
+                html += '<select name="formateur[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
                 html += '<option value="" selected hidden> Choisir formateur </option>';
                 for (var $i = 0; $i < userData.length; $i++) {
                     html += '<option value="' + userData[$i].formateur_id + '">' + userData[$i]
@@ -607,7 +620,7 @@
                 html += '<div class="input-group">';
                 html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
                 html +=
-                    '<button id="removeRow" type="button"><i class="far fa-minus-circle mx-1 my-3"></i></button> ';
+                    '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
                 html += '</div>';
                 html += '</div>';
 

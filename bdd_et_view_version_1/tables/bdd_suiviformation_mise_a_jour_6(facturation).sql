@@ -65,6 +65,8 @@ CREATE TABLE `encaissements` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `num_facture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `resp_cfp_id` bigint(20) NOT NULL REFERENCES responsables_cfp(id) ON DELETE CASCADE,
+  `nom_resp_cfp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mode_financement_id` bigint(20) UNSIGNED NOT NULL REFERENCES mode_financements(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

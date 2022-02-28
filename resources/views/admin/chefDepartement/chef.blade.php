@@ -61,15 +61,22 @@
 
 
 <div id="page-wrapper">
-    <div class="shadow-sm p-3 mb-5 bg-body rounded">
+    {{-- <div class="shadow-sm p-3 mb-5 bg-body rounded"> --}}
         <div class="container-fluid">
-            <div class="panel-heading d-flex justify-content-between mb-5">
-                <div>
-                    <li class="{{ Route::currentRouteNamed('liste_chefDepartement') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste_chefDepartement')}}"><span class="bx bx-list-ul"></span>Liste des Manager</a></li>&nbsp;
+            <div class="panel-heading d-flex mb-5">
+                <div class="mx-2">
+                    <li class="{{ Route::currentRouteNamed('liste_participant') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste_participant')}}"><span class="bx bx-list-ul"></span>Liste des participants</a></li>&nbsp;
                 </div>
-                <div>
+                <div class="mx-2">
+                    <li class="{{ Route::currentRouteNamed('employes') ? 'active' : '' }}" style="list-style: none"><a href="{{route('employes')}}"><span class="bx bx-list-ul"></span>Liste des Manager</a></li>&nbsp;
+                </div>
+                <div class="mx-2">
+                    <li class="{{ Route::currentRouteNamed('liste+responsable+entreprise') ? 'active' : '' }}" style="list-style: none"><a href="{{route('liste+responsable+entreprise')}}"><span class="bx bx-list-ul"></span>Liste des responsables</a></li>&nbsp;
+                </div>
+
+                         {{-- <div>
                     <button class="btn btn_nouveau_color"><a href="{{route('departement.create')}}"><span class="bx bxs-plus-circle"></span> Nouveau Manager</a></button>
-                </div>
+                </div> --}}
             </div>
             @if (Session::has('error'))
             <div class="alert alert-danger">
@@ -79,176 +86,134 @@
             </div>
             @endif
             <!-- /.row -->
-            <div class="shadow p-3 mb-5 bg-body rounded">
-                <h2>Nouveau Manager</h2>
 
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="shadow p-3 mb-5 bg-body rounded">
+                        <h2>Nouveau Employé</h2>
 
+                        <form action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <input type="text" autocomplete="off" required name="matricule" class="form-control input_inscription" id="matricule" />
+                                            <label for="matricule" class="form-control-placeholder" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
 
-                <form action="{{route('ajoutChefDepartement.store')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                                             @error('matricule')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col">
 
-                    <div class="form-group">
-                        <label for="photo" class="form-label">Photo<strong style="color:#ff0000;">*</strong></label>
-                        <input type="file" enctype="multipart/form-data" class="form-control" id="photo" name="photos">
-                        @error('photos')
-                        <div class="col-sm-6">
-                            <span style="color:#ff0000;"> {{$message}} </span>
-                        </div>
-                        @enderror
-                    </div><br>
-
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <input type="text" autocomplete="off" required name="nom" class="form-control input_inscription" id="nom" />
-                                <label for="nom" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                                @error('nom')
-                                <div class="col-sm-6">
-                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                    </div> --}}
                                 </div>
-                                @enderror
                             </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="form-group">
-                                <input type="text" autocomplete="off" name="prenom" class="form-control input_inscription" id="prenom" />
-                                <label for="prenom" class="form-control-placeholder" align="left">Prénom</label>
-                                @error('prenom')
-                                <div class="col-sm-6">
-                                    <span style="color:#ff0000;"> {{$message}} </span>
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <input type="text" autocomplete="off" required name="nom" class="form-control input_inscription" id="nom" />
+                                        <label for="nom" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
+                                        @error('nom')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" required autocomplete="off" name="cin" class="form-control input_inscription" id="cin" />
-                                <label for="cin" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
-                                <span style="color:#ff0000;" id="cin_err"></span>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" autocomplete="off" required name="fonction" class="form-control input_inscription" id="fonction" />
-                                <label for="fonction" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                                @error('fonction')
-                                <div class="col-sm-6">
-                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <input type="text" autocomplete="off" name="prenom" class="form-control input_inscription" id="prenom" />
+                                        <label for="prenom" class="form-control-placeholder" align="left">Prénom</label>
+                                    </div>
                                 </div>
-                                @enderror
                             </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="email" required name="mail" class="form-control input_inscription" id="mail" />
-                                <label for="mail" class="form-control-placeholder" align="left">Email<strong style="color:#ff0000;">*</strong></label>
-                                <span style="color:#ff0000;" id="mail_err"></span>
-                                @error('mail')
-                                <div class="col-sm-6">
-                                    <span style="color:#ff0000;"> {{$message}} </span>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input type="text" required autocomplete="off" name="cin" class="form-control input_inscription" id="cin" />
+                                        <label for="cin" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                                        <span style="color:#ff0000;" id="cin_err"></span>
+                                        @error('cin')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" max=10 required name="phone" class="form-control input_inscription" id="phone" />
-                                <label for="phone" class="form-control-placeholder" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>
-                                <span style="color:#ff0000;" id="phone_err"></span>
-                                @error('phone')
-                                <div class="col-sm-6">
-                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input type="text" autocomplete="off" required name="fonction" class="form-control input_inscription" id="fonction" />
+                                        <label for="fonction" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
+                                        @error('fonction')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @enderror
                             </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="etp">Genre ou Sexe<strong style="color:#ff0000;">*</strong></label>
-                                <select class="form-select" aria-label="Default select example" name="genre_chef" required id="genre_chef">
-                                    <option value="H">Homme</option>
-                                    <option value="S">Femme</option>
-                                </select>
-                                @error('genre_chef')
-                                <div class="col-sm-6">
-                                    <span style="color:#ff0000;"> {{$message}} </span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" required name="mail" class="form-control input_inscription" id="mail" />
+                                        <label for="mail" class="form-control-placeholder" align="left">Email<strong style="color:#ff0000;">*</strong></label>
+                                        <span style="color:#ff0000;" id="mail_err"></span>
+                                        @error('mail')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @enderror
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" max=10 required name="phone" class="form-control input_inscription" id="phone" />
+                                        <label for="phone" class="form-control-placeholder" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>
+                                        <span style="color:#ff0000;" id="phone_err"></span>
+                                        @error('phone')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            @can('isReferent')
-                            <div class="form-group">
-                                <label for="etp">Departement<strong style="color:#ff0000;">*</strong></label>
-                                <select class="form-select" class="form-control" id="liste_dep" name="liste_dep">
-                                    @for($i = 0; $i < count($liste_departement);$i++)
-                                    <option value="{{$liste_departement[$i]->id}}">{{$liste_departement[$i]->nom_departement}}</option>
-                                    @endfor
-                                    </option>
+
+                            <div class="form-group pb-0">
+                                <label for="etp">Enregistrer en tant que<strong style="color:#ff0000;">*</strong></label>
+                                <select class="form-select" class="form-control" id="type_enregistrement" name="type_enregistrement">
+                                    <option value="STAGIAIRE">Employé</option>
+                                    <option value="REFERENT">Réferent</option>
+                                    <option value="MANAGER">Chef de département</option>
                                 </select>
                             </div>
-                            @endcan
-                        </div>
+                            <button type="submit" class="btn btn-lg" style="background-color: #9C27B0; color: white"><span class="fa fa-save"></span>&nbsp; sauvegarder
+                        </form>
                     </div>
-
-                    @can('isSuperAdmin')
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="etp">Entreprise</label><br><br>
-                                <select class="form-select" class="form-control" id="liste_etp" name="liste_etp">
-                                    @foreach($liste_entreprise as $etp)
-                                    <option value="{{$etp->id}}">{{$etp->nom_etp}}</option>
-                                    @endforeach
-                                </select>
-                            </div><br>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="etp">Département</label>
-                                <select class="form-select" class="form-control" id="liste_dep" name="liste_dep">
-                                    @foreach($liste_departement as $dep)
-                                    <option value="{{$dep->id}}">{{$dep->nom_departement}}</option>
-                                    @endforeach
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    @endcan
-
-                    <button type="submit" class="btn btn-lg" style="background-color: #9C27B0; color: white"><span class="fa fa-save"></span>&nbsp; Ajouter
-
-
-                </form>
-
+                </div>
+                <div class="col-md-2"></div>
             </div>
-        </div>
-    </div>
+
+
 </div>
 </div>
 </div>
 </div>
 </div>
+</div>
+{{-- </div> --}}
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
-
-$(document).on('change', '#cin', function() {
+    $(document).on('change', '#cin', function() {
         var result = $(this).val();
         $.ajax({
             url: '{{route("verify_cin_user")}}'

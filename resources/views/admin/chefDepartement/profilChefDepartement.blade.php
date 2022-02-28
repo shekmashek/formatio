@@ -38,9 +38,9 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-home"></i>&nbsp;Département</p>
-                                            @foreach ($departement as $dep)
+                                            {{-- @foreach ($departement as $dep)
                                             <h6 class="text-muted f-w-400">{{$dep->departement->nom_departement}}</h6>
-                                            @endforeach
+                                            @endforeach --}}
 
                                         </div>
                                         <div class="col-sm-6">

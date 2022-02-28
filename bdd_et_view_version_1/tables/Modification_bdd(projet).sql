@@ -47,10 +47,10 @@ create table status(
   status varchar(100) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into status('Prévisionnel');
-insert into status('A venir');
-insert into status('En cours');
-insert into status('Terminé');
+insert into status(status) VALUES('Prévisionnel');
+insert into status(status) VALUES('A venir');
+insert into status(status) VALUES('En cours');
+insert into status(status) VALUES('Terminé');
 
 create table mes_documents(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

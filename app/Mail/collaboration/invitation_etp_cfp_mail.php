@@ -16,11 +16,12 @@ class invitation_etp_cfp_mail extends Mailable
      *
      * @return void
      */
-    public function __construct($nom_etp, $responsables_etp, $nom_resp_cfp)
+    public function __construct($nom_etp, $responsables_etp, $nom_resp_cfp,$email_destinataire)
     {
         $this->nom_etp = $nom_etp;
         $this->responsables_etp = $responsables_etp;
         $this->nom_resp_cfp = $nom_resp_cfp;
+        $this->email_destinataire = $email_destinataire;
     }
 
     /**
@@ -30,7 +31,7 @@ class invitation_etp_cfp_mail extends Mailable
      */
     public function build()
     {
-        return $this->from('contact@formation.mg')
+        return $this->from($this->email_destinataire)
             ->subject('Invitation de collaboration')
             ->view('collaboration.mail.invitation_collaborer_etp_cfp_mail')
             ->with([

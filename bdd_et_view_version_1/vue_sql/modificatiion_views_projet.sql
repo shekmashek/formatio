@@ -261,3 +261,4 @@ create or replace view v_projet_cfp as
     from projets p
     join cfps on cfps.id = p.cfp_id
     join type_formations tf on tf.id = p.type_formation_id;
+    

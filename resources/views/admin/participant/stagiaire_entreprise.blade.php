@@ -87,15 +87,16 @@
                                         @else
 
                                         <tr>
+                                            @for ($i =0; $i < count($datas);$i++)
                                             <td>
                                                 <div align="left">
-                                                    <strong>{{$datas->nom_stagiaire.' '.$datas->prenom_stagiaire}}</strong>
-                                                    {{-- @if($datas->activiter == 0)
+                                                    <strong>{{$datas[$i]->nom_stagiaire.' '.$datas[$i]->prenom_stagiaire}}</strong>
+                                                    {{-- @if($datas[$i]->activiter == 0)
                                                         <strong style="background-color: red;color:white;padding:5px">Inactif </strong>
                                                     @else
                                                         <strong style="background-color: green;color:white;padding:5px">Actif </strong>
                                                     @endif --}}
-                                                    <p style="color: rgb(238, 150, 18)">{{$datas->mail_stagiaire}}</p>
+                                                    <p style="color: rgb(238, 150, 18)">{{$datas[$i]->mail_stagiaire}}</p>
 
 
                                                 </div>
@@ -111,15 +112,15 @@
                                                     </button>
 
                                                     <div class="dropdown-menu">
-                                                        <a href="{{route('profile_stagiaire',$datas->id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
+                                                        <a href="{{route('profile_stagiaire',$datas[$i]->id)}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px"></i>&nbsp;Profil</a>
                                                         @canany(['isReferent'])
-                                                        <a href="{{route('destroy_participant',['id'=>$datas->id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
+                                                        <a href="{{route('destroy_participant',['id'=>$datas[$i]->id])}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Supprimer</strong></a>
                                                         @endcanany
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-
+                                        @endfor
                                         @endif
                                 </tbody>
                             </table>
@@ -296,8 +297,7 @@ $(document).ready(function(){
                         $('#resultat').append(
                             "<tr><td><div align='left'><strong>" + res[i].nom_stagiaire +
                             "</strong><strong>&nbsp;&nbsp;" + res[i].prenom_stagiaire +
-                            "</strong><strong>&nbsp;&nbsp;" + res[i].cin +
-                            "</strong>&nbsp;&nbsp;<button class='btn btn-success' data-toggle='modal' data-target='#modal_ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button>"
+                            "</strong><strong>&nbsp;&nbsp;" + res[i].cin +                            "</strong>&nbsp;&nbsp;<button class='btn btn-success' data-toggle='modal' data-target='#modal_ajouter'><span class = 'fa fa-plus'>Ajouter dans mon entreprise</span></button>"
                         );
 
                     }

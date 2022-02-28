@@ -55,15 +55,31 @@ class DepartementController extends Controller
 
         return view('admin.chefDepartement.liste', compact('chef'));
     } */
+    //ajout nouveau role
+    public function role_manager(Request $request){
+        $id_chef = $request->id_chef;
+        $user_id = chefDepartement::where('id',$id_chef)->value('user_id');
+        $roles = $request->role_id;
+        for ($i=0; $i < count($roles); $i++) {
+             DB::insert('insert into role_users (user_id, role_id) values (?, ?)', [$user_id, $roles[$i]]);
+        }
+        return back();
+    }
 
     public function liste()
     {
+        //on va récupérer la liste des employes
         $user_id = Auth::user()->id;
         $etp_id = responsable::where('user_id',[$user_id])->value('entreprise_id');
+
+        $referent = DB::select('select * from responsables where entreprise_id = ?', [$etp_id]);
         $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
+        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
 
-
-        return view('admin.chefDepartement.liste', compact('chef'));
+        $user_role = DB::select('select * from v_user_role');
+        $roles = DB::select('select * from roles');
+        // dd($user_role);
+        return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
     }
 
     public function create()
@@ -142,8 +158,12 @@ class DepartementController extends Controller
 
     public function edit($id)
     {
+        $rqt = DB::select('select * from chef_departements where id = ?', [$id]);
+        $user_id = $rqt[0]->user_id;
+        $role_id = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
+        $roles = DB::select('select * from roles');
         $var = chefDepartement::findOrFail($id);
-        return view('admin.chefDepartement.update', compact('var'));
+        return view('admin.chefDepartement.update', compact('var','roles','role_id'));
     }
 
     public function update(Request $request)
@@ -171,8 +191,19 @@ class DepartementController extends Controller
     }
     //fonction qui montre les départements, services,branches de l'entreprise connecté
     public function show_departement(Request $request){
-        $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-        $id_etp = $rqt[0]->entreprise_id;
+        if (Gate::allows('isReferentPrincipale')) {
+            $rqt= DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isStagiairePrincipale')) {
+            $rqt= DB::select('select * from stagiaires where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isManagerPrincipale')) {
+            $rqt= DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+
         $rqt = db::select('select * from departement_entreprises where entreprise_id = ?',[$id_etp]);
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
