@@ -1,8 +1,8 @@
 CREATE TABLE domaines (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_domaine varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO domaines (id, nom_domaine, created_at, updated_at) VALUES
@@ -17,8 +17,8 @@ CREATE TABLE formations (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_formation varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   domaine_id int(11) NOT NULL REFERENCES domaines(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL,
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT '0000-00-00',
   status boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -45,8 +45,8 @@ CREATE TABLE modules (
   nom_module varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   formation_id bigint(20) UNSIGNED NOT NULL REFERENCES formations(id) ON DELETE CASCADE,
   cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL,
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT '0000-00-00',
   prix int(11) NOT NULL,
   duree int(11) NOT NULL,
   duree_jour int(11) NOT NULL,
@@ -80,8 +80,8 @@ CREATE TABLE programmes (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   titre varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   module_id bigint(20) UNSIGNED NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -89,8 +89,8 @@ CREATE TABLE cours (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   titre_cours varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   programme_id bigint(20) UNSIGNED NOT NULL REFERENCES programmes(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -304,8 +304,8 @@ CREATE TABLE `competence_a_evaluers` (
   `titre_competence` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `module_id` bigint(20) UNSIGNED NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
   `objectif` int(10) UNSIGNED not null DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

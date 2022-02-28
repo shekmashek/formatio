@@ -59,7 +59,7 @@ CREATE TABLE `encaissements` (
   `montant_facture` decimal(15,2) DEFAULT 0.00,
   `libelle` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payement` decimal(15,2) DEFAULT 0.00,
-  `montant_ouvert` decimal(15,2) DEFAULT NULL,
+  `montant_ouvert` decimal(15,2) DEFAULT 0,
   `date_encaissement` timestamp NOT NULL DEFAULT current_timestamp(),
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,

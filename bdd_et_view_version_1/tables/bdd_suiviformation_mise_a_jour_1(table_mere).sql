@@ -2,8 +2,8 @@ CREATE TABLE roles (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   role_name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES
@@ -19,8 +19,8 @@ INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES
 CREATE TABLE `niveaux` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `niveau` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `niveaux` (`id`,`niveau`, `created_at`, `updated_at`) VALUES
@@ -31,9 +31,9 @@ INSERT INTO `niveaux` (`id`,`niveau`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `taxes` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pourcent` decimal(5,2) DEFAULT NULL CHECK (`pourcent` >= 0),
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `pourcent` decimal(5,2) DEFAULT 20 CHECK (`pourcent` >= 0),
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `taxes` (`description`, `pourcent`, `created_at`, `updated_at`) VALUES
@@ -43,8 +43,8 @@ INSERT INTO `taxes` (`description`, `pourcent`, `created_at`, `updated_at`) VALU
 CREATE TABLE `type_payement` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `type_payement` (`type`, `created_at`, `updated_at`) VALUES
@@ -64,8 +64,8 @@ CREATE TABLE `type_abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `logo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `type_abonnements` (`id`, `nom_type`, `logo`, `created_at`, `updated_at`) VALUES
@@ -74,8 +74,8 @@ INSERT INTO `type_abonnements` (`id`, `nom_type`, `logo`, `created_at`, `updated
 CREATE TABLE `mode_financements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `mode_financements` (`id`, `description`, `created_at`, `updated_at`) VALUES
@@ -93,8 +93,8 @@ CREATE TABLE users (
   email_verified_at timestamp NULL DEFAULT NULL,
   password varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   remember_token varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL
+  created_at timestamp NULL DEFAULT  '0000-00-00',
+  updated_at timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO users (id, name, email, email_verified_at, password, remember_token, created_at, updated_at,cin,telephone) VALUES
@@ -109,8 +109,8 @@ CREATE TABLE role_users(
 CREATE TABLE `type_abonnes` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `abonne_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `type_abonnes` (`id`, `abonne_name`, `created_at`, `updated_at`) VALUES
@@ -121,16 +121,16 @@ CREATE TABLE `type_abonnement_roles` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `type_abonne_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnes(id) ON DELETE CASCADE,
   `type_abonnement_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnements(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE `categorie_paiements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `categorie` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `categorie_paiements` (`id`, `categorie`, `created_at`, `updated_at`) VALUES
@@ -142,46 +142,46 @@ CREATE TABLE `tarif_categories` (
   `type_abonnement_role_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
   `categorie_paiement_id` bigint(20) UNSIGNED NOT NULL REFERENCES categorie_paiements(id) ON DELETE CASCADE,
   `tarif` decimal(10,2) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT  '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT  '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE cfps (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci,
-  adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci,
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci,
-  adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci,
-  adresse_region varchar(191) COLLATE utf8mb4_unicode_ci,
+  adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  adresse_region varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  domaine_de_formation varchar(255) COLLATE utf8mb4_unicode_ci,
+  domaine_de_formation varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   nif varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  stat varchar(191) COLLATE utf8mb4_unicode_ci,
-  rcs varchar(191) COLLATE utf8mb4_unicode_ci,
-  cif varchar(191) COLLATE utf8mb4_unicode_ci,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL,
+  stat varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  rcs varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  cif varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT '0000-00-00',
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  site_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default 'XXXXXXX',
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date NOT NULL,
-  `date_debut` date DEFAULT NULL,
-  `date_fin` date DEFAULT NULL,
+  `date_demande` date NOT '0000-00-00',
+  `date_debut` date DEFAULT '0000-00-00',
+  `date_fin` date DEFAULT '0000-00-00',
   `mode_paiement` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_role_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00',
+  `updated_at` timestamp NULL DEFAULT '0000-00-00',
   `categorie_paiement_id` bigint(20) UNSIGNED NOT NULL REFERENCES categorie_paiements(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -189,23 +189,23 @@ CREATE TABLE `abonnement_cfps` (
 CREATE TABLE responsables_cfp(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
-  sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
-  date_naissance_resp_cfp date,
-  cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  date_naissance_resp_cfp date default '0000-00-00',
+  cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX',
   email_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci,
-  adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci,
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci,
-  adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci,
-  adresse_region varchar(191) COLLATE utf8mb4_unicode_ci,
-  photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
+  adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   activiter boolean not null default true,
   prioriter boolean not null default false,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL
+  created_at timestamp NULL DEFAULT '0000-00-00',
+  updated_at timestamp NULL DEFAULT '0000-00-00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
