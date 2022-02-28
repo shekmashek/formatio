@@ -107,6 +107,7 @@ Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
 Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
 Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
 Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
+Route::get('session_inter/{id?}','GroupeController@sessionInter')->name('session_inter');
 //route entreprise
 Route::resource('entreprise','EntrepriseController')->except([
     'create','edit','destroy','update'

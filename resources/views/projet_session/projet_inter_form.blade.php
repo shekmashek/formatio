@@ -2,9 +2,10 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container pt-5">
-    {{-- <div class="row">
+    {{--<div class="row">
         <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5>
-        <form action="{{ route('nouveau_session_inter',['type_formation'=>2]) }}" id="formPayement" method="POST" class="form_session">
+        <form action="{{ route('nouveau_session_inter',['type_formation'=>2]) }}" id="formPayement" method="POST"
+            class="form_session">
             @csrf
             <div class="row">
                 <h5 class="mb-4 text-center">Ajouter votre nouvelle Session</h5>
@@ -21,8 +22,8 @@
                             </div>
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_debut"
-                                        required onfocus="(this.type='date')">
+                                    <input type="text" id="min" class="form-control input" name="date_debut" required
+                                        onfocus="(this.type='date')">
                                     <label class="ml-3 form-control-placeholder" for="min">Date debut du session</label>
                                 </div>
                             </div>
@@ -52,8 +53,8 @@
                             </div>
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_fin"
-                                        required onfocus="(this.type='date')">
+                                    <input type="text" id="min" class="form-control input" name="date_fin" required
+                                        onfocus="(this.type='date')">
                                     <label class="ml-3 form-control-placeholder" for="min">Date fin du session</label>
                                 </div>
                             </div>
@@ -76,6 +77,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </form>
     </div> --}}
     <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5>
@@ -164,13 +166,9 @@
                                 <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span
                                     class="acf-niveau">{{$mod1->niveau}}</span>
                             </div>
-
                         </div>
-
                         <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" data-id="{{$mod1->id}}"
-                                data-bs-toggle="modal" data-bs-target="#ModalCompetence" id="{{$mod1->id}}">Session
-                                Inter</button>
+                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->id)}}">Session Inter</a></button>
                         </div>
                     </div>
                     @endif
@@ -184,7 +182,7 @@
             @if($formations[0]->id != $frm->id)
             <div class="tab-pane fade " id="formation_{{$frm->id}}">
                 <div class="container d-flex flex-wrap">
-                @foreach ($modules as $mod) @if($mod->formation_id === $frm->id)
+                    @foreach ($modules as $mod) @if($mod->formation_id === $frm->id)
                     <div class="row detail__formation__result new_card_module bg-light mb-3" id="border_premier">
                         <div class=" detail__formation__result__content">
                             <div class="detail__formation__result__item ">
@@ -247,9 +245,7 @@
                         </div>
 
                         <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" data-id="{{$mod->id}}"
-                                data-bs-toggle="modal" data-bs-target="#ModalCompetence" id="{{$mod->id}}">Session
-                                Inter</button>
+                            <button type="button" class="btn btn_competence non_pub" id="{{$mod->id}}"><a href="{{route('session_inter')}}">Session Inter</a></button>
                         </div>
                     </div>
                     @endif
@@ -264,4 +260,67 @@
     </div>
 </div>
 <script src="{{asset('js/projet_inter_intra.js')}}"></script>
+<script>
+    $(document).on('click', '#removeRow', function() {
+        $(this).closest('#inputFormRow').remove();
+    });
+
+    $(document).on('click', '#addRow', function() {
+        $('#frais').empty();
+        $.ajax({
+            url: "{{ route('all_formateurs') }}",
+            type: 'get',
+            success: function(response) {
+                var userData = response;
+                var html = '';
+                html += '<div class="row" id ="inputFormRow">';
+
+                html += '<div class="col-md-4 p-0">';
+                html += '<div class="row">';
+                html += '<div class="col-md-5 p-0">';
+                html +=
+                    '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';
+                html += '</div>';
+                html += ' <div class="col-md-7 ps-1 d-flex">';
+                html +=
+                    '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
+                html += '<input type="time" name="fin[]" class="form-control my-1" required>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+
+                html += '<div class="col-md-8">';
+                html += '<div class="row">';
+                html += '<div class="col-md-5 px-2">';
+                html += '<div class="input-group">';
+                html += '<select name="formateur[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
+                html += '<option value="" selected hidden> Choisir formateur </option>';
+                for (var $i = 0; $i < userData.length; $i++) {
+                    html += '<option value="' + userData[$i].formateur_id + '">' + userData[$i]
+                        .prenom_formateur + '</option>';
+                }
+                html += '</select>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="col-md-7 px-0 pe-2">';
+                html += '<div class="input-group">';
+                html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
+                html +=
+                    '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
+                html += '</div>';
+                html += '</div>';
+
+
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+
+                $('#newRow').append(html);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
 @endsection

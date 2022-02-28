@@ -9,7 +9,7 @@ html {
 
 #grad1 {
     background-color:  #9C27B0;
-    background-image: linear-gradient(120deg, #FF4081, #801D68)
+    background-image: linear-gradient(120deg, #FF4081, #7635dc)
 }
 
 #msform_facture {
@@ -55,8 +55,8 @@ html {
     padding: 0px 8px 4px 8px;
     /* border: none; */
     border: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 25px;
+    border-radius: 5px;
+    /* margin-bottom: 25px; */
     margin-top: 2px;
     width: 100%;
     box-sizing: border-box;
@@ -73,17 +73,17 @@ html {
     box-shadow: none !important;
     border: none;
     font-weight: bold;
-    border-bottom: 2px solid #801D68;
+    border-bottom: 2px solid #7635dc;
     outline-width: 0
 }
 
 #msform_facture .action-button {
     width: 100px;
-    background: #801D68;
+    background: #7635dc;
     font-weight: bold;
     color: white;
     border: 0 none;
-    border-radius: 0px;
+    border-radius: 10px;
     cursor: pointer;
     padding: 10px 5px;
     margin: 10px 5px
@@ -91,7 +91,7 @@ html {
 
 #msform_facture .action-button:hover,
 #msform_facture .action-button:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px #801D68
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #7635dc
 }
 
 #msform_facture .action-button-previous {
@@ -100,7 +100,7 @@ html {
     font-weight: bold;
     color: white;
     border: 0 none;
-    border-radius: 0px;
+    border-radius: 10px;
     cursor: pointer;
     padding: 10px 5px;
     margin: 10px 5px
@@ -120,7 +120,7 @@ select.list-dt {
 }
 
 select.list-dt:focus {
-    border-bottom: 2px solid #801D68
+    border-bottom: 2px solid #7635dc
 }
 
 .card {
@@ -183,12 +183,12 @@ select.list-dt:focus {
     line-height: 45px;
     display: block;
     font-size: 18px;
-    color: #801D68;
+    color: #7635dc;
     background: white;
     border-radius: 50%;
     margin: 0 auto 10px auto;
     padding: 2px;
-    border: 1px solid #801D68 !important;
+    border: 1px solid #7635dc !important;
 }
 
 #progressbars li:after {
@@ -204,8 +204,8 @@ select.list-dt:focus {
 
 #progressbars li.active:before,
 #progressbars li.active:after {
-    background: #801D68;
-    border: 1px solid #801D68 !important;
+    background: #7635dc;
+    border: 1px solid #7635dc !important;
     color: white;
 }
 

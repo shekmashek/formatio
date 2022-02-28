@@ -344,7 +344,7 @@ ul li a {
     left: 78px;
     display: flex;
     background-color: var(--first-color);
-    /* z-index: 0; */
+    z-index: 1;
     transition: 0.5s;
     padding: 0;
     margin-left: 0.1rem;
@@ -941,6 +941,35 @@ input:-webkit-autofill:active {
     /* background-color: rgba(92, 92, 241, 0.61); */
     background-color: red;
     transform: scale(1.05);
+    color: white;
+}
+
+
+.btn_next {
+    color: #7635dc;
+    border: none;
+    padding: 5px 8px;
+    background-color: #7535dc25;
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+}
+
+.btn_next:hover {
+    background-color: #7635dc;
+    color: white;
+    transform: scale(1.1);
+}
+
+.btn_next a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.btn_next a:hover{
     color: white;
 }
 

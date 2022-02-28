@@ -65,6 +65,11 @@ class GroupeController extends Controller
         return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
     }
 
+    public function sessionInter($id)
+    {
+        $module_id = $id;
+        return view('projet_session.session_inter', compact('module_id'));
+    }
 
     public function module_formation(Request $rq)
     {
@@ -156,7 +161,7 @@ class GroupeController extends Controller
 
             $last_insert_groupe = DB::table('groupes')->latest('id')->first();
             DB::commit();
-            return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id]);
+            return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id, 'type_formation'=>2]);
         }catch(Exception $e){
             DB::rollback();
             return back()->with('groupe_error',"insertion de la session échouée!");
