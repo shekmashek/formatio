@@ -4,33 +4,27 @@
 @endsection
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid px-5">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading d-flex justify-content-between mb-5">
-                    <div>
-                        <li class="{{ Route::currentRouteNamed('employes') ? 'active' : '' }}" style="list-style: none"><a href="{{route('employes')}}"><span class="bx bx-list-ul"></span>Liste des employés</a></li>&nbsp;<br><br>
-                        <strong>Rôle principal</strong>
-                    </div>
-                    <div>
-                        <button style = "color: rgb(102, 15, 241)"><a href="{{route('departement.create')}}"><span class="bx bxs-plus-circle"></span> Nouveau Employé</a></button>
-                    </div>
+                <div class="panel-heading d-flex justify-content-end">
+                    <button type="button" class="btn_enregistrer"><a href="{{route('departement.create')}}">Nouveau Employé</a></button>
                 </div>
-                <div class="col-md-12 mt-5">
+                <div class="col-md-12 mb-3">
                     <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
-                        <li class="nav-item">
-                            <a href="#" style="color: rgb(102, 15, 241)" class=" active" id="referent" data-toggle="tab" data-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
+                        <li class="nav-item btn_next">
+                            <a href="#" class="active" id="referent" data-bs-toggle="tab" data-bs-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
                                 Référents
                             </a>
                         </li>
-                        <li class="nav-item ms-5">
-                            <a href="#"  style="color: rgb(102, 15, 241)" class="" id="employé" data-toggle="tab" data-target="#tab-employé" type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
+                        <li class="nav-item ms-5 btn_next">
+                            <a href="#" class="" id="employé" data-bs-toggle="tab" data-bs-target="#tab-employé" type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
                                 Employés
                             </a>
                         </li>
-                        <li class="nav-item ms-5">
-                            <a href="#"  style="color: rgb(102, 15, 241)" class="" id="manager" data-toggle="tab" data-target="#tab-manager" type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
+                        <li class="nav-item ms-5 btn_next">
+                            <a href="#" class="" id="manager" data-bs-toggle="tab" data-bs-target="#tab-manager" type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
                                 Chef de département
                             </a>
                         </li>
@@ -41,9 +35,9 @@
                     <div class="tab-pane fade show active" id="tab-referent" role="tabpanel" aria-labelledby="referent">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="dataTables-example">
+                                <table class="table table-striped table-hover" id="dataTables-example">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center titre_table">
                                             <th>Photo</th>
                                             <th>Matricule</th>
                                             <th>Nom</th>
@@ -59,7 +53,7 @@
                                     </thead>
                                     <tbody>
                                         @for($i = 0; $i < count($referent); $i++)
-                                        <tr>
+                                        <tr class="text-center content_table">
                                             <td>
                                                 @if($referent[$i]->photos == null)
                                                 <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
@@ -105,12 +99,12 @@
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
+                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-bs-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
+                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
                                                         {{-- </div>
                                                     </div>
                                                 </center>
@@ -202,7 +196,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped" id="dataTables-example">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center titre_table">
                                             <th>Photo</th>
                                             <th>Matricule</th>
                                             <th>Nom</th>
@@ -219,7 +213,7 @@
                                     </thead>
                                     <tbody>
                                        @for($i = 0; $i < count($stagiaires); $i++)
-                                        <tr>
+                                        <tr class="text-center content_table">
                                             <td>
                                                 @if($stagiaires[$i]->photos == null)
                                                     <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
@@ -266,12 +260,12 @@
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
+                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-bs-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
+                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
                                                         {{-- </div>
                                                     </div> --}}
                                                 {{-- </center>
@@ -365,7 +359,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped" id="dataTables-example">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center titre_table">
                                             <th>Photo</th>
                                             <th>Matricule</th>
                                             <th>Nom</th>
@@ -383,7 +377,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($chef as $chefs)
-                                        <tr>
+                                        <tr class="text-center content_table">
                                             <td>
                                                 @if($chefs->photos == null)
                                                 <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
@@ -432,12 +426,12 @@
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                              <li type="button" style="font-size:15px;"> <a href="" data-toggle="modal"  data-target="#exampleModal_{{$chefs->id}}" class="modifier" title="Modifier le profil" id="" ><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_{{$chefs->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
+                                                              <li type="button" style="font-size:15px;"> <a href="" data-bs-toggle="modal"  data-target="#exampleModal_{{$chefs->id}}" class="modifier" title="Modifier le profil" id="" ><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
+                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_{{$chefs->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
                                                         {{-- </div>
                                                     </div>
                                                 </center>
