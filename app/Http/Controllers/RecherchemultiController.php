@@ -22,16 +22,14 @@ class RecherchemultiController extends Controller
     public function index()
     {
         $id_etp = responsable::where('user_id',Auth::id())->value('entreprise_id');
-
         $branches=branche::where('entreprise_id',$id_etp)->get();
-        $stagiaire=stagiaire::where('entreprise_id',$id_etp)->get();
+        $stagiaires=stagiaire::where('entreprise_id',$id_etp)->get();
         $departement=DepartementEntreprise::where('entreprise_id',$id_etp)->get();
         $service = db::select('select * from v_departement_service_entreprise  where entreprise_id = ?',[$id_etp]);
         $dom=Domaine::all();
         $module=Module::all();
-       
         // $liste_serv = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? ',[$id_etp]);
-        return view('projet_session.recherche_admin',compact('branches','stagiaire','departement','service','dom','module'));
+        return view('projet_session.recherche_admin',compact('branches','stagiaires','departement','service','dom','module'));
     }
 
     /**
@@ -65,8 +63,6 @@ class RecherchemultiController extends Controller
         $date_jour = $request->rech_date;
         $date_mois = $request->rech_mois;
         $date_annee = $request->rech_annee;
-
-
         //recuperer les input not null
         $inputs_null = array_filter(request()->all(), function ($val) {
             return !is_null($val);
