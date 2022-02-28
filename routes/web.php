@@ -853,3 +853,4 @@ Route::get('get_thematique','ModuleController@get_thematique')->name('get_themat
 Route::post('recherche_thematique_formation','AppelOffreController@recherche_thematique_formation')->name('recherche_thematique_formation');
 Route::post('recherche_intervale_date_appel_offre','AppelOffreController@recherche_intervale_date_appel_offre')->name('recherche_intervale_date_appel_offre');
 
+
