@@ -42,6 +42,7 @@ create table role_users at bdd_suivi_formation_mis_a_jour_1(table mere)
 //Create view v_user_role : view 0
 ALTER TABLE roles add column role_description varchar(255)
 
+
 //select table name as
 SELECT
 Case
