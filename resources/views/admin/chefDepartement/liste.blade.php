@@ -251,43 +251,61 @@
 
 
                                                     <td>
+                                                        @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
                                                                 @if($user_role[$j]->role_description == "referent")
                                                                     <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                                @else
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                    @php $nb+=1 @endphp
+                                                                    @if($nb>0)
+                                                                        @break
+                                                                    @else
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                            </label>
+                                                                        </div>
+                                                                    @endif
 
-                                                                        </label>
-                                                                    </div>
                                                                 @endif
                                                             @endif
                                                         @endfor
                                                     </td>
 
                                                     <td>
+                                                        @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
-                                                                @if($user_role[$j]->role_description == "consultant formateur")
-                                                                <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                @if($user_role[$j]->role_description == "formateur")
+                                                                    <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                    @php $nb+=1 @endphp
+                                                                    @if($nb<=0)
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                            </label>
+                                                                        </div>
+                                                                    @endif
                                                                 @endif
                                                             @endif
                                                         @endfor
                                                     </td>
                                                     <td>
+                                                        @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
                                                                 @if($user_role[$j]->role_description == "chef de département")
                                                                 <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                                @else
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                    <label class="form-check-label" for="flexCheckDefault">
-
-                                                                    </label>
-                                                                </div>
+                                                                @php $nb+=1 @endphp
+                                                                    @if($nb>0)
+                                                                        @break
+                                                                    @else
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                            </label>
+                                                                        </div>
+                                                                    @endif
                                                                 @endif
                                                             @endif
                                                         @endfor
