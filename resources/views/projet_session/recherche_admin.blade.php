@@ -37,7 +37,7 @@ float: right;
                        
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="personne()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="tous" checked >
+                        <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="tous"  >
                         <label class="form-check-label" for="tous">Tous </label>
                         @foreach ($branches as $branche)
                         <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="tous"  >
@@ -56,7 +56,7 @@ float: right;
                     <p class="menu_google p-2  m-0" id="fonction_hover">Fonction &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="fonction()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_fonction" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_fonction" >
                         <label class="form-check-label" for="tous_fonction">
                           Tous
                         </label>
@@ -73,7 +73,7 @@ float: right;
                     <p class="menu_google p-2 m-0" id="domaine_hover">Departement &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="domaine()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" >
                         <label class="form-check-label" for="tous_domaine">
                           Tous
                         </label>
@@ -90,7 +90,7 @@ float: right;
                     <p class="menu_google p-2 m-0 " id="domaine_hover">Service &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="domaine()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_domaine" >
                         <label class="form-check-label" for="tous_domaine">
                           Tous
                         </label>
@@ -124,7 +124,7 @@ float: right;
                     <p class="menu_google p-2 m-0" id="qualite_hover">Domaine &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="qualite()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" >
                         <label class="form-check-label" for="tous_qualite">
                           Tous
                         </label>
@@ -143,7 +143,7 @@ float: right;
                     <p class="menu_google p-2 m-0" id="qualite_hover">Module &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="qualite()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" >
                         <label class="form-check-label" for="tous_qualite">
                           Tous
                         </label>
@@ -161,7 +161,7 @@ float: right;
                     <p class="menu_google p-2 m-0" id="qualite_hover">Thématique &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="qualite()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_qualite" >
                         <label class="form-check-label" for="tous_qualite">
                           Tous
                         </label>
@@ -196,7 +196,7 @@ float: right;
                     <p class="menu_google p-2 m-0" id="niveau_hover">Niveau &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="niveau()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_niveau" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_niveau" >
                         <label class="form-check-label" for="tous_niveau">
                           Tous
                         </label>
@@ -231,7 +231,7 @@ float: right;
                     <p class="menu_google p-2 m-0" id="status_hover">Status &nbsp; &nbsp; <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="status()">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tous_status" checked>
+                        <input class="form-check-input" type="checkbox" value="" id="tous_status" >
                         <label class="form-check-label" for="tous_status">
                           Tous
                         </label>
