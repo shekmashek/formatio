@@ -443,10 +443,10 @@ create or replace view v_emargement as
 
 
 ALTER TABLE presences
-ADD CONSTRAINT presence_constraint UNIQUE (detail_id,stagiaire_id);
+ADD CONSTRAINT presence_stg_constraint UNIQUE (detail_id,stagiaire_id);
 
 
----view inter
+
 create or replace view v_projet_session_inter as
     select
         p.nom_projet,

@@ -398,30 +398,30 @@ class HomeController extends Controller
 
 
         }
-        else {
-             //get the column with null value
-             $databaseName = DB::connection()->getDatabaseName();
-             $testNull = DB::select('select * from chef_departements where user_id  = ? ',[Auth::user()->id]);
-             $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
+        // else {
+        //      //get the column with null value
+        //      $databaseName = DB::connection()->getDatabaseName();
+        //      $testNull = DB::select('select * from chef_departements where user_id  = ? ',[Auth::user()->id]);
+        //      $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
 
-             $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'chef_departements']);
-             $nb = 0;
-             for ($i=0; $i < count($colonnes); $i++) {
-                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                 if ($colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "photos"){
-                    if ($testNull[0]-> $tempo== null) {
-                        $nb+=1;
-                    }
-                }
+        //      $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',[$databaseName,'chef_departements']);
+        //      $nb = 0;
+        //      for ($i=0; $i < count($colonnes); $i++) {
+        //          $tempo =  $colonnes[$i]->COLUMN_NAME;
+        //          if ($colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "photos"){
+        //             if ($testNull[0]-> $tempo== null) {
+        //                 $nb+=1;
+        //             }
+        //         }
 
-             }
-             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
-             if ($nb>0) {
-                 return view('formulaire_manager',compact('testNull','entreprise'));
-             }
-            $totale_invitation = $this->collaboration->count_invitation();
-            return view('layouts.accueil_admin', compact('totale_invitation'));
-        }
+        //      }
+        //      //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
+        //      if ($nb>0) {
+        //          return view('formulaire_manager',compact('testNull','entreprise'));
+        //      }
+        //     $totale_invitation = $this->collaboration->count_invitation();
+        //     return view('layouts.accueil_admin', compact('totale_invitation'));
+        // }
     }
 
 

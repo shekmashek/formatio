@@ -84,6 +84,7 @@ $(document).ready(function() {
 
 });
 $(document).ready(function() {
+    var id_user = document.getElementById('id_user').value;
     $.ajax({
         url: "/affichage_role"
         , type: 'get'
