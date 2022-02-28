@@ -847,3 +847,6 @@ Route::get('appel_offre.publier/{id}','AppelOffreController@publier')->name('app
 
 Route::post('result_recherche_appel_offre','AppelOffreController@recherche_reference')->name('result_recherche_appel_offre');
 
+//=================== Recherche de thématique par rapport à une formation
+
+Route::get('get_thematique','ModuleController@get_thematique')->name('get_thematique');

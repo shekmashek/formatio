@@ -17,23 +17,19 @@ class Appel_offre extends Model
             'reference_soumission.required' => 'Veillez remplir le champ.',
             'dte.required' => 'Veillez remplir le champ.',
             'hr.required' => 'Veillez remplir le champ.',
-            'prestation.required' => 'Veillez remplir le champ.',
-            'contexte.required' => 'Veillez remplir le champ.',
-            'dossier_fournir.required' => 'Veillez remplir le champ.',
-            'information_generale.required' => 'Veillez remplir le champ.',
-            'exigence_soumission.required'=>'Veillez remplir le champ.'
+            'desc_court.required' => 'Veillez remplir le champ.',
+            'desc_detailer.required' => 'Veillez remplir le champ.',
+            'thematique.required' => 'Veillez remplir le champ.'
         ];
         $critere=[
             'tdr' => 'required',
             'reference_soumission' => 'required',
             'dte' => 'required',
             'hr' => 'required',
-            'prestation' => 'required',
-            'contexte' => 'required',
-            'information_generale' => 'required',
-            'dossier_fournir' =>'required',
-            'exigence_soumission' => 'required'
-        ];
+            'desc_court' => 'required',
+            'desc_detailer' => 'required',
+            'thematique' => 'required'
+          ];
         $input->validate($critere,$rules);
     }
 

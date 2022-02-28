@@ -398,4 +398,10 @@ class ModuleController extends Controller
         }
         else return redirect()->route('liste_module');
     }
+
+    public function get_thematique(Request $req){
+        $formtion_id = $req->formation_id;
+        $thematique = DB::select('select * from formations where domaine_id = ?', [$formtion_id]);
+        return response()->json($thematique);
+    }
 }
