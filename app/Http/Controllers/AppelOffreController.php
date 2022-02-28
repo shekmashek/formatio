@@ -40,9 +40,10 @@ class AppelOffreController extends Controller
             return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier','domaines'));
         }
         if (Gate::allows('isCFP')) {
+            $domaines = $this->fonct->findAll("domaines");
             $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [false]);
             $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
-            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier'));
+            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
         }
     }
 
@@ -68,12 +69,13 @@ class AppelOffreController extends Controller
         }
 
         if (Gate::allows('isCFP')) {
+            $domaines = $this->fonct->findAll("domaines");
             if ($reference != null) {
                 $appel_offre_publier =  DB::select("select * from v_appel_offre where UPPER(nom_formation) LIKE UPPER('%" . $reference . "%') and  publier=true");
             } else {
                 $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
             }
-            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier'));
+            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
         }
 
     }
