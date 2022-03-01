@@ -152,6 +152,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         g.date_debut,
         g.date_fin,
         g.status_groupe,
+        s.status as statut,
         g.activiter_groupe,
         mf.reference,
         mf.nom_module,
@@ -162,7 +163,9 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         f.mail_formateur,
         f.numero_formateur,
         p.nom_projet,
-        (c.nom) nom_cfp
+        (c.nom) nom_cfp,
+        p.type_formation_id,
+        t.type_formation
     FROM
         details d
     JOIN v_groupe_projet_entreprise g ON
@@ -175,6 +178,10 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         d.projet_id = p.id
     JOIN cfps c ON
         p.cfp_id = c.id
+    JOIN status s ON
+        g.status_groupe = s.id
+    join type_formations t
+        on t.id = p.type_formation_id
     GROUP BY
     d.id,
     d.lieu,
@@ -203,7 +210,10 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     f.numero_formateur,
     p.nom_projet,
     c.nom,
-    g.entreprise_id
+    g.entreprise_id,
+    s.status,
+    p.type_formation_id,
+    t.type_formation
     ;
 
 
@@ -261,4 +271,3 @@ create or replace view v_projet_cfp as
     from projets p
     join cfps on cfps.id = p.cfp_id
     join type_formations tf on tf.id = p.type_formation_id;
-    
