@@ -837,6 +837,8 @@ Route::post('role_manager','DepartementController@role_manager')->name('role_man
 
 //Route get nom entreprise user connecter
 Route::get('admin_nom_etp','AdminController@get_name_etp')->name('admin_nom_etp');
+//route user profile responsable
+Route::get('profile_resp','AdminController@profile_resp')->name('profile_resp');
 
 //====================== APPEL D'OFFRE
 

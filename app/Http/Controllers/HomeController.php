@@ -177,7 +177,7 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
 
-
+       
         if (Gate::allows('isStagiairePrincipale')) {
              //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
@@ -314,8 +314,9 @@ class HomeController extends Controller
 
         if (Gate::allows('isReferentPrincipale')) {
             //get the column with null value
-
+           
             $testNull = DB::select('select * from responsables where user_id  = ? ',[Auth::user()->id]);
+           
             $entreprise = DB::select('select * from entreprises where id  = ? ',[$testNull[0]->entreprise_id]);
             $departement = DB::select('select * from departement_entreprises where id  = ? ',[$testNull[0]->departement_entreprises_id]);
 
@@ -337,6 +338,7 @@ class HomeController extends Controller
                 return view('formulaire',compact('testNull','entreprise','departement'));
             }
             else{
+                
                 // $user_id = User::where('id', Auth::user()->id)->value('id');
                 // return view('layouts.dashboard_referent');
                 $fonct = new FonctionGenerique();
@@ -387,11 +389,12 @@ class HomeController extends Controller
 
                 if ($id!=null) {
                     $referent = $fonct->findWhereMulitOne("responsables",["id"],[$id]);
+                    
                 }
                 else{
                     $referent = $fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id]);
                 }
-
+                
                 return view('referent.dashboard_referent.dashboard_referent',compact('etp','referent','refs','formateur_referent','cfps','facture_paye','facture_non_echu','session_intra_terminer','session_intra_previ','session_intra_en_cours','session_intra_avenir','nb_stagiaire','total','name'));
 
             }

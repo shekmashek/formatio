@@ -540,14 +540,13 @@
                     {{-- entreprise --}}
                     <div class="col d-flex flex-row" style="align-items: left; text-align:center">
                         <div class="header_etp_cfp d-flex flex-row" style="">
-                            <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68;"></i>
-                            </p>
-                                    <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;
-                            <div class="d-flex pro_plan">
-                                <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
-                                <p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
-                            </div>
+                            {{-- <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68;"></i>
+                            </p> --}}
+                                    {{-- <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp; --}}
+                            {{-- <div class="d-flex pro_plan">
+                                {{-- <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p> --}}
+                            {{-- </div> --}} 
                         </div>
                         {{-- <div class="pdp_etp_cfp" id="box_etp_cfp">
                             <div class="container pdp_etp_cfp_card ">
@@ -566,23 +565,59 @@
                     {{-- user --}}
                     <div class="col">
                         <div class="header_img ms-5 mb-2 text-center d-flex flex-row" style="text-align: center">
-                            <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p>
+                            <p><div class='photo_user'>  </div></p>
                             <p style="text-transform: capitalize;color:#801D68" class="header_img_name">
-                                &nbsp;{{Auth::user()->name}}</p>
+                                {{-- &nbsp;{{Auth::user()->name}}</p> --}}
                         </div>
+                        @can('isReferent')
                         <div class="pdp_profil" id="box_profil">
                             <div class="container pdp_profil_card ">
-                                <div class="card">
+                                <div class="card" style="width: 500px;height:250px">
                                     <div class="card-title">
-                                        <h6 class="mb-0 text-center">{{Auth::user()->name}}</h6>
-                                        <hr class="m-0">
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="text-center">
-                                            <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                        <ul id="liste_role">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="text_resp ms-5 me-5 pt-1 d-flex flex-row">
+                                                    <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();" class="deconnexion_text "></a></p>
+                                                    <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();"
+                                                            class="deconnexion_text btn" style="text-decoration: none;background-color:rgb(168, 161, 161)">&nbsp;&nbsp;<span>Déconnexion</span></a>
+                                                    <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
+                                                        @csrf
+                                                    </form>
+                                                    </p>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <div class='photo_user ms-5' style="">  </div>
+                                             
+                                            </div>
+                                            <div class="col-md-8">
+                                            <h6 class="">{{Auth::user()->name}}</h6>
+
+                                            <h6 class="">{{Auth::user()->email}}</h6>
+                                        
+                                            </div>
+                                            <br><br><br>
+                                      <hr class="m-0"><br>
+                                        
+                                        <i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px;text-transform: capitalize;margin-top:-50px;color :#801D68">rubi&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{route('affResponsable')}}" class="btn btn-outline-primary" style="border-radius: 15px;text-decoration:none">Gérer votre compte</a></i>
+                                        
+                                    <br>
+
+                                        <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden><br>
+                                      
+                                         <img src="" id="photos" >
+                            @endcan
+                        </div>
+                    </div>  
+                                        {{-- <ul id="liste_role">
                                             Accès:
-                                        </ul>
+                                        </ul> --}}
                                             {{-- @if(Auth::user()->role_id == 1)
                                             <span class="text-muted d-block mb-2">Admin</span>
                                             @endif
@@ -605,7 +640,7 @@
                                             <span class="text-muted d-block mb-2">Centre de Formation</span>
                                             @endif --}}
 
-                                        </div>
+                                   
                                         <div class="text-center">
                                             @can('isManagerPrincipale')
                                             <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
@@ -617,9 +652,9 @@
                                             @can('isStagiairePrincipale')
                                             <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                             @endcan
-                                            @can('isReferentPrincipale')
+                                            {{-- @can('isReferentPrincipale')
                                             <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                                            @endcan
+                                            @endcan --}}
                                             @can('isCFPPrincipale')
                                             <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                             @endcan
@@ -644,6 +679,7 @@
                         </div>
                     </div>
                     {{-- logout --}}
+                    @can('isManagerPrincipale','isFormateurPrincipale','isStagiairePrincipale','isCFPPrincipale')
                     <div class="col">
                         <div class="text_resp ms-5 me-5 pt-1 d-flex flex-row">
                             <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -659,6 +695,7 @@
                         </div>
                     </div>
                 </div>
+                @endcan
             </header>
             {{-- header --}}
             {{-- content --}}
@@ -735,5 +772,24 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script src="{{asset('js/admin.js')}}"></script>
+    <script>
+    $(document).ready(function() {
+        var pdp="";
+        $.ajax({
+            url: '{{ route("profile_resp") }}'
+            , type: 'get'
+            , success: function(response) {
+                var userData = response;
+                var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width: width : 60px;px; height : 60px;   border: none;-moz-border-radius : 75px;-webkit-border-radius : 75pxpx;border-radius : 75px;cursor: pointer;">';
+                html = html.replace(":?",userData);
+            
+                $('.photo_user').append(html);
+            }         
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+    </script>
 </body>
 </html>

@@ -109,4 +109,13 @@ class AdminController extends Controller
          }
 
     }
+    public function profile_resp(){
+        $id_user = Auth::user()->id;
+            
+            if (Gate::allows('isReferent')) {
+                $user= responsable::where('user_id', $id_user)->value('photos');
+                $user = 'responsables/'.$user;
+                return response()->json($user);
+            }
+    }
 }
