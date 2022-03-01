@@ -12,8 +12,8 @@ CREATE TABLE projets (
   type_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES type_formations(id) ON DELETE CASCADE,
   status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  created_at timestamp NULL DEFAULT '0000-00-00',
-  updated_at timestamp NULL DEFAULT '0000-00-00'
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -29,16 +29,16 @@ CREATE TABLE groupes (
   date_fin date NOT NULL,
   status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  created_at timestamp NULL DEFAULT '0000-00-00',
-  updated_at timestamp NULL DEFAULT '0000-00-00'
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE groupe_entreprises (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   groupe_id  bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT '0000-00-00',
-  updated_at timestamp NULL DEFAULT '0000-00-00'
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -61,8 +61,8 @@ CREATE TABLE `details` (
   `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
   `projet_id` bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -82,8 +82,8 @@ CREATE TABLE `presences` (
    `note` text,
   `detail_id` bigint(20) UNSIGNED NOT NULL REFERENCES details(id) ON DELETE CASCADE,
   `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -94,8 +94,8 @@ CREATE TABLE `froid_evaluations` (
   `projet_id` bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
   `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -103,8 +103,8 @@ CREATE TABLE `type_champs` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_champ` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
   `desc_champ` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `type_champs` (`id`, `nom_champ`, `desc_champ`, `created_at`, `updated_at`) VALUES
@@ -117,8 +117,8 @@ CREATE TABLE `question_mere` (
   `qst_mere` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `desc_reponse` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -127,8 +127,8 @@ CREATE TABLE `question_fille` (
   `qst_fille` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_type_champs` bigint(20) UNSIGNED NOT NULL REFERENCES type_champs(id) ON DELETE CASCADE,
   `id_qst_mere` bigint(20) UNSIGNED NOT NULL REFERENCES question_mere(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -138,8 +138,8 @@ CREATE TABLE `description_champ_reponse` (
   `id_qst_fille` bigint(20) UNSIGNED NOT NULL REFERENCES question_fille(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   `nb_max` int(11),
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -150,8 +150,8 @@ CREATE TABLE `reponse_evaluationchaud` (
   `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
   `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT '0000-00-00',
-  `updated_at` timestamp NULL DEFAULT '0000-00-00'
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

@@ -3,8 +3,8 @@ create table demmande_cfp_etp(
     demmandeur_cfp_id bigint(20) unsigned not null,
     inviter_etp_id bigint(20) unsigned not null,
     activiter boolean not null default false,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(demmandeur_cfp_id) references cfps(id) on delete cascade,
     foreign key(inviter_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -15,8 +15,8 @@ create table demmande_etp_cfp(
     demmandeur_etp_id bigint(20) unsigned not null,
     inviter_cfp_id bigint(20) unsigned not null,
     activiter boolean not null default false,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(inviter_cfp_id) references cfps(id) on delete cascade,
     foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -26,8 +26,8 @@ create table demmande_cfp_formateur(
     demmandeur_cfp_id bigint(20) unsigned not null,
     inviter_formateur_id bigint(20) unsigned not null,
     activiter boolean not null default false,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(inviter_formateur_id) references formateurs(id) on delete cascade,
     foreign key(demmandeur_cfp_id) references cfps(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -38,8 +38,8 @@ create table demmande_formateur_cfp(
     demmandeur_formateur_id bigint(20) unsigned not null,
     inviter_cfp_id bigint(20) unsigned not null,
     activiter boolean not null default false,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(demmandeur_formateur_id) references formateurs(id) on delete cascade,
     foreign key(inviter_cfp_id) references cfps(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -50,7 +50,7 @@ create table refuse_demmande_cfp_etp(
     demmandeur_cfp_id bigint(20) unsigned not null,
     inviter_etp_id bigint(20) unsigned not null,
     activiter boolean not null default false,
-    created_at timestamp NULL DEFAULT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(demmandeur_cfp_id) references cfps(id) on delete cascade,
     foreign key(inviter_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -61,7 +61,7 @@ create table refuse_demmande_etp_cfp(
     demmandeur_etp_id bigint(20) unsigned not null,
     inviter_cfp_id bigint(20) unsigned not null,
     activiter boolean not null default false,
-    created_at timestamp NULL DEFAULT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(inviter_cfp_id) references cfps(id) on delete cascade,
     foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

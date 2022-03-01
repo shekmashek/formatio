@@ -9,7 +9,7 @@ create table appel_offres(
     entreprise_id bigint(20) unsigned not null  references entreprises(id) on delete cascade,
     formation_id bigint(20) unsigned not null  references formations(id) on delete cascade,
     created_at timestamp NOT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT current_timestamp(),
     publier boolean not null default false
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
