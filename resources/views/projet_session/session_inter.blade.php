@@ -15,40 +15,46 @@
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
+                                    <input type="text" id="min" class="form-control input" name="date_debut" required
+                                        onfocus="(this.type='date')">
+                                    <label class="ml-3 form-control-placeholder" for="min">Date debut du session<strong
+                                            class="text-danger">*</strong></label>
+                                </div>
+                            </div>
+
+                            <div class="row px-3 mt-2">
+                                <div class="form-group mt-1 mb-1">
                                     <input type="text" id="min" class="form-control input" min="1" max="50"
-                                        name="min_part" required onfocus="(this.type='number')">
+                                        name="min_part" onfocus="(this.type='number')">
                                     <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
                                         minimal</label>
                                 </div>
                             </div>
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_debut" required
-                                        onfocus="(this.type='date')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Date debut du session</label>
-                                </div>
-                            </div>
+
                             <div class="text-center "><button type="submit" form="formPayement"
                                     class="btn btn_enregistrer">Valider</button></div>
                         </div>
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="50"
-                                        name="max_part" required onfocus="(this.type='number')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                        maximal</label>
+                                    <input type="text" id="min" class="form-control input" name="date_fin" required
+                                        onfocus="(this.type='date')">
+                                    <label class="ml-3 form-control-placeholder" for="min">Date fin du session<strong
+                                            class="text-danger">*</strong></label>
                                 </div>
                             </div>
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_fin" required
-                                        onfocus="(this.type='date')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Date fin du session</label>
+                                    <input type="text" id="min" class="form-control input" min="1" max="50"
+                                        name="max_part" onfocus="(this.type='number')">
+                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
+                                        maximal</label>
                                 </div>
                             </div>
-                            <div class="text-center "><button type="button" class="btn  btn_annuler"
-                                    data-dismiss="modal">Annuler</button></div>
+
+                            <div class="text-center "><button type="button" class="btn  btn_annuler"><a
+                                        href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}">Annuler</a></button>
+                            </div>
                         </div>
                     </div>
                 </div>

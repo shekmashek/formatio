@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-<div class="shadow p-3 mb-5 bg-body rounded h-100">
+<div class="shadow p-3 mb-5 bg-body rounded h-100" style="z-index: -1">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
             <h5>Session </h5>
@@ -96,7 +96,7 @@
                                 @endif
                             </button>
                         </div>
-                    @endif
+
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'ressource')" style="width: 100%">
                             <p class="m-0 p-0">RESSOURCES</p>
@@ -153,6 +153,7 @@
                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
                         </button>
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -184,7 +185,7 @@
                             @include('admin.stagiaire.ajout_stagiaire')
                         </div>
                       @endif
-                      
+
                       <div id="ressource" class="tabcontent">
                         @include('projet_session.ressource')
                       </div>

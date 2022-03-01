@@ -48,14 +48,14 @@
                     <a href="#List_publies" class="nav-link" data-bs-toggle="tab">Listes Modules
                         Publiées&nbsp;({{count($mod_publies)}})</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#listes_p" class="nav-link" data-bs-toggle="tab">Modules
+                {{-- <li class="nav-item">
+                    <a href="#listes_p" class="nav-link" data-bs-toggle="tab">Modules Publiées
                         Intra&nbsp;({{count($mod_publies)}})</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#listes_publ" class="nav-link" data-bs-toggle="tab">Modules
+                    <a href="#listes_publ" class="nav-link" data-bs-toggle="tab">Modules Publiées
                         Inter&nbsp;({{count($mod_publies)}})</a>
-                </li>
+                </li> --}}
             </ul>
 
             <div class="tab-content">
@@ -896,7 +896,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <p class="mt-2">Publiees</p>
+                            <p class="mt-2">Listes modules Publiees(Tableau)</p>
 
                             <div class="container p-0">
                                 <ul class="ps-2">

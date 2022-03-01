@@ -35,6 +35,7 @@ body {
 .content_body {
     background: rgba(238, 237, 237, 0.192);
     min-height: 100vh;
+    z-index: -999;
 }
 
 a {
@@ -944,6 +945,14 @@ input:-webkit-autofill:active {
     color: white;
 }
 
+.btn_annuler a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.btn_annuler a:hover{
+    color: white;
+}
 
 .btn_next {
     color: #7635dc;
@@ -964,6 +973,27 @@ input:-webkit-autofill:active {
     transform: scale(1.1);
 }
 
+.btn_competence{
+    background: #7635dc;
+    color: #f1f1f1;
+    transition: all 0.5s ease;
+}
+
+.btn_competence:hover{
+    color: #7635dc;
+    transform: scale(1.1);
+    background: #7535dc28;
+}
+
+.btn_competence a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.btn_competence a:hover{
+    color: #7635dc;
+}
+
 .btn_next a{
     text-decoration: none;
     text-decoration-line: none;
@@ -973,6 +1003,55 @@ input:-webkit-autofill:active {
     color: white;
 }
 
+/* search form header */
+.searchButtonMod {
+    border: none;
+    background-color: #7535dc3f;
+    border-radius: 5px;
+    color: #7635dc;
+    padding-top: 0.4rem;
+    padding-bottom: 0.2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    transition: all .5s ease;
+    margin-top: 1px;
+    position: relative;
+    top: 2px;
+}
+
+.searchInputMod {
+    border: none;
+    background: rgba(128, 128, 128, 0.281);
+    border-radius: 5px;
+    height: 34px;
+    padding-left: 1rem;
+    outline-color: #7635dc;
+    width: 75%;
+}
+
+.searchInputMod:focus{
+    background-color: white;
+}
+
+.searchBoxMod:hover > .searchButtonMod {
+    background: rgba(128, 128, 128, 0.247);
+    color: #7635dc;
+    border-radius: 15px;
+    transform: scale(1.1);
+    font-size: 17px;
+}
+
+.searchInputMod::placeholder {
+    color: #7635dc;
+font-size: 0.850rem;
+}
+
+.searchBoxMod{
+    position: relative;
+    bottom: 0.7rem;
+    left: 1rem;
+}
+/* search form header */
 
 /*---------------------
     fin   Header
@@ -991,7 +1070,7 @@ input:-webkit-autofill:active {
     color: var(--color-child1);
     padding: 5px;
     font-size: 10px;
-    le
+    z-index: 1;
 }
 .footer_all a p:hover {
     text-decoration-line: underline;

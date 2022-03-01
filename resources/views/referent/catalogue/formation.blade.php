@@ -1,96 +1,96 @@
 @extends('./layouts/admin')
 @section('title')
 
-    <p style="font-size: 20px; color:white" class="ms-5">Recherche de Formation</p>
+<p style="font-size: 20px; color:white" class="ms-5">Recherche de Formation</p>
 
 @endsection
 @section('content')
-    <section class="formation">
-        <div class="container-fluid">
+<section class="formation">
+    <div class="container">
 
-                    {{-- <div class="formation__categories"> --}}
-                        {{-- <div class="formation__categories__tous d-flex flex-row align-items-center"> --}}
-                            {{-- <div><i class="bx bxs-grid"></i></div> --}}
-                            {{-- <div><span>Domaines de formation</span></div>
-                        </div>
-                        <div class="formation__list__box">
-                            <dl class="fl__item fl__item__bureatique dropdown">
-                                @foreach ($domaines as $domaine)
-                                    <dt class="formation__name">
-                                        <span>
-                                            <a href="#" class="ms-2 domaine" data-toggle="dropdown" id="{{ $domaine->id }}" data-id="{{ $domaine->id }}" aria-haspopup="true" aria-expanded="false">{{ $domaine->nom_domaine }}</a>
-                                        </span>
-                                    </dt>
-                                @endforeach --}}
-                                {{-- <div id="formation_resultat"></div>
-                                 <dd class="sous-formation dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" data-path="f-bureatique-content" data-role="first-menu-main" style="display: none;">
-                                    <div class="sous-formation-main">
-                                        <div class="sous-formation-content d-flex flex-column flex-sm-row align-items-start">
-                                                <div class="sous-formation-row dropdown-item ">
-                                                </div>
-                                        </div>
-                                    </div>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div> --}}
-                </div>
-                <div class="row">
-                    <div class="col-lg-3">
-                    </div>
-                <div class="col-lg-9">
-
-                    <h3>Que voulez-vous apprendre?</h3>
-                    <div class="formation__search">
-                        <div class="formation__search__form">
-                            <form class="" method="GET" action="{{route('result_formation')}}">
-                                {{-- <form action="{{ route('search') }}" method="GET">
-                                    <input type="text" name="search" class="form-control" required/>: --}}
-                           @csrf
-                                <input type="text" id="reference_search" name="nom_formation" placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
-                                <button type="submit" class="btn">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-
-                    @foreach ($categorie as $ctg )
-                    <a href="{{route('select_par_module',$ctg->id)}}"><button type="button" class="btn btn" style="border-radius: 15px">{{$ctg->nom_formation}}</button></a>
-                    @endforeach
-                    <style>
-
-                        .btn{background-color: #801D68;color: white}
-                        .btn:hover{color:white}
-                    </style>
-                       </div>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-3">
-                            </div>
-                        <div class="col-lg-9">
-                    <div class="formation__item set-bg" id>
-                        <h3>Les formations les plus recherchées </h3><br>
-                    </div>
-                     </div>
-
-
+        {{-- <div class="formation__categories"> --}}
+            {{-- <div class="formation__categories__tous d-flex flex-row align-items-center"> --}}
+                {{-- <div><i class="bx bxs-grid"></i></div> --}}
+                {{-- <div><span>Domaines de formation</span></div>
+            </div>
+            <div class="formation__list__box">
+                <dl class="fl__item fl__item__bureatique dropdown">
+                    @foreach ($domaines as $domaine)
+                    <dt class="formation__name">
+                        <span>
+                            <a href="#" class="ms-2 domaine" data-toggle="dropdown" id="{{ $domaine->id }}"
+                                data-id="{{ $domaine->id }}" aria-haspopup="true" aria-expanded="false">{{
+                                $domaine->nom_domaine }}</a>
+                        </span>
+                    </dt>
+                    @endforeach --}}
+                    {{-- <div id="formation_resultat"></div>
+                    <dd class="sous-formation dropdown-menu dropdown-menu-right"
+                        aria-labelledby="navbarDropdownMenuLink" data-path="f-bureatique-content"
+                        data-role="first-menu-main" style="display: none;">
+                        <div class="sous-formation-main">
+                            <div class="sous-formation-content d-flex flex-column flex-sm-row align-items-start">
+                                <div class="sous-formation-row dropdown-item ">
+                                </div>
                             </div>
                         </div>
+                    </dd>
+                </dl>
+            </div>
+        </div> --}}
+    </div>
+    <div class="row">
+
+        <div class="container">
+
+            <h3>Que voulez-vous apprendre?</h3>
+            <div class="row">
+                <form method="GET" action="{{route('result_formation')}}">
+                    @csrf
+                    <div class="form-row">
+                        <div class="searchBoxMod">
+                            <input class="searchInputMod mb-2" type="text" name=""
+                                placeholder="Rechercher par formations...">
+                            <button class="searchButtonMod" href="#">
+                                <i class="bx bx-search">
+                                </i>
+                            </button>
                         </div>
                     </div>
+                </form>
+            </div>
+
+            @foreach ($categorie as $ctg )
+            <a href="{{route('select_par_module',$ctg->id)}}"><button type="button" class="btn btn"
+                    style="border-radius: 15px">{{$ctg->nom_formation}}</button></a>
+            @endforeach
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-9">
+                <div class="formation__item set-bg" id>
+                    <h3>Les formations les plus recherchées </h3><br>
                 </div>
             </div>
+
+
         </div>
-    </section>
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script type="text/javascript">
-        // CSRF Token
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script type="text/javascript">
+    // CSRF Token
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function(){
           $( "#reference_search" ).autocomplete({

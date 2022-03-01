@@ -339,6 +339,7 @@ Route::get('date_but','DetailController@showDate')->name('date_but');
 
 Route::get('/show/{id}','DetailController@show')->name('show');
 Route::get('/store_detail','DetailController@store')->name('store_detail');
+Route::post ('/store_detailInter','DetailController@storeInter')->name('store_detailInter');
 Route::post('/update_detail/{id}','DetailController@update')->name('update_detail');
 Route::get('/destroy_detail/{id?}','DetailController@destroy')->name('destroy_detail');
 

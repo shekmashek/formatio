@@ -134,8 +134,6 @@ class GroupeController extends Controller
         //condition de validation de formulaire
         $request->validate(
             [
-                'min_part' => "required|numeric|min:0",
-                'max_part' => "required|numeric|min:0",
                 'date_debut' => "required|date",
                 'date_fin' => "required|date",
                 'module_id' => "required",
