@@ -222,7 +222,12 @@
                         <label for="">Session: </label>&nbsp;<label id="session"></label><br>
                         <label for="">Statut:</label>&nbsp;<label id="statut"></label><br>
                         <label for="">Type de formation:</label>&nbsp;<label id="types"></label><br>
-                        <label>O.F:</label>&nbsp;<label id="cfp"> </label><br>
+                        @canany(['isReferent','isStagiaire'])
+                            <label>O.F:</label>&nbsp;<label id="cfp"> </label><br>
+                        @endcanany
+                        @canany(['isCFP','isFormateur'])
+                            <label>Entreprise:</label>&nbsp;<label id="etp"> </label><br>
+                        @endcanany
                         <label>Formation:</label>&nbsp;<label id="formation"> </label><br>
                         <label>Module:</label>&nbsp;<label id="module"></label><br>
                         <label>Formateur:</label>&nbsp;<label id="formateur"></label><br>
@@ -230,8 +235,10 @@
                         <label for="">Dates:</label><label id="date_formation"></label><br>
                         <label>Heure:</label>&nbsp;<label id="heure"></label><br>
                         <hr>
-                        <label for="">Liste des apprenants</label><br>
-                        <ul id="liste_app"></ul>
+                        @canany(['isReferent','isCFP','isFormateur'])
+                            <label for="">Liste des apprenants</label><br>
+                            <ul id="liste_app"></ul>
+                        @endcanany
                     </div>
                 </div>
             </div>
@@ -303,6 +310,8 @@
                                     statut.innerHTML = '';
                                     var nom_cfp = document.getElementById('cfp');
                                     nom_cfp.innerHTML = '';
+                                    // var etp = document.getElementById('etp');
+
                                     var formation = document.getElementById('formation');
                                     formation.innerHTML = '';
                                     var module = document.getElementById('module');
@@ -327,6 +336,7 @@
                                         $('#statut').append(userData[$i].statut);
                                         $('#types').append(userData[$i].type_formation);
                                         $("#cfp").append(userData[$i].nom_cfp);
+                                        $("#etp").append(userData[$i].nom_etp);
                                         $("#formation").append(userData[$i].nom_formation);
                                         $("#module").append(userData[$i].nom_module);
                                         $('#formateur').append(userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur);

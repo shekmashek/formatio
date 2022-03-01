@@ -145,6 +145,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         d.groupe_id,
         d.cfp_id,
         g.entreprise_id,
+        e.nom_etp,
         g.max_participant,
         g.min_participant,
         g.nom_groupe,
@@ -182,6 +183,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         g.status_groupe = s.id
     join type_formations t
         on t.id = p.type_formation_id
+    join entreprises e
+        on e.id =  g.entreprise_id
     GROUP BY
     d.id,
     d.lieu,
@@ -211,6 +214,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     p.nom_projet,
     c.nom,
     g.entreprise_id,
+    e.nom_etp,
     s.status,
     p.type_formation_id,
     t.type_formation
