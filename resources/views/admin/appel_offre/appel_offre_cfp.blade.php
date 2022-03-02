@@ -1,56 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
-
-
-<style type="text/css">
-    button,
-    value {
-        font-size: 12px;
-    }
-
-    .font_text strong,
-    .font_text li,
-    .font_text h3,
-    .font_text h4,
-    .font_text p {
-        font-size: 12px;
-    }
-
-    .font_text h5,
-    .font_text h6 {
-        font-size: 10px;
-    }
-
-    .form_colab input {
-        height: 30px;
-    }
-
-    .form_colab input::placeholder {
-        font-size: 12px
-    }
-
-    .form_colab button {
-        height: 30px;
-        padding: 0;
-        padding-left: 5px;
-        padding-right: 5px;
-        font-size: 13px;
-    }
-
-    .nav_bar_list:hover {
-        background-color: transparent;
-    }
-
-    .nav_bar_list .nav-item:hover {
-        border-bottom: 2px solid black;
-    }
-
-    .filtre{
-        overflow-y: scroll;
-    }
-
-</style>
-
+<link rel="stylesheet" href="{{asset('assets/css/appel.css')}}">
 <div id="page-wrapper">
 
     @if (Session::has('error'))
@@ -165,76 +115,90 @@
 
         </div>
     </div>
-    <div class="col mx-1 shadow">
+    <div class="col-10">
         @if (count($appel_offre_publier) >0)
-        @foreach($appel_offre_publier as $publier)
-        <div class="row">
-            <div class="col shadow">
+        @foreach($appel_offre_publier as $pub)
+        <div class="row d-flex flex-row">
+            {{-- <div class="col-6 d-flex flex-wrap">
+                <ul>
+                    <li class="list_appel">
+                        <div class="row d-flex flex-row">
+                            <div class="col-4">
+                                <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="img-fluid" alt="...">
+                            </div>
+                            <div class="col-4">
+                                <p>{{$pub->nom_etp}}</p>
+                            </div>
+                            <div class="col-4">
+                                <p><a data-bs-toggle="collapse" href="#detail_{{$pub->id}}" role="button" aria-expanded="false" aria-controls="detail_{{$pub->id}}">détail</a></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div> --}}
+            <div class="col content_appel">
                 <table class="table">
                     <tbody>
                         <tr class="test">
                             <th scope="row">
                                 <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
                                 <br>
-                                <p>{{$publier->nom_etp}}</p>
-                                <p><a data-bs-toggle="collapse" href="#detail_{{$publier->id}}" role="button" aria-expanded="false" aria-controls="detail_{{$publier->id}}">détail</a></p>
+                                <p>{{$pub->nom_etp}}</p>
+                                <p><a data-bs-toggle="collapse" href="#detail_{{$pub->id}}" role="button" aria-expanded="false" aria-controls="detail_{{$pub->id}}">détail</a></p>
                             </th>
                             <td>
-                                <p>Référence: <a href="#detail_{{$publier->id}}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="detail_{{$publier->id}}" role="button">
-                                        <strong>{{$publier->reference_soumission}}</strong> </a>
+                                <p>Référence: <a href="#detail_{{$pub->id}}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="detail_{{$pub->id}}" class="detail" role="button">
+                                        <strong>{{$pub->reference_soumission}}</strong> </a>
                                 </p>
-                                <h6><strong class="fw-lighter">domaine </strong> {{$publier->nom_domaine}}</h6>
-                                <h6><strong class="fw-lighter">thématique </strong> {{$publier->nom_formation}}</h6>
-                                <h6><strong class="fw-lighter">postulé le, </strong> {{$publier->created_at}}</h6>
-                                <h6><strong class="fw-lighter">cloturé le, </strong> {{$publier->date_fin}} <strong class="fw-lighter">à</strong> {{$publier->hr_fin}}</h6>
+                                <h6><strong class="fw-lighter">domaine </strong> {{$pub->nom_domaine}}</h6>
+                                <h6><strong class="fw-lighter">thématique </strong> {{$pub->nom_formation}}</h6>
+                                <h6><strong class="fw-lighter">postulé le, </strong> {{$pub->created_at}}</h6>
+                                <h6><strong class="fw-lighter">cloturé le, </strong> {{$pub->date_fin}} <strong class="fw-lighter">à</strong> {{$pub->hr_fin}}</h6>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="col mx-1">
-                <div class="collapse multi-collapse" id="detail_{{$publier->id}}">
-
+            <div class="col mx-1 details_appel">
+                <div class="collapse multi-collapse" id="detail_{{$pub->id}}">
                     <span class="shadow p-3 bg-body row mt-1 mb-1 mx-1" style="width: 40rem;">
                         <div class="row">
                             <div class="col">
                                 <div align="left">
                                     <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
-                                    <h5>{{$publier->nom_etp}}</h5>
-                                    <p>{{$publier->email_etp}}</p>
+                                    <h5>{{$pub->nom_etp}}</h5>
+                                    <p>{{$pub->email_etp}}</p>
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col">
-                                <h6 class="text-muted">{{$publier->nom_secteur}}</h6>
+                                <h6 class="text-muted">{{$pub->nom_secteur}}</h6>
                             </div>
                         </div>
                         <div align="center" class="mt-2">
                             <h5> <strong> DETAIL DE L'APPEL D'OFFRE</strong></h5>
                         </div>
-                        <h6>Réference: <strong>{{$publier->reference_soumission}}</strong></h6>
-                        <h6><strong class="fw-lighter"> Recherche de formation </strong> <strong>{{$publier->nom_formation}}</strong> <strong class="fw-lighter"> du domaine</strong> <strong>{{$publier->nom_domaine}}</strong></h6>
-                        <p class="text-muted">{{$publier->description_court}}</p>
+                        <h6>Réference: <strong>{{$pub->reference_soumission}}</strong></h6>
+                        <h6><strong class="fw-lighter"> Recherche de formation </strong> <strong>{{$pub->nom_formation}}</strong> <strong class="fw-lighter"> du domaine</strong> <strong>{{$pub->nom_domaine}}</strong></h6>
+                        <p class="text-muted">{{$pub->description_court}}</p>
 
-                        <p><strong class="fw-lighter">L'offre a été postulé le</strong> <strong>{{$publier->created_at}}</strong>. <strong class="fw-lighter">Les interventions du préstataire s'étaleront à la date</strong> <strong>{{$publier->date_fin}}</strong> <strong class="fw-lighter">à</strong> <strong>{{$publier->hr_fin}}</strong></p>
+                        <p><strong class="fw-lighter">L'offre a été postulé le</strong> <strong>{{$pub->created_at}}</strong>. <strong class="fw-lighter">Les interventions du préstataire s'étaleront à la date</strong> <strong>{{$pub->date_fin}}</strong> <strong class="fw-lighter">à</strong> <strong>{{$pub->hr_fin}}</strong></p>
 
                         <div class="row my-1">
                             <div class="col">
                                 @php
-                                echo html_entity_decode($publier->description) @endphp
+                                echo html_entity_decode($pub->description) @endphp
                             </div>
                         </div>
-                        <p>TDR: <a href="#">{{$publier->tdr_url}}</a></p>
+                        <p class="appel_download">TDR: <a href="#" ><i class="bx bxs-cloud-download"></i>télécharger</a></p>
                     </span>
                 </div>
-
             </div>
+            @endforeach
         </div>
-        @endforeach
         @else
         <h3>Aucun appel d'offre trouvé</h3>
-
         @endif
     </div>
 </div>
@@ -272,6 +236,12 @@
             }
         });
     });
+
+    $(".detail").on('click', function() {
+        $(".details_appel").css("display","block");
+        $(".details_appel").css("display","none");
+    })
+
 
 </script>
 

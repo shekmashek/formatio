@@ -1,0 +1,66 @@
+button,
+value {
+    font-size: 12px;
+}
+
+.font_text strong,
+.font_text li,
+.font_text h3,
+.font_text h4,
+.font_text p {
+    font-size: 12px;
+}
+
+.font_text h5,
+.font_text h6 {
+    font-size: 10px;
+}
+
+.form_colab input {
+    height: 30px;
+}
+
+.form_colab input::placeholder {
+    font-size: 12px;
+}
+
+.form_colab button {
+    height: 30px;
+    padding: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 13px;
+}
+
+.nav_bar_list:hover {
+    background-color: transparent;
+}
+
+.nav_bar_list .nav-item:hover {
+    border-bottom: 2px solid black;
+}
+
+.appel_download a {
+    color: #7635dc;
+    transition: all 0.5s ease;
+    text-decoration: none;
+}
+.appel_download a:hover {
+    color: blue;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.appel_download a i {
+    font-size: 3rem !important;
+    position: relative;
+    top: 1rem;
+}
+.details_appel{
+    height: 165px;
+    overflow-y: scroll;
+}
+.list_appel{
+    border: #7535dc26 1px solid;
+    padding: 1.5rem .5rem;
+}

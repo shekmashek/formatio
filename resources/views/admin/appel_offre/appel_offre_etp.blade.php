@@ -126,9 +126,9 @@
         <div class="tab-pane fade  show active" id="nav-offre_nom_publier" role="tabpanel" aria-labelledby="nav-offre_nom_publier-tab">
 
             {{-- <tr class="test">
-                                <th scope="row">
-                                    <a href="#multiCollapseExample1" data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="multiCollapseExample1" role="button">
-                                    <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
+            <th scope="row">
+            <a href="#multiCollapseExample1" data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="multiCollapseExample1" role="button">
+            <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
             <br>
             <p>Nom Entreprise</p>
             </a>
@@ -146,7 +146,7 @@
             </tr> --}}
             @if (count($appel_offre_non_publier) >0)
 
-            @foreach ($appel_offre_non_publier as $publier)
+            @foreach ($appel_offre_non_publier as $nom_publier)
             <div class="row">
                 <div class="col">
                     <table class="table">

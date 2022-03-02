@@ -136,7 +136,7 @@ class AppelOffreController extends Controller
             $appel_offre->publier = false;
             $appel_offre->save();
             // return back()->with('success', 'terminer!');
-            return redirect()->route('appel_offre');
+            return redirect()->route('appel_offre.index');
         } else {
             return back()->with('error', "vous êtes pas autorisé!  :-)");
         }
