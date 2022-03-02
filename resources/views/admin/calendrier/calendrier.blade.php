@@ -232,9 +232,9 @@
                         <label>Module:</label>&nbsp;<label id="module"></label><br>
                         <label>Formateur:</label>&nbsp;<label id="formateur"></label><br>
                         <label>Lieu:</label>&nbsp;<label id="lieu"> </label><br>
-                        <label for="">Dates:</label><label id="date_formation"></label><br>
-                        <label>Heure:</label>&nbsp;<label id="heure"></label><br>
-                        <hr>
+                        <label for="">Date - Heure:</label><br>
+                        <ul id="date_formation"></ul>
+                         <hr>
                         @canany(['isReferent','isCFP','isFormateur'])
                             <label for="">Liste des apprenants</label><br>
                             <ul id="liste_app"></ul>
@@ -333,8 +333,7 @@
                                     formateur.innerHTML = '';
                                     var lieu = document.getElementById('lieu');
                                     lieu.innerHTML = '';
-                                    var heure = document.getElementById('heure');
-                                    heure.innerHTML = '';
+
                                     var liste_app = document.getElementById('liste_app');
                                     liste_app.innerHTML = '';
                                     // alert(JSON.stringify(response));
@@ -342,7 +341,7 @@
                                     // alert(userData.length);
                                     var userData = userDataDetail['detail'];
                                     var stg = userDataDetail['stagiaire'];
-
+                                    var date_groupe = userDataDetail['date_groupe'];
                                     for (var $i = 0; $i < userData.length; $i++) {
                                         $("#projet").append(userData[$i].nom_projet);
                                         $('#session').append(userData[$i].nom_groupe);
@@ -354,16 +353,21 @@
                                         $("#module").append(userData[$i].nom_module);
                                         $('#formateur').append(userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur);
                                         $('#lieu').append(userData[$i].lieu);
-                                        $('#heure').append(userData[$i].h_debut + ' h  -  ' + userData[$i].h_fin + ' h');
-                                        $('#date_formation').append(userData[$i].date_debut + ' au ' + userData[$i].date_fin);
+
                                     }
+                                    var html = '';
+                                    for (var $j = 0; $j < date_groupe.length; $j++) {
+                                        html += '<li>- '+date_groupe[$j].date_detail+' / '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                    }
+                                    $('#date_formation').append(html);
+
                                     var html = '';
                                     for (var $a = 0; $a < stg.length; $a++) {
                                         html += '<li>- '+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</li>'
                                     }
-                                    // $("#projet").append(userData.nom_projet);
+
                                     $('#liste_app').append(html);
-                                    $('#modal_affichage').modal('show');
+                                    // $('#modal_affichage').modal('show');
                                 }
                                 , error: function(error) {
                                     console.log(error)

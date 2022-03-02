@@ -64,7 +64,9 @@ class DetailController extends Controller
         $id = $request->Id;
         $detail = DB::select('select * from v_detailmodule where detail_id = ' . $id);
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
-        return response()->json(['detail'=>$detail,'stagiaire'=>$stg]);
+        $id_groupe = $detail[0]->groupe_id;
+        $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
+        return response()->json(['detail'=>$detail,'stagiaire'=>$stg,'date_groupe'=>$date_groupe]);
     }
     /*
     public function index()
