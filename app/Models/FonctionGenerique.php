@@ -42,6 +42,22 @@ class FonctionGenerique extends Model
                 return $query;
             }
     }
+    public function queryWhereOr($nomTab,$para=[],$val=[]){
+        $query="SELECT * FROM ".$nomTab." WHERE ";
+        if(count($para) != count($val)){
+            return "ERROR: tail des onnees parametre et value est different";
+        } else
+            {
+                for($i=0;$i<count($para);$i++)
+                {
+                $query.="".$para[$i]."= ?";
+                if($i+1 < count($para)){
+                    $query.=" OR ";
+                }
+                }
+                return $query;
+            }
+    }
 
     public function queryWherePagination($nomTab,$para=[],$val=[]){
         $query="SELECT * FROM ".$nomTab." WHERE ";
@@ -65,6 +81,13 @@ class FonctionGenerique extends Model
         $fonction = new FonctionGenerique();
         // echo $fonction->queryWhere($nomTab,$para,$val);
         $data =  DB::select($fonction->queryWhere($nomTab,$para,$val), $val);
+        return $data;
+    }
+
+    public function findWhereOr($nomTab,$para=[],$val=[]){
+        $fonction = new FonctionGenerique();
+        // echo $fonction->queryWhere($nomTab,$para,$val);
+        $data =  DB::select($fonction->queryWhereOr($nomTab,$para,$val), $val);
         return $data;
     }
 

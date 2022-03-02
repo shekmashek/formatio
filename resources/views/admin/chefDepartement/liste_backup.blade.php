@@ -68,7 +68,7 @@
                                             <td>{{$referent[$i]->email_resp}}</td>
                                             <td>{{$referent[$i]->telephone_resp}}</td>
 
-                                            {{-- <td>
+                                            <td>
                                                 @for($j = 0; $j < count($user_role); $j++)
                                                     @if($referent[$i]->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "referent")
@@ -116,13 +116,7 @@
                                                         @endif
                                                     @endif
                                                 @endfor
-                                            </td> --}}
-
-
-
-
-
-
+                                            </td>
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
@@ -231,13 +225,10 @@
                                             <th>Fonction</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
-                                            @foreach ($roles as $rl)
-                                            <th>{{$rl->role_description}}</th>
+                                            <th>Référent</th>
 
-                                            @endforeach
-                                            {{-- <th>Référent</th>
                                             <th>Formateur</th>
-                                            <th>Chef de département</th> --}}
+                                            <th>Chef de département</th>
                                             {{-- <th>Actions</th> --}}
                                         </tr>
                                     </thead>
@@ -258,40 +249,8 @@
                                             <td>{{$stagiaires[$i]->mail_stagiaire}}</td>
                                             <td>{{$stagiaires[$i]->telephone_stagiaire}}</td>
 
-                                            @foreach ($roles as $rls)
-                                            <td>
-                                                @foreach ($user_role as $us_rl)
-                                                @if($stagiaires[$i]->user_id == $us_rl->user_id)
-                                                @if($rls->id == $us_rl->role_id)
-                                                <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                @else
-                                                <span style="color:blueviolet">attribué role
-                                                    <button class="btn modifier pt-0"><a
-                                                        href="#"><i
-                                                            class='bx bx-edit background_grey'
-                                                            style="color: #0052D4 !important;font-size: 15px"
-                                                            title="modifier les informations"></i></a></button>
-                                                </span>
-                                                @endif
-                                                @endif
 
-                                                @endforeach
-                                            </td>
-
-                                            @endforeach
-                                            <td>
-                                                <div class="btn-group dropleft">
-                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier role</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; suprimer role</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                                    {{-- <td>
+                                                    <td>
                                                         @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
@@ -308,9 +267,9 @@
                                                                 </label>
                                                             </div>
                                                         @endif
-                                                    </td> --}}
+                                                    </td>
 
-                                                    {{-- <td>
+                                                    <td>
                                                         @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
@@ -327,8 +286,8 @@
                                                                 </label>
                                                             </div>
                                                         @endif
-                                                    </td> --}}
-                                                    {{-- <td>
+                                                    </td>
+                                                    <td>
                                                         @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
@@ -345,11 +304,7 @@
                                                                 </label>
                                                             </div>
                                                         @endif
-                                                    </td> --}}
-
-
-
-
+                                                    </td>
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
@@ -488,8 +443,6 @@
                                             <td>{{$chefs->mail_chef}}</td>
                                             <td>{{$chefs->telephone_chef}}</td>
 
-
-{{--
                                             <td>
                                                 @php $nb = 0;@endphp
                                                 @for($j = 0; $j < count($user_role); $j++)
@@ -544,13 +497,7 @@
                                                         </label>
                                                     </div>
                                                 @endif
-                                            </td> --}}
-
-
-
-
-
-
+                                            </td>
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">

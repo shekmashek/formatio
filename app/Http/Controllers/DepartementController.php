@@ -68,6 +68,27 @@ class DepartementController extends Controller
 
     public function liste()
     {
+        $fonct = new FonctionGenerique();
+
+        //on va récupérer la liste des employes
+        $user_id = Auth::user()->id;
+        $etp_id = responsable::where('user_id',[$user_id])->value('entreprise_id');
+
+        $referent = DB::select('select * from responsables where entreprise_id = ?', [$etp_id]);
+        $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
+        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
+
+        $user_role = DB::select('select * from role_users');
+        $roles = $fonct->findWhereOr("roles",["role_name","role_name","role_name","role_name"],["referent","formateur","manager","stagiaire"]);
+
+        return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
+    }
+
+ /*   public function liste()
+    {
+        $fonct = new FonctionGenerique();
+        $roles = $fonct->findWhereOr("roles",["role_name","role_name","role_name"],["referent","formateur","manager"]);
+
         //on va récupérer la liste des employes
         $user_id = Auth::user()->id;
         $etp_id = responsable::where('user_id',[$user_id])->value('entreprise_id');
@@ -81,7 +102,7 @@ class DepartementController extends Controller
         // dd($user_role);
         return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
     }
-
+*/
     public function create()
     {
         $fonct = new FonctionGenerique();
