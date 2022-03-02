@@ -309,8 +309,19 @@
                                     var statut = document.getElementById('statut');
                                     statut.innerHTML = '';
                                     var nom_cfp = document.getElementById('cfp');
-                                    nom_cfp.innerHTML = '';
-                                    // var etp = document.getElementById('etp');
+                                    var etp = document.getElementById('etp');
+                                    if (typeof nom_cfp == 'undefined') {
+                                        console.log('undefined');
+                                    }
+                                    else{
+                                        nom_cfp.innerHTML = '';
+                                    }
+                                    if (typeof etp == 'undefined') {
+                                        console.log('undefined');
+                                    }
+                                    else{
+                                        etp.innerHTML = '';
+                                    }
 
                                     var formation = document.getElementById('formation');
                                     formation.innerHTML = '';
