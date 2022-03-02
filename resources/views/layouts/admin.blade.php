@@ -40,15 +40,6 @@
                 </a>
                 <span class="tooltip">Tableau de bord</span>
             </li>
-            @canany(['isReferent'])
-            <li>
-                <a href="{{route('liste_formation')}}" class="d-flex nav_linke">
-                    <i class='bx bx-buildings'></i>
-                    <span class="links_name">Catalogue</span>
-                </a>
-                <span class="tooltip">Catalogue</span>
-            </li>
-            @endcanany
 
             @canany(['isCFP','isFormateur'])
             <li>
@@ -507,6 +498,8 @@
                                         <i class="bx bx-search">
                                         </i>
                                     </button>
+                                    <button type="button" class="btn_next ms-2"><a href="{{route('liste_formation')}}">Catalogue</a> </button>
+                                    <button type="button" class="btn_next ms-1">Annuaire des OF</button>
                                 </div>
                             </div>
                         </form>

@@ -80,7 +80,7 @@ ul li a {
     align-items: center;
     color: var(--font-sidebar-color);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    /* z-index: 1; */
+    z-index: 999;
 }
 
 .sidebar.active {
@@ -1026,7 +1026,7 @@ input:-webkit-autofill:active {
     height: 34px;
     padding-left: 1rem;
     outline-color: #7635dc;
-    width: 75%;
+    width: 50%;
 }
 
 .searchInputMod:focus{
@@ -1093,7 +1093,6 @@ font-size: 0.850rem;
 /*---------------------
     fin footer
 -----------------------*/
-
 
 .detail__formation__result {
 
