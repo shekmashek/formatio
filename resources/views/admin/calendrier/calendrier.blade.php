@@ -211,13 +211,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8">
-                <div id='calendar' style="width:80%;"></div>
+            <div class="col-sm-4">
+                <div id='calendar' style="width:100%;"></div>
             </div>
-            <div class="col-sm-2" id="detail" style="display: none">
+            <div class="col-sm-6" id="detail" style="display: none">
                 <div class="card" style="width: auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Détail du projet <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button></h5>
+                        <h5 class="card-title">Détail du projet <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><button class="btn" style="float: right"><i class="bx bx-printer" aria-hidden="true"></i></button></h5>
+
                         <label for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
                         <label for="">Session: </label>&nbsp;<label id="session"></label><br>
                         <label for="">Statut:</label>&nbsp;<label id="statut"></label><br>
@@ -257,7 +258,7 @@
                     var event = Array();
                     $.each(data, function(i, entry) {
                         event.push({
-                            title: entry.nom_projet + ': ' + entry.h_debut + "h -" + entry.h_fin + "h"
+                            title: entry.nom_formation
                             , start: entry.date_detail
                             ,backgroundColor:"green"
                             , nom_projet: entry.nom_projet
@@ -357,13 +358,13 @@
                                     }
                                     var html = '';
                                     for (var $j = 0; $j < date_groupe.length; $j++) {
-                                        html += '<li>- '+date_groupe[$j].date_detail+' / '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                        html += '<li>- Séance ' + ($j+1) +':  '+date_groupe[$j].date_detail+' / '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
                                     }
                                     $('#date_formation').append(html);
 
                                     var html = '';
                                     for (var $a = 0; $a < stg.length; $a++) {
-                                        html += '<li>- '+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</li>'
+                                        html += '<li><img src = "{{asset('images/users/users.png')}}" style="width:50px">'+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+'</li>'
                                     }
 
                                     $('#liste_app').append(html);
@@ -374,9 +375,14 @@
                                 }
                             });
                         },
-
-
-
+                        eventDidMount: function(info) {
+                            var tooltip = new Tooltip(info.el, {
+                                title: "test",
+                                placement: 'top',
+                                trigger: 'hover',
+                                container: 'body'
+                            });
+                        },
                         events: event
                     });
 
