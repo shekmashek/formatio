@@ -4,33 +4,27 @@
 @endsection
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid px-5">
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading d-flex justify-content-between mb-5">
-                    <div>
-                        <li class="{{ Route::currentRouteNamed('employes') ? 'active' : '' }}" style="list-style: none"><a href="{{route('employes')}}"><span class="bx bx-list-ul"></span>Liste des employés</a></li>&nbsp;<br><br>
-                        <strong>Rôle principal</strong>
-                    </div>
-                    <div>
-                        <button style = "color: rgb(102, 15, 241)"><a href="{{route('departement.create')}}"><span class="bx bxs-plus-circle"></span> Nouveau Employé</a></button>
-                    </div>
+                <div class="panel-heading d-flex justify-content-end">
+                    <button type="button" class="btn_enregistrer"><a href="{{route('departement.create')}}">Nouveau Employé</a></button>
                 </div>
-                <div class="col-md-12 mt-5">
+                <div class="col-md-12 mb-3">
                     <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
-                        <li class="nav-item">
-                            <a href="#" style="color: rgb(102, 15, 241)" class=" active" id="referent" data-toggle="tab" data-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
+                        <li class="nav-item btn_next">
+                            <a href="#" class="active" id="referent" data-bs-toggle="tab" data-bs-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
                                 Référents
                             </a>
                         </li>
-                        <li class="nav-item ms-5">
-                            <a href="#"  style="color: rgb(102, 15, 241)" class="" id="employé" data-toggle="tab" data-target="#tab-employé" type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
+                        <li class="nav-item ms-5 btn_next">
+                            <a href="#" class="" id="employé" data-bs-toggle="tab" data-bs-target="#tab-employé" type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
                                 Employés
                             </a>
                         </li>
-                        <li class="nav-item ms-5">
-                            <a href="#"  style="color: rgb(102, 15, 241)" class="" id="manager" data-toggle="tab" data-target="#tab-manager" type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
+                        <li class="nav-item ms-5 btn_next">
+                            <a href="#" class="" id="manager" data-bs-toggle="tab" data-bs-target="#tab-manager" type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
                                 Chef de département
                             </a>
                         </li>
@@ -41,9 +35,9 @@
                     <div class="tab-pane fade show active" id="tab-referent" role="tabpanel" aria-labelledby="referent">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="dataTables-example">
+                                <table class="table table-striped table-hover" id="dataTables-example">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center titre_table">
                                             <th>Photo</th>
                                             <th>Matricule</th>
                                             <th>Nom</th>
@@ -59,13 +53,13 @@
                                     </thead>
                                     <tbody>
                                         @for($i = 0; $i < count($referent); $i++)
-                                        <tr>
+                                        <tr class="text-center content_table">
                                             <td>
-                                                @if($referent[$i]->photos == null)
+                                                {{-- @if($referent[$i]->photos == null)
                                                 <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
                                                 @else
                                                 <img src="/responsable-image/{{$referent[$i]->photos}}" width="50" height="50"></td>
-                                                @endif
+                                                @endif --}}
                                             <td>{{$referent[$i]->matricule}}</td>
                                             <td>{{$referent[$i]->nom_resp}}</td>
                                             <td>{{$referent[$i]->prenom_resp}}</td>
@@ -79,6 +73,13 @@
                                                     @if($referent[$i]->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "referent")
                                                             <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @else
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                <label class="form-check-label" for="flexCheckDefault">
+
+                                                                </label>
+                                                            </div>
                                                         @endif
                                                     @endif
                                                 @endfor
@@ -89,7 +90,14 @@
                                                     @if($referent[$i]->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "consultant formateur")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @endif
+                                                        @else
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                <label class="form-check-label" for="flexCheckDefault">
+
+                                                                </label>
+                                                            </div>
+                                                    @endif
                                                     @endif
                                                 @endfor
                                             </td>
@@ -98,6 +106,13 @@
                                                     @if($referent[$i]->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "chef de département")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @else
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+
+                                                            </label>
+                                                        </div>
                                                         @endif
                                                     @endif
                                                 @endfor
@@ -105,12 +120,12 @@
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
+                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-bs-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
+                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
                                                         {{-- </div>
                                                     </div>
                                                 </center>
@@ -202,7 +217,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped" id="dataTables-example">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center titre_table">
                                             <th>Photo</th>
                                             <th>Matricule</th>
                                             <th>Nom</th>
@@ -219,13 +234,13 @@
                                     </thead>
                                     <tbody>
                                        @for($i = 0; $i < count($stagiaires); $i++)
-                                        <tr>
+                                        <tr class="text-center content_table">
                                             <td>
-                                                @if($stagiaires[$i]->photos == null)
+                                                {{-- @if($stagiaires[$i]->photos == null)
                                                     <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
                                                 @else
                                                     <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50" height="50"></td>
-                                                @endif
+                                                @endif --}}
                                             </td>
                                             <td>{{$stagiaires[$i]->matricule}}</td>
                                             <td>{{$stagiaires[$i]->nom_stagiaire}}</td>
@@ -236,42 +251,69 @@
 
 
                                                     <td>
+                                                        @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
                                                                 @if($user_role[$j]->role_description == "referent")
                                                                     <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                    @php $nb+=1 @endphp
                                                                 @endif
                                                             @endif
                                                         @endfor
+                                                        @if($nb<=0)
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                <label class="form-check-label" for="flexCheckDefault">
+                                                                </label>
+                                                            </div>
+                                                        @endif
                                                     </td>
 
                                                     <td>
+                                                        @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
-                                                                @if($user_role[$j]->role_description == "consultant formateur")
-                                                                <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                @if($user_role[$j]->role_description == "formateur")
+                                                                    <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                    @php $nb+=1 @endphp
                                                                 @endif
                                                             @endif
                                                         @endfor
+                                                        @if($nb<=0)
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                <label class="form-check-label" for="flexCheckDefault">
+                                                                </label>
+                                                            </div>
+                                                        @endif
                                                     </td>
                                                     <td>
+                                                        @php $nb=0 @endphp
                                                         @for($j = 0; $j < count($user_role); $j++)
                                                             @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
                                                                 @if($user_role[$j]->role_description == "chef de département")
                                                                 <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                @php $nb+=1 @endphp
                                                                 @endif
                                                             @endif
                                                         @endfor
+                                                        @if($nb<=0)
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                <label class="form-check-label" for="flexCheckDefault">
+                                                                </label>
+                                                            </div>
+                                                        @endif
                                                     </td>
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
+                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-bs-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
+                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
                                                         {{-- </div>
                                                     </div> --}}
                                                 {{-- </center>
@@ -365,7 +407,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped" id="dataTables-example">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center titre_table">
                                             <th>Photo</th>
                                             <th>Matricule</th>
                                             <th>Nom</th>
@@ -383,14 +425,15 @@
                                     </thead>
                                     <tbody>
                                         @foreach($chef as $chefs)
-                                        <tr>
-                                            <td>
+                                        <tr class="text-center content_table">
+                                            <td></td>
+                                            {{-- <td>
                                                 @if($chefs->photos == null)
                                                 <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
                                                 @else
                                                 <img src="/stagiaire-image/{{$chefs->photos}}" width="50" height="50"></td>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td>{{$chefs->matricule}}</td>
                                             <td>{{$chefs->nom_chef}}</td>
                                             <td>{{$chefs->prenom_chef}}</td>
@@ -401,43 +444,69 @@
                                             <td>{{$chefs->telephone_chef}}</td>
 
                                             <td>
+                                                @php $nb = 0;@endphp
                                                 @for($j = 0; $j < count($user_role); $j++)
                                                     @if($chefs->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "referent")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
-
+                                                        @php $nb+=1 @endphp
                                                         @endif
                                                     @endif
                                                 @endfor
+                                                @if($nb<=0)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                        </label>
+                                                    </div>
+                                                @endif
                                             </td>
 
                                             <td>
+                                                @php $nb = 0; @endphp
                                                 @for($j = 0; $j < count($user_role); $j++)
                                                     @if($chefs->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "formateur")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @php $nb+=1 @endphp
                                                         @endif
                                                     @endif
                                                 @endfor
+                                                @if($nb<=0)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                        </label>
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td>
+                                                @php $nb = 0;@endphp
                                                 @for($j = 0; $j < count($user_role); $j++)
                                                     @if($chefs->user_id == $user_role[$j]->user_id)
                                                         @if($user_role[$j]->role_description == "chef de département")
                                                         <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                        @php $nb+=1 @endphp
                                                         @endif
                                                     @endif
                                                 @endfor
+                                                @if($nb<=0)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                        </label>
+                                                    </div>
+                                                @endif
                                             </td>
                                             {{-- <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                              <li type="button" style="font-size:15px;"> <a href="" data-toggle="modal"  data-target="#exampleModal_{{$chefs->id}}" class="modifier" title="Modifier le profil" id="" ><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_{{$chefs->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
+                                                              <li type="button" style="font-size:15px;"> <a href="" data-bs-toggle="modal"  data-target="#exampleModal_{{$chefs->id}}" class="modifier" title="Modifier le profil" id="" ><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
+                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_{{$chefs->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
                                                         {{-- </div>
                                                     </div>
                                                 </center>

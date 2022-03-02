@@ -899,6 +899,8 @@ input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
+/* btn design */
+
 .btn_enregistrer {
     padding: 5px;
     margin-top: 1rem;
@@ -921,6 +923,20 @@ input:-webkit-autofill:active {
     transform: scale(1.05);
     color: White;
 }
+
+.btn_enregistrer a{
+    color: #7635dc;
+}
+
+.btn_enregistrer a:hover{
+    color: white;
+    cursor: pointer;
+}
+.btn_enregistrer a:focus{
+    color: white;
+    text-decoration: none;
+}
+
 .btn_annuler {
     padding: 5px;
     margin-top: 1rem;
@@ -945,6 +961,96 @@ input:-webkit-autofill:active {
 }
 
 
+.btn_next {
+    color: #7635dc;
+    border: none;
+    padding: 5px 8px;
+    background-color: #7535dc25;
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+}
+
+.btn_next:hover {
+    background-color: #7635dc;
+    color: white;
+    transform: scale(1.1);
+}
+
+.btn_next:focus {
+    background-color: #7635dc !important;
+    color: white;
+    transform: scale(1.1);
+}
+
+.btn_next a:hover{
+    color: white;
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.btn_next a{
+    color: #7635dc;
+}
+
+.btn_next a:hover{
+    color: white;
+    cursor: pointer;
+}
+.btn_next a:focus{
+    color: white;
+    text-decoration: none;
+}
+
+.btn_previous {
+    color: #7635dc;
+    border: none;
+    padding: 5px 8px;
+    background-color: rgba(128, 128, 128, 0.288);
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+}
+
+.btn_previous:hover {
+    background-color: #7535dc2d;
+    color: #7635dc;
+    transform: scale(1.1);
+}
+
+.btn_previous a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.btn_previous a:hover{
+    color: #7635dc;
+}
+
+/* btn design */
+
+/* table design */
+
+.titre_table{
+    font-size: 0.850rem;
+    font-weight: 500;
+    color: #637381;
+}
+
+.content_table{
+    font-size: 0.850rem;
+    color: #637381;
+}
+/* table design */
+
+
+
 /*---------------------
     fin   Header
 -----------------------*/
@@ -962,7 +1068,6 @@ input:-webkit-autofill:active {
     color: var(--color-child1);
     padding: 5px;
     font-size: 10px;
-    le
 }
 .footer_all a p:hover {
     text-decoration-line: underline;

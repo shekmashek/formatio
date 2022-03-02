@@ -538,64 +538,6 @@ font-size: 0.850rem;
 font-size: 0.850rem;
 }
 
-.btn_next {
-    color: #7635dc;
-    border: none;
-    padding: 5px 8px;
-    background-color: #7535dc25;
-    border-radius: 5px;
-    border-width: 0;
-    cursor: pointer;
-    font-size: 0.900rem;
-    transition: all 200ms;
-    margin-right: 1rem;
-}
-
-.btn_next:hover {
-    background-color: #7635dc;
-    color: white;
-    transform: scale(1.1);
-}
-
-.btn_next a{
-    text-decoration: none;
-    text-decoration-line: none;
-}
-
-.btn_next a:hover{
-    color: white;
-}
-
-.btn_previous {
-    color: #7635dc;
-    border: none;
-    padding: 5px 8px;
-    background-color: rgba(128, 128, 128, 0.288);
-    border-radius: 5px;
-    border-width: 0;
-    cursor: pointer;
-    font-size: 0.900rem;
-    transition: all 200ms;
-    margin-right: 1rem;
-}
-
-.btn_previous:hover {
-    background-color: #7535dc2d;
-    color: #7635dc;
-    transform: scale(1.1);
-}
-
-.btn_previous a{
-    text-decoration: none;
-    text-decoration-line: none;
-}
-
-.btn_previous a:hover{
-    color: #7635dc;
-}
-
-
-
 .acf-objectif,
 .acf-cible,
 .acf-prerequis,
