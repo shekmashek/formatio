@@ -74,7 +74,7 @@
             @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_formation')}}" class="d-flex nav_linke">
-                    <i class='bx bx-buildings'></i>
+                    <i class='bx bx-home-alt'></i>
                     <span class="links_name">Departements</span>
                 </a>
                 <span class="tooltip">Departements</span>
@@ -153,7 +153,7 @@
             @canany(['isCFP','isReferent','isManager'])
             <li>
                 <a href="{{route('appel_offre.index')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-account'></i>
+                    <i class='bx bx-mail-send'></i>
                     <span class="links_name">Appel d'Offre</span>
                 </a>
                 <span class="tooltip">Appel d'Offre</span>
@@ -499,7 +499,8 @@
                                         </i>
                                     </button>
                                     <button type="button" class="btn_next ms-2"><a href="{{route('liste_formation')}}">Catalogue</a> </button>
-                                    <button type="button" class="btn_next ms-1">Annuaire des OF</button>
+                                    <button type="button" class="btn_next">Annuaire</button>
+                                    <button type="button" class="btn_next"><a href="{{route('calendrier')}}">Agenda</a> </button>
                                 </div>
                             </div>
                         </form>

@@ -1026,7 +1026,7 @@ input:-webkit-autofill:active {
     height: 34px;
     padding-left: 1rem;
     outline-color: #7635dc;
-    width: 50%;
+    width: 45%;
 }
 
 .searchInputMod:focus{
