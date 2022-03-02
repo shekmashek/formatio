@@ -63,6 +63,7 @@ class GroupeController extends Controller
         $type_formation = request()->type_formation;
         $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
         $modules = $fonct->findWhere("v_module", ["cfp_id","status"], [$cfp_id,2]);
+        // dd($formations,$modules);
         return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
     }
 

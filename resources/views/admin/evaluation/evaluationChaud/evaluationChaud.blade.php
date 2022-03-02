@@ -64,7 +64,7 @@
         {{-- <h5 class="text-center">Evaluation</h5> --}}
 
         
-            <div class="row">
+            <div class="row mb-5">
                 <form method="POST" action="{{ route('createEvaluationChaud',[$detail->detail_id,$detail->stagiaire_id])}}">
                     @csrf
                 <div class="col-md-9 card shadow p-3 mb-5 bg-body rounded">
@@ -148,7 +148,7 @@
                     <div class="d-grid gap-2 col-6 mx-auto">
                         <button class="btn btn-success" type="submit">Envoye d'evaluation à chaud</button>
                     </div>
-
+                    <br><br><br>
                 </div>
             </form>
         </div>

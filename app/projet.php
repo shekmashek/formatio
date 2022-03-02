@@ -72,6 +72,7 @@ class Projet extends Model
                 }
             }
         }
+        $sql = $sql." order by date_projet desc";
         return $sql;
     }
 

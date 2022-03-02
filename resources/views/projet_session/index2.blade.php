@@ -102,8 +102,11 @@
                     {{-- {{ $data[0]->nom_etp }} --}}
                 @endif
             </h6>
-            <span type="button" class="btn_plus m-0" data-bs-toggle="modal"
-                data-bs-target="#modal_{{$prj->projet_id}}">Nouvelle Session</span>
+            @if ($type_formation_id == 1)
+                <span type="button" class="btn_plus m-0" data-bs-toggle="modal"
+                data-bs-target="#modal_{{$prj->projet_id}}">Nouvelle Session</span> 
+            @endif
+            
         </div>
 
         <table class="table table-stripped m-0 p-0 collapse" id="collapseprojet_{{$prj->projet_id}}">
@@ -286,33 +289,71 @@
         @endforeach
     </div>
     @endcanany
-    @canany(['isReferent'])
-    <div class="collapse" id="corps">
-        <table class="table table-stroped m-0 p-0">
-            <thead class="thead_projet">
-                <th>Projet</th>
-                <th> Session </th>
-                <th> Centre de formation </th>
-                <th> Date du projet</th>
+    @can('isReferent')
+        @if (count($data) <= 0)
+            <div class="d-flex mt-3 titre_projet p-1 mb-1">
+                <span class="text-center">Vous n'avez pas encore du projet.</span>
+            </div>
+        @else
+            <table class="table table-stroped m-0 p-0">
+                <thead class="thead_projet">
+                    <th>Projet</th>
+                    <th> Session </th>
+                    <th> Centre de formation </th>
+                    <th> Date du projet</th>
 
-                <th> Statut </th>
-            </thead>
-            <tbody>
-                @foreach ($data as $pj)
-                <tr>
-                    <td>{{ $pj->nom_projet }}</td>
-                    <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
-                    <td> {{ $pj->nom_cfp }} </td>
-                    <td> {{ date("d-m-Y",strtotime($pj->date_projet)) }} </td>
-                    <td>
-                        <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    @endcanany
+                    <th> Statut </th>
+                </thead>
+                <tbody class="tbody_projet">
+                    @foreach ($data as $pj)
+                    <tr>
+                        <td>{{ $pj->nom_projet }}</td>
+                        <td> <a href="{{ route('detail_session',$pj->groupe_id) }}">{{ $pj->nom_groupe }}</a></td>
+                        <td> {{ $pj->nom_cfp }} </td>
+                        <td> {{ date("d-m-Y",strtotime($pj->date_projet)) }} </td>
+                        <td>
+                            <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    @endcan
+    @can('isStagiaire')
+        @if (count($data) <= 0)
+            <div class="d-flex mt-3 titre_projet p-1 mb-1">
+                <span class="text-center">Vous n'avez pas encore du projet.</span>
+            </div>
+        @else
+            <table class="table table-stroped m-0 p-0">
+                <thead class="thead_projet">
+                    {{-- <th>Projet</th> --}}
+                    <th> Session </th>
+                    <th> Date du session</th>
+                    <th> Centre de formation </th>
+                    <th> Formation </th>
+                    <th> Module</th>
+                    <th> Evaluation </th>
+                </thead>
+                <tbody class="tbody_projet">
+                    @foreach ($data as $pj)
+                        <tr>
+                            {{-- <td>{{ $pj->nom_projet }}</td> --}}
+                            <td> {{ $pj->nom_groupe }}</td>
+                            <td> {{ date("d-m-Y",strtotime($pj->date_debut)) }}-{{ date("d-m-Y",strtotime($pj->date_fin)) }} </td>
+                            <td> {{ $pj->nom_formation }} </td>
+                            <td> {{ $pj->nom_module }} </td>
+                            <td> {{ $pj->nom_cfp }} </td>
+                            <td>
+                                {{-- <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p> --}}Evaluation
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    @endcan
 </div><br>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="{{asset('js/index2.js')}}"></script>

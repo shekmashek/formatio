@@ -151,18 +151,20 @@ class SessionController extends Controller
             $formateur = NULL;
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-        }if(Gate::allows('isStagiaire')){
-            $evaluation = new EvaluationChaud();
-            $matricule = stagiaire::where('user_id',$user_id)->value('matricule');
-            $etp_id = stagiaire::where('user_id',$user_id)->value('entreprise_id');
-            $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
-            $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
-            $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-            $data = $evaluation->findDetailProject($matricule,$id); // return les information du project avec detail et information du stagiaire
-
-            $stagiaire = $data['stagiaire'];
-            $detail = $data['detail'];
         }
+        // if(Gate::allows('isStagiaire')){
+        //     $evaluation = new EvaluationChaud();
+        //     $etp_id = stagiaire::where('user_id',$user_id)->value('entreprise_id');
+        //     $matricule = stagiaire::where('user_id',$user_id)->value('matricule');
+        //     $stg_id = stagiaire::where('user_id',$user_id)->value('id');
+        //     $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
+        //     $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
+        //     $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
+        //     $data = $evaluation->findDetailProject($matricule,$id); // return les information du project avec detail et information du stagiaire
+        //     $projet = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
+        //     $stagiaire = $data['stagiaire'];
+        //     $detail = $data['detail'];
+        // }
 
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
@@ -179,15 +181,15 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         // dd($competences);
         // ---------evalution fait par les stagiaires
-        $evaluation = new EvaluationChaud();
-        $matricule = "ETU001";
-        $session_id = 1;
-        $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
-        $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
-        $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-        $detail = $evaluation->findDetailProject($matricule,$session_id); // return les information du project avec detail et information du stagiaire
+        // $evaluation = new EvaluationChaud();
+        // $matricule = "ETU001";
+        // $session_id = 1;
+        // $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
+        // $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
+        // $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
+        // $detail = $evaluation->findDetailProject($matricule,$session_id); // return les information du project avec detail et information du stagiaire
         // dd($detail);
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','detail','champ_reponse', 'qst_mere', 'qst_fille'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id'));
     }
 
     public function getFormateur(){

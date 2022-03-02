@@ -123,12 +123,14 @@
                             <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                         </button>
                     </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
-                            <p class="m-0 p-0">EVALUATION</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
+                    @canany(['isStagiaire'])
+                        <div>
+                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
+                                <p class="m-0 p-0">EVALUATION</p>
+                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                            </button>
+                        </div>
+                    @endcanany
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'emargement')" style="width: 100%">
                             <p class="m-0 p-0">EMARGEMENT</p>
@@ -194,10 +196,12 @@
                       <div id="document" class="tabcontent">
                         @include('projet_session.document')
                       </div>
-                      <div id="chaud" class="tabcontent">
-                        {{-- @include('projet_session.index_evaluation') --}}
-                        @include('admin.evaluation.evaluationChaud.evaluationChaud')
-                      </div>
+                      @canany(['isStagiaire'])
+                        <div id="chaud" class="tabcontent">
+                            {{-- @include('projet_session.index_evaluation') --}}
+                            @include('admin.evaluation.evaluationChaud.evaluationChaud')
+                        </div>
+                      @endcanany
                       <div id="emargement" class="tabcontent">
                         @include('projet_session.emargement')
                       </div>
