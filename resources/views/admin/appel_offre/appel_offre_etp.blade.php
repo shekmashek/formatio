@@ -146,7 +146,7 @@
             </tr> --}}
             @if (count($appel_offre_non_publier) >0)
 
-            @foreach ($appel_offre_non_publier as $publier)
+            @foreach ($appel_offre_non_publier as $nom_publier)
             <div class="row">
                 <div class="col">
                     <table class="table">
