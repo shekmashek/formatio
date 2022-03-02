@@ -310,14 +310,16 @@
                                     statut.innerHTML = '';
                                     var nom_cfp = document.getElementById('cfp');
                                     var etp = document.getElementById('etp');
-                                    if (typeof nom_cfp == 'undefined') {
-                                        console.log('undefined');
+
+
+                                    if ( nom_cfp == null) {
+                                        console.log('null');
                                     }
                                     else{
                                         nom_cfp.innerHTML = '';
                                     }
-                                    if (typeof etp == 'undefined') {
-                                        console.log('undefined');
+                                    if ( etp == null) {
+                                        console.log('null');
                                     }
                                     else{
                                         etp.innerHTML = '';
@@ -353,7 +355,7 @@
                                         $('#formateur').append(userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur);
                                         $('#lieu').append(userData[$i].lieu);
                                         $('#heure').append(userData[$i].h_debut + ' h  -  ' + userData[$i].h_fin + ' h');
-                                        $('#date_formation').append(userData[$i].date_debut + ' - ' + userData[$i].date_fin);
+                                        $('#date_formation').append(userData[$i].date_debut + ' au ' + userData[$i].date_fin);
                                     }
                                     var html = '';
                                     for (var $a = 0; $a < stg.length; $a++) {
