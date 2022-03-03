@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Manager</h3>
+<h3 class="text-white ms-5">Manager</h3>
 @endsection
 @section('content')
 
@@ -45,21 +45,19 @@
                                             <th>Fonction</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
-                                            <th>Référent</th>
-                                            <th>Formateur</th>
-                                            <th>Chef de département</th>
-                                            {{-- <th>Actions</th> --}}
+                                            <th>Role asigné</th>
+                                            <th>Role non asigné</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @for($i = 0; $i < count($referent); $i++)
-                                        <tr class="text-center content_table">
+                                        @for($i = 0; $i < count($referent); $i++) <tr class="text-center content_table">
                                             <td>
                                                 {{-- @if($referent[$i]->photos == null)
-                                                <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
+                                                <img src="{{asset('images/users/users.png')}}" width="50" height="50" class="image-ronde">
                                                 @else
                                                 <img src="/responsable-image/{{$referent[$i]->photos}}" width="50" height="50"></td>
-                                                @endif --}}
+                                            @endif --}}
                                             <td>{{$referent[$i]->matricule}}</td>
                                             <td>{{$referent[$i]->nom_resp}}</td>
                                             <td>{{$referent[$i]->prenom_resp}}</td>
@@ -69,71 +67,50 @@
                                             <td>{{$referent[$i]->telephone_resp}}</td>
 
                                             <td>
-                                                @for($j = 0; $j < count($user_role); $j++)
-                                                    @if($referent[$i]->user_id == $user_role[$j]->user_id)
-                                                        @if($user_role[$j]->role_description == "referent")
-                                                            <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @else
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                <label class="form-check-label" for="flexCheckDefault">
-
-                                                                </label>
-                                                            </div>
-                                                        @endif
+                                                <div align="left">
+                                                    @foreach ($roles_actif_referent as $role_asigner_referent)
+                                                    @if($referent[$i]->user_id == $role_asigner_referent->user_id)
+                                                    <span><i class="fa fa-check" style="color: green" aria-hidden="true"></i> {{$role_asigner_referent->role_name}}</span> <br>
                                                     @endif
-                                                @endfor
-                                            </td>
-
-                                            <td>
-                                                @for($j = 0; $j < count($user_role); $j++)
-                                                    @if($referent[$i]->user_id == $user_role[$j]->user_id)
-                                                        @if($user_role[$j]->role_description == "consultant formateur")
-                                                        <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @else
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                <label class="form-check-label" for="flexCheckDefault">
-
-                                                                </label>
-                                                            </div>
-                                                    @endif
-                                                    @endif
-                                                @endfor
+                                                    @endforeach
+                                                </div>
                                             </td>
                                             <td>
-                                                @for($j = 0; $j < count($user_role); $j++)
-                                                    @if($referent[$i]->user_id == $user_role[$j]->user_id)
-                                                        @if($user_role[$j]->role_description == "chef de département")
-                                                        <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @else
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                <div align="left">
 
-                                                            </label>
-                                                        </div>
-                                                        @endif
+                                                    @for($ii = 0; $ii < count($roles_not_actif_referent[$i]["role_inactif"]); $ii++)
+                                                    @if($stagiaires[$i]->user_id == $roles_not_actif_referent[$i]["user_id"])
+                                                    <span style="color:blueviolet">attribué role pour {{$roles_not_actif_referent[$i]["role_inactif"][$ii]->role_name}}
+                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$stagiaires[$i]->user_id,$roles_not_actif_referent[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                    </span> <br>
                                                     @endif
-                                                @endfor
+                                                    @endfor
+
+{{--
+                                                    @if($referent[$i]->user_id == $roles_not_actif_referent[$j]["user_id"])
+                                                        <span style="color:blueviolet">attribué role pour {{$roles_not_actif_referent[$j]["role_name"]}}
+                                                            <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$j]["id"]])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                        </span> <br>
+                                                        @endif
+                                                        @endfor --}}
+                                                </div>
                                             </td>
-                                            {{-- <td>
-                                                <center>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-bs-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
-                                                        {{-- </div>
+                                            <td>
+                                                <div class="btn-group dropleft">
+                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier role</a>
+                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; suprimer role</a>
                                                     </div>
-                                                </center>
-                                            </td> --}}
-                                        </tr>
+                                                </div>
+                                            </td>
+
+                                            </tr>
 
 
-                                        {{-- <!-- Modal delete -->
+                                            {{-- <!-- Modal delete -->
                                         <div class="modal fade" id="exampleModal_{{$referent[$i]->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -156,197 +133,129 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                            </div> --}}
 
 
-                                        <div class="modal fade" id="myModal_{{ $referent[$i]->id }}">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(96,167,134);">
-                                                        <h6 class="modal-title text-white"> Modification </h6>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="{{route('modifDepartement', $referent[$i]->id)}}" method="get" class="btn-submit">
-                                                            @csrf
-                                                            {{-- --}}
-                                                            <input type="hidden" name="_method" value="PUT">
-                                                            {{-- --}}
-                                                            <div class="form-group">
-                                                                <label for="name"><small><b>Nom</b></small></label><br>
-                                                                <input type="text" class="form-control" value="{{$referent[$i]->nom_resp}}" autocomplete="off" id="" name="nom_chef" placeholder="Nom">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="prenom"><small><b>Prénom</b></small></label><br>
-                                                                <input type="text" class="form-control" autocomplete="off" value="{{$referent[$i]->prenom_resp}}" id="" name="prenom_chef" placeholder="Prénom">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="prenom"><small><b>Genre</b></small></label><br>
-                                                                <input type="text" class="form-control" autocomplete="off" value="{{$referent[$i]->sexe_resp}}" id="" name="genre_chef" placeholder="Genre">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="fonction"><small><b>Fonction</b></small></label><br>
-                                                                <input type="text" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->fonction_resp}}" name="fonction_chef" placeholder="Fonction">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="email"><small><b>E-mail</b></small></label><br>
-                                                                <input type="email" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->email_resp}}" name="mail_chef" placeholder="E-mail">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="phone"><small><b>Téléphone</b></small></label><br>
-                                                                <input type="text" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->telephone_resp}}" name="telephone_chef" placeholder="Téléphone">
-                                                            </div>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>&nbsp;
-                                                        <button type="submit" class="btn btn-success modification " id=""><span class="fa fa-pencil"></span> Modifier</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            <div class="modal fade" id="myModal_{{ $referent[$i]->id }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(96,167,134);">
+                                            <h6 class="modal-title text-white"> Modification </h6>
                                         </div>
-                                        @endfor
-                                    </tbody>
-                                </table>
+                                        <div class="modal-body">
+                                            <form action="{{route('modifDepartement', $referent[$i]->id)}}" method="get" class="btn-submit">
+                                                @csrf
+                                                {{-- --}}
+                                                <input type="hidden" name="_method" value="PUT">
+                                                {{-- --}}
+                                                <div class="form-group">
+                                                    <label for="name"><small><b>Nom</b></small></label><br>
+                                                    <input type="text" class="form-control" value="{{$referent[$i]->nom_resp}}" autocomplete="off" id="" name="nom_chef" placeholder="Nom">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="prenom"><small><b>Prénom</b></small></label><br>
+                                                    <input type="text" class="form-control" autocomplete="off" value="{{$referent[$i]->prenom_resp}}" id="" name="prenom_chef" placeholder="Prénom">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="prenom"><small><b>Genre</b></small></label><br>
+                                                    <input type="text" class="form-control" autocomplete="off" value="{{$referent[$i]->sexe_resp}}" id="" name="genre_chef" placeholder="Genre">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fonction"><small><b>Fonction</b></small></label><br>
+                                                    <input type="text" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->fonction_resp}}" name="fonction_chef" placeholder="Fonction">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email"><small><b>E-mail</b></small></label><br>
+                                                    <input type="email" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->email_resp}}" name="mail_chef" placeholder="E-mail">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone"><small><b>Téléphone</b></small></label><br>
+                                                    <input type="text" class="form-control" autocomplete="off" id="" value="{{$referent[$i]->telephone_resp}}" name="telephone_chef" placeholder="Téléphone">
+                                                </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>&nbsp;
+                                            <button type="submit" class="btn btn-success modification " id=""><span class="fa fa-pencil"></span> Modifier</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            @endfor
+                            </tbody>
+                            </table>
                         </div>
                     </div>
-                    {{-- employé --}}
-                    <div class="tab-pane fade show" id="tab-employé" role="tabpanel" aria-labelledby="employé">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="dataTables-example">
-                                    <thead>
-                                        <tr class="text-center titre_table">
-                                            <th>Photo</th>
-                                            <th>Matricule</th>
-                                            <th>Nom</th>
-                                            <th>Prénom</th>
-                                            <th>Fonction</th>
-                                            <th>E-mail</th>
-                                            <th>Téléphone</th>
-                                            <th>Référent</th>
+                </div>
+                {{-- employé --}}
+                <div class="tab-pane fade show" id="tab-employé" role="tabpanel" aria-labelledby="employé">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="dataTables-example">
+                                <thead>
+                                    <tr class="text-center titre_table">
+                                        <th>Photo</th>
+                                        <th>Matricule</th>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Fonction</th>
+                                        <th>E-mail</th>
+                                        <th>Téléphone</th>
+                                        <th>Role asigné</th>
+                                        <th>Role non asigné</th>
+                                        <th>Actions</th>
 
-                                            <th>Formateur</th>
-                                            <th>Chef de département</th>
-                                            {{-- <th>Actions</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                       @for($i = 0; $i < count($stagiaires); $i++)
-                                        <tr class="text-center content_table">
-                                            <td>
-                                                {{-- @if($stagiaires[$i]->photos == null)
-                                                    <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
-                                                @else
-                                                    <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50" height="50"></td>
-                                                @endif --}}
-                                            </td>
-                                            <td>{{$stagiaires[$i]->matricule}}</td>
-                                            <td>{{$stagiaires[$i]->nom_stagiaire}}</td>
-                                            <td>{{$stagiaires[$i]->prenom_stagiaire}}</td>
-                                           <td>{{$stagiaires[$i]->fonction_stagiaire}}</td>
-                                            <td>{{$stagiaires[$i]->mail_stagiaire}}</td>
-                                            <td>{{$stagiaires[$i]->telephone_stagiaire}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for($i = 0; $i < count($stagiaires); $i++) <tr class="text-center content_table">
+                                        <td>
+                                            {{-- @if($stagiaires[$i]->photos == null)
+                                                    <img src="{{asset('images/users/users.png')}}" width="50" height="50" class="image-ronde">
+                                            @else
+                                            <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50" height="50"></td>
+                                        @endif --}}
+                                        </td>
+                                        <td>{{$stagiaires[$i]->matricule}}</td>
+                                        <td>{{$stagiaires[$i]->nom_stagiaire}}</td>
+                                        <td>{{$stagiaires[$i]->prenom_stagiaire}}</td>
+                                        <td>{{$stagiaires[$i]->fonction_stagiaire}}</td>
+                                        <td>{{$stagiaires[$i]->mail_stagiaire}}</td>
+                                        <td>{{$stagiaires[$i]->telephone_stagiaire}}</td>
+                                        <td>
+                                            <div align="left">
+                                                @foreach ($roles_actif_stg as $role_asigner_stg)
+                                                @if($stagiaires[$i]->user_id == $role_asigner_stg->user_id)
+                                                <span><i class="fa fa-check" style="color: green" aria-hidden="true"></i> {{$role_asigner_stg->role_name}}</span> <br>
+                                                @endif
+                                                @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="left">
 
-
-                                                    <td>
-                                                        @php $nb=0 @endphp
-                                                        @for($j = 0; $j < count($user_role); $j++)
-                                                            @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
-                                                                @if($user_role[$j]->role_description == "referent")
-                                                                    <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                                    @php $nb+=1 @endphp
-                                                                @endif
-                                                            @endif
-                                                        @endfor
-                                                        @if($nb<=0)
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                <label class="form-check-label" for="flexCheckDefault">
-                                                                </label>
-                                                            </div>
-                                                        @endif
-                                                    </td>
-
-                                                    <td>
-                                                        @php $nb=0 @endphp
-                                                        @for($j = 0; $j < count($user_role); $j++)
-                                                            @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
-                                                                @if($user_role[$j]->role_description == "formateur")
-                                                                    <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                                    @php $nb+=1 @endphp
-                                                                @endif
-                                                            @endif
-                                                        @endfor
-                                                        @if($nb<=0)
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                <label class="form-check-label" for="flexCheckDefault">
-                                                                </label>
-                                                            </div>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @php $nb=0 @endphp
-                                                        @for($j = 0; $j < count($user_role); $j++)
-                                                            @if($stagiaires[$i]->user_id == $user_role[$j]->user_id)
-                                                                @if($user_role[$j]->role_description == "chef de département")
-                                                                <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                                @php $nb+=1 @endphp
-                                                                @endif
-                                                            @endif
-                                                        @endfor
-                                                        @if($nb<=0)
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                <label class="form-check-label" for="flexCheckDefault">
-                                                                </label>
-                                                            </div>
-                                                        @endif
-                                                    </td>
-                                            {{-- <td>
-                                                <center>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <li type="button" style="font-size:15px;"> <a href="#myModal_" class="modifier" title="Modifier le profil" id="" data-bs-toggle="modal"><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
-                                                        {{-- </div>
-                                                    </div> --}}
-                                                {{-- </center>
-                                            </td> --}}
-
-                                        </tr>
-
-
-                                        {{-- <!-- Modal delete -->
-                                        <div class="modal fade" id="exampleModal_{{$stagiaires[$i]->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                        <h6 class="modal-title">
-                                                            <font color="white">Avertissement !</font>
-                                                        </h6>
-
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                        <form action="{{ route('destroy_chefDepartement') }}" method="GET">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                            <input type="text" name="id_get" value="{{ $stagiaires[$i]->id }}" hidden>
-                                                        </form>
-                                                    </div>
+                                                @for($ii = 0; $ii < count($roles_not_actif_stg[$i]["role_inactif"]); $ii++)
+                                                @if($stagiaires[$i]->user_id == $roles_not_actif_stg[$i]["user_id"])
+                                                <span style="color:blueviolet">attribué role pour {{$roles_not_actif_stg[$i]["role_inactif"][$ii]->role_name}}
+                                                    <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$stagiaires[$i]->user_id,$roles_not_actif_stg[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                </span> <br>
+                                                @endif
+                                                @endfor
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group dropleft">
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier role</a>
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; suprimer role</a>
                                                 </div>
                                             </div>
-                                        </div> --}}
-
+                                        </td>
+                                        </tr>
 
                                         <div class="modal fade" id="myModal_{{ $stagiaires[$i]->id }}">
                                             <div class="modal-dialog">
@@ -395,183 +304,151 @@
                                             </div>
                                         </div>
                                         @endfor
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    {{-- chef de département --}}
+                </div>
+                {{-- chef de département --}}
 
-                    <div class="tab-pane fade show" id="tab-manager" role="tabpanel" aria-labelledby="manager">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="dataTables-example">
-                                    <thead>
-                                        <tr class="text-center titre_table">
-                                            <th>Photo</th>
-                                            <th>Matricule</th>
-                                            <th>Nom</th>
-                                            <th>Prénom</th>
+                <div class="tab-pane fade show" id="tab-manager" role="tabpanel" aria-labelledby="manager">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="dataTables-example">
+                                <thead>
+                                    <tr class="text-center titre_table">
+                                        <th>Photo</th>
+                                        <th>Matricule</th>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
 
-                                            <th>Fonction</th>
-                                            <th>E-mail</th>
-                                            <th>Téléphone</th>
-                                            <th>Référent</th>
-
-                                            <th>Formateur</th>
-                                            <th>Chef de département</th>
-                                            {{-- <th>Actions</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($chef as $chefs)
-                                        <tr class="text-center content_table">
-                                            <td></td>
-                                            {{-- <td>
+                                        <th>Fonction</th>
+                                        <th>E-mail</th>
+                                        <th>Téléphone</th>
+                                        <th>Role asigné</th>
+                                        <th>Role non asigné</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for($i=0;$i<count($chef);$i+=1)
+                                    <tr class="text-center content_table">
+                                        <td></td>
+                                        {{-- <td>
                                                 @if($chefs->photos == null)
-                                                <img src="{{asset('images/users/users.png')}}"  width="50" height="50" class="image-ronde">
-                                                @else
-                                                <img src="/stagiaire-image/{{$chefs->photos}}" width="50" height="50"></td>
+                                                <img src="{{asset('images/users/users.png')}}" width="50" height="50" class="image-ronde">
+                                        @else
+                                        <img src="/stagiaire-image/{{$chefs->photos}}" width="50" height="50"></td>
+                                        @endif
+                                        </td> --}}
+                                        <td>{{$chef[$i]->matricule}}</td>
+                                        <td>{{$chef[$i]->nom_chef}}</td>
+                                        <td>{{$chef[$i]->prenom_chef}}</td>
+
+
+                                        <td>{{$chef[$i]->fonction_chef}}</td>
+                                        <td>{{$chef[$i]->mail_chef}}</td>
+                                        <td>{{$chef[$i]->telephone_chef}}</td>
+                                        <td>
+                                            <div align="left">
+                                                @foreach ($roles_actif_manager as $role_asigner_manager)
+
+                                                @if($chef[$i]->user_id == $role_asigner_manager->user_id)
+                                                <span><i class="fa fa-check" style="color: green" aria-hidden="true"></i> {{$role_asigner_manager->role_name}}</span> <br>
                                                 @endif
-                                            </td> --}}
-                                            <td>{{$chefs->matricule}}</td>
-                                            <td>{{$chefs->nom_chef}}</td>
-                                            <td>{{$chefs->prenom_chef}}</td>
+                                                @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="left">
 
-
-                                            <td>{{$chefs->fonction_chef}}</td>
-                                            <td>{{$chefs->mail_chef}}</td>
-                                            <td>{{$chefs->telephone_chef}}</td>
-
-                                            <td>
-                                                @php $nb = 0;@endphp
-                                                @for($j = 0; $j < count($user_role); $j++)
-                                                    @if($chefs->user_id == $user_role[$j]->user_id)
-                                                        @if($user_role[$j]->role_description == "referent")
-                                                        <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @php $nb+=1 @endphp
-                                                        @endif
-                                                    @endif
+                                                @for($ii = 0; $ii < count($roles_not_actif_manager[$i]["role_inactif"]); $ii++)
+                                                @if($chef[$i]->user_id == $roles_not_actif_manager[$i]["user_id"])
+                                                <span style="color:blueviolet">attribué role pour {{$roles_not_actif_manager[$i]["role_inactif"][$ii]->role_name}}
+                                                    <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$chef[$i]->user_id,$roles_not_actif_manager[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                </span> <br>
+                                                @endif
                                                 @endfor
-                                                @if($nb<=0)
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                    </div>
-                                                @endif
-                                            </td>
 
-                                            <td>
-                                                @php $nb = 0; @endphp
-                                                @for($j = 0; $j < count($user_role); $j++)
-                                                    @if($chefs->user_id == $user_role[$j]->user_id)
-                                                        @if($user_role[$j]->role_description == "formateur")
-                                                        <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @php $nb+=1 @endphp
-                                                        @endif
+                                                {{-- @for($j = 0; $j < count($roles_not_actif_manager); $j++) @if($chefs->user_id == $roles_not_actif_manager[$j]["user_id"])
+                                                    <span style="color:blueviolet">attribué role pour {{$roles_not_actif_manager[$j]["role_name"]}}
+                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$chefs->user_id,$roles_not_actif_manager[$j]["id"]])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                    </span> <br>
                                                     @endif
-                                                @endfor
-                                                @if($nb<=0)
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                    </div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @php $nb = 0;@endphp
-                                                @for($j = 0; $j < count($user_role); $j++)
-                                                    @if($chefs->user_id == $user_role[$j]->user_id)
-                                                        @if($user_role[$j]->role_description == "chef de département")
-                                                        <span><i class="fa fa-check" aria-hidden="true"></i></span>
-                                                        @php $nb+=1 @endphp
-                                                        @endif
-                                                    @endif
-                                                @endfor
-                                                @if($nb<=0)
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                        </label>
-                                                    </div>
-                                                @endif
-                                            </td>
-                                            {{-- <td>
-                                                <center>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                              <li type="button" style="font-size:15px;"> <a href="" data-bs-toggle="modal"  data-target="#exampleModal_{{$chefs->id}}" class="modifier" title="Modifier le profil" id="" ><i style="font-size:18px;" class="fa fa-edit"></i> &nbsp;Modifier</a> </li>
-                                                            {{-- <li style="font-size:15px;"><a href="" data-bs-toggle="modal" data-target="#exampleModal_{{$chefs->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
-                                                        {{-- </div>
-                                                    </div>
-                                                </center>
-                                            </td> --}}
-                                        </tr>
-
-
-                                        <!-- Modal delete -->
-                                        <div class="modal fade" id="exampleModal_{{$chefs->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header d-flex justify-content-center" style="background-color:green">
-                                                        <h6 class="modal-title">
-                                                            <font color="white">Atrribuer d'autre rôle !</font>
-                                                        </h6>
-
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="{{route('role_manager')}}" method="POST">
-                                                            @csrf
-                                                            {{-- @php
-                                                                $a = 0;
-                                                            @endphp --}}
-                                                        @for($a = 0;$a < count($user_role);$a++)
-                                                            @if($chefs->user_id == $user_role[$a]->user_id)
-                                                                @php
-                                                                    echo $user_role[$a]->role_id;
-                                                                @endphp
-                                                                @for($b = 0; $b < count($roles); $b++)
-                                                                    @if($roles[$b]->id != $user_role[$a]->role_id && $roles[$b]->id!=1 && $roles[$b]->id!=6 && $roles[$b]->id!=7 && $roles[$b]->id!=3)
-                                                                        @php
-                                                                            echo $roles[$b]->id;
-                                                                        @endphp
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" value="{{$roles[$b]->id}}" name = "role_id[]" id="flexCheckDefault">
-                                                                            <label class="form-check-label" for="flexCheckDefault">
-                                                                                {{$roles[$b]->role_description}}
-                                                                            </label>
-                                                                        </div>
-                                                                    @endif
-                                                                @endfor
-                                                            @endif
-                                                        @endfor
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-
-                                                            <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                            <input type="text" name="id_chef" value="{{ $chefs->id }}" hidden>
-
-                                                    </div>
-                                                </form>
+                                                    @endfor --}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group dropleft">
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier role</a>
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; suprimer role</a>
                                                 </div>
                                             </div>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <!-- Modal delete -->
+                                    <div class="modal fade" id="exampleModal_{{$chef[$i]->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header d-flex justify-content-center" style="background-color:green">
+                                                    <h6 class="modal-title">
+                                                        <font color="white">Atrribuer d'autre rôle !</font>
+                                                    </h6>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{route('role_manager')}}" method="POST">
+                                                        @csrf
+                                                        {{-- @php
+                                                                $a = 0;
+                                                            @endphp --}}
+                                                        @for($a = 0;$a < count($user_role);$a++) @if($chef[$i]->user_id == $user_role[$a]->user_id)
+                                                            @php
+                                                            echo $user_role[$a]->role_id;
+                                                            @endphp
+                                                            @for($b = 0; $b < count($roles); $b++) @if($roles[$b]->id != $user_role[$a]->role_id && $roles[$b]->id!=1 && $roles[$b]->id!=6 && $roles[$b]->id!=7 && $roles[$b]->id!=3)
+                                                                @php
+                                                                echo $roles[$b]->id;
+                                                                @endphp
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="{{$roles[$b]->id}}" name="role_id[]" id="flexCheckDefault">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        {{$roles[$b]->role_description}}
+                                                                    </label>
+                                                                </div>
+                                                                @endif
+                                                                @endfor
+                                                                @endif
+                                                                @endfor
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+
+                                                    <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                    <input type="text" name="id_chef" value="{{ $chef[$i]->id }}" hidden>
+
+                                                </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </div>
+                                    @endfor
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
