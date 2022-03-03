@@ -8,12 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\entreprise;
-use App\Departement;
-use App\DepartementEntreprise;
-use App\chefDepartement;
-use App\chefDepartementEntreprise;
-use App\responsable;
+use App\RoleUser;
 use App\Models\FonctionGenerique;
+
 
 use Illuminate\Support\Facades\Gate;
 
@@ -31,21 +28,24 @@ class RoleController extends Controller
         $this->fonct = new FonctionGenerique();
     }
 
-    public function add_role_user_stg(Request $request, $user_id_stg, $role_id)
+    public function add_role_user(Request $request, $user_id_stg, $role_id)
     {
+        // dd("user_id: ".$user_id_stg."  ,role_id: ".$role_id);
+        // dd( $this->fonct->findWhereMulitOne("role_users", ["user_id"], [$user_id_stg]));
+
         if (Gate::allows('isReferent')) {
 
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
 
             if ($resp_connecter->prioriter == true) {
-                DB::beginTransaction();
-                try {
+                // DB::beginTransaction();
+                // try {
                     DB::insert("insert into role_users(user_id,role_id) values (?,?)", [$user_id_stg, $role_id]);
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
-                }
+                //     DB::commit();
+                // } catch (Exception $e) {
+                //     DB::rollback();
+                //     echo $e->getMessage();
+                // }
                 return back();
             } else {
                 return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');

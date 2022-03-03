@@ -14,6 +14,7 @@ use App\chefDepartement;
 use App\chefDepartementEntreprise;
 use App\responsable;
 use App\Models\FonctionGenerique;
+use App\RoleUser;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -69,19 +70,43 @@ class DepartementController extends Controller
     public function liste()
     {
         $fonct = new FonctionGenerique();
+        $role = new RoleUser();
 
         //on va récupérer la liste des employes
         $user_id = Auth::user()->id;
         $etp_id = responsable::where('user_id',[$user_id])->value('entreprise_id');
 
-        $referent = DB::select('select * from responsables where entreprise_id = ?', [$etp_id]);
+        $referent = DB::select('select * from responsables where entreprise_id = ? and prioriter=false', [$etp_id]);
         $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
         $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
 
-        $user_role = DB::select('select * from role_users');
-        $roles = $fonct->findWhereOr("roles",["role_name","role_name","role_name","role_name"],["referent","formateur","manager","stagiaire"]);
+        $user_role = DB::select('select * from v_user_role');
+        $roles = $fonct->findAll("v_role_etp");
 
-        return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
+
+        // role actif
+        $roles_actif_stg= $fonct->findWhere("v_role_user_etp_stg",["entreprise_id"],[$etp_id]);
+        $roles_actif_referent = $fonct->findWhere("v_role_user_etp_referent",["entreprise_id"],[$etp_id]);
+        $roles_actif_manager = $fonct->findWhere("v_role_user_etp_manager",["entreprise_id"],[$etp_id]);
+
+           // role not actif
+           $roles_not_actif_stg= $role->getNotRoleUser($roles_actif_stg);
+           $roles_not_actif_referent = $role->getNotRoleUser($roles_actif_referent);
+           $roles_not_actif_manager = $role->getNotRoleUser($roles_actif_manager);
+
+        //    dd($chef);
+        //    dd($roles_actif_stg);
+        //    dd($roles_not_actif_stg[0]["role_name"]);
+
+        //    dd($roles_actif_referent);
+        //    dd($roles_not_actif_referent);
+
+        //    dd($roles_actif_manager);
+        //    dd($roles_not_actif_manager);
+
+
+
+        return view('admin.chefDepartement.liste', compact('roles_actif_stg','roles_not_actif_stg','roles_actif_referent','roles_not_actif_referent','roles_actif_manager','roles_not_actif_manager'  ,'chef','referent','stagiaires','user_role','roles'));
     }
 
  /*   public function liste()

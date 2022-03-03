@@ -847,3 +847,5 @@ Route::get('appel_offre.publier/{id}','AppelOffreController@publier')->name('app
 
 Route::post('result_recherche_appel_offre','AppelOffreController@recherche_reference')->name('result_recherche_appel_offre');
 
+// ================== Role User
+Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->name('add_role_user');
