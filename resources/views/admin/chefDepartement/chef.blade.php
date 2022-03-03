@@ -26,6 +26,7 @@
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
                 <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2>
 
+                {{-- <form action="{{route('create_compte_employeur')}}" method="POST" enctype="multipart/form-data"> --}}
                 <form action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
@@ -43,13 +44,13 @@
                         <div class="col-6">
                             <div class="row px-3">
                                 <div class="form-group">
-                                    <select class="form-select selectP input" id="formation_id" name="formation_id" aria-label="Default select example">
+                                    <select class="form-select selectP input" id="type_enregistrement" name="type_enregistrement" aria-label="Default select example">
                                         <option value="STAGIAIRE">Employé</option>
                                         <option value="REFERENT">Réferent</option>
                                         <option value="MANAGER">Chef de département</option>
 
                                     </select>
-                                    <label class="form-control-placeholder" for="formation_id">Enregistrer en tant que<strong style="color:#ff0000;">*</strong></label>
+                                    <label class="form-control-placeholder" for="type_enregistrement">Enregistrer en tant que<strong style="color:#ff0000;">*</strong></label>
                                 </div>
                             </div>
                         </div>

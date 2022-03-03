@@ -74,6 +74,8 @@ class EmployeurController extends Controller
         $fonction = $request->fonction;
         $mail = $request->mail;
         $phone = $request->phone;
+        // dd($request->input());
+        // dd($request->type_enregistrement." == STAGIAIRE");
 
         if (Gate::allows('isReferent')) {
 
@@ -89,6 +91,7 @@ class EmployeurController extends Controller
             $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
 
+
             if ($request->type_enregistrement == "STAGIAIRE") {
 
                 DB::beginTransaction();
@@ -102,7 +105,7 @@ class EmployeurController extends Controller
                 $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                 DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
                 entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-                return back();
+                return redirect()->route('employes');
             }
             if ($request->type_enregistrement == "REFERENT") {
                 DB::beginTransaction();
