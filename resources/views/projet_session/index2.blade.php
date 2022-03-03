@@ -1,55 +1,58 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
-<div class="container mb-3 pt-5">
-    <form action="{{ route('liste_projet') }}" method="GET">
-        <input type="hidden" name="type_formation" value="{{ $type_formation_id }}">
-        <div class="row text-center">
-                <div class="col">
-                        <select name="mois" id="mois" class="filtre_projet">
-                            <option value="null" selected>Mois</option>
-                            <option style="background-color: red;color: red;" value="1">Janvier</option>
-                            <option value="2">Février</option>
-                            <option value="3">Mars</option>
-                            <option value="4">Avril</option>
-                            <option value="5">Mai</option>
-                            <option value="6">Juin</option>
-                            <option value="7">Juillet</option>
-                            <option value="8">Août</option>
-                            <option value="9">Septembre</option>
-                            <option value="10">Octobre</option>
-                            <option value="11">Novembre</option>
-                            <option value="12">Décembre</option>
+@canany(['isReferent', 'isCFP'])
+    <div class="container mb-3 pt-5">
+        <form action="{{ route('liste_projet') }}" method="GET">
+            <input type="hidden" name="type_formation" value="{{ $type_formation_id }}">
+            <div class="row text-center">
+                    <div class="col">
+                            <select name="mois" id="mois" class="filtre_projet">
+                                <option value="null" selected>Mois</option>
+                                <option style="background-color: red;color: red;" value="1">Janvier</option>
+                                <option value="2">Février</option>
+                                <option value="3">Mars</option>
+                                <option value="4">Avril</option>
+                                <option value="5">Mai</option>
+                                <option value="6">Juin</option>
+                                <option value="7">Juillet</option>
+                                <option value="8">Août</option>
+                                <option value="9">Septembre</option>
+                                <option value="10">Octobre</option>
+                                <option value="11">Novembre</option>
+                                <option value="12">Décembre</option>
+                            </select>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <select name="trimestre" id="trimestre" class="filtre_projet">
+                            <option value="null" selected>Trimestres</option>
+                            <option value="1">1e Trimestre</option>
+                            <option value="2">2e Trimestre</option>
+                            <option value="3">3e Trimestre</option>
+                            <option value="4">4e Trimestre</option>
                         </select>
-                    </button>
-                </div>
-                <div class="col">
-                    <select name="trimestre" id="trimestre" class="filtre_projet">
-                        <option value="null" selected>Trimestres</option>
-                        <option value="1">1e Trimestre</option>
-                        <option value="2">2e Trimestre</option>
-                        <option value="3">3e Trimestre</option>
-                        <option value="4">4e Trimestre</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <select name="semestre" id="semestre" class="filtre_projet">
-                        <option value="null" selected>Semestres</option>
-                        <option value="1">1e Semestre</option>
-                        <option value="2">2e Semestre</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <select name="annee" id="annee" class="filtre_projet">
-                        <option value="null" selected >Années</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <button class="btn btn_filtre filtre_appliquer" type="submit">Appliquer</button>
-                </div>
-        </div>
-    </form>
-</div>
+                    </div>
+                    <div class="col">
+                        <select name="semestre" id="semestre" class="filtre_projet">
+                            <option value="null" selected>Semestres</option>
+                            <option value="1">1e Semestre</option>
+                            <option value="2">2e Semestre</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select name="annee" id="annee" class="filtre_projet">
+                            <option value="null" selected >Années</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn_filtre filtre_appliquer" type="submit">Appliquer</button>
+                    </div>
+            </div>
+        </form>
+    </div>
+@endcanany
+
 {{-- <div class="col-2 filtre_cours ps-3">
     <h5 class="mt-3">Filtrer les modules</h5>
     <div class="row">
@@ -334,7 +337,7 @@
                     <th> Centre de formation </th>
                     <th> Formation </th>
                     <th> Module</th>
-                    <th> Evaluation </th>
+                    <th>Evaluation </th>
                 </thead>
                 <tbody class="tbody_projet">
                     @foreach ($data as $pj)
@@ -342,11 +345,11 @@
                             {{-- <td>{{ $pj->nom_projet }}</td> --}}
                             <td> {{ $pj->nom_groupe }}</td>
                             <td> {{ date("d-m-Y",strtotime($pj->date_debut)) }}-{{ date("d-m-Y",strtotime($pj->date_fin)) }} </td>
+                            <td> {{ $pj->nom_cfp }} </td>
                             <td> {{ $pj->nom_formation }} </td>
                             <td> {{ $pj->nom_module }} </td>
-                            <td> {{ $pj->nom_cfp }} </td>
                             <td>
-                                {{-- <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p> --}}Evaluation
+                                <a class="btn btn_filtre filtre_appliquer" href="{{ route('faireEvaluationChaud',[$pj->groupe_id]) }}">Evaluation</a>
                             </td>
                         </tr>
                     @endforeach

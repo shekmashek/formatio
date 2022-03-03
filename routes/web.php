@@ -490,8 +490,8 @@ Route::get('pdf.imprime_feuille_facture/{id}','FactureController@generatePDF')->
 
 // =======================  Evaluation à Chaud
 Route::resource('evaluationchaud', 'EvaluationChaudController')->except(['create']);
-Route::get('faireEvaluationChaud/{matricule}','EvaluationChaudController@index')->name('faireEvaluationChaud');
-Route::post('createEvaluationChaud/{detail_id}/{stagiaire_id}','EvaluationChaudController@create')->name('createEvaluationChaud');
+Route::get('faireEvaluationChaud/{groupe}','EvaluationChaudController@index')->name('faireEvaluationChaud');
+Route::post('createEvaluationChaud/{groupe}','EvaluationChaudController@create')->name('createEvaluationChaud');
 Route::get('evaluationchaud/{matricule?}','EvaluationChaudController@index')->name('evaluationchaud');
 
 Route::post('insert_avis','EvaluationChaudController@store')->name('insert_avis');

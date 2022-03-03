@@ -65,8 +65,8 @@ class EvaluationChaud extends Model
         $evaluation->save();
     }
 
-    public function verifyExistsEvaluationChaud($id_stag,$id_detail){
-        $verify = DB::select('select (count(stagiaire_id)) verify from reponse_evaluationchaud where stagiaire_id = ?', [$id_stag]);
+    public function verifyExistsEvaluationChaud($id_stag,$groupe_id){
+        $verify = DB::select('select (count(stagiaire_id)) verify from reponse_evaluationchaud where stagiaire_id = ? and groupe_id = ?', [$id_stag,$groupe_id]);
         return $verify[0]->verify;
     }
 
@@ -119,10 +119,10 @@ class EvaluationChaud extends Model
         return $message;
     }
 
-        public function verificationEvaluation($id_stag,$groupe_id,$cfp_id,$id_detail,$imput){
+        public function verificationEvaluation($id_stag,$groupe_id,$cfp_id,$imput){
 
 
-            $verify = $this->verifyExistsEvaluationChaud($id_stag,$id_detail);
+            $verify = $this->verifyExistsEvaluationChaud($id_stag,$groupe_id);
             if($verify<=0)
             {
                 $message = $this->controlleCreationEvaluation($id_stag,$groupe_id,$cfp_id,$imput);
@@ -133,7 +133,7 @@ class EvaluationChaud extends Model
             return $message;
         }
 
-        public function getDetailResponseEvaluationChaud($stagiaire_id,$detail_id){
+        public function getDetailResponseEvaluationChaud($stagiaire_id){
             $fonction = new FonctionGenerique();
             $data  = $fonction->findWhere("v_reponse_evaluationchaud",["stagiaire_id"],[$stagiaire_id]);
             return $data;

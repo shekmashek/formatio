@@ -308,7 +308,8 @@ select g.id as groupe_id,
         mf.reference,
         mf.nom_module,
         mf.nom_formation,
-        mf.nom as nom_cfp
+        mf.nom as nom_cfp,
+        mf.cfp_id
     from
         participant_groupe p
     join

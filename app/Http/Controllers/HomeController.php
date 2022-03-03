@@ -530,11 +530,8 @@ class HomeController extends Controller
             $etp_id = stagiaire::where('user_id',$user_id)->value('entreprise_id');
             $matricule = stagiaire::where('user_id',$user_id)->value('matricule');
             $stg_id = stagiaire::where('user_id',$user_id)->value('id');
-            $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
-            $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
-            $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-            // $data = $evaluation->findDetailProject($matricule,$id); // return les information du project avec detail et information du stagiaire
-            $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
+            // $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
+            $data = DB::select('select * from v_stagiaire_groupe where stagiaire_id = ? and groupe_id not in(select groupe_id from reponse_evaluationchaud) order by date_debut desc',[$stg_id]);
             return view('projet_session.index2', compact('data', 'status','type_formation_id'));
         }
     }

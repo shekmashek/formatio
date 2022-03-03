@@ -1,21 +1,9 @@
-{{-- @extends('./layouts/admin')
-@section('content') --}}
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{asset('img/logo_numerika/logonmrk.png')}}" sizes="90x60" type="image/png">
-    <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
-    <link href="{{asset('bootstrapCss/css/bootstrap-glyphicons.css')}} " rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{asset('login_css/css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
-    <title>Evaluation Chaud de {{$stagiaire->nom_stagiaire}}</title>
-</head>
-<body> --}}
+@extends('./layouts/admin')
+@section('content')
 
-    {{-- <div class="container-fluid mt-5">
+{{-- <body>
+
+    <div class="container-fluid mt-5">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h4 class="btn-warning">Evaluation à Chaud Par Stagiaire</h4>
@@ -26,16 +14,18 @@
     {{-- <div class="container mt-4">
         <div class="row"> --}}
 
-            {{-- <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
-                <h4 class="card-title"> Information de l'entreprise et Formateur</h4>
+            <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
+                {{-- <h4 class="card-title"> Information de l'entreprise et Formateur</h4> --}}
                 <div class="card-body">
                     
-                    <h6 class="card-title my-1">Project: {{$detail->projet_id}}</h6>
-                    <h6 class="card-title my-1">Groupe: {{$detail->groupe_id}}</h6>
-                    <h6 class="card-title my-1">Formation: {{$detail->module_id}} Module: {{$detail->module_id}}</h6>
+                    <h6 class="card-title my-1">Centre de formation: {{$data->nom_cfp}}</h6>
+                    <h6 class="card-title my-1">Groupe: {{$data->nom_groupe}}</h6>
+                    <h6 class="card-title my-1">Date de la session: {{ date("d-m-Y",strtotime($data->date_debut)) }} au {{ date("d-m-Y",strtotime($data->date_fin)) }}</h6>
+                    <h6 class="card-title my-1">Formation: {{$data->nom_formation}}</h6>
+                    <h6 class="card-title my-1">Module: {{$data->nom_module}}</h6>
                 </div>
 
-            </div> --}}
+            </div>
 
             {{-- <div class="col-md-2"></div> --}}
 
@@ -52,22 +42,22 @@
                 </div> --}}
                 {{-- </div> --}}
 
-            {{-- </div>
+            {{-- {{-- </div> --}}
 
-            <h4 class="card-title text-center">Formateur: <img src="" class="profil-stagiaire" alt="..." /> Nom formateur</h5> --}}
+            {{-- <h4 class="card-title text-center">Formateur: <img src="" class="profil-stagiaire" alt="..." /> Nom formateur</h5> --}}
 
         {{-- </div>
     </div> --}}
 
     {{-- <div class="container"> --}}
 
-        {{-- <h5 class="text-center">Evaluation</h5> --}}
+        <h5 class="text-center mt-1">Evaluation</h5>
 
         
-            <div class="row mb-5">
-                <form method="POST" action="{{ route('createEvaluationChaud',[$detail->detail_id,$detail->stagiaire_id])}}">
+            <div class="row">
+                <form method="POST" action="{{ route('createEvaluationChaud',[$data->groupe_id])}}">
                     @csrf
-                <div class="col-md-9 card shadow p-3 mb-5 bg-body rounded">
+                <div class="col-md-12 card shadow p-3 mb-1 bg-body rounded">
 
                     @foreach ($qst_mere as $qst_mere)
 
@@ -145,8 +135,8 @@
 
                     @endforeach
 
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <button class="btn btn-success" type="submit">Envoye d'evaluation à chaud</button>
+                    <div class="d-grid gap-2 col-6 mx-auto ">
+                        <button class="btn btn-success inserer_evaluation" type="submit">Envoyer d'evaluation à chaud</button>
                     </div>
                     <br><br><br>
                 </div>
@@ -158,4 +148,20 @@
 
 {{-- </body>
 </html> --}}
-{{-- @endsection --}}
+<style>
+    .inserer_evaluation{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        border: 0;
+        background-color: #87868a2f;
+        transition: all .5s ease;
+    }
+    .inserer_evaluation:hover{
+        color: #ffffff;
+        background-color: #7635dc;
+        transform: scale(1.1);
+    }
+
+</style>
+@endsection

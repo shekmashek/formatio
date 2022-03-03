@@ -262,3 +262,11 @@ create or replace view v_projet_cfp as
     join cfps on cfps.id = p.cfp_id
     join type_formations tf on tf.id = p.type_formation_id;
     
+
+    create or replace view v_projet_entreprise as 
+        select 
+            projet_id,
+            entreprise_id,
+            type_formation_id
+        from v_groupe_projet_entreprise 
+        group by projet_id;
