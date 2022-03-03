@@ -205,6 +205,13 @@
                 </a>
                 <span class="tooltip">Formateurs</span>
             </li>
+            <li>
+                <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
+                    <i class='bx bxs-bank'></i>
+                    <span class="links_name">Nouveau Formateur</span>
+                </a>
+                <span class="tooltip">Nouveau Formateur</span>
+            </li>
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">

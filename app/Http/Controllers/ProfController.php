@@ -124,6 +124,7 @@ class ProfController extends Controller
      */
     public function store(Request $request)
     {
+        $fonct = new FonctionGenerique();
 
         $frm = new formateur();
         $frm->nom_formateur = $request->nom;
@@ -159,16 +160,25 @@ class ProfController extends Controller
         $ch1 = '0000';
         // $ch2 = substr($request->phone, 8, 2);
         $user->password = Hash::make($ch1);
-        $user->role_id = '4';
-        $user->save();
+         $user->save();
+
+        $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;
+        DB::beginTransaction();
+        try {
+            $fonct->insert_role_user($user_id, "4"); // formateur
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
 
         //get user id
-        $user_id = User::where('email', $request->mail)->value('id');
         $frm->user_id = $user_id;
-        $frm->save();
+       $frm->save();
 
-        $idmail_formateur = formateur::where('mail_formateur', $request->mail)->value('id');
-
+        // $idmail_formateur = formateur::where('mail_formateur', $request->mail)->value('id');
+        $idmail_formateur = $fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$request->mail])->id;
+// dd($idmail_formateur);
         $input = $request->all();
         for ($i = 0; $i < count($input['domaine']); $i++) {
             $competence = new competenceFormateur();
@@ -188,8 +198,12 @@ class ProfController extends Controller
             $experience->formateur_id = $idmail_formateur;
             $experience->save();
         }
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $fonct->findWhereMulitOne("cfps", ["user_id"], [Auth::id()])->id;
+        DB::insert("insert into demmande_cfp_formateur(demmandeur_cfp_id,inviter_formateur_id,activiter,created_at,updated_at) values(?,?,true,NOW(),NOW())",[$cfp_id,$idmail_formateur]);
+        }
         // return redirect()->route('utilisateur_formateur');
-        return back()->with('success', 'success terminer! pour travail avec le nouveaux formateur,vous devrez collaborer');
+        return back()->with('success', 'success terminer!');
     }
 
 
