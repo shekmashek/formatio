@@ -1,6 +1,14 @@
 @extends('./layouts/admin')
 @section('content')
-
+<style>
+         .image-ronde{
+   width : 30px; height : 30px;
+   border: none;
+   -moz-border-radius : 75px;
+   -webkit-border-radius : 75px;
+   border-radius : 75px;
+ }
+</style>
     <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
@@ -11,7 +19,7 @@
                                 <div class="card-block text-center text-white">
                                     @foreach ($formateur as $formateur)
 
-                                    <div class="m-b-25"> <img src="/formateur-image/{{$formateur->photos}}" width="150px" height="150px" class="rounded-circle">
+                                    <div class="m-b-25">  <img src="{{asset('images/formateurs/'.$formateur->photos)}}" class="image-ronde">
 
                                     </div>
                                     <h6 class="f-w-600">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} </h6>

@@ -313,6 +313,7 @@ class HomeController extends Controller
         // }
 
         if (Gate::allows('isReferentPrincipale')) {
+            
             //get the column with null value
            
             $testNull = DB::select('select * from responsables where user_id  = ? ',[Auth::user()->id]);
@@ -335,6 +336,7 @@ class HomeController extends Controller
             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
 
             if ($nb>0) {
+                    
                 return view('formulaire',compact('testNull','entreprise','departement'));
             }
             else{

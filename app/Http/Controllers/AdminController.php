@@ -117,5 +117,15 @@ class AdminController extends Controller
                 $user = 'responsables/'.$user;
                 return response()->json($user);
             }
+            if (Gate::allows('isStagiaire')) {
+                $user= stagiaire::where('user_id', $id_user)->value('photos');
+                $user = 'stagiaires/'.$user;
+                return response()->json($user);
+            }
+            if (Gate::allows('isFormateur')) {
+                $user= Formateur::where('user_id', $id_user)->value('photos');
+                $user = 'formateurs/'.$user;
+                return response()->json($user);
+            }
     }
 }
