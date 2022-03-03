@@ -77,3 +77,9 @@ Branche nouveau_entiter.1.0:
            ALTER TABLE chef_departements ADD COLUMN matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
             ALTER TABLE encaissements ADD COLUMN resp_cfp_id bigint(20) NOT NULL REFERENCES responsables_cfp(id) ON DELETE CASCADE;
              ALTER TABLE encaissements ADD COLUMN nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+
+
+
+...... Branch equipe_administratif: ajouter tout view dans bdd_suivi_formation_view_28(roles).sql
+
+
