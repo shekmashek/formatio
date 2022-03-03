@@ -77,7 +77,6 @@
                                             </td>
                                             <td>
                                                 <div align="left">
-
                                                     @for($ii = 0; $ii < count($roles_not_actif_referent[$i]["role_inactif"]); $ii++)
                                                     @if($referent[$i]->user_id == $roles_not_actif_referent[$i]["user_id"])
                                                     <span style="color:blueviolet">attribué role pour {{$roles_not_actif_referent[$i]["role_inactif"][$ii]->role_name}}
@@ -227,7 +226,6 @@
                                         </td>
                                         <td>
                                             <div align="left">
-
                                                 @for($ii = 0; $ii < count($roles_not_actif_stg[$i]["role_inactif"]); $ii++)
                                                 @if($stagiaires[$i]->user_id == $roles_not_actif_stg[$i]["user_id"])
                                                 <span style="color:blueviolet">attribué role pour {{$roles_not_actif_stg[$i]["role_inactif"][$ii]->role_name}}
@@ -346,7 +344,6 @@
                                         <td>
                                             <div align="left">
                                                 @foreach ($roles_actif_manager as $role_asigner_manager)
-
                                                 @if($chef[$i]->user_id == $role_asigner_manager->user_id)
                                                 <span><i class="fa fa-check" style="color: green" aria-hidden="true"></i> {{$role_asigner_manager->role_name}}</span> <br>
                                                 @endif
@@ -355,7 +352,6 @@
                                         </td>
                                         <td>
                                             <div align="left">
-
                                                 @for($ii = 0; $ii < count($roles_not_actif_manager[$i]["role_inactif"]); $ii++)
                                                 @if($chef[$i]->user_id == $roles_not_actif_manager[$i]["user_id"])
                                                 <span style="color:blueviolet">attribué role pour {{$roles_not_actif_manager[$i]["role_inactif"][$ii]->role_name}}
@@ -363,13 +359,6 @@
                                                 </span> <br>
                                                 @endif
                                                 @endfor
-
-                                                {{-- @for($j = 0; $j < count($roles_not_actif_manager); $j++) @if($chefs->user_id == $roles_not_actif_manager[$j]["user_id"])
-                                                    <span style="color:blueviolet">attribué role pour {{$roles_not_actif_manager[$j]["role_name"]}}
-                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$chefs->user_id,$roles_not_actif_manager[$j]["id"]])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
-                                                    </span> <br>
-                                                    @endif
-                                                    @endfor --}}
                                             </div>
                                         </td>
                                         <td>
