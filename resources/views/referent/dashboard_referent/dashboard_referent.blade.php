@@ -1,3 +1,4 @@
+
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">

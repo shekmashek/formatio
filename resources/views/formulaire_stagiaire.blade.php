@@ -72,11 +72,11 @@
             <div class="row">
                 <h2 class="text-center">Remplissez les informations manquantes</h2>
                 @if (\Session::has('error'))
-                    <div class="alert alert-danger">
-                        <ul>
-                            <li>{!! \Session::get('error') !!}</li>
-                        </ul>
-                    </div>
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{!! \Session::get('error') !!}</li>
+                    </ul>
+                </div>
                 @endif
             </div>
             <br>
@@ -93,7 +93,7 @@
                                     <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$testNull[0]->nom_stagiaire}} {{$testNull[0]->prenom_stagiaire}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_stg" style="float: right;"></p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_stg" style="float: right;"></p>
                                     @endif
                                 </div>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
@@ -103,7 +103,7 @@
                                     </p>
                                     @else
                                     <p class="p-1 m-0" style="font-size: 10px;">TITRE
-                                        <select  value="" name="titre_stg" class="" id="titre_stg" style="float: right;" >
+                                        <select value="" name="titre_stg" class="" id="titre_stg" style="float: right;">
                                             <option value="Mr">Mr</option>
                                             <option value="Mme">Mme</option>
                                             <option value="Mme">Mlle</option>
@@ -113,22 +113,22 @@
                                 </div>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                     @if ($testNull[0]->date_naissance!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<span style="float: right;">{{date('j \\ F Y', strtotime($testNull[0]->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<span style="float: right;">{{date('j \\ F Y', strtotime($testNull[0]->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<input type="date" name="date_naissance_stg" style="float: right;"></p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<input type="date" name="date_naissance_stg" style="float: right;"></p>
                                     @endif
 
 
                                 </div>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                     @if ($testNull[0]->genre_stagiaire!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$testNull[0]->genre_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$testNull[0]->genre_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    </p>
                                     @else
                                     <p class="p-1 m-0" style="font-size: 10px;">GENRE
-                                        <select  value="" name="genre_stg" class="" style="float: right" id="genre"  >
-                                            <option value="Homme"  >Homme</option>
+                                        <select value="" name="genre_stg" class="" style="float: right" id="genre">
+                                            <option value="Homme">Homme</option>
                                             <option value="Femme">Femme</option>
                                         </select>
                                     </p>
@@ -144,17 +144,17 @@
 
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
                                     @if ($testNull[0]->mail_stagiaire!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$testNull[0]->mail_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$testNull[0]->mail_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<input type="text" name="email_stg" style="float: right;"></p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<input type="text" name="email_stg" style="float: right;"></p>
                                     @endif
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
                                     @if ($testNull[0]->telephone_stagiaire!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$testNull[0]->telephone_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                    <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$testNull[0]->telephone_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
-                                        </p>
+                                    </p>
                                     @else
                                     <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<input type="text" name="tel_stg" style="float: right;"></p>
                                     @endif
@@ -162,10 +162,10 @@
 
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
                                     @if ($testNull[0]->cin!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$testNull[0]->cin}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$testNull[0]->cin}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    </p>
                                     @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<input type="text" name="cin_stg" style="float: right;"></p>
+                                    <p class="p-1 m-0" style="font-size: 10px;">CIN<input type="text" name="cin_stg" style="float: right;"></p>
                                     @endif
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
@@ -238,16 +238,16 @@
 
 
     </main>
-    <footer class="footer_container" style="position:fixed; bottom:0; width:100%">
+    {{-- <footer class="footer_container" style="position:fixed; bottom:0; width:100%">
         <div class="container-fluid d-flex justify-content-center pt-3">
             <div class="bordure">&copy; Copyright 2022</div>
             <div class="bordure"><a href="{{url('info_legale')}}" style="color:#801D68 !important" target="_blank">Informations légales</a></div>
-            <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Contactez-nous</a></div>
-            <div class="bordure">Politique de confidentialités</div>
-            <div class="bordure"> <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
-            <div class="bordure"> <a href="{{url('tarifs')}}" style="color:#801D68 !important" target="_blank"> Tarifs</a></div>
-            <div class="bordure">Crédits</div>
-            <div> &nbsp; Version 0.9</div>
-        </div>
-    </footer>
+    <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Contactez-nous</a></div>
+    <div class="bordure">Politique de confidentialités</div>
+    <div class="bordure"> <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
+    <div class="bordure"> <a href="{{url('tarifs')}}" style="color:#801D68 !important" target="_blank"> Tarifs</a></div>
+    <div class="bordure">Crédits</div>
+    <div> &nbsp; Version 0.9</div>
+    </div>
+    </footer> --}}
 </body>
