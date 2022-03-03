@@ -91,7 +91,7 @@
                                                         @foreach ($roles_actif_referent as $role_asigner_referent)
                                                         @if($referent[$i]->user_id == $role_asigner_referent->user_id && $role_asigner_referent->role_name!='referent' && $role_asigner_referent->role_name!='stagiaire')
                                                         <span> <button class="btn modifier pt-0"><a href="{{route('delete_role_user',[$referent[$i]->user_id,$role_asigner_referent->role_id])}}">
-                                                            <i class="fas fa-window-close" aria-hidden="true" style="red"></i>{{$role_asigner_referent->role_name}}
+                                                            <i class="fas fa-window-close" aria-hidden="true" style="color:red"></i>{{$role_asigner_referent->role_name}}
                                                         </a></button>
                                                         </span> <br>
                                                         @endif
@@ -240,7 +240,7 @@
                                                 @foreach ($roles_actif_stg as $role_asigner_stg)
                                                 @if($stagiaires[$i]->user_id == $role_asigner_stg->user_id && $role_asigner_stg->role_name!='stagiaire')
                                                 <span> <button class="btn modifier pt-0"><a href="{{route('delete_role_user',[$stagiaires[$i]->user_id,$role_asigner_stg->role_id])}}">
-                                                    <i class="fas fa-window-close" aria-hidden="true" style="red"></i>{{$role_asigner_stg->role_name}}
+                                                    <i class="fas fa-window-close" aria-hidden="true" style="color:red"></i>{{$role_asigner_stg->role_name}}
                                                 </a></button>
                                                 </span> <br>
                                                 @endif
@@ -366,7 +366,7 @@
                                                 @foreach ($roles_actif_manager as $role_asigner_manager)
                                                 @if($chef[$i]->user_id == $role_asigner_manager->user_id && $role_asigner_manager->role_name!='stagiaire' && $role_asigner_manager->role_name!='manager')
                                                 <span> <button class="btn modifier pt-0"><a href="{{route('delete_role_user',[$chef[$i]->user_id,$role_asigner_manager->role_id])}}">
-                                                    <i class="fas fa-window-close" aria-hidden="true" style="red"></i>{{$role_asigner_manager->role_name}}
+                                                    <i class="fas fa-window-close" aria-hidden="true" style="color:red"></i>{{$role_asigner_manager->role_name}}
                                                 </a></button>
                                                 </span> <br>
                                                 @endif
