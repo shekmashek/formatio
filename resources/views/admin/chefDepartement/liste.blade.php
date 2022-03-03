@@ -47,7 +47,7 @@
                                             <th>Téléphone</th>
                                             <th>Role asigné</th>
                                             <th>Role non asigné</th>
-                                            <th>Actions</th>
+                                            <th>Netoyé</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -79,32 +79,25 @@
                                                 <div align="left">
 
                                                     @for($ii = 0; $ii < count($roles_not_actif_referent[$i]["role_inactif"]); $ii++)
-                                                    @if($stagiaires[$i]->user_id == $roles_not_actif_referent[$i]["user_id"])
+                                                    @if($referent[$i]->user_id == $roles_not_actif_referent[$i]["user_id"])
                                                     <span style="color:blueviolet">attribué role pour {{$roles_not_actif_referent[$i]["role_inactif"][$ii]->role_name}}
-                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$stagiaires[$i]->user_id,$roles_not_actif_referent[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
                                                     </span> <br>
                                                     @endif
                                                     @endfor
-
-{{--
-                                                    @if($referent[$i]->user_id == $roles_not_actif_referent[$j]["user_id"])
-                                                        <span style="color:blueviolet">attribué role pour {{$roles_not_actif_referent[$j]["role_name"]}}
-                                                            <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$j]["id"]])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
-                                                        </span> <br>
-                                                        @endif
-                                                        @endfor --}}
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="btn-group dropleft">
-                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier role</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; suprimer role</a>
+                                                    <div align="left">
+                                                        @foreach ($roles_actif_referent as $role_asigner_referent)
+                                                        @if($referent[$i]->user_id == $role_asigner_referent->user_id && $role_asigner_referent->role_name!='referent' && $role_asigner_referent->role_name!='stagiaire')
+                                                        <span> <button class="btn modifier pt-0"><a href="{{route('delete_role_user',[$referent[$i]->user_id,$role_asigner_referent->role_id])}}">
+                                                            <i class="fas fa-window-close" aria-hidden="true" style="red"></i>{{$role_asigner_referent->role_name}}
+                                                        </a></button>
+                                                        </span> <br>
+                                                        @endif
+                                                        @endforeach
                                                     </div>
-                                                </div>
                                             </td>
 
                                             </tr>
@@ -204,7 +197,7 @@
                                         <th>Téléphone</th>
                                         <th>Role asigné</th>
                                         <th>Role non asigné</th>
-                                        <th>Actions</th>
+                                        <th>Netoyé</th>
 
                                     </tr>
                                 </thead>
@@ -245,14 +238,15 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="btn-group dropleft">
-                                                <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier role</a>
-                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; suprimer role</a>
-                                                </div>
+                                            <div align="left">
+                                                @foreach ($roles_actif_stg as $role_asigner_stg)
+                                                @if($stagiaires[$i]->user_id == $role_asigner_stg->user_id && $role_asigner_stg->role_name!='stagiaire')
+                                                <span> <button class="btn modifier pt-0"><a href="{{route('delete_role_user',[$stagiaires[$i]->user_id,$role_asigner_stg->role_id])}}">
+                                                    <i class="fas fa-window-close" aria-hidden="true" style="red"></i>{{$role_asigner_stg->role_name}}
+                                                </a></button>
+                                                </span> <br>
+                                                @endif
+                                                @endforeach
                                             </div>
                                         </td>
                                         </tr>
@@ -327,7 +321,7 @@
                                         <th>Téléphone</th>
                                         <th>Role asigné</th>
                                         <th>Role non asigné</th>
-                                        <th>Actions</th>
+                                        <th>Netoyé</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -379,14 +373,15 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="btn-group dropleft">
-                                                <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier role</a>
-                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; suprimer role</a>
-                                                </div>
+                                            <div align="left">
+                                                @foreach ($roles_actif_manager as $role_asigner_manager)
+                                                @if($chef[$i]->user_id == $role_asigner_manager->user_id && $role_asigner_manager->role_name!='stagiaire' && $role_asigner_manager->role_name!='manager')
+                                                <span> <button class="btn modifier pt-0"><a href="{{route('delete_role_user',[$chef[$i]->user_id,$role_asigner_manager->role_id])}}">
+                                                    <i class="fas fa-window-close" aria-hidden="true" style="red"></i>{{$role_asigner_manager->role_name}}
+                                                </a></button>
+                                                </span> <br>
+                                                @endif
+                                                @endforeach
                                             </div>
                                         </td>
 

@@ -28,25 +28,25 @@ class RoleController extends Controller
         $this->fonct = new FonctionGenerique();
     }
 
-    public function add_role_user(Request $request, $user_id_stg, $role_id)
+    public function add_role_user(Request $request, $user_id, $role_id)
     {
-        // dd("user_id: ".$user_id_stg."  ,role_id: ".$role_id);
-        // dd( $this->fonct->findWhereMulitOne("role_users", ["user_id"], [$user_id_stg]));
-
         if (Gate::allows('isReferent')) {
-
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
-
             if ($resp_connecter->prioriter == true) {
-                // DB::beginTransaction();
-                // try {
-                    DB::insert("insert into role_users(user_id,role_id) values (?,?)", [$user_id_stg, $role_id]);
-                //     DB::commit();
-                // } catch (Exception $e) {
-                //     DB::rollback();
-                //     echo $e->getMessage();
-                // }
+                    DB::insert("insert into role_users(user_id,role_id) values (?,?)", [$user_id, $role_id]);
                 return back();
+            } else {
+                return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');
+            }
+        }
+    }
+    public function delete_role_user(Request $request, $user_id, $role_id)
+    {
+        if (Gate::allows('isReferent')) {
+            $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+            if ($resp_connecter->prioriter == true) {
+                    DB::delete("delete from role_users where user_id=? and role_id=?", [$user_id, $role_id]);
+                return back()->with('success_'.$user_id, "role de l'utilisateur a été rétiré!");
             } else {
                 return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');
             }
