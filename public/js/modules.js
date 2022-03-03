@@ -165,7 +165,7 @@ function competence() {
     html +=     '<div class="col-7">';
     html +=         '<div class="form-group">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control label_placeholder" required>';
+    html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" required>';
     html +=                 '<label for="titre_competence" class="form-control-placeholder">Compétences';
     html +=                 '</label>';
     html +=             '</div>';
@@ -175,7 +175,7 @@ function competence() {
     html +=     '<div class="col-4">';
     html +=         '<div class="form-group ms-1">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="number" name="objectif[]" id="objectif" min="1" max="10" class="form-control label_placeholder" required>';
+    html +=                 '<input type="number" name="objectif[]" id="objectif" min="1" max="10" class="form-control input" required>';
     html +=                 '<label for="objectif" class="form-control-placeholder">Notes';
     html +=                 '</label>';
     html +=             '</div>';
@@ -184,12 +184,10 @@ function competence() {
 
     html +=     '<div class="col-1">';
     html +=         '<div class="mt-3">';
-    html +=             '<div class="form-row">';
-    html +=                 '<button id="removeRow" class="form-control btn" type="button">';
+    html +=                '<button id="removeRow" class="form-control btn_competence" type="button">';
     html +=                     '<i class="bx bx-minus" style="font-size: 20px">';
     html +=                     '</i>';
     html +=                 '</button>';
-    html +=             '</div>';
     html +=         '</div>';
     html +=     '</div>';
     html += '</div>';

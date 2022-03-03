@@ -483,7 +483,7 @@
     </div>
 
     <div class="home_content">
-        <div class="container-fluid ps-0 height-100 bg-light" id="content">
+        <div class="container-fluid p-0 height-100 bg-light" id="content">
             <header class="header row align-items-center g-0" id="header">
                 <div class="col-5 align-items-center justify-content-center">
                     @canany('isReferent','isStagiaire','isManager')
@@ -506,15 +506,6 @@
                         </form>
                     </div>
                     @endcanany
-                    {{-- <div class="formation__search w-75">
-                        <form class="d-flex" method="GET" action="{{route('result_formation')}}">
-                            @csrf
-                            <input type="search" id="reference_search" name="nom_formation"
-                                placeholder="Formations..." class="form-control"
-                                autocomplete="off">
-                            <button type="submit" class="btn "><i class="fa fa-search"></i></button>
-                        </form>
-                    </div> --}}
                 </div>
 
                 <div class="col-7 header-right align-items-center d-flex flex-row">
@@ -699,7 +690,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body" style="padding-bottom: 1rem; padding-top: 3.5rem;">
+            <div class="container-fluid content_body px-0" style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
             </div>
             {{-- content --}}

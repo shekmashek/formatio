@@ -79,7 +79,7 @@ class ModuleController extends Controller
             $categorie = formation::all();
         }
 
-        return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies'));
+        return view('admin.module.module', compact('categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
     }
 
     /*   ====================  Generate PDF gestion de Catalogue     */

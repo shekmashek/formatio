@@ -1,5 +1,152 @@
-.date_ville{
+.date_ville {
     border: 1px solid rgba(128, 128, 128, 0.218);
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+}
+.content_formation {
+    background: linear-gradient(60deg, #4222c3, #7635dc);
+    height: 75vh;
+    width: 100%;
+    color: white;
+    border-bottom-left-radius: 20%;
+    border-bottom-right-radius: 50%;
+}
+
+.content_formation h3 {
+    color: aqua;
+    font-size: 2.5rem;
+    margin-top: 2rem;
+}
+
+.content_search input {
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    height: 50px;
+    padding-left: 10px;
+    box-shadow: none;
+    outline: none;
+    color: #7635dc;
+    transition: all 0.5s ease;
+}
+
+.content_search input:hover {
+    transform: scale(1.05);
+    color: black;
+}
+
+.content_search input:focus {
+    transform: scale(1.02);
+}
+
+.content_search input::placeholder {
+    color: #7635dc;
+}
+
+.content_search button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    color: #7635dc;
+    transition: all 0.5s ease;
+}
+
+.content_search button .bx {
+    position: relative;
+    top: 3px;
+}
+.content_search button:hover {
+    transform: scale(0.9);
+    color: #4222c3;
+    background-color: aqua;
+}
+
+#myCarousel img{
+    position: relative;
+}
+
+.content_domaines button {
+    color: white;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.144);
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 35px;
+    margin: 0.5rem 0.5rem;
+    font-weight: 500;
+}
+
+.content_domaines button:hover {
+    color: #4222c3;
+    background: rgb(255, 255, 255);
+}
+
+.icon_categ {
+    padding: 5px;
+    background-color: white;
+    color: #4222c3;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    margin-right: 10px;
+    position: relative;
+    top: 2px;
+}
+
+.btn_categ {
+    padding: 0.7rem 1.1rem !important;
+}
+
+.content_domaines button a:hover{
+    color: #7635dc;
+    text-decoration: none;
+}
+
+.btn_categ:hover .icon_categ{
+    background-color: #4222c3;
+    color: white;
+}
+.card_formation{
+    height: 340px;
+    width: 360px;
+    border: none;
+    background: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 0.5rem;
+    margin: 1rem 1.5rem;
+    border-radius: 6px;
+}
+
+.imageLogo img{
+    height: 62px;
+}
+
+.titre_module p{
+    color: #7635dc;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.details_module p{
+    font-size: 0.850rem;
+}
+
+.details_module p .prix{
+    color: #7635dc;
+    padding: 0.5rem 1rem;
+    background: #7535dc32;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.details_module p .bx{
+    color: #7635dc;
+    font-size: 1rem;
+    position: relative;
+}
+
+.details_module p .text-muted{
+    font-size: 0.5rem;
 }

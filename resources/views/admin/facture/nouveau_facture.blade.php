@@ -174,7 +174,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col">
                                     {{-- <div class="form-group"> --}}
                                         <label align="left" for="down_bc" class="form-label">
@@ -190,9 +190,9 @@
                                 </div>
                                 <div class="col">
                                     {{-- <div class="form-group"> --}}
-                                        <label align="left" for="down_bc" class="form-label" style="margin-bottom: 26px">Upload Devis(Format pdf
+                                        <label align="left" for="down_bc" class="form-label" >Upload Devis(Format pdf
                                             :maximum 1.5M.0)<strong style="color:#ff0000;">*</strong></label>
-                                        <input type="file" class="form-control mt-2" id="down_fa" name="down_fa">
+                                        <input type="file" class="form-control " id="down_fa" name="down_fa">
                                         @error('down_fa')
                                         <span style="color:#ff0000;"> {{$message}} </span>
                                         @enderror

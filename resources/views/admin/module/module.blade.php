@@ -642,7 +642,7 @@
                                                                     <div class="form-row">
                                                                         <input type="text" name="titre_competence[]"
                                                                             id="titre_competence"
-                                                                            class="form-control label_placeholder"
+                                                                            class="form-control input"
                                                                             required>
                                                                         <label for="titre_competence"
                                                                             class="form-control-placeholder">Compétences</label>
@@ -655,7 +655,7 @@
                                                                         <input type="text" name="objectif[]"
                                                                             id="objectif" min="1" max="10"
                                                                             onfocus="(this.type='number')"
-                                                                            class="form-control label_placeholder"
+                                                                            class="form-control input"
                                                                             required>
                                                                         <label for="objectif"
                                                                             class="form-control-placeholder">Notes</label>
@@ -665,7 +665,7 @@
                                                             </div>
                                                             <div class="col-1">
                                                                 <div class="mt-3">
-                                                                    <button id="addRow" class="form-control btn"
+                                                                    <button id="addRow" class="form-control btn_competence"
                                                                         type="button" onclick="competence();"><i
                                                                             class="bx bx-plus"
                                                                             style="font-size: 20px"></i></button>
@@ -675,12 +675,11 @@
                                                         <div id="newRow"></div>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary " id="fermer"
-                                                        data-bs-dismiss="modal">
-                                                        Fermer </button>
+                                                <div class="modal-footer d-flex flex-row">
+                                                    <button type="button" class="btn btn_annuler " id="fermer"
+                                                        data-bs-dismiss="modal">Annuler</button>
                                                     <button type="submit"
-                                                        class="btn btn-primary non_pub">Enregistrer</button>
+                                                        class="btn btn_enregistrer non_pub">Enregistrer</button>
                                                 </div>
                                             </form>
                                         </div>

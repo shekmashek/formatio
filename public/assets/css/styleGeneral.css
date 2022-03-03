@@ -35,7 +35,7 @@ body {
 .content_body {
     background: rgba(238, 237, 237, 0.192);
     min-height: 100vh;
-    z-index: -999;
+    padding-right: 0;
 }
 
 a {
@@ -345,7 +345,7 @@ ul li a {
     left: 78px;
     display: flex;
     background-color: var(--first-color);
-    z-index: 1;
+    z-index: 1000;
     transition: 0.5s;
     padding: 0;
     margin-left: 0.1rem;
@@ -912,7 +912,7 @@ input:-webkit-autofill:active {
     font-size: 1em;
     transition: all 200ms;
     color: #7635dc;
-    width: 15rem;
+    width: 13rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
@@ -934,7 +934,7 @@ input:-webkit-autofill:active {
     font-size: 1em;
     transition: all 200ms;
     color: red;
-    width: 15rem;
+    width: 13rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
@@ -971,27 +971,6 @@ input:-webkit-autofill:active {
     background-color: #7635dc;
     color: white;
     transform: scale(1.1);
-}
-
-.btn_competence{
-    background: #7635dc;
-    color: #f1f1f1;
-    transition: all 0.5s ease;
-}
-
-.btn_competence:hover{
-    color: #7635dc;
-    transform: scale(1.1);
-    background: #7535dc28;
-}
-
-.btn_competence a{
-    text-decoration: none;
-    text-decoration-line: none;
-}
-
-.btn_competence a:hover{
-    color: #7635dc;
 }
 
 .btn_next a{
