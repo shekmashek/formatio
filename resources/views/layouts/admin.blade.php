@@ -586,6 +586,8 @@
                                                 <div class="row">
                                             <div class="col-md-4 ">
                                                 <span ><div class='photo_user'>  </div></span>
+                         
+
                                             </div>
                                          
                                             <div class="col-md-8">
@@ -594,12 +596,12 @@
         
                                             </div>
                                         </div>
-                                        <hr >
+                                        <hr>
                                     </div>
                                     <div class="card-body">
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                        <ul id="liste_role">
+                                        <ul id="liste_role" style="float: right">
                                             Accès:
                                         </ul>
                                             {{-- @if(Auth::user()->role_id == 1)
@@ -625,9 +627,9 @@
                                             @endif --}}
 
                                         </div>
-                                        <div class="d-flex pro_plan">
+                                        <div class="d-flex pro_plan" style="margin-top: -25px">
                                             <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
-                                            <p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
+                                            <span ><div class='logo'> </div></span><p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
                                         </div>
                                         <div class="text-center">
                                             @can('isManagerPrincipale')
@@ -635,7 +637,7 @@
                                             @endcan
                                             @can('isFormateurPrincipale')
                                             <a href="{{route('profile_formateur')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-3 mb-3">Profil</button></a><br>
+                                                    class="btn btn-primary btn-sm profil_btn mt-3 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isStagiairePrincipale')
                                             <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
@@ -646,14 +648,14 @@
                                             @can('isCFPPrincipale')
                                             <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
-                                            <div class="text_resp ">
+                                            <div class="text_resp" style="margin-top: -10px;margin-left:65px">
                                                 
                                                 <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();" class="deconnexion_text">
                                                         </a></p>
                                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();"
-                                                        class="deconnexion_text btn btn-secondary p-0 m-0 mt-0" style="text-decoration:none;margin-left:50px">&nbsp;&nbsp;<span>Déconnexion</span></a>
+                                                        class="deconnexion_text btn btn-secondary text-center  mt-4 mb-3" style="text-decoration:none;">&nbsp;&nbsp;<span>Se Déconnecter</span></a>
                                                 <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
                                                     @csrf
                                                 </form>
@@ -661,10 +663,6 @@
                                             </div>
                                         </div>
                                           {{-- logout --}}
-                                          
-                                            
-                                        
-                                        
                                         {{-- <div class="text-center">
                                             @can('isManager')
                                             <a href="{{route('affProfilChefDepartement')}}"><button
@@ -772,6 +770,7 @@
                     var userData = response;
                     var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 40px; height : 40px;border-radius : 100%; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?",userData);
+                    
                      $('.photo_user').append(html);
                 }         
                 , error: function(error) {
@@ -780,6 +779,24 @@
             });
         });
         </script>
+            <script>
+                $(document).ready(function() {
+                    var pdp="";
+                    $.ajax({
+                        url: '{{ route("logos") }}'
+                        , type: 'get'
+                        , success: function(response) {
+                            var userData = response;
+                            var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 40px; margin-top:4px; cursor: pointer;">';
+                            html = html.replace(":?",userData);
+                             $('.logo').append(html);
+                        }         
+                        , error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                });
+                </script>
 </body>
 
 </html>

@@ -566,9 +566,9 @@ ul li a {
     color: red;
 }
 
-.deconnexion_text:hover {
+/* .deconnexion_text:hover {
     color: red;
-}
+} */
 
 .pro_plan {
     padding: 0;
@@ -578,11 +578,13 @@ ul li a {
     padding-left: 6px;
     padding-top: 2px;
     padding: auto;
-    background-color: rgb(219, 215, 215);
+    z-index: 2;
     border-radius: 15px;
     height: 25px;
     width: auto;
     color: red;
+    display: inline-block;
+    margin: 18px;
     font-size: 0.85rem;
     position: relative;
     bottom: 0.2rem;
