@@ -102,6 +102,7 @@ class NouveauCompteController extends Controller
                 $verify_cfp_nif = $this->fonct->findWhere("cfps", ["nif"], [$req->nif]);
                 $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_cfp]);
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_cfp]);
+
                 $verify_resp_tel = $this->fonct->findWhere("users", ["telephone"], [$req->tel_resp_cfp]);
 
                 if (count($verify) <= 0) { // cfp n'existe pas
@@ -117,7 +118,7 @@ class NouveauCompteController extends Controller
                                     $this->user->telephone = $req->tel_resp_cfp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
-                                    $this->user->role_id = '7';
+
                                     $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_cfp)->value('id');
@@ -211,7 +212,7 @@ class NouveauCompteController extends Controller
                                     $this->user->telephone = $req->tel_resp_etp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
-                                    $this->user->role_id = '2';
+
                                     $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_etp)->value('id');

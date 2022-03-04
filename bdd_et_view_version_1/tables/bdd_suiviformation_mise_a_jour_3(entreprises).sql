@@ -111,7 +111,7 @@ CREATE TABLE `chef_dep_entreprises` (
 
 CREATE TABLE responsables (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_resp varchar(255) COLLATE utf8mb4_unicode_ci,
   sexe_resp varchar(255) COLLATE utf8mb4_unicode_ci,

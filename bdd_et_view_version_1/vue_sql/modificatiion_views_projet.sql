@@ -73,7 +73,7 @@ create or replace view v_groupe_entreprise as
         g.activiter as activiter_groupe,
         g.type_payement_id,
         tp.type as type_payement
-    from groupe_entreprise ge
+    from groupe_entreprises ge
     join groupes g on ge.groupe_id = g.id
     join entreprises e on ge.entreprise_id = e.id
     join type_payement tp on g.type_payement_id = tp.id;
@@ -234,13 +234,11 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
         s.photos,
-        s.departement_entreprise_id as departement_id,
         s.cin,
         s.date_naissance,
         (s.lot) adresse,
         s.niveau_etude,
-        s.activiter AS activiter_stagiaire,
-        s.lieu_travail
+        s.activiter AS activiter_stagiaire
     FROM
         participant_groupe pg
     JOIN v_detailmodule dm ON

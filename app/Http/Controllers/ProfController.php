@@ -159,7 +159,7 @@ class ProfController extends Controller
         $ch1 = '0000';
         // $ch2 = substr($request->phone, 8, 2);
         $user->password = Hash::make($ch1);
-        $user->role_id = '4';
+
         $user->save();
 
         //get user id

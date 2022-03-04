@@ -216,8 +216,9 @@
             </div>
             <div class="col-sm-6" id="detail" style="display: none">
                 <div class="card" style="width: auto;">
-                    <div class="card-body">
-                        <h5 class="card-title">Détail du projet <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><button class="btn" style="float: right"><i class="bx bx-printer" aria-hidden="true"></i></button></h5>
+                    <div id="editor"></div>
+                    <div class="card-body" id="test">
+                        <h5 class="card-title">Détail du projet <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><button class="btn" style="float: right" onclick="testPdf();"><i class="bx bx-printer" aria-hidden="true"></i></button></h5>
 
                         <label for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
                         <label for="">Session: </label>&nbsp;<label id="session"></label><br>
@@ -228,6 +229,7 @@
                         @endcanany
                         @canany(['isCFP','isFormateur'])
                             <label>Entreprise:</label>&nbsp;<label id="etp"> </label><br>
+                            <label for="logo" id="logo_etp"></label>
                         @endcanany
                         <label>Formation:</label>&nbsp;<label id="formation"> </label><br>
                         <label>Module:</label>&nbsp;<label id="module"></label><br>
@@ -248,7 +250,26 @@
 </body>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
     <script>
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+        function testPdf(){//send the div to PDF
+            doc.fromHTML($('#test').html(), 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+            doc.save('Detail-du-projet.pdf');
+        };
         document.addEventListener('DOMContentLoaded', function() {
             $.ajax({
                 type: "GET"
@@ -343,6 +364,7 @@
                                     var userData = userDataDetail['detail'];
                                     var stg = userDataDetail['stagiaire'];
                                     var date_groupe = userDataDetail['date_groupe'];
+                                    var images = '';
                                     for (var $i = 0; $i < userData.length; $i++) {
                                         $("#projet").append(userData[$i].nom_projet);
                                         $('#session').append(userData[$i].nom_groupe);

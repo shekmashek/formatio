@@ -344,14 +344,14 @@ class HomeController extends Controller
                 $user_id = User::where('id', Auth::user()->id)->value('id');
                 $ref = $fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->user_id;
 
-                $nom_profil_referent = responsable::where('user_id', $user_id)->value('id');
+                $nom_profil_referent = responsable::where('user_id', $user_id)->value('entreprise_id');
                 $etp = entreprise::where('id',$nom_profil_referent)->value('nom_etp');
                 $etp_id = entreprise::where('id',$nom_profil_referent)->value('id');
 
                 // $refs = DB::select('select nif,stat,rcs from entreprises where id = ' . $nom_profil_referent . ' ');
 
-                $refs_tmp = DB::select('select nif,stat,rcs from entreprises where id = ?',[$nom_profil_referent]);
-                $refs =$refs_tmp[0];
+                $refs_tmp = DB::select('select nif,stat,rcs from entreprises where id = ?',[$etp_id]);
+               $refs =$refs_tmp[0];
 
                 $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
 
