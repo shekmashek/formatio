@@ -9,7 +9,7 @@ use App\Models\FonctionGenerique;
 class NouveauCompte extends Model
 {
 
-    public function insert_CFP($doner, $user_id)
+    public function insert_CFP($doner)
     {
         if($doner["web_cfp"] == null){
             $doner["web_cfp"]=NULL;
@@ -17,10 +17,10 @@ class NouveauCompte extends Model
         $data = [
             $doner["logo_cfp"], $doner["nom_cfp"],
             $doner["email_cfp"], $doner["tel_cfp"], $doner["web_cfp"],
-            $doner["nif"],$user_id
+            $doner["nif"]
         ];
 
-        DB::insert('insert into cfps(logo,nom,email,telephone,site_cfp,nif,created_at,user_id) values (?,?,?,?,?,?,NOW(),?)', $data);
+        DB::insert('insert into cfps(logo,nom,email,telephone,site_cfp,nif,created_at) values (?,?,?,?,?,?,NOW())', $data);
         DB::commit();
 
         // insert into cfps(logo,nom,adresse_ville,email,telephone,site_cfp,nif,adresse_lot,adresse_quartier,adresse_code_postal,adresse_region,created_at,user_id) values ('noam_cfp','Numerika Center','Tana','antoenjara1998@gmail.com','0328683700','ituniversity.com','1324567897865434','Analamahitsy','Q-analamahitsy','s','43','NOW()','41');
