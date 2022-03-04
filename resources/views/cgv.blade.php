@@ -135,7 +135,7 @@
                 <h2>Description des Services</h2>
                 <h6>1. Licence(s) d’utilisation de l’Application</h6>
                 <h6 style="margin-left: 10px">1.1 Objet de la licence</h6>
-                <h6>A WORLD FOR US concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
+                <h6>Formation.mg concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
                 <h6>L’accès à l’Application est fourni : </h6><br>
                 <ul>
                     <li>- Gratuitement en ce qui concerne l’abonnement basique ;</li>
@@ -147,17 +147,17 @@
                 <h6 style="margin-left: 10px">1.2 Hébergement</h6>
                 <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par Formation.mg ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
                 <h6>En cas de changement de prestataire d’hébergement, Formation.mg s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
-                <h6>A WORLD FOR US s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
+                <h6>Formation.mg s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
                 <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels Formation.mg n’a aucune maîtrise, la responsabilité de Formation.mg sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
-                <h6>A WORLD FOR US ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
+                <h6>Formation.mg ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
                 <h6 style="margin-left: 10px">1.3 Maintenance évolutive</h6>
-                <h6>A WORLD FOR US s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de Formation.mg.</h6><br>
-                <h6>A WORLD FOR US se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
+                <h6>Formation.mg s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de Formation.mg.</h6><br>
+                <h6>Formation.mg se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
                 <h6 style="margin-left: 10px">1.4 Support technique</h6>
                 <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des Services, Formation.mg offre au Client un support technique consistant en une assistance et un conseil.</h6><br>
                 <h6>Le support technique est accessible à l’adresse email info@digiforma.com ou par chat.</h6><br>
                 <h6 style="margin-left: 10px">1.5 Autres Services</h6>
-                <h6>A WORLD FOR US se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
+                <h6>Formation.mg se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
             </div>
             <div>
                 <h2>Conditions financières</h2>
