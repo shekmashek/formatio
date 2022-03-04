@@ -589,7 +589,7 @@
 
 
                                             <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
-                                                <hr class="ms-0">
+                                                <hr class="ms-0" style="color:lightgrey">
                                                 <div class="row">
                                             <div class="col-md-4 ">
                                                 <span ><div class='photo_user'>  </div></span>
@@ -603,14 +603,14 @@
 
                                             </div>
                                         </div>
-                                        <hr>
+                                        <hr style="color:lightgrey">
                                     </div>
                                     <div class="card-body">
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                        <ul id="liste_role" style="float: right">
+                                        {{-- <ul id="liste_role" style="float: right">
                                             Accès:
-                                        </ul>
+                                        </ul> --}}
                                             {{-- @if(Auth::user()->role_id == 1)
                                             <span class="text-muted d-block mb-2">Admin</span>
                                             @endif
@@ -655,6 +655,8 @@
                                             @can('isCFPPrincipale')
                                             <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
+                                        <hr style="color:lightgrey">
+
                                             <div class="text_resp" style="margin-top: -10px;margin-left:65px">
 
                                                 <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
