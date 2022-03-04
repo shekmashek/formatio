@@ -21,7 +21,13 @@ class AppelOffreController extends Controller
     public function __construct()
     {
         $this->fonct = new FonctionGenerique();
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
     }
+
 
     public function nouveau()
     {

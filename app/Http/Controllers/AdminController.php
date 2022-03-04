@@ -112,6 +112,7 @@ class AdminController extends Controller
     public function profile_resp()
     {
         $id_user = Auth::user()->id;
+        $fonct = new FonctionGenerique();
 
         if (Gate::allows('isReferent')) {
             $user = responsable::where('user_id', $id_user)->value('photos');
@@ -125,8 +126,9 @@ class AdminController extends Controller
         }
 
         if (Gate::allows('isFormateur')) {
+
             $user = Formateur::where('user_id', $id_user)->value('photos');
-            if($user == null){
+             if($user == null){
                 $user = 'users/users.png';
             } else{
                 $user = 'formateurs/' . $user;
@@ -147,7 +149,6 @@ class AdminController extends Controller
         }
 
         if (Gate::allows('isCFP')) {
-            $fonct = new FonctionGenerique();
             $user = $fonct->findWhereMulitOne(("v_responsable_cfp"),["user_id"],[$id_user])->photos_resp_cfp;
             if($user == null){
                 $user = 'users/users.png';
@@ -195,7 +196,7 @@ class AdminController extends Controller
             if($etp == null){
                 $etp = 'users/users.png';
             } else{
-                $etp = 'responsables/' . $etp;
+                $etp = 'entreprises/' . $etp;
             }
 
             // $etp = 'entreprises/' . $etp;
@@ -215,12 +216,14 @@ class AdminController extends Controller
         }
         if (Gate::allows('isFormateur')) {
 
-            $etp_id = Formateur::where('user_id', $id_user)->value('entreprise_id');
-            $etp = entreprise::where('id', $etp_id)->value('logo');
+            // $etp_id = Formateur::where('user_id', $id_user)->value('entreprise_id');
+            // $etp = entreprise::where('id', $etp_id)->value('logo');
+              $etp = $fonct->findWhereMulitOne(("v_demmande_cfp_formateur"),["user_id"],[$id_user])->logo;
+
             if($etp == null){
                 $etp = 'users/users.png';
             } else{
-                $etp = 'formateurs/' . $etp;
+                $etp = 'CFP/' . $etp;
             }
             // $etp = 'entreprises/' . $etp;
             return response()->json($etp);

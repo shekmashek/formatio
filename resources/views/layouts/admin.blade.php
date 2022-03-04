@@ -9,11 +9,9 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Formation.mg</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet"
-        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 </head>
 
@@ -58,10 +56,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouvelle_entreprise')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouvelle Entreprise</span>
-                </a>
-                <span class="tooltip">Nouvelle Entreprise</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouvelle Entreprise</span>
+            </a>
+            <span class="tooltip">Nouvelle Entreprise</span>
             <li class="my-1 sousMenu">
                 <a href="{{route('departement.index')}}">Département</a>
             </li>
@@ -106,10 +104,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Projet</span>
-                </a>
-                <span class="tooltip">Nouveau Projet</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Projet</span>
+            </a>
+            <span class="tooltip">Nouveau Projet</span>
             <li class="my-1 sousMenu">
                 <a href="{{route('liste_groupe')}}">Groupes</a>
             </li>
@@ -126,10 +124,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Projet</span>
-                </a>
-                <span class="tooltip">Nouveau Projet</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Projet</span>
+            </a>
+            <span class="tooltip">Nouveau Projet</span>
             <li class="sousMenu me-2 d-flex justify-content-between">
                 <a href="{{url('detail_session')}}">Sessions</a>
                 <p class="my-1" id="projets_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;">
@@ -148,7 +146,7 @@
             @endcanany
             @canany(['isCFP','isReferent','isManager'])
             <li class="my-2">
-                <a href="{{route('appel_offre.index')}}"  class="nav_linke d-flex">
+                <a href="{{route('appel_offre.index')}}" class="nav_linke d-flex">
                     <i class='bx bxs-user-account'></i>
                     <span class="links_name">Appel d'Offre</span>
                 </a>
@@ -191,10 +189,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Formateur</span>
-                </a>
-                <span class="tooltip">Nouveau Formateur</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Formateur</span>
+            </a>
+            <span class="tooltip">Nouveau Formateur</span>
             </li> --}}
             @endcanany
             @canany(['isCFP'])
@@ -215,10 +213,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Formateur</span>
-                </a>
-                <span class="tooltip">Nouveau Formateur</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Formateur</span>
+            </a>
+            <span class="tooltip">Nouveau Formateur</span>
             </li> --}}
             @endcanany
             {{-- manager --}}
@@ -233,10 +231,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Manager</span>
-                </a>
-                <span class="tooltip">Nouveau Manager</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Manager</span>
+            </a>
+            <span class="tooltip">Nouveau Manager</span>
             </li> --}}
             @endcanany
             @canany(['isReferent'])
@@ -250,10 +248,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Manager</span>
-                </a>
-                <span class="tooltip">Nouveau Manager</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Manager</span>
+            </a>
+            <span class="tooltip">Nouveau Manager</span>
             </li> --}}
             @endcanany
             {{-- Referent --}}
@@ -268,10 +266,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_responsable')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Réferents</span>
-                </a>
-                <span class="tooltip">Nouveau Réferents</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Réferents</span>
+            </a>
+            <span class="tooltip">Nouveau Réferents</span>
             </li> --}}
             @endcanany
             {{-- stagiares --}}
@@ -286,27 +284,27 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_participant')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Stagiaire</span>
-                </a>
-                <span class="tooltip">Nouveau Stagiaire</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Stagiaire</span>
+            </a>
+            <span class="tooltip">Nouveau Stagiaire</span>
             </li> --}}
             @endcanany
             {{-- @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_participant')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Stagiaires</span>
-                </a>
-                <span class="tooltip">Stagiaires</span>
+            <i class='bx bxs-user-rectangle'></i>
+            <span class="links_name">Stagiaires</span>
+            </a>
+            <span class="tooltip">Stagiaires</span>
             </li>
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_participant')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Stagiaire</span>
-                </a>
-                <span class="tooltip">Nouveau Stagiaire</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Stagiaire</span>
+            </a>
+            <span class="tooltip">Nouveau Stagiaire</span>
             </li> --}}
             {{-- @endcanany --}}
             {{-- action de formations --}}
@@ -334,10 +332,10 @@
             {{-- @canany(['isSuperAdmin','isCFP','isReferent'])
             <li>
                 <a href="{{route('collaboration')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-account'></i>
-                    <span class="links_name">Coopération</span>
-                </a>
-                <span class="tooltip">Coopération</span>
+            <i class='bx bxs-user-account'></i>
+            <span class="links_name">Coopération</span>
+            </a>
+            <span class="tooltip">Coopération</span>
             </li>
             @endcanany --}}
             @canany(['isCFP','isReferent'])
@@ -351,10 +349,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Total facture</span>
-                </a>
-                <span class="tooltip">Total facture</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Total facture</span>
+            </a>
+            <span class="tooltip">Total facture</span>
             </li> --}}
 
             @endcanany
@@ -371,10 +369,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Total facture</span>
-                </a>
-                <span class="tooltip">Total facture</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Total facture</span>
+            </a>
+            <span class="tooltip">Total facture</span>
             </li> --}}
             @endcanany
             <li>
@@ -389,8 +387,7 @@
             {{-- plan de formation --}}
             @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
             <li>
-                <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
-                    href="{{route('liste_projet')}}" class="d-flex nav_linke">
+                <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-scatter-chart'></i>
                     <span class="links_name">Plan</span>
                 </a>
@@ -399,10 +396,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('listePlanFormation')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Liste Plan</span>
-                </a>
-                <span class="tooltip">Liste Plan</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Liste Plan</span>
+            </a>
+            <span class="tooltip">Liste Plan</span>
             </li> --}}
             @endcanany
             {{-- abonemment --}}
@@ -417,10 +414,10 @@
             {{-- integrer dans la page
             <li>
                 <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Abonnement</span>
-                </a>
-                <span class="tooltip">Abonnement</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Abonnement</span>
+            </a>
+            <span class="tooltip">Abonnement</span>
             </li> --}}
             @endcanany
             @can('isReferent')
@@ -451,10 +448,10 @@
             @can('isCFP')
             {{-- <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-book-add'></i>
-                    <span class="links_name">Librairies</span>
-                </a>
-                <span class="tooltip">Librairies</span>
+            <i class='bx bx-book-add'></i>
+            <span class="links_name">Librairies</span>
+            </a>
+            <span class="tooltip">Librairies</span>
             </li> --}}
             <li>
                 <a href="#" class="d-flex nav_linke">
@@ -470,8 +467,7 @@
         <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
-                    <img src="{{asset('images/formateurs/RAHARIFETRANicole22-12-2021.png')}}" class="img-fluid"
-                        alt="user_profile">
+                    <img src="{{asset('images/formateurs/RAHARIFETRANicole22-12-2021.png')}}" class="img-fluid" alt="user_profile">
                     <div class="name_job">
                         <div class="name">Malala</div>
                         <div class="job">Manager</div>
@@ -486,7 +482,7 @@
     </div>
 
     <div class="home_content">
-        <div class="container-fluid ps-0 height-100 bg-light" id="content" >
+        <div class="container-fluid ps-0 height-100 bg-light" id="content">
             <!-- <div class="text">Home</div> -->
             {{-- header --}}
             <header class="header row align-items-center g-0" id="header">
@@ -578,7 +574,9 @@
                         <div class="header_img ms-5 mb-2 text-center d-flex flex-row" style="text-align: center">
 
                             {{-- <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p> --}}
-                            <p><div class='photo_user'>  </div></p>
+                            <p>
+                                <div class='photo_user'> </div>
+                            </p>
                             {{-- <p style="text-transform: capitalize;color:#801D68" class="header_img_name">
                                 &nbsp;{{Auth::user()->name}}</p> --}}
                         </div>
@@ -588,11 +586,13 @@
                                     <div class="card-title">
 
 
-                                            <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
-                                                <hr class="ms-0" style="color:lightgrey">
-                                                <div class="row">
+                                        <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
+                                        <hr class="ms-0" style="color:lightgrey">
+                                        <div class="row">
                                             <div class="col-md-4 ">
-                                                <span ><div class='photo_user'>  </div></span>
+                                                <span>
+                                                    <div class='photo_user'> </div>
+                                                </span>
 
 
                                             </div>
@@ -608,7 +608,7 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                        {{-- <ul id="liste_role" style="float: right">
+                                            {{-- <ul id="liste_role" style="float: right">
                                             Accès:
                                         </ul> --}}
                                             {{-- @if(Auth::user()->role_id == 1)
@@ -636,15 +636,17 @@
                                         </div>
                                         <div class="d-flex pro_plan" style="margin-top: -25px">
                                             <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
-                                            <span ><div class='logo_etp_user'> </div></span><p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
+                                            <span>
+                                                <div class='logo_etp_user'> </div>
+                                            </span>
+                                            <p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
                                         </div>
                                         <div class="text-center">
                                             @can('isManagerPrincipale')
                                             <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3" style="">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isFormateurPrincipale')
-                                            <a href="{{route('profile_formateur')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-3 mb-3">Gérer votre compte</button></a><br>
+                                            <a href="{{route('profile_formateur')}}"><button class="btn btn-primary btn-sm profil_btn mt-3 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isStagiairePrincipale')
                                             <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
@@ -655,157 +657,148 @@
                                             @can('isCFPPrincipale')
                                             <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
-                                        <hr style="color:lightgrey">
+                                            <hr style="color:lightgrey">
 
                                             <div class="text_resp" style="margin-top: -10px;margin-left:65px">
 
                                                 <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();" class="deconnexion_text">
-                                                        </a></p>
+                                                    </a></p>
                                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();"
-                                                        class="deconnexion_text btn btn-secondary text-center  mt-4 mb-3" style="text-decoration:none;">&nbsp;&nbsp;<span>Se Déconnecter</span></a>
+                                                        document.getElementById('logout-form').submit();" class="deconnexion_text btn btn-secondary text-center  mt-4 mb-3" style="text-decoration:none;">&nbsp;&nbsp;<span>Se Déconnecter</span></a>
                                                 <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
                                                     @csrf
                                                 </form>
 
                                             </div>
                                         </div>
-                                          {{-- logout --}}
+                                        {{-- logout --}}
                                         {{-- <div class="text-center">
                                             @can('isManager')
-                                            <a href="{{route('affProfilChefDepartement')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                                            @endcan
-                                            @can('isStagiaire')
-                                            <a href="{{route('profile_stagiaire')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                                            @endcan
-                                            @can('isReferent')
-                                            <a href="{{route('affResponsable')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                                            @endcan
-                                        </div> --}}
-                                    </div>
+                                            <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @endcan
+                                        @can('isStagiaire')
+                                        <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @endcan
+                                        @can('isReferent')
+                                        <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        @endcan
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                </div>
-            </header>
-            {{-- header --}}
-            {{-- content --}}
-            <div class="container-fluid content_body" style="padding-bottom: 1rem; padding-top: 3.5rem;">
-                @yield('content')
-            </div>
-            {{-- content --}}
-            {{-- footer --}}
-            <div class="footer mt-5">
-                <div class="container-fluid footer_all">
-                    <div class="row w-100">
-                        <div class="col-12">
-                            <div class="container">
-                                <div class="d-flex w-auto footer_one justify-content-center">
-                                    <div class="footer_list me-2">
-                                        <a href="#" class="mx-auto">
-                                            <p>&copy;&nbsp;Copyright 2022 : Formation.mg</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="#">
-                                            <p>Informations légales</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="{{url('contacts')}}" style="color: #801D62;text-decoration:none">
-                                            <p>Contactez-nous</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="{{url('politique_confidentialite')}}" target="_blank">
-                                            <p>Politique de confidentialité</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="{{route('condition_generale_de_vente')}}"
-                                            style="color:#801D68 !important" target="_blank">
-                                            <p>Condition d'utilisation</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="#">
-                                            <p>Tarifs</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list ms-2 me-2">
-                                        <a href="#">
-                                            <p>Crédits</p>
-                                        </a>
-                                    </div>
-                                    <div class="footer_list_end ms-2 me-2 text-muted">
-                                        <p>1.01</p>
-                                    </div>
+        </div>
+        </header>
+        {{-- header --}}
+        {{-- content --}}
+        <div class="container-fluid content_body" style="padding-bottom: 1rem; padding-top: 3.5rem;">
+            @yield('content')
+        </div>
+        {{-- content --}}
+        {{-- footer --}}
+        <div class="footer mt-5">
+            <div class="container-fluid footer_all">
+                <div class="row w-100">
+                    <div class="col-12">
+                        <div class="container">
+                            <div class="d-flex w-auto footer_one justify-content-center">
+                                <div class="footer_list me-2">
+                                    <a href="#" class="mx-auto">
+                                        <p>&copy;&nbsp;Copyright 2022 : Formation.mg</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Informations légales</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="{{url('contacts')}}" style="color: #801D62;text-decoration:none">
+                                        <p>Contactez-nous</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="{{url('politique_confidentialite')}}" target="_blank">
+                                        <p>Politique de confidentialité</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank">
+                                        <p>Condition d'utilisation</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Tarifs</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list ms-2 me-2">
+                                    <a href="#">
+                                        <p>Crédits</p>
+                                    </a>
+                                </div>
+                                <div class="footer_list_end ms-2 me-2 text-muted">
+                                    <p>1.01</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {{-- footer --}}
         </div>
+        {{-- footer --}}
+    </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
-        integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-        integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js" integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script src="{{asset('js/admin.js')}}"></script>
     <script>
         $(document).ready(function() {
-            var pdp="";
+            var pdp = "";
             $.ajax({
                 url: '{{ route("profile_resp") }}'
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
                     var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 40px; height : 40px;border-radius : 100%; margin-top:4px; cursor: pointer;">';
-                    html = html.replace(":?",userData);
+                    html = html.replace(":?", userData);
 
-                     $('.photo_user').append(html);
+                    $('.photo_user').append(html);
                 }
                 , error: function(error) {
                     console.log(error);
                 }
             });
         });
-        </script>
-            <script>
-                $(document).ready(function() {
-                    var pdp="";
-                    $.ajax({
-                        url: '{{ route("logos") }}'
-                        , type: 'get'
-                        , success: function(response) {
-                            var userData = response;
-                            var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 40px; margin-top:4px; cursor: pointer;">';
-                            html = html.replace(":?",userData);
-                             $('.logo_etp_user').append(html);
-                        }
-                        , error: function(error) {
-                            console.log(error);
-                        }
-                    });
-                });
-                </script>
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            var pdp = "";
+            $.ajax({
+                url: '{{ route("logos") }}'
+                , type: 'get'
+                , success: function(response) {
+                    var userData = response;
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 40px; margin-top:4px; cursor: pointer;">';
+                    html = html.replace(":?", userData);
+                    $('.logo_etp_user').append(html);
+                }
+                , error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>
