@@ -220,13 +220,11 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
         s.photos,
-        s.departement_entreprises_id as departement_id,
         s.cin,
         s.date_naissance,
         (s.lot) adresse,
         s.niveau_etude,
-        s.activiter AS activiter_stagiaire,
-        s.lieu_travail
+        s.activiter AS activiter_stagiaire
     FROM
         participant_groupe pg
     JOIN v_detailmodule dm ON
@@ -261,10 +259,10 @@ create or replace view v_projet_cfp as
     from projets p
     join cfps on cfps.id = p.cfp_id
     join type_formations tf on tf.id = p.type_formation_id;
-    
 
-    create or replace view v_projet_entreprise as 
-        select 
+
+    create or replace view v_projet_entreprise as
+        select
             gp.projet_id,
             nom_projet,
             entreprise_id,
@@ -273,21 +271,21 @@ create or replace view v_projet_cfp as
             totale_session
         from v_groupe_projet_entreprise gp
         join v_totale_session ts on ts.projet_id = gp.projet_id
-        group by 
+        group by
             projet_id,
             nom_projet,
             entreprise_id,
             type_formation_id,
             date_projet;
 
-create or replace view v_projet_formation as 
-    select 
+create or replace view v_projet_formation as
+    select
         projet_id,
         formation_id,
         nom_formation,
         cfp_id
     from v_groupe_projet_entreprise_module
-    group by 
+    group by
         projet_id,
         formation_id,
         nom_formation,

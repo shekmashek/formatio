@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <h3 class="mt-5 mb-3 text-center">Listes des Projets Intra et Inter</h3>
-            <div class="col-2">
+            <div class="col-2 pe-3">
                 @canany(['isReferent', 'isCFP'])
                     <div class="row mb-3 p-2 filtre_date">
                         <h6 class="text-center mt-2">Filtrer vos Projets</h6>
@@ -35,32 +35,32 @@
                                         <option value="3">3e Trimestre</option>
                                         <option value="4">4e Trimestre</option>
                                     </select>
-                                        
+
                                     </div>
-                                    
+
                                     <div class="row px-3 mt-2">
                                     <select name="semestre" id="semestre" class="filtre_projet">
                                         <option value="null" selected>Semestres</option>
                                         <option value="1">1e Semestre</option>
                                         <option value="2">2e Semestre</option>
                                     </select>
-                                
+
                             </div>
-                               
+
                             <div class="row px-3 mt-2">
                                     <select name="annee" id="annee" class="filtre_projet">
                                         <option value="null" selected>Années</option>
                                     </select>
                                     <button class="btn btn_competence mt-3 mb-3" type="submit">Appliquer</button>
                             </div>
-                            
+
                         </form>
                     </div>
                 @endcanany
             </div>
-    
-    
-            <div class="col-10">
+
+
+            <div class="col-10 ps-5">
                 <div class="row">
                 @canany(['isCFP', 'isFormateur'])
                     <div class="m" id="corps">
@@ -70,9 +70,9 @@
                             </div>
                         @endif
                         @foreach ($projet as $prj)
-                            
+
                                 <div class="row mt-3 titre_projet p-1 mb-1 w-100">
-                            
+
                                     <div class="col-4 p-0"><h6 class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse"
                                         href="#collapseprojet_{{ $prj->projet_id }}" role="button" aria-expanded="false"
                                         aria-controls="collapseprojet"><i class="bx bx-caret-down carret-icon"></i>&nbsp;
@@ -80,7 +80,7 @@
                                                     echo $prj->nom_projet . '(' . $prj->totale_session . ' session)';
                                                 } elseif ($prj->totale_session > 1) {
                                                     echo $prj->nom_projet . '(' . $prj->totale_session . ' sessions)';
-                                            } 
+                                            }
                                         @endphp
                                         &nbsp;&nbsp;&#10148;&nbsp;@php
                                             setlocale(LC_TIME, 'fr_FR');

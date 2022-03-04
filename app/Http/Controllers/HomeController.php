@@ -464,7 +464,7 @@ class HomeController extends Controller
             if (Gate::allows('isManagerPrincipale')) {
                 $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
             }
-            $sql = $projet_model->build_requette($entreprise_id,$type_formation_id,"v_groupe_projet_entreprise",$request);
+            $sql = $projet_model->build_requette($entreprise_id,"v_groupe_projet_entreprise",$request);
             $data = DB::select($sql);
             // $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","type_formation_id"], [$entreprise_id,$type_formation_id]);
             // dd($data);
@@ -479,10 +479,10 @@ class HomeController extends Controller
             $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation','status'));
-        } 
+        }
         // elseif (Gate::allows('isStagiaire')) {
         //     return view('layouts.accueil_admin');
-        // } 
+        // }
         elseif (Gate::allows('isCFP')) {
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
