@@ -32,11 +32,11 @@
             </div>
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68"><b> <i class="fad fa-address-card"></i>&nbsp; Facture </b>
-                    <a class="overr" href=""><p class=" m-1 system_ pb-1">Payé<span class="system_numero">{{ count($facture_paye) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Non échu<span class="system_numero">{{ count($facture_non_echu) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Echu non payé<span class="system_numero">0</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Payement partiel<span class="system_numero">0</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Brouillon<span class="system_numero">{{ count($facture_brouillon) }}</span></p></a>
+                    <a class="overr" href="{{route('liste_facture',2)}}"><p class=" m-1 system_ pb-1">Payé<span class="system_numero">{{ count($facture_paye) }}</span></p></a>
+                    <a class="overr" href="{{route('liste_facture',2)}}"><p class="m-1 system_ pb-1">Non échu<span class="system_numero">{{ count($facture_non_echu) }}</span></p></a>
+                    <a class="overr" href="{{route('liste_facture',2)}}"><p class="m-1 system_ pb-1">Echu non payé<span class="system_numero">0</span></p></a>
+                    <a class="overr" href="{{route('liste_facture',2)}}"><p class="m-1 system_ pb-1">Payement partiel<span class="system_numero">0</span></p></a>
+                    <a class="overr" href="{{route('liste_facture',2)}}"><p class="m-1 system_ pb-1">Brouillon<span class="system_numero">{{ count($facture_brouillon) }}</span></p></a>
                 </div>
             </div>
         </div>

@@ -432,6 +432,7 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.ville,
     stg.region,
     stg.lot,
+    b.nom_branche,
     e.nom_etp,
     e.adresse_rue,
     e.adresse_quartier,
@@ -454,7 +455,9 @@ FROM
     join entreprises e
     on stg.entreprise_id = e.id
     join v_departement_service_entreprise ds
-    on ds.service_id = stg.service_id;
+    on ds.service_id = stg.service_id
+    join branches b
+    on b.id = stg.branche_id;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
 --     stg.id AS stagiaire_id,

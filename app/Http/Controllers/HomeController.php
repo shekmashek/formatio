@@ -202,12 +202,13 @@ class HomeController extends Controller
             $valeur = DB::select('select activiter,id from stagiaires where user_id = ' . Auth::id());
             $activiter = $valeur[0]->activiter;
             $stg_id =  $valeur[0]->id;
-
             //si le compte stagiaire est actif
             if ($activiter == 1) {
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
-                    return view('layouts.accueil_admin', compact('totale_invitation'));
+                    $phone_tmp =  DB::select('select * from v_stagiaire_entreprise where user_id = ?',[Auth::user()->id]);
+
+                    return view('layouts.accueil_admin', compact('totale_invitation','phone_tmp'));
                 }
             }
             //si le compte est inactif, on vérifie d'abord si le stagiaire est déjà dans une autre entreprise
