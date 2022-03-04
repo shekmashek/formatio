@@ -102,6 +102,7 @@ class NouveauCompteController extends Controller
                 $verify_cfp_nif = $this->fonct->findWhere("cfps", ["nif"], [$req->nif]);
                 $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_cfp]);
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_cfp]);
+
                 $verify_resp_tel = $this->fonct->findWhere("users", ["telephone"], [$req->tel_resp_cfp]);
 
                 if (count($verify) <= 0) { // cfp n'existe pas
@@ -117,7 +118,7 @@ class NouveauCompteController extends Controller
                                     $this->user->telephone = $req->tel_resp_cfp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
-                                    $this->user->role_id = '7';
+
                                     $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_cfp)->value('id');
@@ -126,6 +127,14 @@ class NouveauCompteController extends Controller
                                     $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp])->id;
                                     $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$cfp_id]);
                                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
+                                    DB::beginTransaction();
+                                    try {
+                                        $this->fonct->insert_role_user($user_id, "7"); // CFP
+                                        DB::commit();
+                                    } catch (Exception $e) {
+                                        DB::rollback();
+                                        echo $e->getMessage();
+                                    }
                                     //============= save image
 
                                     $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
@@ -211,7 +220,7 @@ class NouveauCompteController extends Controller
                                     $this->user->telephone = $req->tel_resp_etp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
-                                    $this->user->role_id = '2';
+
                                     $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_etp)->value('id');
@@ -221,6 +230,15 @@ class NouveauCompteController extends Controller
                                     $etp_id = $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp])->id;
                                     $resp_etp = $this->fonct->findWhere("responsables", ["entreprise_id"], [$etp_id]);
                                     $this->new_compte->insert_resp_ETP($resp, $etp_id, $user_id);
+                                    DB::beginTransaction();
+                                    try {
+                                        $this->fonct->insert_role_user($user_id, "3"); // stagiaires
+                                        $this->fonct->insert_role_user($user_id, "2"); // referent
+                                        DB::commit();
+                                    } catch (Exception $e) {
+                                        DB::rollback();
+                                        echo $e->getMessage();
+                                    }
                                     //============= save image
 
                                     $this->img->store_image("entreprise", $data["logo_etp"], $req->file('logo_etp')->getContent());

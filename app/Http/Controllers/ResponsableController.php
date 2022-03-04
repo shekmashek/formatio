@@ -507,11 +507,12 @@ class ResponsableController extends Controller
     }
     public function update(Request $request, $id)
     {
+
+
         if (Gate::allows('isReferent')) {
             $fonct = new FonctionGenerique();
 
             $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
-
 
             //modifier les données
             $nom = $request->nom;
@@ -614,6 +615,8 @@ class ResponsableController extends Controller
             $fonction = $request->Fonction;
             $phone =  $request->Phone;
             if ($input != null) {
+
+
                 responsable::where('id', $id)
                     ->update([
                         'nom_resp' => $nom,

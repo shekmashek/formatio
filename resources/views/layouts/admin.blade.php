@@ -331,7 +331,7 @@
             </li>
 
             {{-- commercial --}}
-            @canany(['isSuperAdmin','isCFP','isReferent'])
+            {{-- @canany(['isSuperAdmin','isCFP','isReferent'])
             <li>
                 <a href="{{route('collaboration')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-account'></i>
@@ -339,7 +339,7 @@
                 </a>
                 <span class="tooltip">Coopération</span>
             </li>
-            @endcanany
+            @endcanany --}}
             @canany(['isCFP','isReferent'])
             <li>
                 <a href="{{route('facture')}}" class="d-flex nav_linke">

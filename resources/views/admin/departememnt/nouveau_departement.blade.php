@@ -82,12 +82,12 @@
                         </a>
                     </li>
                     <li class="nav-item ms-5">
-                        <a href="#"  style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                        <a href="#" style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
                             gestion de service
                         </a>
                     </li>
                     <li class="nav-item ms-5">
-                        <a href="#"  style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#branche" type="button" role="tab" aria-controls="branche" aria-selected="false">
+                        <a href="#" style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#branche" type="button" role="tab" aria-controls="branche" aria-selected="false">
                             gestion de branche
                         </a>
                     </li>
@@ -117,14 +117,14 @@
                                 <table class="table  table-borderless table-sm">
                                     <tbody id="data_collaboration">
 
+                                        @if (count($rqt)>0)
                                         <tr>
                                             <td>
                                                 <div align="left">
                                                     @if(isset($rqt))
-                                                        @for($i = 0; $i < $nb; $i++)
-                                                            <p><strong>{{$rqt[$i]->nom_departement}}</strong></p>
+                                                    @for($i = 0; $i < count($rqt); $i++) <p><strong>{{$rqt[$i]->nom_departement}}</strong></p>
                                                         @endfor
-                                                    @endif
+                                                        @endif
 
                                                 </div>
                                             </td>
@@ -166,6 +166,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @else
+                                        <tr>
+                                            <td colspan="3"> Aucun département pour l'entreprise</td>
+                                        </tr>
+                                        @endif
+
+
+
 
                                     </tbody>
                                 </table>
@@ -224,37 +232,36 @@
                                             <td>
                                                 <div align="left">
                                                     @if(isset($service_departement))
-                                                        @for($i = 0; $i < $nb_serv; $i++)
-                                                            <h6><strong>{{$service_departement[$i]->nom_departement}}</strong></h6>
+                                                    @for($i = 0; $i < $nb_serv; $i++) <h6><strong>{{$service_departement[$i]->nom_departement}}</strong></h6>
 
-                                                    <div class="row">
-                                                        <div class="col-md-1"></div>
-                                                        <div class="col-md-9">
-                                                            <p>{{$service_departement[$i]->nom_service}}</p>
-                                                        </div>
-                                                        <div class="col-md-1">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-9">
+                                                                <p>{{$service_departement[$i]->nom_service}}</p>
+                                                            </div>
+                                                            <div class="col-md-1">
                                                                 <div align="rigth">
                                                                     <p style="color: rgb(66, 55, 221)"><i class="bx bx-check"></i></p>
                                                                 </div>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <div class="btn-group dropleft">
-                                                                <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier</a>
-                                                                    <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_#"><i class="fa fa-trash"></i> <strong style="color: red">rétirer définitvement</strong></a>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <div class="btn-group dropleft">
+                                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu">
+                                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye"></i> &nbsp; modifier</a>
+                                                                        <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_#"><i class="fa fa-trash"></i> <strong style="color: red">rétirer définitvement</strong></a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    @endfor
-                                                    @endif
+                                                        @endfor
+                                                        @endif
                                                 </div>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                         <div class="modal fade" id="exampleModal_#" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -293,13 +300,12 @@
                                 @csrf
                                 <div class="form-row d-flex">
                                     <div class="col mb-2">
-                                        <select class="form-select mt-2" id="inlineFormInput" aria-label="Default select example" name = "departement_id[]">
+                                        <select class="form-select mt-2" id="inlineFormInput" aria-label="Default select example" name="departement_id[]">
                                             <option selected>Choisissez le département </option>
                                             @if(isset($rqt))
-                                                @for($i = 0; $i < $nb; $i++)
-                                                    <option value= "{{$rqt[$i]->id}}">{{$rqt[$i]->nom_departement}}</option>
+                                            @for($i = 0; $i < $nb; $i++) <option value="{{$rqt[$i]->id}}">{{$rqt[$i]->nom_departement}}</option>
                                                 @endfor
-                                            @endif
+                                                @endif
                                         </select>
                                     </div>
 
@@ -348,10 +354,9 @@
                                         <tr>
                                             <td>
                                                 @if(isset($branches))
-                                                    @for($i = 0; $i < $nb_branche; $i++)
-                                                        <p><strong>{{$branches[$i]->nom_branche}}</strong></p>
+                                                @for($i = 0; $i < $nb_branche; $i++) <p><strong>{{$branches[$i]->nom_branche}}</strong></p>
                                                     @endfor
-                                                @endif
+                                                    @endif
                                             </td>
                                         </tr>
                                     </tbody>
@@ -395,7 +400,7 @@
     </div>
 
 
-     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.js')}}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
@@ -425,16 +430,16 @@
         $(document).on('click', '#addRow2', function() {
             $('#inlineFormInput').empty();
             $.ajax({
-                url:"{{route('affiche_departement')}}",
-                type:'get',
-                success:function(response){
+                url: "{{route('affiche_departement')}}"
+                , type: 'get'
+                , success: function(response) {
 
-                    var userData=response;
-                    for (var $i = 0; $i < userData.length; $i++){
-                        $("#inlineFormInput").append('<option value="'+userData[$i].id+'">'+ JSON.stringify(userData[$i].nom_departement)+'</option>');
+                    var userData = response;
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        $("#inlineFormInput").append('<option value="' + userData[$i].id + '">' + JSON.stringify(userData[$i].nom_departement) + '</option>');
                     }
-                },
-                error:function(error){
+                }
+                , error: function(error) {
                     console.log(error);
                 }
             });
@@ -450,7 +455,7 @@
                     html += '<select class="form-select mt-2" id="inlineFormInput" aria-label="Default select example" name = "departement_id[]">';
                     html += ' <option selected>Choisissez le département </option>';
                     for (var $i = 0; $i < userData.length; $i++) {
-                        html += ' <option value="'+userData[$i].id+'"> ' + userData[$i].nom_departement + '</option>';
+                        html += ' <option value="' + userData[$i].id + '"> ' + userData[$i].nom_departement + '</option>';
                     }
                     html += ' </select>';
                     html += '</div>';
@@ -475,8 +480,8 @@
             $(this).closest('#inputFormRow2').remove();
         });
 
-           //add row3
-           $(document).on('click', '#addRow3', function() {
+        //add row3
+        $(document).on('click', '#addRow3', function() {
             var html = '';
             html += '<div class="form-row d-flex" id="inputFormRow3">';
             html += '<div class="col">';
@@ -528,5 +533,4 @@
 
     </script> --}}
 
-@endsection
-
+    @endsection

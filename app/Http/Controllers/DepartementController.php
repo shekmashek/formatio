@@ -246,12 +246,7 @@ class DepartementController extends Controller
         $nb_serv = count($service_departement);
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
         $nb_branche = count($branches);
-        if ($rqt != null) {
-            // $liste_departement = $rqt[3]->nom_departement;
             return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'branches', 'nb_branche'));
-        } else {
-            return view('admin.departememnt.nouveau_departement');
-        }
     }
     //fonction qui enregistre les services ratachés aux départements
     public function enregistrement_service(Request $request)
