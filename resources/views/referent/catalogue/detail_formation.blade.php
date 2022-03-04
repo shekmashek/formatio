@@ -1,129 +1,9 @@
 @extends('./layouts/admin')
 @section('content')
-<style>
-    .accordion {
-        background-color: rgba(236, 235, 235, 0.521);
-        color: black;
-        cursor: pointer;
-        height: 3rem;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-        transition: 0.4s;
-    }
-
-    .accordion_prog input {
-        background-color: transparent;
-        border: none;
-        border-radius: 0;
-        height: inherit;
-        width: 90%;
-        margin-top: 0;
-        margin-left: 1rem;
-        color: #542356;
-    }
-
-    .accordion_prog input:focus {
-        background-color: transparent;
-        border-bottom: 2px solid #801D68;
-    }
-
-    .input_cours input {
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid rgba(155, 155, 155, 0.801);
-        border-radius: 0;
-        height: inherit;
-        width: 90%;
-        margin-top: 0;
-        margin-left: 1rem;
-        color: black;
-    }
-
-    .input_cours input:focus {
-        background-color: transparent;
-        border-bottom: 2px solid #801D68;
-        font-size: 14px
-    }
-
-    /* .active,
-    .accordion:hover {
-        background-color: #ccc;
-    } */
-
-    .plus_prog {
-        color: #801D68;
-        float: right;
-        position: relative;
-        bottom: 3rem;
-        padding-right: 1rem;
-        padding-left: .5rem;
-    }
-
-    .accordion:after {
-        /* content: '\002B'; */
-        color: #801D68;
-        font-weight: bold;
-        float: left;
-        position: relative;
-        bottom: 2.5rem;
-        font-size: 24px;
-        padding-right: 1rem;
-        padding-left: .5rem;
-    }
-
-    .btn_enregistrer{
-        background-color: #801D68;
-    }
-
-    .btn_enregistrer:hover{
-        background-color: white;
-        color: #801D68;
-        border: 1px solid #801D68;
-    }
-
-    /* .active:after {
-        content: "\2212";
-    } */
-
-    .panel {
-        padding: 0 18px;
-        background-color: rgba(255, 255, 255, 0.548);
-        max-height: auto;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-    }
-</style>
-<div class="row">
-    <div class="col-lg-3">
-    </div>
-    <div class="col-lg-9">
-
-        <div class="formation__search">
-            <div class="formation__search__form">
-                <form class="" method="GET" action="{{route('result_formation')}}">
-                    {{-- <form action="{{ route('search') }}" method="GET">
-                        <input type="text" name="search" class="form-control" required />: --}}
-                        @csrf
-                        <input type="text" id="reference_search" name="nom_formation"
-                            placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
-                        <button type="submit" class="btn">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </form>
-            </div>
-        </div>
-        @foreach ($categorie as $ctg )
-        <button type="button" class="btn btn" style="border-radius: 15px"><a
-                href="{{route('select_par_module',$ctg->id)}}">{{$ctg->nom_formation}}</a></button>
-        @endforeach
-    </div>
-</div>
-<section class="detail__formation">
+<link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
+<section class="detail__formation mb-5">
     <div class="container py-4">
-        <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5">
+        <div class="row bg-light justify-content-space-between py-3 px-5 back" id="border_premier">
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
@@ -133,8 +13,6 @@
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                         <span><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
                     </div>
-
-
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
@@ -475,6 +353,35 @@
                 <div class="row detail__formation__item__main">
                     <div class="col-lg-12 detail__prix__main__btn py-5">
                         <button type="submit" class="btn">Demander un dévis</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row detail__formation__item__left">
+                <h3 class="pt-3 pb-3">Dates et Villes Session Inter</h3>
+                <div class="col-lg-12">
+                    <div class="row">
+                        <ul>
+                            @foreach ($datas as $data)
+                                <li class="date_ville px-2 mb-2">
+                                    <div class="row">
+                                        <div class="col-3 text-center">
+                                            <span>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <span>Analamahitsy</span>
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <span>{{ number_format($infos[0]->prix, 2, '.', ' ') }} AR HT</span>
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <span class="btn_next">S'inscrire</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -107,6 +107,7 @@ Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
 Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
 Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
 Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
+Route::get('session_inter/{id?}','GroupeController@sessionInter')->name('session_inter');
 //route entreprise
 Route::resource('entreprise','EntrepriseController')->except([
     'create','edit','destroy','update'
@@ -294,6 +295,7 @@ Route::get('search__formation','FormationController@getModulesParReference')->na
 Route::get('domaine_formation','FormationController@formation_domaine')->name('domaine_formation');
 Route::get('select_par_formation/{id}','FormationController@affichageParFormation')->name('select_par_formation');
 Route::get('select_par_module/{id}','FormationController@affichageParModule')->name('select_par_module');
+Route::get('select_tous','FormationController@affichageTousCategories')->name('select_tous');
 //route module
 Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
@@ -338,6 +340,7 @@ Route::get('date_but','DetailController@showDate')->name('date_but');
 
 Route::get('/show/{id}','DetailController@show')->name('show');
 Route::get('/store_detail','DetailController@store')->name('store_detail');
+Route::post ('/store_detailInter','DetailController@storeInter')->name('store_detailInter');
 Route::post('/update_detail/{id}','DetailController@update')->name('update_detail');
 Route::get('/destroy_detail/{id?}','DetailController@destroy')->name('destroy_detail');
 

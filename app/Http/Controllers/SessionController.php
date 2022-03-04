@@ -163,7 +163,6 @@ class SessionController extends Controller
             $stagiaire = $data['stagiaire'];
             $detail = $data['detail'];
         }
-
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);

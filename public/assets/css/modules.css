@@ -38,6 +38,15 @@
     background: #7635dc;
     color: #f1f1f1;
     transition: all 0.5s ease;
+    position: relative;
+    bottom: .65rem;
+    margin-left: 2px;
+}
+
+.btn_competence .bx{
+    position: relative;
+    right: 0.38rem;
+    top: 0.2rem;
 }
 
 .btn_competence:hover{

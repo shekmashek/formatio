@@ -190,6 +190,34 @@ class DetailController extends Controller
         return back();
     }
 
+    public function storeInter(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        //condition de validation de formulaire
+        $request->validate(
+            [
+                'ville' => ["required"],
+                'lieu' => ["required"],
+                'debut' => ["required"],
+                'fin' => ["required"]
+            ],
+            [
+                'ville.required' => 'Veuillez remplir le champ',
+                'lieu.required' => 'Veuillez remplir le champ',
+                'debut.required' => 'Veuillez remplir le champ',
+                'fin.required' => 'Veuillez remplir le champ'
+            ]
+        );
+        $formateur_id = DB::select('select inviter_formateur_id from demmande_cfp_formateur where demmandeur_cfp_id = ?', [$cfp_id])[0]->inviter_formateur_id;
+
+        for ($i = 0; $i < count($request['lieu']); $i++) {
+            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['ville'][$i].' '.$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $formateur_id, $request->groupe, $request->projet, $cfp_id]);
+        }
+        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+        return back();
+    }
+
     public function show_detail($id)
     {
         $liste = entreprise::orderBy('nom_etp')->get();

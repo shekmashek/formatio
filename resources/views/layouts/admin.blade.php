@@ -12,8 +12,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet"
-        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
+        integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 </head>
 
@@ -69,8 +73,8 @@
             @endcanany
             @canany(['isReferent'])
             <li>
-                <a href="{{route('liste_departement')}}" class="d-flex nav_linke">
-                    <i class='bx bx-buildings'></i>
+                <a href="{{route('liste_formation')}}" class="d-flex nav_linke">
+                    <i class='bx bx-home-alt'></i>
                     <span class="links_name">Departements</span>
                 </a>
                 <span class="tooltip">Departements</span>
@@ -89,9 +93,9 @@
             <li>
                 <a href="{{route('list_cfp')}}" class="d-flex nav_linke">
                     <i class='bx bxs-business'></i>
-                    <span class="links_name">Organisme</span>
+                    <span class="links_name">Organisme (OF)</span>
                 </a>
-                <span class="tooltip">Organisme</span>
+                <span class="tooltip">Organisme (OF)</span>
             </li>
             @endcan
             {{-- projet de formation --}}
@@ -147,9 +151,9 @@
             </li>
             @endcanany
             @canany(['isCFP','isReferent','isManager'])
-            <li class="my-2">
-                <a href="{{route('appel_offre.index')}}"  class="nav_linke d-flex">
-                    <i class='bx bxs-user-account'></i>
+            <li>
+                <a href="{{route('appel_offre.index')}}" class="d-flex nav_linke">
+                    <i class='bx bx-mail-send'></i>
                     <span class="links_name">Appel d'Offre</span>
                 </a>
                 <span class="tooltip">Appel d'Offre</span>
@@ -486,14 +490,29 @@
     </div>
 
     <div class="home_content">
-        <div class="container-fluid ps-0 height-100 bg-light" id="content" >
-            <!-- <div class="text">Home</div> -->
-            {{-- header --}}
+        <div class="container-fluid p-0 height-100 bg-light" id="content">
             <header class="header row align-items-center g-0" id="header">
-                <div class="col-5">
-                    <div>
-                        @yield('title')
+                <div class="col-5 align-items-center justify-content-center">
+                    @canany('isReferent','isStagiaire','isManager')
+                    <div class="row">
+                        <form method="GET" action="{{route('result_formation')}}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="searchBoxMod">
+                                    <input class="searchInputMod mb-2" type="text" name=""
+                                        placeholder="Rechercher par formations...">
+                                    <button class="searchButtonMod" href="#">
+                                        <i class="bx bx-search">
+                                        </i>
+                                    </button>
+                                    <button type="button" class="btn_next ms-2"><a href="{{route('liste_formation')}}">Catalogue</a> </button>
+                                    <button type="button" class="btn_next">Annuaire</button>
+                                    <button type="button" class="btn_next"><a href="{{route('calendrier')}}">Agenda</a> </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                    @endcanany
                 </div>
 
                 <div class="col-7 header-right align-items-center d-flex flex-row">
@@ -553,7 +572,8 @@
                         {{-- <div class="header_etp_cfp d-flex flex-row" style="">
                             <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68;"></i>
                             </p>
-                                    <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
+                            <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;
+                            </p>&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;
                             <div class="d-flex pro_plan">
                                 <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
@@ -608,9 +628,9 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                        {{-- <ul id="liste_role" style="float: right">
-                                            Accès:
-                                        </ul> --}}
+                                            <ul id="liste_role">
+                                                Accès:
+                                            </ul>
                                             {{-- @if(Auth::user()->role_id == 1)
                                             <span class="text-muted d-block mb-2">Admin</span>
                                             @endif
@@ -707,7 +727,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body" style="padding-bottom: 1rem; padding-top: 3.5rem;">
+            <div class="container-fluid content_body px-0" style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
             </div>
             {{-- content --}}

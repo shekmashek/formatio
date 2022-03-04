@@ -2,28 +2,10 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
-<div class="row mt-5">
-    <div class="col-lg-9">
-
-        <div class="formation__search">
-            <div class="formation__search__form">
-                <form class="" method="GET" action="{{route('result_formation')}}">
-                    {{-- <form action="{{ route('search') }}" method="GET">
-                    <input type="text" name="search" class="form-control" required />: --}}
-                    @csrf
-                    <input type="text" id="reference_search" name="nom_formation" placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
-                    <button type="submit" class="btn">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-        @foreach ($categorie as $ctg )
-        <button type="button" class="btn btn" style="border-radius: 15px"><a href="{{route('select_par_module',$ctg->id)}}">{{$ctg->nom_formation}}</a></button>
-        @endforeach
-    </div>
+<div class="row ">
     <div class="col" align="right">
-        <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}" href="{{route('liste_module')}}">
+        <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
+            href="{{route('liste_module')}}">
             <span class="btn_enregistrer text-center">Précedent</span>
         </a>
     </div>
@@ -47,9 +29,11 @@
             <div class="col-lg-6 col-md-6 ">
                 <div class="detail__formation__result__item2">
                     <a href="#">
-                        <h6 class="py-4 text-center text_black">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
+                        <h6 class="py-4 text-center text_black">Formation Proposée par&nbsp;<span>{{$res->nom}}</span>
+                        </h6>
                     </a>
-                    <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;"></div>
+                    <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
+                            style="width: 200px; height:100px;"></div>
                 </div>
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
@@ -65,9 +49,11 @@
                         @endisset
                     </span> </p>
                 </div>
-                <div class="col"><i class="bx bxs-devices bx_icon"></i><span class="text_black">&nbsp;{{$res->modalite_formation}}</span>
+                <div class="col"><i class="bx bxs-devices bx_icon"></i><span
+                        class="text_black">&nbsp;{{$res->modalite_formation}}</span>
                 </div>
-                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span class="text_black">&nbsp;{{$res->niveau}}</span></div>
+                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span
+                        class="text_black">&nbsp;{{$res->niveau}}</span></div>
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5 mb-5">
@@ -78,7 +64,8 @@
                     <div class="col-lg-12">
                         <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
-                        <button class="btn_enregistrer"><a href="#programme__formation">Consulter votre programme de formation</a></button>
+                        <button class="btn_enregistrer"><a href="#programme__formation">Consulter votre programme de
+                                formation</a></button>
                     </div>
                 </div>
                 {{-- section 1 --}}
@@ -98,7 +85,8 @@
 
                     <div class="col-lg-5">
                         <div class="row d-flex flex-row w-100">
-                            <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
+                            <span class="adresse__text"><i
+                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
                             <div class="col-1"><i class="bx bx-chevron-right"></i></div>
                             <div class="col-11">
                                 <p>{{$res->prerequis}}</p>
@@ -117,7 +105,8 @@
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-5 d-flex flex-row">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
+                            <span class="adresse__text"><i
+                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
                                 necessaire</span>
                             <div class="col-1"><i class="bx bx-chevron-right"></i></div>
                             <div class="col-11">
@@ -128,7 +117,8 @@
 
                     <div class="col-lg-5">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
+                            <span class="adresse__text"><i
+                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
                                 a savoir</span>
                             <div class="col-1"><i class="bx bx-chevron-right"></i></div>
                             <div class="col-11">
@@ -148,7 +138,8 @@
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-12 d-flex flex-row">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
+                            <span class="adresse__text"><i
+                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
                                 pedagogiques</span>
                             <div class="col-1"><i class="bx bx-chevron-right"></i></div>
                             <div class="col-11">
@@ -170,7 +161,8 @@
                                 <div id="newProg"></div>
                                 <div class="form-row d-flex flex-row">
                                     <input type="hidden" value="{{$id}}" name="id_module">
-                                    <button type="submit" class="btn btn-primary background_grey6 " id="nouveau_prg" style="display:none">Enregistrer</button>
+                                    <button type="submit" class="btn btn-primary background_grey6 " id="nouveau_prg"
+                                        style="display:none">Enregistrer</button>
                                     <button type="button" id="addProg" class="background_grey6 btn">Nouveau
                                         Programme</button>
                                 </div>
@@ -182,22 +174,35 @@
                                 <?php $i=0 ?>
                                 @foreach ($programmes as $prgc)
                                 <div class="accordionItem open" id="programme{{$prgc->id}}">
-                                    <h6 class="accordionItemHeading p-0 pb-2 ps-3">{{$i+1}} - {{$prgc->titre}}<i class="bx bx-minus mt-3 background_plus suppression_programme" style="font-size: 14px; color: #801D68;" role="button" title="Supprimer le programme" id="{{$prgc->id}}"></i></h6>
+                                    <h6 class="accordionItemHeading p-0 pb-2 ps-3">{{$i+1}} - {{$prgc->titre}}<i
+                                            class="bx bx-minus mt-3 background_plus suppression_programme"
+                                            style="font-size: 14px; color: #801D68;" role="button"
+                                            title="Supprimer le programme" id="{{$prgc->id}}"></i></h6>
                                     <div class="accordionItemContent">
                                         @foreach ($cours as $c)
                                         @if($c->programme_id == $prgc->id)
-                                        <p id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 p-0 cours_hover"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} <span><i class="bx bx-minus mt-3 background_plus suppression" style="font-size: 14px; color: #801D68; " onclick="Suppression();" role="button" title="Supprimer le Cours" id="{{$c->cours_id}}"></i></span></p>
+                                        <p id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 p-0 cours_hover"><i
+                                                class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} <span><i
+                                                    class="bx bx-minus mt-3 background_plus suppression"
+                                                    style="font-size: 14px; color: #801D68; " onclick="Suppression();"
+                                                    role="button" title="Supprimer le Cours"
+                                                    id="{{$c->cours_id}}"></i></span></p>
                                         @endif
                                         @endforeach
-                                        <button type="button" class="btn background_grey6 mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#Modal_cours_{{$prgc->id}}" id="{{$prgc->id}}">Nouvelle
+                                        <button type="button" class="btn background_grey6 mb-2 mt-2"
+                                            data-bs-toggle="modal" data-bs-target="#Modal_cours_{{$prgc->id}}"
+                                            id="{{$prgc->id}}">Nouvelle
                                             Cours</button>
-                                        <button type="button" class="background_grey6 btn mb-2 mt-2 " data-bs-toggle="modal" data-bs-target="#Modal_{{$prgc->id}}" id="{{$prgc->id}}">Modifier Cours et Programme</button>
+                                        <button type="button" class="background_grey6 btn mb-2 mt-2 "
+                                            data-bs-toggle="modal" data-bs-target="#Modal_{{$prgc->id}}"
+                                            id="{{$prgc->id}}">Modifier Cours et Programme</button>
                                     </div>
                                     {{-- data-target="#Modal_{{$prgc->id}}" --}}
 
                                 </div>
 
-                                <div class="modal fade" id="Modal_{{$prgc->id}}" tabindex="-1" role="dialog" aria-labelledby="Modal{{$prgc->id}}" aria-hidden="true">
+                                <div class="modal fade" id="Modal_{{$prgc->id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="Modal{{$prgc->id}}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -205,18 +210,25 @@
                                                     Programme</h5>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{route('update_prog_cours')}}" method="POST" class="form_modif">
+                                                <form action="{{route('update_prog_cours')}}" method="POST"
+                                                    class="form_modif">
                                                     @csrf
                                                     <input type="hidden" value="{{$prgc->id}}" name="id_prog">
                                                     <div class="form-row">
-                                                        <input type="text" name="titre_prog" class="w-100  titre_{{$i}} input" value="{{$prgc->titre}}">
+                                                        <input type="text" name="titre_prog"
+                                                            class="w-100  titre_{{$i}} input" value="{{$prgc->titre}}">
                                                         <hr>
                                                         <div class="d-flex flex-column">
                                                             <?php $j=0 ?>
                                                             @foreach ($cours as $c)
                                                             @if($c->programme_id == $prgc->id)
-                                                            <input type="text" name="cours_{{$prgc->id}}_{{$c->cours_id}}" class="w-100 cours_{{$j}} input mb-2" value="{{$c->titre_cours}}" required>
-                                                            <input type="hidden" name="id_cours_{{$prgc->id}}_{{$c->cours_id}}" value="{{$c->cours_id}}">
+                                                            <input type="text"
+                                                                name="cours_{{$prgc->id}}_{{$c->cours_id}}"
+                                                                class="w-100 cours_{{$j}} input mb-2"
+                                                                value="{{$c->titre_cours}}" required>
+                                                            <input type="hidden"
+                                                                name="id_cours_{{$prgc->id}}_{{$c->cours_id}}"
+                                                                value="{{$c->cours_id}}">
                                                             <?php $j++ ?>
                                                             @endif
 
@@ -226,7 +238,8 @@
 
                                             </div>
                                             <div class="modal-footer d-flex flex-row">
-                                                <button type="button" class="btn  btn_previous" data-bs-dismiss="modal">Fermer</button>
+                                                <button type="button" class="btn  btn_previous"
+                                                    data-bs-dismiss="modal">Fermer</button>
                                                 <button type="submit" class="btn  btn_next">Enregistrer</button>
                                             </div>
                                             </form>
@@ -234,7 +247,8 @@
                                     </div>
                                 </div>
 
-                                <div class="modal fade" id="Modal_cours_{{$prgc->id}}" tabindex="-1" role="dialog" aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true">
+                                <div class="modal fade" id="Modal_cours_{{$prgc->id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <form action="{{route('insertion_cours')}}" method="POST">
@@ -249,20 +263,21 @@
                                                             <div class="col-11">
                                                                 <div class="form-group">
                                                                     <div class="form-row">
-                                                                        <input type="text" name="cours[]"
-                                                                            id="cours"
-                                                                            class="form-control input"
-                                                                            required>
+                                                                        <input type="text" name="cours[]" id="cours"
+                                                                            class="form-control input" required>
                                                                         <label for="cours"
-                                                                            class="form-control-placeholder">Nouveau cours</label>
+                                                                            class="form-control-placeholder">Nouveau
+                                                                            cours</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-1">
                                                                 <div class="mt-3">
-                                                                    <button class="form-control btn_previous button_plus"
-                                                                        type="button" onclick="Cours();"><i class="bx bx-plus"
+                                                                    <button
+                                                                        class="form-control btn_previous button_plus"
+                                                                        type="button" onclick="Cours();"><i
+                                                                            class="bx bx-plus"
                                                                             style="font-size: 20px"></i></button>
                                                                 </div>
                                                             </div>
@@ -358,7 +373,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

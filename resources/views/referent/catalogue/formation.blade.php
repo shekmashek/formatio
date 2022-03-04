@@ -1,96 +1,104 @@
 @extends('./layouts/admin')
-@section('title')
-
-    <p style="font-size: 20px; color:white" class="ms-5">Recherche de Formation</p>
-
-@endsection
 @section('content')
-    <section class="formation">
-        <div class="container-fluid">
-
-                    {{-- <div class="formation__categories"> --}}
-                        {{-- <div class="formation__categories__tous d-flex flex-row align-items-center"> --}}
-                            {{-- <div><i class="bx bxs-grid"></i></div> --}}
-                            {{-- <div><span>Domaines de formation</span></div>
-                        </div>
-                        <div class="formation__list__box">
-                            <dl class="fl__item fl__item__bureatique dropdown">
-                                @foreach ($domaines as $domaine)
-                                    <dt class="formation__name">
-                                        <span>
-                                            <a href="#" class="ms-2 domaine" data-toggle="dropdown" id="{{ $domaine->id }}" data-id="{{ $domaine->id }}" aria-haspopup="true" aria-expanded="false">{{ $domaine->nom_domaine }}</a>
-                                        </span>
-                                    </dt>
-                                @endforeach --}}
-                                {{-- <div id="formation_resultat"></div>
-                                 <dd class="sous-formation dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" data-path="f-bureatique-content" data-role="first-menu-main" style="display: none;">
-                                    <div class="sous-formation-main">
-                                        <div class="sous-formation-content d-flex flex-column flex-sm-row align-items-start">
-                                                <div class="sous-formation-row dropdown-item ">
-                                                </div>
-                                        </div>
-                                    </div>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div> --}}
-                </div>
-                <div class="row">
-                    <div class="col-lg-3">
-                    </div>
-                <div class="col-lg-9">
-
-                    <h3>Que voulez-vous apprendre?</h3>
-                    <div class="formation__search">
-                        <div class="formation__search__form">
-                            <form class="" method="GET" action="{{route('result_formation')}}">
-                                {{-- <form action="{{ route('search') }}" method="GET">
-                                    <input type="text" name="search" class="form-control" required/>: --}}
-                           @csrf
-                                <input type="text" id="reference_search" name="nom_formation" placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
-                                <button type="submit" class="btn">
-                                    <i class="fa fa-search"></i>
+<link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
+<section class="formation mb-5">
+    <div class="container-fluid g-0 m-0 p-0 justify-content-center ">
+        <div class="row g-0 m-0 content_formation p-5">
+            <div class="col-6 ">
+                <h3 class="text-center mb-4">Que voulez-vous apprendre?</h3>
+                <div class="row content_search text-center mb-5">
+                    <form method="GET" action="{{route('result_formation')}}">
+                        @csrf
+                        <div class="form-row">
+                            <div class="">
+                                <input class="me-3" type="text" name=""
+                                    placeholder="Rechercher par formations ex. Excel">
+                                <button class="btn_search_formation" href="#">
+                                    <i class="bx bx-search">
+                                    </i>
                                 </button>
-                            </form>
+                            </div>
                         </div>
-                    </div>
-
-
+                    </form>
+                </div>
+                <div class="d-flex flex-row flex-wrap ps-5">
                     @foreach ($categorie as $ctg )
-                    <a href="{{route('select_par_module',$ctg->id)}}"><button type="button" class="btn btn" style="border-radius: 15px">{{$ctg->nom_formation}}</button></a>
+                    <div class="content_domaines">
+                        <button type="button" class="btn btn"><a href="{{route('select_par_formation',$ctg->id)}}">
+                                {{$ctg->nom_formation}}</a></button>
+
+                    </div>
                     @endforeach
-                    <style>
-
-                        .btn{background-color: #801D68;color: white}
-                        .btn:hover{color:white}
-                    </style>
-                       </div>
+                    <div class="content_domaines">
+                        <a href="{{route('select_tous')}}">
+                            <button type="button" class="btn btn_categ"><i class="bx bx-list-ul icon_categ"></i> Tous
+                                les Thématiques</button>
+                        </a>
                     </div>
-                    <br>
-                    <br>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-3">
-                            </div>
-                        <div class="col-lg-9">
-                    <div class="formation__item set-bg" id>
-                        <h3>Les formations les plus recherchées </h3><br>
-                    </div>
-                     </div>
-
-
-                            </div>
+                </div>
+            </div>
+            <div class="col-6 align-items-center justify-content-center">
+                <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{asset('img/formation/rendue1.png')}}" alt="image"
+                                class="d-block w-100 img-fluid">
                         </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('img/formation/rendue5.png')}}" alt="image"
+                                class="d-block w-100 img-fluid">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('img/formation/rendue2.png')}}" alt="image"
+                                class="d-block w-100 img-fluid">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script type="text/javascript">
-        // CSRF Token
+    </div>
+    <div class="container mt-5">
+        <h3 class="mb-5">Les formations les plus recherchées </h3>
+        <div class="row">
+            <div class="col-12 d-flex flex-wrap justify-content-center">
+                @foreach ($module as $mod)
+                <div class="card_formation">
+                    <div class="imageLogo text-center mb-2">
+                        {{-- <img src="{{$mod->logo}}" alt="logo" class="img-fluid" title="organisme de formation"> --}}
+                        <img src="{{asset('images/CFP/Numerika19-01-2022.png')}}" alt="logo" class="img-fluid"
+                            title="organisme de formation">
+                    </div>
+                    <div class="titre_module">
+                        <p class="text-capitalize text-">{{$mod->nom_module}}</p>
+                    </div>
+                    <div class="details_module">
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="text-capitalize"><i class='bx bx-detail me-2'></i>{{$mod->nom_formation}}</p>
+                                <p class="text-capitalize"><i class='bx bx-alarm me-2'></i>{{$mod->duree_jour}}
+                                    jours/{{$mod->duree}}heures</p>
+                                <p class="text-capitalize"><i
+                                        class='bx bxs-notification me-2'></i>{{$mod->modalite_formation}}</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <p class="text-capitalize"><span class="prix">{{$mod->prix}}&nbsp;AR&nbsp;<span class="text-muted">HT</span></span> </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="plus_detail text-center ">
+                        <button type="button" class="mt-3 btn_next"><a href="{{route('select_par_module',$mod->module_id)}}">Voir gratuitement</a></button>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script type="text/javascript">
+    // CSRF Token
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function(){
           $( "#reference_search" ).autocomplete({
@@ -161,6 +169,7 @@
             $(".dropdown>.dropdown-menu").css("display", "none");
         });
     });
+
 </script>
 
 @endsection
