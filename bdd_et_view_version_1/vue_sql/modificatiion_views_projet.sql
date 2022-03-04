@@ -73,7 +73,7 @@ create or replace view v_groupe_entreprise as
         g.activiter as activiter_groupe,
         g.type_payement_id,
         tp.type as type_payement
-    from groupe_entreprise ge
+    from groupe_entreprises ge
     join groupes g on ge.groupe_id = g.id
     join entreprises e on ge.entreprise_id = e.id
     join type_payement tp on g.type_payement_id = tp.id;
@@ -220,7 +220,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
         s.photos,
-        s.departement_entreprise_id as departement_id,
+        s.departement_entreprises_id as departement_id,
         s.cin,
         s.date_naissance,
         (s.lot) adresse,
@@ -265,8 +265,30 @@ create or replace view v_projet_cfp as
 
     create or replace view v_projet_entreprise as 
         select 
-            projet_id,
+            gp.projet_id,
+            nom_projet,
             entreprise_id,
-            type_formation_id
-        from v_groupe_projet_entreprise 
-        group by projet_id;
+            type_formation_id,
+            date_projet,
+            totale_session
+        from v_groupe_projet_entreprise gp
+        join v_totale_session ts on ts.projet_id = gp.projet_id
+        group by 
+            projet_id,
+            nom_projet,
+            entreprise_id,
+            type_formation_id,
+            date_projet;
+
+create or replace view v_projet_formation as 
+    select 
+        projet_id,
+        formation_id,
+        nom_formation,
+        cfp_id
+    from v_groupe_projet_entreprise_module
+    group by 
+        projet_id,
+        formation_id,
+        nom_formation,
+        cfp_id;

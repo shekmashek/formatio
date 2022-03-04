@@ -29,8 +29,8 @@ class Projet extends Model
     public function findById($id){  return projet::where('id',$id)->get()[0];    }
 
     //recherche projet
-    public function build_requette($role,$type,$table,$request){
-        $sql = "select * from ".$table." where type_formation_id = ".$type;
+    public function build_requette($role,$table,$request){
+        $sql = "select * from ".$table." where 1=1 ";
         if (Gate::allows('isCFP') || Gate::allows('isFormateur')){
             $sql = $sql." and cfp_id = ".$role;
         }elseif(Gate::allows('isReferent') || Gate::allows('isManager') || Gate::allows('isStagiaire')){

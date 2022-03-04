@@ -486,16 +486,18 @@ class HomeController extends Controller
         elseif (Gate::allows('isCFP')) {
 
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $sql = $projet_model->build_requette($cfp_id,$type_formation_id,"v_projet_session",$request);
+            $sql = $projet_model->build_requette($cfp_id,"v_projet_session",$request);
             // dd($sql);
             $projet = DB::select($sql);
+            $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?',[$cfp_id]);
             // $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
-            if($type_formation_id == 1){
-                $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
-            }
-            elseif($type_formation_id == 2){
-                $data = $fonct->findWhere("v_projet_session_inter", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
-            }
+            // if($type_formation_id == 1){
+            //     $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
+            // }
+            // elseif($type_formation_id == 2){
+            //     $data = $fonct->findWhere("v_projet_session_inter", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
+            // }
+            $data = $fonct->findWhere("v_groupe_projet_entreprise_module", ["cfp_id"], [$cfp_id]);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -506,7 +508,7 @@ class HomeController extends Controller
 
             $type_formation = DB::select('select * from type_formations');
 
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module','type_formation','status','type_formation_id'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module','type_formation','status','type_formation_id','projet_formation'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
