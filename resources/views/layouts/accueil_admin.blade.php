@@ -36,8 +36,8 @@
     </div>    style="background-color: #74b7eb"-eo ambony ty couleur ty --}}
         <div class="col-lg-6">
             <div class="card text-white mb-3 mt-3" >
-                <div class="" style="height:45px;"><img id="example2" class="ms-3" src="{{asset('images/formateurs/20220215123536.jpg')}}" alt="image stagiaire" style="position: absolute; margin-top: 8px; border-radius: 100%; height:60px; width:60px"></div>
-                {{-- <div class="card-header" style="height:45px;"><img id="example2" class="ms-3" src="@foreach($phone_tmp as $item) {{$item->photos}}  @endforeach" alt="image stagiaire" style="position: absolute; margin-top: 8px; border-radius: 100%; height:60px; width:60px"></div> --}}
+                {{-- <div class="" style="height:45px;"><img id="example2" class="ms-3" src="{{asset('images/formateurs/20220215123536.jpg')}}" alt="image stagiaire" style="position: absolute; margin-top: 8px; border-radius: 100%; height:60px; width:60px"></div> --}}
+                <div class="card-header" style="height:45px;"><img id="example2" class="ms-3" src="@foreach($phone_tmp as $item) {{$item->photos}}  @endforeach" alt="image stagiaire" style="position: absolute; margin-top: 8px; border-radius: 100%; height:60px; width:60px"></div>
                 {{-- <div class="rond"><img src="" alt=""></div> --}}
                 <div class="card-body text-dark" style="background-color: #fff; border-radius: 3px">
                     <div class="mt-4">
