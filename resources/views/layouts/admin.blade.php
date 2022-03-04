@@ -635,6 +635,8 @@
 
                                         </div>
                                         <div class="d-flex pro_plan" style="margin-top: -25px">
+
+
                                             <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
                                             <span ><div class='logo_etp_user'> </div></span><p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
                                         </div>
@@ -655,6 +657,15 @@
                                             @can('isCFPPrincipale')
                                             <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
+                                            <select name="vue" id="" class="form-group">
+                                                <option value="Referent">Referent</option>
+                                                <option value="CFP">CFP</option>
+                                                <option value="Chef de Departement">Chef de Departement</option>
+                                                <option value="Formateur">Formateur</option>
+                                                <option value="Stagiaire">Stagiaire</option>
+
+
+                                            </select>
                                         <hr style="color:lightgrey">
 
                                             <div class="text_resp" style="margin-top: -10px;margin-left:65px">
