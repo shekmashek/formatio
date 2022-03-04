@@ -72,7 +72,7 @@
                     <a class="nav-link " href="#comportement">Comportements prohibés</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#obligation">Obligations et responsabilité du A WORLD FOR US</a>
+                    <a class="nav-link " href="#obligation">Obligations et responsabilité du Formation.mg</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="#propriete">Propriété Intellectuelle
@@ -128,7 +128,7 @@
                 <h2>Description des Services</h2>
                 <h6>1. Licence(s) d’utilisation de l’Application</h6>
                 <h6 style="margin-left: 10px">1.1 Objet de la licence</h6>
-                <h6>A WORLD FOR US concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
+                <h6>Formation.mg concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
                 <h6>L’accès à l’Application est fourni : </h6><br>
                 <ul>
                     <li>- Gratuitement en ce qui concerne l’abonnement basique ;</li>
@@ -138,30 +138,30 @@
                 <h6>Cette licence est consentie pour le monde entier et pour la durée de l’abonnement souscrit.</h6><br>
                 <h6>Il est interdit au Client d’en céder ou d’en transférer le bénéfice à un tiers, quel qu’il soit.</h6><br>
                 <h6 style="margin-left: 10px">1.2 Hébergement</h6>
-                <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par A WORLD FOR US ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
-                <h6>En cas de changement de prestataire d’hébergement, A WORLD FOR US s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
-                <h6>A WORLD FOR US s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
-                <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels A WORLD FOR US n’a aucune maîtrise, la responsabilité de A WORLD FOR US sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
-                <h6>A WORLD FOR US ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
+                <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par Formation.mg ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
+                <h6>En cas de changement de prestataire d’hébergement, Formation.mg s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
+                <h6>Formation.mg s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
+                <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels Formation.mg n’a aucune maîtrise, la responsabilité de Formation.mg sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
+                <h6>Formation.mg ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
                 <h6 style="margin-left: 10px">1.3 Maintenance évolutive</h6>
-                <h6>A WORLD FOR US s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de A WORLD FOR US.</h6><br>
-                <h6>A WORLD FOR US se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
+                <h6>Formation.mg s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de Formation.mg.</h6><br>
+                <h6>Formation.mg se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
                 <h6 style="margin-left: 10px">1.4 Support technique</h6>
-                <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des Services, A WORLD FOR US offre au Client un support technique consistant en une assistance et un conseil.</h6><br>
+                <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des Services, Formation.mg offre au Client un support technique consistant en une assistance et un conseil.</h6><br>
                 <h6>Le support technique est accessible à l’adresse email info@digiforma.com ou par chat.</h6><br>
                 <h6 style="margin-left: 10px">1.5 Autres Services</h6>
-                <h6>A WORLD FOR US se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
+                <h6>Formation.mg se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
             </div>
             <div>
                 <h2>Conditions financières</h2>
                 <h6>1. Prix des Services </h6>
-                <h6>En contrepartie de la réalisation des Services, le Client s’engage à payer à A WORLD FOR US le prix de l’abonnement choisi, tel qu’indiqué sur le Site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
+                <h6>En contrepartie de la réalisation des Services, le Client s’engage à payer à Formation.mg le prix de l’abonnement choisi, tel qu’indiqué sur le Site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
                 <h6>2. Facturation </h6>
                 <h6>Les Services font l’objet de factures ponctuelles ou mensuelles communiquées au Client par email et à chaque nouvelle souscription de Service ou d’abonnement.</h6><br>
                 <h6 id="condition">3. Révision du Prix </h6>
                 <h6>Le Prix a été calculé en fonction de l’abonnement choisi par le Client et des options éventuellement souscrites. Si l’un de ces paramètres venait à évoluer en cours de Contrat, le Prix des Services serait recalculé en conséquence.</h6><br>
                 <h6>4. Retards et défauts de paiement
-                    <h6>De convention expresse entre les parties, tout retard de paiement de tout ou partie d’une somme due à son échéance au titre de l’exécution des Services entraînera automatiquement et sans mise en demeure préalable : (i) la déchéance du terme de l’ensemble des sommes dues par le Client et leur exigibilité immédiate, (ii) la suspension immédiate des Services jusqu’au complet paiement de l’intégralité des sommes dues et (iii) la facturation au profit de A WORLD FOR US d’un intérêt de retard au taux de 3 fois (trois fois) le taux d’intérêt légal, assis sur le montant de l’intégralité des sommes dues par le Client.</h6><br>
+                    <h6>De convention expresse entre les parties, tout retard de paiement de tout ou partie d’une somme due à son échéance au titre de l’exécution des Services entraînera automatiquement et sans mise en demeure préalable : (i) la déchéance du terme de l’ensemble des sommes dues par le Client et leur exigibilité immédiate, (ii) la suspension immédiate des Services jusqu’au complet paiement de l’intégralité des sommes dues et (iii) la facturation au profit de Formation.mg d’un intérêt de retard au taux de 3 fois (trois fois) le taux d’intérêt légal, assis sur le montant de l’intégralité des sommes dues par le Client.</h6><br>
             </div>
         </div>
     </div>
@@ -194,7 +194,7 @@
                 <a class="nav-link " href="#comportement">Comportements prohibés</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="#obligation">Obligations et responsabilité du A WORLD FOR US</a>
+                <a class="nav-link " href="#obligation">Obligations et responsabilité du Formation.mg</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="#propriete">Propriété Intellectuelle
@@ -251,7 +251,7 @@
             <h2>Description des Services</h2>
             <h6>1. Licence(s) d’utilisation de l’Application</h6>
             <h6 style="margin-left: 10px">1.1 Objet de la licence</h6>
-            <h6>A WORLD FOR US concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
+            <h6>Formation.mg concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
             <h6>L’accès à l’Application est fourni : </h6><br>
             <ul>
                 <li>- Gratuitement en ce qui concerne l’abonnement basique ;</li>
@@ -261,43 +261,43 @@
             <h6>Cette licence est consentie pour le monde entier et pour la durée de l’abonnement souscrit.</h6><br>
             <h6>Il est interdit au Client d’en céder ou d’en transférer le bénéfice à un tiers, quel qu’il soit.</h6><br>
             <h6 style="margin-left: 10px">1.2 Hébergement</h6>
-            <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par A WORLD FOR US ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
-            <h6>En cas de changement de prestataire d’hébergement, A WORLD FOR US s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
-            <h6>A WORLD FOR US s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
-            <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels A WORLD FOR US n’a aucune maîtrise, la responsabilité de A WORLD FOR US sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
-            <h6>A WORLD FOR US ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
+            <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par Formation.mg ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
+            <h6>En cas de changement de prestataire d’hébergement, Formation.mg s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
+            <h6>Formation.mg s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
+            <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels Formation.mg n’a aucune maîtrise, la responsabilité de Formation.mg sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
+            <h6>Formation.mg ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
             <h6 style="margin-left: 10px">1.3 Maintenance évolutive</h6>
-            <h6>A WORLD FOR US s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de A WORLD FOR US.</h6><br>
-            <h6>A WORLD FOR US se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
+            <h6>Formation.mg s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de Formation.mg.</h6><br>
+            <h6>Formation.mg se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
             <h6 style="margin-left: 10px">1.4 Support technique</h6>
-            <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des Services, A WORLD FOR US offre au Client un support technique consistant en une assistance et un conseil.</h6><br>
+            <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des Services, Formation.mg offre au Client un support technique consistant en une assistance et un conseil.</h6><br>
             <h6>Le support technique est accessible à l’adresse email info@digiforma.com ou par chat.</h6><br>
             <h6 style="margin-left: 10px">1.5 Autres Services</h6>
-            <h6>A WORLD FOR US se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
+            <h6>Formation.mg se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
         </div>
         <div>
             <h2>Conditions financières</h2>
             <h6>1. Prix des Services </h6>
-            <h6>En contrepartie de la réalisation des Services, le Client s’engage à payer à A WORLD FOR US le prix de l’abonnement choisi, tel qu’indiqué sur le Site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
+            <h6>En contrepartie de la réalisation des Services, le Client s’engage à payer à Formation.mg le prix de l’abonnement choisi, tel qu’indiqué sur le Site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
             <h6>2. Facturation </h6>
             <h6>Les Services font l’objet de factures ponctuelles ou mensuelles communiquées au Client par email et à chaque nouvelle souscription de Service ou d’abonnement.</h6><br>
             <h6 id="condition">3. Révision du Prix </h6>
             <h6>Le Prix a été calculé en fonction de l’abonnement choisi par le Client et des options éventuellement souscrites. Si l’un de ces paramètres venait à évoluer en cours de Contrat, le Prix des Services serait recalculé en conséquence.</h6><br>
             <h6>4. Retards et défauts de paiement
-                <h6>De convention expresse entre les parties, tout retard de paiement de tout ou partie d’une somme due à son échéance au titre de l’exécution des Services entraînera automatiquement et sans mise en demeure préalable : (i) la déchéance du terme de l’ensemble des sommes dues par le Client et leur exigibilité immédiate, (ii) la suspension immédiate des Services jusqu’au complet paiement de l’intégralité des sommes dues et (iii) la facturation au profit de A WORLD FOR US d’un intérêt de retard au taux de 3 fois (trois fois) le taux d’intérêt légal, assis sur le montant de l’intégralité des sommes dues par le Client.</h6><br>
+                <h6>De convention expresse entre les parties, tout retard de paiement de tout ou partie d’une somme due à son échéance au titre de l’exécution des Services entraînera automatiquement et sans mise en demeure préalable : (i) la déchéance du terme de l’ensemble des sommes dues par le Client et leur exigibilité immédiate, (ii) la suspension immédiate des Services jusqu’au complet paiement de l’intégralité des sommes dues et (iii) la facturation au profit de Formation.mg d’un intérêt de retard au taux de 3 fois (trois fois) le taux d’intérêt légal, assis sur le montant de l’intégralité des sommes dues par le Client.</h6><br>
         </div> --}}
 {{-- <div>
             <h2>Responsabilités et garanties du Client</h2>
             <h6>1. Le Client est seul responsable du respect des lois et règlements en vigueur applicables à son activité. Il est notamment seul responsable du bon accomplissement de toutes les formalités administratives, fiscales et/ ou sociales qui lui incombent en relation avec son utilisation des Services.</h6><br>
-            <h6>2. Le Client reconnait être seul responsable du traitement des données à caractère personnel pouvant être collectées à travers les Services et s’engage à respecter la législation applicable. A WORLD FOR US n’intervient qu’en qualité de sous-traitant et met en œuvre les moyens nécessaires au maintien de la sécurité et de la confidentialité desdites données. </h6><br>
+            <h6>2. Le Client reconnait être seul responsable du traitement des données à caractère personnel pouvant être collectées à travers les Services et s’engage à respecter la législation applicable. Formation.mg n’intervient qu’en qualité de sous-traitant et met en œuvre les moyens nécessaires au maintien de la sécurité et de la confidentialité desdites données. </h6><br>
             <h6>3.
             Le Client s’interdit, en son nom et au nom des Utilisateurs, de céder, concéder ou transférer tout ou partie de ses droits ou obligations au titre des présentes à un quelconque tiers, y compris si ce tiers a un lien direct ou indirect avec le Client, de quelque manière que ce soit.
             <h6>4.
             Le Client est informé et accepte que la mise en œuvre des Services nécessite qu’il soit connecté à internet et que la qualité des Services dépend directement de cette connexion.
             <h6>5.
-            Le Client déclare avoir pris connaissance des caractéristiques et des fonctionnalités de l’Application, qu’il est informé de la configuration technique nécessaire à son utilisation, qu’il a reçu de A WORLD FOR US tous conseils, instructions et précisions qui lui sont nécessaires pour souscrire aux Services en toute connaissance de cause, qu’il dispose ainsi d’une connaissance suffisante des Services et qu’il a, préalablement aux présentes, suffisamment échangé avec A WORLD FOR US pour s’assurer que les Services correspondent à ses attentes, besoins et contraintes.
+            Le Client déclare avoir pris connaissance des caractéristiques et des fonctionnalités de l’Application, qu’il est informé de la configuration technique nécessaire à son utilisation, qu’il a reçu de Formation.mg tous conseils, instructions et précisions qui lui sont nécessaires pour souscrire aux Services en toute connaissance de cause, qu’il dispose ainsi d’une connaissance suffisante des Services et qu’il a, préalablement aux présentes, suffisamment échangé avec Formation.mg pour s’assurer que les Services correspondent à ses attentes, besoins et contraintes.
             <h6>6.
-            De façon générale, le Client s’engage à ne rien faire qui puisse, de quelque manière que ce soit, nuire à l’image de marque ou à la réputation de A WORLD FOR US.
+            De façon générale, le Client s’engage à ne rien faire qui puisse, de quelque manière que ce soit, nuire à l’image de marque ou à la réputation de Formation.mg.
             <h6>7.
             Le Client est seul responsable des contenus de toute nature (rédactionnels, graphiques, audios, audiovisuels ou autres) qu’il publie sur l’Application et de toute conséquence qui en découlerait.
             <h6>8.
