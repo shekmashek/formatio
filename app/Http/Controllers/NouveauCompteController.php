@@ -125,7 +125,6 @@ class NouveauCompteController extends Controller
                                     $this->new_compte->insert_CFP($data);
 
                                     $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp])->id;
-                                    $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$cfp_id]);
                                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
                                     DB::beginTransaction();
                                     try {
@@ -137,12 +136,13 @@ class NouveauCompteController extends Controller
                                     }
                                     //============= save image
 
-                                    $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
-                                    // $this->img->store_image("responsable",$resp["photo_resp"],$req->file('photo_resp_cfp')->getContent());
+                                    // $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
                                     $fonct = new FonctionGenerique();
                                     $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
 
                                     Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+                                    $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
+
                                     return redirect()->route('inscription_save');
                                 } else {
                                     return back()->with('error', 'télephone existe déjà!');
@@ -187,9 +187,8 @@ class NouveauCompteController extends Controller
                 $data["nif"] = $req->nif;
                 $data["secteur_id"] = $req->secteur_id;
 
-            //    dd($data);
                 // ======= responsable
-
+                $resp["matricule"] = $req->matricule_resp_etp;
                 $resp["nom_resp"] = $req->nom_resp_etp;
                 $resp["prenom_resp"] = $req->prenom_resp_etp;
                 $resp["cin_resp"] = $req->cin_resp_etp;
@@ -204,7 +203,7 @@ class NouveauCompteController extends Controller
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_etp]);
                 $verify_resp_tel = $this->fonct->findWhere("users", ["telephone"], [$req->tel_resp_etp]);
 
-
+/*ssss
                 if (count($verify) <= 0) { // etp n'existe pas
 
 
@@ -212,7 +211,7 @@ class NouveauCompteController extends Controller
                         if (count($verify_resp_cin) <= 0) {
                             if (count($verify_resp_mail) <= 0) {
                                 if (count($verify_resp_tel) <= 0) {
-
+*/
 
                                     $this->user->name = $req->nom_resp_etp . " " . $req->prenom_resp_etp;
                                     $this->user->email = $req->email_resp_etp;
@@ -220,47 +219,47 @@ class NouveauCompteController extends Controller
                                     $this->user->telephone = $req->tel_resp_etp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
-
-                                    $this->user->save();
+ //                                   $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_etp)->value('id');
-
-                                    $this->new_compte->insert_ETP($data, $user_id);
+ //                                   $this->new_compte->insert_ETP($data, $user_id);
 
                                     $etp_id = $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp])->id;
                                     $resp_etp = $this->fonct->findWhere("responsables", ["entreprise_id"], [$etp_id]);
-                                    $this->new_compte->insert_resp_ETP($resp, $etp_id, $user_id);
-                                    DB::beginTransaction();
+   /*                                   $this->new_compte->insert_resp_ETP($resp, $etp_id, $user_id);
+                                  DB::beginTransaction();
                                     try {
-                                        $this->fonct->insert_role_user($user_id, "3"); // stagiaires
                                         $this->fonct->insert_role_user($user_id, "2"); // referent
+                                        $this->fonct->insert_role_user($user_id, "3"); // stagiaires
                                         DB::commit();
                                     } catch (Exception $e) {
                                         DB::rollback();
                                         echo $e->getMessage();
                                     }
+*/
                                     //============= save image
 
-                                    $this->img->store_image("entreprise", $data["logo_etp"], $req->file('logo_etp')->getContent());
-                                    $fonct = new FonctionGenerique();
-                                    $etp = $fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp]);
+                                    // $this->img->store_image("entreprise", $data["logo_etp"], $req->file('logo_etp')->getContent());
+                                    $etp =  $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp]);
+                                    $name = $req->nom_resp_etp . ' ' . $req->prenom_resp_etp;
+                                    Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
+ //                                   $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
+ //                                   return redirect()->route('inscription_save');
 
-                                    // Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($req->nom_resp_etp . ' ' . $req->prenom_resp_etp, $req->email_resp_etp, $etp->nom_etp));
-                                    return redirect()->route('inscription_save');
                                 } else {
                                     return back()->with('error', 'télephone existe déjà!');
                                 }
                             } else {
                                 return back()->with('error', 'email existe déjà!');
                             }
+
+            /*
                         } else {
                             return back()->with('error', 'CIN existe déjà!');
                         }
                     } else {
                         return back()->with('error', 'NIF existe déjà!');
                     }
-
-
                 } else {
                     return back()->with('error', 'Organisation de Formation existe déjà!');
                 }
@@ -269,7 +268,7 @@ class NouveauCompteController extends Controller
             }
         } else {
             return back()->with('error', 'désolé, les robots ne sont pas autorisé sur ce plateforme :-) !');
-        }
+        } */
     }
 
     public function search_entreprise_referent(Request $req)

@@ -29,8 +29,8 @@ class save_new_compte_cfp_Mail extends Mailable
      */
     public function build()
     {
-        return $this->from('contact@formation.mg')
-            ->subject('Compte crée avec success')
+        return $this->from("contact@formation.mg")
+            ->subject('Votre compte a été crée avec succès')
             ->view('collaboration.mail.save_new_compte_cfp_Mail')
             ->with([
                 'nom_resp_cfp' => $this->nom_resp_cfp,
