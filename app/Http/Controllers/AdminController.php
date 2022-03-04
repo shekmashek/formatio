@@ -118,24 +118,26 @@ class AdminController extends Controller
                 $user = 'responsables/'.$user;
                 return response()->json($user);
             }
-            if (Gate::allows('isStagiaire')) {
-                $user= stagiaire::where('user_id', $id_user)->value('photos');
-                $user = 'stagiaires/'.$user;
-                return response()->json($user);
-            }
+           
             if (Gate::allows('isFormateur')) {
                 $user= Formateur::where('user_id', $id_user)->value('photos');
                 $user = 'formateurs/'.$user;
                 return response()->json($user);
             }
-            if (Gate::allows('isMananger')) {
-                $user= ChefDepartement::where('user_id', $id_user)->value('photos');
+            if (Gate::allows('isManager')){
+                $user=ChefDepartement::where('user_id',$id_user)->value('photos');
                 $user = 'chefDepartement/'.$user;
-                return response()->json($user);
+                 return response()->json($user);
             }
+         
             if (Gate::allows('isCFP')) {
                 $user= cfp::where('user_id', $id_user)->value('logo');
                 $user = 'CFP/'.$user;
+                return response()->json($user);
+            }
+            if (Gate::allows('isStagiaire')) {
+                $user= stagiaire::where('user_id', $id_user)->value('photos');
+                $user = 'stagiaires/'.$user;
                 return response()->json($user);
             }
             
@@ -143,7 +145,17 @@ class AdminController extends Controller
     public function logo()
     {
         $id_user = Auth::user()->id;
-        
+        if(Gate::allows('isManager')){
+           
+             $etp_id=ChefDepartement::where('user_id',$id_user)->value('entreprise_id');
+         
+             $etp=entreprise::where('id',$etp_id)->value('logo');
+         
+             $etp= 'entreprises/'.$etp;
+             return response()->json($etp);
+             }
+       
+    
         if (Gate::allows('isReferent')) {
         $etp_id=responsable::where('user_id',$id_user)->value('entreprise_id');
         $etp=entreprise::where('id',$etp_id)->value('logo');
@@ -151,22 +163,8 @@ class AdminController extends Controller
         $etp= 'entreprises/'.$etp;
         return response()->json($etp);
         }
-        if (Gate::allows('isStagiaire')) {
-          
-            $etp_id=stagiaire::where('user_id',$id_user)->value('entreprise_id');
-            
-            $etp=entreprise::where('id',$etp_id)->value('logo');
-          
-            $etp= 'entreprises/'.$etp;
-            return response()->json($etp);
-            }
-            if (Gate::allows('isMananger')) {
-          
-                $etp_id=ChefDepartement::where('user_id',$id_user)->value('entreprise_id');
-                $etp=entreprise::where('id',$etp_id)->value('logo');
-                $etp= 'entreprises/'.$etp;
-                return response()->json($etp);
-                }
+        
+   
                 if (Gate::allows('isCFP')) {
           
                     $etp_id=Cfp::where('user_id',$id_user)->value('entreprise_id');
@@ -181,5 +179,14 @@ class AdminController extends Controller
                         $etp= 'entreprises/'.$etp;
                         return response()->json($etp);
                         }
+                        if (Gate::allows('isStagiaire')) {
+          
+                            $etp_id=stagiaire::where('user_id',$id_user)->value('entreprise_id');
+                            
+                            $etp=entreprise::where('id',$etp_id)->value('logo');
+                          
+                            $etp= 'entreprises/'.$etp;
+                            return response()->json($etp);
+                            }
     }
 }
