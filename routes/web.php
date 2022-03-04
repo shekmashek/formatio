@@ -492,9 +492,10 @@ Route::get('pdf.imprime_feuille_facture/{id}','FactureController@generatePDF')->
 
 
 // =======================  Evaluation à Chaud
-Route::resource('evaluationchaud', 'EvaluationChaudController')->except(['index','create']);
-Route::get('faireEvaluationChaud/{matricule}','EvaluationChaudController@index')->name('faireEvaluationChaud');
-Route::post('createEvaluationChaud/{detail_id}/{stagiaire_id}','EvaluationChaudController@create')->name('createEvaluationChaud');
+Route::resource('evaluationchaud', 'EvaluationChaudController')->except(['create']);
+Route::get('faireEvaluationChaud/{groupe}','EvaluationChaudController@index')->name('faireEvaluationChaud');
+Route::post('createEvaluationChaud/{groupe}','EvaluationChaudController@create')->name('createEvaluationChaud');
+Route::get('evaluationchaud/{matricule?}','EvaluationChaudController@index')->name('evaluationchaud');
 
 Route::post('insert_avis','EvaluationChaudController@store')->name('insert_avis');
 // =======================  Envoi de mail
@@ -866,3 +867,4 @@ Route::post('recherche_intervale_date_appel_offre','AppelOffreController@recherc
 Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->name('add_role_user');
 Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
 
+Route::post('insert_session','GroupeController@insert_session')->name('insert_session');

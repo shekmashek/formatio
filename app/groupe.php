@@ -23,7 +23,7 @@ class Groupe extends Model
             $str = explode(" ",$num_projet[0]->nom_groupe);
             $num_session=intval($str[1])+1;
         }
-            $nom_session ="session ".$num_session;
+            $nom_session ="Session ".$num_session;
             return $nom_session;
     }
 }

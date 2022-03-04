@@ -23,8 +23,8 @@ Branche inscription_cfp_etp:
      -modules: alter table modules add column cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE;
 
      2°) Modification table Users:
-     alter table users add column  cin varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL DEFALUT 'XXXXX';
-    alter table users add column telephone varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFALUT 'XXXXX';
+     alter table users add column  cin varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'XXXXX';
+    alter table users add column telephone varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'XXXXX';
 
 
 alter table responsables add column  prioriter boolean not null default false;
@@ -36,7 +36,7 @@ Noam: page_error:
 -update view v_facture_actif et view v_facture_inactif
 
 //delete role_id at users
-ALTER TABLE USERS DROP COLUMN role_id
+ALTER TABLE USERS DROP COLUMN role_id;
 create table role_users at bdd_suivi_formation_mis_a_jour_1(table mere)
 
 //Create view v_user_role : view 0

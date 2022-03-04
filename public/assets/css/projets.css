@@ -192,7 +192,7 @@
 }
 
 .btn_plus {
-    padding: 0.3rem;
+    padding: 0.2rem;
     margin-left: 2rem;
     margin-top: 0.1rem;
     padding-top: 0.4rem;
@@ -344,3 +344,49 @@
     text-decoration-line: none;
 }
 
+.type_intra{
+    padding: 0.2rem;
+    padding-left: 0.4rem;
+    font-size: 0.85rem;
+    background-color: rgba(255, 255, 255, 0.822);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 200ms;
+    color: black;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    cursor: none;
+}
+.type_inter{
+    padding: 0.2rem;
+    padding-left: 0.4rem;
+    font-size: 0.85rem;
+    background-color: rgb(136, 136, 136);
+    border-radius: 5px;
+    transition: all 200ms;
+    color: rgb(255, 255, 255);
+    border: none;
+    box-shadow: none;
+    outline: none;
+    cursor: default;
+}
+.projet_formation{
+    padding: 0.2rem;
+    padding-left: 0.4rem;
+    font-size: 0.85rem;
+    border-radius: 5px;
+    transition: all 200ms;
+    color: rgb(111, 133, 61);
+    border: none;
+    box-shadow: none;
+    outline: none;
+    cursor: default;
+}
+
+.filtre_date{
+    background: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

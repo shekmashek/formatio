@@ -18,10 +18,10 @@ class GroupeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
-            return $next($request);
-        });
+        // $this->middleware(function ($request, $next) {
+        //     if(Auth::user()->exists == false) return redirect()->route('sign-in');
+        //     return $next($request);
+        // });
     }
     public function index()
     {
@@ -56,12 +56,14 @@ class GroupeController extends Controller
     public function createInter()
     {
         $fonct = new FonctionGenerique();
+        $formations = [];
+        $modules = [];
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $type_formation = request()->type_formation;
         $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
         $modules = $fonct->findWhere("v_module", ["cfp_id","status"], [$cfp_id,2]);
-
+        // dd($formations,$modules);
         return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
     }
 
@@ -197,5 +199,26 @@ class GroupeController extends Controller
        // $del = groupe::where('id', $id)->delete();
        DB::delete('delete from groupes where id = ?', [$id]);
         return back();
+    }
+
+    public function insert_session(Request $request){
+        try{
+            DB::beginTransaction(); 
+            $projet = $request->projet;
+            $fonct = new FonctionGenerique();
+            $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['projet_id'],[$projet]);
+            $groupe = new groupe();
+            $nom_groupe = $groupe->generateNomSession($projet);
+            DB::insert('insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,1,TRUE)',
+            [$request->max_part,$request->min_part,$nom_groupe,$projet,$session->module_id,$session->type_payement_id,$request->date_debut,$request->date_fin]);
+            $last_insert_groupe = DB::table('groupes')->latest('id')->first();
+
+            DB::insert('insert into groupe_entreprises(groupe_id,entreprise_id) values(?,?)',[$last_insert_groupe->id,$session->entreprise_id]);
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->with('groupe_error',"insertion de la session échouée!");
+        }
     }
 }

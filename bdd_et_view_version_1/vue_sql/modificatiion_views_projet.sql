@@ -273,3 +273,34 @@ create or replace view v_projet_cfp as
     from projets p
     join cfps on cfps.id = p.cfp_id
     join type_formations tf on tf.id = p.type_formation_id;
+
+
+    create or replace view v_projet_entreprise as
+        select
+            gp.projet_id,
+            nom_projet,
+            entreprise_id,
+            type_formation_id,
+            date_projet,
+            totale_session
+        from v_groupe_projet_entreprise gp
+        join v_totale_session ts on ts.projet_id = gp.projet_id
+        group by
+            projet_id,
+            nom_projet,
+            entreprise_id,
+            type_formation_id,
+            date_projet;
+
+create or replace view v_projet_formation as
+    select
+        projet_id,
+        formation_id,
+        nom_formation,
+        cfp_id
+    from v_groupe_projet_entreprise_module
+    group by
+        projet_id,
+        formation_id,
+        nom_formation,
+        cfp_id;

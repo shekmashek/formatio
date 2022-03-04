@@ -30,7 +30,7 @@
                     @foreach ($modules as $mod1)
                     @if($mod1->formation_id === $formations[0]->id)
                     <div class="row detail__formation__result new_card_module bg-light mb-3" id="border_premier">
-                        <div class=" detail__formation__result__content">
+                        <div class="detail__formation__result__content">
                             <div class="detail__formation__result__item ">
                                 <h4 class="mt-3"><span id="preview_categ"><span
                                             class=" acf-categorie">{{$mod1->nom_formation}}</span></span><span>&nbsp;-&nbsp;</span>

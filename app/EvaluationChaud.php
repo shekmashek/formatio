@@ -44,15 +44,15 @@ class EvaluationChaud extends Model
     }
 
 
-    public function findDetailProject($matricule){
+    public function findDetailProject($matricule,$session_id){
         $fonction = new FonctionGenerique();
 
-        $stagiaire = $fonction->findWhereOne("v_participant_groupe","matricule","=",$matricule);
-        $detail = $fonction->findWhereOne("v_participant_groupe","detail_id","=",$stagiaire->detail_id);
+        // $stagiaire = $fonction->findWhereOne("v_stagiaire_groupe","matricule","=",$matricule);
+        // dd($stagiaire);
+        $detail = $fonction->findWhereMulitOne("v_participant_groupe_detail",['matricule','groupe_id'],[$matricule,$session_id]);
 
-        $data['stagiaire'] = $stagiaire;
-        $data['detail'] = $detail;
-        return $data;
+        // $data['stagiaire'] = $stagiaire;
+        return $detail;
     }
 
     //=============== ajout reponse formulaire de l'evaluation  à chaud par le stagiaire
@@ -65,8 +65,8 @@ class EvaluationChaud extends Model
         $evaluation->save();
     }
 
-    public function verifyExistsEvaluationChaud($id_stag,$id_detail){
-        $verify = DB::select('select (count(stagiaire_id)) verify from reponse_evaluationchaud where stagiaire_id = ?', [$id_stag]);
+    public function verifyExistsEvaluationChaud($id_stag,$groupe_id){
+        $verify = DB::select('select (count(stagiaire_id)) verify from reponse_evaluationchaud where stagiaire_id = ? and groupe_id = ?', [$id_stag,$groupe_id]);
         return $verify[0]->verify;
     }
 
@@ -119,10 +119,10 @@ class EvaluationChaud extends Model
         return $message;
     }
 
-        public function verificationEvaluation($id_stag,$groupe_id,$cfp_id,$id_detail,$imput){
+        public function verificationEvaluation($id_stag,$groupe_id,$cfp_id,$imput){
 
 
-            $verify = $this->verifyExistsEvaluationChaud($id_stag,$id_detail);
+            $verify = $this->verifyExistsEvaluationChaud($id_stag,$groupe_id);
             if($verify<=0)
             {
                 $message = $this->controlleCreationEvaluation($id_stag,$groupe_id,$cfp_id,$imput);
@@ -133,7 +133,7 @@ class EvaluationChaud extends Model
             return $message;
         }
 
-        public function getDetailResponseEvaluationChaud($stagiaire_id,$detail_id){
+        public function getDetailResponseEvaluationChaud($stagiaire_id){
             $fonction = new FonctionGenerique();
             $data  = $fonction->findWhere("v_reponse_evaluationchaud",["stagiaire_id"],[$stagiaire_id]);
             return $data;

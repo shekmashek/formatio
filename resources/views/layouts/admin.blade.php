@@ -150,6 +150,15 @@
                 <span class="tooltip">Projets</span>
             </li>
             @endcanany
+            @canany(['isStagiaire'])
+            <li>
+                <a href="{{route('liste_projet',['id'=>1])}}" class="d-flex nav_linke">
+                    <i class='bx bx-library'></i>
+                    <span class="links_name">Projets</span>
+                </a>
+                <span class="tooltip">Projets</span>
+            </li>
+            @endcanany
             @canany(['isCFP','isReferent','isManager'])
             <li>
                 <a href="{{route('appel_offre.index')}}" class="d-flex nav_linke">

@@ -304,7 +304,12 @@ select g.id as groupe_id,
         s.activiter as activiter_stagiaire,
         s.branche_id,
         d.nom_departement,
-        d.nom_service
+        d.nom_service,
+        mf.reference,
+        mf.nom_module,
+        mf.nom_formation,
+        mf.nom as nom_cfp,
+        mf.cfp_id
     from
         participant_groupe p
     join
@@ -314,7 +319,9 @@ select g.id as groupe_id,
         stagiaires s
         on s.id = p.stagiaire_id
     join v_departement_service_entreprise d
-        on s.service_id = d.service_id;
+        on s.service_id = d.service_id
+    join moduleformation mf 
+        on mf.module_id = g.module_id;
 
 
 create or replace view v_detail_presence as

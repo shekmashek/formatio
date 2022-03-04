@@ -1,19 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{asset('img/logo_numerika/logonmrk.png')}}" sizes="90x60" type="image/png">
-    <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
-    <link href="{{asset('bootstrapCss/css/bootstrap-glyphicons.css')}} " rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{asset('login_css/css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/stagiaire.css')}}">
-    <title>Evaluation Chaud de {{$stagiaire->nom_stagiaire}}</title>
-</head>
-<body> --}}
+
+{{-- <body>
 
     <div class="container-fluid mt-5">
         <div class="row">
@@ -21,57 +9,55 @@
                 <h4 class="btn-warning">Evaluation à Chaud Par Stagiaire</h4>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="container mt-4">
-        <div class="row">
+    {{-- <div class="container mt-4">
+        <div class="row"> --}}
 
             <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
-
-                {{-- <div class="card shadow p-3 mb-5 bg-body rounded"> --}}
-                <h4 class="card-title"> Information de l'entreprise et Formateur</h4>
+                {{-- <h4 class="card-title"> Information de l'entreprise et Formateur</h4> --}}
                 <div class="card-body">
-                    {{-- <h4 class="card-title"><img src=" {{asset('storage/'.$detail->logo)}} " class="profil-entreprise" alt="..."/> {{$detail->nom_etp}}</h4> --}}
-
-                    <h6 class="card-title my-1">Project: {{$detail->nom_projet}}</h6>
-                    <h6 class="card-title my-1">Groupe: {{$detail->groupe_id}}</h6>
-                    {{-- <h6 class="card-title my-1">Session: de 2021/02/13 à 2021/02/26(static)  id session: {{$detail->session_id}}</h6> --}}
-                    <h6 class="card-title my-1">Formation: {{$detail->nom_formation}} Module: {{$detail->nom_module}}</h6>
+                    
+                    <h6 class="card-title my-1">Centre de formation: {{$data->nom_cfp}}</h6>
+                    <h6 class="card-title my-1">Groupe: {{$data->nom_groupe}}</h6>
+                    <h6 class="card-title my-1">Date de la session: {{ date("d-m-Y",strtotime($data->date_debut)) }} au {{ date("d-m-Y",strtotime($data->date_fin)) }}</h6>
+                    <h6 class="card-title my-1">Formation: {{$data->nom_formation}}</h6>
+                    <h6 class="card-title my-1">Module: {{$data->nom_module}}</h6>
                 </div>
-                {{-- </div> --}}
 
             </div>
 
-            <div class="col-md-2"></div>
+            {{-- <div class="col-md-2"></div> --}}
 
-            <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
+            {{-- <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded"> --}}
 
                 {{-- <div class="card shadow p-3 mb-5 bg-body rounded"> --}}
-                <h4 class="card-title"> Information du Stagiaire</h4>
+                {{-- <h4 class="card-title"> Information du Stagiaire</h4>
                 <div class="card-body">
-                    <h5 class="card-title"><img src=" {{asset('storage/'.$stagiaire->photos)}}" class="profil-stagiaire" alt="..."> {{$stagiaire->nom_stagiaire.' '.$stagiaire->prenom_stagiaire}}</h5>
-                    <h6 class="card-title my-1">Matricule: {{$stagiaire->matricule}} Genre: {{$stagiaire->genre_stagiaire}}</h6>
-                    <h6 class="card-title my-1">Foncion: {{$stagiaire->fonction_stagiaire}} </h6>
-                    <h6 class="card-title my-1">Mail: <a href="#">{{$stagiaire->mail_stagiaire}}</a> </h6>
-                    <h6 class="card-title my-1">Tel: {{$stagiaire->telephone_stagiaire}}</h6>
-                </div>
+                    <h5 class="card-title"><img src="" class="profil-stagiaire" alt="..."> {{$detail->nom_stagiaire.' '.$detail->prenom_stagiaire}}</h5>
+                    <h6 class="card-title my-1">Matricule: {{$detail->matricule}}</h6>
+                    <h6 class="card-title my-1">Foncion: {{$detail->fonction_stagiaire}} </h6>
+                    <h6 class="card-title my-1">Mail: <a href="#">{{$detail->mail_stagiaire}}</a> </h6>
+                    <h6 class="card-title my-1">Tel: {{$detail->telephone_stagiaire}}</h6>
+                </div> --}}
                 {{-- </div> --}}
 
-            </div>
+            {{-- {{-- </div> --}}
 
-            <h4 class="card-title text-center">Formateur: <img src=" {{asset('storage/'.$detail->photos)}} " class="profil-stagiaire" alt="..." /> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5>
+            {{-- <h4 class="card-title text-center">Formateur: <img src="" class="profil-stagiaire" alt="..." /> Nom formateur</h5> --}}
 
-        </div>
-    </div>
+        {{-- </div>
+    </div> --}}
 
-    <div class="container">
+    {{-- <div class="container"> --}}
 
-        <h5 class="text-center">Evaluation</h5>
+        <h5 class="text-center mt-1">Evaluation</h5>
 
-        <form method="POST" action="{{ route('createEvaluationChaud',[$stagiaire->detail_id,$stagiaire->stagiaire_id])}}">
-            @csrf
+        
             <div class="row">
-                <div class="col-md-12 card shadow p-3 mb-5 bg-body rounded">
+                <form method="POST" action="{{ route('createEvaluationChaud',[$data->groupe_id])}}">
+                    @csrf
+                <div class="col-md-12 card shadow p-3 mb-1 bg-body rounded">
 
                     @foreach ($qst_mere as $qst_mere)
 
@@ -149,16 +135,33 @@
 
                     @endforeach
 
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <button class="btn btn-success" type="submit">Envoye d'evaluation à chaud</button>
+                    <div class="d-grid gap-2 col-6 mx-auto ">
+                        <button class="btn btn-success inserer_evaluation" type="submit">Envoyer d'evaluation à chaud</button>
                     </div>
-
+                    <br><br><br>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+        
+    {{-- </div> --}}
 
 
 {{-- </body>
 </html> --}}
+<style>
+    .inserer_evaluation{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        border: 0;
+        background-color: #87868a2f;
+        transition: all .5s ease;
+    }
+    .inserer_evaluation:hover{
+        color: #ffffff;
+        background-color: #7635dc;
+        transform: scale(1.1);
+    }
+
+</style>
 @endsection

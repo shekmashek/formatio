@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-<div class="shadow p-3 mb-5 bg-body rounded h-100" style="z-index: -1">
+<div class="shadow p-3 mb-5 bg-body rounded ">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
             <h5>Session </h5>
@@ -123,12 +123,14 @@
                             <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                         </button>
                     </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
-                            <p class="m-0 p-0">EVALUATION</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
+                    @canany(['isStagiaire'])
+                        <div>
+                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
+                                <p class="m-0 p-0">EVALUATION</p>
+                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                            </button>
+                        </div>
+                    @endcanany
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'emargement')" style="width: 100%">
                             <p class="m-0 p-0">EMARGEMENT</p>
@@ -195,9 +197,12 @@
                       <div id="document" class="tabcontent">
                         @include('projet_session.document')
                       </div>
-                      <div id="chaud" class="tabcontent">
-                        @include('projet_session.index_evaluation')
-                      </div>
+                      @canany(['isStagiaire'])
+                        <div id="chaud" class="tabcontent">
+                            {{-- @include('projet_session.index_evaluation') --}}
+                            @include('admin.evaluation.evaluationChaud.evaluationChaud')
+                        </div>
+                      @endcanany
                       <div id="emargement" class="tabcontent">
                         @include('projet_session.emargement')
                       </div>
@@ -229,6 +234,10 @@
 
 
 <style>
+.shadow{
+    height: auto;
+}
+
 *{
     font-family: 'Open Sans';
     font-size: .9rem;
