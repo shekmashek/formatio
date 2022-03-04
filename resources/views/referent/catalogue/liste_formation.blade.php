@@ -1,23 +1,29 @@
 @extends('./layouts/admin')
 @section('content')
-<section class="liste__formation">
+<link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
+<section class="">
     <div class="container">
-        <div class="row my-5 titre_formation">
-            <span>
-                <h2>Modules</h2>
-            </span>
-            @isset($nom_formation)
-            <h2>{{$nom_formation}}</h2>
-            @endisset
-        </div>
-        @if(Session::has('success'))
-        <div class="alert alert-success">
-            {{Session::get('success')}}
-        </div>
-        @endif
         <div class="row">
-            <div class="col-lg-3">
-                <div class="row liste__formation__recherche">
+
+            @if (count($infos)>0)
+            <h2 class="">Tous les formations en :&nbsp;{{ $infos[0]->nom_formation }}</h2><br>
+            <p></p>
+            @else
+            <h2>Aucun module dans cette formation.</h2>
+            @endif
+            @if(Session::has('success'))
+            <div class="alert alert-success">
+                {{Session::get('success')}}
+            </div>
+            @endif
+        </div>
+    </div>
+
+    </div>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-3 filtre_formation">
+                <div class="row">
                     <p class="liste__formation__titre">Catégories</p>
                     <div class="form-check liste__formation__radio">
                         <input class="form-check-input" type="radio" name="flexRadioListe" id="flexRadioListe1" checked>
@@ -29,76 +35,106 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-8">
                 @foreach ($infos as $info)
-                <div class="row liste__formation__result justify-content-space-between mb-5">
-                    <div class="row liste__formation justify-content-space-between">
-                        <div class="col-lg-6 col-md-6 liste__formation__result__content">
-                            <a href="{{route('select_par_module',$info->module_id)}}">
-                                <div class="liste__formation__result__item">
-                                    <h4>{{$info->nom_formation}} - {{$info->nom_module}}</h4>
-                                    <p>{{$info->description}}</p>
-                                    <div class="liste__formation__result__avis">
-                                        <div class="Stars" style="--note: {{ $info->pourcentage }};"></div>
-                                        <span><strong>{{ $info->pourcentage }}</strong>/5</span>
+                <div class="row liste__formation justify-content-space-between mb-5">
+                    <div class="col-lg-6 col-md-6 liste__formation__content">
+                        <a href="{{route('select_par_module',$info->module_id)}}">
+                            <div class="liste__formation__item">
+                                <h4>{{$info->nom_module}}</h4>
+                                <p class="description">{{$info->description}}</p>
+                                <div class="liste__formation__avis">
+                                    <div class="Stars" style="--note: {{ $info->pourcentage }};">
+
                                     </div>
-
-                                    <p class="mt-2">Formation proposée
-                                        par&nbsp;<span>{{$info->nom}}</span>&nbsp;&nbsp;&nbsp;<img
-                                            src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid"
-                                            style="width: 100px; height:50px;"></p>
-
+                                    <span><strong>{{ $info->pourcentage }}</strong>/5</span>
                                 </div>
-                            </a>
+
+                                <p class="mt-2 description">Formation proposée
+                                    par&nbsp;<span class="">{{$info->nom}}</span>&nbsp;&nbsp;&nbsp;<img
+                                        src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid"
+                                        style="width: 100px; height:50px;"></p>
+
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 text-end description">
+                        <div class="liste__formation__item2">
+                            <form action="{{route('demande_devis.store')}}" method="post">
+                                @csrf
+                                <input type="text" hidden name="module_id" value="{{$info->module_id}}">
+                                <button type="submit" class=" btn btn_next mb-3">Démander
+                                    un devis&nbsp;<i class="bx bxs-cart-add bx_icon"></i></button>
+                            </form>
+
+                            {{-- <a href="#">
+                                <h6 class="devis_form">Démander un devis&nbsp;<i class="bx bxs-cart-add bx_icon"></i>
+                                </h6>
+                            </a> --}}
+                            <p class="prix_ht"><span class="prix_ar">
+                                    @php
+                                    echo number_format($info->prix, 0, ' ', ' ');
+                                    @endphp
+                                    &nbsp;AR</span>&nbsp;HT</p>
+                            <p>Réference : <span>{{$info->reference}}</span></p>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 liste__formation__result__content">
-                            <div class="liste__formation__result__item2">
-                                <form action="{{route('demande_devis.store')}}" method="post">
-                                    @csrf
-                                    <input type="text" hidden name="module_id" value="{{$info->module_id}}">
-                                    <button type="submit" class=" btn devis_form"
-                                        style="background-color: : red">Démander un devis&nbsp;<i
-                                            class="bx bxs-cart-add bx_icon"></i></button>
-                                </form>
-
-                                {{-- <a href="#">
-                                    <h6 class="devis_form">Démander un devis&nbsp;<i
-                                            class="bx bxs-cart-add bx_icon"></i></h6>
-                                </a> --}}
-                                <p class="prix_ht"><span class="prix_ar">
-                                        @php
-                                        echo number_format($info->prix, 0, ' ', ' ');
-                                        @endphp
-                                        &nbsp;AR</span>&nbsp;HT</p>
-                                <p>Réference : <span>{{$info->reference}}</span></p>
-                            </div>
+                    </div>
+                    <div class="row row-cols-auto liste__formation__item3 justify-content-space-between description">
+                        <div class="col"><i class="bx bx-alarm bx_icon"></i>
+                            <span>
+                                @isset($info->duree_jour)
+                                {{$info->duree_jour}} jours
+                                @endisset
+                            </span>
+                            <span>
+                                @isset($info->duree)
+                                /{{$info->duree}} h
+                                @endisset
+                            </span> </p>
                         </div>
-                        <hr>
-                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between">
-                            <div class="col"><i class="bx bx-alarm bx_icon"></i>
-                                <span>
-                                    @isset($info->duree_jour)
-                                    {{$info->duree_jour}} jours
-                                    @endisset
-                                </span>
-                                <span>
-                                    @isset($info->duree)
-                                    /{{$info->duree}} h
-                                    @endisset
-                                </span> </p>
-                            </div>
-                            <div class="col"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
-                            </div>
-                            <div class="col"><i
-                                    class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
-                            </div>
-                            <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
-                            </div>
-                            <div class="col"><span>Intra</span></div>
+                        <div class="col"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                        </div>
+                        <div class="col"><i
+                                class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                        </div>
+                        <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row w-100 justify-content-end">
+
+                            <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse"
+                                href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false"
+                                aria-controls="collapseprojet">Afficher les dates&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                    </h6>
+                    </div>
+                    <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
+                        <div class="row px-3 py-2">
+                            <div class="col-3">
+                                <p>Prochaines Sessions</p>
+                            </div>
+                            <div class="col-5 date">
+                                @foreach ($datas as $data)
+                                    @if($info->module_id == $data->module_id)
+                                        <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-4">
+                                <p>Cette thématique vous intéresse ?
+                                    Nos experts conçoivent votre formation
+                                    sur-mesure ! Nous contacter</p>
+                                    <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
+
+
                 @endforeach
             </div>
         </div>
@@ -178,5 +214,24 @@
             $(".dropdown>.dropdown-menu").css("display", "none");
         });
     });
+$(document).ready(function() {
+    $(".changer_caret").on("click", function() {
+        if (
+            $(this)
+                .find(".caret-icon")
+                .hasClass("bx-caret-down")
+        ) {
+            $(this)
+                .find(".caret-icon")
+                .removeClass("bx-caret-down")
+                .addClass("bx-caret-up");
+        } else {
+            $(this)
+                .find(".caret-icon")
+                .removeClass("bx-caret-up")
+                .addClass("bx-caret-down");
+        }
+    });
+});
 </script>
 @endsection

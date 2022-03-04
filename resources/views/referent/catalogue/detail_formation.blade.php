@@ -363,22 +363,24 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <ul>
-                            <li class="date_ville px-2">
-                                <div class="row">
-                                    <div class="col-3 text-center">
-                                        <span>Du 02 mars au 06 mars. 2022</span>
+                            @foreach ($datas as $data)
+                                <li class="date_ville px-2 mb-2">
+                                    <div class="row">
+                                        <div class="col-3 text-center">
+                                            <span>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <span>Analamahitsy</span>
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <span>{{ number_format($infos[0]->prix, 2, '.', ' ') }} AR HT</span>
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <span class="btn_next">S'inscrire</span>
+                                        </div>
                                     </div>
-                                    <div class="col-3 text-center">
-                                        <span>Antananarivo</span>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <span>450 000 AR HT</span>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <span class="btn_next">S'inscrire</span>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

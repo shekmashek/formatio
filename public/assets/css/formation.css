@@ -1,3 +1,14 @@
+a{
+    text-decoration: none;
+}
+a:hover{
+    color: inherit;
+}
+a:focus{
+    text-decoration: none;
+}
+
+
 .date_ville {
     border: 1px solid rgba(128, 128, 128, 0.218);
     padding-top: 1.5rem;
@@ -150,3 +161,58 @@
 .details_module p .text-muted{
     font-size: 0.5rem;
 }
+
+/* liste formation */
+.titre_formation{
+height: 10rem;
+background: linear-gradient(60deg, #7635dc, #4222c3);
+}
+.titre_formation .titre{
+    padding-left: 4rem;
+}
+
+.titre_formation h2{
+    color: white;
+    font-size: 1.5rem;
+}
+
+.filtre_formation{
+    position: sticky;
+    top: 8rem;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-right: 3rem;
+    padding: 2rem;
+    max-height: 50vh;
+    border: none;
+    border-radius: 5px;
+}
+.liste__formation{
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    padding: 1rem;
+    transition: all .5s ease;
+}
+.liste__formation__item:hover .liste__formation{
+    transform: scale(1.5s);
+}
+.liste__formation h4{
+    color: #7635dc;
+}
+
+.liste__formation .description{
+    font-size: 0.850rem;
+}
+
+.detail_inter{
+    background-color: rgba(128, 128, 128, 0.128);
+    border-radius: 5px;
+}
+
+.liste__formation__item3 .bx{
+    color: #7635dc;
+}
+.detail_inter .date{
+    color: #7635dc;
+}
+/* liste formation */

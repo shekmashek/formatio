@@ -295,6 +295,7 @@ Route::get('search__formation','FormationController@getModulesParReference')->na
 Route::get('domaine_formation','FormationController@formation_domaine')->name('domaine_formation');
 Route::get('select_par_formation/{id}','FormationController@affichageParFormation')->name('select_par_formation');
 Route::get('select_par_module/{id}','FormationController@affichageParModule')->name('select_par_module');
+Route::get('select_tous','FormationController@affichageTousCategories')->name('select_tous');
 //route module
 Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
