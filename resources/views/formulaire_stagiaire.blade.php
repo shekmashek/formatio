@@ -205,11 +205,8 @@
 
 
                                 <div style="border-bottom: solid 1px #d399c2;" class="">
-
                                     <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$entreprise[0]->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-
                                     </p>
-
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
 
