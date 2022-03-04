@@ -44,7 +44,9 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        // dd($fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]));
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $type_formation = request()->type_formation;
         $formations = $fonct->findWhere("formations", [1], [1]);
         $modules = $fonct->findAll("modules");

@@ -439,7 +439,9 @@ class HomeController extends Controller
         $fonct = new FonctionGenerique();
 
         $user_id = Auth::user()->id;
-        $totale_invitation = $this->collaboration->count_invitation();
+        $totale_invitation = 0;
+
+        // $totale_invitation = $this->collaboration->count_invitation();
         $entp = new entreprise();
         $status = DB::select('select * from status');
         $type_formation_id = $request->type_formation;
@@ -489,7 +491,9 @@ class HomeController extends Controller
             return view('layouts.accueil_admin');
         } elseif (Gate::allows('isCFP')) {
 
-            $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
+
             $sql = $projet_model->build_requette($cfp_id,$type_formation_id,"v_projet_session",$request);
             // dd($sql);
             $projet = DB::select($sql);
