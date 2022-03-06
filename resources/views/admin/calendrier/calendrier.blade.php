@@ -163,6 +163,20 @@
             margin-left: 0;
             margin-right: 0;
         }
+        .card{
+            border-radius: 20px;
+        }
+        .gauche{
+            float: left;
+            font-weight: bold;
+        }
+        .contenu{
+            text-align: center;
+        }
+        .icones{
+             background: #7535dc3f;
+        }
+
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
@@ -218,28 +232,32 @@
                 <div class="card" style="width: auto;">
                     <div id="editor"></div>
                     <div class="card-body" id="test">
-                        <h5 class="card-title">Détail du projet <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><button class="btn" style="float: right" onclick="testPdf();"><i class="bx bx-printer" aria-hidden="true"></i></button></h5>
-
-                        <label for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
-                        <label for="">Session: </label>&nbsp;<label id="session"></label><br>
-                        <label for="">Statut:</label>&nbsp;<label id="statut"></label><br>
-                        <label for="">Type de formation:</label>&nbsp;<label id="types"></label><br>
                         @canany(['isReferent','isStagiaire'])
-                            <label>O.F:</label>&nbsp;<label id="cfp"> </label><br>
+                            <h5 class="card-title" style="text-align: center;">
+                                <span id="cfp"></span> <label for="logo" id="logo_cfp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><a href="" style="float: right"><i class="bx bx-printer" aria-hidden="true"></i></a></h5>
                         @endcanany
+
                         @canany(['isCFP','isFormateur'])
-                            <label>Entreprise:</label>&nbsp;<label id="etp"> </label><br>
-                            <label for="logo" id="logo_etp"></label>
+                            <h5 class="card-title" style="text-align: center;">
+                                <span id="etp"></span> <label for="logo" id="logo_etp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><a href="" style="float: right"><i class="bx bx-printer" aria-hidden="true"></i></a></h5>
                         @endcanany
-                        <label>Formation:</label>&nbsp;<label id="formation"> </label><br>
-                        <label>Module:</label>&nbsp;<label id="module"></label><br>
-                        <label>Formateur:</label>&nbsp;<label id="formateur"></label><br>
-                        <label>Lieu:</label>&nbsp;<label id="lieu"> </label><br>
-                        <label for="">Date - Heure:</label><br>
+
+
+                        <label class="gauche" for="">Nom du projet: </label>&nbsp;<label class="contenu" id="projet"> </label><br>
+                        <label class="gauche" for="">Session: </label>&nbsp;<label class="contenu" id="session"></label><br>
+                        <label class="gauche" for="">Statut:</label>&nbsp;<label class="contenu" id="statut"></label><br>
+                        <label class="gauche" for="">Type de formation:</label>&nbsp;<label class="contenu" id="types"></label><br>
+
+
+                        <label class="gauche">Formation:</label>&nbsp;<label id="formation"> </label><br>
+                        <label class="gauche">Module:</label>&nbsp;<label id="module"></label><br>
+                        <label class="gauche">Formateur:</label>&nbsp;  <label for="logo" id="logo_formateur"></label>&nbsp;<label id="formateur"></label><br>
+                        <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
+                        <label class="gauche" for="">Date - Heure:</label><br>
                         <ul id="date_formation"></ul>
                          <hr>
                         @canany(['isReferent','isCFP','isFormateur'])
-                            <label for="">Liste des apprenants</label><br>
+                            <label class="gauche" for="">Liste des apprenants</label><br>
                             <ul id="liste_app"></ul>
                         @endcanany
                     </div>
@@ -332,8 +350,9 @@
                                     statut.innerHTML = '';
                                     var nom_cfp = document.getElementById('cfp');
                                     var etp = document.getElementById('etp');
-
-
+                                    var logo_etp = document.getElementById('logo_etp');
+                                     var logo_cfp = document.getElementById('logo_cfp');
+                                     var logo_formateur = document.getElementById('logo_formateur');
                                     if ( nom_cfp == null) {
                                         console.log('null');
                                     }
@@ -346,6 +365,24 @@
                                     else{
                                         etp.innerHTML = '';
                                     }
+                                     if ( logo_etp == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_etp.innerHTML = '';
+                                     }
+                                     if ( logo_cfp == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_cfp.innerHTML = '';
+                                     }
+                                     if ( logo_formateur == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_formateur.innerHTML = '';
+                                     }
 
                                     var formation = document.getElementById('formation');
                                     formation.innerHTML = '';
@@ -374,23 +411,24 @@
                                         $("#etp").append(userData[$i].nom_etp);
                                         $("#formation").append(userData[$i].nom_formation);
                                         $("#module").append(userData[$i].nom_module);
-                                        $('#formateur').append(userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur);
+                                        $('#formateur').append(userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + ' - '+ userData[$i].mail_formateur);
                                         $('#lieu').append(userData[$i].lieu);
-
+                                        $('#logo_formateur').append('<br><img src = "{{asset('images/users/users.png')}}"  style="width:30px"> ');
+                                        $('#logo_etp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
+                                        $('#logo_cfp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
                                     }
                                     var html = '';
                                     for (var $j = 0; $j < date_groupe.length; $j++) {
-                                        html += '<li>- Séance ' + ($j+1) +':  '+date_groupe[$j].date_detail+' / '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                        html += '<li>- Séance ' + ($j+1) +': <br><i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'<br><i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
                                     }
                                     $('#date_formation').append(html);
 
                                     var html = '';
                                     for (var $a = 0; $a < stg.length; $a++) {
-                                        html += '<li><img src = "{{asset('images/users/users.png')}}" style="width:50px">'+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+'</li>'
+                                        html += '<li><img src = "{{asset('images/users/users.png')}}" class = "rounded-circle" style="width:50px">'+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+'</li>'
                                     }
 
                                     $('#liste_app').append(html);
-                                    // $('#modal_affichage').modal('show');
                                 }
                                 , error: function(error) {
                                     console.log(error)
