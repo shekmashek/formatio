@@ -483,11 +483,12 @@
         <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
-                    <img src="{{asset('images/formateurs/RAHARIFETRANicole22-12-2021.png')}}" class="img-fluid"
-                        alt="user_profile">
+                    <p><div class='photo_user'>  </div></p>
                     <div class="name_job">
-                        <div class="name">Malala</div>
-                        <div class="job">Manager</div>
+                        <div class="name">{{Auth::user()->name}}</div>
+                        <div class="job">
+
+                        </div>
                     </div>
                 </div>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -497,7 +498,6 @@
         </div>
 
     </div>
-
     <div class="home_content">
         <div class="container-fluid p-0 height-100 bg-light" id="content">
             <header class="header row align-items-center g-0" id="header">
@@ -637,9 +637,7 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                            <ul id="liste_role">
-                                                Accès:
-                                            </ul>
+                                            
                                             {{-- @if(Auth::user()->role_id == 1)
                                             <span class="text-muted d-block mb-2">Admin</span>
                                             @endif

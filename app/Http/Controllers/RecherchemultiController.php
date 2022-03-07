@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\responsable;
+use App\branche;
+use App\DepartementEntreprise;
+use App\Stagiaire;
+use App\service;
+use App\Domaine;
+use App\Module;
 class RecherchemultiController extends Controller
 {
     /**
@@ -16,9 +22,15 @@ class RecherchemultiController extends Controller
     public function index()
     {
         $id_etp = responsable::where('user_id',Auth::id())->value('entreprise_id');
-        $liste_dep = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement',[$id_etp]);
-        $liste_serv = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? ',[$id_etp]);
-        return view('projet_session.recherche_admin',compact('liste_dep','liste_serv'));
+        $branches=branche::where('entreprise_id',$id_etp)->get();
+        $stagiaires=stagiaire::where('entreprise_id',$id_etp)->get();
+        $departement=DepartementEntreprise::where('entreprise_id',$id_etp)->get();
+        $service = db::select('select * from v_departement_service_entreprise  where entreprise_id = ?',[$id_etp]);
+        $dom_mod=db::select('select * from v_groupe_projet_entreprise_module where entreprise_id = ?',[$id_etp]);
+        
+        // $module=Module::all();
+        // $liste_serv = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? ',[$id_etp]);
+        return view('projet_session.recherche_admin',compact('branches','stagiaires','departement','service','dom_mod'));
     }
 
     /**
@@ -52,8 +64,6 @@ class RecherchemultiController extends Controller
         $date_jour = $request->rech_date;
         $date_mois = $request->rech_mois;
         $date_annee = $request->rech_annee;
-
-
         //recuperer les input not null
         $inputs_null = array_filter(request()->all(), function ($val) {
             return !is_null($val);
