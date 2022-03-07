@@ -162,8 +162,12 @@ class ModuleController extends Controller
     {
         //condition de validation de formulaire
 
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        // $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+
+        $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+
+        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $validator = Validator::make(
             $request->all(),
             [
