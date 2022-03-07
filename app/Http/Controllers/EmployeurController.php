@@ -75,9 +75,7 @@ class EmployeurController extends Controller
         $fonction = $request->fonction;
         $mail = $request->mail;
         $phone = $request->phone;
-        // dd($request->input());
-        // dd($request->type_enregistrement." == STAGIAIRE");
-
+       $fonction_employer=null;
         if (Gate::allows('isReferent')) {
 
             $user->name = $request->nom . " " . $request->prenom;
@@ -91,12 +89,11 @@ class EmployeurController extends Controller
 
             $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
-
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
 
 
             if ($request->type_enregistrement == "STAGIAIRE") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"]);
+                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
 
                 DB::beginTransaction();
                 try {
@@ -109,13 +106,9 @@ class EmployeurController extends Controller
                 $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                 DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
                 entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-                // __construct($nom_etp,$responsable_etp,$nom_employer,$email_employer)
-                Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
-
-                return redirect()->route('employes');
             }
             if ($request->type_enregistrement == "REFERENT") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"]);
+                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
 
                 DB::beginTransaction();
                 try {
@@ -129,10 +122,9 @@ class EmployeurController extends Controller
                 $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                 DB::insert("insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
                 ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-                return back();
             }
             if ($request->type_enregistrement == "MANAGER") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"]);
+                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;
 
                 DB::beginTransaction();
                 try {
@@ -146,8 +138,9 @@ class EmployeurController extends Controller
                 $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id,$user_id];
                 DB::insert("insert into chef_departements(matricule,nom_chef,prenom_chef,cin_chef,mail_chef,telephone_chef,fonction_chef
                 ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-                return back();
             }
+            Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
+            return back();
         }
 
 

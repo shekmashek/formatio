@@ -12,7 +12,7 @@
         <strong>Félicitations</strong>, votre compte est activé. <br>
     </p>
 
-    <p>{{$responsable_etp->nom_resp.' '$responsable_etp->prenom_resp}} responable <strong>{{$nom_etp}}</strong> viens de vous ajoutez sur le plateforme <strong>formation.mg</strong>.</p>
+    <p>{{$responsable_etp->nom_resp.' '.$responsable_etp->prenom_resp}} responable <strong>{{$nom_etp}}</strong> viens de vous ajoutez sur le plateforme <strong>formation.mg</strong>.</p>
     <p>En tant que {{$fonction_user}}, votre identifiant est: </p>
     <p>   nom: {{$nom_employer}} </p>
     <p>   adresse email: {{$email_employer}}</p>
