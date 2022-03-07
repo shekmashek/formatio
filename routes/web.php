@@ -263,7 +263,7 @@ Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->
 // Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
 // profile_stagiaire
-Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
+Route::get('/profile_stagiaire/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 // route recheche par matricule
 Route::get('recherche/{matricule?}','ParticipantController@recherche')->name('recherche');
 Route::get('/search','ParticipantController@getStagiaires')->name('search');
@@ -847,3 +847,5 @@ Route::get('appel_offre.publier/{id}','AppelOffreController@publier')->name('app
 
 Route::post('result_recherche_appel_offre','AppelOffreController@recherche_reference')->name('result_recherche_appel_offre');
 
+//Route impression detail_calendrier
+Route::get('detail_printpdf/{id}','DetailController@detail_printpdf')->name('detail_printpdf');

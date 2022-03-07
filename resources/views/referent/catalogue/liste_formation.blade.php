@@ -18,9 +18,9 @@
         </form>
     </div>
 </div>
-@foreach ($categorie as $ctg )
+{{-- @foreach ($categorie as $ctg )
 <button type="button" class="btn btn" style="border-radius: 15px"><a href="{{route('select_par_module',$ctg->id)}}">{{$ctg->nom_formation}}</a></button>
-@endforeach
+@endforeach --}}
 <style>
     .btn{background-color: #801D68;color: white}
     .btn:hover{color:white}

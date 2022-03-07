@@ -171,7 +171,12 @@
             font-weight: bold;
         }
         .contenu{
-            text-align: center;
+            color: #7635dc;
+            cursor: pointer;
+        }
+        .contenu a:hover{
+            color: #7635dc;
+            text-decoration-line: underline;
         }
         .icones{
              background: #7535dc3f;
@@ -234,31 +239,31 @@
                     <div class="card-body" id="test">
                         @canany(['isReferent','isStagiaire'])
                             <h5 class="card-title" style="text-align: center;">
-                                <span id="cfp"></span> <label for="logo" id="logo_cfp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><a href="" style="float: right"><i class="bx bx-printer" aria-hidden="true"></i></a></h5>
+                                <span id="cfp" class="contenu"></span> <label for="logo" id="logo_cfp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label></h5>
                         @endcanany
 
                         @canany(['isCFP','isFormateur'])
                             <h5 class="card-title" style="text-align: center;">
-                                <span id="etp"></span> <label for="logo" id="logo_etp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><a href="" style="float: right"><i class="bx bx-printer" aria-hidden="true"></i></a></h5>
+                                <span id="etp" class="contenu"></span> <label for="logo" id="logo_etp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label></h5>
                         @endcanany
 
 
-                        <label class="gauche" for="">Nom du projet: </label>&nbsp;<label class="contenu" id="projet"> </label><br>
+                        <label class="gauche" for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
                         <label class="gauche" for="">Session: </label>&nbsp;<label class="contenu" id="session"></label><br>
-                        <label class="gauche" for="">Statut:</label>&nbsp;<label class="contenu" id="statut"></label><br>
-                        <label class="gauche" for="">Type de formation:</label>&nbsp;<label class="contenu" id="types"></label><br>
+                        <label class="gauche" for="">Statut:</label>&nbsp;<label id="statut"></label><br>
+                        <label class="gauche" for="">Type de formation:</label>&nbsp;<label id="types"></label><br>
 
 
-                        <label class="gauche">Formation:</label>&nbsp;<label id="formation"> </label><br>
-                        <label class="gauche">Module:</label>&nbsp;<label id="module"></label><br>
-                        <label class="gauche">Formateur:</label>&nbsp;  <label for="logo" id="logo_formateur"></label>&nbsp;<label id="formateur"></label><br>
+                        <label class="gauche">Formation:</label>&nbsp;<label class="contenu" id="formation"> </label><br>
+                        <label class="gauche">Module:</label>&nbsp;<label class="contenu" id="module"></label><br>
+                        <label class="gauche">Formateur:</label><br><label for="logo" id="logo_formateur"></label>&nbsp;<label id="formateur" class="contenu"></label><br>
                         <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
                         <label class="gauche" for="">Date - Heure:</label><br>
                         <ul id="date_formation"></ul>
                          <hr>
                         @canany(['isReferent','isCFP','isFormateur'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
-                            <ul id="liste_app"></ul>
+                            <ul class="contenu" id="liste_app"></ul>
                         @endcanany
                     </div>
                 </div>
@@ -399,33 +404,82 @@
                                     var userDataDetail = JSON.parse(response);
                                     // alert(userData.length);
                                     var userData = userDataDetail['detail'];
+
                                     var stg = userDataDetail['stagiaire'];
                                     var date_groupe = userDataDetail['date_groupe'];
                                     var images = '';
+                                    var html = '';
+                                    var formation = '';
+                                    var modules = '';
+                                    var logo_formateur = '';
+                                    var logo_etp = '';
+                                    var logo_cfp = '';
+                                    var session = '';
+                                    var cfp = '';
+                                    var etp = '';
+                                    var printpdf = '';
                                     for (var $i = 0; $i < userData.length; $i++) {
+                                        printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
+                                        printpdf = printpdf.replace(":?",userData[$i].detail_id);
+                                        $('#printpdf').append(printpdf);
+
+
                                         $("#projet").append(userData[$i].nom_projet);
-                                        $('#session').append(userData[$i].nom_groupe);
                                         $('#statut').append(userData[$i].statut);
                                         $('#types').append(userData[$i].type_formation);
-                                        $("#cfp").append(userData[$i].nom_cfp);
-                                        $("#etp").append(userData[$i].nom_etp);
-                                        $("#formation").append(userData[$i].nom_formation);
-                                        $("#module").append(userData[$i].nom_module);
-                                        $('#formateur').append(userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + ' - '+ userData[$i].mail_formateur);
                                         $('#lieu').append(userData[$i].lieu);
-                                        $('#logo_formateur').append('<br><img src = "{{asset('images/users/users.png')}}"  style="width:30px"> ');
-                                        $('#logo_etp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
-                                        $('#logo_cfp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
+
+                                        session+='<a href = "{{url("detail_session/:?/:!")}}" target = "_blank">'+userData[$i].nom_groupe+'</a>'
+                                        session = session.replace(":?",userData[$i].groupe_id);
+                                        session = session.replace(":!",userData[$i].type_formation_id);
+                                        $('#session').append(session);
+
+                                        cfp+='<a href = "{{url("profil_cfp/:?")}}" target = "_blank">'+userData[$i].nom_cfp+'</a>'
+                                        cfp = cfp.replace(":?",userData[$i].cfp_id);
+                                        $('#cfp').append(cfp);
+
+                                        etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+userData[$i].nom_etp+'</a>'
+                                        etp = etp.replace(":?",userData[$i].entreprise_id);
+                                        $('#etp').append(etp);
+
+                                        logo_formateur+='<img src = "{{asset('images/formateurs/:?')}}" class ="rounded-circle"  style="width:50px">';
+                                        logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
+                                        $('#logo_formateur').append(logo_formateur);
+
+                                        logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:80px">';
+                                        logo_etp = logo_etp.replace(":?",userData[$i].logo_entreprise);
+                                        $('#logo_etp').append(logo_etp);
+
+                                        // $('#logo_cfp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
+                                        logo_cfp+='<img src = "{{asset('images/CFP/:?')}}"  style="width:80px">';
+                                        logo_cfp = logo_cfp.replace(":?",userData[$i].logo_cfp);
+                                        $('#logo_cfp').append(logo_cfp);
+
+                                        html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + ' - '+ userData[$i].mail_formateur + ' - '+ userData[$i].numero_formateur+'</a>'
+                                        html = html.replace(":?",userData[$i].formateur_id);
+                                        $('#formateur').append(html);
+
+                                        formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+userData[$i].nom_formation+'</a>'
+                                        formation = formation.replace(":?",userData[$i].formation_id);
+                                        $('#formation').append(formation);
+
+
+                                        modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+userData[$i].nom_module+'</a>'
+                                        modules = modules.replace(":?",userData[$i].module_id);
+                                        $('#module').append(modules);
+
                                     }
                                     var html = '';
                                     for (var $j = 0; $j < date_groupe.length; $j++) {
-                                        html += '<li>- Séance ' + ($j+1) +': <br><i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'<br><i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                        html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'/ <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
                                     }
                                     $('#date_formation').append(html);
 
                                     var html = '';
                                     for (var $a = 0; $a < stg.length; $a++) {
-                                        html += '<li><img src = "{{asset('images/users/users.png')}}" class = "rounded-circle" style="width:50px">'+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+'</li>'
+                                        html += '<img src = "{{asset('images/stagiaires/:!')}}" class = "" style="width:50px"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+' - '+stg[$a].telephone_stagiaire+'</a>'
+                                        html = html.replace(":?",stg[$a].stagiaire_id);
+                                        html = html.replace(":!",stg[$a].photos);
                                     }
 
                                     $('#liste_app').append(html);
