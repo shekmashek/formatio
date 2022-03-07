@@ -40,10 +40,10 @@ class RoleController extends Controller
 
                         $data = [
                             $stg->matricule, $stg->nom_stagiaire, $stg->prenom_stagiaire, $stg->cin, $stg->mail_stagiaire, $stg->telephone_stagiaire, $stg->fonction_stagiaire,
-                            $stg->entreprise_id, $stg->user_id, $stg->genre_stagiaire, $stg->date_naissance, $stg->lot, $stg->ville, $stg->region, $stg->code_postal
+                            $stg->entreprise_id, $stg->user_id, $stg->genre_stagiaire, $stg->date_naissance, $stg->lot, $stg->ville, $stg->region, $stg->code_postal, $stg->quartier
                         ];
                         DB::insert('insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-                        ,entreprise_id,user_id,activiter,created_at,prioriter,sexe_resp,date_naissance_resp,adresse_lot,adresse_ville,adresse_region,adresse_code_postal) values(?,?,?,?,?,?,?,?,?,1,NOW(),false,?,?,?,?,?,?)', $data);
+                        ,entreprise_id,user_id,activiter,created_at,prioriter,sexe_resp,date_naissance_resp,adresse_lot,adresse_ville,adresse_region,adresse_code_postal,adresse_quartier) values(?,?,?,?,?,?,?,?,?,1,NOW(),false,?,?,?,?,?,?,?)', $data);
                     }
                     if ($role_id == 3) { // stagiaire
                     }
