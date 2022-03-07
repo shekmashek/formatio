@@ -824,6 +824,11 @@ Route::get('telecharger_fichier','SessionController@telecharger_fichier')->name(
 
 //affichage role utilisateur
 Route::get('affichage_role','HomeController@affichage_role')->name('affichage_role');
+
+//========= change role user
+
+Route::get('change_role_user/{user_id}/{role_id}','RoleController@change_role_user')->name('change_role_user');
+
 //remplir information manquante
 Route::post('remplir_info_resp','HomeController@remplir_info_resp')->name('remplir_info_resp');
 Route::post('remplir_info_stagiaire','HomeController@remplir_info_stagiaire')->name('remplir_info_stagiaire');

@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 use App\entreprise;
 use App\RoleUser;
 use App\Models\FonctionGenerique;
-
-
+use App\Role;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -33,7 +32,7 @@ class RoleController extends Controller
         if (Gate::allows('isReferent')) {
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             if ($resp_connecter->prioriter == true) {
-                    DB::insert("insert into role_users(user_id,role_id) values (?,?)", [$user_id, $role_id]);
+                DB::insert("insert into role_users(user_id,role_id) values (?,?)", [$user_id, $role_id]);
                 return back();
             } else {
                 return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');
@@ -45,12 +44,18 @@ class RoleController extends Controller
         if (Gate::allows('isReferent')) {
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             if ($resp_connecter->prioriter == true) {
-                    DB::delete("delete from role_users where user_id=? and role_id=?", [$user_id, $role_id]);
-                return back()->with('success_'.$user_id, "role de l'utilisateur a été rétiré!");
+                DB::delete("delete from role_users where user_id=? and role_id=?", [$user_id, $role_id]);
+                return back()->with('success_' . $user_id, "role de l'utilisateur a été rétiré!");
             } else {
                 return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');
             }
         }
+    }
+
+    public function change_role_user(Request $rq, $user_id, $role_id)
+    {
+        $role_user = new RoleUser();
+        return $role_user->update_role_user($user_id, $role_id);
     }
 
     public function index()

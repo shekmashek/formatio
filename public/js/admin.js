@@ -94,7 +94,7 @@ $(document).ready(function() {
         , success: function(response) {
             var userData = response;
             for (var $i = 0; $i < userData.length; $i++) {
-                document.getElementById('liste_role').innerHTML += "<li>" + userData[$i].role_description+ "</li>"
+                document.getElementById('liste_role').innerHTML += '<li> <a href="/change_role_user/'+ userData[$i].user_id+'/'+userData[$i].role_id+'">'+ userData[$i].role_description+'</a> </li>';
             }
         }
         , error: function(error) {
