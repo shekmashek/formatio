@@ -638,9 +638,9 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                            {{-- <ul id="liste_role" style="float: right">
+                                            <ul id="liste_role" style="float: right">
                                             Accès:
-                                        </ul> --}}
+                                        </ul>
                                             {{-- @if(Auth::user()->role_id == 1)
                                             <span class="text-muted d-block mb-2">Admin</span>
                                             @endif
