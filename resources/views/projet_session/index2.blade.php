@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    <div class="container-fluid">
+    <div class="container-fluid mb-5">
         <div class="row">
             <h3 class="mt-5 mb-3 text-center">Listes des Projets Intra et Inter</h3>
             <div class="col-2 pe-3">

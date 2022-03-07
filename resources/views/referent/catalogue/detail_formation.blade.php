@@ -376,7 +376,7 @@
                                             <span>{{ number_format($infos[0]->prix, 2, '.', ' ') }} AR HT</span>
                                         </div>
                                         <div class="col-3 text-center">
-                                            <span class="btn_next">S'inscrire</span>
+                                            <span class="btn_next" role="button"><a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}">S'inscrire</a></span>
                                         </div>
                                     </div>
                                 </li>

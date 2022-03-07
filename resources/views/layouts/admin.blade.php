@@ -218,13 +218,13 @@
                 </a>
                 <span class="tooltip">Formateurs</span>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
                     <span class="links_name">Nouveau Formateur</span>
                 </a>
                 <span class="tooltip">Nouveau Formateur</span>
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
@@ -736,7 +736,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body px-0" style="padding-bottom: 1rem; padding-top: 3.5rem;">
+            <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
             </div>
             {{-- content --}}
