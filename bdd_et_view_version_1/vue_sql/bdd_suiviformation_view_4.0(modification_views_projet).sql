@@ -128,7 +128,8 @@ create or replace view v_groupe_projet_entreprise_module as
         mf.nom,
         mf.email,
         mf.telephone,
-        mf.pourcentage
+        mf.pourcentage,
+        d.nom_domaine
     from
         v_groupe_projet_entreprise vgpe
     join moduleformation mf on vgpe.module_id = mf.module_id;
