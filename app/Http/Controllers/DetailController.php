@@ -75,9 +75,8 @@ class DetailController extends Controller
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
-        return view('admin.calendrier.detail_pdf', compact('detail', 'stg','date_groupe'));
-        // $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('detail', 'stg','date_groupe'));
-        // return $pdf->download('Detail du projet.pdf');
+        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('detail', 'stg','date_groupe'));
+        return $pdf->download('Detail du projet.pdf');
     }
     /*
     public function index()
