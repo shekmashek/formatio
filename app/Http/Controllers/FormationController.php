@@ -180,7 +180,7 @@ class FormationController extends Controller
     public function affichageParFormation($id)
     {
         $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2', [$id]);
-        $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where formation_id = ?',[$id]);
+        $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where formation_id = ? and type_formation_id = 2',[$id]);
         return view('referent.catalogue.liste_formation', compact('infos','datas'));
     }
 
@@ -209,7 +209,7 @@ class FormationController extends Controller
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
-            $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where module_id = ?',[$id]);
+            $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where module_id = ? and type_formation_id = 2',[$id]);
             return view('referent.catalogue.detail_formation', compact('infos','datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categories', 'id'));
         } else return redirect()->route('liste_formation');
     }
