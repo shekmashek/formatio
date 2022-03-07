@@ -32,7 +32,30 @@ class RoleController extends Controller
         if (Gate::allows('isReferent')) {
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             if ($resp_connecter->prioriter == true) {
-                DB::insert("insert into role_users(user_id,role_id) values (?,?)", [$user_id, $role_id]);
+                DB::beginTransaction();
+                try {
+                    DB::insert("insert into role_users(user_id,role_id,activiter) values (?,?,false)", [$user_id, $role_id]);
+                    if ($role_id == 2) { // referent
+                        $stg = $this->fonct->findWhereMulitOne("stagiaires", ["user_id"], [$user_id]);
+
+                        $data = [
+                            $stg->matricule, $stg->nom_stagiaire, $stg->prenom_stagiaire, $stg->cin, $stg->mail_stagiaire, $stg->telephone_stagiaire, $stg->fonction_stagiaire,
+                            $stg->entreprise_id, $stg->user_id, $stg->genre_stagiaire, $stg->date_naissance
+                        ];
+                        DB::insert('insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
+                        ,entreprise_id,user_id,activiter,created_at,prioriter,sexe_resp,date_naissance_resp) values(?,?,?,?,?,?,?,?,?,1,NOW(),false,?,?)', $data);
+                    }
+                    if ($role_id == 3) { // stagiaire
+                    }
+                    if ($role_id == 4) { // formateur
+                    }
+                    if ($role_id == 5) { // manager
+                    }
+                    DB::commit();
+                } catch (Exception $e) {
+                    DB::rollback();
+                    echo $e->getMessage();
+                }
                 return back();
             } else {
                 return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');
@@ -44,7 +67,27 @@ class RoleController extends Controller
         if (Gate::allows('isReferent')) {
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             if ($resp_connecter->prioriter == true) {
-                DB::delete("delete from role_users where user_id=? and role_id=?", [$user_id, $role_id]);
+
+                DB::beginTransaction();
+                try {
+                    DB::delete("delete from role_users where user_id=? and role_id=?", [$user_id, $role_id]);
+                    if ($role_id == 2) { // referent
+                        $stg = $this->fonct->findWhereMulitOne("stagiaires", ["user_id"], [$user_id]);
+                        DB::delete('delete from responsables where user_id=?', [$stg->user_id]);
+                        DB::update("update role_users set activiter=true where role_id=3 and user_id=?", [$user_id, $role_id]);
+                    }
+                    if ($role_id == 3) { // stagiaire
+                    }
+                    if ($role_id == 4) { // formateur
+                    }
+                    if ($role_id == 5) { // manager
+                    }
+                    DB::commit();
+                } catch (Exception $e) {
+                    DB::rollback();
+                    echo $e->getMessage();
+                }
+
                 return back()->with('success_' . $user_id, "role de l'utilisateur a été rétiré!");
             } else {
                 return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');

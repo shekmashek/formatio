@@ -30,6 +30,11 @@
                         </li>
                     </ul>
                 </div>
+                @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{Session::get('error')}}
+                </div>
+                @endif
                 <div class="tab-content" id="myTabContent">
                     {{-- referent --}}
                     <div class="tab-pane fade show active" id="tab-referent" role="tabpanel" aria-labelledby="referent">
