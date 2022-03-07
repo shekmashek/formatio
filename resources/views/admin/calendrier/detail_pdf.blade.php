@@ -37,7 +37,7 @@
 
                     <h1>Projet de formation: {{$detail[$i]->type_formation}}&nbsp;</h1>
                     <label for=""><strong>Entreprise client:</strong>&nbsp;<img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" class="photo">&nbsp; {{$detail[$i]->nom_etp}}</label><br><br>
-                    <label for=""><strong>Organnisme de formation:</strong>&nbsp;<img src = "{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px">&nbsp; {{$detail[$i]->nom_cfp}}</label><br><br>
+                    <label for=""><strong>Organisme de formation:</strong>&nbsp;<img src = "{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px">&nbsp; {{$detail[$i]->nom_cfp}}</label><br><br>
                     <label for=""><strong>Nom du projet:</strong>&nbsp; {{$detail[$i]->nom_projet}}</label><br><br>
                     <label for=""><strong>Session:</strong>&nbsp; {{$detail[$i]->nom_groupe}}</label><br><br>
                     <label for=""><strong>Statut:</strong>&nbsp; {{$detail[$i]->statut}}</label><br><br>
@@ -45,12 +45,12 @@
                     <label for=""><strong>Module:</strong>&nbsp; {{$detail[$i]->nom_module}}</label><br><br>
                     <label for=""><strong>Formateur:</strong><br>
                     <ul>
-                        <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" width="50px" class="photo">&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}} - {{$detail[$i]->mail_formateur}} - {{$detail[$i]->numero_formateur}}</li>
+                        <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" width="50px" class="photo">&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$detail[$i]->numero_formateur}}</li>
                     </ul>
                     <label for=""><strong>Lieu:</strong>&nbsp; {{$detail[$i]->lieu}}</label><br><br>
-                    <label for=""><strong>Date - Heure:</strong><br>
+                    <label for=""><strong>Date - Heure:</strong><br><br>
                     @for($j = 0; $j < count($date_groupe); $j++)
-                        <label for="">- Séance {{$j+1}} : </label>&nbsp;{{$date_groupe[$j]->date_detail}}&nbsp;/&nbsp;&nbsp;{{$date_groupe[$j]->h_debut}}h - {{$date_groupe[$j]->h_fin}}h <br>
+                        <label for="">- Séance {{$j+1}} : </label>&nbsp;<img src = "{{ public_path('images/icone/calendar.png')}}" width="20px" class="photo">{{$date_groupe[$j]->date_detail}}&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/times.png')}}" width="20px" class="photo">&nbsp;{{$date_groupe[$j]->h_debut}}h - {{$date_groupe[$j]->h_fin}}h <br>
                     @endfor
                     <hr>
                     <label for=""><strong>Liste des apprenants</strong></label>

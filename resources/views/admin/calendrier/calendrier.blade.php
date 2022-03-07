@@ -459,7 +459,7 @@
                                         logo_cfp = logo_cfp.replace(":?",userData[$i].logo_cfp);
                                         $('#logo_cfp').append(logo_cfp);
 
-                                        html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + ' - <i class="fas fa-envelope-square"></i> &nbsp'+ userData[$i].mail_formateur + ' - <i class="fas fa-phone-alt"></i>&nbsp '+ userData[$i].numero_formateur+'</a>'
+                                        html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + '&nbsp&nbsp<i class="fas fa-envelope-square"></i>'+ userData[$i].mail_formateur + '&nbsp&nbsp<i class="fas fa-phone-alt"></i> '+ userData[$i].numero_formateur+'</a>'
                                         html = html.replace(":?",userData[$i].formateur_id);
                                         $('#formateur').append(html);
 
@@ -475,7 +475,7 @@
                                     }
                                     var html = '';
                                     for (var $j = 0; $j < date_groupe.length; $j++) {
-                                        html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'/ <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                        html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'&nbsp <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
                                     }
                                     $('#date_formation').append(html);
 
