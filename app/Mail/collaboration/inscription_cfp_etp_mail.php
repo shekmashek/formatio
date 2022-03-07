@@ -32,7 +32,7 @@ class inscription_cfp_etp_mail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->email_destinataire)
+        return $this->from($this->email_resp_cfp)
             ->subject('Invitation de collaboration')
             ->view('collaboration.mail.invitation_create_new_compte_cfp_etp_mail')
             ->with([

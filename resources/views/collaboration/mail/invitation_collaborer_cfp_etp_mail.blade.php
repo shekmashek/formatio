@@ -30,7 +30,7 @@
         Bonne continuation, <br><br>
 
         Cordialement <br>
-        <strong>L’équipe de {{$nom_cfp}}</strong> <br>
+        {{-- <strong>L’équipe de {{$nom_cfp}}</strong> <br> --}}
     </p>
 </body>
 </html>

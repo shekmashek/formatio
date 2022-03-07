@@ -346,7 +346,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
         $str = 'Bon_commande_Facture/' . $nameDossier;
         $pathBC = 'BonCommande_Projet_' . $pathBC . '.' . $extense_bc;
-        $pathFA = 'Facture_Projet_' . $pathFA . '.' . $extense_fa;
+        $pathFA = 'Devis_Projet_' . $pathFA . '.' . $extense_fa;
 
         $result['str'] = $str;
         $result['path_bc'] = $str . '/' . $pathBC;

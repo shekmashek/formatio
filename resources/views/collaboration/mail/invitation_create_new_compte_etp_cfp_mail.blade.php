@@ -16,9 +16,9 @@
         C'est comme une feuille de calcul, mais beaucoup plus intelligent . Commencez en <strong>10 secondes</strong> ou <strong>moins</strong> et profiter d'une utilisation complète .
     </p>
     <p>Bienvenue et merci ! <br><br>
-        L'équipe de <strong>formation.mg</strong>
+        {{-- L'équipe de <strong>formation.mg</strong> --}}
     </p>
-    <a href="#">visiter notre page d'aide</a>
+    <a href="{{route('condition_generale_de_vente')}}">visiter notre page d'aide</a>
 
 </body>
 </html>
