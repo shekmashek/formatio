@@ -108,6 +108,7 @@
                                         @endif
                                         @endforeach
                                     </div>
+                                    <div class="col-1"><a href="{{ route('nouveauRapportFinale',[$prj->projet_id]) }}"><button class="btn rapport_finale">Rapport</button></a></div>
                                     <div class="col-1 text-end p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)

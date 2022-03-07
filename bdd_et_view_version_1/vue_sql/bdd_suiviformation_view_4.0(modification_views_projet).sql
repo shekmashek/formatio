@@ -132,7 +132,8 @@ create or replace view v_groupe_projet_entreprise_module as
         d.nom_domaine
     from
         v_groupe_projet_entreprise vgpe
-    join moduleformation mf on vgpe.module_id = mf.module_id;
+    join moduleformation mf on vgpe.module_id = mf.module_id
+    join domaines d on d.id = mf.domaine_id;
 
 CREATE OR REPLACE VIEW v_detailmodule AS
     SELECT
@@ -502,3 +503,36 @@ create or replace view v_projet_session_inter as
         (cfps.logo) logo_cfp
     from groupes g join projets p on g.projet_id = p.id
     join cfps on cfps.id = p.cfp_id;
+
+
+create or replace view v_formateur_projet as
+    select 
+        f.formateur_id,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.numero_formateur,
+        f.photos,
+        f.genre,
+        f.date_naissance,
+        f.adresse,
+        f.cin,
+        f.specialite,
+        f.niveau,
+        d.projet_id
+    from
+        v_demmande_cfp_formateur f join details d on f.formateur_id = d.formateur_id
+    group by 
+        f.formateur_id,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.numero_formateur,
+        f.photos,
+        f.genre,
+        f.date_naissance,
+        f.adresse,
+        f.cin,
+        f.specialite,
+        f.niveau,
+        d.projet_id;

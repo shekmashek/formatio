@@ -315,6 +315,23 @@
     transform: scale(1.2);
 }
 
+.rapport_finale{
+    padding: 0.2rem;
+    padding-left: 0.4rem;
+    font-size: 0.85rem;
+    background-color: #dededfe0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 200ms;
+    color: #7635dc;
+}
+
+.rapport_finale:hover{
+    background-color: #63738131;
+    color: #7635dc;
+    transform: scale(1.2);
+}
+
 .navigation_module .nav-link {
     color: #7635dc;
     border: none;

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\RapportFinale;
 use App\Models\FonctionGenerique;
 use PDF;
+use Illuminate\Support\Facades\DB;
 //use Charts;
 
 use Illuminate\Http\Request;
@@ -107,20 +108,20 @@ class RapportFinaleController extends Controller
         $fonct = new FonctionGenerique();
 
         $projet_id = $req->projet_id;
-        $entreprise_id = $req->entreprise_id;
-
+        $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where projet_id = ?', [$projet_id])[0]->entreprise_id;
+        
         $para=["entreprise_id","projet_id"];
         $val=[$req->entreprise_id,$req->projet_id];
         $para2=["projet_id"];
         $val2=[$req->projet_id];
 
-        $data["projet"] = $fonct->findWhereMulitOne("v_projetentreprise",$para,$val);
+        $data["projet"] = $fonct->findWhereMulitOne("v_groupe_projet_entreprise",$para,$val);
 
-        $data["formateurs"] = $fonct->findWhere("v_liste_formateur_projet ",$para2,$val2);
+        $data["formateurs"] = $fonct->findWhere("v_formateur_projet ",$para2,$val2);
         $data["toutformateurs"] =  $fonct->findAll("formateurs");
-        $data["groupes"] = $fonct->findWhere("v_groupe_projet",$para2,$val2);
+        $data["groupes"] = $fonct->findWhere("v_groupe_projet_entreprise",$para2,$val2);
 
-        $data["stagiaires"] =$fonct->findWhere("v_participant_groupe",$para2,$val2);
+        $data["stagiaires"] =$fonct->findWhere("v_stagiaire_groupe",$para2,$val2);
         $data["stagiaire_evaluation_apprenant"] =  $fonct->findWhere("v_evaluation_apprenant",$para2,$val2);
 
 
