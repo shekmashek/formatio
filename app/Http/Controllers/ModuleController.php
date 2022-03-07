@@ -53,11 +53,15 @@ class ModuleController extends Controller
 
     public function index($id = null)
     {
-        $id_user = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $fonct = new FonctionGenerique();
-        $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
+        $infos =null;
+        $categorie=null;
+        $id_user = Auth::user()->id;
+        // $cfp_id = cfp::where('user_id', $id_user)->value('id');
         if (Gate::allows('isCFP')) {
+            $cfp_id  = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
+            $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
+
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             // $categorie = formation::where('cfp_id', $cfp_id)->get();
             $categorie = formation::all();

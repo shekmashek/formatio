@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\FonctionGenerique;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\new_employer\create_compte_new_employer_mail;
 use Illuminate\Support\Facades\Gate;
 
 class EmployeurController extends Controller
@@ -89,10 +90,13 @@ class EmployeurController extends Controller
             // $nom_img = "images/users/user.png";
 
             $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+            $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
+
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
 
 
             if ($request->type_enregistrement == "STAGIAIRE") {
+                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"]);
 
                 DB::beginTransaction();
                 try {
@@ -105,9 +109,14 @@ class EmployeurController extends Controller
                 $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                 DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
                 entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+                // __construct($nom_etp,$responsable_etp,$nom_employer,$email_employer)
+                Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
+
                 return redirect()->route('employes');
             }
             if ($request->type_enregistrement == "REFERENT") {
+                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"]);
+
                 DB::beginTransaction();
                 try {
                     $this->fonct->insert_role_user($user_id, "2"); // RH
@@ -123,6 +132,8 @@ class EmployeurController extends Controller
                 return back();
             }
             if ($request->type_enregistrement == "MANAGER") {
+                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"]);
+
                 DB::beginTransaction();
                 try {
                     $this->fonct->insert_role_user($user_id, "5"); // MANAGER

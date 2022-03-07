@@ -34,7 +34,7 @@ class ProfController extends Controller
             return view('collaboration.collaboration_cfp', compact('formateur','demmande_formateur','invitation_formateur'));
         }
     */
-  /*  public function index($id = null)
+    /*  public function index($id = null)
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
@@ -61,7 +61,7 @@ class ProfController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -74,30 +74,32 @@ class ProfController extends Controller
 
         if (Gate::allows('isCFP')) {
 
-            $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
-            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            $formateur = $forma->getFormateur($formateur1, $formateur2);
+            // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+            // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+            // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            // $formateur = $forma->getFormateur($formateur1, $formateur2);
+            $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+
 
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-            return view('admin.formateur.formateur', compact('formateur','demmande_formateur','invitation_formateur'));
+            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
 
-             if(count($formateur )<=0){
+            if (count($formateur) <= 0) {
                 return view('admin.formateur.guide');
-              }
-            else{
+            } else {
                 return view('admin.formateur.formateur', compact('formateur'));
-                }
+            }
         } else {
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp",["cfp_id"],[$cfp_id]);
+            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             $formateur = $forma->getFormateur($formateur1, $formateur2);
 
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-            return view('admin.formateur.formateur', compact('formateur','demmande_formateur','invitation_formateur'));
+            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
         }
     }
 
@@ -145,7 +147,7 @@ class ProfController extends Controller
         //stocker logo dans google drive
         $dossier = 'formateur';
         $stock_formateur = new getImageModel();
-        $stock_formateur->store_image($dossier,$nom_image,$request->file('image')->getContent());
+        // $stock_formateur->store_image($dossier,$nom_image,$request->file('image')->getContent());
         // $request->image->move(public_path($str), $nom_image);
 
         $frm->photos = $nom_image;
@@ -160,7 +162,7 @@ class ProfController extends Controller
         $ch1 = '0000';
         // $ch2 = substr($request->phone, 8, 2);
         $user->password = Hash::make($ch1);
-         $user->save();
+        $user->save();
 
         $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;
         DB::beginTransaction();
@@ -174,11 +176,11 @@ class ProfController extends Controller
 
         //get user id
         $frm->user_id = $user_id;
-       $frm->save();
+        $frm->save();
 
         // $idmail_formateur = formateur::where('mail_formateur', $request->mail)->value('id');
         $idmail_formateur = $fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$request->mail])->id;
-// dd($idmail_formateur);
+
         $input = $request->all();
         for ($i = 0; $i < count($input['domaine']); $i++) {
             $competence = new competenceFormateur();
@@ -199,9 +201,11 @@ class ProfController extends Controller
             $experience->save();
         }
         if (Gate::allows('isCFP')) {
-            $cfp_id = $fonct->findWhereMulitOne("cfps", ["user_id"], [Auth::id()])->id;
-        DB::insert("insert into demmande_cfp_formateur(demmandeur_cfp_id,inviter_formateur_id,activiter,created_at,updated_at) values(?,?,true,NOW(),NOW())",[$cfp_id,$idmail_formateur]);
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::id()])->cfp_id;
+            DB::insert("insert into demmande_cfp_formateur(demmandeur_cfp_id,inviter_formateur_id,activiter,created_at,updated_at) values(?,?,true,NOW(),NOW())", [$cfp_id, $idmail_formateur]);
         }
+        $request->image->move(public_path('images/formateurs'), $nom_image);  //save image cfp
+
         // return redirect()->route('utilisateur_formateur');
         return back()->with('success', 'success terminer!');
     }
@@ -218,67 +222,78 @@ class ProfController extends Controller
         $formateur = formateur::where('id', $id)->get();
         return response()->json($formateur);
     }
-    public function editer_photos($id, Request $request){
+    public function editer_photos($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_photos', compact('formateur'));
     }
-      public function editer_nom($id, Request $request){
+    public function editer_nom($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_nom', compact('formateur'));
     }
-    public function editer_genre($id, Request $request){
+    public function editer_genre($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_genre', compact('formateur'));
     }
-    public function editer_naissance($id, Request $request){
+    public function editer_naissance($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.editer_naissance', compact('formateur'));
     }
-    public function editer_mail($id, Request $request){
+    public function editer_mail($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_mail', compact('formateur'));
     }
-    public function editer_phone($id, Request $request){
+    public function editer_phone($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_phone', compact('formateur'));
     }
-    public function editer_cin($id, Request $request){
+    public function editer_cin($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_cin', compact('formateur'));
     }
-    public function editer_adresse($id, Request $request){
+    public function editer_adresse($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_adresse', compact('formateur'));
     }
-    public function editer_etp($id, Request $request){
+    public function editer_etp($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_etp', compact('formateur'));
     }
-    public function editer_niveau($id, Request $request){
+    public function editer_niveau($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
         return view('admin.formateur.edit_niveau', compact('formateur'));
     }
-    public function editer_pwd($id, Request $request){
+    public function editer_pwd($id, Request $request)
+    {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = formateur::findOrFail($id);
@@ -325,10 +340,10 @@ class ProfController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             // dd("delete from demmande_cfp_formateur where demmandeur_cfp_id = ".$cfp_id." and inviter_formateur_id=".$id_formateur);
-                DB::delete('delete from demmande_cfp_formateur where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
+            DB::delete('delete from demmande_cfp_formateur where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
         }
 
-        if (Gate::allows('isSuperAdmin','isAdmin')) {
+        if (Gate::allows('isSuperAdmin', 'isAdmin')) {
             DB::beginTransaction();
             try {
                 DB::delete('delete from formateurs where id = ?', [$id_formateur]);
@@ -341,12 +356,13 @@ class ProfController extends Controller
         return back();
     }
 
-    public function desactivation_formateur(Request $req){
+    public function desactivation_formateur(Request $req)
+    {
         $user_id = Auth::user()->id;
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $id_formateur = $req->id_get;
-            // DB::update('update demmande_formateur_cfp set activiter = 0 where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$id_formateur, $cfp_id]);
-            DB::update('update demmande_cfp_formateur set activiter = 0 where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
+        // DB::update('update demmande_formateur_cfp set activiter = 0 where demmandeur_formateur_id = ? and inviter_cfp_id=?', [$id_formateur, $cfp_id]);
+        DB::update('update demmande_cfp_formateur set activiter = 0 where demmandeur_cfp_id = ? and inviter_formateur_id=?', [$cfp_id, $id_formateur]);
 
         return back();
     }
@@ -359,7 +375,7 @@ class ProfController extends Controller
         $experience = experienceFormateur::where('formateur_id', $id)->get();
         return view('admin.formateur.profil', compact('formateur', 'competence', 'experience'));
     }
-    public function profile_formateur( $id = null )
+    public function profile_formateur($id = null)
     {
         $formateur = formateur::findOrFail($id);
 
@@ -383,13 +399,13 @@ class ProfController extends Controller
         $formateur = formateur::FindOrFail($request->id);
         return view('admin.formateur.modification_profil_formateur', compact('formateur'));
     }
-    public function misajourFormateur(Request $request,$id)
+    public function misajourFormateur(Request $request, $id)
     {
 
         // $fonct = new FonctionGenerique();
 
         // $resp_etp = $fonct->findWhereMulitOne("formateurs",["user_id"],[ Auth::user()->id]);
-       // dd( $resp_etp );
+        // dd( $resp_etp );
         $nom = $request->nom;
 
         $phone =  $request->phone;
@@ -403,38 +419,38 @@ class ProfController extends Controller
             $destinationPath = 'images/formateurs';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
-            $input= "$profileImage";
+            $input = "$profileImage";
         }
-        if ($input !=null){
-        formateur::where('id',  $id)
-            ->update([
-                'nom_formateur' => $nom,
-                'prenom_formateur' => $request->prenom,
-                'numero_formateur' => $phone,
-                'mail_formateur' => $mail,
-                'cin' => $cin,
-                'genre' =>  $request->genre,
-                'date_naissance' => $datenais,
-                'adresse' => $request->adresse,
-                'specialite' => $splt,
-                'niveau' => $nv,
-                'photos' => $input,
-            ]);
-        }else{
+        if ($input != null) {
             formateur::where('id',  $id)
-            ->update([
-                'nom_formateur' => $nom,
-                'prenom_formateur' => $request->prenom,
-                'numero_formateur' => $phone,
-                'mail_formateur' => $mail,
-                'cin' => $cin,
-                'genre' =>$request->genre,
-                'date_naissance' => $datenais,
-                'adresse' => $request->adresse,
-                'specialite' => $splt,
-                'niveau' => $nv,
+                ->update([
+                    'nom_formateur' => $nom,
+                    'prenom_formateur' => $request->prenom,
+                    'numero_formateur' => $phone,
+                    'mail_formateur' => $mail,
+                    'cin' => $cin,
+                    'genre' =>  $request->genre,
+                    'date_naissance' => $datenais,
+                    'adresse' => $request->adresse,
+                    'specialite' => $splt,
+                    'niveau' => $nv,
+                    'photos' => $input,
+                ]);
+        } else {
+            formateur::where('id',  $id)
+                ->update([
+                    'nom_formateur' => $nom,
+                    'prenom_formateur' => $request->prenom,
+                    'numero_formateur' => $phone,
+                    'mail_formateur' => $mail,
+                    'cin' => $cin,
+                    'genre' => $request->genre,
+                    'date_naissance' => $datenais,
+                    'adresse' => $request->adresse,
+                    'specialite' => $splt,
+                    'niveau' => $nv,
 
-            ]);
+                ]);
         }
         $password = $request->password;
         $hashedPwd = Hash::make($password);
@@ -453,10 +469,11 @@ class ProfController extends Controller
 
         return view('admin.formateur.profile_formateurs', compact('formateur'));
     }
-      //fonction récupération photos depuis google drive
-    public function getImage($path){
+    //fonction récupération photos depuis google drive
+    public function getImage($path)
+    {
         $dossier = 'formateur';
         $etp = new getImageModel();
-        return $etp->get_image($path,$dossier);
+        return $etp->get_image($path, $dossier);
     }
 }

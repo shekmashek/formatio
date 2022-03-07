@@ -30,7 +30,7 @@ class NouveauCompte extends Model
     public function insert_resp_CFP($doner, $cfp_id, $user_id)
     {
         $data = [
-            $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
+           $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
             $cfp_id, $user_id
         ];
         DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
@@ -55,11 +55,11 @@ class NouveauCompte extends Model
     public function insert_resp_ETP($doner, $entreprise_id, $user_id)
     {
         $data = [
-            $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
+            $doner["matricule"],$doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
             $entreprise_id, $user_id
         ];
-        DB::insert('insert into responsables(nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-        ,entreprise_id,user_id,activiter,created_at,prioriter) values(?,?,?,?,?,?,?,?,1,NOW(),true)', $data);
+        DB::insert('insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
+        ,entreprise_id,user_id,activiter,created_at,prioriter) values(?,?,?,?,?,?,?,?,?,1,NOW(),true)', $data);
         DB::commit();
     }
 

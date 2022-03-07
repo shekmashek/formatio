@@ -146,7 +146,6 @@ class UtilisateurControlleur extends Controller
         $nom_image = str_replace(' ', '_', $request->nom . '' . $date . '.' . $request->logo->extension());
 
         $str = 'images/CFP';
-
         //stocker logo dans google drive
 
         $dossier = 'entreprise';

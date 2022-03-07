@@ -9,24 +9,24 @@
 <body>
     <p>
         Bonjour {{$nom_resp.'('.$email_resp.')'}}, <br>
-        <strong>Félicitations!</strong>votre compte est activé. <br>
+        <strong>Félicitations</strong>, votre compte est activé! <br>
     </p>
 
     <p>vous êtes le responsable principale de <strong>{{$nom_etp}}</strong> </p>
-    <p>Etant que responsable, vous pouvez vous connecter en tant que: <br>
-        nom: {{$nom_resp}} <br>
-        adresse email: {{$email_resp}}
-        mot de passe : 0000
-    </p>
+    <p>En tant que responsable, votre identifiant est: </p>
+    <p>    nom: {{$nom_resp}} </p>
+    <p>    adresse email: {{$email_resp}} </p>
+        <p>    mot de passe : <strong>0000</strong> </p>
 
-    <p><strong>Vos information est modifiable dans votre profile !</strong>  <br><br>
+
+    <p><strong>Vos informations sont modifiables dans votre profil</strong>  <br><br>
         Merci d'avoir choisi <a href="{{route('sign-in')}}">formation.mg</a>
     </p>
     <p>
         Cordialement
     </p>
-    <p>
+    {{-- <p>
         L’équipe de <strong>formation.mg</strong> <br>
-    </p>
+    </p> --}}
 </body>
 </html>

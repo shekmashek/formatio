@@ -228,6 +228,7 @@
                                 <table class="table  table-borderless table-sm">
                                     <tbody id="data_collaboration">
 
+                                        @if (count($service_departement)>0)
                                         <tr>
                                             <td>
                                                 <div align="left">
@@ -284,6 +285,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @else
+                                        <tr>
+                                            <td colspan="3"> Aucun département pour l'entreprise</td>
+                                        </tr>
+                                        @endif
+
+
 
                                     </tbody>
                                 </table>
@@ -351,6 +359,7 @@
 
                                 <table class="table  table-borderless table-sm">
                                     <tbody id="data_collaboration">
+                                        @if (count($branches)>0)
                                         <tr>
                                             <td>
                                                 @if(isset($branches))
@@ -359,6 +368,12 @@
                                                     @endif
                                             </td>
                                         </tr>
+                                        @else
+                                        <tr>
+                                            <td colspan="3"> Aucun département pour l'entreprise</td>
+                                        </tr>
+                                        @endif
+
                                     </tbody>
                                 </table>
 

@@ -38,10 +38,10 @@ class FactureController extends Controller
     public function fullFacture(Request $request)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
+
 
         if (Gate::allows('isCFP')) {
-            $totale_invitation = $this->collaboration->count_invitation();
             $id_projet = $request->projet_id;
             $message = "";
             $typePayement = $this->typePaye->findAll();
@@ -53,7 +53,7 @@ class FactureController extends Controller
             $taxe = $this->fonct->findAll("taxes");
             $type_facture = $this->fonct->findAll("type_facture");
             $mode_payement = $this->fonct->findAll("mode_financements");
-            return view('admin.facture.nouveau_facture', compact('totale_invitation', 'project', 'entreprise', 'typePayement', 'message', 'taxe', 'mode_payement', 'type_facture'));
+            return view('admin.facture.nouveau_facture', compact( 'project', 'entreprise', 'typePayement', 'message', 'taxe', 'mode_payement', 'type_facture'));
 
             // return view('admin.facture.maquette_entrer_facture', compact('totale_invitation', 'project', 'entreprise', 'typePayement', 'message', 'taxe', 'mode_payement', 'type_facture'));
         }
@@ -67,9 +67,8 @@ class FactureController extends Controller
     {
 
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
 
-        $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
 
         $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
@@ -86,7 +85,7 @@ class FactureController extends Controller
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
-            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour','data'));
+            return view('admin.facture.facture', compact('mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour','data'));
         }
     }
 
@@ -97,18 +96,17 @@ class FactureController extends Controller
     {
         $invoice_dte = $req->invoice_dte_fact;
         $due_dte = $req->due_dte_fact;
-        $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
 
         if($invoice_dte == null || $due_dte==null){
             if (Gate::allows('isCFP')) {
-                $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
+                $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
                 $facture_actif =  $this->fact->search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
                 $facture_inactif =  $this->fact->search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
                 $facture_payer =  $this->fact->search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
                 $facture_encour = $this->fact->search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, 0, 10);
                 // dd($facture_actif);
-                return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+                return view('admin.facture.facture', compact('mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
             }
         } else {
             return back();
@@ -118,17 +116,16 @@ class FactureController extends Controller
     public function search_par_num_fact(Request $req)
     {
         $num_fact = $req->num_fact;
-        $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
 
         if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id',  Auth::user()->id)->value('id');
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
             $facture_actif =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "valider", $cfp_id);
             $facture_inactif =  $this->fact->search_num_fact_inactif_cfp($num_fact, $cfp_id);
             $facture_payer =  $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "terminer", $cfp_id);
             $facture_encour = $this->fact->search_num_fact_actif_cfp("v_facture_actif", $num_fact, "en_cour", $cfp_id);
             // dd($facture_encour);
-            return view('admin.facture.facture', compact('mode_payement', 'totale_invitation', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            return view('admin.facture.facture', compact('mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
         }
     }
 
@@ -139,7 +136,6 @@ class FactureController extends Controller
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
 
-        $totale_invitation = $this->collaboration->count_invitation();
         $mode_payement = DB::select('select * from mode_financements');
         $facture_actif = $this->fonct->findWhere("v_facture_actif", ["entreprise_id"], [$entreprise_id]);
 
@@ -178,13 +174,13 @@ class FactureController extends Controller
             $entreprise = responsable::where('user_id', $user_id)->exists();
             if ($entreprise) {
                 $projet = projet::where('entreprise_id', $entreprise_id)->get();
-                return view('admin.facture.liste_facture', compact('totale_invitation', 'entreprise', 'projet', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+                return view('admin.facture.liste_facture', compact( 'entreprise', 'projet', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
             } else {
                 $entreprise = null;
-                return view('admin.facture.liste_facture', compact('totale_invitation', 'entreprise', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+                return view('admin.facture.liste_facture', compact( 'entreprise', 'mode_payement', 'facture_actif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
             }
         } else {
-            return view('admin.facture.liste_facture_inactif', compact('totale_invitation', 'facture_inactif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
+            return view('admin.facture.liste_facture_inactif', compact( 'facture_inactif', 'compte_facture_actif', 'compte_facture_inactif', 'compte_facture_en_cour', 'compte_facture_payer'));
         }
     }
 
@@ -200,8 +196,7 @@ class FactureController extends Controller
 
     public function detail_facture($numero_fact)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
 
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -232,8 +227,7 @@ class FactureController extends Controller
 
     public function generatePDF($numero_fact)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
 
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -296,10 +290,7 @@ class FactureController extends Controller
     public function valid_facture(Request $req)
     {
 
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
-
-        $totale_invitation = $this->collaboration->count_invitation();
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         $this->fact->valider_facture_inactif($req->num_facture, $cfp_id);
         return redirect()->route('liste_facture',2);
 
@@ -314,8 +305,6 @@ class FactureController extends Controller
 
         $type_fact = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$imput["type_facture"]]);
         $prj_id = $this->fonct->findWhereMulitOne("groupes", ["id"], [$groupe_id[0]])->projet_id;
-        // $prj_id = $this->fonct->findWhereMulitOne("groupes", ["id"], [$groupe_id[0]]);
-        // dd($prj_id);
         $un_projet = $this->fonct->findWhereMulitOne("projets", ["id"], [$prj_id]);
         $un_cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$un_projet->cfp_id]);
 
@@ -347,17 +336,32 @@ class FactureController extends Controller
         $bc->create_sub_directory($dossier, $sous_dossier, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_bc')->getContent());
         //enregistrement du devis
         $sous_dossier2 = 'devis';
+        $bc->create_sub_directory($dossier, $sous_dossier2, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_fa')->getContent());
+
+
+        $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);
+
+        /*
+         //creation sous dossier Facture/BonCommande/Nom_du_cfp et enregistrement du bc et devis
+        $dossier = 'facture';
+        $sous_dossier = 'bc';
+        $dossier_cfp = $un_cfp->nom . $un_cfp->id;
+        $projet_folder = $un_projet->nom_projet . $un_projet->id;
+        $bc = new getImageModel();
+        //enregistrement du bc
+        $bc->create_sub_directory($dossier, $sous_dossier, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_bc')->getContent());
+        //enregistrement du devis
+        $sous_dossier2 = 'devis';
         $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);
         $bc->create_sub_directory($dossier, $sous_dossier2, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_fa')->getContent());
 
+        */
         return $res;
     }
 
     public function create(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
-
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         $tax = $this->fonct->findWhereOne("taxes", "id", "=", $request->tax_id);
         $para = ["groupe_id"];
 
@@ -454,9 +458,7 @@ class FactureController extends Controller
 
     public function destroy($num_facture)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
-
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         $status = $this->fact->verifyDeleteFacture($num_facture, $cfp_id);
         return $status;
     }
@@ -469,7 +471,6 @@ class FactureController extends Controller
 
     public function getGroupe_projet(Request $req)
     {
-        // $data = $this->fonct->findWhere("v_groupe", ["projet_id"], [$req->id]);
         $data = $this->fonct->findWhere("v_groupe_projet_entreprise", ["projet_id","entreprise_id"], [$req->id,$req->entreprise_id]);
 
         return response()->json($data);
@@ -482,21 +483,18 @@ class FactureController extends Controller
     }
     public function projetFacturer(Request $req)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         return response()->json($this->fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]));
     }
 
     public function verifyFacture(Request $req)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         return response()->json($this->fact->verifyExistsNumFacture($req->num_facture, $cfp_id));
     }
     public function verifyReferenceBC(Request $req)
     {
-        $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         return response()->json($this->fact->verifyExistsReferenceBC($req->reference_bc, $cfp_id));
     }
 

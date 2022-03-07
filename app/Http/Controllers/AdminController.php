@@ -13,6 +13,8 @@ use App\ChefDepartement;
 use App\Formateur;
 use App\entreprise;
 
+use App\Models\FonctionGenerique;
+
 class AdminController extends Controller
 {
     public function __construct()
@@ -110,37 +112,66 @@ class AdminController extends Controller
     public function profile_resp()
     {
         $id_user = Auth::user()->id;
+        $fonct = new FonctionGenerique();
 
         if (Gate::allows('isReferent')) {
             $user = responsable::where('user_id', $id_user)->value('photos');
-            $user = 'responsables/' . $user;
+            if($user == null){
+                $user = 'users/users.png';
+            } else{
+                $user = 'responsables/' . $user;
+            }
+            // $user = 'responsables/' . $user;
             return response()->json($user);
         }
 
         if (Gate::allows('isFormateur')) {
+
             $user = Formateur::where('user_id', $id_user)->value('photos');
-            $user = 'formateurs/' . $user;
+             if($user == null){
+                $user = 'users/users.png';
+            } else{
+                $user = 'formateurs/' . $user;
+            }
+            // $user = 'formateurs/' . $user;
             return response()->json($user);
         }
         if (Gate::allows('isManager')) {
             $user = ChefDepartement::where('user_id', $id_user)->value('photos');
-            $user = 'chefDepartement/' . $user;
+            if($user == null){
+                $user = 'users/users.png';
+            } else{
+                $user = 'chefDepartement/' . $user;
+            }
+
+            // $user = 'chefDepartement/' . $user;
             return response()->json($user);
         }
 
         if (Gate::allows('isCFP')) {
-            $user = cfp::where('user_id', $id_user)->value('logo');
-            $user = 'CFP/' . $user;
+            $user = $fonct->findWhereMulitOne(("v_responsable_cfp"),["user_id"],[$id_user])->photos_resp_cfp;
+            if($user == null){
+                $user = 'users/users.png';
+            } else{
+                $user = 'responsables/' . $user;
+            }
+            // $user = 'CFP/' . $user;
             return response()->json($user);
         }
         if (Gate::allows('isStagiaire')) {
             $user = stagiaire::where('user_id', $id_user)->value('photos');
-            $user = 'stagiaires/' . $user;
+            if($user == null){
+                $user = 'users/users.png';
+            } else{
+                $user = 'stagiaires/' . $user;
+            }
+            // $user = 'stagiaires/' . $user;
             return response()->json($user);
         }
     }
     public function logo()
     {
+        $fonct = new FonctionGenerique();
         $id_user = Auth::user()->id;
         if (Gate::allows('isManager')) {
 
@@ -148,7 +179,12 @@ class AdminController extends Controller
 
             $etp = entreprise::where('id', $etp_id)->value('logo');
 
-            $etp = 'entreprises/' . $etp;
+            if($etp == null){
+                $etp = 'users/users.png';
+            } else{
+                $etp = 'entreprises/' . $etp;
+            }
+
             return response()->json($etp);
         }
 
@@ -157,23 +193,39 @@ class AdminController extends Controller
             $etp_id = responsable::where('user_id', $id_user)->value('entreprise_id');
             $etp = entreprise::where('id', $etp_id)->value('logo');
 
-            $etp = 'entreprises/' . $etp;
+            if($etp == null){
+                $etp = 'users/users.png';
+            } else{
+                $etp = 'entreprises/' . $etp;
+            }
+
+            // $etp = 'entreprises/' . $etp;
             return response()->json($etp);
         }
 
-
         if (Gate::allows('isCFP')) {
 
-            $etp_id = Cfp::where('user_id', $id_user)->value('entreprise_id');
-            $etp = entreprise::where('id', $etp_id)->value('logo');
-            $etp = 'entreprises/' . $etp;
+            $etp = $fonct->findWhereMulitOne(("v_responsable_cfp"),["user_id"],[$id_user])->logo_cfp;
+            if($etp == null){
+                $etp = 'users/users.png';
+            } else{
+                $etp = 'CFP/' . $etp;
+            }
+            // $etp = 'CFP/' . $etp;
             return response()->json($etp);
         }
         if (Gate::allows('isFormateur')) {
 
-            $etp_id = Formateur::where('user_id', $id_user)->value('entreprise_id');
-            $etp = entreprise::where('id', $etp_id)->value('logo');
-            $etp = 'entreprises/' . $etp;
+            // $etp_id = Formateur::where('user_id', $id_user)->value('entreprise_id');
+            // $etp = entreprise::where('id', $etp_id)->value('logo');
+              $etp = $fonct->findWhereMulitOne(("v_demmande_cfp_formateur"),["user_id"],[$id_user])->logo;
+
+            if($etp == null){
+                $etp = 'users/users.png';
+            } else{
+                $etp = 'CFP/' . $etp;
+            }
+            // $etp = 'entreprises/' . $etp;
             return response()->json($etp);
         }
         if (Gate::allows('isStagiaire')) {
@@ -181,8 +233,12 @@ class AdminController extends Controller
             $etp_id = stagiaire::where('user_id', $id_user)->value('entreprise_id');
 
             $etp = entreprise::where('id', $etp_id)->value('logo');
-
-            $etp = 'entreprises/' . $etp;
+            if($etp == null){
+                $etp = 'users/users.png';
+            } else{
+                $etp = 'stagiaires/' . $etp;
+            }
+            // $etp = 'entreprises/' . $etp;
             return response()->json($etp);
         }
     }

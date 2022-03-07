@@ -39,11 +39,11 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->collaboration = new Collaboration();
-        // $this->middleware('auth');
-        // $this->middleware(function ($request, $next) {
-        //     if (Auth::user()->exists == false) return view('auth.connexion');
-        //     return $next($request);
-        // });
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->exists == false) return view('auth.connexion');
+            return $next($request);
+        });
     }
 
 
@@ -239,9 +239,11 @@ class HomeController extends Controller
             $fonct = new FonctionGenerique();
 
             $user_id = Auth::user()->id;
-            $cfp = Cfp::where('user_id', $user_id)->value('nom');
-            // cfp_id
-            $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+             // cfp_id
+            //  $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+            $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+
+            $cfp = Cfp::where('id', $cfp_id)->value('nom');
 
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
@@ -288,7 +290,7 @@ class HomeController extends Controller
             $session_intra_en_cours = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 3 and cfp_id = ' . $cfp_id . ' ');
             $session_intra_avenir = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 2 and cfp_id = ' . $cfp_id . ' ');
 
-            $nom_profil_organisation = cfp::where('user_id', $user_id)->value('nom');
+            $nom_profil_organisation = cfp::where('id', $cfp_id)->value('nom');
 
 
             // $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
@@ -302,7 +304,7 @@ class HomeController extends Controller
                 $ref = $fonct->findWhereMulitOne("cfps",["id"],[$id]);
             }
             else{
-                $ref = $fonct->findWhereMulitOne("cfps",["user_id"],[Auth::user()->id]);
+                $ref = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
             }
 
             return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation','ref','formateur','dmd_cfp_etp','resp_cfp','module_publié','module_encours_publié','facture_paye','facture_non_echu','facture_brouillon','session_intra_terminer','session_intra_previ','session_intra_en_cours','session_intra_avenir'));
@@ -437,7 +439,9 @@ class HomeController extends Controller
         $fonct = new FonctionGenerique();
 
         $user_id = Auth::user()->id;
-        $totale_invitation = $this->collaboration->count_invitation();
+        $totale_invitation = 0;
+
+        // $totale_invitation = $this->collaboration->count_invitation();
         $entp = new entreprise();
         $status = DB::select('select * from status');
         $type_formation_id = $request->type_formation;
@@ -491,8 +495,10 @@ class HomeController extends Controller
         // }
         elseif (Gate::allows('isCFP')) {
 
-            $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $sql = $projet_model->build_requette($cfp_id,"v_projet_session",$request);
+            // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
+
+            $sql = $projet_model->build_requette($cfp_id,$type_formation_id,"v_projet_session",$request);
             // dd($sql);
             $projet = DB::select($sql);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?',[$cfp_id]);

@@ -394,6 +394,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     c.logo,
     c.activiter AS activiter_cfp,
     c.site_cfp,
+    f.user_id,
     f.id AS formateur_id,
     f.nom_formateur,
     f.prenom_formateur,

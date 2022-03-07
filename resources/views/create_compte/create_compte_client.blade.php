@@ -142,6 +142,16 @@
                     <h4 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
                     <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <input type="text" required name="matricule_resp_etp" class="form-control input_inscription" id="matricule_resp_etp" />
+                                <label for="matricule_resp_etp" class="form-control-placeholder" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
+                            </div>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
                                 <input type="text" required name="nom_resp_etp" class="form-control input_inscription" id="nom_resp_etp" />
