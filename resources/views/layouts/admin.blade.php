@@ -594,7 +594,6 @@
                                             <div class="col-md-4 ">
                                                 <span ><div class='photo_user'>  </div></span>
 
-
                                             </div>
 
                                             <div class="col-md-8">

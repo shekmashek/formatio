@@ -13,6 +13,7 @@ use App\ChefDepartement;
 use App\Formateur;
 use App\entreprise;
 
+
 class AdminController extends Controller
 {
     public function __construct()
@@ -129,9 +130,11 @@ class AdminController extends Controller
         }
 
         if (Gate::allows('isCFP')) {
-            $user = cfp::where('user_id', $id_user)->value('logo');
-            $user = 'CFP/' . $user;
-            return response()->json($user);
+        
+            $user = DB::table('v_responsable_cfp')->select('logo_cfp')->distinct()->where('user_id',$id_user)->get();
+          
+            // $user = 'CFP/' . $user;
+            // return response()->json($user);
         }
         if (Gate::allows('isStagiaire')) {
             $user = stagiaire::where('user_id', $id_user)->value('photos');
