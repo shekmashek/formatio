@@ -210,7 +210,7 @@
                             <option value="Inter entreprise">Inter entreprise</option>
                         </select><br>
                         <h5>Statut</h5>
-                        <select name="" id="statut" class="form-control w-75">
+                        <select name="" id="liste_statut" class="form-control w-75">
                             @for ($i = 0;$i<count($statut);$i++)
                                 <option value = "{{$statut[$i]->id}}">{{$statut[$i]->status}}</option>
                             @endfor
@@ -980,7 +980,7 @@
             }
         });
     });
-    $('#statut').on('change',function(e){
+    $('#liste_statut').on('change',function(e){
         var statut = $(this).val();
         $.ajax({
             type: "GET"
