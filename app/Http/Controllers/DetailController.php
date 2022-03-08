@@ -29,15 +29,22 @@ class DetailController extends Controller
             return $next($request);
         });
     }
-    public function listEvent()
+    public function listEvent(Request $request)
     {
         $id_user = Auth::user()->id;
+        $module = $request->module;
         if (Gate::allows('isSuperAdmin')) {
             $detail = DB::select('select * from v_detailmodule');
         }
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
-            $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            if ($module!=null) {
+                $detail = DB::select('select * from v_detailmodule where nom_module = "' . $module.'" and cfp_id = '.$cfp_id);
+            }
+            else{
+                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            }
+
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $id_user)->value('id');
@@ -78,6 +85,12 @@ class DetailController extends Controller
         $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('detail', 'stg','date_groupe'));
         //return view('admin.calendrier.detail_pdf' ,compact('detail', 'stg','date_groupe'));
         return $pdf->download('Detail du projet.pdf');
+    }
+    //filtre calendrier
+    public function rechercheModuleCalendar(Request $request){
+        $nom_module = $request->module;
+        $resultat = DB::select('select * from v_detailmodule where nom_module = "'.$nom_module.'"');
+        return response()->json($resultat);
     }
     /*
     public function index()
