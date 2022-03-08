@@ -367,9 +367,7 @@ Route::resource('ajoutt', 'formulaireEvaluationChaudController');
 Route::post('test_avis','EvaluationChaudController@test_avis')->name('test_avis');
 // Route::get('/ajout_stagiaire','ExecutionController@create')->name('ajout_stagiaire');
 
-Route::get('/calendrier',function(){
-    return view('admin.calendrier.calendrier');
-})->name('calendrier');
+Route::get('/calendrier','DetailController@calendrier')->name('calendrier');
  Route::get('allEvent','DetailController@listEvent')->name('allEvent');
 // Route::get('allEvent','DetailController@listEvent')->name('allEvent');
 

@@ -160,6 +160,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         mf.nom_module,
         mf.formation_id,
         mf.nom_formation,
+        dom.id as domaines_id,
+        dom.nom_domaine,
         f.nom_formateur,
         f.prenom_formateur,
         f.mail_formateur,
@@ -188,6 +190,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         on t.id = p.type_formation_id
     join entreprises e
         on e.id =  g.entreprise_id
+    join domaines dom
+        on dom.id = mf.domaine_id
     GROUP BY
     d.id,
     d.lieu,
@@ -210,6 +214,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     mf.nom_module,
     mf.formation_id,
     mf.nom_formation,
+    dom.id,
+    dom.nom_domaine,
     f.nom_formateur,
     f.prenom_formateur,
     f.mail_formateur,

@@ -29,10 +29,21 @@ class DetailController extends Controller
             return $next($request);
         });
     }
+    public function calendrier(){
+        $domaines = DB::select('select * from domaines');
+        $rqt = DB::select('select * from responsables_cfp where user_id = ?',[Auth::user()->id]);
+        $cfp_id = $rqt[0]->cfp_id;
+        $formations = DB::select('select * from formations where cfp_id = ?',[$cfp_id]);
+        return view('admin.calendrier.calendrier',compact('domaines','formations'));
+    }
     public function listEvent(Request $request)
     {
         $id_user = Auth::user()->id;
         $module = $request->module;
+        $type_formation = $request->types_formation;
+        $statut_projet = $request->statut_projet;
+        $domaines = $request->domaines;
+        $formations = $request->formations;
         if (Gate::allows('isSuperAdmin')) {
             $detail = DB::select('select * from v_detailmodule');
         }
@@ -44,6 +55,31 @@ class DetailController extends Controller
             else{
                 $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
             }
+            if ($type_formation!=null) {
+                $detail = DB::select('select * from v_detailmodule where type_formation = "' . $type_formation.'" and cfp_id = '.$cfp_id);
+            }
+            else{
+                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            }
+            if ($statut_projet!=null) {
+                $detail = DB::select('select * from v_detailmodule where statut = "' . $statut_projet.'" and cfp_id = '.$cfp_id);
+            }
+            else{
+                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            }
+            if ($domaines!=null) {
+                $detail = DB::select('select * from v_detailmodule where domaines_id = ? and cfp_id = ?' ,[$domaines,$cfp_id]);
+            }
+            else{
+                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            }
+            if ($formations!=null) {
+                $detail = DB::select('select * from v_detailmodule where formation_id = ? and cfp_id = ?' , [$formations,$cfp_id]);
+            }
+            else{
+                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            }
+
 
         }
         if (Gate::allows('isFormateur')) {

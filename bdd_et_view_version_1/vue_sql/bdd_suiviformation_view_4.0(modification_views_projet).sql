@@ -156,6 +156,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         mf.reference,
         mf.nom_module,
         mf.formation_id,
+        dom.id as id_domaine,
+        dom.nom_domaine,
         mf.nom_formation,
         f.nom_formateur,
         f.prenom_formateur,
@@ -175,6 +177,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         d.projet_id = p.id
     JOIN cfps c ON
         p.cfp_id = c.id
+    JOIN domaines dom ON
+        mf.domaine_id = dom.id
     GROUP BY
     d.id,
     d.lieu,
@@ -196,6 +200,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     mf.reference,
     mf.nom_module,
     mf.formation_id,
+    dom.id,
+    dom.nom_domaine,
     mf.nom_formation,
     f.nom_formateur,
     f.prenom_formateur,
@@ -320,7 +326,7 @@ select g.id as groupe_id,
         on s.id = p.stagiaire_id
     join v_departement_service_entreprise d
         on s.service_id = d.service_id
-    join moduleformation mf 
+    join moduleformation mf
         on mf.module_id = g.module_id;
 
 
