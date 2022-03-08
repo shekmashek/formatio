@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Models\FonctionGenerique;
 class ChefDepartementController extends Controller
 {
     public function __construct()
@@ -24,6 +25,8 @@ class ChefDepartementController extends Controller
             if(Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+
+        $this->FonctionGenerique = new FonctionGenerique();
     }
     public function index()
     {
@@ -96,7 +99,16 @@ class ChefDepartementController extends Controller
             $chefParEtp->departement_entreprise_id = $departement_entreprise_id;
             $chefParEtp->chef_departement_id = $chef_id;
             DB::insert("insert into chef_dep_entreprises(departement_entreprise_id,chef_departement_id) values(?,?)", [$departement_entreprise_id, $chef_id]);
-        //      DB::insert("insert into chef_dep_entreprises(departement_entreprise_id,chef_departement_id,departement_id) values(?,?,?)", [$departement_entreprise_id, $chef_id, $request->liste_dep]);
+            DB::beginTransaction();
+            try {
+                $this->fonct->insert_role_user($user_id, "5",true); // Manager
+                $this->fonct->insert_role_user($user_id, "3",false); // Manager
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+            //      DB::insert("insert into chef_dep_entreprises(departement_entreprise_id,chef_departement_id,departement_id) values(?,?,?)", [$departement_entreprise_id, $chef_id, $request->liste_dep]);
             // $request->photos->move(public_path($str), $nom_image);
             return redirect()->route('liste_chefDepartement');
         }

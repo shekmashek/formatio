@@ -109,8 +109,7 @@ class ResponsableCfpController extends Controller
 
                             DB::beginTransaction();
                             try {
-                                $fonct->insert_role_user($use_id_inserer,"7"); // cfp
-                                // $fonct->insert_role_user($use_id_inserer,"3"); // stagiaire
+                                $fonct->insert_role_user($use_id_inserer,"7",true); // cfp
                                 DB::commit();
                             } catch (Exception $e) {
                                 DB::rollback();

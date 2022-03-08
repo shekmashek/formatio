@@ -264,7 +264,7 @@ Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->
 // Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
 // profile_stagiaire
-Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
+Route::get('/profile_stagiaire/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 // route recheche par matricule
 Route::get('recherche/{matricule?}','ParticipantController@recherche')->name('recherche');
 Route::get('/search','ParticipantController@getStagiaires')->name('search');
@@ -873,3 +873,5 @@ Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->
 Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
 
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
+//Route impression detail_calendrier
+Route::get('detail_printpdf/{id}','DetailController@detail_printpdf')->name('detail_printpdf');

@@ -163,6 +163,25 @@
             margin-left: 0;
             margin-right: 0;
         }
+        .card{
+            border-radius: 20px;
+        }
+        .gauche{
+            float: left;
+            font-weight: bold;
+        }
+        .contenu{
+            color: #7635dc;
+            cursor: pointer;
+        }
+        .contenu a:hover{
+            color: #7635dc;
+            text-decoration-line: underline;
+        }
+        .icones{
+             background: #7535dc3f;
+        }
+
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
@@ -218,29 +237,46 @@
                 <div class="card" style="width: auto;">
                     <div id="editor"></div>
                     <div class="card-body" id="test">
-                        <h5 class="card-title">Détail du projet <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><button class="btn" style="float: right" onclick="testPdf();"><i class="bx bx-printer" aria-hidden="true"></i></button></h5>
+                        <h2 class="card-title" style="text-align: center;">
+                            Projet de formation: <label id="types"></label><br>
+                            <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label>
+                        </h2>
 
-                        <label for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
-                        <label for="">Session: </label>&nbsp;<label id="session"></label><br>
-                        <label for="">Statut:</label>&nbsp;<label id="statut"></label><br>
-                        <label for="">Type de formation:</label>&nbsp;<label id="types"></label><br>
-                        @canany(['isReferent','isStagiaire'])
-                            <label>O.F:</label>&nbsp;<label id="cfp"> </label><br>
-                        @endcanany
-                        @canany(['isCFP','isFormateur'])
-                            <label>Entreprise:</label>&nbsp;<label id="etp"> </label><br>
-                            <label for="logo" id="logo_etp"></label>
-                        @endcanany
-                        <label>Formation:</label>&nbsp;<label id="formation"> </label><br>
-                        <label>Module:</label>&nbsp;<label id="module"></label><br>
-                        <label>Formateur:</label>&nbsp;<label id="formateur"></label><br>
-                        <label>Lieu:</label>&nbsp;<label id="lieu"> </label><br>
-                        <label for="">Date - Heure:</label><br>
+
+                        {{-- @canany(['isCFP','isFormateur'])
+                            <h5 class="card-title" style="text-align: center;">
+                                <span id="etp" class="contenu"></span> <label for="logo" id="logo_etp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label></h5>
+                        @endcanany --}}
+
+                        <label class="gauche" for="">Entreprise client: </label>&nbsp;<label for="logo" id="logo_etp"></label> &nbsp;<label id="etp" class="contenu"> </label><br>
+                        <label class="gauche" for="">Organisme de formation: </label>&nbsp;<label for="logo" id="logo_cfp"></label>&nbsp;<label id="cfp" class="contenu"> </label><br>
+                        <label class="gauche" for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
+                        <label class="gauche" for="">Session: </label>&nbsp;<label class="contenu" id="session"></label><br>
+                        <label class="gauche" for="">Statut:</label>&nbsp;<label id="statut"></label><br>
+                        <label class="gauche">Formation:</label>&nbsp;<label class="contenu" id="formation"> </label><br>
+                        <label class="gauche">Module:</label>&nbsp;<label class="contenu" id="module"></label><br>
+                        <label class="gauche">Formateur:</label><br><label for="logo" id="logo_formateur"></label>&nbsp;<label id="formateur" class="contenu"></label><br>
+                        <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
+                        <label class="gauche" for="">Date - Heure:</label><br>
                         <ul id="date_formation"></ul>
                          <hr>
                         @canany(['isReferent','isCFP','isFormateur'])
-                            <label for="">Liste des apprenants</label><br>
-                            <ul id="liste_app"></ul>
+                            <label class="gauche" for="">Liste des apprenants</label><br>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Matricule</th>
+                                        <th>Noms</th>
+                                        <th>Fonction</th>
+                                        <th>E-mail</th>
+                                        <th>Téléphone</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="liste_app" >
+
+                                </tbody>
+                            </table>
                         @endcanany
                     </div>
                 </div>
@@ -257,19 +293,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 
     <script>
-        var doc = new jsPDF();
-        var specialElementHandlers = {
-            '#editor': function (element, renderer) {
-                return true;
-            }
-        };
-        function testPdf(){//send the div to PDF
-            doc.fromHTML($('#test').html(), 15, 15, {
-                'width': 170,
-                'elementHandlers': specialElementHandlers
-            });
-            doc.save('Detail-du-projet.pdf');
-        };
+
         document.addEventListener('DOMContentLoaded', function() {
             $.ajax({
                 type: "GET"
@@ -330,10 +354,14 @@
                                     types.innerHTML = '';
                                     var statut = document.getElementById('statut');
                                     statut.innerHTML = '';
+                                    var printpdf = document.getElementById('printpdf');
+                                    printpdf.innerHTML = '';
+
                                     var nom_cfp = document.getElementById('cfp');
                                     var etp = document.getElementById('etp');
-
-
+                                    var logo_etp = document.getElementById('logo_etp');
+                                     var logo_cfp = document.getElementById('logo_cfp');
+                                     var logo_formateur = document.getElementById('logo_formateur');
                                     if ( nom_cfp == null) {
                                         console.log('null');
                                     }
@@ -346,6 +374,24 @@
                                     else{
                                         etp.innerHTML = '';
                                     }
+                                     if ( logo_etp == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_etp.innerHTML = '';
+                                     }
+                                     if ( logo_cfp == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_cfp.innerHTML = '';
+                                     }
+                                     if ( logo_formateur == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_formateur.innerHTML = '';
+                                     }
 
                                     var formation = document.getElementById('formation');
                                     formation.innerHTML = '';
@@ -362,35 +408,89 @@
                                     var userDataDetail = JSON.parse(response);
                                     // alert(userData.length);
                                     var userData = userDataDetail['detail'];
+
                                     var stg = userDataDetail['stagiaire'];
                                     var date_groupe = userDataDetail['date_groupe'];
                                     var images = '';
+                                    var html = '';
+                                    var formation = '';
+                                    var modules = '';
+                                    var logo_formateur = '';
+                                    var logo_etp = '';
+                                    var logo_cfp = '';
+                                    var session = '';
+                                    var cfp = '';
+                                    var etp = '';
+                                    var printpdf = '';
                                     for (var $i = 0; $i < userData.length; $i++) {
+                                        printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
+                                        printpdf = printpdf.replace(":?",userData[$i].detail_id);
+                                        $('#printpdf').append(printpdf);
+
+
                                         $("#projet").append(userData[$i].nom_projet);
-                                        $('#session').append(userData[$i].nom_groupe);
                                         $('#statut').append(userData[$i].statut);
                                         $('#types').append(userData[$i].type_formation);
-                                        $("#cfp").append(userData[$i].nom_cfp);
-                                        $("#etp").append(userData[$i].nom_etp);
-                                        $("#formation").append(userData[$i].nom_formation);
-                                        $("#module").append(userData[$i].nom_module);
-                                        $('#formateur').append(userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur);
                                         $('#lieu').append(userData[$i].lieu);
+
+                                        session+='<a href = "{{url("detail_session/:?/:!")}}" target = "_blank">'+userData[$i].nom_groupe+'</a>'
+                                        session = session.replace(":?",userData[$i].groupe_id);
+                                        session = session.replace(":!",userData[$i].type_formation_id);
+                                        $('#session').append(session);
+
+                                        cfp+='<a href = "{{url("profil_cfp/:?")}}" target = "_blank">'+userData[$i].nom_cfp+'</a>'
+                                        cfp = cfp.replace(":?",userData[$i].cfp_id);
+                                        $('#cfp').append(cfp);
+
+                                        etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+userData[$i].nom_etp+'</a>'
+                                        etp = etp.replace(":?",userData[$i].entreprise_id);
+                                        $('#etp').append(etp);
+
+                                        logo_formateur+='<img src = "{{asset('images/formateurs/:?')}}" class ="rounded-circle"  style="width:50px">';
+                                        logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
+                                        $('#logo_formateur').append(logo_formateur);
+
+                                        logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:80px">';
+                                        logo_etp = logo_etp.replace(":?",userData[$i].logo_entreprise);
+                                        $('#logo_etp').append(logo_etp);
+
+                                        // $('#logo_cfp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
+                                        logo_cfp+='<img src = "{{asset('images/CFP/:?')}}"  style="width:80px">';
+                                        logo_cfp = logo_cfp.replace(":?",userData[$i].logo_cfp);
+                                        $('#logo_cfp').append(logo_cfp);
+
+                                        html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + '&nbsp&nbsp<i class="fas fa-envelope-square"></i>'+ userData[$i].mail_formateur + '&nbsp&nbsp<i class="fas fa-phone-alt"></i> '+ userData[$i].numero_formateur+'</a>'
+                                        html = html.replace(":?",userData[$i].formateur_id);
+                                        $('#formateur').append(html);
+
+                                        formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+userData[$i].nom_formation+'</a>'
+                                        formation = formation.replace(":?",userData[$i].formation_id);
+                                        $('#formation').append(formation);
+
+
+                                        modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+userData[$i].nom_module+'</a>'
+                                        modules = modules.replace(":?",userData[$i].module_id);
+                                        $('#module').append(modules);
 
                                     }
                                     var html = '';
                                     for (var $j = 0; $j < date_groupe.length; $j++) {
-                                        html += '<li>- Séance ' + ($j+1) +':  '+date_groupe[$j].date_detail+' / '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                        html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'&nbsp <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
                                     }
                                     $('#date_formation').append(html);
 
                                     var html = '';
+                                    // for (var $a = 0; $a < stg.length; $a++) {
+                                    //     html += '+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+' - '+stg[$a].telephone_stagiaire+'</a>'
+                                    //     html = html.replace(":?",stg[$a].stagiaire_id);
+                                    //     html = html.replace(":!",stg[$a].photos);
+                                    // }
                                     for (var $a = 0; $a < stg.length; $a++) {
-                                        html += '<li><img src = "{{asset('images/users/users.png')}}" style="width:50px">'+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+'</li>'
+                                        html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                        html = html.replace(":?",stg[$a].stagiaire_id);
+                                        html = html.replace(":!",stg[$a].photos);
                                     }
-
                                     $('#liste_app').append(html);
-                                    // $('#modal_affichage').modal('show');
                                 }
                                 , error: function(error) {
                                     console.log(error)

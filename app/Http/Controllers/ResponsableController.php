@@ -31,6 +31,7 @@ class ResponsableController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
 
     public function show_responsable()
@@ -230,14 +231,24 @@ class ResponsableController extends Controller
         $user->password = Hash::make($ch1);
         $user->role_id = '2';
         $user->save();
-        // DB::insert('insert into users (name,email,password,role_id) VALUES (?,?,?,?)',[$request->nom,$request->mail,0000,2]);
-        //get user id
+
         $user_id = User::where('email', $request->mail)->value('id');
         $resp->user_id = $user_id;
         //etp_id
         $resp->entreprise_id = $request->liste_etp;
         $resp->activiter = TRUE;
         $resp->save();
+
+        DB::beginTransaction();
+        try {
+            $this->fonct->insert_role_user($user_id, "2",true); // Referent
+            $this->fonct->insert_role_user($user_id, "3",false); // Manager
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
+
         //envoyer un mail de notification à tous les utilisateurs admin
         $emails = User::where('role_id', '1')->get();
         foreach ($emails as $email) {

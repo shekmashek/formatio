@@ -37,6 +37,8 @@ class ParticipantController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+
+        $this->fonct = new FonctionGenerique();
     }
 
     public function get_service(Request $req){
@@ -267,7 +269,14 @@ class ParticipantController extends Controller
             // $request->image->move(public_path($str), $nom_image);
             $participant->save();
             // $request->image->move(public_path($str), $nom_image);
-
+            DB::beginTransaction();
+            try {
+                $this->fonct->insert_role_user($user_id, "3",true); // Stagiaire
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
 
             // $dossier = 'stagiaire';
             // $stock_stg = new getImageModel();
@@ -794,7 +803,9 @@ class ParticipantController extends Controller
 
         } else {
             $stagiaires_tmp = DB::select('SELECT * FROM stagiaires where id = ?',[$id]);
+
             $stagiaire=$stagiaires_tmp[0];
+
             $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
             $entreprise = $fonct->findWhereMulitOne("entreprises",["id"],[$stagiaire->entreprise_id]);
 

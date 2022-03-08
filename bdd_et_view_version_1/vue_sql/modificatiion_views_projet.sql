@@ -146,6 +146,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         d.cfp_id,
         g.entreprise_id,
         e.nom_etp,
+        e.logo as logo_entreprise,
         g.max_participant,
         g.min_participant,
         g.nom_groupe,
@@ -163,8 +164,10 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         f.prenom_formateur,
         f.mail_formateur,
         f.numero_formateur,
+        f.photos,
         p.nom_projet,
         (c.nom) nom_cfp,
+        c.logo as logo_cfp,
         p.type_formation_id,
         t.type_formation
     FROM
@@ -211,10 +214,13 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     f.prenom_formateur,
     f.mail_formateur,
     f.numero_formateur,
+    f.photos,
     p.nom_projet,
     c.nom,
+    c.logo,
     g.entreprise_id,
     e.nom_etp,
+    e.logo,
     s.status,
     p.type_formation_id,
     t.type_formation

@@ -97,7 +97,7 @@ class EmployeurController extends Controller
 
                 DB::beginTransaction();
                 try {
-                    $this->fonct->insert_role_user($user_id, "3"); // EMPLOYEUR
+                    $this->fonct->insert_role_user($user_id, "3",true); // EMPLOYEUR
                     DB::commit();
                 } catch (Exception $e) {
                     DB::rollback();
@@ -112,8 +112,8 @@ class EmployeurController extends Controller
 
                 DB::beginTransaction();
                 try {
-                    $this->fonct->insert_role_user($user_id, "2"); // RH
-                    $this->fonct->insert_role_user($user_id, "3"); // EMPLOYEUR
+                    $this->fonct->insert_role_user($user_id, "2",true); // RH
+                    $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
                     DB::commit();
                 } catch (Exception $e) {
                     DB::rollback();
@@ -128,8 +128,8 @@ class EmployeurController extends Controller
 
                 DB::beginTransaction();
                 try {
-                    $this->fonct->insert_role_user($user_id, "5"); // MANAGER
-                    $this->fonct->insert_role_user($user_id, "3"); // EMPLOYEUR
+                    $this->fonct->insert_role_user($user_id, "5",true); // MANAGER
+                    $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
                     DB::commit();
                 } catch (Exception $e) {
                     DB::rollback();

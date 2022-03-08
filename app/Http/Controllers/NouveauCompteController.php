@@ -128,7 +128,7 @@ class NouveauCompteController extends Controller
                                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
                                     DB::beginTransaction();
                                     try {
-                                        $this->fonct->insert_role_user($user_id, "7"); // CFP
+                                        $this->fonct->insert_role_user($user_id, "7",true); // CFP
                                         DB::commit();
                                     } catch (Exception $e) {
                                         DB::rollback();
@@ -229,8 +229,8 @@ class NouveauCompteController extends Controller
                                     $this->new_compte->insert_resp_ETP($resp, $etp_id, $user_id);
                                     DB::beginTransaction();
                                     try {
-                                        $this->fonct->insert_role_user($user_id, "2"); // referent
-                                        $this->fonct->insert_role_user($user_id, "3"); // stagiaires
+                                        $this->fonct->insert_role_user($user_id, "2",true); // referent
+                                        $this->fonct->insert_role_user($user_id, "3",false); // stagiaires
                                         DB::commit();
                                     } catch (Exception $e) {
                                         DB::rollback();
