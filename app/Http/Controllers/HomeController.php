@@ -493,9 +493,9 @@ class HomeController extends Controller
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
-            $sql = $projet_model->build_requette($cfp_id, $type_formation_id, "v_projet_session", $request);
-            // dd($sql);
+            $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
             $projet = DB::select($sql);
+            // dd($projet);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
             // $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
             // if($type_formation_id == 1){
