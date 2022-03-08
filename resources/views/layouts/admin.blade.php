@@ -468,7 +468,7 @@
             <span class="tooltip">Librairies</span>
             </li> --}}
             <li>
-                <a href="#" class="d-flex nav_linke">
+                <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-book-add'></i>
                     <span class="links_name">Librairies</span>
                 </a>
