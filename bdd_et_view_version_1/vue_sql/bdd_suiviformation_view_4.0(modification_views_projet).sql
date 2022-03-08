@@ -277,7 +277,9 @@ create or replace view v_departement_service_entreprise as
 
 
 create or replace view v_stagiaire_groupe as
-select g.id as groupe_id,
+select 
+        p.id as participant_groupe_id,
+        g.id as groupe_id,
         g.max_participant,
         g.min_participant,
         g.nom_groupe,

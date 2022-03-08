@@ -229,7 +229,7 @@ h6{
             <div class="card mb-1">
                 <div class="card-body">
                     <h5 class="groupe">{{$groupe->nom_groupe}}</h5>
-                    <h6 class="mb-2 text-muted">{{$groupe->nom_module.'('.$groupe->lieu.')'}}</h6>
+                    <h6 class="mb-2 text-muted">{{$groupe->nom_module}}</h6>
                     <div class="card-text">
                         <table class="table" border="1">
                             <thead>
@@ -1057,9 +1057,9 @@ h6{
                             <tr>
                                 <td>{{$stg->nom_stagiaire.' '.$stg->prenom_stagiaire}}
 
-                                    @if(Session::has('success_update_note_candidat'.$stg->stagaire_id))
+                                    @if(Session::has('success_update_note_candidat'.$stg->stagiaire_id))
                                     <div class="alert alert-success">
-                                        {{ Session::get('success_update_note_candidat'.$stg->stagaire_id) }}
+                                        {{ Session::get('success_update_note_candidat'.$stg->stagiaire_id) }}
                                     </div>
                                     @endif
 

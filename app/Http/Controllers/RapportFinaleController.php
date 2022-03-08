@@ -109,9 +109,9 @@ class RapportFinaleController extends Controller
 
         $projet_id = $req->projet_id;
         $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where projet_id = ?', [$projet_id])[0]->entreprise_id;
-        
+
         $para=["entreprise_id","projet_id"];
-        $val=[$req->entreprise_id,$req->projet_id];
+        $val=[$entreprise_id,$req->projet_id];
         $para2=["projet_id"];
         $val2=[$req->projet_id];
 
@@ -119,7 +119,7 @@ class RapportFinaleController extends Controller
 
         $data["formateurs"] = $fonct->findWhere("v_formateur_projet ",$para2,$val2);
         $data["toutformateurs"] =  $fonct->findAll("formateurs");
-        $data["groupes"] = $fonct->findWhere("v_groupe_projet_entreprise",$para2,$val2);
+        $data["groupes"] = $fonct->findWhere("v_groupe_projet_entreprise_module",$para2,$val2);
 
         $data["stagiaires"] =$fonct->findWhere("v_stagiaire_groupe",$para2,$val2);
         $data["stagiaire_evaluation_apprenant"] =  $fonct->findWhere("v_evaluation_apprenant",$para2,$val2);
@@ -135,7 +135,7 @@ class RapportFinaleController extends Controller
         }
 
         $data["detail_formation"] = $fonct->findWhere("v_date_formation",$para2,$val2);
-        $data["but_objectif"] = $fonct->findAllQuery("SELECT  lieu,projet_id,module_id,reference,nom_module FROM v_detail_groupe_module_projet  where projet_id='".$req->projet_id."' group by lieu,projet_id,module_id,reference,nom_module");
+        $data["but_objectif"] = $fonct->findAllQuery("SELECT  lieu,projet_id,module_id,reference,nom_module FROM v_detailmodule  where projet_id='".$req->projet_id."' group by lieu,projet_id,module_id,reference,nom_module");
         $data["pedagogique"] = $fonct->findAll("pedagogique");
         $data["obj_pedagogique"] = $fonct->findWhere("objectif_pedagogique",$para2,$val2);
         $data["desc_objectif"] = $fonct->findAll("but_objectif");
