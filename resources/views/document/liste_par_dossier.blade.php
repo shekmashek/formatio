@@ -23,6 +23,13 @@
 <div class="container" style="padding-top: 50px">
     <div class="row">
         <div class="col-md-4">
+            @if (\Session::has('error'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{!! \Session::get('error') !!}</li>
+                    </ul>
+                </div>
+            @endif
             <strong>Gestion de vos documents</strong>
         </div>
         <div class="col-md-2"></div>

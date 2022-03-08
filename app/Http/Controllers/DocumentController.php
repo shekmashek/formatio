@@ -114,14 +114,20 @@ class DocumentController extends Controller
     }
     //importation de fichier
     public function importation_fichier(Request $request){
-        //récupérer le deuxième paramètre de l'url :: sub_folder
-        $sub_folder = $request->sous_dossier;
-        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-        $nom_cfp = $rqt[0]->nom;
+       if($request->documents == null){
+            return redirect()->back()->with('error','Veuillez choisir un fichier à importer');
+       }
+       else{
+            $sub_folder = $request->sous_dossier;
+            $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
+            $nom_cfp = $rqt[0]->nom;
 
-        $document = new getImageModel();
-        $document->store_document($nom_cfp,$sub_folder,$request->file('documents')->getClientOriginalName(),$request->file('documents')->getContent());
-        return redirect()->back();
+            $document = new getImageModel();
+            $document->store_document($nom_cfp,$sub_folder,$request->file('documents')->getClientOriginalName(),$request->file('documents')->getContent());
+            return redirect()->back();
+       }
+        //récupérer le deuxième paramètre de l'url :: sub_folder
+
     }
     //telecharger fichier
     public function download_file(){
