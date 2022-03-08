@@ -33,8 +33,14 @@ class DetailController extends Controller
         $domaines = DB::select('select * from domaines');
         $rqt = DB::select('select * from responsables_cfp where user_id = ?',[Auth::user()->id]);
         $statut = DB::select('select * from status');
-        $cfp_id = $rqt[0]->cfp_id;
-        $formations = DB::select('select * from formations where cfp_id = ?',[$cfp_id]);
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $rqt[0]->cfp_id;
+            $formations = DB::select('select * from formations where cfp_id = ?',[$cfp_id]);
+        }
+        else{
+            $formations = DB::select('select * from formations ');
+        }
+
         return view('admin.calendrier.calendrier',compact('domaines','formations','statut'));
     }
     public function listEvent(Request $request)
@@ -61,22 +67,13 @@ class DetailController extends Controller
             if ($statut_projet!=null) {
                 $detail = DB::select('select * from v_detailmodule where status_groupe = ? and cfp_id = ?',[$statut_projet,$cfp_id]);
             }
-            // else{
-            //     $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            // }
             if ($domaines!=null) {
                 $detail = DB::select('select * from v_detailmodule where domaines_id = ? and cfp_id = ?' ,[$domaines,$cfp_id]);
             }
-            // else{
-            //     $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            // }
             if ($formations!=null) {
                 $detail = DB::select('select * from v_detailmodule where formation_id = ? and cfp_id = ?' , [$formations,$cfp_id]);
             }
-            // else{
-            //     $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            // }
-                if($request->all() == null)
+            if($request->all() == null)
             $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
 
 
@@ -91,6 +88,24 @@ class DetailController extends Controller
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+            if ($module!=null) {
+                $detail = DB::select('select * from v_detailmodule where nom_module = "' . $module.'" and entreprise_id = '.$entreprise_id);
+            }
+
+            if ($type_formation!=null) {
+                $detail = DB::select('select * from v_detailmodule where type_formation = "' . $type_formation.'" and entreprise_id = '.$entreprise_id);
+            }
+
+            if ($statut_projet!=null) {
+                $detail = DB::select('select * from v_detailmodule where status_groupe = ? and entreprise_id = ?',[$statut_projet,$entreprise_id]);
+            }
+            if ($domaines!=null) {
+                $detail = DB::select('select * from v_detailmodule where domaines_id = ? and entreprise_id = ?' ,[$domaines,$entreprise_id]);
+            }
+            if ($formations!=null) {
+                $detail = DB::select('select * from v_detailmodule where formation_id = ? and entreprise_id = ?' , [$formations,$entreprise_id]);
+            }
+            if($request->all() == null)
             $detail = DB::select('select * from v_detailmodule where entreprise_id = ?', [$entreprise_id]);
         }
         if (Gate::allows('isManager')) {
