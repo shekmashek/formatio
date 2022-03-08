@@ -1,0 +1,179 @@
+#example2 {
+    box-shadow: 1px 1px 7px #888888;
+    margin-left: 38px;
+    position: absolute;
+    margin-top: 15px;
+    border-radius: 100%;
+    height:60px;
+    width:60px;
+  }
+
+  #exemple1{
+      color: black;
+      position: relative;
+      top: 16px;
+      left:-110px;
+      right:2px;
+      border-radius: 100%;
+      height:60px;
+      width:60px;
+      float: right
+  }
+
+  #sp{
+      font-size: 16px;
+  }
+
+  #cl{
+      background-color: #fff;
+      border-radius: 3px;
+  }
+
+  #pp{
+      color: rgb(136, 136, 136);
+  }
+
+  #p1{
+      color: rgb(124, 116, 116);
+  }
+
+  #ffp{
+      background-color: #fff;
+      border-radius: 3px;
+  }
+
+  #ftt{
+      font-size: 16px;
+      color: #7635DC;
+  }
+
+  #fpt{
+      color: rgb(124, 116, 116);
+  }
+
+  #ip{
+      color: rgb(136, 136, 136);
+  }
+
+  .ck:hover{
+      background-color: #888888;
+      font-size: 12px;
+  }
+
+  .a1:hover{
+      background-color: rgb(250, 243, 255);
+      border-radius: 7px;
+      padding-block-start: 1px;
+      cursor: pointer;
+      font-size: 11.5px;
+  }
+
+  #font{
+      font-size: 11px;
+  }
+
+  #bc{
+      border-color: #d7c9ee;
+  }
+
+  #ft2{
+      color: #7635DC;
+      font-size: 12px;
+  }
+
+  #ft155{
+      font-size: 15px;
+  }
+
+  #coll{
+      color: #7635DC; font-size: 12px;
+  }
+
+  #pddp{
+      padding: .6rem 1.4rem;
+      background-image: linear-gradient(to right, #755dd0 , #a0a5ca);
+      color:white;
+      border:none;
+      border-radius: 50%;
+  }
+
+  #sssq{
+      font-size: 20px; position: relative;right: .65rem;
+  }
+
+
+  #qssq{
+      padding: .6rem 1.4rem;
+      background-image: linear-gradient(to right, rgb(248, 131, 131) , rgb(250, 250, 108));
+      color:white;
+      border:none;
+      border-radius: 50%;
+  }
+
+  #wq{
+      padding: .6rem 1.4rem;
+      background-image: linear-gradient(to right, #895ad3 , #b29dd3) ;
+      color:white;
+      border:none;
+      border-radius: 50%;
+  }
+
+  #xw{
+      padding: .6rem 1.4rem;
+      background-image: linear-gradient(to right, #755dd0 , #a0a5ca);
+      color:white;
+      border:none;
+      border-radius: 50%;
+  }
+
+  #fs{
+      font-size: 15px;
+  }
+
+  #pdn{
+      padding: .6rem 1.4rem;
+      background-image: linear-gradient(to right, rgb(248, 131, 131) , rgb(250, 250, 108));
+      color:white;
+      border:none;
+      border-radius: 50%;
+  }
+
+
+  #cx{
+      padding: .6rem 1.4rem;
+      background-image: linear-gradient(to right, #895ad3 , #b29dd3);
+      color:white;
+      border:none;
+      border-radius: 50%;
+  }
+
+  #qxqx{
+      font-size: 20px;
+      position: relative;
+      right: .55rem;
+  }
+
+
+  #n{
+      background-color: #e0dceb;
+  }
+
+  #b{
+      background-color: #fff;
+      border-radius: 3px;
+      background-color: #fff;
+      border-radius: 3px;
+  }
+  #ff{
+      font-size: 16px;
+      color: #7635DC;
+  }
+  #ddd{
+      color: rgb(136, 136, 136);
+      font-size: 13px;
+  }
+
+
+  #sdf{
+      color: rgb(136, 136, 136);
+  }

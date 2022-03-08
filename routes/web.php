@@ -868,3 +868,43 @@ Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->
 Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
 
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
+
+//=================== route pour moderne,fléxible et sécurisé etc
+Route::get('/moderne', function () {
+    return view('/moderne');
+});
+
+Route::get('/gestiond', function () {
+    return view('/gestiond');
+});
+
+Route::get('/gestionf', function () {
+    return view('/gestionf');
+});
+
+Route::get('/gestiona', function () {
+    return view('/gestiona');
+});
+
+
+Route::get('/gestionc', function () {
+    return view('/gestionc');
+});
+
+Route::get('/qualite', function () {
+    return view('/qualite');
+});
+
+
+Route::get('/communication', function () {
+    return view('/communication');
+});
+
+Route::get('/elearning', function () {
+    return view('/elearning');
+});
+
+
+Route::get('/fonctionnalitea', function () {
+    return view('/fonctionnalitea');
+});
