@@ -514,9 +514,9 @@
                                         <i class="bx bx-search">
                                         </i>
                                     </button>
-                                    <button type="button" class="btn_next ms-2"><a href="{{route('liste_formation')}}">Catalogue</a> </button>
-                                    <button type="button" class="btn_next">Annuaire</button>
-                                    <button type="button" class="btn_next"><a href="{{route('calendrier')}}">Agenda</a> </button>
+                                    <a href="{{route('liste_formation')}}" class="btn_next ms-2" role="button">Catalogue</a>
+                                    <a href="{{route('annuaire')}}" class="btn_next" role="button">Annuaire</a>
+                                    <a href="{{route('calendrier')}}" class="btn_next" role="button">Agenda</a>
                                 </div>
                             </div>
                         </form>

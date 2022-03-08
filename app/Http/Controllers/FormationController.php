@@ -39,7 +39,7 @@ class FormationController extends Controller
             // $domaines = Domaine::all();
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
 
-            $categorie = DB::select('select * from formations where status = 1 limit 8');
+            $categorie = DB::select('select * from formations where status = 1 limit 7');
             $module = DB::select('select * from moduleformation where formation_id = 1 and status = 2 limit 6');
             return view('referent.catalogue.formation', compact('categorie','module'));
         }
@@ -241,7 +241,7 @@ class FormationController extends Controller
                     FROM
                     formations,
                     WHERE
-                   status = 1;
+                    status = 1;
                     ');
         return view('referent.catalogue.liste_formation', compact('categorie'));
     }
@@ -250,5 +250,25 @@ class FormationController extends Controller
         $id_groupe = $request->id_groupe;
         $id_type_formation = $request->type_formation_id;
         return redirect()->route('detail_session',['id_session'=>$id_groupe,'type_formation'=>$id_type_formation]);
+    }
+    public function annuaire(){
+        // if (Gate::allows('isCFP')) {
+        //     $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
+        //     return view('admin.formation.formation', compact('formation'));
+        // }
+        // if (Gate::allows('isSuperAdmin')) {
+        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
+        //     return view('admin.formation.formation', compact('formation'));
+        // }
+        // if (Gate::allows('isFormateur')) {
+        //     $categorie = formation::orderBy('nom_formation')->get();
+        //     $domaines = Domaine::all();
+        //     return view('referent.catalogue.formation', compact('domaines', 'categorie'));
+        // }
+        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
+            $cfp = DB::select('select * from cfps');
+            return view('referent.catalogue.cfp_tous', compact('cfp'));
+        }
     }
 }

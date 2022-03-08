@@ -2,9 +2,9 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 <section class="detail__formation mb-5">
-    <div class="container py-4">
+    <div class="container py-5">
         <div class="row bg-light justify-content-space-between py-3 px-5 back" id="border_premier">
-            <div class="col-lg-6 col-md-6 detail__formation__result__content">
+            <div class="col-lg-8 col-md-8 pe-5 module_detail">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
                     <h4 class="py-4">{{$res->nom_formation}} - {{$res->nom_module}}</h4>
@@ -15,8 +15,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 detail__formation__result__content">
-                <div class="detail__formation__result__item2">
+            <div class="col-lg-4 col-md-4 ">
+                <div class="module_detail2">
                     <a href="#">
                         <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
                     </a>
@@ -24,7 +24,7 @@
                             style="width: 200px; height:100px;"></div>
                 </div>
             </div>
-            <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
+            <div class="row row-cols-auto module_detail_heure justify-content-around">
                 <div class="col"><i class="bx bxs-alarm bx_icon"></i>
                     <span>
                         @isset($res->duree_jour)
@@ -42,121 +42,108 @@
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
             </div>
         </div>
-        <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
-            <div class="col-lg-9 detail__formation__content">
+        <div class="row detail__formation__detail py-5">
+            <div class="col-lg-9 pe-5">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <div class="row detail__formation__item__left__objectif">
+                <div class="row module_detail_content p-5">
                     <div class="col-lg-12">
                         <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
-                        <a href="#programme__formation"><button type="button" class="btn btn-warning">Consulter le
+                        <a href="#programme__formation"><button type="button" class="btn encre">Consulter le
                                 programme de cette formation</button></a>
                     </div>
                 </div>
                 {{-- section 1 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3 pb-3">A qui s'adresse cette formation?</h3>
-                <div class="row detail__formation__item__left__adresse">
-                    <div class="col-lg-5 d-flex flex-row">
+                <h3 class="pt-3 pb-3 mt-5">A qui s'adresse cette formation?</h3>
+                <div class="row justify-content-between">
+                    <div class="col-lg-5 d-flex flex-row module_detail_objet">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui
+                            <span class="adresse__text"><i class="bx bx-user adresse__icon"></i>&nbsp;Pour qui
                                 ?</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
+                            <div class="col-12 ps-4">
                                 <p>{{$res->cible}}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-5">
+                    <div class="col-lg-6 module_detail_objet">
                         <div class="row d-flex flex-row w-100">
                             <span class="adresse__text"><i
-                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
+                                    class="bx bx-list-plus adresse__icon"></i>&nbsp;Prérequis</span>
+                            <div class="col-12 ps-4">
                                 <p>{{$res->prerequis}}</p>
                             </div>
                         </div>
                         <div class="row d-flex flex-row">
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
+                            <div class="col-12 ps-4">
                                 <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
                             </div>
                         </div>
                     </div>
-                    <div id="programme__formation"></div>
                 </div>
 
-                <div class="row detail__formation__item__left__adresse">
-                    <div class="col-lg-5 d-flex flex-row">
+                <div class="row justify-content-between">
+                    <div class="col-lg-6 d-flex flex-row module_detail_objet">
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
-                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
+                                    class="bx bxs-cog adresse__icon"></i>&nbsp;Equipement
                                 necessaire</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
+                            <div class="col-12 ps-4">
                                 <p>{{$res->materiel_necessaire}}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 module_detail_objet">
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
-                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
+                                    class="bx bxs-message-check adresse__icon"></i>&nbsp;Bon
                                 a savoir</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
+                            <div class="col-12 ps-4">
                                 <p>{{$res->bon_a_savoir}}</p>
                             </div>
                         </div>
                         <div class="row d-flex flex-row">
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
+                            <div class="col-12 ps-4">
                                 <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
                             </div>
                         </div>
                     </div>
-                    <div id="programme__formation"></div>
                 </div>
 
                 <div class="row detail__formation__item__left__adresse">
-                    <div class="col-lg-12 d-flex flex-row">
+                    <div class="col-lg-12 d-flex flex-row module_detail_objet">
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
-                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
+                                    class="bx bx-hive adresse__icon"></i>&nbsp;Prestations
                                 pedagogiques</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
+                            <div class="col-12 ps-4">
                                 <p>{{$res->prestation}}</p>
                             </div>
                         </div>
                     </div>
-                    <div id="programme__formation"></div>
                 </div>
                 @endforeach
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <div class="row detail__formation__item__left">
+                <div class="row module_detail_content mt-5">
                     <h3 class="pt-3 pb-3">Programme de la formation</h3>
-                    <div></div>
                     <div class="col-lg-12">
-                        <div class="row detail__formation__item__left__accordion">
+                        <div class="row">
                             <div class="accordion" id="accordion__program">
                                 <?php $i=1 ?>
                                 @foreach ($programmes as $prgc)
-                                <div class="card">
+                                <div class="card mb-5">
                                     <div class="card-header" id="heading1">
                                         <h2 class="mb-0"><button class="btn btn-block text-left" type="button"
                                                 data-toggle="collapse" data-target="#collapse{{$i}}"
-                                                aria-expanded="true" id="icon" aria-controls="collapse1"><i
-                                                    class="bx bxs-plus-circle icon-prog-list"
-                                                    id="icon"></i>&nbsp;&nbsp;{{$i}} - {{$prgc->titre}}</button></h2>
+                                                aria-expanded="true" id="icon" aria-controls="collapse1">{{$i}} - {{$prgc->titre}}</button></h2>
                                     </div>
                                     @foreach ($cours as $c)
                                     @if($c->programme_id == $prgc->id)
-                                    <div id="collapse{{$i}}" class="collapse show" aria-labelledby="heading1"
+                                    <div id="collapse{{$i}}" class="collapse show ps-3" aria-labelledby="heading1"
                                         data-parent="#accordion__program">
                                         <div class="card-body"> <i
                                                 class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}</div>
@@ -284,102 +271,104 @@
             </div>
 
             {{-- FIXME:mise en forme de design --}}
-            <div class="col-lg-3 detail__formation__item__right">
-                <div class="row detail__formation__item__main__head align-items-center">
-                    <div class="detail__prix__head">
-                        <div class="detail__prix__text">
-                            <p class="pt-2"><b>INTRA</b></p>
+            <div class="col-lg-3 ">
+                <div class="row detail__intra">
+                    <div class="row g-0 m-0">
+                        <div class="detail__prix">
+                            <div class="detail__prix__text">
+                                <p class="pt-2"><b>INTRA</b></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row detail__formation__item__main">
-                    <div class="detail__prix__main__presentiel pt-3">
-                        <div>
-                            <p class="text-uppercase">{{$res->modalite_formation}}</p>
+                    <div class="row g-0 m-0">
+                        <div class="detail__modal pt-3">
+                            <div>
+                                <p class="text-uppercase">{{$res->modalite_formation}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row detail__formation__item__main">
-                    <div class="col-lg-6 detail__prix__main__ref">
-                        <div>
-                            <p><i class="bx bx-clipboard"></i>&nbsp;Reference</p>
+                    <div class="row g-0 m-0 ps-2">
+                        <div class="col-lg-4 detail_ref">
+                            <div>
+                                <p><i class="bx bx-clipboard"></i>&nbsp;Réf :</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 g-0 m-0 detail_ref_ref">
+                            <div>
+                                <p class="m-0 mt-1">{{ $res->reference }}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 detail__prix__main__ref2">
-                        <div>
-                            <p>{{ $res->reference }}</p>
+                    <hr class="hr">
+                    <div class="row g-0 m-0">
+                        <div class="col-lg-4 p-0 ps-2 detail_ref">
+                            <div>
+                                <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 detail_ref_ref">
+                            <div>
+                                <p class="mt-1 m-0">
+                                    <span>
+                                        @isset($res->duree_jour)
+                                        {{$res->duree_jour}} jours
+                                        @endisset
+                                    </span>
+                                    <span>
+                                        @isset($res->duree)
+                                        /{{$res->duree}} h
+                                        @endisset
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__main">
-                    <div class="col-lg-6 detail__prix__main__dure">
-                        <div>
-                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span></p>
+                    <hr class="hr">
+                    <div class="row g-0 m-0">
+                        <div class="col-lg-4 p-0 ps-2 detail_ref">
+                            <div>
+                                <p><i class='bx bx-euro'></i>&nbsp;Prix :</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 detail_ref_ref">
+                            <div>
+                                <p class="m-0 mt-1"><span class="prix">{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 detail__prix__main__dure2">
-                        <div>
-                            <p>
-                                <span>
-                                    @isset($res->duree_jour)
-                                    {{$res->duree_jour}} jours
-                                    @endisset
-                                </span>
-                                <span>
-                                    @isset($res->duree)
-                                    /{{$res->duree}} h
-                                    @endisset
-                                </span>
-                            </p>
+                    <hr class="hr">
+                    <div class="row g-0 m-0 detail_ref_ref">
+                        <div class="col-lg-12 py-5">
+                            <a href="#" role="button" class="btn_demander">Demander un dévis</a>
                         </div>
-                    </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__rmain">
-                    <div class="col-lg-4 detail__prix__main__prix">
-                        <div>
-                            <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 detail__prix__main__prix2">
-                        <div class="text-end">
-                            <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
-
-                        </div>
-                    </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__main">
-                    <div class="col-lg-12 detail__prix__main__btn py-5">
-                        <button type="submit" class="btn">Demander un dévis</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="row detail__formation__item__left">
+            <div class="row ">
                 <h3 class="pt-3 pb-3">Dates et Villes Session Inter</h3>
                 <div class="col-lg-12">
                     <div class="row">
                         <ul>
                             @foreach ($datas as $data)
-                                <li class="date_ville px-2 mb-2">
-                                    <div class="row">
-                                        <div class="col-3 text-center">
-                                            <span>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
-                                        </div>
-                                        <div class="col-3 text-center">
-                                            <span>Analamahitsy</span>
-                                        </div>
-                                        <div class="col-3 text-center">
-                                            <span>{{ number_format($infos[0]->prix, 2, '.', ' ') }} AR HT</span>
-                                        </div>
-                                        <div class="col-3 text-center">
-                                            <span class="btn_next" role="button"><a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}">S'inscrire</a></span>
-                                        </div>
+                            <li class="date_ville px-2 mb-2">
+                                <div class="row">
+                                    <div class="col-3 text-center">
+                                        <span>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y",
+                                            strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR");
+                                            echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
                                     </div>
-                                </li>
+                                    <div class="col-3 text-center">
+                                        <span>Analamahitsy</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}" class="btn_inscription" role="button">S'inscrire</a>
+                                </div>
+                            </li>
                             @endforeach
                         </ul>
                     </div>
