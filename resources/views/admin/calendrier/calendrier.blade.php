@@ -195,7 +195,8 @@
             <div class="col-sm-2">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">Filtre par module</h5>
+                        <button id="tout" class="btn btn-primary">Tout</button><br><br>
+                        <h5 >Filtre par module</h5><br>
                         <div class="searchBoxMod">
                             <input class="searchInputMod w-75" type="text" id="nom_module"
                                 placeholder="Nom du module...">
@@ -1664,6 +1665,231 @@
                 console.log(error)
             }
         });
+    });
+    $('#tout').on('click',function(e){
+        $.ajax({
+                type: "GET"
+                , url: "{{route('allEvent')}}"
+                , dataType: "Json"
+                , success: function(data) {
+                    var event = Array();
+                    $.each(data, function(i, entry) {
+                        event.push({
+                            title: entry.nom_formation
+                            , start: entry.date_detail
+                            ,backgroundColor:"green"
+                            , nom_projet: entry.nom_projet
+                            , nom_module: entry.nom_module
+                            , nom_formation: entry.nom_formation
+                            , h_debut: entry.h_debut
+                            , h_fin: entry.h_fin
+                            , lieu: entry.lieu
+                            , formateur: entry.nom_formateur + ' ' + entry.prenom_formateur
+                            , detail_id: entry.detail_id
+                            , nom_cfp: entry.nom_cfp
+                            , customRender: true
+
+                        });
+
+                    });
+
+                    var calendarEl = document.getElementById('calendar');
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
+                        , timeZone: 'UTC'
+                        , initialView: 'dayGridMonth'
+                        , headerToolbar: {
+                            left: 'prev,next'
+                            , center: 'title'
+                            , right: 'dayGridMonth'
+
+                        }
+                        , editable: true
+                        , eventClick: function(info) {
+                            $('#detail').css('display','block');
+
+                            $.ajax({
+                                method: "GET"
+                                , url: "{{route('information_module')}}"
+                                , data: {
+                                    Id: info.event.extendedProps.detail_id
+                                }
+                                , dataType: "html"
+                                , success: function(response) {
+                                    var projet = document.getElementById('projet');
+                                    projet.innerHTML = '';
+                                    var session = document.getElementById('session');
+                                    session.innerHTML = '';
+                                    var date_formation = document.getElementById('date_formation');
+                                    date_formation.innerHTML = '';
+                                    var types = document.getElementById('types');
+                                    types.innerHTML = '';
+                                    var statut = document.getElementById('statut');
+                                    statut.innerHTML = '';
+                                    var printpdf = document.getElementById('printpdf');
+                                    printpdf.innerHTML = '';
+
+                                    var nom_cfp = document.getElementById('cfp');
+                                    var etp = document.getElementById('etp');
+                                    var logo_etp = document.getElementById('logo_etp');
+                                     var logo_cfp = document.getElementById('logo_cfp');
+                                     var logo_formateur = document.getElementById('logo_formateur');
+                                    if ( nom_cfp == null) {
+                                        console.log('null');
+                                    }
+                                    else{
+                                        nom_cfp.innerHTML = '';
+                                    }
+                                    if ( etp == null) {
+                                        console.log('null');
+                                    }
+                                    else{
+                                        etp.innerHTML = '';
+                                    }
+                                     if ( logo_etp == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_etp.innerHTML = '';
+                                     }
+                                     if ( logo_cfp == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_cfp.innerHTML = '';
+                                     }
+                                     if ( logo_formateur == null) {
+                                         console.log('null');
+                                     }
+                                     else{
+                                         logo_formateur.innerHTML = '';
+                                     }
+
+                                    var formation = document.getElementById('formation');
+                                    formation.innerHTML = '';
+                                    var module = document.getElementById('module');
+                                    module.innerHTML = '';
+                                    var formateur = document.getElementById('formateur');
+                                    formateur.innerHTML = '';
+                                    var lieu = document.getElementById('lieu');
+                                    lieu.innerHTML = '';
+
+                                    var liste_app = document.getElementById('liste_app');
+                                    liste_app.innerHTML = '';
+                                    // alert(JSON.stringify(response));
+                                    var userDataDetail = JSON.parse(response);
+                                    // alert(userData.length);
+                                    var userData = userDataDetail['detail'];
+
+                                    var stg = userDataDetail['stagiaire'];
+                                    var date_groupe = userDataDetail['date_groupe'];
+                                    var images = '';
+                                    var html = '';
+                                    var formation = '';
+                                    var modules = '';
+                                    var logo_formateur = '';
+                                    var logo_etp = '';
+                                    var logo_cfp = '';
+                                    var session = '';
+                                    var cfp = '';
+                                    var etp = '';
+                                    var printpdf = '';
+                                    for (var $i = 0; $i < userData.length; $i++) {
+                                        printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
+                                        printpdf = printpdf.replace(":?",userData[$i].detail_id);
+                                        $('#printpdf').append(printpdf);
+
+
+                                        $("#projet").append(userData[$i].nom_projet);
+                                        $('#statut').append(userData[$i].statut);
+                                        $('#types').append(userData[$i].type_formation);
+                                        $('#lieu').append(userData[$i].lieu);
+
+                                        session+='<a href = "{{url("detail_session/:?/:!")}}" target = "_blank">'+userData[$i].nom_groupe+'</a>'
+                                        session = session.replace(":?",userData[$i].groupe_id);
+                                        session = session.replace(":!",userData[$i].type_formation_id);
+                                        $('#session').append(session);
+
+                                        cfp+='<a href = "{{url("profil_cfp/:?")}}" target = "_blank">'+userData[$i].nom_cfp+'</a>'
+                                        cfp = cfp.replace(":?",userData[$i].cfp_id);
+                                        $('#cfp').append(cfp);
+
+                                        etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+userData[$i].nom_etp+'</a>'
+                                        etp = etp.replace(":?",userData[$i].entreprise_id);
+                                        $('#etp').append(etp);
+
+                                        logo_formateur+='<img src = "{{asset('images/formateurs/:?')}}" class ="rounded-circle"  style="width:50px">';
+                                        logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
+                                        $('#logo_formateur').append(logo_formateur);
+
+                                        logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:80px">';
+                                        logo_etp = logo_etp.replace(":?",userData[$i].logo_entreprise);
+                                        $('#logo_etp').append(logo_etp);
+
+                                        // $('#logo_cfp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
+                                        logo_cfp+='<img src = "{{asset('images/CFP/:?')}}"  style="width:80px">';
+                                        logo_cfp = logo_cfp.replace(":?",userData[$i].logo_cfp);
+                                        $('#logo_cfp').append(logo_cfp);
+
+                                        html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + '&nbsp&nbsp<i class="fas fa-envelope-square"></i>'+ userData[$i].mail_formateur + '&nbsp&nbsp<i class="fas fa-phone-alt"></i> '+ userData[$i].numero_formateur+'</a>'
+                                        html = html.replace(":?",userData[$i].formateur_id);
+                                        $('#formateur').append(html);
+
+                                        formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+userData[$i].nom_formation+'</a>'
+                                        formation = formation.replace(":?",userData[$i].formation_id);
+                                        $('#formation').append(formation);
+
+
+                                        modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+userData[$i].nom_module+'</a>'
+                                        modules = modules.replace(":?",userData[$i].module_id);
+                                        $('#module').append(modules);
+
+                                    }
+                                    var html = '';
+                                    for (var $j = 0; $j < date_groupe.length; $j++) {
+                                        html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'&nbsp <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                    }
+                                    $('#date_formation').append(html);
+
+                                    var html = '';
+                                    // for (var $a = 0; $a < stg.length; $a++) {
+                                    //     html += '+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+' - '+stg[$a].telephone_stagiaire+'</a>'
+                                    //     html = html.replace(":?",stg[$a].stagiaire_id);
+                                    //     html = html.replace(":!",stg[$a].photos);
+                                    // }
+                                    for (var $a = 0; $a < stg.length; $a++) {
+                                        html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                        html = html.replace(":?",stg[$a].stagiaire_id);
+                                        html = html.replace(":!",stg[$a].photos);
+                                    }
+                                    $('#liste_app').append(html);
+                                }
+                                , error: function(error) {
+                                    console.log(error)
+                                }
+                            });
+                        },
+                        eventDidMount: function(info) {
+                            var tooltip = new Tooltip(info.el, {
+                                title: "test",
+                                placement: 'top',
+                                trigger: 'hover',
+                                container: 'body'
+                            });
+                        },
+                        events: event
+                    });
+
+
+                    calendar.render();
+
+                }
+                , error: function(error) {
+                    console.log(error)
+                }
+            });
+
     });
     </script>
 </html>

@@ -37,7 +37,7 @@
                     <i class="bx bxs-dashboard"></i>
                     <span class="links_name">Tableau de bord</span>
                 </a>
-                <span class="tooltip">Tableau de bord</span>
+                {{-- <span class="tooltip">Tableau de bord</span> --}}
             </li>
 
             @canany(['isCFP','isFormateur'])
