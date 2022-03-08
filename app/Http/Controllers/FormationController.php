@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\DB;
 class FormationController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
+    }
     public function index($id = null)
 
     {
@@ -124,20 +132,18 @@ class FormationController extends Controller
         $categorie = DB::select('select * from formations where status = 1');
         $nom_formation = $request->nom_formation;
         // $nom_formation = $request->input('nom_formation');
+        $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where type_formation_id = 2');
+
         if ($nom_formation == null) {
             // $infos = DB::select('select * from moduleFormation');
             $infos = DB::select('select * from moduleFormation where status = 2');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
-            // $infos= module::query()
-            //                          ->where('nom_formation', ' ', "%{$nom_fomation}%")
-            //                         ->get();
-
-            return view('referent.catalogue.liste_formation', compact('infos', 'liste_avis', 'categorie'));
+            return view('referent.catalogue.liste_formation', compact('infos', 'datas','liste_avis', 'categorie'));
         } else {
             // $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
-            $infos = DB::select('select * from moduleFormation where nom_formation like "%' . $nom_formation . '%" and status = 2');
+            $infos = DB::select('select * from moduleFormation where UPPER(nom_formation) like UPPER("%' . $nom_formation . '%") and status = 2');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
-            return view('referent.catalogue.liste_formation', compact('infos', 'liste_avis', 'categorie'));
+            return view('referent.catalogue.liste_formation', compact('infos', 'datas','liste_avis', 'categorie'));
         }
     }
     //recheche formation

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Models\FonctionGenerique;
 use PDF;
+
 class DetailController extends Controller
 {
     public function __construct()
@@ -67,15 +68,16 @@ class DetailController extends Controller
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
-        return response()->json(['detail'=>$detail,'stagiaire'=>$stg,'date_groupe'=>$date_groupe]);
+        return response()->json(['detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe]);
     }
     //impression
-    public function detail_printpdf($id){
+    public function detail_printpdf($id)
+    {
         $detail = DB::select('select * from v_detailmodule where detail_id = ' . $id);
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
-        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('detail', 'stg','date_groupe'));
+        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('detail', 'stg', 'date_groupe'));
         //return view('admin.calendrier.detail_pdf' ,compact('detail', 'stg','date_groupe'));
         return $pdf->download('Detail du projet.pdf');
     }
@@ -135,7 +137,9 @@ class DetailController extends Controller
 
 
         if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', $users)->value('id');
+            // $cfp_id = cfp::where('user_id', $users)->value('id');
+            $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$users]);
+            $cfp_id = $resp->cfp_id;
             $forma = new formateur();
 
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
@@ -177,7 +181,10 @@ class DetailController extends Controller
     public function store(Request $request)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id]);
+        $cfp_id = $resp->cfp_id;
 
         //condition de validation de formulaire
         $request->validate(
@@ -196,7 +203,7 @@ class DetailController extends Controller
         for ($i = 0; $i < count($request['lieu']); $i++) {
             DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $request['formateur'][$i], $request->groupe, $request->projet, $cfp_id]);
         }
-        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+        DB::update('update groupes set status = 1 where id = ?', [$request->groupe]);
         return back();
     }
 
@@ -222,9 +229,9 @@ class DetailController extends Controller
         $formateur_id = DB::select('select inviter_formateur_id from demmande_cfp_formateur where demmandeur_cfp_id = ?', [$cfp_id])[0]->inviter_formateur_id;
 
         for ($i = 0; $i < count($request['lieu']); $i++) {
-            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['ville'][$i].' '.$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $formateur_id, $request->groupe, $request->projet, $cfp_id]);
+            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['ville'][$i] . ' ' . $request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $formateur_id, $request->groupe, $request->projet, $cfp_id]);
         }
-        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+        DB::update('update groupes set status = 1 where id = ?', [$request->groupe]);
         return back();
     }
 
@@ -260,7 +267,7 @@ class DetailController extends Controller
         $date_detail = $request->date;
         detail::where('id', $id)
             ->update([
-                'formateur_id' =>$formateur,
+                'formateur_id' => $formateur,
                 'lieu' => $lieu,
                 'h_debut' => $h_debut,
                 'h_fin' => $h_fin,

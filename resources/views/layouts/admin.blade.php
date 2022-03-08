@@ -505,7 +505,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="searchBoxMod">
-                                    <input class="searchInputMod mb-2" type="text" name=""
+                                    <input class="searchInputMod mb-2" type="text" name="nom_formation"
                                         placeholder="Rechercher par formations...">
                                     <button class="searchButtonMod" href="#">
                                         <i class="bx bx-search">

@@ -19,18 +19,18 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                            <li class="nav-item">
+                            <li class="nav-item btn_next">
                                 <a class="nav-link  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">
-                                    <i class="fa fa-list">Liste des Factures</i></a>
+                                    Liste des Factures</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item btn_next">
                                 <a class="nav-link  {{ Route::currentRouteNamed('facture') ? 'active' : '' }}" href="{{route('facture')}}">
-                                    <i class="fa fa-plus">Nouveau Facture</i></a>
+                                    Nouveau Facture</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item btn_next">
                                 <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$facture[0]->num_facture)}}">
-                                    <i class="fa fa-download">PDF</i></a>
+                                    PDF</a>
                             </li>
 
                         </ul>
@@ -81,7 +81,9 @@
 
                                 <div class="col-md-3">
                                     <div align="right">
-                                        <h6><img src="/image-cfp/{{$cfp->logo }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
+                                        {{-- <h6><img src="/image-cfp/{{$cfp->logo }}" alt="logonmk" style="width: 200px; height: 60px;"></h6> --}}
+                                        <h6><img src="{{asset('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 200px; height: 60px;"></h6>
+
                                         <h5><strong>{{$cfp->nom}}</strong></h5>
                                         <h6>adresse: {{$cfp->adresse_lot}}</h6>
                                         <h6>ville: {{$cfp->adresse_ville}}</h6>
@@ -364,7 +366,7 @@
                                                         <td>
                                                             <div align="right">
                                                                 {{-- {{number_format($montant_totale->net_ttc,2,",",".")}} --}}
-                                                                               {{number_format($montant_totale->montant_total,2,",",".")}}
+                                                                {{number_format($montant_totale->montant_total,2,",",".")}}
                                                             </div>
                                                         </td>
                                                     </div>
