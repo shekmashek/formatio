@@ -211,10 +211,9 @@
                         </select><br>
                         <h5>Statut</h5>
                         <select name="" id="statut" class="form-control w-75">
-                            <option value="Annulé">Annulé</option>
-                            <option value="Prévisionnel">Prévisionnel</option>
-                            <option value="En cours">En cours</option>
-                            <option value="Complété">Complété</option>
+                            @for ($i = 0;$i<count($statut);$i++)
+                                <option value = "{{$statut[$i]->id}}">{{$statut[$i]->status}}</option>
+                            @endfor
                         </select><br>
                         <h5>Domaine</h5>
                         <select name="" id="domaines" class="form-control w-75">

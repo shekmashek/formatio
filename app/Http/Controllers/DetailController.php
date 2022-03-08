@@ -32,9 +32,10 @@ class DetailController extends Controller
     public function calendrier(){
         $domaines = DB::select('select * from domaines');
         $rqt = DB::select('select * from responsables_cfp where user_id = ?',[Auth::user()->id]);
+        $statut = DB::select('select * from status');
         $cfp_id = $rqt[0]->cfp_id;
         $formations = DB::select('select * from formations where cfp_id = ?',[$cfp_id]);
-        return view('admin.calendrier.calendrier',compact('domaines','formations'));
+        return view('admin.calendrier.calendrier',compact('domaines','formations','statut'));
     }
     public function listEvent(Request $request)
     {
@@ -52,33 +53,31 @@ class DetailController extends Controller
             if ($module!=null) {
                 $detail = DB::select('select * from v_detailmodule where nom_module = "' . $module.'" and cfp_id = '.$cfp_id);
             }
-            else{
-                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            }
+
             if ($type_formation!=null) {
                 $detail = DB::select('select * from v_detailmodule where type_formation = "' . $type_formation.'" and cfp_id = '.$cfp_id);
             }
-            else{
-                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            }
+
             if ($statut_projet!=null) {
-                $detail = DB::select('select * from v_detailmodule where statut = "' . $statut_projet.'" and cfp_id = '.$cfp_id);
+                $detail = DB::select('select * from v_detailmodule where status_groupe = ? and cfp_id = ?',[$statut_projet,$cfp_id]);
             }
-            else{
-                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            }
+            // else{
+            //     $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            // }
             if ($domaines!=null) {
                 $detail = DB::select('select * from v_detailmodule where domaines_id = ? and cfp_id = ?' ,[$domaines,$cfp_id]);
             }
-            else{
-                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            }
+            // else{
+            //     $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            // }
             if ($formations!=null) {
                 $detail = DB::select('select * from v_detailmodule where formation_id = ? and cfp_id = ?' , [$formations,$cfp_id]);
             }
-            else{
-                $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
-            }
+            // else{
+            //     $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            // }
+                if($request->all() == null)
+            $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
 
 
         }
