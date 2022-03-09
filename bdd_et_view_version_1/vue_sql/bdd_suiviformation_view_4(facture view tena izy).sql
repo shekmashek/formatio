@@ -329,6 +329,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
             )
         ) jour_restant,
         v_facture_existant.facture_encour,
+        v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
@@ -345,6 +346,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
         factures.num_facture,
         factures.other_message,
         facture_encour,
+        v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
@@ -371,6 +373,7 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
             )
         ) jour_restant,
         facture_encour,
+        v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
@@ -387,6 +390,7 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
         entreprise_id,
         factures.other_message,
         facture_encour,
+        v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,

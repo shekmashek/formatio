@@ -11,7 +11,7 @@
                         @csrf
                         <div class="form-row">
                             <div class="">
-                                <input class="me-3" type="text" name=""
+                                <input class="me-3" type="text" name="nom_formation"
                                     placeholder="Rechercher par formations ex. Excel">
                                 <button class="btn_search_formation" href="#">
                                     <i class="bx bx-search">

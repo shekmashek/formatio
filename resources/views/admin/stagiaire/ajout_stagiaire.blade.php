@@ -224,6 +224,8 @@ td{
             data:{Id:id},
             dataType: "html",
             success:function(response){
+
+                alert(JSON.stringify(response));
                 var userData=JSON.parse(response);
                 $("#matricule").val(userData[0].matricule);
                 $("#nom").val(userData[0].nom_stagiaire);

@@ -33,7 +33,7 @@
                         @if($refs->photos_resp_cfp==null)
                         <img src="{{asset('images/users/user.png')}}" class="image-ronde">
                         @else
-                        <img src="/responsable-image/{{$refs->photos_resp_cfp}}" class="image-ronde">
+                        <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
                         @endif
 
 

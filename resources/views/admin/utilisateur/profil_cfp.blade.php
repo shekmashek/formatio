@@ -10,11 +10,12 @@
                     <div class="card user-card-full">
                         <div class="row m-l-2 m-r-2">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
-                                <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%">
-
+                                <div class="card-block text-center">
+                                    <div class="m-b-25">
+                                        {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
+                                        <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="30%" height="30%">
                                     </div>
-                                    <h6 class="f-w-600">{{ $cfp->nom }}</h6>
+                                    <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
                                     <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 </div>
@@ -26,9 +27,41 @@
                                     <h6 class="m-b-20  f-w-600">Centre de formaton</h6>
                                             <hr>
                                             <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
-                                            <h6 class="text-muted f-w-400">{{ $cfp->adresse_lot }}, {{ $cfp->adresse_ville }}, {{ $cfp->adresse_region }}</h6>
+                                            <h6 class="text-muted f-w-400">
+                                                lot:
+                                                @if($cfp->adresse_lot==NULL)
+                                                <strong style="color: red">incomplète</strong>
+                                                @else
+                                                {{ $cfp->adresse_lot }}
+                                                @endif
+                                            </h6>
+                                            <h6 class="text-muted f-w-400">
+                                                quartier:
+                                                @if($cfp->adresse_quartier==NULL)
+                                                <strong style="color: red">incomplète</strong>
+                                                @else
+                                                {{ $cfp->adresse_quartier }}
+                                                @endif
+                                            </h6>
+                                            <h6 class="text-muted f-w-400">
+                                                ville:
+                                                @if($cfp->adresse_ville==NULL)
+                                                <strong style="color: red">incomplète</strong>
+                                                @else
+                                                {{ $cfp->adresse_ville }}
+                                                @endif
+                                            </h6>
 
-                                            <p class="m-b-10 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
+                                            <h6 class="text-muted f-w-400">
+                                                region:
+                                                @if($cfp->adresse_region==NULL)
+                                                <strong style="color: red">incomplète</strong>
+                                                @else
+                                                {{ strtoupper($cfp->adresse_region) }}
+                                                @endif
+                                            </h6>
+
+                                            <p class="m-b-10 m-t-2 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
                                             <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
 
                                             <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
@@ -38,9 +71,21 @@
                                         <div class="col-lg-6">
                                             <br><br>
                                         <p class="m-b-10 f-w-600"><i  class="bx bxs-graduation"></i>&nbsp; Domaine de formation</p>
-                                            <h6 class="text-muted f-w-400"> {{ $cfp->domaine_de_formation }} </h6>
+                                            <h6 class="text-muted f-w-400">
+                                                @if ($cfp->domaine_de_formation==NULL)
+                                                <strong style="color: red">incomplète</strong>
+                                                @else
+                                                {{ $cfp->domaine_de_formation }}
+                                                @endif
+                                            </h6>
                                               <p class="m-b-10 f-w-600"><i  class="fa fa-globe"></i>&nbsp; Site web officiel</p>
-                                            <h6 class="text-muted f-w-400">{{ $cfp->site_cfp }}</h6>
+                                            <h6 class="text-muted f-w-400">
+                                                @if ($cfp->site_cfp==NULL)
+                                                <strong style="color: rgb(202, 98, 98)">aucun site a été mentionner</strong>
+                                                @else
+                                                {{ $cfp->site_cfp }}
+                                                @endif
+                                            </h6>
                                      </div>
                                     </div>
 

@@ -169,7 +169,9 @@ class EncaissementController extends Controller
     public function montant_reste_payer(Request $request)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
 
         $numero_fact = $request->num_facture;
         $montant_restant = DB::select('select dernier_montant_ouvert from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);

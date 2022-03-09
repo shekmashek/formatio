@@ -117,8 +117,12 @@ class SessionController extends Controller
         $fonct = new FonctionGenerique();
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
-            $cfp_id = Cfp::where('user_id', $user_id)->value('id');
-            $cfp_nom = Cfp::where('user_id', $user_id)->value('nom');
+
+            $fonct = new FonctionGenerique();
+            $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+            $cfp_id = $resp->cfp_id;
+            $cfp_nom = $resp->nom_cfp;
+
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             if($type_formation_id  == 1){
@@ -194,8 +198,9 @@ class SessionController extends Controller
 
     public function getFormateur(){
         $user_id = Auth::user()->id;
-        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfp_id = $resp->cfp_id;
         $data = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
         return response()->json($data);
     }
@@ -204,7 +209,9 @@ class SessionController extends Controller
         $search = $request->search;
         $etp_id = $request->etp_id;
         $user_id = Auth::user()->id;
-        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfp_id = $resp->cfp_id;
         if ($search == '') {
             $stagiaire = stagiaire::orderby('matricule', 'asc')->select('id', 'matricule')->limit(5)->get();
         } else {
@@ -414,7 +421,10 @@ class SessionController extends Controller
 
     public function save_documents(Request $request){
         $user_id = Auth::user()->id;
-        $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        // $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfp = $resp->nom_cfp;
         $groupe = $request->groupe;
         $paths = $request->path;
         $nom_docs = $request->nom_doc;
@@ -430,7 +440,11 @@ class SessionController extends Controller
 
     public function telecharger_fichier(){
         $user_id = Auth::user()->id;
-        $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        // $cfp = Cfp::where('user_id', $user_id)->value('nom');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        // $cfp_id = $resp->cfp_id;
+        $cfp = $resp->nom_cfp;
         $namefile = request()->filename;
         $cfp = request()->cfp;
         $extension = request()->extension;
