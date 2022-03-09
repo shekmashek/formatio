@@ -4,7 +4,6 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<div id="page-wrapper">
     <div class="container-fluid pb-3">
         <nav class="navbar navbar-expand-lg w-100">
             <div class="row w-100 g-0 m-0">
