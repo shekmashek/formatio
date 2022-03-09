@@ -70,7 +70,9 @@
 .date-heure{
     color: rgb(214, 177, 13);
 }
-
+/* .evolution{
+    margin: 0 300px;
+} */
 
 
 
@@ -151,14 +153,10 @@ hr{
 
             <header class="navbar navbar-expand-lg navbar-light">
                 <div class="float-left">
-                    {{-- <img src="{{ asset('storage/'.$data["projet"]->logo) }}" alt="logonmk" class="logo"> --}}
-                    <img src="{{ public_path('storage/'.$data["projet"]->logo) }}" alt="logonmk" class="logo">
-
+                    <img src="{{ public_path('images/entreprises/'.$data["projet"]->logo) }}" alt="logoetp" class="logo">
                 </div>
                 <div class="float-right">
-                    {{-- <img src="{{ asset('img/logo_numerika/logonmrk.png') }}" alt="logonmk" class="logo navbar-brand"> --}}
-                    <img src="{{ public_path('img/logo_numerika/logonmrk.png') }}" alt="logonmk" class="logo navbar-brand">
-
+                    <img src="{{ public_path('images/CFP/'.$data["projet"]->logo_cfp) }}" alt="logonmk" class="logo navbar-brand">
                 </div>
             </header>
 
@@ -175,7 +173,7 @@ hr{
                         des membres de
                         <span class="introduction-title">
                             {{$data["projet"]->nom_etp}}
-                         en EXCEL(Static)
+                         en {{ $data["projet"]->nom_formation }}
                         </span>
 
                         </h3>
@@ -193,7 +191,7 @@ hr{
                     <p >{{$formateur->nom_formateur.' '.$formateur->prenom_formateur}}</p>
                 @endforeach
 
-                <p >Consultant Formateur Expert EXCEL(Static)</p>
+                <p >Consultant Formateur Expert {{ $data["projet"]->nom_formation }}</p>
         </div>
         <div class="col-md-6"></div>
     </div>
@@ -203,10 +201,10 @@ hr{
     <div class="row">
         <div class="col-md-12">
             <div class="float-left">
-                <p class="p-font-size">Rapport de formation EXCEL(Static)</p>
+                <p class="p-font-size">Rapport de formation {{ $data["projet"]->nom_formation }}</p>
             </div>
             <div class="float-right">
-                <p class="p-font-size">NUMERIKA</p>
+                <p class="p-font-size">{{ $data["projet"]->nom_cfp }}</p>
             </div>
 
         </div>
@@ -254,10 +252,11 @@ hr{
                 <h5 class="mb-3 introduction-title">1. INTRODUCTION</h5>
                 <h6></h6>
                 <p>
-                    Dans le cadre de la collaboration avec l’organisme <strong>{{$data["projet"]->nom_etp}}</strong> , un projet de renforcement de <strong>{{$data["projet"]->nom_etp}}</strong>,un projet de renforcement de capacité destiné au personnel de <strong>{{$data["projet"]->nom_etp}}</strong> a été planifié avec <strong>NUMERIKA</strong>. Ce projet permettra de disposer à terme des ressources humaines correspondant aux besoins de l’organisme <strong>{{$data["projet"]->nom_etp}}</strong> en quantité qu’en qualité sur l’utilisation du logiciel Microsoft Excel.
+                    Dans le cadre de la collaboration avec l’organisme <strong>{{$data["projet"]->nom_etp}}</strong> , un projet de renforcement de <strong>{{$data["projet"]->nom_etp}}</strong>,un projet de renforcement de capacité destiné au personnel de <strong>{{$data["projet"]->nom_etp}}</strong> a été planifié avec <strong>{{ $data["projet"]->nom_cfp }}</strong>. Ce projet permettra de disposer à terme des ressources humaines correspondant aux besoins de l’organisme <strong>{{$data["projet"]->nom_etp}}</strong> en quantité qu’en qualité.
+                     {{-- sur l’utilisation du logiciel {{ $data["projet"]->nom_formation }}. --}}
                 </p>
                 <p>
-                    EXCEL(Static) est un logiciel très connu, très largement utilisé mais paradoxalement peu de personnes connaissent toutes ses potentialités et ne savent tirer profit au maximum d'Excel de manière simple et efficace.
+                    {{ $data["projet"]->nom_formation }} est très connu, très largement utilisé mais paradoxalement peu de personnes connaissent toutes ses potentialités et ne savent tirer profit au maximum {{ $data["projet"]->nom_formation }} de manière simple et efficace.
                 </p>
         </div>
         <div class="col-md-1"></div>
@@ -273,7 +272,7 @@ hr{
 
                 <h6>2.1.	PREPARATION DE LA FORMATION :</h6>
                 <p>
-                    Des briefings avant chaque formation ont été organisé entre <strong>{{$data["projet"]->nom_etp}}</strong> et <strong>NUMERIKA</strong> afin d’analyser les besoins et de mieux cadrer la formation.
+                    Des briefings avant chaque formation ont été organisé entre <strong>{{$data["projet"]->nom_etp}}</strong> et <strong>{{ $data["projet"]->nom_cfp }}</strong> afin d’analyser les besoins et de mieux cadrer la formation.
                 </p>
             <h6>2.2.	LISTE DES APPRENANTS :</h6>
                 <p>
@@ -287,7 +286,7 @@ hr{
             <div class="card mb-1">
                 <div class="card-body">
                     <h5 class="groupe">{{$data["groupes"][$i]->nom_groupe}}</h5>
-                    <h6 class="mb-2 text-muted">{{$data["groupes"][$i]->nom_module.'('.$data["groupes"][$i]->lieu.')'}}</h6>
+                    <h6 class="mb-2 text-muted">{{$data["groupes"][$i]->nom_module}}</h6>
                     <div class="card-text">
                         <table class="table" border="1">
                             <thead>
@@ -303,7 +302,7 @@ hr{
                                 @if ($data["groupes"][$i]->groupe_id == $stagiaire->groupe_id)
 
                                 <tr>
-                                    <th>N°{{$stagiaire->stagaire_id}}</th>
+                                    <th>N°{{$stagiaire->stagiaire_id}}</th>
                                     <th scope="row">{{$stagiaire->nom_stagiaire}}</th>
                                     <td>{{$stagiaire->prenom_stagiaire}}</td>
                                 </tr>
@@ -331,7 +330,7 @@ hr{
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    <p>En la personne de <strong>M. Levy RAVELOSON</strong> , qui est le garant de toute les opérations administratives et financières du projet chez <strong>NUMERIKA</strong></p>
+                    <p>En la personne de <strong>M. Levy RAVELOSON</strong> , qui est le garant de toute les opérations administratives et financières du projet chez <strong>{{ $data["projet"]->nom_cfp }}</strong></p>
                 </div>
             </div>
 
@@ -573,7 +572,7 @@ hr{
                     <p>
                         Les questionnaires post-formation visent à mesurer le ressenti des stagiaires vis-à-vis de la formation suivie, et à évaluer leur degré de satisfaction. C’est le meilleur moyen d’améliorer en continu l’organisation, la forme et le contenu des formations.(static)
                     </p>
-                    <p>Après synthèse des fiches d’évaluations de la formation Excel effectué par <strong>NUMERIKA</strong> pour <strong>{{$data["projet"]->nom_etp}}</strong>
+                    <p>Après synthèse des fiches d’évaluations de la formation Excel effectué par <strong>{{ $data["projet"]->nom_cfp }}</strong> pour <strong>{{$data["projet"]->nom_etp}}</strong>
                         ,nous constatons avec plaisir une bonne note de satisfaction globale des apprenants par rapport à l’ensemble de la formation dont ci-après les grandes lignes.(mbol modifier)
                     </p>
 
@@ -623,10 +622,10 @@ hr{
                             <p>Deux tests ont été effectué afin de mieux cerner le niveau des apprenants et de mesurer leur évolution après la formation :</p>
 
                             <li>
-                                Test de niveau 1 pour vérifier leur maitriser de calcul dans Excel(mbol modifier)
+                                Test de niveau 1 pour vérifier leur maitriser de calcul dans {{ $data["projet"]->nom_formation }}
                             </li>
                             <li>
-                                Test de niveau 2 pour vérifier leur assimilation du logiciel Excel(mbol modifier)
+                                Test de niveau 2 pour vérifier leur assimilation du logiciel {{ $data["projet"]->nom_formation }}
                             </li>
 
                         </div>
@@ -637,7 +636,7 @@ hr{
                         <div class="col-md-10">
                             <p class="text-center">Après chaque formation :</p>
                             <hr>
-                            <p>Le formateur évalue chaque apprenant selon leur capacité à être autonome et efficacité à résoudre un problème dans Microsoft Excel(mbol modifier). </p>
+                            <p>Le formateur évalue chaque apprenant selon leur capacité à être autonome et efficacité à résoudre un problème dans {{ $data["projet"]->nom_formation }}). </p>
                         </div>
                     </div>
 
@@ -647,7 +646,7 @@ hr{
                         <div class="col-md-2"></div>
                         <div class="col-md-10">
                             <p>
-                                La notation utilisée par  <strong>NUMERIKA</strong> est de deux sortes : notation sur 5 ou bien exprimé en %
+                                La notation utilisée par  <strong>{{ $data["projet"]->nom_cfp }}</strong> est de deux sortes : notation sur 5 ou bien exprimé en %
                             </p>
                             <li>1 ou [0 à 20 % [Niveau Initial]</li>
 
@@ -692,7 +691,7 @@ hr{
 
                                 @foreach ($data["stagiaire_evaluation_apprenant"] as $stg)
                                     <tr>
-                                        <th>N°{{$stg->stagaire_id}}</th>
+                                        <th>N°{{$stg->stagiaire_id}}</th>
                                         <th scope="row">{{$stg->nom_stagiaire.' '.$stg->prenom_stagiaire}}</th>
                                         <td>{{$stg->note_avant}}</td>
                                         <td>{{$stg->note_apres}}</td>
@@ -705,7 +704,7 @@ hr{
                         </div>
                     </div>
 
-
+                    <p class="evolution">Evolution des participants de <strong>{{$data["projet"]->nom_etp}}</strong> à la formation {{$data["projet"]->nom_formation}}</p>
 
         </div>
         <div class="col-md-1"></div>
@@ -715,50 +714,47 @@ hr{
 
 
 
-<h3 class="my-2">Evolution des participants de <strong>{{$data["projet"]->nom_etp}}</strong> à la formation Excel(mbol ovaina)</h3>
 
+{{-- 
     <div class="row my-1">
         <div class="col-md-12">
 
-            <canvas id="userChart" class="rounded shadow"></canvas>
+            <div id="userChart" style="width: 900px; height: 500px"></div>
 
         </div>
-    </div>
+    </div> --}}
 
 
 
-<div style="background-color: #04803A;">
-<div class="container mb-5">
-    <div class="row mb-5">
-        <div class="col-md-12">
-            <div class="float-left">
-                <h3>Merci</h3>
-            </div>
-            <div class="float-right">
-                <img src="{{ public_path('img/logo_numerika/logonmrk.png') }}" alt="logonmk" class="logo navbar-brand">
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="float-left">
+                    <h5>Merci pour votre confiance</h5>
+                </div>
+                <div class="float-right">
+                    {{-- <img src="{{ public_path('images/CFP/'.$data["projet"]->logo_cfp) }}" alt="logonmk" class="logo navbar-brand"> --}}
+                </div>
             </div>
         </div>
-    </div>
 
-    <br class="my-5">
+        <br class="">
 
-    <div class="row my-5 flex-center">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <h4 class="mb-5">pour votre confiance</h4>
+        <div class="row flex-center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h4 class="mb-5"></h4>
 
-            <div class="position-center">
-            <img width="500px;" height="400px;" src="{{ public_path('img/logo_numerika/graphique-rapport_finale.jpg') }}" alt="logonmk">
+                <div class="position-center">
+                {{-- <img width="500px;" height="400px;" src="{{ public_path('img/logo_numerika/graphique-rapport_finale.jpg') }}" alt="logonmk"> --}}
+                </div>
+
             </div>
-
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
+
     </div>
-
-</div>
-
-
-
 </div>
 
 
@@ -769,9 +765,9 @@ hr{
     <table class="table" width="auto">
         <tr>
             <th>&copy;20{{date('y')}}</th>
-            <th>contact@numerika.center</th>
-            <th>0332313563</th>
-            <th>www.numerika.center</th>
+            <th>{{ $data["projet"]->mail_cfp }}</th>
+            <th>{{ $data["projet"]->tel_cfp }}</th>
+            <th><a href="">{{ $data["projet"]->site_cfp }}</a></th>
         </tr>
 </table>
 
@@ -782,14 +778,14 @@ hr{
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
  --}}
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
+ --}}
 
 <!-- CHARTS -->
-<script>
+{{-- <script>
     var ctx = document.getElementById('userChart').getContext('2d');
     var chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -839,7 +835,37 @@ hr{
             }
         }
     });
-</script>
+</script> --}}
 
+{{-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+        var labels = {!! json_encode($data["chart"]["labels"]) !!};
+        var datas = {!! json_encode($data["chart"]["dataset"]) !!};
+        alert({!! json_encode($data["chart"]["dataset"]) !!});
+        alert({!! json_encode($data["chart"]["labels"]) !!});
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            // [labels],
+            // [datas]
+            ['Year', 'Sales', 'Expenses'],
+            ['2004',  1000,      400],
+            ['2005',  1170,      460],
+            ['2006',  660,       1120],
+            ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Evolution des participants',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('userChart'));
+
+        chart.draw(data, options);
+      }
+    </script> --}}
 </body>
 </html>

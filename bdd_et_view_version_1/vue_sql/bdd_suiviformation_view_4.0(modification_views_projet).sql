@@ -99,7 +99,8 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
-        (cfps.logo) logo_cfp
+        (cfps.logo) logo_cfp,
+        cfps.site_cfp
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
     join type_formations tf on p.type_formation_id = tf.id
@@ -538,3 +539,12 @@ create or replace view v_formateur_projet as
         f.specialite,
         f.niveau,
         d.projet_id;
+
+
+create or replace view v_programme_detail_activiter as
+select
+        v_detailmodule.*,cours_id,titre_cours,programme_id,titre_programme
+from
+    v_detailmodule,v_detail_cour
+where
+    v_detailmodule.detail_id = v_detail_cour.detail_id;

@@ -503,7 +503,7 @@ Route::resource('convocation','ConvocationMail');
 Route::get('convocationMail/{detail}/{groupe}','ConvocationMail@sendMail')->name('convocationMail');
 //============================ Rapport Finale par Project
 Route::resource('rapportfinale', 'RapportFinaleController');
-Route::get('downRapportFinale', 'RapportFinaleController@rapport')->name('downRapportFinale');
+Route::get('downRapportFinale/{projet_id?}', 'RapportFinaleController@rapport')->name('downRapportFinale');
 Route::get('nouveauRapportFinale/{projet_id}', 'RapportFinaleController@new')->name('nouveauRapportFinale');
 
 //=========================== ajout donner dans les different somaire de rapport finale

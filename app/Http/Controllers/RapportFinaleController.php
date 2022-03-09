@@ -6,6 +6,7 @@ use App\RapportFinale;
 use App\Models\FonctionGenerique;
 use PDF;
 use Illuminate\Support\Facades\DB;
+use App\cfp;
 //use Charts;
 
 use Illuminate\Http\Request;
@@ -31,20 +32,20 @@ class RapportFinaleController extends Controller
         $fonct = new FonctionGenerique();
 
         $projet_id = $req->projet_id;
-        $entreprise_id = $req->entreprise_id;
+        $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where projet_id = ?', [$projet_id])[0]->entreprise_id;
         $para=["entreprise_id","projet_id"];
-        $val=[$req->entreprise_id,$req->projet_id];
+        $val=[$entreprise_id,$req->projet_id];
         $para2=["projet_id"];
         $val2=[$req->projet_id];
 
-        $data["projet"] = $fonct->findWhereMulitOne("v_projetentreprise",$para,$val);
-        $data["formateurs"] = $fonct->findWhere("v_liste_formateur_projet ",$para2,$val2);
+        $data["projet"] = $fonct->findWhereMulitOne("v_groupe_projet_entreprise_module",$para,$val);
+        $data["formateurs"] = $fonct->findWhere("v_formateur_projet ",$para2,$val2);
         $data["toutformateurs"] =  $fonct->findAll("formateurs");
-        $data["groupes"] = $fonct->findWhere("v_groupe_projet",$para2,$val2);
-        $data["stagiaires"] =$fonct->findWhere("v_participant_groupe",$para2,$val2);
+        $data["groupes"] = $fonct->findWhere("v_groupe_projet_entreprise_module",$para2,$val2);
+        $data["stagiaires"] =$fonct->findWhere("v_stagiaire_groupe",$para2,$val2);
         $data["detail_formation"] = $fonct->findWhere("v_date_formation",$para2,$val2);
-        $data["but_objectif"] = $fonct->findAllQuery("SELECT  lieu,projet_id,module_id,reference,nom_module FROM v_detail_groupe_module_projet  where projet_id='".$req->projet_id."' group by lieu,projet_id,module_id,reference,nom_module");
-        $data["detail_activiter"] = $fonct->findWhere("v_detailmoduleformationprojetformateur",$para2,$val2);
+        $data["but_objectif"] = $fonct->findAllQuery("select lieu,projet_id,module_id,reference,nom_module FROM v_detailmodule  where projet_id='".$req->projet_id."' group by lieu,projet_id,module_id,reference,nom_module");
+        $data["detail_activiter"] = $fonct->findWhere("v_detailmodule",$para2,$val2);
         $data["pedagogique"] = $fonct->findAll("pedagogique");
         $data["obj_pedagogique"] = $fonct->findWhere("objectif_pedagogique",$para2,$val2);
         $data["desc_objectif"] = $fonct->findAll("but_objectif");
@@ -65,7 +66,7 @@ class RapportFinaleController extends Controller
         $dataset = array();
 
         for($j=0;$j<count($data["stagiaire_evaluation_apprenant"]);$j+=1){
-            $labels[] = $data["stagiaire_evaluation_apprenant"][$j]->nom_stagiaire.' '.$data["stagiaire_evaluation_apprenant"][$j]->prenom_stagiaire;
+            $labels[] = "'".$data["stagiaire_evaluation_apprenant"][$j]->nom_stagiaire.' '.$data["stagiaire_evaluation_apprenant"][$j]->prenom_stagiaire."'";
             $dataset[] = $data["stagiaire_evaluation_apprenant"][$j]->note_avant;
         }
         $colours[0] = "GREEN";
@@ -73,6 +74,7 @@ class RapportFinaleController extends Controller
         $data["chart"]["labels"] = $labels;
         $data["chart"]["dataset"] = $dataset;
         $data["chart"]["colours"] = $colours;
+
 
 
         $lieu_string="";
@@ -91,6 +93,7 @@ class RapportFinaleController extends Controller
             "dpi" => 130
         ]);
 
+        // return view('admin.pdf.pdf_rapport_finale',compact('data'));
         $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
         return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
     }
@@ -202,6 +205,8 @@ class RapportFinaleController extends Controller
 
     public function desc_objectif($idProjet,Request $request)
     {
+        $id_user = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -212,7 +217,7 @@ class RapportFinaleController extends Controller
                 {
                     $temp = $request["desc_objectif_".$but_objectif[$i]->id];
                     if($temp!=NULL || $temp!=""){
-                        $rapport->insert_obj_globau($temp,$but_objectif[$i]->id,$idProjet);
+                        $rapport->insert_obj_globau($temp,$but_objectif[$i]->id,$idProjet,$cfp_id);
                     }
                 }
         } catch(Exception $e){
@@ -236,6 +241,8 @@ class RapportFinaleController extends Controller
 
     //====================================== Pedagogique
     public function new_pedagogique($idProjet,Request $request){
+        $id_user = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -246,7 +253,7 @@ class RapportFinaleController extends Controller
                 {
                     $temp = $request["pedagogique_".$pedagogique[$i]->id];
                     if($temp!=NULL || $temp!=""){
-                        $rapport->insert_objectif_pedagogique($temp,$pedagogique[$i]->id,$idProjet);
+                        $rapport->insert_objectif_pedagogique($temp,$pedagogique[$i]->id,$idProjet,$cfp_id);
                     }
                 }
         } catch(Exception $e){
@@ -271,6 +278,8 @@ class RapportFinaleController extends Controller
     // =============== conclusion
 
     public function new_conclusion($idProjet,Request $request){
+        $id_user = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -278,7 +287,7 @@ class RapportFinaleController extends Controller
         try{
                 $temp = $request["conclusion_data"];
                 if($temp!=NULL || $temp!=""){
-                    $rapport->insert_objectif_conclusion($temp,$idProjet);
+                    $rapport->insert_objectif_conclusion($temp,$idProjet,$cfp_id);
                 }
         } catch(Exception $e){
             echo $e->getMessage();
@@ -301,6 +310,8 @@ class RapportFinaleController extends Controller
     // ====================== Feed back
 
     public function new_feedback($idProjet,Request $request){
+        $id_user = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -308,7 +319,7 @@ class RapportFinaleController extends Controller
         try{
                 $temp = $request["feedback_data"];
                 if($temp!=NULL || $temp!=""){
-                    $rapport->insert_objectif_feedback($temp,$idProjet);
+                    $rapport->insert_objectif_feedback($temp,$idProjet,$cfp_id);
                 }
         } catch(Exception $e){
             echo $e->getMessage();
@@ -331,6 +342,8 @@ class RapportFinaleController extends Controller
     //============================================= evaluation_resultat
 
     public function new_evaluation_resultat($idProjet,Request $request){
+        $id_user = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -338,7 +351,7 @@ class RapportFinaleController extends Controller
         try{
                 $temp = $request["evaluation_resultat_data"];
                 if($temp!=NULL || $temp!=""){
-                    $rapport->insert_evaluation_resultat($temp,$idProjet);
+                    $rapport->insert_evaluation_resultat($temp,$idProjet,$cfp_id);
                 }
         } catch(Exception $e){
             echo $e->getMessage();
@@ -361,6 +374,8 @@ class RapportFinaleController extends Controller
     //============================================ Recommandation
 
     public function new_recommandation($idProjet,Request $request){
+        $id_user = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $desc_recommandation = $fonct->findAll("recommandation");
@@ -371,7 +386,7 @@ class RapportFinaleController extends Controller
 
                 $temp = $request["data_recommandation_".$desc_recommandation[$i]->id];
                 if($temp!=NULL || $temp!=""){
-                    $rapport->insert_recommandation($temp,$desc_recommandation[$i]->id,$idProjet);
+                    $rapport->insert_recommandation($temp,$desc_recommandation[$i]->id,$idProjet,$cfp_id);
                 }
             }
         } catch(Exception $e){
@@ -396,6 +411,8 @@ class RapportFinaleController extends Controller
 
 
     public function new_evaluation_action_formation($idProjet,Request $request){
+        $id_user = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', $id_user)->value('id');
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -408,7 +425,7 @@ class RapportFinaleController extends Controller
                 $temp = $request["evaluation_action_formation_data_".$evaluation_action_formation[$i]->id];
 
                 if($temp!=NULL || $temp!=""){
-                    $rapport->insert_evaluation_action_formation($temp,$evaluation_action_formation[$i]->id,$idProjet);
+                    $rapport->insert_evaluation_action_formation($temp,$evaluation_action_formation[$i]->id,$idProjet,$cfp_id);
                 }
             }
         } catch(Exception $e){
@@ -451,7 +468,7 @@ class RapportFinaleController extends Controller
         $para2=["projet_id"];
         $val2=[$idProjet];
 
-        $stagiaires = $fonct->findWhere("v_participant_groupe",$para2,$val2);
+        $stagiaires = $fonct->findWhere("v_stagiaire_groupe",$para2,$val2);
 
         try{
             for($i=0;$i<count($stagiaires);$i+=1){
