@@ -27,14 +27,16 @@
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
                             <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">
-                                    <i class="fa fa-list">Liste des Factures</i></a>
+                                <a class="nav-link btn_next  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">
+                                  Liste des Factures</a>
                             </li>
                             @canany(['isSuperAdmin','isCFP'])
-                            <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
-                                    <i class="fa fa-download">PDF liste encaissement</i></a>
+                            <li class="nav-item ">
+                                <a class="nav-link btn_next {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
+                                  PDF liste encaissement</a>
                             </li>
                             @endcanany
                         </ul>
