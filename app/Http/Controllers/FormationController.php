@@ -41,9 +41,7 @@ class FormationController extends Controller
 
             $categorie = DB::select('select * from formations
             WHERE
-           status = 1; ');
-
-           
+           status = 1 limit 7 ');
             // $categorie = DB::select('select * from formations where status = 1 limit 8');
             $module = DB::select('select * from moduleformation where formation_id = 1 and status = 2 limit 6');
             return view('referent.catalogue.formation', compact('categorie','module'));
