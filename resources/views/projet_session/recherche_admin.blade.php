@@ -55,16 +55,18 @@ float: right;
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="fonction()">
                <div class="form-check">
                     <input class="form-check-input " type="checkbox" name="flexRadioDefault" id="select2" >                                                                                               
-                       
+                      
                     <label class="form-check-label" >Tous </label><br>
                         @foreach($stagiaires as $stg )
                         {{$stg->fonction_stagiaire}}
                         <input class="form-check-input Check2 tous2" type="checkbox" value="" name="fonction[]"> 
+                       
                         <label class="form-check-label" for="tous_fonction"></label>
                         @endforeach
                </div>
                </div>
                   </div>
+               
                   <div class="dropdown">
                     <p class="menu_google p-2 m-0" id="domaine_hover">Departement &nbsp; &nbsp;&nbsp;&nbsp;<span id="count3"> <i class="fas fa-caret-down"></i></p>
                     <div class="dropdown-content" onmouseleave="quit()" onmouseover="domaine()">
@@ -253,6 +255,7 @@ float: right;
                   </div>
                   <button class="btn btn-success appliquer">Appliquer</button>
                 </div> 
+            
               </div>
             </div>
           </div>

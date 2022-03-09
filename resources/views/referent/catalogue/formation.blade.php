@@ -64,8 +64,8 @@
                 @foreach ($module as $mod)
                 <div class="card_formation">
                     <div class="imageLogo text-center mb-2">
-                        {{-- <img src="{{$mod->logo}}" alt="logo" class="img-fluid" title="organisme de formation"> --}}
-                        <img src="{{asset('images/CFP/Numerika19-01-2022.png')}}" alt="logo" class="img-fluid"
+                         <img src="{{$mod->logo}}" alt="logo" class="img-fluid" title="organisme de formation"> 
+                         <img src="{{asset('images/CFP/Numerika19-01-2022.png')}}" alt="logo" class="img-fluid"
                             title="organisme de formation">
                     </div>
                     <div class="titre_module">
@@ -93,8 +93,8 @@
                 @endforeach
             </div>
         </div>
-    </div>
-</section>
+    </div> 
+</section> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">

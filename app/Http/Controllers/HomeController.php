@@ -177,6 +177,10 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
+        // dd($request->input());
+        if (Gate::allows('isSuperAdmin')){
+            return redirect()->route('liste_utilisateur');
+        }
         if (Gate::allows('isStagiairePrincipale')) {
              //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();

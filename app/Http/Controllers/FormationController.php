@@ -39,7 +39,12 @@ class FormationController extends Controller
             // $domaines = Domaine::all();
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
 
-            $categorie = DB::select('select * from formations where status = 1 limit 8');
+            $categorie = DB::select('select * from formations
+            WHERE
+           status = 1; ');
+
+           
+            // $categorie = DB::select('select * from formations where status = 1 limit 8');
             $module = DB::select('select * from moduleformation where formation_id = 1 and status = 2 limit 6');
             return view('referent.catalogue.formation', compact('categorie','module'));
         }
