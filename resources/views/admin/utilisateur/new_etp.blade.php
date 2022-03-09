@@ -92,29 +92,29 @@
 
         <div class="card" style="padding: 5px;">
             {{-- <form action="{{ route('utilisateur_register_cfp') }}" method="post" enctype="multipart/form-data"> --}}
-                <form action="{{route('create_compte_cfp')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
+                <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col">
-                        <h4 align="left" class="mb-2">Veuillez entrer le profile professionnel de votre organisation</strong></h4>
+                        <h4 align="left" class="mb-2">Veuillez entrer le profile professionnel de votre entreprise</strong></h4>
                         <div class="form-group">
                             <label for="exampleFormControlInput1" class="form-control-label">Logo<strong style="color:#ff0000;">*</strong></label>
-                            <input type="file" required name="logo_cfp" class="form-control" id="logo_cfp" />
-                        </div>
+                            <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
+                    </div>
 
                         <div class="row">
 
                             <div class="col">
                                 <div class="form-group">
                                     <label for="name_cfp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
-                                    <input type="text" name="name_cfp" class="form-control input_inscription" id="name_cfp" required />
+                                    <input type="text" name="name_etp" class="form-control input_inscription" id="name_etp" required />
                                     <span style = "color:#ff0000;" id="name_cfp_err"></span>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
-                                    <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
+                                    <input type="text" name="web_etp" class="form-control input_inscription" id="web_etp" />
 
                                 </div>
                             </div>
@@ -122,68 +122,34 @@
 
                         <div class="form-group">
                             <label for="name_entreprise" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
-                            <input type="text" name="nif" required class="form-control input_inscription" id="nif_cfp" />
-                            <span style = "color:#ff0000;" id="nif_cfp_err"></span>
+                            <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
+                            <span style = "color:#ff0000;" id="nif_etp_err"></span>
                         </div>
-                        {{-- <label for=""> Logo </label>
-                        <p></p>
-                        <p></p>
-                        <input type="file" name="logo"><br><br>
-                        <label for=""> Nom </label><br>
-                        <input type="text" class="form-control" name="nom" autocomplete="off" required><br>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <label for=""> Lot </label><br>
-                                <input type="text" class="form-control" name="adresse_lot" autocomplete="off" required><br>
-                            </div>
-                            <div>
-                                <label for=""> Ville </label><br>
-                                <input type="text" class="form-control" name="adresse_ville" autocomplete="off" required><br>
-                            </div>
-                            <div>
-                                <label for=""> Région </label><br>
-                                <input type="text" class="form-control" name="adresse_region" autocomplete="off" required><br>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row">
-                            <div>
-                                <label for=""> E-mail </label><br>
-                                <input type="text" class="form-control" name="email" autocomplete="off" required><br>
-                            </div>
-                            <div>
-                                <label for=""> Site web </label><br>
-                                <input type="text" class="form-control" name="site" autocomplete="off" required><br>
-                            </div>
-                        </div>
-                        <label for=""> Téléphone(une seule numero) </label><br>
-                        <input type="text" class="form-control" name="telephone" autocomplete="off" required><br>
-                        <label for=""> Domaine </label><br>
-                        <input type="text" class="form-control" name="domaine" autocomplete="off" required><br>
-                        <label for=""> NIF </label><br>
-                        <input type="text" class="form-control" name="nif" autocomplete="off" required><br>
-                        <label for=""> STAT </label><br>
-                        <input type="text" class="form-control" name="stat" autocomplete="off" required><br>
-                        <label for=""> RCS</label><br>
-                        <input type="text" class="form-control" name="rcs" autocomplete="off" required><br>
-                        <label for=""> CIF </label><br>
-                        <input type="text" class="form-control sm-3" name="cif" autocomplete="off" required><br> --}}
 
                     </div>
                     <div class="col">
 
                         <h4 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
-
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="matricule_resp_etp" class="form-control-placeholder" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
+                                    <input type="text" required name="matricule_resp_etp" class="form-control input_inscription" id="matricule_resp_etp" />
+                                </div>
+                            </div>
+                            <div class="col"></div>
+                        </div>
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="nom_resp_cfp" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                                    <input type="text" required name="nom_resp_cfp" class="form-control input_inscription" id="nom_resp_cfp" />
-                                </div>
+                                    <input type="text" required name="nom_resp_etp" class="form-control input_inscription" id="nom_resp_etp" />
+                            </div>
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group">
                                     <label for="prenom_resp_cfp" class="form-control-placeholder" align="left">Prénom</label>
-                                    <input type="text" name="prenom_resp_cfp" class="form-control input_inscription" id="prenom_resp_cfp" />
+                                    <input type="text" name="prenom_resp_etp" class="form-control input_inscription" id="prenom_resp_etp" />
                                 </div>
                             </div>
                         </div>
@@ -192,14 +158,14 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="cin_resp_cfp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
-                                    <input type="text" name="cin_resp_cfp" class="form-control input_inscription" id="cin_resp_cfp" />
-                                    <span style = "color:#ff0000;" id="cin_resp_cfp_err"></span>
+                                    <input type="text" name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
+                                    <span style = "color:#ff0000;" id="cin_resp_etp_err"></span>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="fonction_resp_cfp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                                    <input type="text" required name="fonction_resp_cfp" class="form-control input_inscription" id="fonction_resp_cfp" />
+                                    <input type="text" required name="fonction_resp_etp" class="form-control input_inscription" id="fonction_resp_etp" />
                                 </div>
                             </div>
                         </div>
@@ -208,16 +174,17 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="email_resp_cfp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
-                                    <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
-                                    <span style = "color:#ff0000;" id="email_resp_cfp_err"></span>
+                                    <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
+                                    <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
+                                    <span style = "color:#ff0000;" id="email_resp_etp_err"></span>
+
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="tel_resp_cfp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
-                                    <input type="text" max=10 required name="tel_resp_cfp" class="form-control input_inscription" id="tel_resp_cfp" />
-                                    <span style = "color:#ff0000;" id="tel_resp_cfp_err"></span>
+                                    <input type="text" max=10 required name="tel_resp_etp" class="form-control input_inscription" id="tel_resp_etp" />
+                                    <span style = "color:#ff0000;" id="tel_resp_etp_err"></span>
                                 </div>
                             </div>
                         </div>

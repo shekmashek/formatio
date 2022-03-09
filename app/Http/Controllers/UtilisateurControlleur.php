@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\Gate;
 
 class UtilisateurControlleur extends Controller
 {
     public function __construct()
     {
+        $this->fonct = new FonctionGenerique();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
@@ -57,7 +60,9 @@ class UtilisateurControlleur extends Controller
 
     public function admin()
     {
-        $users = User::where('role_id', '1')->get();
+        // dd( $this->fonct->findWhere("v_user_role",["role_id"],["1"]));
+        // $users = User::where('role_id', "1")->get();
+        $users = $this->fonct->findWhere("v_user_role",["role_id"],["1"]);
         $liste = entreprise::orderBy('nom_etp')->get();
         return view('admin/utilisateur/admin', compact('liste', 'users'));
     }
@@ -86,7 +91,9 @@ class UtilisateurControlleur extends Controller
     public function superAdmin()
     {
         $liste = entreprise::orderBy('nom_etp')->get();
-        $supers = User::where('role_id', '6')->get();
+        // $supers = User::where('role_id', '6')->get();
+        $supers = $this->fonct->findWhere("v_user_role",["role_id"],["6"]);
+
         return view('admin/utilisateur/superAdmin', compact('liste', 'supers'));
     }
 

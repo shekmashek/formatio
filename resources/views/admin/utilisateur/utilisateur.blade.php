@@ -15,37 +15,36 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                         <li class="nav-item">
-                        <a class="nav-link  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
-                            <i class="fa fa-list">&nbsp; Responsables</i></a>
+                            <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
+                                Responsables</a>
                         </li>
 
                         <li class="nav-item">
 
-                        <a class="nav-link  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
-                            <i class="fa fa-list">&nbsp; Stagiaires</i></a>
+                            <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
+                                Stagiaires</a>
 
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link  {{ Route::currentRouteNamed('utilisateur_formateur') ? 'active' : '' }}" href="{{route('utilisateur_formateur')}}">
-                            <i class="fa fa-list">&nbsp; Formateurs</i></a>
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_formateur') ? 'active' : '' }}" href="{{route('utilisateur_formateur')}}">
+                                Formateurs</a>
                         </li>
 
-                         <li class="nav-item">
-                            <a class="nav-link  {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
-                            <i class="fa fa-list">&nbsp; Admin</i></a>
+                        <li class="nav-item">
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
+                                Admin</a>
                         </li>
 
-                         <li class="nav-item">
-                            <a class="nav-link  {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
-                            <i class="fa fa-list">&nbsp; Cfp</i></a>
+                        <li class="nav-item">
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
+                                Organisme de Formation</a>
                         </li>
 
-                         <li class="nav-item">
-                            <a class="nav-link  {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
-                            <i class="fa fa-list">&nbsp; Super Admin</i></a>
+                        <li class="nav-item">
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
+                                Super Admin</a>
                         </li>
-
 
                     </ul>
 

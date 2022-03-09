@@ -310,8 +310,26 @@ class HomeController extends Controller
 
             return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir'));
         }
-        // else {
-        //     $totale_invitation = $this->collaboration->count_invitation();
+        if(Gate::allows('isSuperAdminPrincipale')) {
+            return redirect()->route('liste_utilisateur');
+            // return view('layouts.accueil_admin');
+        }
+        if(Gate::allows('isSuperAdmin')) {
+            return view('layouts.accueil_admin');
+
+        }
+        if(Gate::allows('isAdminPrincipale')) {
+            return view('layouts.accueil_admin');
+
+        }
+        if(Gate::allows('isSuperAdmin')) {
+            return view('layouts.accueil_admin');
+
+        }
+        // if(Gate::allows('isSuperAdminPrincipale')) {
+        //     return view('layouts.accueil_admin', compact('totale_invitation'));
+        // }
+        // if(Gate::allows('isSuperAdminPrincipale')) {
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
         // }
 
