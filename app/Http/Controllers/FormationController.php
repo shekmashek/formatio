@@ -267,8 +267,9 @@ class FormationController extends Controller
         //     return view('referent.catalogue.formation', compact('domaines', 'categorie'));
         // }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
-            $cfp = DB::select('select * from cfps');
-            return view('referent.catalogue.cfp_tous', compact('cfp'));
+            // $cfp = DB::select('select * from cfps order by nom');
+            $pagination = Cfp::orderBy('nom')->paginate(1);
+            return view('referent.catalogue.cfp_tous', compact('pagination'));;
         }
     }
 }

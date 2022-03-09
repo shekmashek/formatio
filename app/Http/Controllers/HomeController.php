@@ -403,6 +403,10 @@ class HomeController extends Controller
 
 
         }
+
+        if (Gate::allows('isSuperAdminPrincipale')){
+            return redirect()->route('liste_utilisateur');
+        }
         // else {
         //      //get the column with null value
         //      $databaseName = DB::connection()->getDatabaseName();
