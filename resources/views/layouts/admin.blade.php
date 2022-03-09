@@ -98,26 +98,7 @@
             </li>
             @endcan
             {{-- projet de formation --}}
-            @canany(['isSuperAdmin'])
-            <li>
-                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bx-library'></i>
-                    <span class="links_name">Projets</span>
-                </a>
-                <span class="tooltip">Projets</span>
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_projet')}}" class="d-flex nav_linke">
-            <i class='bx bxs-bank'></i>
-            <span class="links_name">Nouveau Projet</span>
-            </a>
-            <span class="tooltip">Nouveau Projet</span>
-            <li class="my-1 sousMenu">
-                <a href="{{route('liste_groupe')}}">Groupes</a>
-            </li>
-            </li> --}}
-            @endcanany
+
             @canany(['isCFP','isFormateur'])
             <li>
                 <a href="{{route('accueil_projet')}}" class="d-flex nav_linke">
@@ -192,23 +173,7 @@
             </li>
             @endcanany
             {{-- formateurs --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            <li>
-                <a href="{{route('liste_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Formateurs</span>
-                </a>
-                <span class="tooltip">Formateurs</span>
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
-            <i class='bx bxs-bank'></i>
-            <span class="links_name">Nouveau Formateur</span>
-            </a>
-            <span class="tooltip">Nouveau Formateur</span>
-            </li> --}}
-            @endcanany
+
             @canany(['isCFP'])
             <li>
                 <a href="{{route('liste_formateur')}}" class="d-flex nav_linke">
@@ -287,23 +252,7 @@
             </li> --}}
             @endcanany
             {{-- stagiares --}}
-            @canany(['isSuperAdmin'])
-            <li>
-                <a href="{{route('liste_participant')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Stagiaires</span>
-                </a>
-                <span class="tooltip">Stagiaires</span>
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_participant')}}" class="d-flex nav_linke">
-            <i class='bx bxs-bank'></i>
-            <span class="links_name">Nouveau Stagiaire</span>
-            </a>
-            <span class="tooltip">Nouveau Stagiaire</span>
-            </li> --}}
-            @endcanany
+
             {{-- @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_participant')}}" class="d-flex nav_linke">

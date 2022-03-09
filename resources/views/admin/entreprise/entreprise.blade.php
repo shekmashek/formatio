@@ -8,8 +8,6 @@
             <div class="col-lg-12">
                 <br>
                 <h5>Entreprises</h5>
-                <a href="{{ route('collaboration')}}">
-                <button class="btn btn-success mb-2 payement"><i class="fa fa-plus"></i> collaborer</button></a>
             </div>
 
             <nav class="navbar navbar-expand-lg navbar-light css-menuInter p-3 mb-2 rounded">
@@ -109,7 +107,8 @@
                                         @foreach($datas as $etp)
                                     		<tr>
                                                 <td>
-                                                    <img src="/dynamic-image/{{$etp->logo}}" width="100" height="100">
+                                                    {{-- <img src="/dynamic-image/{{$etp->logo}}" width="100" height="100"> --}}
+                                                    <img src="{{asset('images/entreprises/'.$etp->logo)}}" width="100" height="100">
                                                 </td>
                                     			<td width = "200px">{{$etp->nom_etp}}</td>
                                     			<td>{{$etp->adresse}}</td>
@@ -318,7 +317,7 @@
         var id = e.target.id;
         $.ajax({
         type: "GET",
-        url:"{{route('edit_entreprise')}}",
+        url:"{{route('edit_responsable')}}",
         data:{Id:id},
         dataType: "html",
         success:function(response){
