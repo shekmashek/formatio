@@ -56,3 +56,44 @@
     border: none;
     border-bottom: 5px solid #7635dc;
 }
+
+.btn_actions{
+    background: #7635dc;
+    color: white;
+    padding: 0.5rem 0.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.900rem;
+}
+
+.btn_actions .bx{
+    position: relative;
+    top: .3rem;
+    margin-right: .5rem;
+    font-size: 1.4rem !important;
+}
+
+.detail_cfp{
+    border: none;
+    border-right: 1px solid grey;
+}
+
+.contact{
+    display: none;
+}
+
+.phone_detail{
+    background: rgba(128, 128, 128, 0.176);
+    border: none;
+border-radius: 5px;
+padding: 0.5rem 1rem;
+}
+
+.phone_detail .bx{
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.adresse{
+    color: rgba(35, 35, 248, 0.759);
+}
