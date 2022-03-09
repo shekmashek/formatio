@@ -92,14 +92,14 @@ class ProfController extends Controller
                 return view('admin.formateur.formateur', compact('formateur'));
             }
         } else {
-            $cfp_id = cfp::where('user_id', $user_id)->value('id');
-            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
-            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            $formateur = $forma->getFormateur($formateur1, $formateur2);
+            // $cfp_id = cfp::where('user_id', $user_id)->value('id');
+            // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
+            // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            // $formateur = $forma->getFormateur($formateur1, $formateur2);
 
-            $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
-            $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
+            // $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
+            // $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
+            // return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
         }
     }
 
