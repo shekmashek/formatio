@@ -23,18 +23,16 @@
                 </div>
                 <div class="d-flex flex-row flex-wrap ps-5">
                     @foreach ($categorie as $ctg )
-                    <div class="content_domaines">
-                        <button type="button" class="btn btn"><a href="{{route('select_par_formation',$ctg->id)}}">
-                                {{$ctg->nom_formation}}</a></button>
+                    <div class="content_domaines my-4">
+                        <a href="{{route('select_par_formation',$ctg->id)}}">
+                                {{$ctg->nom_formation}}</a>
 
                     </div>
                     @endforeach
-                    <div class="content_domaines">
-                        <a href="{{route('select_tous')}}">
-                            <button type="button" class="btn btn_categ"><i class="bx bx-list-ul icon_categ"></i> Tous
-                                les Thématiques</button>
-                        </a>
-                    </div>
+                    <a href="{{route('select_tous')}}">
+                        <button type="button" class="btn btn_categ"><i class="bx bx-list-ul icon_categ"></i> Tous
+                            les Thématiques</button>
+                    </a>
                 </div>
             </div>
             <div class="col-6 align-items-center justify-content-center">

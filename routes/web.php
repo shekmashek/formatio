@@ -296,6 +296,10 @@ Route::get('domaine_formation','FormationController@formation_domaine')->name('d
 Route::get('select_par_formation/{id}','FormationController@affichageParFormation')->name('select_par_formation');
 Route::get('select_par_module/{id}','FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous','FormationController@affichageTousCategories')->name('select_tous');
+Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','FormationController@inscription')->name('inscriptionInter');
+//route annuaire de cfp
+Route::get('annuaire','FormationController@annuaire')->name('annuaire');
+
 //route module
 Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
