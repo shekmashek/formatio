@@ -112,44 +112,162 @@ class UtilisateurControlleur extends Controller
     {
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$id]);
         $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$id]);
-        for ($i = 0; $i < count($resp_cfp); $i += 1) {
-            DB::delete('delete from users where id = ?', [$resp_cfp[$i]->user_id]);
-            if ($resp_cfp[$i]->photos_resp_cfp != null) {
-                File::delete("images/responsables/" . $resp_cfp[$i]->photos_resp_cfp);
+        DB::beginTransaction();
+        try {
+            for ($i = 0; $i < count($resp_cfp); $i += 1) {
+                DB::delete('delete from users where id = ?', [$resp_cfp[$i]->user_id]);
+                if ($resp_cfp[$i]->photos_resp_cfp != null) {
+                    File::delete("images/responsables/" . $resp_cfp[$i]->photos_resp_cfp);
+                }
             }
-        }
-        DB::delete('delete from responsables_cfp where cfp_id = ?', [$id]);
-        DB::delete('delete from cfps where id = ?', [$id]);
-        DB::delete('delete from modules where cfp_id = ?', [$id]);
-        if ($cfp != null) {
+            DB::delete('delete from modules where cfp_id = ?', [$id]);
+            DB::delete('delete from responsables_cfp where cfp_id = ?', [$id]);
+            DB::delete('delete from cfps where id = ?', [$id]);
             File::delete("images/CFP/" . $cfp->logo);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
         }
         return back();
     }
+
+    public function delete_resp_cfp($id)
+    {
+        $resp = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["id"], [$id]);
+        if ($resp->prioriter == true) {
+            DB::beginTransaction();
+            try {
+                $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$resp->cfp_id]);
+                for ($i = 0; $i < count($resp_cfp); $i += 1) {
+                    DB::delete('delete from users where id = ?', [$resp_cfp[$i]->user_id]);
+                    if ($resp_cfp[$i]->photos_resp_cfp != null) {
+                        File::delete("images/responsables/" . $resp_cfp[$i]->photos_resp_cfp);
+                    }
+                }
+                DB::delete('delete from responsables_cfp where cfp_id = ?', [$id]);
+                DB::delete('delete from cfps where id = ?', [$resp->cfp_id]);
+                DB::delete('delete from modules where cfp_id = ?', [$id]);
+                File::delete("images/CFP/" . $resp->logo_cfp);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+        } else {
+            DB::beginTransaction();
+            try {
+                DB::delete('delete from role_users where user_id = ?', [$resp->user_id]);
+                DB::delete('delete from users where id = ?', [$resp->user_id]);
+                if ($resp->photos_resp_cfp != null) {
+                    File::delete("images/responsables/" . $resp->photos_resp_cfp);
+                }
+                DB::delete('delete from responsables_cfp where id = ?', [$id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+        }
+
+        return back();
+    }
+
+    public function create_compte_employeur(Request $req)
+    {
+
+
+                // ======= responsable
+
+                $resp["nom_resp"] = $req->nom_resp_cfp;
+                $resp["prenom_resp"] = $req->prenom_resp_cfp;
+                $resp["cin_resp"] = $req->cin_resp_cfp;
+                $resp["email_resp"] = $req->email_resp_cfp;
+                $resp["tel_resp"] = $req->tel_resp_cfp;
+                $resp["fonction_resp"] = $req->fonction_resp_cfp;
+
+                $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_cfp]);
+                $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_cfp]);
+
+                $verify_resp_tel = $this->fonct->findWhere("users", ["telephone"], [$req->tel_resp_cfp]);
+
+                        if (count($verify_resp_cin) <= 0) {
+                            if (count($verify_resp_mail) <= 0) {
+                                if (count($verify_resp_tel) <= 0) {
+
+                                    $this->user->name = $req->nom_resp_cfp . " " . $req->prenom_resp_cfp;
+                                    $this->user->email = $req->email_resp_cfp;
+                                    $this->user->cin = $req->cin_resp_cfp;
+                                    $this->user->telephone = $req->tel_resp_cfp;
+                                    $ch1 = "0000";
+                                    $this->user->password = Hash::make($ch1);
+
+                                    $this->user->save();
+
+                                    $user_id = User::where('email', $req->email_resp_cfp)->value('id');
+                                    $this->new_compte->insert_CFP($data);
+
+                                    $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp])->id;
+                                    $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
+                                    DB::beginTransaction();
+                                    try {
+                                        $this->fonct->insert_role_user($user_id, "7", true); // CFP
+                                        DB::commit();
+                                    } catch (Exception $e) {
+                                        DB::rollback();
+                                        echo $e->getMessage();
+                                    }
+                                    //============= save image
+
+                                    // $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
+                                    $fonct = new FonctionGenerique();
+                                    $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
+
+                                    Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+                                    $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
+
+                                    if (Gate::allows('isSuperAdminPrincipale')) {
+                                        return back();
+                                    }
+
+                                    return redirect()->route('inscription_save');
+                                } else {
+                                    return back()->with('error', 'télephone existe déjà!');
+                                }
+                            } else {
+                                return back()->with('error', 'email existe déjà!');
+                            }
+                        } else {
+                            return back()->with('error', 'CIN existe déjà!');
+                        }
+
+    }
+
+
     public function delete_entreprise($id)
     {
         $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$id]);
         $resp = $this->fonct->findWhere("responsables", ["entreprise_id"], [$id]);
 
-        // DB::beginTransaction();
-        // try {
-        for ($i = 0; $i < count($resp); $i += 1) {
-            DB::delete('delete from users where id = ?', [$resp[$i]->user_id]);
-            if ($resp[$i]->photos_resp != null) {
-                File::delete("images/responsables/" . $resp[$i]->photos_resp);
+        DB::beginTransaction();
+        try {
+            for ($i = 0; $i < count($resp); $i += 1) {
+                DB::delete('delete from users where id = ?', [$resp[$i]->user_id]);
+                if ($resp[$i]->photos_resp != null) {
+                    File::delete("images/responsables/" . $resp[$i]->photos_resp);
+                }
             }
+            DB::delete('delete from appel_offres where entreprise_id = ?', [$id]);
+            DB::delete('delete from responsables where entreprise_id = ?', [$id]);
+            DB::delete('delete from entreprises where id = ?', [$id]);
+            if ($entreprise != null) {
+                File::delete("images/entreprises/" . $entreprise->logo);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
         }
-        DB::delete('delete from responsables where entreprise_id = ?', [$id]);
-        DB::delete('delete from appel_offres where entreprise_id = ?', [$id]);
-        DB::delete('delete from entreprises where id = ?', [$id]);
-        if ($entreprise != null) {
-            File::delete("images/entreprises/" . $entreprise->logo);
-        }
-
-        // } catch (Exception $e) {
-        //     DB::rollback();
-        //     echo $e->getMessage();
-        // }
         return back();
     }
 
@@ -232,11 +350,32 @@ class UtilisateurControlleur extends Controller
         return back();
     }
 
-    public function show_resp_cfp(){
+    public function update_resp_cfp(Request $req, $id)
+    {
+        $resp = $this->fonct->findWhereMulitOne("responsables_cfp", ["id"], [$id]);
+        DB::beginTransaction();
+        try {
+            DB::update(
+                "UPDATE users SET name=?,email=?,cin=?,telephone=? WHERE id=?",
+                [$req->nom . " " . $req->prenom, $req->email_resp_cfp, $req->cin, $req->telephone, $resp->user_id]
+            );
+            DB::update(
+                "UPDATE responsables_cfp SET nom_resp_cfp=?,prenom_resp_cfp=?,email_resp_cfp=?,cin_resp_cfp=?,telephone_resp_cfp=?,fonction_resp_cfp=?,sexe_resp_cfp=? WHERE id=?",
+                [$req->nom, $req->prenom, $req->email_resp_cfp, $req->cin, $req->telephone, $req->fonction, $req->sexe, $id]
+            );
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
+        return back();
+    }
+
+    public function show_resp_cfp()
+    {
 
         $responsables = $this->fonct->findAll("v_responsable_cfp");
-        return view("admin.utilisateur.responsable_cfp",compact('responsables'));
-
+        return view("admin.utilisateur.responsable_cfp", compact('responsables'));
     }
     public function show($id)
     {

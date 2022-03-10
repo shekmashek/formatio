@@ -79,7 +79,7 @@
             </div>
         </nav>
 
-        <form action="{{ route('utilisateur_new_cfp') }}">
+        <form action="{{ route('utilisateur_new_resp_etp') }}" method="GET">
             @csrf
             <p style="display: flex; justify-content:end;">
                 <button type="submit" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Responsables OF</button>
@@ -99,7 +99,7 @@
                 <tbody>
                     @foreach ($responsables as $resp)
                     <tr>
-                        <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}">
+                        <td style="width: 10%;"><a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}">
                                 @if ($resp->photos_resp_cfp==null)
                                 <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/users.png')}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
 
@@ -109,7 +109,14 @@
                             @endif
                         </td>
                         <td> <a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}"><strong>{{ $resp->nom_resp_cfp." ".$resp->prenom_resp_cfp }}</strong> </a></td>
-                        <td>{{ $resp->email_resp_cfp }}</td>
+                        <td>
+                            @if ($resp->prioriter==true)
+                            {{ $resp->email_resp_cfp }} (<strong style="color: green">principale</strong>)
+                            @else
+                            {{ $resp->email_resp_cfp }} (<strong style="color: rgb(223, 21, 223)">responsable</strong>)
+                            @endif
+
+                        </td>
                         <td>{{ $resp->telephone_resp_cfp }}</td>
                         <td>{{ $resp->fonction_resp_cfp }}</td>
                         <td>
@@ -121,7 +128,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                        <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                        <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
                                         <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a>
 
                                     </ul>
@@ -133,125 +140,101 @@
 
 
                     <!-- Modal delete -->
-                    {{-- <div class="modal fade" id="delete_modal_{{$resp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                    <h6 class="modal-title text-white">Avertissement pour <strong>{{$resp->nom}}</strong>!</h6>
+                    <div class="modal fade" id="delete_modal_{{$resp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                <h6 class="modal-title text-white">Avertissement pour <strong>{{$resp->nom_resp_cfp." ".$resp->prenom_resp_cfp}}</strong>!</h6>
+                            </div>
+                            @if ($resp->prioriter==true)
+                            <div class="modal-body">
+                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible.Cette utilisateur est le responsable principale de son entreprise.Si vous voulez le supprimer, tous les informations à propos de son entreprise disparaîtra Continuer ?</small>
+                            </div>
+                            @else
+                            <div class="modal-body">
+                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                            </div>
+                            @endif
 
-                                </div>
-                                <div class="modal-body">
-                                    <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                </div>
-                                <div class="modal-footer">
+                            <div class="modal-footer">
 
-                                    <button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                                <button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
 
-                                    <form action="{{ route('utilisateur_cfp_delete',$resp->id) }}" method="GET">
-                                        @csrf
-                                        <button type="submit" class="btn btn_enregistrer"> Suprimer </button>
-                                    </form>
-                                </div>
+                                <form action="{{ route('delete_resp_cfp',$resp->id) }}" method="GET">
+                                    @csrf
+                                    <button type="submit" class="btn btn_enregistrer"> Suprimer </button>
+                                </form>
                             </div>
                         </div>
-                    </div> --}}
-                    {{-- fin modal delete --}}
-
-                    {{-- <div id="modal_{{$cfp->id}}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="modal-title text-md">
-                                        <h6>Modification des informations pour</h6>
-                                        <h5><strong>{{$cfp->nom}}</strong></h5>
-                                    </div>
-                                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{ route('utilisateur_update_cfp',$cfp->id) }}" id="formPayement" method="POST">
-                                        @csrf
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bxs-graduation"></i>&nbsp; Raison sociale<strong style="color:red">*</strong> </span>
-                                            <input autocomplete="off" type="text" name="nom_cfp" class="form-control formPayement" required="required" value="{{$cfp->nom}}">
-
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bxs-graduation"></i>&nbsp; Domaine de formation<strong style="color:red">*</strong> </span>
-                                            <textarea autocomplete="off" required class="form-control" id="exampleFormControlTextarea1" rows="3" name="domaine_cfp"></textarea>
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bx-envelope"></i>&nbsp;NIF<strong style="color:#ff0000;">*</strong></span>
-                                            <input autocomplete="off" type="text" name="nif_cfp" class="form-control formPayement" required="required" value="{{$cfp->nif}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bx-envelope"></i>&nbsp;STAT<strong style="color:#ff0000;">*</strong></span>
-                                            <input autocomplete="off" type="text" name="stat_cfp" class="form-control formPayement" required="required" value="{{$cfp->stat}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bx-envelope"></i>&nbsp;CIF<strong style="color:#ff0000;">*</strong></span>
-                                            <input autocomplete="off" type="text" name="cif_cfp" class="form-control formPayement" required="required" value="{{$cfp->cif}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bx-envelope"></i>&nbsp;RCS<strong style="color:#ff0000;">*</strong></span>
-                                            <input autocomplete="off" type="text" name="rcs_cfp" class="form-control formPayement" required="required" value="{{$cfp->rcs}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bx-envelope"></i>&nbsp;Email<strong style="color:#ff0000;">*</strong></span>
-                                            <input autocomplete="off" type="email" name="email_cfp" class="form-control formPayement" required="required" value="{{$cfp->email}}">
-                                        </div>
-
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="bx bx-phone"></i>&nbsp;Téléphone<strong style="color:#ff0000;">*</strong></span>
-                                            <input autocomplete="off" type="text" name="telephone_cfp" class="form-control formPayement" required="required" value="{{$cfp->telephone}}"> </div>
-                                        @if ($cfp->site_cfp!=NULL)
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="fa fa-globe"></i>&nbsp; Site web officiel</span>
-                                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required" value="{{$cfp->site_cfp}}"> </div>
-
-                                        @else
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span><i class="fa fa-globe"></i>&nbsp; Ajouter un site web officiel</span>
-                                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required"> </div>
-
-                                        @endif
-
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span>Lot<strong style="color:#ff0000;">*</strong></span>
-                                            <input type="text" name="adresse_lot" class="form-control formPayement" required="required" value="{{$cfp->adresse_lot}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span>Quartier<strong style="color:#ff0000;">*</strong></span>
-                                            <input type="text" name="adresse_quartier" class="form-control formPayement" required="required" value="{{$cfp->adresse_quartier}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span>Ville<strong style="color:#ff0000;">*</strong></span>
-                                            <input type="text" name="adresse_ville" class="form-control formPayement" required="required" value="{{$cfp->adresse_ville}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3">
-                                            <span>Région<strong style="color:#ff0000;">*</strong></span>
-                                            <input type="text" name="adresse_region" class="form-control formPayement" required="required" value="{{$cfp->adresse_region}}">
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
-                                    </form>
-                                    <div class="mt-4 mb-4">
-                                        <div class="mt-4 mb-4 d-flex justify-content-between">
-                                            <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
-                                            <button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    {{-- fin --}}
-
-
-                    @endforeach
-                </tbody>
-                <tfoot></tfoot>
-            </table>
+                    </div>
         </div>
+        {{-- fin modal delete --}}
 
+        <div id="modal_{{$resp->id}}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title text-md">
+                            <h6>Modification des informations pour</h6>
+                            <h5><strong>{{$resp->nom_resp_cfp." ".$resp->prenom_resp_cfp}}</strong></h5>
+                        </div>
+                        <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('update_resp_cfp',$resp->id) }}"  method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <div class="inputbox inputboxP mt-3">
+                                <span><i class="bx bxs-graduation"></i>&nbsp; Nom<strong style="color:red">*</strong> </span>
+                                <input autocomplete="off" type="text" name="nom" class="form-control formPayement" required="required" value="{{$resp->nom_resp_cfp}}">
+
+                            </div>
+                            <div class="inputbox inputboxP mt-3">
+                                <span><i class="bx bxs-graduation"></i>&nbsp; Prénom<strong style="color:red">*</strong> </span>
+                                <input autocomplete="off" type="text" name="prenom" class="form-control formPayement" required="required" value="{{$resp->prenom_resp_cfp}}">
+                            </div>
+                            <div class="inputbox inputboxP mt-3">
+                                <span><i class="bx bx-envelope"></i>&nbsp;Fonction<strong style="color:#ff0000;">*</strong></span>
+                                <input autocomplete="off" type="text" name="fonction" class="form-control formPayement" required="required" value="{{$resp->fonction_resp_cfp}}">
+                            </div>
+                            <div class="inputbox inputboxP mt-3">
+                                <span><i class="bx bx-envelope"></i>&nbsp;Email<strong style="color:#ff0000;">*</strong></span>
+                                <input autocomplete="off" type="email"  name="email_resp_cfp" class="form-control formPayement" required="required" value="{{$resp->email_resp_cfp}}">
+                            </div>
+                            <div class="inputbox inputboxP mt-3">
+                                <span><i class="bx bx-envelope"></i>&nbsp;CIN<strong style="color:#ff0000;">*</strong></span>
+                                <input autocomplete="off" type="text"  name="cin" class="form-control formPayement" required="required" value="{{$resp->cin_resp_cfp}}">
+                            </div>
+                            <div class="inputbox inputboxP mt-3">
+                                <span><i class="bx bx-phone"></i>&nbsp;Téléphone<strong style="color:#ff0000;">*</strong></span>
+                                <input autocomplete="off" type="text" name="telephone" class="form-control formPayement" required="required" value="{{$resp->telephone_resp_cfp}}"> </div>
+                            <div class="inputbox inputboxP mt-3">
+                                <span><i class="fa fa-globe"></i>&nbsp; Genre</span>
+                                <select name="sexe" id="sexe">
+                                    <option value="HOMME">Homme</option>
+                                    <option value="FEMME">Femme</option>
+                                </select>
+                                <div class="mt-4 mb-4">
+                                    <div class="mt-4 mb-4 d-flex justify-content-between">
+                                        <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                        <button type="submit"  class="btn btn_enregistrer">Valider</button> </div>
+                                </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- fin --}}
+
+
+        @endforeach
+        </tbody>
+        <tfoot></tfoot>
+        </table>
     </div>
+
+</div>
 </div>
 
 

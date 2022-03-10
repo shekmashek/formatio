@@ -138,6 +138,13 @@ Route::get('/utilisateur_new_admin','UtilisateurControlleur@new_admin')->name('u
 //route cfp
 Route::get('/utilisateur_cfp','UtilisateurControlleur@cfp')->name('utilisateur_cfp');
 Route::get('/utilisateur_resp_cfp','UtilisateurControlleur@show_resp_cfp')->name('utilisateur_resp_cfp');
+Route::get('/update_resp_cfp/{id}','UtilisateurControlleur@update_resp_cfp')->name('update_resp_cfp');
+Route::get('/delete_resp_cfp/{id}','UtilisateurControlleur@delete_resp_cfp')->name('delete_resp_cfp');
+Route::get('/utilisateur_new_resp_etp',function(){
+    return view('admin.utilisateur.new_resp_cfp');
+})->name('utilisateur_new_resp_etp');
+
+
 Route::get('/utilisateur_entreprise','UtilisateurControlleur@entreprise')->name('utilisateur_entreprise');
 Route::get('/utilisateur_cfp_delete/{id}','UtilisateurControlleur@delete_cfp')->name('utilisateur_cfp_delete');
 Route::get('/utilisateur_new_cfp','UtilisateurControlleur@new_cfp')->name('utilisateur_new_cfp');

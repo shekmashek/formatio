@@ -196,13 +196,14 @@
                             <input type="text" name="adresse_region" class="form-control formPayement" required="required" value="{{$cfp->adresse_region}}">
                         </div>
                         <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
-                    </form>
-                    <div class="mt-4 mb-4">
-                        <div class="mt-4 mb-4 d-flex justify-content-between">
-                            <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
-                            <button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button> </div>
-                    </div>
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button> </div>
+                        </div>
 
+
+                    </form>
                 </div>
 
             </div>
