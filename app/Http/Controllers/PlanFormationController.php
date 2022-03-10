@@ -95,7 +95,7 @@ class PlanFormationController extends Controller
         $test = annee_plan::where('Annee', $yearNow)->exists();
         $domaine = Domaine::all();
         $stagiaire = stagiaire::all();
-        $role_id = User::where('email', Auth::user()->email)->value('role_id');
+        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
 
         if (Gate::allows('isReferent')) {
             $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();

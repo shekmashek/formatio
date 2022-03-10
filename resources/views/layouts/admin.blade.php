@@ -350,7 +350,7 @@
             {{-- plan de formation --}}
             @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
             <li>
-                <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany href="{{route('liste_projet')}}" class="d-flex nav_linke">
+                <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-scatter-chart'></i>
                     <span class="links_name">Plan</span>
                 </a>
