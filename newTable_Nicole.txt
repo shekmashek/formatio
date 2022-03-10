@@ -83,4 +83,6 @@ Branche nouveau_entiter.1.0:
 
 ...... Branch equipe_administratif: ajouter tout view dans bdd_suivi_formation_view_28(roles).sql
 
-
+-----CALENDRIER : Modification view v_detailmodule
+------BUDGETISATION
+     add v-new view bdd_suivi_formation_29

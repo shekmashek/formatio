@@ -877,3 +877,5 @@ Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_us
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
 //Route impression detail_calendrier
 Route::get('detail_printpdf/{id}','DetailController@detail_printpdf')->name('detail_printpdf');
+//Route budgetisation
+Route::get('budget','PlanFormationController@budgetisation')->name('budget');

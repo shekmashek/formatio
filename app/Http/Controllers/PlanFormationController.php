@@ -270,4 +270,9 @@ class PlanFormationController extends Controller
         $plan = recueil_information::with('stagiaire', 'formation')->where('id', $id)->get();
         return view('referent.ajout', compact('plan'));
     }
+    //budgetisation
+    public function budgetisation(){
+
+        return view('referent.budget');
+    }
 }
