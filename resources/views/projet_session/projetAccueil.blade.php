@@ -49,7 +49,7 @@
                         <i class='bx bxs-grid-alt projets_icon'></i>
                     </div>
                     <div class="col-9">
-                        <h5>Session pour un projet en intra</h5>
+                        <h5>Projet en intra et inter</h5>
                         <p>
                             Découvrez toutes nos formations en présentiel et à distance, en inter, intra
                             packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
@@ -60,13 +60,13 @@
             </a>
         </div>
         <div class="col-6  ">
-            <a href="{{route('liste_projet',['type_formation'=>2])}}">
+            <a href="#">
                 <div class="row projets_card4 ms-2">
                     <div class="col-3">
                         <i class='bx bx-grid-alt projets_icon'></i>
                     </div>
                     <div class="col-9">
-                        <h5>Session pour un projet en inter</h5>
+                        <h5>Projet interne</h5>
                         <p>
                             Découvrez toutes nos formations en présentiel et à distance, en inter, intra
                             packagées, en entreprise, diplômantes, éligibles au CPF et les cycles avec
