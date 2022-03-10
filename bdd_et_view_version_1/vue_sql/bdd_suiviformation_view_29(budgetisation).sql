@@ -20,3 +20,34 @@ FROM
     responsables
 JOIN entreprises e ON e.id = responsables.entreprise_id
 JOIN secteurs s ON s.id = e.secteur_id;
+
+CREATE OR REPLACE VIEW v_plan_formation as
+SELECT
+    s.id,
+    s.nom_stagiaire,
+    s.prenom_stagiaire,
+    s.service_id,
+    serv.nom_service,
+    serv.departement_entreprise_id,
+    dep.nom_departement,
+    r.stagiaire_id as id_stagiaire,
+    r.duree_formation,
+    r.mois_previsionnelle,
+    r.statut,
+    r.date_demande,
+    r.formation_id,
+    f.nom_formation,
+    r.typologie_formation,
+    r.objectif_attendu,
+    p.cout_previsionnel,
+    p.mode_financement,
+    p.recueil_information_id,
+    a.annee
+FROM
+    recueil_informations r
+JOIN plan_formations p ON  p.recueil_information_id = r.id
+JOIN formations f ON f.id = r.formation_id
+JOIN annee_plans a ON a.id = r.annee_plan_id
+JOIN stagiaires s ON s.id = r.stagiaire_id
+JOIN services serv ON serv.id = s.service_id
+JOIN departement_entreprises dep ON dep.id = serv.departement_entreprise_id;

@@ -879,3 +879,4 @@ Route::post('insert_session','GroupeController@insert_session')->name('insert_se
 Route::get('detail_printpdf/{id}','DetailController@detail_printpdf')->name('detail_printpdf');
 //Route budgetisation
 Route::get('budget','PlanFormationController@budgetisation')->name('budget');
+Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');

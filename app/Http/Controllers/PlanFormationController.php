@@ -272,7 +272,16 @@ class PlanFormationController extends Controller
     }
     //budgetisation
     public function budgetisation(){
-
-        return view('referent.budget');
+        $rqt =DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $departement = DB::select('select * from departement_entreprises where entreprise_id = ?', [$rqt[0]->entreprise_id]);
+        return view('referent.budget',compact('departement'));
+    }
+    //afficher le total cout previsionnel par département
+    public function cout_previsionnel(Request $request){
+        $current_year = Carbon::now()->format('Y');
+        $departement_id = $request->dep_id;
+        $nom_dep = DB::select('select * from v_plan_formation where departement_entreprise_id = ?', [$departement_id]);
+        $rqt = DB::select('select SUM(cout_previsionnel) as cout_prev from v_plan_formation where departement_entreprise_id = ? and annee = ?', [$departement_id,$current_year]);
+        return response()->json(['total_budget'=>$rqt,'nom_dep'=>$nom_dep[0]]);
     }
 }
