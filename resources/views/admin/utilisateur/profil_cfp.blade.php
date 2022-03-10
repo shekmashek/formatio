@@ -11,13 +11,24 @@
                     <div class="row m-l-2 m-r-2">
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center">
-                                <div class="m-b-25">
+                                <div class="m-b-25 mt-2">
                                     {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
-                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="30%" height="30%">
+                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
                                 </div>
                                 <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="{{route('utilisateur_cfp')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> retour</button></a>
+
+                                    </div>
+                                    <div class="col">
+                                        @canany(['isAdminPrincipale','isSuperAdminPrincipale'])
+                                        <button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal"> <i class="bx bx-edit"></i> modifier profile</button>
+                                        @endcanany
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
@@ -88,10 +99,6 @@
                                         </h6>
                                     </div>
 
-                                    @canany(['isCFP'])
-                                    <button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal"> <i class="bx bx-edit"></i> modifier profile</button>
-
-                                    @endcanany
                                 </div>
 
                                 <ul class="social-link list-unstyled m-t-40 m-b-10">
@@ -108,7 +115,6 @@
     </div>
 
 
-    {{-- debut modal encaissement --}}
     {{-- <div id="modal" class="modal fade" data-backdrop="true"> --}}
     <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
@@ -120,9 +126,11 @@
                         <h5><strong>{{$cfp->nom}}</strong></h5>
 
                     </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('encaisser') }}" id="formPayement" method="POST">
+                    <form action="{{ route('utilisateur_update_cfp',$cfp->id) }}" id="formPayement" method="POST">
                         @csrf
                         {{-- <h6 class="text-uppercase">Payment details</h6> --}}
                         <div class="inputbox inputboxP mt-3">
@@ -132,60 +140,60 @@
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bxs-graduation"></i>&nbsp; Domaine de formation<strong style="color:red">*</strong> </span>
-                            <textarea autocomplete="off" required class="form-control" id="exampleFormControlTextarea1" rows="3" name="d"></textarea>
+                            <textarea autocomplete="off" required class="form-control" id="exampleFormControlTextarea1" rows="3" name="domaine_cfp"></textarea>
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-envelope"></i>&nbsp;NIF<strong style="color:#ff0000;">*</strong></span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required" value="{{$cfp->nif}}">
+                            <input autocomplete="off" type="text" name="nif_cfp" class="form-control formPayement" required="required" value="{{$cfp->nif}}">
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-envelope"></i>&nbsp;STAT<strong style="color:#ff0000;">*</strong></span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required" value="{{$cfp->stat}}">
+                            <input autocomplete="off" type="text" name="stat_cfp" class="form-control formPayement" required="required" value="{{$cfp->stat}}">
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-envelope"></i>&nbsp;CIF<strong style="color:#ff0000;">*</strong></span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required" value="{{$cfp->cif}}">
+                            <input autocomplete="off" type="text" name="cif_cfp" class="form-control formPayement" required="required" value="{{$cfp->cif}}">
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-envelope"></i>&nbsp;RCS<strong style="color:#ff0000;">*</strong></span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required" value="{{$cfp->rcs}}">
+                            <input autocomplete="off" type="text" name="rcs_cfp" class="form-control formPayement" required="required" value="{{$cfp->rcs}}">
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-envelope"></i>&nbsp;Email<strong style="color:#ff0000;">*</strong></span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required" value="{{$cfp->email}}">
+                            <input autocomplete="off" type="email" name="email_cfp" class="form-control formPayement" required="required" value="{{$cfp->email}}">
                         </div>
 
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-phone"></i>&nbsp;Téléphone<strong style="color:#ff0000;">*</strong></span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required" value="{{$cfp->telephone}}"> </div>
+                            <input autocomplete="off" type="text" name="telephone_cfp" class="form-control formPayement" required="required" value="{{$cfp->telephone}}"> </div>
                         @if ($cfp->site_cfp!=NULL)
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="fa fa-globe"></i>&nbsp; Site web officiel</span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required" value="{{$cfp->site_cfp}}"> </div>
+                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required" value="{{$cfp->site_cfp}}"> </div>
 
                         @else
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="fa fa-globe"></i>&nbsp; Ajouter un site web officiel</span>
-                            <input autocomplete="off" type="text" name="montant" class="form-control formPayement" required="required"> </div>
+                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required"> </div>
 
                         @endif
 
 
                         <div class="inputbox inputboxP mt-3">
                             <span>Lot<strong style="color:#ff0000;">*</strong></span>
-                            <input type="text" name="date_encaissement" class="form-control formPayement" required="required" value="{{$cfp->adresse_lot}}">
+                            <input type="text" name="adresse_lot" class="form-control formPayement" required="required" value="{{$cfp->adresse_lot}}">
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span>Quartier<strong style="color:#ff0000;">*</strong></span>
-                            <input type="text" name="date_encaissement" class="form-control formPayement" required="required" value="{{$cfp->adresse_quartier}}">
+                            <input type="text" name="adresse_quartier" class="form-control formPayement" required="required" value="{{$cfp->adresse_quartier}}">
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span>Ville<strong style="color:#ff0000;">*</strong></span>
-                            <input type="text" name="date_encaissement" class="form-control formPayement" required="required" value="{{$cfp->adresse_ville}}">
+                            <input type="text" name="adresse_ville" class="form-control formPayement" required="required" value="{{$cfp->adresse_ville}}">
                         </div>
                         <div class="inputbox inputboxP mt-3">
                             <span>Région<strong style="color:#ff0000;">*</strong></span>
-                            <input type="text" name="date_encaissement" class="form-control formPayement" required="required" value="{{$cfp->adresse_region}}">
+                            <input type="text" name="adresse_region" class="form-control formPayement" required="required" value="{{$cfp->adresse_region}}">
                         </div>
                         <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                     </form>

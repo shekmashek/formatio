@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
+
+use Illuminate\Support\Facades\File;
 
 class UtilisateurControlleur extends Controller
 {
@@ -62,7 +65,7 @@ class UtilisateurControlleur extends Controller
     {
         // dd( $this->fonct->findWhere("v_user_role",["role_id"],["1"]));
         // $users = User::where('role_id', "1")->get();
-        $users = $this->fonct->findWhere("v_user_role",["role_id"],["1"]);
+        $users = $this->fonct->findWhere("v_user_role", ["role_id"], ["1"]);
         $liste = entreprise::orderBy('nom_etp')->get();
         return view('admin/utilisateur/admin', compact('liste', 'users'));
     }
@@ -88,27 +91,68 @@ class UtilisateurControlleur extends Controller
         $cfps = cfp::all();
         return view('admin.utilisateur.cfp', compact('liste', 'cfps'));
     }
+
+    public function entreprise()
+    {
+        $entreprise = $this->fonct->findAll("entreprises");
+        $branches = $this->fonct->findAll("departement_entreprises");
+        return view('admin.utilisateur.entreprise', compact('entreprise', 'branches'));
+    }
+
     public function superAdmin()
     {
         $liste = entreprise::orderBy('nom_etp')->get();
         // $supers = User::where('role_id', '6')->get();
-        $supers = $this->fonct->findWhere("v_user_role",["role_id"],["6"]);
+        $supers = $this->fonct->findWhere("v_user_role", ["role_id"], ["6"]);
 
         return view('admin/utilisateur/superAdmin', compact('liste', 'supers'));
     }
 
     public function delete_cfp($id)
     {
-        //$del = cfp::where('id', $id)->delete();
-        DB::beginTransaction();
-        try {
-            DB::delete('delete from cfps where id = ?', [$id]);
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
+        $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$id]);
+        $resp_cfp = $this->fonct->findWhere("responsables_cfp", ["cfp_id"], [$id]);
+        for ($i = 0; $i < count($resp_cfp); $i += 1) {
+            DB::delete('delete from users where id = ?', [$resp_cfp[$i]->user_id]);
+            if ($resp_cfp[$i]->photos_resp_cfp != null) {
+                File::delete("images/responsables/" . $resp_cfp[$i]->photos_resp_cfp);
+            }
         }
-        return redirect('utilisateur_cfp');
+        DB::delete('delete from responsables_cfp where cfp_id = ?', [$id]);
+        DB::delete('delete from cfps where id = ?', [$id]);
+        DB::delete('delete from modules where cfp_id = ?', [$id]);
+        if ($cfp != null) {
+            File::delete("images/CFP/" . $cfp->logo);
+        }
+        return back();
     }
+    public function delete_entreprise($id)
+    {
+        $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$id]);
+        $resp = $this->fonct->findWhere("responsables", ["entreprise_id"], [$id]);
+
+        // DB::beginTransaction();
+        // try {
+        for ($i = 0; $i < count($resp); $i += 1) {
+            DB::delete('delete from users where id = ?', [$resp[$i]->user_id]);
+            if ($resp[$i]->photos_resp != null) {
+                File::delete("images/responsables/" . $resp[$i]->photos_resp);
+            }
+        }
+        DB::delete('delete from responsables where entreprise_id = ?', [$id]);
+        DB::delete('delete from appel_offres where entreprise_id = ?', [$id]);
+        DB::delete('delete from entreprises where id = ?', [$id]);
+        if ($entreprise != null) {
+            File::delete("images/entreprises/" . $entreprise->logo);
+        }
+
+        // } catch (Exception $e) {
+        //     DB::rollback();
+        //     echo $e->getMessage();
+        // }
+        return back();
+    }
+
     public function new_cfp()
     {
         $liste = entreprise::orderBy('nom_etp')->get();
@@ -173,8 +217,9 @@ class UtilisateurControlleur extends Controller
         $update_cfp = cfp::where('id', $id)->update([
             'nom' => $request->get('nom_cfp'),
             'adresse_lot' => $request->get('adresse_lot'),
+            'adresse_quartier' => $request->get('adresse_quartier'),
             'adresse_ville' => $request->get('adresse_ville'),
-            'adresse_region' => $request->get('adresse_region'),
+            'adresse_region' => Str::upper($request->get('adresse_region')),
             'email' => $request->get('email_cfp'),
             'telephone' => $request->get('telephone_cfp'),
             'site_cfp' => $request->get('site_web'),
@@ -187,6 +232,12 @@ class UtilisateurControlleur extends Controller
         return back();
     }
 
+    public function show_resp_cfp(){
+
+        $responsables = $this->fonct->findAll("v_responsable_cfp");
+        return view("admin.utilisateur.responsable_cfp",compact('responsables'));
+
+    }
     public function show($id)
     {
         $liste = entreprise::orderBy("nom_etp")->get();

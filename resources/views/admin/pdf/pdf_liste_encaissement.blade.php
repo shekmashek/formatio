@@ -140,7 +140,7 @@
                             <th scope="col">Paiement(Ariary)</th>
                             <th scope="col">Montant ouvert(Ariary)</th>
                             <th scope="col">Mode de payement</th>
-                            <th colspan="2">Encaisseur</th>
+                            <th scope="col">Encaisseur</th>
                         </tr>
                     </thead>
                     <tbody>
