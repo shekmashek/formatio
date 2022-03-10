@@ -166,8 +166,8 @@ ul li a {
 
 .sidebar ul li .tooltip {
     position: absolute;
-    left: 122px;
-    top: 0;
+    left: 0;
+    top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 6px;
     height: 35px;
@@ -179,10 +179,10 @@ ul li a {
     transition: 0s;
     opacity: 0;
     display: block;
-    z-index: 1000;
 }
 
 .sidebar.active ul li .tooltip {
+    opacity: 0;
     display: none;
 }
 
@@ -190,7 +190,13 @@ ul li a {
     opacity: 1;
     top: 50%;
     transition: all 0.5s ease;
-    z-index: 9999;
+    position: absolute;
+    left: 122px;
+}
+
+.sidebar ul li .tooltip:hover{
+    opacity: 0;
+    z-index: -1;
 }
 
 .sidebar ul li a {
@@ -204,7 +210,7 @@ ul li a {
     padding-left: 0.8rem;
 }
 
-.sidebar ul li a:hover {
+.sidebar ul li a:hover{
     color: var(--font-sidebar-color);
     background: rgba(192, 192, 192, 0.171);
 }
