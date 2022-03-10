@@ -1,6 +1,13 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
+@if (Session::has('error'))
+    <div class="alert alert-danger">
+        <ul>
+            <li>{!! Session::get('error') !!}</li>
+        </ul>
+    </div>
+@endif
 <section class="detail__formation mb-5">
     <div class="container py-5">
         <div class="row bg-light justify-content-space-between py-3 px-5 back" id="border_premier">
@@ -16,7 +23,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 ">
-                <div class="module_detail2">
+                <div class="">
                     <a href="#">
                         <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
                     </a>
@@ -365,8 +372,11 @@
                                     <div class="col-3 text-center">
                                         <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>
                                     </div>
-                                    <div class="col-3 text-center">
-                                        <a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}" class="btn_inscription" role="button">S'inscrire</a>
+                                    @canany(['isManager','isReferent','isStagiaire'])
+                                        <div class="col-3 text-center">
+                                            <a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}" class="btn_inscription" role="button">S'inscrire</a>
+                                        </div>
+                                    @endcanany
                                 </div>
                             </li>
                             @endforeach

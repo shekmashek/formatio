@@ -548,3 +548,27 @@ from
     v_detailmodule,v_detail_cour
 where
     v_detailmodule.detail_id = v_detail_cour.detail_id;
+
+
+create or replace view v_session_projet as 
+    select 
+        g.id as groupe_id,
+        g.max_participant,
+        g.min_participant,
+        g.nom_groupe,
+        g.projet_id,
+        g.type_payement_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        g.activiter as activiter_groupe,
+        p.nom_projet,
+        p.type_formation_id,
+        p.status as status_projet,
+        p.created_at as date_projet,
+        mf.*
+    from 
+    groupes g join projets p 
+    on g.projet_id = p.id
+    join moduleformation mf on mf.module_id = g.module_id;
+    

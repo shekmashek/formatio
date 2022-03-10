@@ -14,3 +14,6 @@ creation du view v_evaluation_stagiaire_competence(competences_evaluation)
 ALTER TABLE groupes Modify column status int(2) not null;
 
 creation table status(Modification_bdd(projet))
+
+ALTER TABLE groupe_entreprises
+ADD CONSTRAINT incription UNIQUE (groupe_id,entreprise_id);
