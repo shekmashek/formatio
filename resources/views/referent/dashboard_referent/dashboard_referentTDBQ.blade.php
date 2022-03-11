@@ -4,9 +4,12 @@
 {{-- <link rel="stylesheet" href="ttps://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"> --}}
 
 <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">
-        <a href="{{ route('home') }}" type="button" class="btn bb" style="font-size: 12px;"> <i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB système</a>
-        <a href="{{ route('homertdbf')}}" type="button" class="btn bb me-2 ms-2" style="font-size: 12px;"><i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
-        <a href="{{ route('hometdbq')}}" type="button" class="btn c active" style="font-size: 12px; color: #801D68;"> <i class="fas fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
+        <a href="{{ route('home') }}" type="button" class="btn" style="font-size: 12px;"> <i class="fad fa-sliders-v" style="font-size: 10px;"></i>&nbsp;TDB système</a>
+        <a href="{{ route('hometdbf')}}" type="button" class="btn me-2 ms-2" style="font-size: 12px;"><i class="far fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
+        <a href="{{ route('hometdbq')}}" type="button" class="btn c active" style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
+        @can('isReferent')
+        <a href="{{ route('budget_previsionnel')}}" type="button" class="btn " style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB budget previsionnel</a>    </div>
+        @endcan
 </div>
 
 

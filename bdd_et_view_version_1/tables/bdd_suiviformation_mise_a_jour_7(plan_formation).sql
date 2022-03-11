@@ -29,7 +29,7 @@ CREATE TABLE `recueil_informations` (
 CREATE TABLE `plan_formations` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  `cout_previsionnel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cout_previsionnel`  decimal(15,2) DEFAULT 0.00,
   `mode_financement` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `recueil_information_id` bigint(20) UNSIGNED NOT NULL REFERENCES receuil_informations(id) ON DELETE CASCADE,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -37,5 +37,17 @@ CREATE TABLE `plan_formations` (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `annee_plan_id` bigint(20) NOT NULL REFERENCES annee_plans(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `budgetisation` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
+  `departement_entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES departement_entreprises(id) ON DELETE CASCADE,
+  `budget_total`  decimal(15,2) DEFAULT 0.00,
+  `date_creation` date NOT NULL,
+   `annee` year NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 

@@ -270,4 +270,28 @@ class PlanFormationController extends Controller
         $plan = recueil_information::with('stagiaire', 'formation')->where('id', $id)->get();
         return view('referent.ajout', compact('plan'));
     }
+    //budgetisation
+    public function budgetisation(){
+        $rqt =DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $departement = DB::select('select * from departement_entreprises where entreprise_id = ?', [$rqt[0]->entreprise_id]);
+        return view('referent.budget',compact('departement'));
+    }
+    //afficher le total cout previsionnel par département
+    public function cout_previsionnel(Request $request){
+        $current_year = Carbon::now()->format('Y');
+        $departement_id = $request->dep_id;
+        $nom_dep = DB::select('select * from v_plan_formation where departement_entreprise_id = ?', [$departement_id]);
+        $rqt = DB::select('select SUM(cout_previsionnel) as cout_prev from v_plan_formation where departement_entreprise_id = ? and annee = ?', [$departement_id,$current_year]);
+        return response()->json(['total_budget'=>$rqt,'nom_dep'=>$nom_dep[0]]);
+    }
+    //enregistrer le budget
+    public function enregistrer_budget(Request $request){
+        $entreprise_id = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $budget = $request->budget;
+        $departement = $request->departement;
+        $annee = $request->annee;
+        $todayDate = Carbon::now()->format('Y-m-d');
+        DB::insert('insert into budgetisation (entreprise_id, departement_entreprise_id,budget_total,date_creation,annee) values (?, ?,?,?,?)', [$entreprise_id[0]->entreprise_id,$departement,$budget,$todayDate,$annee]);
+        return back()->with('success','Budget previsionnel enregistré avec succès');
+    }
 }

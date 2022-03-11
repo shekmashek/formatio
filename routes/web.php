@@ -55,6 +55,8 @@ Route::get('/hometdbq/{id?}','HomeControllerTDBQ@index')->name('hometdbq');
 Route::get('/homertdbf/{id?}','HomeControllerRTDBF@index')->name('homertdbf');
 Route::get('/homertdbq/{id?}','HomeControllerRTDBQ@index')->name('homertdbq');
 
+//Tableau de bord budget previsionnel
+Route::get('budget_previsionnel','HomeController@budget_previsionnel')->name('budget_previsionnel');
 
 Route::get('/liste_projet/{id?}', 'HomeController@liste_projet')->name('liste_projet');
 Route::get('/liste','HomeController@liste')->name('liste');
@@ -923,3 +925,7 @@ Route::get('/elearning', function () {
 Route::get('/fonctionnalitea', function () {
     return view('/fonctionnalitea');
 });
+//Route budgetisation
+Route::get('budget','PlanFormationController@budgetisation')->name('budget');
+Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
+Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
