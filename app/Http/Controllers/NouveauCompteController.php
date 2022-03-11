@@ -202,7 +202,6 @@ class NouveauCompteController extends Controller
                 $resp["fonction_resp"] = $req->fonction_resp_etp;
 
                 $verify = $this->new_compte->verify_etp($req->name_etp, $req->email_resp_etp);
-                $verify = $this->new_compte->verify_cfp($req->name_cfp, $req->email_resp_cfp);
                 $verify_etp_nif = $this->fonct->findWhere("entreprises", ["nif"], [$req->nif]);
                 $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_etp]);
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_etp]);

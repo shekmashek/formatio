@@ -118,17 +118,17 @@
             <div>
                 <h2>Usage strictement personnel, Comptes administrateurs et utilisateurs</h2>
                 <h6>Une fois son inscription validée, le Client, ou l’administrateur qu’il aura désigné, dispose de la faculté de créer plusieurs comptes utilisateurs via son Espace Personnel, donnant accès aux Services.</h6><br>
-                <h6> appartient au Client ou à l’administrateur de sélectionner les utilisateurs ayant accès à l’Application ou aux Services, dans la limite du nombre maximum prévu dans l’abonnement du Client, de déterminer la nature des accès qui leur sont donnés, ainsi que les données et informations auxquelles ils ont accès.</h6><br>
+                <h6>Il appartient au Client ou à l’administrateur de sélectionner les utilisateurs ayant accès à l’Application ou aux Services, dans la limite du nombre maximum prévu dans l’abonnement du Client, de déterminer la nature des accès qui leur sont donnés, ainsi que les données et informations auxquelles ils ont accès.</h6><br>
                 <h6>L’utilisateur et/ou l’administrateur peuvent accéder à tout moment au Compte du Client par le biais de leur propre Espace Personnel, après s’être identifiés à l’aide de leur identifiant de connexion ainsi que de leur mot de passe.</h6><br>
                 <h6>L’utilisateur et l’administrateur s’engagent à utiliser personnellement les Services et à ne permettre à aucun tiers de les utiliser à leur place ou pour leur compte, sauf à en supporter l’entière responsabilité.</h6><br>
-                <h6>Ils sont pareillement responsables du maintien de la confidentialité de leur identifiant et de leur mot de passe, et reconnaissent expressément que toute utilisation des Services depuis leur Compte sera réputée avoir été effectuée par eux. Ces derniers doivent immédiatement contacter Formation;mg s’ils remarquent que leur Compte a été utilisé à leur insu. Ils reconnaissent à formation.mg le droit de prendre toutes mesures appropriées en pareil cas.</h6><br>
+                <h6>Ils sont pareillement responsables du maintien de la confidentialité de leur identifiant et de leur mot de passe, et reconnaissent expressément que toute utilisation des Services depuis leur Compte sera réputée avoir été effectuée par eux. Ces derniers doivent immédiatement contacter TALENTA SARL s’ils remarquent que leur Compte a été utilisé à leur insu. Ils reconnaissent à TALENTA SARL le droit de prendre toutes mesures appropriées en pareil cas.</h6><br>
                 <h6  id = "duree">Le Client est responsable de l’utilisation des Services par l’administrateur et les utilisateurs. Toute utilisation des Services avec l’identifiant et le mot de passe d’un Compte administrateur et/ou utilisateur est réputée effectuée par le Client.</h6><br>
             </div>
             <div>
                 <h2>Durée de l’abonnement, désinscription</h2>
                 <h6>1. La licence d’utilisation de l’Application et l’ensemble des Services prévus aux présentes sont souscrits par le Client sous la forme d’un abonnement mensuel ou annuel, dont la date de début est indiquée dans l’email de confirmation de son inscription. Cet abonnement se renouvellera ensuite tacitement pour une période de même durée, sauf dénonciation par l’une ou l’autre des parties adressée à l’autre partie par tout moyen écrit 8 (huit) jours au moins avant l’expiration de la période en cours.
                 </h6><br>
-                <h6  id="description">2. Tout abonnement aux Services est souscrit pour une durée indéterminée. La suppression d’un compte ne pourrait pas se faire, du fait que c’est un site collaboratif. Cependant, le client peut suspendre son compte  et y avoir accès dès qu’il entre son identifiant et son mot de passe.
+                <h6  id="description">2. Tout abonnement aux Services est souscrit pour une durée indéterminée. Cependant, la suppression d’un compte ne pourrait pas se faire, du fait que c’est un site collaboratif. Cependant, le client peut suspendre son compte  et y avoir accès dès qu’il entre son identifiant et son mot de passe.
                 </h6><br>
             </div>
             <div>
@@ -138,15 +138,15 @@
                 <h6>TALENTA SARL concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
                 <h6>L’accès à l’Application est fourni : </h6><br>
                 <ul>
-                    <li>- Gratuitement en ce qui concerne l’abonnement basique ;</li>
-                    <li>- Moyennant un abonnement payant concernant les fonctionnalités Premium proposées sur le Site.
+                    <li>- Gratuitement en ce qui concerne les trois premiers mois (essai) ;</li>
+                    <li>- Moyennant un abonnement payant les mois suivants l'essai.
                     </li>
                 </ul>
                 <h6>Cette licence est consentie pour le monde entier et pour la durée de l’abonnement souscrit.</h6><br>
                 <h6>Il est interdit au Client d’en céder ou d’en transférer le bénéfice à un tiers, quel qu’il soit.</h6><br>
                 <h6 style="margin-left: 10px">1.2 Hébergement</h6>
                 <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par TALENTA SARL ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
-                <h6>En cas de changement de prestataire d’hébergement, TALENTA SARL s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
+                {{-- <h6>En cas de changement de prestataire d’hébergement, TALENTA SARL s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br> --}}
                 <h6>TALENTA SARL s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
                 <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels TALENTA SARL n’a aucune maîtrise, la responsabilité de TALENTA SARL sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
                 <h6>TALENTA SARL ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
