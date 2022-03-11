@@ -5,12 +5,13 @@
 
 
 .nav .btn{
-    background-color: #f7f7f7;
+    background-color: #e2e2e2;
     border: none;
 }
 
 .nav .btn:hover{
     background-color: #dddddd;
+    color: #801D68;
     border: none;
 }
 
@@ -19,13 +20,16 @@
     color: #801D68;
 }
 
+.nav .bb{
+    background-color: #eeeeee;
+    color: #801D68;
+}
 
 .system_{
     text-align: left;
     border: none;
     border-bottom: 0.1px solid #d0c1cc;
 }
-
 
 .systems_{
     text-align: left;
@@ -89,3 +93,5 @@
     padding-left: 5px;
     padding-right: 5px
 }
+
+

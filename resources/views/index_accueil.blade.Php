@@ -101,7 +101,7 @@
         <div class=" p-5 m-0 container-fluid" style="font-size: 14px">
             <div class="row ">
                 <div class="p-0 col-lg-6">
-                    <div class="shadow p-3 mb-4 bg-body rounded">
+                    <div class="shadow p-3 mb-4 bg-body rounded" style="height: 160px">
                         <div class="row ">
                             <div class="col"  align="center">
                                 <p class="p-0 mt-0 m-0">Plateforme collaboratif de gestion de formation</p>
@@ -170,7 +170,7 @@
                     </div>
                 </div>
                 <div class="p-0 col-lg-6">
-                    <div class=" ms-3 shadow p-3 mb-0 bg-body rounded">
+                    <div class=" ms-3 shadow p-3 mb-0 bg-body rounded" style="height: 237px">
                         <div class="row ">
                             <div class="col" align="center">
                                 <p class="p-0 mt-0 m-0">Vous êtes employeur ?</p>

@@ -97,42 +97,50 @@
         </nav> --}}
     </header>
     <main>
-        <div class="container-fluid">
+        <div class="container">
             <div class="p-5 m-0">
-                <center><h1>Offrez-vous l'excellence</h1></center>
-                <p class="p-3" style="font-size: 14px; color:rgb(131, 131, 131)">Toutes nos offres sont <b> sans engagement : </b> <br>
-                nos clients travaillent avec nous car ils sont <b> satisfaits </b>, pas sous contrat ! </p> </center>
+                <center>
+                    <h1>Offrez-vous l'excellence</h1>
+                    <p class="p-3" style="font-size: 14px; color:rgb(131, 131, 131)">Toutes nos offres sont <b> sans engagement : </b> <br>
+                    nos clients travaillent avec nous car ils sont <b> satisfaits </b>, pas sous contrat ! </p>
+                </center>
             </div>
-            <div class="row">
-                <div class="col-lg-3"></div>
-                    <div class="col-lg-2">
-                        <center>
-                            <p>Basic</p>
-                            <b class="p-0 m-0" style="font-size: 25px;">199 €</b>
-                            <p>Par mois</p>
-                        </center>
+            <div class="row justify-content-end ps-5">
+                    <div class="col-lg-3 p-0">
+                        <div class="card">
+                            <center>
+                                <p>Basic</p>
+                                <b class="p-0 m-0" style="font-size: 25px;">199 €</b>
+                                <p>Par mois</p>
+                            </center>
+                        </div>
                     </div>
-                    <div class="col-lg-2">
-                        <center>
-                            <p>Pro</p>
-                            <b class="p-0 m-0" style="font-size: 25px;">299 €</b>
-                            <p>Par mois</p>
-                        </center>
+                    <div class="col-lg-3 p-0">
+                        <div class="card">
+                            <center>
+                                <p>Pro</p>
+                                <b class="p-0 m-0" style="font-size: 25px;">299 €</b>
+                                <p>Par mois</p>
+                            </center>
+                        </div>
                     </div>
-                    <div class="col-lg-2">
-                        <center>
-                            <p>Premium</p>
-                            <b class="p-0 m-0" style="font-size: 25px;">499 €</b>
-                            <p>Par mois</p>
-                        </center>
+                    <div class="col-lg-3 p-0">
+                        <div class="card">
+                            <center>
+                                <p>Premium</p>
+                                <b class="p-0 m-0" style="font-size: 25px;">499 €</b>
+                                <p>Par mois</p>
+                            </center>
+                        </div>
                     </div>
-                    <div class="col-lg-2">
-                        <center>
-                            <p>Elite</p>
-                            <b class="p-0 m-0" style="font-size: 25px;">Sur devis</b>
-                        </center>
+                    <div class="col-lg-3 p-0">
+                        <div class="card" style="height: 114px">
+                            <center>
+                                <p>Elite</p>
+                                <b class="p-0 m-0" style="font-size: 25px;">Sur devis</b>
+                            </center>
+                        </div>
                     </div>
-                <div class="col-lg-1"></div>
             </div>
             <div class="row">
 

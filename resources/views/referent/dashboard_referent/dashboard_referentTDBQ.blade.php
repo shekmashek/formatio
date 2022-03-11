@@ -4,205 +4,149 @@
 {{-- <link rel="stylesheet" href="ttps://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"> --}}
 
 <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">
-        <a href="{{ route('home') }}" type="button" class="btn" style="font-size: 12px;"> <i class="fad fa-sliders-v" style="font-size: 10px;"></i>&nbsp;TDB système</a>
-        <a href="{{ route('hometdbf')}}" type="button" class="btn me-2 ms-2" style="font-size: 12px;"><i class="far fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
-        <a href="{{ route('hometdbq')}}" type="button" class="btn c active" style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
+        <a href="{{ route('home') }}" type="button" class="btn bb" style="font-size: 12px;"> <i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB système</a>
+        <a href="{{ route('homertdbf')}}" type="button" class="btn bb me-2 ms-2" style="font-size: 12px;"><i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
+        <a href="{{ route('hometdbq')}}" type="button" class="btn c active" style="font-size: 12px; color: #801D68;"> <i class="fas fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
 </div>
 
 
 <div class="p-1 m-0">
     <div class="container-fluid">
         <div class="row mt-2">
+            <div class="col-lg-4" >
+                <div class="form-control">
+                    <p class="text-center" style="color:#7535DC; font-size: 13px;">Total d'heure de formation</p>
+                    {{-- <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-clock" style="color:rgb(150, 214, 142);background-color: rgb(204, 242, 200); border-radius: 7px; font-size: 26px; padding: 5px"></i>&nbsp;&nbsp; 145 heures</span> --}}
+                    <div id="piechart" style="max-width:300px; height: 140px;"></div>
+                </div>
+            </div>
             <div class="col-lg-4">
-                <div class="form-control" style="font-size: 11px;">
-                    <p class="text-center">Tableau de bord financier</p>
-                    <p class="p-0 m-0 ">C.A actuel:
-                        {{-- @php
-                            foreach ($CA_actuel as $total) {
-                                $total = $total->total;
-                                echo $total . ' ';
-                            }
-                        @endphp --}}
-                        Ar TTC</p>
+                <div class="form-control" style="height: 189px">
+                    {{-- graphique --}}
+                    <p class="text-center" style="font-size: 13px; color:#7535DC">Total d'heure par département</p><br>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-clock" style="color:rgb(216, 146, 137);background-color: rgb(243, 208, 204); border-radius: 7px; font-size: 30px; padding: 5px"></i>&nbsp;&nbsp; 15 heures</span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-control">
+                    {{-- graphique --}}
+                    <p class="text-center" style="font-size: 13px; color:#7535DC" >Total d'heure par module</p>
+                    {{-- <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-clock" style="color:rgb(220, 223, 79);background-color: rgb(244, 245, 171); border-radius: 7px; font-size: 26px; padding: 5px"></i>&nbsp;&nbsp; Excel • 45 heures</span> --}}
+                    <div id="pie1" style="max-width:300px; height: 140px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <div class="form-control" style="height: 189px">
+                    <p class="text-center" style="font-size: 13px; color:#7535DC" >Nombre homme et femme formés</p><br>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-male" style="color:rgb(138, 154, 243);background-color: rgb(197, 204, 243); border-radius: 7px; font-size: 30px; padding: 5px;width:30px"></i>&nbsp;&nbsp; 100 hommes</span>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-female" style="color:rgb(238, 144, 149);background-color: rgb(243, 197, 199); border-radius: 7px; font-size: 30px; padding: 5px;width:30px"></i>&nbsp;&nbsp; 115 femmes</span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-control">
+                    {{-- graphique --}}
+                    <p class="text-center" style="font-size: 13px; color:#7535DC">Nombre de la personne formé par module</p>
+                    {{-- <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-male" style="color:rgb(138, 154, 243);background-color: rgb(197, 204, 243); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 10 hommes</span> --}}
+                    {{-- <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-female" style="color:rgb(238, 144, 149);background-color: rgb(243, 197, 199); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 5 femmes</span>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-building" style="color:rgb(181, 206, 71);background-color: rgb(224, 238, 161); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 115 personnes</span> --}}
+                    <div id="pie2" style="max-width:300px; height: 140px;"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-control" style="height: 189px">
+                    <p class="text-center" style="font-size: 13px; color:#7535DC">Total homme et femme</p><br>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-male" style="color:rgb(138, 154, 243);background-color: rgb(197, 204, 243); border-radius: 7px; font-size: 30px; padding: 5px;width:30px"></i>&nbsp;&nbsp; 10 hommes</span>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-female" style="color:rgb(238, 144, 149);background-color: rgb(243, 197, 199); border-radius: 7px; font-size: 30px; padding: 5px;width:30px"></i>&nbsp;&nbsp; 5 femmes</span>
+                </div>
+                {{-- <div class="form-control">
+                    <p class="text-center" style="font-size: 13px; color:#7535DC" >Nombre homme et femme formés</p>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-male" style="color:rgb(138, 154, 243);background-color: rgb(197, 204, 243); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 100 hommes</span>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-female" style="color:rgb(238, 144, 149);background-color: rgb(243, 197, 199); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 115 femmes</span>
+                </div> --}}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <div class="form-control">
+                    <p class="text-center" style="color:#7535DC;font-size: 13px;">Assiduité</p>
+                    <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-users" style="color:rgb(125, 218, 213);background-color: rgb(197, 243, 241); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 17 % (taux d'absence)</span>
+                </div>
+            </div>
+            <div class="col-lg-4">
 
-                    <p class="p-1 m-0" style="font-size: 10px;">C.A précedent:
-                        {{-- @php
-                            foreach ($CA_precedent as $totals) {
-                                $totals = $totals->total;
-                                echo $totals . ' ';
-                            }
-                        @endphp  --}}
-                        Ar TTC</p>
-                    <hr>
-                    <div id="3" ></div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="form-control">
-                    <p class="text-center" style="font-size: 11px;">Chiffre d'affaires par module</p>
-                    <p class="p-0 m-0 " style="font-size: 10px; ">Top 10 modules</p>
-                    <hr>
-                    <div id="4" ></div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="form-control">
-                    <p class="text-center" style="font-size: 11px;" >Chiffre d'affaires par client</p>
-                    <p class="p-0 m-0 " style="font-size: 10px; ">Top 10 clients</p>
-                    <hr>
-                    <div id="5" ></div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['corechart', 'bar']
-        });
-        google.charts.setOnLoadCallback(drawStuff);
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
 
-        function drawStuff() {
+      function drawChart() {
 
-            // var button = document.getElementById('change-chart');
-            var chartDiv = document.getElementById('3');
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Mois','date'],
+          ['Work',     10, 10],
+          ['Eat',      2, 2],
+          ['Commute',  1, 3]
+        ]);
 
-            var data = google.visualization.arrayToDataTable([
-                ['mois', 'prix', 'annee'],
-                // @php
-                // foreach ($GChart as $product) {
-                //     $val = "['" . $product->mois . "', " . $product->net_ttc . ', ' . $product->annee . ']';
-                //     echo $val . ',';
-                // }
-                // @endphp
-            ]);
-
-            var materialOptions = {
-                width: 320,
-                chart: {
-                    title: '',
-                    subtitle: ''
-                },
-                series: {
-                    0: {
-                        axis: 'Actuel'
-                    },
-                    1: {
-                        axis: 'précédent'
-                    }
-                },
-                axes: {
-                    y: {
-                        distance: {
-                            label: 'C.A'
-                        },
-                        brightness: {
-                            side: 'right',
-                            label: ''
-                        }
-                    }
-                }
-            };
-
-            var classicOptions = {
-                width: 320,
-                series: {
-                    0: {
-                        targetAxisIndex: 0
-                    },
-                    1: {
-                        targetAxisIndex: 1
-                    }
-                },
-                title: '',
-                vAxes: {
-                    // Adds titles to each axis.
-                    0: {
-                        title: ''
-                    },
-                    1: {
-                        title: ' '
-                    }
-                }
-            };
-
-            function drawMaterialChart() {
-                var materialChart = new google.charts.Bar(chartDiv);
-                materialChart.draw(data, google.charts.Bar.convertOptions(materialOptions));
-                button.innerText = 'Change to Classic';
-                button.onclick = drawClassicChart;
-            }
-
-            function drawClassicChart() {
-                var classicChart = new google.visualization.ColumnChart(chartDiv);
-                classicChart.draw(data, classicOptions);
-                button.innerText = 'Change to Material';
-                button.onclick = drawMaterialChart;
-            }
-
-            drawMaterialChart();
+        var options = {
+          title: ''
         };
-        </script>
 
-    <script type="text/javascript">
-            google.charts.load('current', {'packages':['bar']});
-            google.charts.setOnLoadCallback(drawChart);
+        var chart = new google.visualization.BarChart(document.getElementById('piechart'));
 
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses', 'Profit'],
-                ['2014', 1000, 400, 200],
-                ['2015', 1170, 460, 250],
-                ['2016', 660, 1120, 300],
-                ['2017', 1030, 540, 350]
-                ]);
-
-                var options = {
-                    width:320,
-                    height:200,
-                chart: {
-                    title: '',
-                    subtitle: '',
-                },
-                bars: 'horizontal' // Required for Material Bar Charts.
-                };
-
-                var chart = new google.charts.Bar(document.getElementById('4'));
-
-                chart.draw(data, google.charts.Bar.convertOptions(options));
-            }
+        chart.draw(data, options);
+      }
     </script>
 
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
 
-    <script type="text/javascript">
-            google.charts.load('current', {'packages':['bar']});
-            google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
 
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses', 'Profit'],
-                ['2014', 100, 40, 00],
-                ['2015', 110, 40, 25],
-                ['2016', 60, 110, 30],
-                ['2017', 100, 40, 50]
-                ]);
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Mois','date'],
+      ['Work',     10, 10],
+      ['Eat',      2, 2],
+      ['Commute',  1, 3]
+    ]);
 
-                var options = {
-                    width:320,
-                    height:200,
-                chart: {
-                    title: '',
-                    subtitle: '',
-                },
-                bars: 'horizontal' // Required for Material Bar Charts.
-                };
+    var options = {
+      title: ''
+    };
 
-                var chart = new google.charts.Bar(document.getElementById('5'));
+    var chart = new google.visualization.BarChart(document.getElementById('pie1'));
 
-                chart.draw(data, google.charts.Bar.convertOptions(options));
-            }
-    </script>
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Mois','date'],
+      ['Work',     10, 10],
+      ['Eat',      2, 2],
+      ['Commute',  1, 3]
+    ]);
+
+    var options = {
+      title: ''
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('pie2'));
+
+    chart.draw(data, options);
+  }
+</script>
 @endsection

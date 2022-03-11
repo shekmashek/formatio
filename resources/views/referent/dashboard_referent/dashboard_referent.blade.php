@@ -3,9 +3,9 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">
-        <a href="{{ route('home') }}" type="button" class="btn a active" style="font-size: 12px;"> <i class="fad fa-sliders-v" style="font-size: 10px;"></i>&nbsp;TDB système</a>
-        <a href="{{ route('homertdbf')}}" type="button" class="btn  me-2 ms-2" style="font-size: 12px;"><i class="far fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
-        <a href="{{ route('homertdbq')}}" type="button" class="btn " style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
+        <a href="{{ route('home') }}" type="button" class="btn a active" style="font-size: 12px;"><i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB système</a>
+        <a href="{{ route('homertdbf')}}" type="button" class="btn bb  me-2 ms-2" style="font-size: 12px;"><i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
+        <a href="{{ route('homertdbq')}}" type="button" class="btn bb" style="font-size: 12px;"> <i class="fa fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
 </div>
 
 
@@ -31,7 +31,7 @@
 
 
             <div class="col-lg-4">
-                <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68"><b> <i class="fal fa-building"></i> &nbsp; Profil de l'organisation ({{ $etp }}) </b>
+                <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68; height:129px;"><b> <i class="fal fa-building"></i> &nbsp; Profil de l'organisation ({{ $etp }}) </b>
                     @if ($referent->adresse_quartier==null or $referent->adresse_code_postal==null and $referent->adresse_lot==null and $referent->adresse_ville==null and $referent->adresse_region==null)
                         <a class="overr" href="{{route('affResponsable')}}"> <p class="p-0 m-1 system_ pb-1">Adresse<span class="system_numeroAlert">Incomplet</span></p></a>
                     @else
