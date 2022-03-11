@@ -372,8 +372,10 @@
                     <i class='bx bxl-sketch'></i>
                     <span class="links_name">Abonnées</span>
                 </a>
+               
                 <span class="tooltip">Abonnées</span>
             </li>
+           
             {{-- integrer dans la page
             <li>
                 <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
@@ -383,15 +385,6 @@
             <span class="tooltip">Abonnement</span>
             </li> --}}
             @endcanany
-            @can('isReferent')
-            <li>
-                <a href="{{route('ListeAbonnement')}}" class="d-flex nav_linke">
-                    <i class='bx bxl-sketch'></i>
-                    <span class="links_name">Abonnement</span>
-                </a>
-                <span class="tooltip">Abonnement</span>
-            </li>
-            @endcan
             @can('isSuperAdmin')
             <li>
                 <a href="{{route('categorie')}}" class="d-flex nav_linke">
@@ -400,7 +393,25 @@
                 </a>
                 <span class="tooltip">Catégories</span>
             </li>
+            <li>
+                <a href="{{route('module')}}" class="d-flex nav_linke">
+                    <i class='bx bx-book'></i>
+                    <span class="links_name">Modules</span>
+                </a>
+                <span class="tooltip">Modules</span>
+            </li>
             @endcan
+            @can('isReferent')
+            <li>
+                <a href="{{route('ListeAbonnement')}}" class="d-flex nav_linke">
+                    <i class='bx bxl-sketch'></i>
+                    <span class="links_name">Abonnement</span>
+                </a>
+                <span class="tooltip">Abonnement</span>
+            </li>
+          
+            @endcan
+            
             <li>
                 <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>

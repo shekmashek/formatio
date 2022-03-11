@@ -11,7 +11,7 @@
                         @csrf
                         <div class="form-row">
                             <div class="">
-                                <input class="me-3" type="text" name="nom_formation"
+                                <input class="me-3" type="text" name=""
                                     placeholder="Rechercher par formations ex. Excel">
                                 <button class="btn_search_formation" href="#">
                                     <i class="bx bx-search">
@@ -60,13 +60,12 @@
     <div class="container mt-5">
         <h3 class="mb-5">Les formations les plus recherchées </h3>
         <div class="row">
-            <div class="col-12 d-flex flex-wrap justify-content-center">
+            <div class= "col-12 d-flex flex-wrap justify-content-cente">
                 @foreach ($module as $mod)
+                <a href="{{route('select_par_module',$mod->module_id)}}">
                 <div class="card_formation">
                     <div class="imageLogo text-center mb-2">
-                        {{-- <img src="{{$mod->logo}}" alt="logo" class="img-fluid" title="organisme de formation"> --}}
-                        <img src="{{asset('images/CFP/Numerika19-01-2022.png')}}" alt="logo" class="img-fluid"
-                            title="organisme de formation">
+                         <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"title="organisme de formation">        
                     </div>
                     <div class="titre_module">
                         <p class="text-capitalize text-">{{$mod->nom_module}}</p>
@@ -84,17 +83,15 @@
                                 <p class="text-capitalize"><span class="prix">{{$mod->prix}}&nbsp;AR&nbsp;<span class="text-muted">HT</span></span> </p>
                             </div>
                         </div>
-
                     </div>
-                    <div class="plus_detail text-center ">
-                        <button type="button" class="mt-3 btn_next"><a href="{{route('select_par_module',$mod->module_id)}}">Voir gratuitement</a></button>
-                    </div>
+                   </a>
+                   
                 </div>
                 @endforeach
             </div>
         </div>
-    </div>
-</section>
+    </div> 
+</section> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">

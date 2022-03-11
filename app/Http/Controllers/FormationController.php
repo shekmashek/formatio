@@ -47,8 +47,8 @@ class FormationController extends Controller
             // $domaines = Domaine::all();
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
 
-            $categorie = DB::select('select * from formations where status = 1 limit 8');
-            $module = DB::select('select * from moduleformation where formation_id = 1 and status = 2 limit 6');
+            $categorie = DB::select('select * from formations where status = 1 limit 5');
+            $module = DB::select('select * from moduleformation where  status = 2 limit 6');
             return view('referent.catalogue.formation', compact('categorie','module'));
         }
     }
@@ -225,6 +225,12 @@ class FormationController extends Controller
         $categorie = formation::all();
         return view('superadmin.catalogue.categories_formations', compact('categorie'));
     }
+    public function module_formations()
+    {
+
+        $module = module::all();
+        return view('superadmin.catalogue.formation_publier', compact('module'));
+    }
     public function ajout_categorie(Request $request)
     {
         $ids = $request->status;
@@ -236,6 +242,22 @@ class FormationController extends Controller
         foreach ($ids as $id) {
 
             formation::where('id', $id)->update([
+                'status' => $nombre_1
+            ]);
+        }
+        return back();
+    }
+    public function ajout_module(Request $request)
+    {
+        $ids = $request->status;
+        $nombre_1 = 2;
+        $nombre_0 = 0;
+        module::where('status', 2)->update([
+            'status' => $nombre_0
+        ]);
+        foreach ($ids as $id) {
+
+            module::where('id', $id)->update([
                 'status' => $nombre_1
             ]);
         }

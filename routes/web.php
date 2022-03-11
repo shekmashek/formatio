@@ -291,8 +291,13 @@ Route::get('/liste_formation/{id?}','FormationController@index')->name('liste_fo
 Route::get('/nouvelle_formation','FormationController@nouvelle_formation')->name('nouvelle_formation');
 //route categorie_formation
 Route::get('/categorie','FormationController@categorie_formations')->name('categorie');
+//route module_formations
+Route::get('/module','FormationController@module_formations')->name('module');
+
 //route ajout_categorie_formation
 Route::get('/ajout_categorie','FormationController@ajout_categorie')->name('ajout_categorie');
+//route ajout_module_formation
+Route::get('/ajout_module','FormationController@ajout_module')->name('ajout_module');
 //route catalogue de formation
 Route::get('result__formation','FormationController@rechercheParModule')->name('result_formation');
 Route::get('search__formation','FormationController@getModulesParReference')->name('search__formation');
