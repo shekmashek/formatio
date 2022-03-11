@@ -57,13 +57,13 @@
                                         @endforeach
                                     </span>
                                 </p>
-                                <p class="card-text m-1 " id="pp" ><i class="fas fa-code-branch"></i>&nbsp;
+                                {{-- <p class="card-text m-1 " id="pp" ><i class="fas fa-code-branch"></i>&nbsp;
                                     <span>
                                         @foreach($phone_tmp as $item)
                                             {{$item->nom_branche}}
                                         @endforeach
                                     </span>
-                                </p>
+                                </p> --}}
                             </div>
                         </div>
                     </div>
