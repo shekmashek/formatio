@@ -744,6 +744,7 @@ class HomeController extends Controller
         //get total budget restant
 
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
+
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
 }

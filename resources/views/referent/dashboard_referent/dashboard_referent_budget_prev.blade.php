@@ -20,39 +20,37 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<!-- Load plotly.js into the DOM -->
+	<script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script>
 <script>
-    google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawBasic);
-
-function drawBasic() {
-
-      var data = google.visualization.arrayToDataTable([
-          ['Budget','Budget prévisionnel:', 'Budget Engagé', 'Budget Réalisé','Budget Restant'],
-            @php
-                echo "[' ',".$total_budget[0]->total.", 0,0,0],";
-                echo "[' ',0, ".$total_engage[0]->engage.", ".$total_realise[0]->realise.",".$total_restant."]";
-            @endphp
+        var data = [
+      {
+        type: "indicator",
+        mode: "number+gauge+delta",
+        value: @php echo $total_realise[0]->realise @endphp,
+        domain: { x: [0, 1], y: [0, 1] },
+        title: { text: "<b>Budget</b>" },
+        delta: { reference: 200 },
+        gauge: {
+          shape: "bullet",
+          axis: { range: [null, @php echo $total_budget[0]->total @endphp] },
+          threshold: {
+            line: { color: "red", width: 2 },
+            thickness: 0.75,
+            value: 280
+          },
+          steps: [
+            { range: [0,@php echo $total_engage[0]->engage @endphp], color: "grey" },
+            { range: [50000,@php echo $total_realise[0]->realise @endphp], color: "grey" },
+            { range: [@php echo $total_realise[0]->realise @endphp,  @php echo $total_budget[0]->total @endphp], color: "blue" }
           ]
-
-      );
-
-      var options = {
-        isStacked: true,
-        title: 'Budget previsionnel '+new Date().getFullYear() ,
-        chartArea: {width: '50%'},
-        hAxis: {
-          title: '',
-          minValue: 0
-        },
-        vAxis: {
-          title: ''
         }
-      };
+      }
+    ];
 
-      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-
-      chart.draw(data, options);
-    }
+    var layout = { width: 600, height: 250 };
+    var config = { responsive: true };
+    var myDiv = document.getElementById('chart_div');
+    Plotly.newPlot(myDiv, data, layout, config);
 </script>
 @endsection
