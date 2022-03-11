@@ -284,4 +284,14 @@ class PlanFormationController extends Controller
         $rqt = DB::select('select SUM(cout_previsionnel) as cout_prev from v_plan_formation where departement_entreprise_id = ? and annee = ?', [$departement_id,$current_year]);
         return response()->json(['total_budget'=>$rqt,'nom_dep'=>$nom_dep[0]]);
     }
+    //enregistrer le budget
+    public function enregistrer_budget(Request $request){
+        $entreprise_id = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+        $budget = $request->budget;
+        $departement = $request->departement;
+        $annee = $request->annee;
+        $todayDate = Carbon::now()->format('Y-m-d');
+        DB::insert('insert into budgetisation (entreprise_id, departement_entreprise_id,budget_total,date_creation,annee) values (?, ?,?,?,?)', [$entreprise_id[0]->entreprise_id,$departement,$budget,$todayDate,$annee]);
+        return back()->with('success','Budget previsionnel enregistré avec succès');
+    }
 }

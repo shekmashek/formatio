@@ -51,3 +51,14 @@ JOIN annee_plans a ON a.id = r.annee_plan_id
 JOIN stagiaires s ON s.id = r.stagiaire_id
 JOIN services serv ON serv.id = s.service_id
 JOIN departement_entreprises dep ON dep.id = serv.departement_entreprise_id;
+
+CREATE OR REPLACE VIEW v_budgetisation as SELECT
+    e.id as entreprise_id,
+    e.nom_etp,
+    dep.nom_departement,
+    b.budget_total,
+    b.annee
+FROM
+    budgetisation b
+JOIN entreprises e ON b.entreprise_id = e.id
+JOIN departement_entreprises dep ON b.departement_entreprise_id = dep.id;

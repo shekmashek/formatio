@@ -44,6 +44,20 @@
     </div>
     <div class="row">
         <div class="col-md-4"></div>
+        <div class="col-md-4">
+            @if (\Session::has('success'))
+                <div class="alert alert-success">
+                    <ul>
+                        <li>{!! \Session::get('success') !!}</li>
+                    </ul>
+                </div>
+            @endif
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
         <div class="col-md-4"> <h4 id="cout_suggere"></h4>
         </div>
         <div class="col-md-4"></div>
@@ -54,12 +68,12 @@
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
                 <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">BUDGET PREVISIONNEL</h2>
 
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{route('enregistrer_budget')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" autocomplete="off" required name="Coût en Ariary" class="form-control input" id="matricule" /required>
+                                <input type="text" autocomplete="off" required name="budget" class="form-control input" id="matricule" /required>
                                 <label for="cout" class="form-control-placeholder" align="left">Coût en Ariary<strong style="color:#ff0000;">*</strong></label>
                                 @error('cout')
                                 <div class="col-sm-6">
@@ -102,6 +116,9 @@
                         </div>
                         <div class="col-md-4"></div>
                     </div>
+                    <div class=" text-center">
+                        <button type="submit" class="btn btn-lg btn_enregistrer">Sauvegarder</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -132,7 +149,7 @@
 
                 var budget = response['total_budget'];
                 var nom_dep = response['nom_dep'];
-                $('#cout_suggere').text('Coût suggéré,année '+ nom_dep.annee+' du département '+nom_dep.nom_departement+ ':'+budget[0].cout_prev)+'Ar';
+                $('#cout_suggere').text('Coût suggéré(Ar),année '+ nom_dep.annee+' du département '+nom_dep.nom_departement+ ':'+budget[0].cout_prev);
             }
             , error: function(error) {
                 console.log(error);
@@ -151,8 +168,7 @@
             , success: function(response) {
                 var budget = response['total_budget'];
                 var nom_dep = response['nom_dep'];
-                console.log(nom_dep);
-                $('#cout_suggere').text('Coût suggéré pendant le recueil de demande formation du département '+nom_dep.nom_departement+ ':');
+                $('#cout_suggere').text('Coût suggéré(Ar),année '+ nom_dep.annee+' du département '+nom_dep.nom_departement+ ':'+budget[0].cout_prev);
            }
             , error: function(error) {
                 console.log(error);
