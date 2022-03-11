@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="font-size: 10px;">
+    <div class="container-fluid p-3" style="font-size: 10px;">
         <div class="row mt-2">
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68"><b> <i class="fas fa-tasks"></i>&nbsp; Formation intra entreprise</b>

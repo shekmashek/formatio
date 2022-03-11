@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row mt-2">
             <div class="col-lg-4">
-                <div class="form-control" style="height: 189px">
+                <div class="form-control" style="height: 188px">
                     <p class="text-center" style="color:#7535DC; font-size: 13px;">Total d'heure de formation</p><br>
                     <span class="ms-5 mt-1" style="color: rgb(82, 82, 82);"><i class="fas fa-clock" style="color:rgb(150, 214, 142);background-color: rgb(204, 242, 200); border-radius: 7px; font-size: 30px; padding: 5px"></i>&nbsp;&nbsp; 145 heures</span>
                 </div>
@@ -25,7 +25,7 @@
                     {{-- <span class="ms-5 " style="color: rgb(82, 82, 82)">
                         <i class="fas fa-clock" style="color:rgb(216, 146, 137);background-color: rgb(243, 208, 204); border-radius: 7px; font-size: 26px; padding: 5px"></i>&nbsp;&nbsp; 15 heures
                     </span> --}}
-                    <div id="piechart" style="max-width:300px; height: 120px;"></div>
+                    <div id="piechart" style="max-width:300px; height: 139px;"></div>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -33,13 +33,13 @@
                     {{-- graphique --}}
                     <p class="text-center" style="font-size: 13px; color:#7535DC" >Total d'heure par module</p>
                     {{-- <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-clock" style="color:rgb(220, 223, 79);background-color: rgb(244, 245, 171); border-radius: 7px; font-size: 26px; padding: 5px"></i>&nbsp;&nbsp; Excel • 45 heures</span> --}}
-                    <div id="pie1" style="max-width:300px; height: 120px;"></div>
+                    <div id="pie1" style="max-width:300px; height: 139px;"></div>
                 </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-lg-4">
-                <div class="form-control" style="height: 189px">
+                <div class="form-control" style="height: 188px">
                     <p class="text-center" style="font-size: 13px; color:#7535DC" >Nombre homme et femme formés</p><br>
                     <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-male" style="color:rgb(138, 154, 243);background-color: rgb(197, 204, 243); border-radius: 7px; font-size: 30px; padding: 5px;width:30px"></i>&nbsp;&nbsp; 100 hommes</span>
                     <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-female" style="color:rgb(238, 144, 149);background-color: rgb(243, 197, 199); border-radius: 7px; font-size: 30px; padding: 5px;width:30px"></i>&nbsp;&nbsp; 115 femmes</span>
@@ -52,11 +52,11 @@
                     {{-- <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-building" style="color:rgb(181, 206, 71);background-color: rgb(224, 238, 161); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 115 personnes</span> --}}
                     {{-- <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-male" style="color:rgb(138, 154, 243);background-color: rgb(197, 204, 243); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 10 hommes</span>
                     <span class="ms-5 mt-1" style="color: rgb(82, 82, 82)"><i class="fas fa-female" style="color:rgb(238, 144, 149);background-color: rgb(243, 197, 199); border-radius: 7px; font-size: 26px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 5 femmes</span> --}}
-                    <div id="pie2" style="max-width:300px; height: 120px;"></div>
+                    <div id="pie2" style="max-width:300px; height: 139px;"></div>
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="form-control" style="height: 189px">
+                <div class="form-control" style="height: 188px">
                     <p class="text-center" style="font-size: 13px; color:#7535DC">Nombre de la personne formé par module</p><br>
                     <span class="ms-5 mt-1" style="color:rgb(82, 82, 82)"><i class="fas fa-users" style="color:rgb(138, 154, 243);background-color: rgb(197, 204, 243); border-radius: 7px; font-size: 30px; padding: 5px;width:26px"></i>&nbsp;&nbsp; 115 personnes</span>
                 </div>

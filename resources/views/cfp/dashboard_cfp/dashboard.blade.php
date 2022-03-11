@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="container-fluid" style="font-size: 10px;">
-        <div class="row mt-2">
+        <div class="row mt-3">
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68"><b> <i class="fas fa-tasks"></i>&nbsp; Session Intra enreprise </b>
                     <a class="overr" href=""><p class="p-0 m-1 system_ pb-1">Complété<span class="system_numero">{{ count($session_intra_terminer) }}</span></p></a>
