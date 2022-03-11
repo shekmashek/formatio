@@ -84,7 +84,7 @@
                             @endif
                         </button>
                     </div>
-                    @if ($type_formation_id == 1)
+                    
                         <div>
                             <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
                                 <p class="m-0 p-0">APPRENANTS</p>
@@ -96,7 +96,7 @@
                                 @endif
                             </button>
                         </div>
-
+                        @if ($type_formation_id == 1)    
                     <div>
                         <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'ressource')" style="width: 100%">
                             <p class="m-0 p-0">RESSOURCES</p>
@@ -182,11 +182,11 @@
                     <div id="planning" class="tabcontent" style="display: block;">
                             @include('admin.detail.detail')
                       </div>
-                      @if ($type_formation_id == 1)
+                      {{-- @if ($type_formation_id == 1) --}}
                         <div id="apprenant" class="tabcontent">
                             @include('admin.stagiaire.ajout_stagiaire')
                         </div>
-                      @endif
+                      {{-- @endif --}}
 
                       <div id="ressource" class="tabcontent">
                         @include('projet_session.ressource')

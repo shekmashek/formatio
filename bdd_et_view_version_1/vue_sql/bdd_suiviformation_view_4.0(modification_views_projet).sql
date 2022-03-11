@@ -99,7 +99,8 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
-        (cfps.logo) logo_cfp
+        (cfps.logo) logo_cfp,
+        cfps.site_cfp
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
     join type_formations tf on p.type_formation_id = tf.id
@@ -128,10 +129,12 @@ create or replace view v_groupe_projet_entreprise_module as
         mf.nom,
         mf.email,
         mf.telephone,
-        mf.pourcentage
+        mf.pourcentage,
+        d.nom_domaine
     from
         v_groupe_projet_entreprise vgpe
-    join moduleformation mf on vgpe.module_id = mf.module_id;
+    join moduleformation mf on vgpe.module_id = mf.module_id
+    join domaines d on d.id = mf.domaine_id;
 
 CREATE OR REPLACE VIEW v_detailmodule AS
     SELECT
@@ -281,7 +284,9 @@ create or replace view v_departement_service_entreprise as
 
 
 create or replace view v_stagiaire_groupe as
-select g.id as groupe_id,
+select
+        p.id as participant_groupe_id,
+        g.id as groupe_id,
         g.max_participant,
         g.min_participant,
         g.nom_groupe,
@@ -507,3 +512,77 @@ create or replace view v_projet_session_inter as
         (cfps.logo) logo_cfp
     from groupes g join projets p on g.projet_id = p.id
     join cfps on cfps.id = p.cfp_id;
+
+
+create or replace view v_formateur_projet as
+    select
+        f.formateur_id,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.numero_formateur,
+        f.photos,
+        f.genre,
+        f.date_naissance,
+        f.adresse,
+        f.cin,
+        f.specialite,
+        f.niveau,
+        d.projet_id
+    from
+        v_demmande_cfp_formateur f join details d on f.formateur_id = d.formateur_id
+    group by
+        f.formateur_id,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.numero_formateur,
+        f.photos,
+        f.genre,
+        f.date_naissance,
+        f.adresse,
+        f.cin,
+        f.specialite,
+        f.niveau,
+        d.projet_id;
+
+
+create or replace view v_programme_detail_activiter as
+select
+        v_detailmodule.*,cours_id,titre_cours,programme_id,titre_programme
+from
+    v_detailmodule,v_detail_cour
+where
+    v_detailmodule.detail_id = v_detail_cour.detail_id;
+
+
+create or replace view v_session_projet as
+    select
+        g.id as groupe_id,
+        g.max_participant,
+        g.min_participant,
+        g.nom_groupe,
+        g.projet_id,
+        g.type_payement_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        g.activiter as activiter_groupe,
+        p.nom_projet,
+        p.type_formation_id,
+        p.status as status_projet,
+        p.created_at as date_projet,
+        mf.*
+    from
+    groupes g join projets p
+    on g.projet_id = p.id
+    join moduleformation mf on mf.module_id = g.module_id;
+
+
+create or replace view v_evaluation_apprenant as
+select
+    (detail_evaluation_apprenants.id) id,v_stagiaire_groupe.*,note_avant,note_apres
+from
+    v_stagiaire_groupe,detail_evaluation_apprenants
+where
+    v_stagiaire_groupe.participant_groupe_id = detail_evaluation_apprenants.participant_groupe_id ;

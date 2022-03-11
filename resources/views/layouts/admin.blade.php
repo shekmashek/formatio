@@ -182,13 +182,13 @@
                 </a>
                 <span class="tooltip">Formateurs</span>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
                     <span class="links_name">Nouveau Formateur</span>
                 </a>
                 <span class="tooltip">Nouveau Formateur</span>
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
@@ -460,9 +460,9 @@
                                         <i class="bx bx-search">
                                         </i>
                                     </button>
-                                    <button type="button" class="btn_next ms-2"><a href="{{route('liste_formation')}}">Catalogue</a> </button>
-                                    <button type="button" class="btn_next">Annuaire</button>
-                                    <button type="button" class="btn_next"><a href="{{route('calendrier')}}">Agenda</a> </button>
+                                    <a href="{{route('liste_formation')}}" class="btn_next ms-2" role="button">Catalogue</a>
+                                    <a href="{{route('annuaire')}}" class="btn_next" role="button">Annuaire</a>
+                                    <a href="{{route('calendrier')}}" class="btn_next" role="button">Agenda</a>
                                 </div>
                             </div>
                         </form>
@@ -673,7 +673,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body px-0" style="padding-bottom: 1rem; padding-top: 3.5rem;">
+            <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
             </div>
             {{-- content --}}

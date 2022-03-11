@@ -47,7 +47,7 @@ class FormationController extends Controller
             // $domaines = Domaine::all();
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
 
-            $categorie = DB::select('select * from formations where status = 1 limit 8');
+            $categorie = DB::select('select * from formations where status = 1 limit 7');
             $module = DB::select('select * from moduleformation where formation_id = 1 and status = 2 limit 6');
             return view('referent.catalogue.formation', compact('categorie','module'));
         }
@@ -186,7 +186,7 @@ class FormationController extends Controller
     public function affichageParFormation($id)
     {
         $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2', [$id]);
-        $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where formation_id = ? and type_formation_id = 2',[$id]);
+        $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_session_projet where formation_id = ? and type_formation_id = 2',[$id]);
         return view('referent.catalogue.liste_formation', compact('infos','datas'));
     }
 
@@ -215,7 +215,7 @@ class FormationController extends Controller
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
-            $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where module_id = ? and type_formation_id = 2',[$id]);
+            $datas =DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_session_projet where module_id = ? and type_formation_id = 2',[$id]);
             return view('referent.catalogue.detail_formation', compact('infos','datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categories', 'id'));
         } else return redirect()->route('liste_formation');
     }
@@ -247,8 +247,31 @@ class FormationController extends Controller
                     FROM
                     formations,
                     WHERE
-                   status = 1;
+                    status = 1;
                     ');
         return view('referent.catalogue.liste_formation', compact('categorie'));
+    }
+
+    
+    public function annuaire(){
+        // if (Gate::allows('isCFP')) {
+        //     $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
+        //     return view('admin.formation.formation', compact('formation'));
+        // }
+        // if (Gate::allows('isSuperAdmin')) {
+        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
+        //     return view('admin.formation.formation', compact('formation'));
+        // }
+        // if (Gate::allows('isFormateur')) {
+        //     $categorie = formation::orderBy('nom_formation')->get();
+        //     $domaines = Domaine::all();
+        //     return view('referent.catalogue.formation', compact('domaines', 'categorie'));
+        // }
+        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
+            // $cfp = DB::select('select * from cfps order by nom');
+            $pagination = Cfp::orderBy('nom')->paginate(1);
+            return view('referent.catalogue.cfp_tous', compact('pagination'));;
+        }
     }
 }

@@ -1,0 +1,131 @@
+.input {
+    padding: 2px 1rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #888787;
+    border: 1px solid #bdbdbd;
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 50px !important;
+}
+
+.input:focus,
+.input:valid {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 2px solid #7635dc !important;
+    outline-width: 0 !important;
+}
+
+.form-control-placeholder {
+    position: relative;
+    bottom: 2.5rem;
+    padding: 12px 2px 0 2px;
+    padding: 0;
+    padding-top: 2px;
+    padding-bottom: 5px;
+    transition: all 300ms;
+    opacity: 0.5;
+    left: 2rem;
+}
+
+.input:focus+.form-control-placeholder,
+.input:valid+.form-control-placeholder {
+    padding-right: 0.5rem;opacity: 0;
+}
+
+.annuaire{
+    background: white;
+}
+
+.btn_submit{
+    background-color: #7635dc;
+    color: white;
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: 5px;
+}
+
+.logo_formation img{
+    height: 3.125rem;
+    width: 3.125rem;
+}
+
+.recherche{
+    border: none;
+    border-bottom: 5px solid #7635dc;
+}
+
+.btn_actions{
+    background: #7635dc;
+    color: white;
+    padding: 0.5rem 0.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.900rem;
+    transition: all .5s ease;
+}
+
+.btn_actions:hover{
+    transform: scale(1.1);
+}
+
+.btn_actions .bx{
+    position: relative;
+    top: .3rem;
+    margin-right: .5rem;
+    font-size: 1.4rem !important;
+}
+
+.btn_actions a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.phone_detail{
+    background: rgba(128, 128, 128, 0.176);
+    border: none;
+border-radius: 5px;
+padding: 0.5rem 1rem;
+}
+
+.phone_detail .bx{
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.adresse{
+    color: rgba(35, 35, 248, 0.759);
+}
+.detail_content{
+    background-color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    width: 80%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin: auto;
+}
+.filtres{
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding: 1rem 1.5rem;
+    height: 22rem;
+    position: sticky;
+    top: 3rem;
+}
+.filtres  h6{
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.alphabet{
+    display: grid;
+    place-content: center;
+    font-size: 1.5rem;
+    letter-spacing: 2rem;
+    cursor: pointer;
+    color: #7635dc;
+    border: 1px solid black;
+    padding: .5rem .5rem;
+}

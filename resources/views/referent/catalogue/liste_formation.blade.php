@@ -18,7 +18,7 @@
     </div>
 
     </div>
-    <div class="container pb-5">
+    <div class="container pb-5 vh-100">
         <div class="row">
             <div class="col-lg-3 filtre_formation">
                 <div class="row">
@@ -107,36 +107,32 @@
                         </h6>
                     </div>
                     <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
-
-                        @if (count($datas)>0)
-                        <div class="row px-3 py-2">
-                            <div class="col-3">
-                                <p>Prochaines Sessions</p>
+                        {{-- @if (count($datas)<=0)
+                            <div class="row px-3 py-2">
+                                <div class="col-3">
+                                    <p>Aucun session inter</p>
+                                </div>
                             </div>
-                            <div class="col-5 date">
-                                @foreach ($datas as $data)
-                                @if($info->module_id == $data->module_id)
-                                <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
-                                @endif
-                                @endforeach
+                        @else --}}
+                            <div class="row px-3 py-2">
+                                <div class="col-3">
+                                    <p>Prochaines Sessions</p>
+                                </div>
+                                <div class="col-5 date">
+                                    @foreach ($datas as $data)
+                                        @if($info->module_id == $data->module_id)
+                                            <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <div class="col-4">
+                                    <p>Cette thématique vous intéresse ?
+                                        Nos experts conçoivent votre formation
+                                        sur-mesure ! Nous contacter</p>
+                                        <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
+                                </div>
                             </div>
-                            <div class="col-4">
-                                <p>Cette thématique vous intéresse ?
-                                    Nos experts conçoivent votre formation
-                                    sur-mesure ! Nous contacter</p>
-                                <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
-                            </div>
-                        </div>
-                        @else
-                        <div class="row px-3 py-2">
-                            <div class="col">
-                                <p align="center"> Auccun session inter en cours</p>
-                            </div>
-                        </div>
-                        @endif
-
-
-
+                        {{-- @endif --}}
                     </div>
 
                 </div>

@@ -105,7 +105,7 @@ h6{
     <header class="navbar navbar-expand-lg navbar-light my-2">
         <div class="container-fluid">
         <div class="navbar-brand">
-            <img src="{{ asset('storage/'.$data["projet"]->logo) }}" alt="logonmk" class="logo">
+            <img src="{{ asset('images/entreprises/'.$data["projet"]->logo) }}" alt="logonmk" class="logo">
         </div>
         <div class="navbar-right">
             <img src="{{ asset('img/logo_numerika/logonmrk.png') }}" alt="logonmk" class="logo">
@@ -113,7 +113,7 @@ h6{
         </div>
     </header>
 
-<a href="{{route('home')}}">Retour</a>
+{{-- <a href="{{route('home')}}">Retour</a> --}}
 <div class="container my-5">
     <div class="row">
         <div class="col-md-2"></div>
@@ -229,7 +229,7 @@ h6{
             <div class="card mb-1">
                 <div class="card-body">
                     <h5 class="groupe">{{$groupe->nom_groupe}}</h5>
-                    <h6 class="mb-2 text-muted">{{$groupe->nom_module.'('.$groupe->lieu.')'}}</h6>
+                    <h6 class="mb-2 text-muted">{{$groupe->nom_module}}</h6>
                     <div class="card-text">
                         <table class="table" border="1">
                             <thead>
@@ -1057,9 +1057,9 @@ h6{
                             <tr>
                                 <td>{{$stg->nom_stagiaire.' '.$stg->prenom_stagiaire}}
 
-                                    @if(Session::has('success_update_note_candidat'.$stg->stagaire_id))
+                                    @if(Session::has('success_update_note_candidat'.$stg->stagiaire_id))
                                     <div class="alert alert-success">
-                                        {{ Session::get('success_update_note_candidat'.$stg->stagaire_id) }}
+                                        {{ Session::get('success_update_note_candidat'.$stg->stagiaire_id) }}
                                     </div>
                                     @endif
 
@@ -1103,7 +1103,13 @@ h6{
     </div>
 
 </div>
-
+<div class="container">
+    <div class="row">
+        <div class="col-m-12">
+            <a href="{{ route('downRapportFinale',[$data["projet"]->projet_id]) }}"><button type="button" class="btn btn-outline-secondary"><i class="bx bxs-file-pdf"></i>Exporter en pdf</button></a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

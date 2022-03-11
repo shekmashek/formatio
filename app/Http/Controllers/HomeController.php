@@ -418,6 +418,10 @@ class HomeController extends Controller
                 return view('referent.dashboard_referent.dashboard_referent', compact('etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name'));
             }
         }
+
+        if (Gate::allows('isSuperAdminPrincipale')){
+            return redirect()->route('liste_utilisateur');
+        }
         // else {
         //      //get the column with null value
         //      $databaseName = DB::connection()->getDatabaseName();

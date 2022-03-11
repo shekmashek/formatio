@@ -300,6 +300,10 @@ Route::get('domaine_formation','FormationController@formation_domaine')->name('d
 Route::get('select_par_formation/{id}','FormationController@affichageParFormation')->name('select_par_formation');
 Route::get('select_par_module/{id}','FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous','FormationController@affichageTousCategories')->name('select_tous');
+Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','SessionController@inscription')->name('inscriptionInter');
+//route annuaire de cfp
+Route::get('annuaire','FormationController@annuaire')->name('annuaire');
+
 //route module
 Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
@@ -505,8 +509,8 @@ Route::resource('convocation','ConvocationMail');
 Route::get('convocationMail/{detail}/{groupe}','ConvocationMail@sendMail')->name('convocationMail');
 //============================ Rapport Finale par Project
 Route::resource('rapportfinale', 'RapportFinaleController');
-Route::get('downRapportFinale', 'RapportFinaleController@rapport')->name('downRapportFinale');
-Route::get('nouveauRapportFinale', 'RapportFinaleController@new')->name('nouveauRapportFinale');
+Route::get('downRapportFinale/{projet_id?}', 'RapportFinaleController@rapport')->name('downRapportFinale');
+Route::get('nouveauRapportFinale/{projet_id}', 'RapportFinaleController@new')->name('nouveauRapportFinale');
 
 //=========================== ajout donner dans les different somaire de rapport finale
 Route::get('nouveauRapportFinale.desc_objectif/{idProjet}', 'RapportFinaleController@desc_objectif')->name('desc_objectif');

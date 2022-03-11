@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    <div class="container-fluid">
+    <div class="container-fluid mb-5">
         <div class="row">
             <h3 class="mt-5 mb-3 text-center">Listes des Projets Intra et Inter</h3>
             <div class="col-2 pe-3">
@@ -108,6 +108,7 @@
                                         @endif
                                         @endforeach
                                     </div>
+                                    <div class="col-1"><a href="{{ route('nouveauRapportFinale',[$prj->projet_id]) }}"><button class="btn rapport_finale">Rapport</button></a></div>
                                     <div class="col-1 text-end p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
@@ -125,9 +126,9 @@
                                     <th> Session </th>
                                     <th> Module </th>
                                     @can('isCFP')
-                                        @if ($prj->type_formation_id == 1)
+                                        {{-- @if ($prj->type_formation_id == 1) --}}
                                             <th> Entreprise </th>
-                                        @endif
+                                        {{-- @endif --}}
                                     @endcan
                                     @can('isReferent')
                                         @if ($prj->type_formation_id == 1)
@@ -155,9 +156,9 @@
                                                     </td>
                                                     <td>{{ $pj->nom_module }}</td>
                                                     @can('isCFP')
-                                                        @if ($pj->type_formation_id == 1)
+                                                        {{-- @if ($pj->type_formation_id == 1) --}}
                                                             <td> {{ $pj->nom_etp }} </td>
-                                                        @endif
+                                                        {{-- @endif --}}
                                                     @endcan
                                                     @can('isReferent')
                                                         @if ($pj->type_formation_id == 1)
@@ -345,7 +346,9 @@
                         <table class="table table-stroped m-0 p-0">
                             <thead class="thead_projet">
                                 <th>Projet</th>
+                                <th>Type de formation</th>
                                 <th> Session </th>
+                                <th>Date session</th>
                                 <th> Centre de formation </th>
                                 <th> Date du projet</th>
 
@@ -353,15 +356,26 @@
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
-                                    <tr>
+                                    <tr class="m-0">
                                         <td>{{ $pj->nom_projet }}</td>
+                                        <td>
+                                            @if ($pj->type_formation_id == 1)
+                                            <h6 class="m-0"><button
+                                                    class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button></h6>
+                                            &nbsp;&nbsp;
+                                            @elseif ($pj->type_formation_id == 2)
+                                                <h6 class="m-0"><button
+                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>&nbsp;&nbsp;
+                                            @endif
+                                        </td>
                                         <td> <a
                                                 href="{{ route('detail_session', $pj->groupe_id) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
+                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
                                         <td>
-                                            <p class="en_cours m-0 p-0">{{ $pj->status_groupe }}</p>
+                                            <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
                                         </td>
                                     </tr>
                                 @endforeach
