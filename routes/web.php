@@ -299,7 +299,8 @@ Route::get('select_tous','FormationController@affichageTousCategories')->name('s
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','FormationController@inscription')->name('inscriptionInter');
 //route annuaire de cfp
 Route::get('annuaire','FormationController@annuaire')->name('annuaire');
-Route::get('aphabet_filtre','FormationController@alphabet_filtre')->name('aphabet_filtre');
+Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
+Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
 
 //route module
 Route::resource('module','ModuleController')->except([

@@ -254,16 +254,20 @@ class FormationController extends Controller
 
     public function annuaire(){
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
-            // $cfp = DB::select('select * from cfps order by nom');
+            $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $pagination = Cfp::orderBy('nom')->paginate(1);
-            return view('referent.catalogue.cfp_tous', compact('pagination'));
+            return view('referent.catalogue.cfp_tous', compact('pagination','initial'));
         }
     }
 
     public function alphabet_filtre(Request $request){
         $alpha = $request->Alpha;
         $cfp = DB::select('select * from cfps where nom like "'.$alpha.'%" limit 0,5');
-        return response()->json(['success'=>true,'data'=>$cfp]);
-        // return view('referent.catalogue.cfp_tous', compact('pagination'));
+        return response()->json($cfp);
+    }
+
+    public function detail_cfp($id){
+        $cfp = DB::select('select * from cfps where id = ?',[$id]);
+        return response()->view('referent.catalogue.detail_cfp',compact('cfp'));
     }
 }

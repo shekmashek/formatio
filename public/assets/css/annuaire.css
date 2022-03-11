@@ -104,8 +104,14 @@
     padding: 1rem 1.5rem;
     border-radius: 5px;
     width: 80%;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     margin: auto;
+    transition: all .5s ease;
+}
+
+.detail_content:hover{
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .filtres {
     border-top: 1px solid grey;
@@ -139,3 +145,18 @@
     color: #7635dc;
 }
 
+.logo_content{
+    display: grid;
+    place-content: center;
+}
+
+.logo_img{
+    width: 100px;
+    height: 60px;
+}
+.pagination{
+    display: flex;
+}
+.detail_content h4 a:hover{
+    color: #7635dc;
+}
