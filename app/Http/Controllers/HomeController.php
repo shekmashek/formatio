@@ -355,7 +355,7 @@ class HomeController extends Controller
                 // $refs = DB::select('select nif,stat,rcs from entreprises where id = ' . $nom_profil_referent . ' ');
 
                 $refs_tmp = DB::select('select nif,stat,rcs from entreprises where id = ?',[$etp_id]);
-               $refs =$refs_tmp[0];
+                $refs =$refs_tmp[0];
 
                 $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
 

@@ -211,20 +211,20 @@
                 <div class="form-control">
                     <p class="text-center" style="font-size: 11px; color:#7535DC">TDB financier</p>
                     <p class="p-0 m-0 " style="font-size: 10px; font-weight: bold;">C.A actuel:
-                        {{-- @php
+                        @php
                             foreach ($CA_actuel as $total) {
                                 $total = $total->total_ttc;
                                 echo $total . ' ';
                             }
-                        @endphp --}}
+                        @endphp
                         Ar TTC</p>
                     <p class="p-1 m-0" style="font-size: 10px;">C.A précedent:
-                        {{-- @php
+                        @php
                             foreach ($CA_precedent as $totals) {
                                 $totals = $totals->total_ttc;
                                 echo $totals . ' ';
                             }
-                        @endphp --}}
+                        @endphp
                         Ar TTC</p>
                     <hr>
                     <div id="chart_div" style=""></div>
