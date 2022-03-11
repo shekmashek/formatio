@@ -202,8 +202,6 @@
                 chart.draw(data, google.charts.Bar.convertOptions(options));
             }
     </script> --}}
-
-
 <div class="p-1 m-0">
     <div class="container-fluid">
         <div class="row mt-2">
