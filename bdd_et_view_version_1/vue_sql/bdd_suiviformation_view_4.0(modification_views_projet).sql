@@ -278,7 +278,7 @@ create or replace view v_departement_service_entreprise as
 
 
 create or replace view v_stagiaire_groupe as
-select 
+select
         p.id as participant_groupe_id,
         g.id as groupe_id,
         g.max_participant,
@@ -325,7 +325,7 @@ select
         on s.id = p.stagiaire_id
     join v_departement_service_entreprise d
         on s.service_id = d.service_id
-    join moduleformation mf 
+    join moduleformation mf
         on mf.module_id = g.module_id;
 
 
@@ -509,7 +509,7 @@ create or replace view v_projet_session_inter as
 
 
 create or replace view v_formateur_projet as
-    select 
+    select
         f.formateur_id,
         f.nom_formateur,
         f.prenom_formateur,
@@ -525,7 +525,7 @@ create or replace view v_formateur_projet as
         d.projet_id
     from
         v_demmande_cfp_formateur f join details d on f.formateur_id = d.formateur_id
-    group by 
+    group by
         f.formateur_id,
         f.nom_formateur,
         f.prenom_formateur,
@@ -550,8 +550,8 @@ where
     v_detailmodule.detail_id = v_detail_cour.detail_id;
 
 
-create or replace view v_session_projet as 
-    select 
+create or replace view v_session_projet as
+    select
         g.id as groupe_id,
         g.max_participant,
         g.min_participant,
@@ -567,8 +567,16 @@ create or replace view v_session_projet as
         p.status as status_projet,
         p.created_at as date_projet,
         mf.*
-    from 
-    groupes g join projets p 
+    from
+    groupes g join projets p
     on g.projet_id = p.id
     join moduleformation mf on mf.module_id = g.module_id;
-    
+
+
+create or replace view v_evaluation_apprenant as
+select
+    (detail_evaluation_apprenants.id) id,v_stagiaire_groupe.*,note_avant,note_apres
+from
+    v_stagiaire_groupe,detail_evaluation_apprenants
+where
+    v_stagiaire_groupe.participant_groupe_id = detail_evaluation_apprenants.participant_groupe_id ;
