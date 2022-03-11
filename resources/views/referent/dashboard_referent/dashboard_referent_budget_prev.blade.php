@@ -28,13 +28,17 @@ google.charts.setOnLoadCallback(drawBasic);
 function drawBasic() {
 
       var data = google.visualization.arrayToDataTable([
-          ['Budget prévisionnel','Budget prévisionnel', 'Budget Engagé', 'Budget Réalisé','Budget Restant'],
+          ['Budget','Budget prévisionnel', 'Budget Engagé', 'Budget Réalisé','Budget Restant'],
             @php
-                echo "[' ',".$total_budget[0]->total.", ".$total_engage[0]->engage.", ".$total_realise[0]->realise.",".$total_restant."]";
+                echo "[' ',".$total_budget[0]->total.", 0,0,0],";
+                echo "[' ',0, ".$total_engage[0]->engage.", ".$total_realise[0]->realise.",".$total_restant."]";
             @endphp
-      ]);
+          ]
+
+      );
 
       var options = {
+        isStacked: true,
         title: 'Budget previsionnel '+new Date().getFullYear() ,
         chartArea: {width: '50%'},
         hAxis: {
