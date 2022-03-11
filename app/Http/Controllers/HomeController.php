@@ -179,7 +179,7 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
         if (Gate::allows('isStagiairePrincipale')) {
-            //get the column with null value
+           //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from stagiaires where user_id  = ? ', [Auth::user()->id]);
 

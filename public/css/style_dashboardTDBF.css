@@ -8,11 +8,20 @@
     border: none;
 }
 
-.nav .b{
+
+.nav .c{
     background-color: #dddddd;
     color: #801D68;
 }
 
+.nav .b{
+    background-color: #dddddd;
+    color: #801D68;
+}
+.nav .bb{
+    background-color: #eeeeee;
+    color: #801D68;
+}
 
 .system_{
     text-align: left;

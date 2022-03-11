@@ -881,3 +881,43 @@ Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_us
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
 //Route impression detail_calendrier
 Route::get('detail_printpdf/{id}','DetailController@detail_printpdf')->name('detail_printpdf');
+
+//=================== route pour moderne,fléxible et sécurisé etc
+Route::get('/moderne', function () {
+    return view('/moderne');
+});
+
+Route::get('/gestiond', function () {
+    return view('/gestiond');
+});
+
+Route::get('/gestionf', function () {
+    return view('/gestionf');
+});
+
+Route::get('/gestiona', function () {
+    return view('/gestiona');
+});
+
+
+Route::get('/gestionc', function () {
+    return view('/gestionc');
+});
+
+Route::get('/qualite', function () {
+    return view('/qualite');
+});
+
+
+Route::get('/communication', function () {
+    return view('/communication');
+});
+
+Route::get('/elearning', function () {
+    return view('/elearning');
+});
+
+
+Route::get('/fonctionnalitea', function () {
+    return view('/fonctionnalitea');
+});

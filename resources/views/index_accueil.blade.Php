@@ -23,10 +23,67 @@
         <i class="far fa-arrow-up"></i>
     </button>
     <header>
-        <nav class="navbar_accueil fixed-top d-flex justify-content-between">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar_accueil " style="height: 55px;">
+            <div class="container-fluid">
+                <div class="left_menu ms-2">
+                    <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="40px" height="25px"> Formation.mg</p>
+                </div>
+              {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button> --}}
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  {{-- <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  </li> --}}
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fonctionnalités</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item mt-2" href="{{url('moderne')}}" target="_blank"><i class="far fa-mouse-pointer center" style="color:rgb(107, 204, 148); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(198,246,213); "></i> &nbsp; Moderne, flexible et sécurusé</a></li>
+                      <li><a class="dropdown-item mt-2" href="{{url('gestiond')}}" target="_blank"><i class="fad fa-file-alt" style="color:rgb(70, 151, 150); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(178,245,234); "></i> &nbsp; Gestion docummentaire</a></li>
+                      {{-- <li><hr class="dropdown-divider"></li> --}}
+                      <li><a class="dropdown-item mt-2" href="{{url('gestionf')}}" target="_blank"><i class="fad fa-euro-sign" style="color:rgb(76,81,191); padding: 8px 11px; border-radius: 100%; font-size: 13px; background-color: rgb(195,218,254); "></i> &nbsp; Gestion financière</a></li>
+                      <li><a class="dropdown-item mt-2" href="{{url('gestiona')}}" target="_blank"><i class="fad fa-calendar-check" style="color:rgb(186, 79, 141); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(254,252,191); "></i>&nbsp; Gestion administrative</a></li>
+                      <li><a class="dropdown-item mt-2" href="{{url('gestionc')}}" target="_blank"><i class="far fa-users" style="color:rgb(43,108,176); padding: 8px 7px; border-radius: 100%; font-size: 13px; background-color: rgb(190,227,248); "></i>&nbsp; Gestion commerciale</a></li>
+                      <li><a class="dropdown-item mt-2" href="{{url('qualite')}}" target="_blank"><i class="fad fa-clipboard" style="color:rgb(192,86,33); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(254,235,200); "></i>&nbsp;&nbsp; Qualité</a></li>
+                      <li><a class="dropdown-item mt-2" href="{{url('communication')}}" target="_blank"><i class="fad fa-comments-alt" style="color:rgb(200,58,58); padding: 8px 8px; border-radius: 100%; font-size: 13px; background-color: rgb(254,235,200); "></i>&nbsp;&nbsp;Communication</a></li>
+                      <li><a class="dropdown-item mt-2" href="{{url('elearning')}}" target="_blank"><i class="fad fa-laptop" style="color:rgb(183,121,31); padding: 8px 7px; border-radius: 100%; font-size: 13px; background-color: rgb(254,252,191); "></i>&nbsp;&nbsp;E-learning</a></li>
+                      <li><a class="dropdown-item mt-2" href="{{url('fonctionnalitea')}}" target="_blank"><i class="fad fa-search" style="color:rgb(100, 60, 194); padding: 8px 9px; border-radius: 100%; font-size: 13px; background-color: rgb(233,216,253); "></i>&nbsp;&nbsp;Fonctionnalités avancées</a></li>
+                    </ul>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{url('tarifs')}}" target="_blank">Tarifs</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">À propos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{url('contact')}}"  target="_blank">Contactez-nous</a>
+                  </li>
+
+                </ul>
+                <form class="d-flex">
+                    <li class="nav-item">
+                        <a style="color:rgb(75, 75, 75);" href="{{ route('sign-in') }}" >Se connecter </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" style="color:rgb(79, 79, 79); padding: 10px 5px; border: 1px solid #7535DC; border-radius: 35px; font-size: 13px;" >Voir une démo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('create+compte+client')}}" style="color:white; padding: 10px 5px; border: 1px solid #7535DC; border-radius: 35px; font-size: 13px; background-color: #7b42d6; ">Créer un compte</a>
+                    </li>
+                  {{-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button> --}}
+                </form>
+              </div>
+            </div>
+          </nav>
+        {{-- <nav class="navbar_accueil fixed-top d-flex justify-content-between">
             <div class="left_menu ms-2">
                 <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg</p>
             </div>
+
             <div class="right_menu d-flex justify-content-end align-items-center">
                 <div class="child_right_menu">
                     <a href="{{url('contact')}}"><button class="btn_bordure_violet mx-2"><i class="fa fa-phone-alt"></i>&nbsp; Contactez-nous</button></a>
@@ -38,22 +95,22 @@
                     <button class="btn bouton_violet mx-2"><a href="{{ route('sign-in') }}"><i class="fa fa-sign-in-alt"></i>&nbsp; Connexion </a></button>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
     </header>
     <main>
-        <div class=" p-4 m-0 container-fluid" style="font-size: 14px">
+        <div class=" p-5 m-0 container-fluid" style="font-size: 14px">
             <div class="row ">
                 <div class="p-0 col-lg-6">
-                    <div class="shadow p-3 mb-4 bg-body rounded">
+                    <div class="shadow p-3 mb-4 bg-body rounded" style="height: 160px">
                         <div class="row ">
                             <div class="col"  align="center">
-                                <p>Plateforme collaboratif de gestion de formation</p>
+                                <p class="p-0 mt-0 m-0">Plateforme collaboratif de gestion de formation</p>
                                 <p style="font-size: 10px; color: rgb(158, 157, 157)">
                                     La première plateforme malagasy
                                     de gestion de formation,<br> outil
                                     incontournable et innovateur du milieu professionnel.
-                                </p>
-                                    <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                                </p><br>
+                                    <a href="{{url('tarifs')}}" style="color: #9d76dc;font-size: 11px;">&nbsp; Voir plus >&nbsp;</a>
                             </div>
                             <div class="col "  align="center">
                                     <p style="font-size: 10px; margin:0; color: rgb(158, 157, 157)" > - Centre de formation </p>
@@ -62,7 +119,7 @@
                                     <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Apprenant</p>
                                     <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Manager </p>
                                     {{-- <img class=" ms-5 img-fluid rounded-3" src="{{ asset('maquette/collaboration.jpg') }}" alt="" style="height:50px; width:120px"><br> --}}
-                                    <a style="background-color: #801D68; color:white; font-size: 12px " class="btn mt-4" href="{{url('contact')}}" target="_blank">Contactez notre service commerciale</a>
+                                    <a style="background-color: #9d76dc; color:white; font-size: 12px; margin-top: 15px " class="btn" href="{{url('contact')}}" target="_blank">Contactez notre service commerciale</a>
                             </div>
                         </div>
                     </div>
@@ -71,18 +128,18 @@
                     <div class=" ms-3 shadow p-3 mb-0 bg-body rounded">
                         <div class="row ">
                             <div class="col" align="center">
-                                <p>Demander une demonstration</p>
+                                <p class="p-0 mt-0 m-0">Demander une demonstration</p>
                                 <p style="font-size: 10px;  color: rgb(158, 157, 157)">
                                     Envie de tester les fonctionnalités de Formation.mg?<br>
                                     Contactez notre équipe commerciale et prenez rendez-vous.
                                     Nous serons ravis de vous faire découvrir les horizons de notre logiciel et en quoi il vous est indispensable.
                                 </p>
-                                <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                                <a href="{{url('tarifs')}}" style="color: #9d76dc;;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
                                     {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn mb-2" href="">Demander une demo</a> --}}
                             </div>
                             <div class="col" align="center">
                                     <img class=" img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="" style="height:70px; width:130px"><br>
-                                    <a style="background-color: #801D68; color:white; font-size: 11px " class=" btn mb-2 mt-1" href="">Demander une demo</a>
+                                    <a style="background-color: #9d76dc;; color:white; font-size: 11px " class=" btn mb-2 mt-4" href="">Demander une demo</a>
                             </div>
                         </div>
                     </div>
@@ -93,7 +150,7 @@
                     <div class=" shadow p-3 mb-4 bg-body rounded">
                         <div class="row ">
                             <div class="col"  align="center">
-                                <p>Vous êtes un organisme de formation ?</p>
+                                <p class="p-0 mt-0 m-0">Vous êtes un organisme de formation ?</p>
                                 <p style="font-size: 10px;  color: rgb(158, 157, 157)">
                                     Disposez d’une base de données centralisée,<br> gagnez en temps et en économie.
                                     Retrouvez  tout ce dont vous avez besoin dans un seul et unique endroit : la gestion de vos formations (session , exécution ...),
@@ -102,21 +159,21 @@
                                     Améliorez votre communication et votre suivi commercial.<br>
                                     Rapprochez-vous de vos clients, envoyez leurs des évaluations digitalisées et personnalisables et obtenez des feedbacks instantanés
                                 </p>
-                                <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                                <a href="{{url('tarifs')}}" style="color: #9d76dc;;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
                                     {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn mb-2" href="{{route('create+compte+client')}}">Creer un compte pro</a> --}}
                             </div>
                             <div class="col"  align="center">
-                                    <img  class=" img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="" style="height:70px; width:130px"><br>
-                                    <a style="background-color: #801D68; color:white; font-size: 11px; " class=" btn mb-2 mt-1" href="{{route('create+compte+client')}}">Creer un compte pro</a>
+                                    <img  class=" img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="" style="height:90px; width:130px"><br>
+                                    <a style="background-color: #9d76dc;; color:white; font-size: 11px; " class=" btn mb-2 mt-5" href="{{route('create+compte+client')}}">Creer un compte pro</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="p-0 col-lg-6">
-                    <div class=" ms-3 shadow p-3 mb-0 bg-body rounded">
+                    <div class=" ms-3 shadow p-3 mb-0 bg-body rounded" style="height: 237px">
                         <div class="row ">
                             <div class="col" align="center">
-                                <p>Vous êtes employeur ?</p>
+                                <p class="p-0 mt-0 m-0">Vous êtes employeur ?</p>
                                 <p style="font-size: 10px;  color: rgb(158, 157, 157)">
                                     Accès facile, sécurisé et instantané. <br>
                                     Accédez facilement au marché des formations professionnelles et trouvez ce dont vous avez besoin sans vous déplacer.<br>
@@ -125,12 +182,12 @@
                                     à n'importe quel moment via formation.mg et dites adieu à vos tâches administratives redondantes et ennuyeuses,
                                     les archives en paperasse volumineuses,...
                                 </P>
-                                <a href="{{url('tarifs')}}" style="color: #801D68;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
+                                <a href="{{url('tarifs')}}" style="color: #9d76dc;;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
                                     {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn" href="{{route('create+compte+client')}}">Creer un compte pro</a> --}}
                             </div>
                             <div class="col" align="center">
-                                    <img class=" img-fluid" src="{{ asset('maquette/formation.jpg') }}" alt=""  alt="" style="height:70px; width:130px"><br>
-                                    <a style="background-color: #801D68; color:white; font-size: 11px " class=" btn mb-2 mt-1" href="{{route('create+compte+client')}}">Creer un compte pro</a>
+                                    <img class=" img-fluid" src="{{ asset('maquette/formation.jpg') }}" alt=""  alt="" style="height:100px; width:130px"><br>
+                                    <a style="background-color: #9d76dc; color:white; font-size: 11px; margin-top: 35px" class=" btn mb-2 " href="{{route('create+compte+client')}}">Creer un compte pro</a>
                             </div>
                         </div>
                     </div>

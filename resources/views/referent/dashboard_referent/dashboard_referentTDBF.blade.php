@@ -1,13 +1,14 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
+<link rel="stylesheet" href="{{asset('css/stagiaires.css')}}">
 {{-- <link rel="stylesheet" href="ttps://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"> --}}
 
 
 <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">
-        <a href="{{ route('home') }}" type="button" class="btn" style="font-size: 12px;"> <i class="fad fa-sliders-v" style="font-size: 10px;"></i>&nbsp;TDB système</a>
-        <a href="{{ route('homertdbf')}}" type="button" class="btn b active me-2 ms-2" style="font-size: 12px;"><i class="far fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
-        <a href="{{ route('homertdbq')}}" type="button" class="btn " style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
+        <a href="{{ route('home') }}" type="button" class="btn bb" style="font-size: 12px;"> <i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB système</a>
+        <a href="{{ route('homertdbf')}}" type="button" class="btn b active me-2 ms-2" style="font-size: 12px; color:#801D68"><i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
+        <a href="{{ route('homertdbq')}}" type="button" class="btn bb" style="font-size: 12px;"> <i class="fas fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
 </div>
 
 
@@ -16,7 +17,7 @@
         <div class="row mt-2">
             <div class="col-lg-4">
                 <div class="form-control">
-                    <p class="text-center" style="font-size: 11px;">TDB financier</p>
+                    <p class="text-center" style="font-size: 11px; color:#7535DC">TDB financier</p>
                     <p class="p-0 m-0 " style="font-size: 10px; font-weight: bold;">C.A actuel:
                         {{-- @php
                             foreach ($CA_actuel as $total) {
@@ -34,23 +35,70 @@
                         @endphp --}}
                         Ar TTC</p>
                     <hr>
-                    <div id="chart_div"></div>
+                    <div id="chart_div" style=""></div>
                 </div>
             </div>
             <div class=" p-0 col-lg-4">
-                <div class="form-control">
-                    <p class="text-center" style="font-size: 11px;">CA par module</p>
-                    <p class="p-0 m-0 " style="font-size: 10px;">Top 10 modules</p>
+                <div class="form-control" style="height: 233px">
+                    <p class="text-center" style="font-size: 11px; color:#7535DC">CA par module</p>
+                    <p class="p-0 m-0 " style="font-size: 10px;">Top 5 modules</p>
                     <hr>
-                    <div id="1"></div>
+                    <div id="1" style=""></div>
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="form-control">
-                    <p class="text-center" style="font-size: 11px;">CA par client</p>
-                    <p class="p-0 m-0 " style="font-size: 10px;">Top 10 clients</p>
+                <div class="form-control" style="height: 233px">
+                    <p class="text-center" style="font-size: 11px; color:#7535DC">CA par client</p>
+                    <p class="p-0 m-0 " style="font-size: 10px;">Top 5 clients</p>
                     <hr>
-                    <div id="2" ></div>
+                    <div id="2" style=""></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 mt-3">
+                <div class="form-control" style="height: 160px">
+                    <p class="text-center" style="font-size: 11px; color:#7535DC">Coût de formation</p>
+                    <hr>
+                    <div style="font-size: 11px">
+                        <div class="row">
+                            <div class="col-lg-6 p-1 mt-0 m-0">
+                                <div class="shadow-sm p-3 mb-1  mt-1 bg-body rounded">
+                                    <div class="row">
+                                        <div class="col-lg-8" >
+                                            <p class="p-0 m-0 ms-0" id="ft2"> Coût pédagogique</p>
+                                            <p class="p-0 m-0 mt-1 ms-0" id="ft155">45 %</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="" >
+                                                <p id="qssq">
+                                                    <i class='bx bxs-wallet' id="sssq"></i>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 p-1 mt-0 m-0">
+                                <div class="shadow-sm p-3 mb-1 mt-1 bg-body rounded">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <p class="p-0 m-0 ms-0" id="coll">Frais annexe</p>
+                                            <p class="p-0 m-0 mt-1 ms-0" id="ft155">200.000 Ar</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div>
+                                                <p id="pddp">
+                                                    <i class='bx bxs-wallet' id="sssq"></i>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,7 +106,7 @@
 </div>
 
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
     <script type="text/javascript">
@@ -74,6 +122,11 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['mois', 'prix', 'annee'],
+                ['2014', 1000, 400],
+                ['2015', 1170, 460],
+                ['2016', 660, 1120],
+                ['2017', 1030, 54]
+                ]);
                 // @php
                 // foreach ($GChart as $product) {
                 //     $val = "['" . $product->mois . "', " . $product->net_ttc . ', ' . $product->annee . ']';
@@ -83,7 +136,8 @@
             ]);
 
             var materialOptions = {
-                width: 320,
+                width: 270,
+                height:120,
                 chart: {
                     title: '',
                     subtitle: ''
@@ -110,7 +164,7 @@
             };
 
             var classicOptions = {
-                width: 300,
+                width: 270,
                 series: {
                     0: {
                         targetAxisIndex: 0
@@ -163,8 +217,8 @@
                 ]);
 
                 var options = {
-                    width:320,
-                    height:200,
+                    width:280,
+                    height:130,
                 chart: {
                     title: '',
                     subtitle: '',
@@ -193,8 +247,8 @@
                 ]);
 
                 var options = {
-                    width:320,
-                    height:200,
+                    width:280,
+                    height:130,
                 chart: {
                     title: '',
                     subtitle: '',
