@@ -5,13 +5,12 @@
     <div class="container-fluid">
         <div class="row">
 
-           <h3>Utilisateurs /</h3>
+            <h3>Utilisateurs / </h3>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}">
                                     Entreprises</a>
@@ -20,23 +19,10 @@
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
                                     Organisme de Formation</a>
                             </li>
-
-                            <li class="nav-item mx-1">
-                                <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
-                                    Responsables</a>
-                            </li>
-
-                            <li class="nav-item mx-1">
-
-                                <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
-                                    Stagiaires</a>
-
-                            </li>
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
                                     Admin</a>
                             </li>
-
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
                                     Super Admin</a>
@@ -88,49 +74,6 @@
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_cfp" />
                             <span style="color:#ff0000;" id="nif_cfp_err"></span>
                         </div>
-                        {{-- <label for=""> Logo </label>
-                        <p></p>
-                        <p></p>
-                        <input type="file" name="logo"><br><br>
-                        <label for=""> Nom </label><br>
-                        <input type="text" class="form-control" name="nom" autocomplete="off" required><br>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <label for=""> Lot </label><br>
-                                <input type="text" class="form-control" name="adresse_lot" autocomplete="off" required><br>
-                            </div>
-                            <div>
-                                <label for=""> Ville </label><br>
-                                <input type="text" class="form-control" name="adresse_ville" autocomplete="off" required><br>
-                            </div>
-                            <div>
-                                <label for=""> Région </label><br>
-                                <input type="text" class="form-control" name="adresse_region" autocomplete="off" required><br>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row">
-                            <div>
-                                <label for=""> E-mail </label><br>
-                                <input type="text" class="form-control" name="email" autocomplete="off" required><br>
-                            </div>
-                            <div>
-                                <label for=""> Site web </label><br>
-                                <input type="text" class="form-control" name="site" autocomplete="off" required><br>
-                            </div>
-                        </div>
-                        <label for=""> Téléphone(une seule numero) </label><br>
-                        <input type="text" class="form-control" name="telephone" autocomplete="off" required><br>
-                        <label for=""> Domaine </label><br>
-                        <input type="text" class="form-control" name="domaine" autocomplete="off" required><br>
-                        <label for=""> NIF </label><br>
-                        <input type="text" class="form-control" name="nif" autocomplete="off" required><br>
-                        <label for=""> STAT </label><br>
-                        <input type="text" class="form-control" name="stat" autocomplete="off" required><br>
-                        <label for=""> RCS</label><br>
-                        <input type="text" class="form-control" name="rcs" autocomplete="off" required><br>
-                        <label for=""> CIF </label><br>
-                        <input type="text" class="form-control sm-3" name="cif" autocomplete="off" required><br> --}}
-
                     </div>
                     <div class="col">
 
@@ -222,14 +165,7 @@
 
                     </div>
                 </div>
-                {{-- <div class="row">
-                    <div class="col-md-6">
 
-                    </div>
-                    <div class="col-md-6">
-
-                    </div>
-                </div> --}}
                 <br><br>
                 <div align="center">
                     <button type="submit" class="btn btn_enregistrer">&nbsp; Enregistrer </button>

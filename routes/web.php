@@ -139,22 +139,25 @@ Route::get('/utilisateur_new_admin','UtilisateurControlleur@new_admin')->name('u
 Route::get('/utilisateur_cfp','UtilisateurControlleur@cfp')->name('utilisateur_cfp');
 Route::get('/utilisateur_resp_cfp','UtilisateurControlleur@show_resp_cfp')->name('utilisateur_resp_cfp');
 Route::get('/update_resp_cfp/{id}','UtilisateurControlleur@update_resp_cfp')->name('update_resp_cfp');
+Route::get('/update_resp_etp/{id}','UtilisateurControlleur@update_resp_etp')->name('update_resp_etp');
 Route::get('/delete_resp_cfp/{id}','UtilisateurControlleur@delete_resp_cfp')->name('delete_resp_cfp');
-Route::get('/utilisateur_new_resp_etp',function(){
-    return view('admin.utilisateur.new_resp_cfp');
-})->name('utilisateur_new_resp_etp');
+Route::get('/delete_resp_etp/{id}','UtilisateurControlleur@delete_resp_etp')->name('delete_resp_etp');
+Route::get('/utilisateur_new_resp_cfp','UtilisateurControlleur@new_resp_cfp')->name('utilisateur_new_resp_cfp');
+Route::get('/utilisateur_new_resp_etp','UtilisateurControlleur@new_resp_etp')->name('utilisateur_new_resp_etp');
+Route::post('/save_new_resp_cfp','UtilisateurControlleur@save_new_resp_cfp')->name('save_new_resp_cfp');
+Route::post('/save_new_resp_etp','UtilisateurControlleur@save_new_resp_etp')->name('save_new_resp_etp');
 
 
 Route::get('/utilisateur_entreprise','UtilisateurControlleur@entreprise')->name('utilisateur_entreprise');
 Route::get('/utilisateur_cfp_delete/{id}','UtilisateurControlleur@delete_cfp')->name('utilisateur_cfp_delete');
+Route::get('/utilisateur_entreprise_delete/{id}','UtilisateurControlleur@delete_entreprise')->name('utilisateur_entreprise_delete');
 Route::get('/utilisateur_new_cfp','UtilisateurControlleur@new_cfp')->name('utilisateur_new_cfp');
-Route::get('/utilisateur_new_etp',function(){
-    return view('admin.utilisateur.new_etp');
-})->name('utilisateur_new_etp');
+Route::get('/utilisateur_new_etp','UtilisateurControlleur@new_entreprise')->name('utilisateur_new_etp');
 
 Route::get('/profil_cfp/{id}','UtilisateurControlleur@profil_cfp')->name('profil_cfp');
 Route::post('/utilisateur_register_cfp','UtilisateurControlleur@register_cfp')->name('utilisateur_register_cfp');
 Route::post('/utilisateur_update_cfp/{id}','UtilisateurControlleur@update_cfp')->name('utilisateur_update_cfp');
+Route::post('/utilisateur_update_etp/{id}','UtilisateurControlleur@update_entreprise')->name('utilisateur_update_etp');
 
 //route superadmin
 Route::get('/utilisateur_superAdmin','UtilisateurControlleur@superAdmin')->name('utilisateur_superAdmin');

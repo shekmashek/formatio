@@ -146,6 +146,8 @@ class NouveauCompteController extends Controller
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();
+                                    } else {
+                                        return redirect()->route('inscription_save');
                                     }
 
                                     return redirect()->route('inscription_save');
@@ -248,10 +250,12 @@ class NouveauCompteController extends Controller
                                     $name = $req->nom_resp_etp . ' ' . $req->prenom_resp_etp;
                                     Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
                                     $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
+
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();
+                                    } else {
+                                        return redirect()->route('inscription_save');
                                     }
-                                    return redirect()->route('inscription_save');
                                 } else {
                                     return back()->with('error', 'télephone existe déjà!');
                                 }

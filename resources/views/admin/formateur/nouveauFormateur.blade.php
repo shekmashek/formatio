@@ -18,13 +18,13 @@
 
                             <li class="nav-item">
                                 <a class="nav-link  {{ Route::currentRouteNamed('utilisateur_formateur') || Route::currentRouteNamed('utilisateur_formateur') ? 'active' : '' }}" href="{{route('utilisateur_formateur')}}">
-                                    <i class="fa fa-list">Formateurs</i></a>
+                                    <button class="btn btn_enregistrer">Formateurs</button></a>
                             </li>
 
                             <li class="nav-item">
 
                                 <a class="nav-link  {{ Route::currentRouteNamed('nouveau_formateur') ? 'active' : '' }}" aria-current="page" href="{{route('nouveau_formateur')}}">
-                                    <i class="fa fa-plus">Nouveau Formateur</i></a>
+                                    <button class="btn btn_enregistrer">Nouveau Formateur</button></a>
 
                             </li>
 

@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <br>
-                <h3>Utilisateurs / Centre de formations professionnelles</h3>
+                <h3>Utilisateurs / </h3>
             </div>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -14,40 +14,22 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                            <li class="nav-item">
-                                <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
-                                    Responsables</a>
+                            <li class="nav-item mx-1">
+                                <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}">
+                                    Entreprises</a>
                             </li>
-
-                            <li class="nav-item">
-
-                                <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
-                                    Stagiaires</a>
-
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_formateur') ? 'active' : '' }}" href="{{route('utilisateur_formateur')}}">
-                                    Formateurs</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
-                                    Admin</a>
-                            </li>
-
-                            <li class="nav-item">
+                            <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
                                     Organisme de Formation</a>
                             </li>
-
-                            <li class="nav-item">
+                            <li class="nav-item mx-1">
+                                <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
+                                    Admin</a>
+                            </li>
+                            <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
                                     Super Admin</a>
                             </li>
-
-
 
                         </ul>
 
@@ -56,43 +38,16 @@
                 </div>
             </nav>
 
+            <div class="col-lg-12">
+                <br>
+                <h4>Entreprise professionnelles / Nouveau</h4>
+            </div>
 
-            <form class="navbar-form navbar-left" role="search">
-                <div style="display: flex; justify-content: flex-end;">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Tout <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('liste_utilisateur',5)}}">5</a></li>
-                            <li><a href="{{route('liste_utilisateur',10)}}">10</a></li>
-                            <li><a href="{{route('liste_utilisateur',25)}}">25</a></li>
-                            <li><a href="{{route('liste_utilisateur',50)}}">50</a></li>
-                            <li><a href="{{route('liste_utilisateur',100)}}">100</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{route('liste_utilisateur')}}">Tout</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Rechercher par entreprise <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            @foreach($liste as $etp)
-                            <li><a href="{{route('utilisateur.show',$etp->id)}}">{{$etp->nom_etp}}</a></li>
-                            @endforeach
-                            <li class="divider"></li>
-                            <li><a href="{{route('liste_utilisateur')}}">Tout</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </form>
         </div>
 
         <div class="card" style="padding: 5px;">
             {{-- <form action="{{ route('utilisateur_register_cfp') }}" method="post" enctype="multipart/form-data"> --}}
-                <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
+            <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col">
@@ -100,7 +55,7 @@
                         <div class="form-group">
                             <label for="exampleFormControlInput1" class="form-control-label">Logo<strong style="color:#ff0000;">*</strong></label>
                             <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
-                    </div>
+                        </div>
 
                         <div class="row">
 
@@ -108,7 +63,7 @@
                                 <div class="form-group">
                                     <label for="name_cfp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
                                     <input type="text" name="name_etp" class="form-control input_inscription" id="name_etp" required />
-                                    <span style = "color:#ff0000;" id="name_cfp_err"></span>
+                                    <span style="color:#ff0000;" id="name_cfp_err"></span>
                                 </div>
                             </div>
                             <div class="col">
@@ -123,7 +78,18 @@
                         <div class="form-group">
                             <label for="name_entreprise" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
-                            <span style = "color:#ff0000;" id="nif_etp_err"></span>
+                            <span style="color:#ff0000;" id="nif_etp_err"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="#" class="form-control-label">Secteur d'activité<strong style="color:#ff0000;">*</strong></label>
+                            <select class="form-select" aria-label="Default select example" name="secteur_id" required id="secteur_id">
+                                @foreach ($secteur as $sect)
+                                <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
+                                @endforeach
+
+                            </select>
+
+
                         </div>
 
                     </div>
@@ -144,7 +110,7 @@
                                 <div class="form-group">
                                     <label for="nom_resp_cfp" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
                                     <input type="text" required name="nom_resp_etp" class="form-control input_inscription" id="nom_resp_etp" />
-                            </div>
+                                </div>
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group">
@@ -159,7 +125,7 @@
                                 <div class="form-group">
                                     <label for="cin_resp_cfp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
                                     <input type="text" name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
-                                    <span style = "color:#ff0000;" id="cin_resp_etp_err"></span>
+                                    <span style="color:#ff0000;" id="cin_resp_etp_err"></span>
                                 </div>
                             </div>
                             <div class="col">
@@ -176,7 +142,7 @@
                                 <div class="form-group">
                                     <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
                                     <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
-                                    <span style = "color:#ff0000;" id="email_resp_etp_err"></span>
+                                    <span style="color:#ff0000;" id="email_resp_etp_err"></span>
 
                                 </div>
                             </div>
@@ -184,7 +150,7 @@
                                 <div class="form-group">
                                     <label for="tel_resp_cfp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
                                     <input type="text" max=10 required name="tel_resp_etp" class="form-control input_inscription" id="tel_resp_etp" />
-                                    <span style = "color:#ff0000;" id="tel_resp_etp_err"></span>
+                                    <span style="color:#ff0000;" id="tel_resp_etp_err"></span>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +201,7 @@
                     </div>
                 </div> --}}
                 <br><br>
-                <div   align="center">
+                <div align="center">
                     <button type="submit" class="btn btn_enregistrer">&nbsp; Enregistrer </button>
                 </div>
             </form>

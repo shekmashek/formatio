@@ -12,7 +12,6 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}">
                                     Entreprises</a>
@@ -21,33 +20,15 @@
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
                                     Organisme de Formation</a>
                             </li>
-
-                            <li class="nav-item mx-1">
-                                <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
-                                    Responsables</a>
-                            </li>
-
-                            <li class="nav-item mx-1">
-
-                                <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
-                                    Stagiaires</a>
-
-                            </li>
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
                                     Admin</a>
                             </li>
-
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
                                     Super Admin</a>
                             </li>
-
-
-
                         </ul>
-
-
                     </div>
                 </div>
             </nav>
@@ -57,39 +38,6 @@
                 <h4>Organismes de formations professionnelles</h4>
             </div>
 
-
-
-            {{-- <form class="navbar-form navbar-left" role="search">
-                <div style="display: flex; justify-content: flex-end;">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Tout <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{route('liste_utilisateur',5)}}">5</a></li>
-            <li><a href="{{route('liste_utilisateur',10)}}">10</a></li>
-            <li><a href="{{route('liste_utilisateur',25)}}">25</a></li>
-            <li><a href="{{route('liste_utilisateur',50)}}">50</a></li>
-            <li><a href="{{route('liste_utilisateur',100)}}">100</a></li>
-            <li class="divider"></li>
-            <li><a href="{{route('liste_utilisateur')}}">Tout</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                Rechercher par entreprise <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                @foreach($liste as $etp)
-                <li><a href="{{route('utilisateur.show',$etp->id)}}">{{$etp->nom_etp}}</a></li>
-                @endforeach
-                <li class="divider"></li>
-                <li><a href="{{route('liste_utilisateur')}}">Tout</a></li>
-            </ul>
-        </div>
-
-    </div>
-    </form> --}}
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -195,7 +143,7 @@
                             <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('utilisateur_update_cfp',$cfp->id) }}" id="formPayement" method="POST">
+                            <form action="{{ route('utilisateur_update_cfp',$cfp->id) }}" id="edit_pdp_cfp" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="inputbox inputboxP mt-3">
                                     <span><i class="bx bxs-graduation"></i>&nbsp; Raison sociale<strong style="color:red">*</strong> </span>
@@ -262,7 +210,7 @@
                                 <div class="mt-4 mb-4">
                                     <div class="mt-4 mb-4 d-flex justify-content-between">
                                         <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
-                                        <button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button> </div>
+                                        <button type="submit"  class="btn btn_enregistrer">Valider</button> </div>
                                 </div>
                             </form>
 
