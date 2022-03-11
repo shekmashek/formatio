@@ -32,7 +32,7 @@
 
             <img src="{{asset('img_create-compte/instructor_signup.png')}}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h6 class="card-title text-center">Organisation de Formation</h6>
+                <h6 class="card-title text-center">Organisme de Formation</h6>
             </div>
         </a>
     </div>

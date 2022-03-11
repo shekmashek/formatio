@@ -84,7 +84,7 @@
             <div id="formulaire">
 
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h4 align="left" class="mb-2">Veuillez entrer le profile professionnel de votre organisation</strong></h4>
+                    <h4 align="left" class="mb-2">Veuillez entrer le profil professionnel de votre organisation</strong></h4>
 
                     <div class="form-group">
                         <label for="exampleFormControlInput1" class="form-control-label">Logo<strong style="color:#ff0000;">*</strong></label>

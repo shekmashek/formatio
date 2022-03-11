@@ -146,6 +146,8 @@ class NouveauCompteController extends Controller
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();
+                                    } else {
+                                        return redirect()->route('inscription_save');
                                     }
 
                                     return redirect()->route('inscription_save');
@@ -202,7 +204,6 @@ class NouveauCompteController extends Controller
                 $resp["fonction_resp"] = $req->fonction_resp_etp;
 
                 $verify = $this->new_compte->verify_etp($req->name_etp, $req->email_resp_etp);
-                $verify = $this->new_compte->verify_cfp($req->name_cfp, $req->email_resp_cfp);
                 $verify_etp_nif = $this->fonct->findWhere("entreprises", ["nif"], [$req->nif]);
                 $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_etp]);
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_etp]);
@@ -249,10 +250,12 @@ class NouveauCompteController extends Controller
                                     $name = $req->nom_resp_etp . ' ' . $req->prenom_resp_etp;
                                     Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
                                     $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
+
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();
+                                    } else {
+                                        return redirect()->route('inscription_save');
                                     }
-                                    return redirect()->route('inscription_save');
                                 } else {
                                     return back()->with('error', 'télephone existe déjà!');
                                 }
