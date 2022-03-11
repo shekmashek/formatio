@@ -134,21 +134,12 @@
                             </div>
                         </div>
                         @endif
-
-
-
                     </div>
-
                 </div>
-
-
                 @endforeach
-
                 @else
                 <h2>Aucun module pour cette formation.</h2>
                 @endif
-
-
             </div>
         </div>
     </div>
