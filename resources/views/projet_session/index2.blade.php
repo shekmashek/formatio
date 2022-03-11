@@ -126,9 +126,9 @@
                                     <th> Session </th>
                                     <th> Module </th>
                                     @can('isCFP')
-                                        @if ($prj->type_formation_id == 1)
+                                        {{-- @if ($prj->type_formation_id == 1) --}}
                                             <th> Entreprise </th>
-                                        @endif
+                                        {{-- @endif --}}
                                     @endcan
                                     @can('isReferent')
                                         @if ($prj->type_formation_id == 1)
@@ -156,9 +156,9 @@
                                                     </td>
                                                     <td>{{ $pj->nom_module }}</td>
                                                     @can('isCFP')
-                                                        @if ($pj->type_formation_id == 1)
+                                                        {{-- @if ($pj->type_formation_id == 1) --}}
                                                             <td> {{ $pj->nom_etp }} </td>
-                                                        @endif
+                                                        {{-- @endif --}}
                                                     @endcan
                                                     @can('isReferent')
                                                         @if ($pj->type_formation_id == 1)
