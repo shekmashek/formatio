@@ -30,83 +30,90 @@
     left: 2rem;
 }
 
-.input:focus+.form-control-placeholder,
-.input:valid+.form-control-placeholder {
-    padding-right: 0.5rem;opacity: 0;
+.input:focus + .form-control-placeholder,
+.input:valid + .form-control-placeholder {
+    padding-right: 0.5rem;
+    opacity: 0;
 }
 
-.annuaire{
+.annuaire {
     background: white;
 }
 
-.btn_submit{
+.btn_submit {
     background-color: #7635dc;
     color: white;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
 }
 
-.logo_formation img{
+.logo_formation img {
     height: 3.125rem;
     width: 3.125rem;
 }
 
-.recherche{
+.recherche {
     border: none;
     border-bottom: 5px solid #7635dc;
 }
 
-.btn_actions{
+.btn_actions {
     background: #7635dc;
     color: white;
     padding: 0.5rem 0.5rem;
     border: none;
     border-radius: 5px;
-    font-size: 0.900rem;
-    transition: all .5s ease;
+    font-size: 0.9rem;
+    transition: all 0.5s ease;
 }
 
-.btn_actions:hover{
+.btn_actions:hover {
     transform: scale(1.1);
 }
 
-.btn_actions .bx{
+.btn_actions .bx {
     position: relative;
-    top: .3rem;
-    margin-right: .5rem;
+    top: 0.3rem;
+    margin-right: 0.5rem;
     font-size: 1.4rem !important;
 }
 
-.btn_actions a{
+.btn_actions a {
     text-decoration: none;
     color: inherit;
 }
 
-.phone_detail{
+.phone_detail {
     background: rgba(128, 128, 128, 0.176);
     border: none;
-border-radius: 5px;
-padding: 0.5rem 1rem;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
 }
 
-.phone_detail .bx{
+.phone_detail .bx {
     font-size: 1.5rem;
     cursor: pointer;
 }
 
-.adresse{
+.adresse {
     color: rgba(35, 35, 248, 0.759);
 }
-.detail_content{
+.detail_content {
     background-color: white;
     padding: 1rem 1.5rem;
     border-radius: 5px;
     width: 80%;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     margin: auto;
+    transition: all .5s ease;
 }
-.filtres{
+
+.detail_content:hover{
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.filtres {
     border-top: 1px solid grey;
     border-bottom: 1px solid grey;
     padding: 1rem 1.5rem;
@@ -114,18 +121,42 @@ padding: 0.5rem 1rem;
     position: sticky;
     top: 3rem;
 }
-.filtres  h6{
+.filtres h6 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
 }
 
-.alphabet{
+.alphabet {
+    display: flex;
+    place-content: center;
+    font-size: 1.3rem;
+    letter-spacing: 1.5rem;
+    cursor: pointer;
+    color: grey;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+    background: #7535dc19;
+}
+.alphabet span{
+    text-decoration: none;
+}
+
+.alphabet span:hover{
+    color: #7635dc;
+}
+
+.logo_content{
     display: grid;
     place-content: center;
-    font-size: 1.5rem;
-    letter-spacing: 2rem;
-    cursor: pointer;
+}
+
+.logo_img{
+    width: 100px;
+    height: 60px;
+}
+.pagination{
+    display: flex;
+}
+.detail_content h4 a:hover{
     color: #7635dc;
-    border: 1px solid black;
-    padding: .5rem .5rem;
 }

@@ -252,26 +252,28 @@ class FormationController extends Controller
         return view('referent.catalogue.liste_formation', compact('categorie'));
     }
 
-    
+    public function inscription(Request $request){
+        $id_groupe = $request->id_groupe;
+        $id_type_formation = $request->type_formation_id;
+        return redirect()->route('detail_session',['id_session'=>$id_groupe,'type_formation'=>$id_type_formation]);
+    }
+
     public function annuaire(){
-        // if (Gate::allows('isCFP')) {
-        //     $cfp_id = cfp::where('user_id', $id_user)->value('id');
-        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
-        //     return view('admin.formation.formation', compact('formation'));
-        // }
-        // if (Gate::allows('isSuperAdmin')) {
-        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
-        //     return view('admin.formation.formation', compact('formation'));
-        // }
-        // if (Gate::allows('isFormateur')) {
-        //     $categorie = formation::orderBy('nom_formation')->get();
-        //     $domaines = Domaine::all();
-        //     return view('referent.catalogue.formation', compact('domaines', 'categorie'));
-        // }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
-            // $cfp = DB::select('select * from cfps order by nom');
+            $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $pagination = Cfp::orderBy('nom')->paginate(1);
-            return view('referent.catalogue.cfp_tous', compact('pagination'));;
+            return view('referent.catalogue.cfp_tous', compact('pagination','initial'));
         }
+    }
+
+    public function alphabet_filtre(Request $request){
+        $alpha = $request->Alpha;
+        $cfp = DB::select('select * from cfps where nom like "'.$alpha.'%" limit 0,5');
+        return response()->json($cfp);
+    }
+
+    public function detail_cfp($id){
+        $cfp = DB::select('select * from cfps where id = ?',[$id]);
+        return response()->view('referent.catalogue.detail_cfp',compact('cfp'));
     }
 }
