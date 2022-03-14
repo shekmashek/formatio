@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\responsable;
 use App\branche;
 use App\DepartementEntreprise;
-use App\Stagiaire;
+use App\stagiaire;
 use App\service;
-use App\Domaine;
-use App\Module;
+use App\domaine;
+use App\module;
 class RecherchemultiController extends Controller
 {
     /**
@@ -24,10 +24,10 @@ class RecherchemultiController extends Controller
         $id_etp = responsable::where('user_id',Auth::id())->value('entreprise_id');
         $branches=branche::where('entreprise_id',$id_etp)->get();
         $stagiaires=stagiaire::where('entreprise_id',$id_etp)->get();
-        $departement=DepartementEntreprise::where('entreprise_id',$id_etp)->get();
+        $departement=departementEntreprise::where('entreprise_id',$id_etp)->get();
         $service = db::select('select * from v_departement_service_entreprise  where entreprise_id = ?',[$id_etp]);
         $dom_mod=db::select('select * from v_groupe_projet_entreprise_module where entreprise_id = ?',[$id_etp]);
-        
+
         // $module=Module::all();
         // $liste_serv = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? ',[$id_etp]);
         return view('projet_session.recherche_admin',compact('branches','stagiaires','departement','service','dom_mod'));
