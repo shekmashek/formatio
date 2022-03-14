@@ -2,8 +2,8 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
 <section class="annuaire mb-5">
-    <div class="container g-0 p-0 recherche">
-        <div class="row g-0 m-0 p-3">
+    <div class="container-fluid g-0 p-0 recherche">
+        <div class="row g-0 m-0 pt-3">
             <div class="col-3 logo_formation text-center">
                 <img src="{{asset('img/images/logo_fmg54Ko.png')}}" alt="logo" class="img-fluid">
             </div>
@@ -27,14 +27,14 @@
             </div>
         </div>
     </div>
-    <div class="container my-5">
+    <div class="container my-5 p-5">
         <div class="row">
             <h4 class="text-center mb-3">Les Organismes de Formations près de chez vous</h4>
             <div class="row mb-5">
 
                 <div class="col-12 alphabet">
                     @foreach ($initial as $init)
-                        <span title="{{$init->initial}}" class="lien_filtre" id="{{$init->initial}}" role="button">{{$init->initial}}</span>
+                        <span title="{{$init->initial}}" class="lien_filtre activer" id="{{$init->initial}}" role="button">{{$init->initial}}</span>
                     @endforeach
                     {{-- @php
                         for($i ='A'; $i != 'AA'; $i++){
@@ -52,7 +52,7 @@
                     <p>Categories</p>
                 </div>
             </div>
-            <div class="col-9 justify-content-center">
+            <div class="col-9 justify-content-center px-5">
                 <div id="result">
                 @foreach ($pagination as $cfp)
                 <div class="row detail_content mb-5">
@@ -62,7 +62,7 @@
                     <div class="col-10 ">
                         <div class="row">
                             <h4><a href="{{route('detail_cfp',$cfp->id)}}">{{$cfp->nom}}</a></h4>
-                            <p>{{$cfp->domaine_de_formation}}</p>
+                            <p>{{$cfp->slogan}}</p>
                             <div class="col d-flex flex-row mb-2">
                                 <span class="btn_actions" role="button"><a href="#"><i
                                             class="bx bx-mail-send"></i>Email</a></span>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 @endforeach
-                </div>
+            </div>
             <div class="d-flex justify-content-center pagination">
                 {!! $pagination->links() !!}
             </div>
@@ -147,27 +147,29 @@ $(document).ready(function() {
                         html +=     '</div>';
                         html += '</div>';
                         html = html.replace(':?',userData[i]['logo']);
-                }
+                        if ($(this).hasClass('activer')) {
+                            $(this).removeClass('activer').addClass("activer_filtre");
+                        }else {
+                            $(this).removeClass('activer_filtre').addClass("activer");
+                        }
+                    }
 
-                $("#result").empty();
-                $("#result").append(html);
-                $(".pagination").css('display','flex');
-
+                    $("#result").empty();
+                    $("#result").append(html);
+                    $(".pagination").css('display','flex');
                 } else {
                     alert('error');
-                }
-                if (userData == "") {
-                    let page = '';
-                    page += '<h4 class="text-center">Aucun organisme de formation commençant par ce lettre</h4>';
-                    $("#result").empty();
-                    $("#result").append(page);
-                    $(".pagination").css('display','none');
                 }
             },
             error: function(error) {
                 console.log(error);
             },
         });
+        if ($(this).hasClass('activer')) {
+            $(this).removeClass('activer').addClass("activer_filtre");
+        }else {
+            $(this).removeClass('activer_filtre').addClass("activer");
+        }
     });
 });
 </script>

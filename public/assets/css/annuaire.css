@@ -160,3 +160,51 @@
 .detail_content h4 a:hover{
     color: #7635dc;
 }
+
+.activer_filtre{
+color: #7635dc;
+}
+
+/* details cfp */
+
+.details_content {
+    background-color: white;
+    padding: 1rem 1.5rem;
+    margin: auto;
+    transition: all .5s ease;
+    color: black;
+    border: none;
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.location{
+    background: url("../../images/CFP/Capture\ d’écran\ 2022-03-14\ à\ 15.44.30.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: content-box;
+}
+.services{
+    border: none;
+    border-bottom: 1px solid grey;
+}
+.services p{
+    color: grey;
+}
+
+.services .choisir{
+    color: black;
+}
+
+.services .border_end{
+    border: none;
+    border-right: 1px solid grey;
+}
+.services .bx{
+    color: #7635dc;
+    font-size: 1.5rem;
+    margin-right: .5em;
+    position: relative;
+    top: .3rem;
+}

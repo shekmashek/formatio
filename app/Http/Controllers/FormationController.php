@@ -283,7 +283,7 @@ class FormationController extends Controller
     public function annuaire(){
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $pagination = Cfp::orderBy('nom')->paginate(1);
+            $pagination = Cfp::orderBy('nom')->paginate(9);
             return view('referent.catalogue.cfp_tous', compact('pagination','initial'));
         }
     }
@@ -296,6 +296,7 @@ class FormationController extends Controller
 
     public function detail_cfp($id){
         $cfp = DB::select('select * from cfps where id = ?',[$id]);
+        // $cfp = DB::select('select * from v_horaire_cfp where id = ?',[$id]);
         return response()->view('referent.catalogue.detail_cfp',compact('cfp'));
     }
 }

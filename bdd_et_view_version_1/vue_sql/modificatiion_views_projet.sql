@@ -15,7 +15,8 @@ create or replace view v_projet_session as
         cfps.adresse_region as adresse_region_cfp,
         cfps.email as mail_cfp,
         cfps.telephone as tel_cfp,
-        cfps.domaine_de_formation,
+        cfps.slogan,
+        cfps.presentation,
         cfps.nif as nif_cfp,
         cfps.stat as stat_cfp,
         cfps.rcs as rcs_cfp,
@@ -94,7 +95,8 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation,
+        cfps.slogan,
+        cfps.presentation,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
@@ -275,7 +277,8 @@ create or replace view v_projet_cfp as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation as domaine_de_formation_cfp,
+        cfps.slogan as domaine_de_formation_cfp,
+        cfps.presentation as presentation,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
@@ -316,3 +319,26 @@ create or replace view v_projet_formation as
         formation_id,
         nom_formation,
         cfp_id;
+
+create or replace view v_horaire_cfp as
+select
+        h.id,
+        h.jours,
+        h.h_entree,
+        h.h_sortie,
+        h.cfp_id,
+        (cfps.nom) nom_cfp,
+        (cfps.adresse_lot) adresse_lot_cfp,
+        (cfps.adresse_ville) adresse_ville_cfp,
+        (cfps.adresse_region) adresse_region_cfp,
+        (cfps.email) mail_cfp,
+        (cfps.telephone) tel_cfp,
+        (cfps.slogan) domaine_de_formation_cfp,
+        (cfps.presentation) presentation,
+        (cfps.logo) logo_cfp,
+        (f.nom_formation) nom_formation,
+        (f.cfp_id) formation_cfp_id
+    from horaires as h
+    join cfps on cfps.id = h.cfp_id
+    join formations f on f.cfp_id = h.cfp_id;
+
