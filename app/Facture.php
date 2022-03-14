@@ -183,9 +183,9 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function verifyExistsFacture($cfp_id, $idProject, $idGroupe, $id_type_facture)
+    public function verifyExistsFacture($cfp_id, $idProject, $idGroupe_etp, $id_type_facture)
     {
-        $verify = DB::select('select (count(id)) verify from ' . $this->table . ' where projet_id = ? and groupe_id=? and type_facture_id=? and cfp_id=?', [$idProject, $idGroupe, $id_type_facture, $cfp_id]);
+        $verify = DB::select('select (count(id)) verify from ' . $this->table . ' where projet_id = ? and groupe_entreprise_id=? and type_facture_id=? and cfp_id=?', [$idProject, $idGroupe_etp, $id_type_facture, $cfp_id]);
         return $verify[0]->verify;
     }
 
@@ -223,7 +223,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     }
 
 
-    public function insert($cfp_id, $idProject, $idGroupe, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $reference_bc, $remise, $type_facture_id)
+    public function insert($cfp_id, $idProject,$entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $reference_bc, $remise, $type_facture_id)
     {
         $ttc = $this->TTC(($tabData['facture'] * $tabData['qte']), $taux);
         $ht = $tabData['facture'] * $tabData['qte'];
@@ -231,22 +231,22 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $path['path_bc'], $path['path_fa'], $ht, $idProject,
             $tabDataTypeFinance['id_type_payement'], $tabDataDate['invoice_date'],
             $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'], $tabDataDesc['description'], $tabDataDesc['other_message'],
-            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id
+            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id,$entrerpsie_id
         ];
 
-        DB::insert('insert into factures (bon_de_commande,devise,hors_taxe,projet_id,type_payement_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?)', $data);
+        DB::insert('insert into factures (bon_de_commande,devise,hors_taxe,projet_id,type_payement_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_entreprise_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id,entreprise_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?)', $data);
 
         DB::commit();
     }
 
     // fonction insert nouveau frais annexe par project
-    public function insert_frais_annexe($cfp_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
+    public function insert_frais_annexe($cfp_id,$projet_id,$entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
     {
         $ttc = $this->TTC(($montant * $qte), $taux);
         $ht = $montant * $qte;
-        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id];
+        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id,$projet_id,$entreprise_id];
 
-        DB::insert('insert into montant_frais_annexes (frais_annexe_id,num_facture,montant,hors_taxe,description,qte, created_at, updated_at,pu,date_frais_annexe,cfp_id) values (?,?,?,?,?,?, NOW(), NOW(),?, NOW(),?)', $data);
+        DB::insert('insert into montant_frais_annexes (frais_annexe_id,num_facture,montant,hors_taxe,description,qte, created_at, updated_at,pu,date_frais_annexe,cfp_id,projet_id,entreprise_id) values (?,?,?,?,?,?, NOW(), NOW(),?, NOW(),?,?,?)', $data);
         DB::commit();
     }
 
@@ -362,15 +362,15 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $imput->down_fa->move(public_path($path['str']), $path['name_fa']);
     }
 
-    public function verifyCreationFacture($cfp_id, $idProject, $idGroupe, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path)
+    public function verifyCreationFacture($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path)
     {
         $this->validation_form($imput);
         $fonction = new FonctionGenerique();
-        $verify = $this->verifyExistsFacture($cfp_id, $idProject, $idGroupe, $imput["type_facture"]);
+        $verify = $this->verifyExistsFacture($cfp_id, $idProject, $idGroupe_etp, $imput["type_facture"]);
 
         if ($verify == 0) {
 
-            $this->insert($cfp_id, $idProject, $idGroupe, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $imput["reference_bc"], $imput["remise"], $imput["type_facture"]);
+            $this->insert($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $imput["reference_bc"], $imput["remise"], $imput["type_facture"]);
 
             return back()->with('success', 'creation de la facture du project est effectué');
         } else {

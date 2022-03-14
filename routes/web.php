@@ -485,7 +485,7 @@ Route::get('taxe','FactureController@getTaxe')->name('taxe');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');
 Route::get('liste_facture/{id}','FactureController@redirection_facture')->name('liste_facture');
-// Route::get('liste_facture','FactureController@get_facture')->name('liste_facture');
+Route::get('edit_facture/{id}','FactureController@edit_facture')->name('edit_facture');
 
 
 Route::post('valid_facture','FactureController@valid_facture')->name('valid_facture');

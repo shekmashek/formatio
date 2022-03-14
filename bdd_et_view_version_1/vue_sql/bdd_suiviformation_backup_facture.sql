@@ -1,7 +1,20 @@
+CREATE OR REPLACE VIEW v_group_num_facture AS SELECT
+    cfp_id,
+    num_facture,
+    invoice_date,
+    due_date
+FROM
+    factures
+GROUP BY
+    cfp_id,
+    num_facture,
+    invoice_date,
+    due_date;
+
+
 CREATE OR REPLACE VIEW v_montant_pedagogique_facture AS SELECT
     cfp_id,
     projet_id,
-    entreprise_id,
     num_facture,
     SUM(qte) AS qte_totale,
     SUM(hors_taxe) AS hors_taxe,
@@ -13,7 +26,6 @@ GROUP BY
     cfp_id,
     num_facture,
     projet_id,
-    entreprise_id,
     due_date,
     invoice_date;
 
@@ -21,7 +33,6 @@ GROUP BY
 CREATE OR REPLACE VIEW v_montant_frais_annexe AS SELECT
     cfp_id,
     projet_id,
-    entreprise_id,
     num_facture,
     SUM(qte) AS qte_totale,
     SUM(hors_taxe) AS hors_taxe
@@ -30,7 +41,6 @@ FROM
 GROUP BY
     cfp_id,
     projet_id,
-    entreprise_id,
     num_facture;
 
 
@@ -38,7 +48,6 @@ GROUP BY
 CREATE OR REPLACE VIEW v_montant_brut_facture AS SELECT
     mpf.cfp_id,
     mpf.projet_id,
-    mpf.entreprise_id,
     mpf.num_facture,
     (
         mpf.hors_taxe + IFNULL(mfa.hors_taxe, 0)
@@ -48,12 +57,11 @@ CREATE OR REPLACE VIEW v_montant_brut_facture AS SELECT
 FROM
     v_montant_frais_annexe mfa
 RIGHT JOIN v_montant_pedagogique_facture mpf ON
-    mpf.num_facture = mfa.num_facture  AND mpf.cfp_id = mfa.cfp_id AND mpf.entreprise_id = mfa.entreprise_id AND  mpf.projet_id = mfa.projet_id;
+    mpf.num_facture = mfa.num_facture  AND mpf.cfp_id = mfa.cfp_id;
 
 CREATE OR REPLACE VIEW v_remise_facture AS SELECT
 	cfp_id,
     projet_id,
-    entreprise_id,
     num_facture,
     SUM(remise) / COUNT(num_facture) AS remise
 FROM
@@ -61,7 +69,6 @@ FROM
 GROUP BY
     num_facture,
     projet_id,
-    entreprise_id,
     cfp_id;
 
 
@@ -220,6 +227,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (factures.id) facture_id,
     (factures.projet_id) as projet_id,
     nom_projet,
+    groupes.entreprise_id,
     factures.type_payement_id,
     (type_payement.type) description_type_payement,
     bon_de_commande,
@@ -235,9 +243,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     qte,
     num_facture,
     factures.activiter,
-    factures.groupe_entreprise_id,
-    groupes.groupe_id,
-    groupes.entreprise_id,
+    factures.groupe_id,
     groupes.nom_groupe,
     pu,
     type_financement_id,
@@ -273,7 +279,7 @@ WHERE
     factures.type_payement_id = type_payement.id AND entreprises.secteur_id = secteurs.id AND
     type_financement_id = mode_financements.id AND
     factures.tax_id = taxes.id AND factures.cfp_id = projets.cfp_id  AND factures.projet_id = projets.id AND
-    factures.groupe_entreprise_id = groupes.groupe_entreprise_id AND groupes.entreprise_id = entreprises.id AND type_facture_id = type_facture.id;
+    factures.groupe_id = groupes.groupe_id AND groupes.entreprise_id = entreprises.id AND type_facture_id = type_facture.id;
 
 
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
@@ -305,9 +311,9 @@ where
 
 CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     factures.cfp_id,
-    factures.entreprise_id,
     (factures.id) facture_id,
     factures.num_facture,
+    entreprise_id,
     other_message,
     (
         DATEDIFF(
@@ -336,7 +342,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     GROUP BY
         factures.id,
         factures.cfp_id,
-        factures.entreprise_id,
+        entreprise_id,
         factures.num_facture,
         factures.other_message,
         facture_encour,
@@ -351,7 +357,7 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
 (factures.id) facture_id,
     factures.cfp_id,
     factures.num_facture,
-    factures.entreprise_id,
+    entreprise_id,
     other_message,
     (
         DATEDIFF(
@@ -381,7 +387,7 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
         factures.id,
         factures.cfp_id,
         factures.num_facture,
-        factures.entreprise_id,
+        entreprise_id,
         factures.other_message,
         facture_encour,
         v_facture_existant.description_type_facture,
