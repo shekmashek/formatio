@@ -47,8 +47,8 @@ class FormationController extends Controller
             // $domaines = Domaine::all();
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
 
-            $categorie = DB::select('select * from formations where status = 1 limit 7');
-            $module = DB::select('select * from moduleformation where formation_id = 1 and status = 2 limit 6');
+            $categorie = DB::select('select * from formations where status = 1 limit 5');
+            $module = DB::select('select * from moduleformation where  status = 2 limit 6');
             return view('referent.catalogue.formation', compact('categorie','module'));
         }
     }
@@ -225,6 +225,12 @@ class FormationController extends Controller
         $categorie = formation::all();
         return view('superadmin.catalogue.categories_formations', compact('categorie'));
     }
+    public function module_formations()
+    {
+
+        $module = module::all();
+        return view('superadmin.catalogue.formation_publier', compact('module'));
+    }
     public function ajout_categorie(Request $request)
     {
         $ids = $request->status;
@@ -241,6 +247,22 @@ class FormationController extends Controller
         }
         return back();
     }
+    public function ajout_module(Request $request)
+    {
+        $ids = $request->status;
+        $nombre_1 = 2;
+        $nombre_0 = 0;
+        module::where('status', 2)->update([
+            'status' => $nombre_0
+        ]);
+        foreach ($ids as $id) {
+
+            module::where('id', $id)->update([
+                'status' => $nombre_1
+            ]);
+        }
+        return back();
+    }
     public function affiche_categorie()
     {
         $categorie = DB::select('select formations.nom_formation
@@ -252,26 +274,28 @@ class FormationController extends Controller
         return view('referent.catalogue.liste_formation', compact('categorie'));
     }
 
-    
+    public function inscription(Request $request){
+        $id_groupe = $request->id_groupe;
+        $id_type_formation = $request->type_formation_id;
+        return redirect()->route('detail_session',['id_session'=>$id_groupe,'type_formation'=>$id_type_formation]);
+    }
+
     public function annuaire(){
-        // if (Gate::allows('isCFP')) {
-        //     $cfp_id = cfp::where('user_id', $id_user)->value('id');
-        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
-        //     return view('admin.formation.formation', compact('formation'));
-        // }
-        // if (Gate::allows('isSuperAdmin')) {
-        //     $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
-        //     return view('admin.formation.formation', compact('formation'));
-        // }
-        // if (Gate::allows('isFormateur')) {
-        //     $categorie = formation::orderBy('nom_formation')->get();
-        //     $domaines = Domaine::all();
-        //     return view('referent.catalogue.formation', compact('domaines', 'categorie'));
-        // }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
-            // $cfp = DB::select('select * from cfps order by nom');
+            $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $pagination = Cfp::orderBy('nom')->paginate(1);
-            return view('referent.catalogue.cfp_tous', compact('pagination'));;
+            return view('referent.catalogue.cfp_tous', compact('pagination','initial'));
         }
+    }
+
+    public function alphabet_filtre(Request $request){
+        $alpha = $request->Alpha;
+        $cfp = DB::select('select * from cfps where nom like "'.$alpha.'%" limit 0,5');
+        return response()->json($cfp);
+    }
+
+    public function detail_cfp($id){
+        $cfp = DB::select('select * from cfps where id = ?',[$id]);
+        return response()->view('referent.catalogue.detail_cfp',compact('cfp'));
     }
 }

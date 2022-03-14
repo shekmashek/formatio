@@ -55,6 +55,8 @@ Route::get('/hometdbq/{id?}','HomeControllerTDBQ@index')->name('hometdbq');
 Route::get('/homertdbf/{id?}','HomeControllerRTDBF@index')->name('homertdbf');
 Route::get('/homertdbq/{id?}','HomeControllerRTDBQ@index')->name('homertdbq');
 
+//Tableau de bord budget previsionnel
+Route::get('budget_previsionnel','HomeController@budget_previsionnel')->name('budget_previsionnel');
 
 Route::get('/liste_projet/{id?}', 'HomeController@liste_projet')->name('liste_projet');
 Route::get('/liste','HomeController@liste')->name('liste');
@@ -303,8 +305,13 @@ Route::get('/liste_formation/{id?}','FormationController@index')->name('liste_fo
 Route::get('/nouvelle_formation','FormationController@nouvelle_formation')->name('nouvelle_formation');
 //route categorie_formation
 Route::get('/categorie','FormationController@categorie_formations')->name('categorie');
+//route module_formations
+Route::get('/module','FormationController@module_formations')->name('module');
+
 //route ajout_categorie_formation
 Route::get('/ajout_categorie','FormationController@ajout_categorie')->name('ajout_categorie');
+//route ajout_module_formation
+Route::get('/ajout_module','FormationController@ajout_module')->name('ajout_module');
 //route catalogue de formation
 Route::get('result__formation','FormationController@rechercheParModule')->name('result_formation');
 Route::get('search__formation','FormationController@getModulesParReference')->name('search__formation');
@@ -315,6 +322,8 @@ Route::get('select_tous','FormationController@affichageTousCategories')->name('s
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','SessionController@inscription')->name('inscriptionInter');
 //route annuaire de cfp
 Route::get('annuaire','FormationController@annuaire')->name('annuaire');
+Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
+Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
 
 //route module
 Route::resource('module','ModuleController')->except([
@@ -893,3 +902,47 @@ Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_us
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
 //Route impression detail_calendrier
 Route::get('detail_printpdf/{id}','DetailController@detail_printpdf')->name('detail_printpdf');
+
+//=================== route pour moderne,fléxible et sécurisé etc
+Route::get('/moderne', function () {
+    return view('/moderne');
+});
+
+Route::get('/gestiond', function () {
+    return view('/gestiond');
+});
+
+Route::get('/gestionf', function () {
+    return view('/gestionf');
+});
+
+Route::get('/gestiona', function () {
+    return view('/gestiona');
+});
+
+
+Route::get('/gestionc', function () {
+    return view('/gestionc');
+});
+
+Route::get('/qualite', function () {
+    return view('/qualite');
+});
+
+
+Route::get('/communication', function () {
+    return view('/communication');
+});
+
+Route::get('/elearning', function () {
+    return view('/elearning');
+});
+
+
+Route::get('/fonctionnalitea', function () {
+    return view('/fonctionnalitea');
+});
+//Route budgetisation
+Route::get('budget','PlanFormationController@budgetisation')->name('budget');
+Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
+Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
