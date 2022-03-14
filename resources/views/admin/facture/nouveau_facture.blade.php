@@ -417,10 +417,6 @@
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{asset('js/facture.js')}}"></script>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/projet_inter
 
 <script type="text/javascript">
     // ========= show facture existe déjà

@@ -77,7 +77,11 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+                <li class="nav-item btn_next">
+                    <a href="{{route('liste_facture',2)}}" class="nav-link">
+                        Voir tout facture
+                    </a>
+                </li>
                 <li class="nav-item btn_next">
                     <a class="nav-link  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">Liste des Factures</a>
                 </li>
@@ -102,9 +106,9 @@
                     <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par thématique de formation</a>
                 </h6>
                 <div class="collapse multi-collapse" id="detail_par_thematique">
-                    <form class="mt-1 mb-2 form_colab" action="{{route('recherche_intervale_date_appel_offre')}}" method="POST" enctype="multipart/form-data">
+                    <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <label for="dte_debut" class="form-label" align="left">entre date <strong style="color:#ff0000;">*</strong></label>
+                        <label for="dte_debut" class="form-label" align="left"> date entre <strong style="color:#ff0000;">*</strong></label>
                         <input required type="date" name="dte_debut" class="form-control" />
                         <br>
                         <label for="dte_fin" class="form-label" align="left">à date <strong style="color:#ff0000;">*</strong></label>
@@ -112,23 +116,6 @@
                         <button type="submit" class="btn_enregistrer">recherche</button>
                     </form>
                 </div>
-
-
-                {{-- <h6>
-                        <a data-bs-toggle="collapse" href="#detail_par_of" role="button" aria-expanded="false" aria-controls="detail_par_of">Recherche par Organisme de formation</a>
-                    </h6>
-                    <div class="collapse multi-collapse" id="detail_par_of">
-                        <form class="mt-1 form_colab" action="{{route('recherche_thematique_formation')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <label for="domaine" class="form-label" align="left">organisme de formation<strong style="color:#ff0000;">*</strong></label>
-                <select class="form-select" aria-label="Default select example" name="domaine" id="domaine">
-                    <option value="#">Numerika Center</option>
-                </select>
-                <br>
-                <button type="submit" class="btn_enregistrer">recherche</button>
-                </form>
-            </div> --}}
-
 
             <h6>
                 <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par Numero Facture</a>
@@ -230,11 +217,8 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li class="dropdown-item">
-                                                <form action="{{route('valid_facture')}}" method="POST">
-                                                    @csrf
-                                                    <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn btn_enregistrer" style="color: rgb(211, 108, 23)"> Modifier facture</button>
-                                                </form>
+                                                <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn btn_enregistrer" style="color: rgb(211, 108, 23)"> Modifier facture</button>
+                                            </a>
                                             </li>
                                             <li class="dropdown-item">
                                                 <form action="{{route('valid_facture')}}" method="POST">
@@ -382,18 +366,6 @@
                                             </ul>
                                         </div>
                                     </div>
-
-                                    {{-- <div class="btn-group dropleft">
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}">PDF</a>
-                                            <a href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class="btn btn-info"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
-                                            <hr class="dropdown-divider">
-                                            <a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a>
-                                        </div>
-                                    </div> --}}
                                 </td>
                                 @endcanany
                                 @endif
@@ -406,18 +378,10 @@
                         @endif
                     </tbody>
                 </table>
-                {{--
-                            </div>
-                        </div>
-
-                    </div> --}}
             </div>
             {{-- --}}
 
             <div class="tab-pane fade" id="nav-encour" role="tabpanel" aria-labelledby="nav-encour-tab">
-                {{-- <div class="container-fluid">
-                        <div class="row">
-                            <div class="col"> --}}
                 <h5 style="color: #AA076B">Facture En Cour</h5>
                 <table class="table table-striped ">
                     <thead>
@@ -449,22 +413,6 @@
                             <td>{{$actif->invoice_date}}</td>
                             <td>{{$actif->due_date}}</td>
                             <td>{{$actif->totale_jour.' jour(s)'}}</td>
-                            {{-- @if ($actif->facture_encour == "valider")
-                            <td style="color:red;"><i class="fa fa-bolt"></i>{{$actif->facture_encour}}</td>
-                            <td>
-                                <div class="btn-group dropleft">
-                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item btn btn-default btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
-                                        <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class=" btn btn-default btn-block mb-2"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
-                                        <hr class="dropdown-divider">
-                                        <a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a>
-                                    </div>
-                                </div>
-                            </td>
-                            @endif --}}
                             @if ($actif->facture_encour == "en_cour")
                             <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
                             @canany(['isCFP'])
@@ -505,9 +453,6 @@
             {{-- --}}
 
             <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
-                {{-- <div class="container-fluid">
-                        <div class="row">
-                            <div class="col"> --}}
                 <h5 style="color: #AA076B">Facture Payer</h5>
                 <table class="table table-striped ">
                     <thead>
@@ -541,7 +486,7 @@
                             <td>{{$actif->totale_jour.' jour(s)'}}</td>
                             @if ($actif->facture_encour == "valider")
                             <td style="color:red;"><i class="fa fa-bolt"></i>{{$actif->facture_encour}}</td>
-                            @canany(['isCFP'])]
+                            @canany(['isCFP'])
                             <td>
                                 <div class="btn-group dropleft">
                                     <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -560,7 +505,7 @@
                             @endcanany
                             @elseif ($actif->facture_encour == "en_cour")
                             <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
-                            @canany(['isCFP'])]
+                            @canany(['isCFP'])
                             <td>
                                 <div class="btn-group dropleft">
                                     <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -575,7 +520,7 @@
                             @endcanany
                             @else
                             <td style="color:rgb(15, 221, 67);"><i class="fa fa-check-circle"></i><i class="fa fa-check-circle"></i> {{$actif->facture_encour}}</td>
-                            @canany(['isCFP'])]
+                            @canany(['isCFP'])
                             <td>
                                 <div class="dropdown">
                                     <div class="btn-group dropstart">
@@ -602,9 +547,6 @@
                         @endif
                     </tbody>
                 </table>
-                {{-- </div>
-                        </div>
-                    </div> --}}
             </div>
 
 
