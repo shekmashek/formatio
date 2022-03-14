@@ -153,7 +153,7 @@ CREATE TABLE cfps (
   nom varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci default 'XXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -210,3 +210,10 @@ CREATE TABLE responsables_cfp(
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE detail_evaluation_action_formation
+	DROP FOREIGN KEY detail_evaluation_action_formation_ibfk_2;
+
+alter table detail_evaluation_action_formation 
+  add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE;

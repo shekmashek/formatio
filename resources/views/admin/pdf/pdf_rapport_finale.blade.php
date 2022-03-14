@@ -204,7 +204,7 @@ hr{
                 <p class="p-font-size">Rapport de formation {{ $data["projet"]->nom_formation }}</p>
             </div>
             <div class="float-right">
-                <p class="p-font-size">{{ $data["projet"]->nom_cfp }}</p>
+                <p class="p-font-size">&nbsp;{{ $data["projet"]->nom_cfp }}</p>
             </div>
 
         </div>
@@ -291,9 +291,12 @@ hr{
                         <table class="table" border="1">
                             <thead>
                                 <tr>
-                                    <th>Numero</th>
-                                    <th>NOM</th>
-                                    <th>PRENOM</th>
+                                    <th>Photo</th>
+                                    <th>Matricule</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Téléphone</th>
+                                    <th>Email</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -302,9 +305,12 @@ hr{
                                 @if ($data["groupes"][$i]->groupe_id == $stagiaire->groupe_id)
 
                                 <tr>
-                                    <th>N°{{$stagiaire->stagiaire_id}}</th>
-                                    <th scope="row">{{$stagiaire->nom_stagiaire}}</th>
-                                    <td>{{$stagiaire->prenom_stagiaire}}</td>
+                                    <th><img src="{{ public_path('images/stagiaires/'.$stagiaire->photos) }}" alt="photo_stg" class="logo"></th>
+                                    <th>{{$stagiaire->matricule}}</th>
+                                    <th>{{$stagiaire->nom_stagiaire}}</th>
+                                    <th>{{$stagiaire->prenom_stagiaire}}</th>
+                                    <th scope="row">{{$stagiaire->telephone_stagiaire}}</th>
+                                    <td>{{$stagiaire->mail_stagiaire}}</td>
                                 </tr>
 
                                 @endif
@@ -322,20 +328,20 @@ hr{
 
 
             <h6 class="my-1">2.3 EQUIPE DU PROJET :</h6>
-            <p>L’équipe du projet de formation est composée de quatre ({{count($data["toutformateurs"])}}) personnes remplissant chacune des responsabilités précises.</p>
+            <p>L’équipe du projet de formation est composée des personnes suivantes remplissant chacune des responsabilités précises.</p>
             <li>
-                Le chef de projet :
+                Référents administratif :
             </li>
 
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    <p>En la personne de <strong>M. Levy RAVELOSON</strong> , qui est le garant de toute les opérations administratives et financières du projet chez <strong>{{ $data["projet"]->nom_cfp }}</strong></p>
+                    <p>En la personne de <strong>{{ $data['responsable']->nom_resp_cfp.' '.$data['responsable']->prenom_resp_cfp }}</strong> , qui est le garant de toute les opérations administratives et financières du projet chez <strong>{{ $data["projet"]->nom_cfp.'(Email : '.$data["projet"]->mail_cfp.', téléphone : '.$data["projet"]->tel_cfp.')' }}</strong></p>
                 </div>
             </div>
 
             <li>
-                Les consultants formateurs junior qui assurent toutes les activités de formation ainsi que les activités de reporting qui suit :
+                Le(s) formateur(s) qui assurent toutes les activités de formation ainsi que les activités de reporting qui suit :
             </li>
 
             <div class="row">
@@ -343,7 +349,7 @@ hr{
                 <div class="col-md-10">
                     @foreach ($data["toutformateurs"] as $listeformateur)
                     <li>
-                        {{$listeformateur->prenom_formateur.' '.$listeformateur->nom_formateur}}
+                        {{$listeformateur->prenom_formateur.' '.$listeformateur->nom_formateur.' - '.$listeformateur->mail_formateur.' - '.$listeformateur->numero_formateur}}
                     </li>
                     @endforeach
 
@@ -354,7 +360,15 @@ hr{
             <p>Lieu : Siège {{$data["projet"]->nom_etp.' '.$data["lieu_string"]}}</p>
 
             @foreach ($data["detail_formation"] as $detail)
-                <p>Date : {{$detail->date_debut.' au '.$detail->date_fin}}</p>
+                <p>Date : 
+                    @php
+                        setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($detail->date_debut));
+                    @endphp
+                    &nbsp; au &nbsp;
+                    @php
+                        setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($detail->date_fin));
+                    @endphp
+                </p>
             @endforeach
 
 

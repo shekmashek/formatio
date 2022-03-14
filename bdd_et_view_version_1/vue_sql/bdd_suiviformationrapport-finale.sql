@@ -225,14 +225,14 @@ insert into detail_evaluation_action_formation values(4,94,4,14,NULL,NULL);
 
 create or replace view v_evaluation_action_formation as
 select
-        (detail_evaluation_action_formation.id) id,(evaluation_action_formation.id) action_formation_id , titre,pourcent,projet_id
+        (detail_evaluation_action_formation.id) id,(evaluation_action_formation.id) action_formation_id , titre,pourcent,groupe_id
 from
     detail_evaluation_action_formation,evaluation_action_formation
 where
     evaluation_action_formation_id = evaluation_action_formation.id;
 
 
-create or replace view v_pourcent_globale_evaluation_action_formation as select (ROUND(AVG(pourcent),2)) globale,projet_id from v_evaluation_action_formation group by projet_id;
+create or replace view v_pourcent_globale_evaluation_action_formation as select (ROUND(AVG(pourcent),2)) globale,groupe_id from v_evaluation_action_formation group by groupe_id;
 
 
 --  mila view ity SELECT * FROM `v_detailmoduleformation`
@@ -254,11 +254,11 @@ where
     v_detailmoduleformation.detail_id = v_detail_cour.detail_id;
 
 create or replace view v_trie_detail_date as
-select projet_id,h_debut,h_fin,date_detail from v_programme_detail_activiter group by projet_id,h_debut,h_fin,date_detail;
+select groupe_id,h_debut,h_fin,date_detail from v_programme_detail_activiter group by groupe_id,h_debut,h_fin,date_detail;
 
 
 create or replace view v_trie_detail_programme as
-select projet_id,programme_id,titre_programme from v_programme_detail_activiter group by projet_id,programme_id,titre_programme;
+select groupe_id,programme_id,titre_programme from v_programme_detail_activiter group by groupe_id,programme_id,titre_programme;
 
 /*
   insert into details(lieu,h_debut,h_fin,date_detail,projet_id,groupe_id,session_id,module_id,formateur_id,created_at,updated_at,cours_id)

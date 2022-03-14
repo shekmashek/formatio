@@ -28,14 +28,19 @@ class RapportFinaleController extends Controller
 
     public function rapport(Request $req)
     {
-        $data = array();
+        $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+    
+        $data = array();
+
+        $data['responsable'] = $resp;
 
         $projet_id = $req->projet_id;
         $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where projet_id = ?', [$projet_id])[0]->entreprise_id;
-        $para=["entreprise_id","projet_id"];
+        $para=["entreprise_id","groupe_id"];
         $val=[$entreprise_id,$req->projet_id];
-        $para2=["projet_id"];
+        $para2=["groupe_id"];
         $val2=[$req->projet_id];
 
         $data["projet"] = $fonct->findWhereMulitOne("v_groupe_projet_entreprise_module",$para,$val);
@@ -44,7 +49,7 @@ class RapportFinaleController extends Controller
         $data["groupes"] = $fonct->findWhere("v_groupe_projet_entreprise_module",$para2,$val2);
         $data["stagiaires"] =$fonct->findWhere("v_stagiaire_groupe",$para2,$val2);
         $data["detail_formation"] = $fonct->findWhere("v_date_formation",$para2,$val2);
-        $data["but_objectif"] = $fonct->findAllQuery("select lieu,projet_id,module_id,reference,nom_module FROM v_detailmodule  where projet_id='".$req->projet_id."' group by lieu,projet_id,module_id,reference,nom_module");
+        $data["but_objectif"] = $fonct->findAllQuery("select lieu,groupe_id,module_id,reference,nom_module FROM v_detailmodule  where groupe_id='".$req->projet_id."' group by lieu,groupe_id,module_id,reference,nom_module");
         $data["detail_activiter"] = $fonct->findWhere("v_detailmodule",$para2,$val2);
         $data["pedagogique"] = $fonct->findAll("pedagogique");
         $data["obj_pedagogique"] = $fonct->findWhere("objectif_pedagogique",$para2,$val2);
@@ -93,9 +98,9 @@ class RapportFinaleController extends Controller
             "dpi" => 130
         ]);
 
-        // return view('admin.pdf.pdf_rapport_finale',compact('data'));
-        $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
-        return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
+        return view('admin.pdf.pdf_rapport_finale',compact('data'));
+        // $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
+        // return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
     }
 
 
@@ -113,9 +118,9 @@ class RapportFinaleController extends Controller
         $projet_id = $req->projet_id;
         $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where projet_id = ?', [$projet_id])[0]->entreprise_id;
 
-        $para=["entreprise_id","projet_id"];
+        $para=["entreprise_id","groupe_id"];
         $val=[$entreprise_id,$req->projet_id];
-        $para2=["projet_id"];
+        $para2=["groupe_id"];
         $val2=[$req->projet_id];
 
         $data["projet"] = $fonct->findWhereMulitOne("v_groupe_projet_entreprise",$para,$val);
@@ -155,7 +160,7 @@ class RapportFinaleController extends Controller
 
         $data["verify_evaluaction_action_formation"] =  array();
         for($i=0;$i<count($data["totale_evaluation_action_formation"]);$i+=1){
-            $temp = $fonct->findWhereMulitOne("detail_evaluation_action_formation",["evaluation_action_formation_id","projet_id"],[$data["totale_evaluation_action_formation"][$i]->id,$projet_id]);
+            $temp = $fonct->findWhereMulitOne("detail_evaluation_action_formation",["evaluation_action_formation_id","groupe_id"],[$data["totale_evaluation_action_formation"][$i]->id,$projet_id]);
 
             if($temp == null){
                 $data["verify_evaluaction_action_formation"][] = $data["totale_evaluation_action_formation"][$i];

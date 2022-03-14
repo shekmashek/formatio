@@ -99,7 +99,7 @@
                                                     class="type_inter mt-1 m-0">{{ $prj->type_formation }}</button></h6>&nbsp;&nbsp;
                                         @endif
                                     </div>
-                                    <div class="col-4 p-0">
+                                    <div class="col-5 p-0">
                                         @foreach ($projet_formation as $pf)
                                         @if ($pf->projet_id == $prj->projet_id)
                                             <h6 class="m-0"><label
@@ -108,7 +108,7 @@
                                         @endif
                                         @endforeach
                                     </div>
-                                    <div class="col-1"><a href="{{ route('nouveauRapportFinale',[$prj->projet_id]) }}"><button class="btn rapport_finale">Rapport</button></a></div>
+                                    
                                     <div class="col-1 text-end p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
@@ -126,9 +126,9 @@
                                     <th> Session </th>
                                     <th> Module </th>
                                     @can('isCFP')
-                                        {{-- @if ($prj->type_formation_id == 1) --}}
+                                        @if ($prj->type_formation_id == 1)
                                             <th> Entreprise </th>
-                                        {{-- @endif --}}
+                                        @endif
                                     @endcan
                                     @can('isReferent')
                                         @if ($prj->type_formation_id == 1)
@@ -138,7 +138,9 @@
                                     <th> Date du projet</th>
 
                                     <th> Statut </th>
-                                    {{-- <th></th> --}}
+                                    @if ($prj->type_formation_id == 1)
+                                        <th></th>
+                                    @endif
                                 </thead>
                                 <tbody class="tbody_projet">
 
@@ -152,13 +154,13 @@
                                             @if ($prj->projet_id == $pj->projet_id)
                                                 <tr>
                                                     <td> <a
-                                                            href="{{ route('detail_session', [$pj->groupe_id, $type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
+                                                            href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                     </td>
                                                     <td>{{ $pj->nom_module }}</td>
                                                     @can('isCFP')
-                                                        {{-- @if ($pj->type_formation_id == 1) --}}
+                                                        @if ($pj->type_formation_id == 1)
                                                             <td> {{ $pj->nom_etp }} </td>
-                                                        {{-- @endif --}}
+                                                        @endif
                                                     @endcan
                                                     @can('isReferent')
                                                         @if ($pj->type_formation_id == 1)
@@ -172,6 +174,12 @@
                                                     <td>
                                                         <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
                                                     </td>
+                                                    @if ($prj->type_formation_id == 1)
+                                                        <td>
+                                                            <a href="{{ route('nouveauRapportFinale',[$pj->groupe_id]) }}"><button class="btn rapport_finale">Rapport</button></a>
+                                                        </td>
+                                                    @endif
+                                                    
                                                     {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
                                 data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
 
@@ -329,6 +337,9 @@
                                                     </div>
                                                     {{-- fin --}}
                                                 </tr>
+                                                @if ($prj->type_formation_id == 2)
+                                                    @break
+                                                @endif
                                             @endif
                                         @endforeach
                                     @endif

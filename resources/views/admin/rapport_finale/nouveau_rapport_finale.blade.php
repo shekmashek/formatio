@@ -1106,7 +1106,7 @@ h6{
 <div class="container">
     <div class="row">
         <div class="col-m-12">
-            <a href="{{ route('downRapportFinale',[$data["projet"]->projet_id]) }}"><button type="button" class="btn btn-outline-secondary"><i class="bx bxs-file-pdf"></i>Exporter en pdf</button></a>
+            <a href="{{ route('downRapportFinale',[$data["projet"]->groupe_id]) }}"><button type="button" class="btn btn-outline-secondary"><i class="bx bxs-file-pdf"></i>Exporter en pdf</button></a>
         </div>
     </div>
 </div>

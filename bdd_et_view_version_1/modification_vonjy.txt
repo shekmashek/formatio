@@ -17,3 +17,9 @@ creation table status(Modification_bdd(projet))
 
 ALTER TABLE groupe_entreprises
 ADD CONSTRAINT incription UNIQUE (groupe_id,entreprise_id);
+
+--------Mars 14
+modification vue  v_formateur_projet (bdd_suiviformation_view_4.0(modification_views_projet))
+modification vue v_evaluation_action_formation (bdd_suiviformationrapport-finale)
+modification vue v_pourcent_globale_evaluation_action_formation (bdd_suiviformationrapport-finale)
+modification vue v_trie_detail_date (bdd_suiviformationrapport-finale)

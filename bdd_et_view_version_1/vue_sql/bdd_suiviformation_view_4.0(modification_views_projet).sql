@@ -528,7 +528,7 @@ create or replace view v_formateur_projet as
         f.cin,
         f.specialite,
         f.niveau,
-        d.projet_id
+        d.groupe_id
     from
         v_demmande_cfp_formateur f join details d on f.formateur_id = d.formateur_id
     group by
@@ -544,7 +544,7 @@ create or replace view v_formateur_projet as
         f.cin,
         f.specialite,
         f.niveau,
-        d.projet_id;
+        d.groupe_id;
 
 
 create or replace view v_programme_detail_activiter as

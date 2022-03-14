@@ -515,7 +515,6 @@ class HomeController extends Controller
 
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
             $projet = DB::select($sql);
             // dd($projet);
@@ -537,7 +536,6 @@ class HomeController extends Controller
             $module = $fonct->findAll("modules");
 
             $type_formation = DB::select('select * from type_formations');
-
             return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation'));
         }
         if (Gate::allows('isFormateur')) {
