@@ -37,13 +37,13 @@
           threshold: {
             line: { color: "red", width: 2 },
             thickness: 0.75,
-            value: 280
+            value: @php echo $total_budget[0]->total @endphp
           },
-          steps: [
-            { range: [0,@php echo $total_engage[0]->engage @endphp], color: "grey" },
-            { range: [50000,@php echo $total_realise[0]->realise @endphp], color: "grey" },
-            { range: [@php echo $total_realise[0]->realise @endphp,  @php echo $total_budget[0]->total @endphp], color: "blue" }
-          ]
+          // steps: [
+          //   { range: [0,@php echo $total_engage[0]->engage @endphp], color: "grey" },
+          //   { range: [50000,@php echo $total_realise[0]->realise @endphp], color: "grey" },
+          //   { range: [@php echo $total_realise[0]->realise @endphp,  @php echo $total_budget[0]->total @endphp], color: "blue" }
+          // ]
         }
       }
     ];
