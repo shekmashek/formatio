@@ -397,29 +397,31 @@ hr{
                 </p>
                 @endforeach
 
-            @foreach ($data["desc_objectif"] as $object)
+            {{-- @foreach ($data["desc_objectif"] as $object) --}}
 
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-10">
-                    <p>
-                        {{$object->description}}
-                    </p>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        <p>
+                            {{-- {{$object->description}} --}}
+                            Objectif(s) global(aux) de la formation :
+                        </p>
 
-                    @foreach ($data["data_desc_objectif"] as $dataq)
-                    @if ($dataq->but_objectif_id == $object->id)
+                        {{-- @foreach ($data["data_desc_objectif"] as $dataq)
+                        @if ($dataq->but_objectif_id == $object->id) --}}
 
-                    <li>
-                        {{$dataq->description}}
-                    </li>
+                        <li>
+                            {{-- {{$dataq->description}} --}}
+                            {{ $data["data_desc_objectif"]->objectif }}
+                        </li>
 
-                    @endif
-                    @endforeach
+                        {{-- @endif
+                        @endforeach --}}
 
+                    </div>
                 </div>
-            </div>
 
-            @endforeach
+            {{-- @endforeach --}}
 
 
             <h6 class="my-2">3.2. PROGRAMME DETAILLE DES ACTIVITES :</h6>

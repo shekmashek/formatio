@@ -54,7 +54,7 @@ class RapportFinaleController extends Controller
         $data["pedagogique"] = $fonct->findAll("pedagogique");
         $data["obj_pedagogique"] = $fonct->findWhere("objectif_pedagogique",$para2,$val2);
         $data["desc_objectif"] = $fonct->findAll("but_objectif");
-        $data["data_desc_objectif"] = $fonct->findWhere("objectif_globaux",$para2,$val2);
+        $data["data_desc_objectif"] = $fonct->findWhereMulitOne("v_groupe_projet_entreprise_module",$para2,$val2);
         $data["feed_back"] = $fonct->findWhereMulitOne("feed_back",$para2,$val2);
         $data["conclusion"] = $fonct->findWhere("conclusion",$para2,$val2);
         $data["evaluation_resultat"] = $fonct->findWhere("evaluation_resultat",$para2,$val2);
@@ -98,9 +98,9 @@ class RapportFinaleController extends Controller
             "dpi" => 130
         ]);
 
-        return view('admin.pdf.pdf_rapport_finale',compact('data'));
-        // $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
-        // return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
+        // return view('admin.pdf.pdf_rapport_finale',compact('data'));
+        $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
+        return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
     }
 
 
@@ -147,7 +147,8 @@ class RapportFinaleController extends Controller
         $data["pedagogique"] = $fonct->findAll("pedagogique");
         $data["obj_pedagogique"] = $fonct->findWhere("objectif_pedagogique",$para2,$val2);
         $data["desc_objectif"] = $fonct->findAll("but_objectif");
-        $data["data_desc_objectif"] = $fonct->findWhere("objectif_globaux",$para2,$val2);
+        // $data["data_desc_objectif"] = $fonct->findWhere("objectif_globaux",$para2,$val2);
+        $data["data_desc_objectif"] = $fonct->findWhereMulitOne("v_groupe_projet_entreprise_module",$para2,$val2);
         $data["feed_back"] = $fonct->findWhereMulitOne("feed_back",$para2,$val2);
         $data["conclusion"] = $fonct->findWhere("conclusion",$para2,$val2);
         $data["evaluation_resultat"] = $fonct->findWhere("evaluation_resultat",$para2,$val2);

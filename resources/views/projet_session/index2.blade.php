@@ -125,11 +125,11 @@
                                 <thead class="thead_projet">
                                     <th> Session </th>
                                     <th> Module </th>
-                                    @can('isCFP')
+                                    {{-- @can('isCFP')
                                         @if ($prj->type_formation_id == 1)
                                             <th> Entreprise </th>
                                         @endif
-                                    @endcan
+                                    @endcan --}}
                                     @can('isReferent')
                                         @if ($prj->type_formation_id == 1)
                                             <th> Centre de formation </th>
@@ -157,11 +157,11 @@
                                                             href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                     </td>
                                                     <td>{{ $pj->nom_module }}</td>
-                                                    @can('isCFP')
+                                                    {{-- @can('isCFP')
                                                         @if ($pj->type_formation_id == 1)
                                                             <td> {{ $pj->nom_etp }} </td>
                                                         @endif
-                                                    @endcan
+                                                    @endcan --}}
                                                     @can('isReferent')
                                                         @if ($pj->type_formation_id == 1)
                                                             <td> {{ $pj->nom_cfp }} </td>

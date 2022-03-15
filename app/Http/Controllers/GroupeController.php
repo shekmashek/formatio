@@ -48,7 +48,7 @@ class GroupeController extends Controller
         // dd($fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]));
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $type_formation = request()->type_formation;
-        $formations = $fonct->findWhere("formations", [1], [1]);
+        $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
         $modules = $fonct->findAll("modules");
         $entreprise = $fonct->findAll("v_demmande_cfp_etp");
         $payement = $fonct->findAll("type_payement");
@@ -152,6 +152,12 @@ class GroupeController extends Controller
         );
 
         try{
+            if($request->date_debut >= $request->date_fin){
+                throw new Exception("Date de début doit être inférieur date de fin.");
+            }
+            if($request->date_debut == null || $request->date_fin == null){
+                throw new Exception("Date de début ou date de fin est vide.");
+            }
             DB::beginTransaction();
             $projet = new projet();
             $nom_projet = $projet->generateNomProjet();
@@ -168,7 +174,7 @@ class GroupeController extends Controller
             return redirect()->route('detail_session',['id_session'=>$last_insert_groupe->id, 'type_formation'=>2]);
         }catch(Exception $e){
             DB::rollback();
-            return back()->with('groupe_error',"insertion de la session échouée!");
+            return back()->with('groupe_error',$e->getMessage());
         }
     }
 
