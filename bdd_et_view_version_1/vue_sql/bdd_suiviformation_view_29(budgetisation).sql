@@ -63,3 +63,17 @@ FROM
     budgetisation b
 JOIN entreprises e ON b.entreprise_id = e.id
 JOIN departement_entreprises dep ON b.departement_entreprise_id = dep.id;
+
+
+CREATE OR REPLACE VIEW v_facture_departement as SELECT
+    vf.entreprise_id,
+    vf.groupe_id,
+    vf.facture_encour,
+    vf.montant_total,
+    vs.stagiaire_id,
+    vs.nom_stagiaire,
+    vs.prenom_stagiaire,
+    vs.departement_id,
+    vs.nom_departement
+FROM v_facture_actif vf
+JOIN v_stagiaire_groupe vs ON vs.groupe_id = vf.groupe_id;

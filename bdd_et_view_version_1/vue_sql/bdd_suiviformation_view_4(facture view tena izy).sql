@@ -313,6 +313,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     factures.cfp_id,
     (factures.id) facture_id,
     factures.num_facture,
+    factures.groupe_id,
     entreprise_id,
     other_message,
     (

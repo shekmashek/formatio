@@ -88,3 +88,4 @@ Branche nouveau_entiter.1.0:
      add v-new view bdd_suivi_formation_29
      changer type coût previsionnel dans plan_formations
      add new table plan de formations
+     add groupe_id at v_facture_actif
