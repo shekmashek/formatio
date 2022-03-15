@@ -74,10 +74,12 @@ class NouveauCompteController extends Controller
 
     public function create_compte_cfp(Request $req)
     {
+        // dd($req->input());
+
+        $this->new_compte->validation_form_cfp($req);
         $qst_IA_robot = 27 - 16;
         $value_confident = $req->value_confident;
         $val_resp_robot = $req->val_robot;
-
         if ($qst_IA_robot == $val_resp_robot) {
             if ($value_confident == 1) // il approuve les règlement
             {
@@ -141,7 +143,7 @@ class NouveauCompteController extends Controller
                                     $fonct = new FonctionGenerique();
                                     $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
 
-                                    Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+    //                                Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
                                     $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
@@ -177,6 +179,7 @@ class NouveauCompteController extends Controller
 
     public function create_compte_employeur(Request $req)
     {
+        $this->new_compte->validation_form_etp($req);
         $qst_IA_robot = 27 - 16;
         $value_confident = $req->value_confident;
         $val_resp_robot = $req->val_robot;
