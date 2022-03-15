@@ -3,10 +3,22 @@
 <script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script>
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 <style>
-    .legende{
+    .realise{
         border: solid 10px;
         border-color: #E1DDDD;
         background-color: #E1DDDD;
+        width: 40px;
+    }
+    .engage{
+        border: solid 10px;
+        border-color: #94928F;
+        background-color: #94928F;
+        width: 40px;
+    }
+    .restant{
+        border: solid 10px;
+        border-color: #4B4A49;
+        background-color: #4B4A49;
         width: 40px;
     }
 </style>
@@ -24,10 +36,12 @@
 <div class="container-fluid">
     <div class="row mb-3">
         <div class="col-md-12 d-flex flex-row">
-          <div class="legende me-3"></div>
-          <h5>Réalisé</h5>
-          <div class="legende me-3"></div>
-          <h5>Engagé</h5>
+          <div class="realise me-3"></div>
+          <h5 class="me-3">Réalisé</h5>
+          <div class="engage me-3"></div>
+          <h5 class="me-3">Engagé</h5>
+          <div class="engage me-3"></div>
+          <h5 class="me-3">Restant</h5>
         </div>
     </div>
     <div class="row">
