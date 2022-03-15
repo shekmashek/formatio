@@ -157,6 +157,7 @@ class FactureController extends Controller
     public function detail_facture($numero_fact)
     {
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
+
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
 
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);

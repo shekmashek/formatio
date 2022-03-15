@@ -39,7 +39,7 @@
         <h4>Budget total :{{number_format($total_budget[0]->total,0,",",".")}}Ar</h4><br><br>
       </div>
       <div class="col-md-6">
-        <h4>Département :{{$total_budget_dep[0]->nom_departement}}</h4><br><br>
+        <h4>Département :{{$total_realise_dep[0]->nom_departement}}</h4><br><br>
       </div>
     </div>
     <div class="row mb-3">
@@ -53,7 +53,7 @@
         </div>
         <div class="col-md-6 d-flex flex-row">
           <div class="realise me-3"></div>
-          <h5 class="me-3">Réalisé: {{number_format($total_budget_dep[0]->total_budget,0,",",".")}}Ar</h5>
+          <h5 class="me-3">Réalisé: {{number_format($total_realise_dep[0]->total_realise,0,",",".")}}Ar</h5>
           <div class="engage me-3"></div>
           <h5 class="me-3">Engagé: {{number_format($total_engage[0]->engage,0,",",".")}}Ar</h5>
           <div class="restant me-3"></div>
@@ -104,38 +104,43 @@
     var config = { responsive: true };
     var myDiv = document.getElementById('chart_div');
     Plotly.newPlot(myDiv, data, layout, config);
+      const total_realise_dep = @php echo  json_encode($total_realise_dep) @endphp;
+      for (let i = 0; i < total_realise_dep.length; i++) {
+          var donnees = [
+          {
+            type: "indicator",
+            mode: "number+gauge+delta",
+            // value:  @php echo $total_budget[0]->total @endphp,
+            domain: { x: [0, 1], y: [0, 1] },
+            title: { text: "<b>Budget</b>" },
+            delta: { reference: @php
+                  echo $total_restant_dep;
+                @endphp
+              },
+            gauge: {
+              shape: "bullet",
+              axis: { range: [null, @php echo  $total_budget[0]->total @endphp] },
+              threshold: {
+                line: { color: "red", width: 5, height:200},
+                thickness: 1,
+                value: @php echo  $total_budget[0]->total @endphp
+              },
+              bar: { color: "grey" },
+              steps: [
+                { range: [0, total_realise_dep[i].total_realise ], color: "#E1DDDD" },
+                { range: [total_realise_dep[i].total_realise,1200000], color: "#94928F" },
+                { range: [1200000,@php echo $total_budget[0]->total @endphp], color: "#383838" }
+              ]
+            }
+          }
+        ];
 
-    var donnees = [
-      {
-        type: "indicator",
-        mode: "number+gauge+delta",
-        // value:  @php echo $total_budget[0]->total @endphp,
-        domain: { x: [0, 1], y: [0, 1] },
-        title: { text: "<b>Budget</b>" },
-        delta: { reference: @php
-              echo $total_budget_dep[0]->total_budget;
-            @endphp
-          },
-        gauge: {
-          shape: "bullet",
-          axis: { range: [null, @php echo  $total_budget[0]->total @endphp] },
-          threshold: {
-            line: { color: "red", width: 5, height:200},
-            thickness: 1,
-            value: @php echo  $total_budget[0]->total @endphp
-          },
-          bar: { color: "grey" },
-           steps: [
-            { range: [0, @php echo $total_budget_dep[0]->total_budget  @endphp], color: "#E1DDDD" },
-            { range: [@php echo $total_budget_dep[0]->total_budget  @endphp,@php echo  $total_budget[0]->total @endphp], color: "#383838" }
-          ]
-        }
+
+        var interface = { width: 600, height: 250 };
+        var configuration = { responsive: true };
+        var monDiv = document.getElementById('chart_dep');
+        Plotly.newPlot(monDiv, donnees, interface, configuration);
       }
-    ];
 
-    var interface = { width: 600, height: 250 };
-    var configuration = { responsive: true };
-    var monDiv = document.getElementById('chart_dep');
-    Plotly.newPlot(monDiv, donnees, interface, configuration);
 </script>
 @endsection

@@ -745,10 +745,12 @@ class HomeController extends Controller
 
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
 
-        //total_budget par département
-        $total_budget_dep = DB::select('select ifnull(sum(budget_total),0) as total_budget,nom_departement  from v_budgetisation where entreprise_id = ? and annee =  ? group by departement_entreprise_id', [$entreprise_id[0]->entreprise_id,$current_year]);
-        $total_restant_dep = $total_budget[0]->total - $total_budget_dep[0]->total_budget;
+        //total_budget realise par département
+        $total_realise_dep = DB::select('select ifnull(sum(montant_total),0) as total_realise,nom_departement  from v_facture_departement where entreprise_id = ? and year(due_date) =  ? and facture_encour =  ?  group by departement_id', [$entreprise_id[0]->entreprise_id,$current_year,"terminer"]);
+        // $total_realise_dep[1] = array('total_realise'=>900000,'nom_departement'=>'Marketing');
+        dd($total_realise_dep);
+        $total_restant_dep = $total_budget[0]->total - $total_realise_dep[0]->total_realise;
 
-        return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_restant_dep','total_realise','total_engage','total_restant','total_budget_dep'));
+        return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_restant_dep','total_realise','total_engage','total_restant','total_realise_dep'));
     }
 }

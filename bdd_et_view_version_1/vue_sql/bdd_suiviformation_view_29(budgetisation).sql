@@ -70,6 +70,7 @@ CREATE OR REPLACE VIEW v_facture_departement as SELECT
     vf.groupe_id,
     vf.facture_encour,
     vf.montant_total,
+    vf.due_date,
     vs.stagiaire_id,
     vs.nom_stagiaire,
     vs.prenom_stagiaire,
