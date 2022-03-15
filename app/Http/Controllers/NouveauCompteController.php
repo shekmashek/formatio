@@ -143,7 +143,7 @@ class NouveauCompteController extends Controller
                                     $fonct = new FonctionGenerique();
                                     $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
 
-    //                                Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+                                    Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
                                     $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
