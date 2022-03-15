@@ -55,6 +55,7 @@ JOIN departement_entreprises dep ON dep.id = serv.departement_entreprise_id;
 CREATE OR REPLACE VIEW v_budgetisation as SELECT
     e.id as entreprise_id,
     e.nom_etp,
+    b.departement_entreprise_id,
     dep.nom_departement,
     b.budget_total,
     b.annee

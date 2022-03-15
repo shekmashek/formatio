@@ -17,8 +17,8 @@
     }
     .restant{
         border: solid 10px;
-        border-color: #4B4A49;
-        background-color: #4B4A49;
+        border-color: #383838;
+        background-color: #383838;
         width: 40px;
     }
 </style>
@@ -34,18 +34,39 @@
     @endcan
 </div>
 <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Budget total :{{number_format($total_budget[0]->total,0,",",".")}}Ar</h4><br><br>
+      </div>
+      <div class="col-md-6">
+        <h4>Département :{{$total_budget_dep[0]->nom_departement}}</h4><br><br>
+      </div>
+    </div>
     <div class="row mb-3">
-        <div class="col-md-12 d-flex flex-row">
+        <div class="col-md-6 d-flex flex-row">
           <div class="realise me-3"></div>
-          <h5 class="me-3">Réalisé</h5>
+          <h5 class="me-3">Réalisé: {{number_format($total_realise[0]->realise,0,",",".")}}Ar</h5>
           <div class="engage me-3"></div>
-          <h5 class="me-3">Engagé</h5>
+          <h5 class="me-3">Engagé: {{number_format($total_engage[0]->engage,0,",",".")}}Ar</h5>
+          <div class="restant me-3"></div>
+          <h5 class="me-3">Restant: {{number_format($total_restant,0,",",".")}}Ar</h5>
+        </div>
+        <div class="col-md-6 d-flex flex-row">
+          <div class="realise me-3"></div>
+          <h5 class="me-3">Réalisé: {{number_format($total_budget_dep[0]->total_budget,0,",",".")}}Ar</h5>
           <div class="engage me-3"></div>
-          <h5 class="me-3">Restant</h5>
+          <h5 class="me-3">Engagé: {{number_format($total_engage[0]->engage,0,",",".")}}Ar</h5>
+          <div class="restant me-3"></div>
+          <h5 class="me-3">Restant: {{number_format($total_restant_dep,0,",",".")}}Ar</h5>
         </div>
     </div>
     <div class="row">
+      <div class="col-md-6 d-flex flex-row">
         <div id="chart_div"></div>
+      </div>
+      <div class="col-md-6 d-flex flex-row">
+        <div id="chart_dep"></div>
+      </div>
     </div>
 </div>
 
@@ -71,9 +92,9 @@
           },
           bar: { color: "grey" },
            steps: [
-            { range: [0,1000000], color: "#E1DDDD" },
-            { range: [1000000,1700000], color: "#94928F" }
-            // { range: [1200000,1700000], color: "#757472" }
+            { range: [0, @php echo $total_realise[0]->realise  @endphp], color: "#E1DDDD" },
+            { range: [@php echo $total_realise[0]->realise  @endphp,1200000], color: "#94928F" },
+            { range: [1200000,@php echo $total_budget[0]->total @endphp], color: "#383838" }
           ]
         }
       }
@@ -83,5 +104,38 @@
     var config = { responsive: true };
     var myDiv = document.getElementById('chart_div');
     Plotly.newPlot(myDiv, data, layout, config);
+
+    var donnees = [
+      {
+        type: "indicator",
+        mode: "number+gauge+delta",
+        // value:  @php echo $total_budget[0]->total @endphp,
+        domain: { x: [0, 1], y: [0, 1] },
+        title: { text: "<b>Budget</b>" },
+        delta: { reference: @php
+              echo $total_budget_dep[0]->total_budget;
+            @endphp
+          },
+        gauge: {
+          shape: "bullet",
+          axis: { range: [null, @php echo  $total_budget[0]->total @endphp] },
+          threshold: {
+            line: { color: "red", width: 5, height:200},
+            thickness: 1,
+            value: @php echo  $total_budget[0]->total @endphp
+          },
+          bar: { color: "grey" },
+           steps: [
+            { range: [0, @php echo $total_budget_dep[0]->total_budget  @endphp], color: "#E1DDDD" },
+            { range: [@php echo $total_budget_dep[0]->total_budget  @endphp,@php echo  $total_budget[0]->total @endphp], color: "#383838" }
+          ]
+        }
+      }
+    ];
+
+    var interface = { width: 600, height: 250 };
+    var configuration = { responsive: true };
+    var monDiv = document.getElementById('chart_dep');
+    Plotly.newPlot(monDiv, donnees, interface, configuration);
 </script>
 @endsection
