@@ -331,7 +331,7 @@ CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
     factures.cfp_id,
     (factures.id) facture_id,
     factures.num_facture,
-    entreprise_id,
+    factures.entreprise_id,
     other_message,
     (
         DATEDIFF(
@@ -360,7 +360,7 @@ CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
     GROUP BY
         factures.id,
         factures.cfp_id,
-        entreprise_id,
+        factures.entreprise_id,
         factures.num_facture,
         factures.other_message,
         facture_encour,
