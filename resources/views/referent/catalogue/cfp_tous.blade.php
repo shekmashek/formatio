@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="container my-5 p-5">
+    <div class="container my-5">
         <div class="row">
             <h4 class="text-center mb-3">Les Organismes de Formations près de chez vous</h4>
             <div class="row mb-5">

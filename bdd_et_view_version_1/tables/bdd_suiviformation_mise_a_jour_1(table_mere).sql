@@ -181,8 +181,22 @@ CREATE TABLE horaires (
   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE reseaux_sociaux (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  lien_facebook varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_twitter varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_instagram varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_linkedin varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL
+alter table cfps
+  add specialisation text COLLATE utf8mb4_unicode_ci NULL,
+  add offrir_aux_gens text COLLATE utf8mb4_unicode_ci NULL
 alter table cfps rename domaine_de_formation to slogan
 
 CREATE TABLE `abonnement_cfps` (

@@ -295,7 +295,7 @@ class FormationController extends Controller
     }
 
     public function detail_cfp($id){
-        $cfp = DB::select('select * from cfps where id = ?',[$id]);
+        $cfp = DB::select('select * from v_horaire where id = ?',[$id]);dd($cfp);
         // $cfp = DB::select('select * from v_horaire_cfp where id = ?',[$id]);
         return response()->view('referent.catalogue.detail_cfp',compact('cfp'));
     }

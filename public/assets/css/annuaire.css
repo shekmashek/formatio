@@ -103,7 +103,7 @@
     background-color: white;
     padding: 1rem 1.5rem;
     border-radius: 5px;
-    width: 80%;
+    width: 100%;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     margin: auto;
     transition: all .5s ease;
@@ -147,12 +147,11 @@
 
 .logo_content{
     display: grid;
-    place-content: center;
 }
 
 .logo_img{
-    width: 100px;
-    height: 60px;
+    width: 123px;
+    height: 92px;
 }
 .pagination{
     display: flex;
@@ -202,9 +201,20 @@ color: #7635dc;
     border-right: 1px solid grey;
 }
 .services .bx{
-    color: #7635dc;
+    color: #5433FF;
     font-size: 1.5rem;
     margin-right: .5em;
     position: relative;
     top: .3rem;
+}
+
+.avis{
+    background-color: rgba(128, 128, 128, 0.124);
+    padding: 1rem;
+}
+
+.avis .bx{
+    font-size: 1.5rem !important;
+    color: #5433FF;
+    margin-right: 1rem;
 }

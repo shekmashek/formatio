@@ -16,3 +16,24 @@ alter table cfps rename column domaine_de_formation to slogan(mbola ts natao scr
 
 creation de nouvelle vue horaire, cfp et formation doncil faut changer tous les vuesou il y a
 le domaine_de_formation en slogan et ajouterla nouvelle collonne presentation
+
+On doit aussi ajouter dans le cfp des nouvelles collones en plus de la presentation:
+  - specialisation du cfp
+  - leurs apports ce qu'ils ont a offrir aux gens
+
+la table doit encore changer et les vues auquels elle est affiliees
+
+creer une nouvelle table pour les liens des reseaux sociaux des centres de formation
+
+CREATE TABLE reseaux_sociaux (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  lien_facebook varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_twitter varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_instagram varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_linkedin varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+creer des nouvelles vues pour le reseaux sociaux etle horair cfp

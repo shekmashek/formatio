@@ -22,6 +22,8 @@ create or replace view v_projet_session as
         cfps.rcs as rcs_cfp,
         cfps.cif as cif_cfp,
         cfps.logo as logo_cfp,
+        cfps.specialisation as specialisation,
+        cfps.offrir_aux_gens as offrir_aux_gens,
         ts.totale_session
     from projets p
     join type_formations tf on p.type_formation_id = tf.id
@@ -38,7 +40,7 @@ create or replace view v_groupe_entreprise as
         e.adresse_quartier,
         e.adresse_code_postal,
         e.adresse_ville,
-         e.adresse_region,
+        e.adresse_region,
         e.logo,
         e.nif,
         e.stat,
@@ -101,7 +103,9 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
-        (cfps.logo) logo_cfp
+        (cfps.logo) logo_cfp,
+        (cfps.specialisation) specialisation,
+        (cfps.offrir_aux_gens) offrir_aux_gens
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
     join type_formations tf on p.type_formation_id = tf.id
@@ -284,6 +288,8 @@ create or replace view v_projet_cfp as
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
         (cfps.logo) logo_cfp,
+        (cfps.specialisation) specialisation,
+        (cfps.offrir_aux_gens) offrir_aux_gens,
         tf.type_formation
     from projets p
     join cfps on cfps.id = p.cfp_id
@@ -321,7 +327,7 @@ create or replace view v_projet_formation as
         cfp_id;
 
 create or replace view v_horaire_cfp as
-select
+    select
         h.id,
         h.jours,
         h.h_entree,
@@ -336,9 +342,43 @@ select
         (cfps.slogan) domaine_de_formation_cfp,
         (cfps.presentation) presentation,
         (cfps.logo) logo_cfp,
+        (cfps.specialisation) specialisation,
+        (cfps.offrir_aux_gens) offrir_aux_gens,
         (f.nom_formation) nom_formation,
         (f.cfp_id) formation_cfp_id
     from horaires as h
     join cfps on cfps.id = h.cfp_id
     join formations f on f.cfp_id = h.cfp_id;
+
+create or replace view v_reseaux_cfp as
+    select
+        rs.id,
+        rs.lien_facebook,
+        rs.lien_twitter,
+        rs.lien_instagram,
+        rs.lien_linkedin,
+        rs.cfp_id,
+        (cfps.nom) nom_cfp,
+        (cfps.adresse_lot) adresse_lot_cfp,
+        (cfps.adresse_ville) adresse_ville_cfp,
+        (cfps.adresse_region) adresse_region_cfp,
+        (cfps.email) mail_cfp,
+        (cfps.telephone) tel_cfp,
+        (cfps.slogan) domaine_de_formation_cfp,
+        (cfps.presentation) presentation,
+        (cfps.logo) logo_cfp,
+        (cfps.specialisation) specialisation,
+        (cfps.offrir_aux_gens) offrir_aux_gens
+    from reseaux_sociaux as rs
+    join cfps on cfps.id = rs.cfp_id;
+
+create or replace view v_horaires_reseaux_cfp as
+    select
+        vh.*,
+        rs.lien_facebook,
+        rs.lien_twitter,
+        rs.lien_instagram,
+        rs.lien_linkedin
+    from v_horaire_cfp as vh
+    join v_reseaux_cfp rs on rs.cfp_id = vh.cfp_id;
 
