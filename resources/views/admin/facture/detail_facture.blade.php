@@ -29,8 +29,15 @@
                                     Nouveau Facture</a>
                             </li>
                             <li class="nav-item btn_next">
+                                @canany(['isCFP','isCFPPrincipale'])
                                 <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$facture[0]->num_facture)}}">
                                     PDF</a>
+                                @endcanany
+                                @canany(['isResponsablePrincipale','isManagerPrincipale','isResponsable','isManager'])
+                                <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$facture[0]->num_facture])}}">
+                                    PDF</a>
+                                @endcanany
+
                             </li>
 
                         </ul>

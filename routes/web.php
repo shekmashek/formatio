@@ -479,6 +479,8 @@ Route::get('edit_facture/{id}','FactureController@edit_facture')->name('edit_fac
 
 Route::post('valid_facture','FactureController@valid_facture')->name('valid_facture');
 Route::get('detail_facture/{num_facture}','FactureController@detail_facture')->name('detail_facture');
+Route::get('detail_facture_etp/{cfp_id}/{num_facture}','FactureController@detail_facture_etp')->name('detail_facture_etp');
+
 Route::get('projetFacturer','FactureController@projetFacturer')->name('projetFacturer');
 Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFacture');
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
@@ -505,6 +507,7 @@ Route::get('evaluation_stagiaire','FroidEvaluationController@index')->name('eval
 // ================= PDF Feuille facture
 
 Route::get('pdf.imprime_feuille_facture/{id}','FactureController@generatePDF')->name('imprime_feuille_facture');
+Route::get('pdf.imprime_feuille_facture_etp/{cfp_id}/{num_fact}','FactureController@generatePDF_etp')->name('imprime_feuille_facture_etp');
 
 
 // =======================  Evaluation à Chaud

@@ -201,7 +201,7 @@
                             <tr>
                                 <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
                                 <th>
-                                    <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                    <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
@@ -315,7 +315,7 @@
                             <tr>
                                 <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
                                 <th>
-                                    <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                    <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
@@ -384,7 +384,7 @@
                             @foreach ($facture_payer as $actif)
                             <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
                             <th>
-                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                     <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                 </a>
                             </th>
