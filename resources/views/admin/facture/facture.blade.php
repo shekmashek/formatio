@@ -110,11 +110,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-2">
-            <h5 style="color: #AA076B">Critère</h5>
+            <h6 style="color: #AA076B">Critère</h6>
             <div class="row mt-0">
-                <h6>
+                <p>
                     <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par thématique de formation</a>
-                </h6>
+            </p>
                 <div class="collapse multi-collapse" id="detail_par_thematique">
                     <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -127,9 +127,9 @@
                     </form>
                 </div>
 
-                <h6>
+                <p>
                     <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par Numero Facture</a>
-                </h6>
+                </p>
                 <div class="collapse multi-collapse" id="search_num_fact">
                     <form class=" mt-1 mb-2 form_colab" method="POST" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
                         @csrf
@@ -187,14 +187,14 @@
                     {{-- <div class="container-fluid">
                         <div class="row">
                             <div class="col"> --}}
-                    <h5 style="color: #AA076B">Facture En Brouillon</h5>
+                    <h6 style="color: #AA076B">Facture En Brouillon</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet/Session/type de formation</th>
+                                <th scope="col">Projet / Session / type de formation</th>
                                 <th scope="col">Invoice Date</th>
                                 <th scope="col">Due Date</th>
                                 <th scope="col">Activité</th>
@@ -280,14 +280,14 @@
                     {{-- <div class="container-fluid">
                         <div class="row">
                             <div class="col"> --}}
-                    <h5 style="color: #AA076B">Facture Validé</h5>
+                    <h6 style="color: #AA076B">Facture Validé</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet/Session/type de formation</th>
+                                <th scope="col">Projet / Session / type de formation</th>
                                 <th scope="col">Invoice Date</th>
                                 <th scope="col">Due Date</th>
                                 <th scope="col">Activité</th>
@@ -315,21 +315,6 @@
                                 @else
                                 <td style="color:red;">temps de payement a éxpirer!</td>
                                 @endif
-
-                                {{-- <tr>
-                            <td class="text-center" style="color:green;">{{$actif->description_type_facture}}</td>
-                                <th>
-                                    <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                        <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
-                                    </a>
-                                </th>
-                                <td>{{$actif->other_message}}</td>
-                                <td>{{$actif->invoice_date}}</td>
-                                <td>{{$actif->due_date}}</td>
-                                @if ($actif->jour_restant<0) <td style="color:red;">temps de payement a éxpirer!</td>
-                                    @else
-                                    <td style="color:rgb(221, 23, 178);">{{$actif->jour_restant.' jour(s)'}}</td>
-                                    @endif --}}
                                     @if ($actif->facture_encour == "valider")
                                     <td style="color:red;"><i class="fa fa-bolt"></i>{{$actif->facture_encour}}</td>
                                     @canany(['isCFP'])
@@ -411,14 +396,14 @@
                 {{-- --}}
 
                 <div class="tab-pane fade" id="nav-encour" role="tabpanel" aria-labelledby="nav-encour-tab">
-                    <h5 style="color: #AA076B">Facture En Cour</h5>
+                    <h6 style="color: #AA076B">Facture En Cour</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet/Session/type de formation</th>
+                                <th scope="col">Projet / Session / type de formation</th>
                                 <th scope="col">Invoice Date</th>
                                 <th scope="col">Due Date</th>
                                 <th scope="col">Activité</th>
@@ -446,18 +431,6 @@
                                 @else
                                 <td style="color:red;">temps de payement a éxpirer!</td>
                                 @endif
-                                {{-- <tr>
-                            <td class="text-center" style="color:green;">{{$actif->description_type_facture}}</td>
-                                <th>
-                                    <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                        <i class="fa fa-barcode"></i>
-                                        {{$actif->num_facture}}
-                                    </a>
-                                </th>
-                                <td>{{$actif->other_message}}</td>
-                                <td>{{$actif->invoice_date}}</td>
-                                <td>{{$actif->due_date}}</td>
-                                <td>{{$actif->totale_jour.' jour(s)'}}</td> --}}
                                 @if ($actif->facture_encour == "en_cour")
                                 <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
                                 @canany(['isCFP'])
@@ -490,22 +463,19 @@
                             @endif
                         </tbody>
                     </table>
-                    {{-- </div>
-                        </div>
-                    </div> --}}
                 </div>
 
                 {{-- --}}
 
                 <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
-                    <h5 style="color: #AA076B">Facture Payer</h5>
+                    <h6 style="color: #AA076B">Facture Payer</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet/Session/type de formation</th>
+                                <th scope="col">Projet / Session / type de formation</th>
                                 <th scope="col">Invoice Date</th>
                                 <th scope="col">Due Date</th>
                                 <th scope="col">Activité</th>
@@ -532,18 +502,6 @@
                             @else
                             <td style="color:red;">temps de payement a éxpirer!</td>
                             @endif
-                            {{-- <tr>
-                            <td class="text-center" style="color:green;">{{$actif->description_type_facture}}</td>
-                            <th>
-                                <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                    <i class="fa fa-barcode"></i>
-                                    {{$actif->num_facture}}
-                                </a>
-                            </th>
-                            <td>{{$actif->other_message}}</td>
-                            <td>{{$actif->invoice_date}}</td>
-                            <td>{{$actif->due_date}}</td>
-                            <td>{{$actif->totale_jour.' jour(s)'}}</td> --}}
                             @if ($actif->facture_encour == "valider")
                             <td style="color:red;"><i class="fa fa-bolt"></i>{{$actif->facture_encour}}</td>
                             @canany(['isCFP'])
@@ -609,9 +567,7 @@
                     </table>
                 </div>
 
-
                 {{-- --}}
-
 
             </div>
 
@@ -636,7 +592,6 @@
 
 
         {{-- debut modal encaissement --}}
-        {{-- <div id="modal" class="modal fade" data-backdrop="true"> --}}
         <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
             <div class="modal-dialog">
@@ -649,7 +604,6 @@
                     <div class="modal-body">
                         <form action="{{ route('encaisser') }}" id="formPayement" method="POST">
                             @csrf
-                            {{-- <h6 class="text-uppercase">Payment details</h6> --}}
                             <div class="inputbox inputboxP mt-3">
                                 <span>Description</span>
                                 <input autocomplete="off" type="text" name="libelle" class="form-control formPayement" required="required" placeholder="description d'encaissement">
@@ -666,8 +620,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
-
                             <div class="inputbox inputboxP mt-3">
                                 <span>Date de payement<strong style="color:#ff0000;">*</strong></span>
                                 <input type="date" name="date_encaissement" class="form-control formPayement" required="required" value="{{ date('d/m/Y') }}">
