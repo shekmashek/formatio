@@ -333,6 +333,7 @@ create or replace view v_horaire_cfp as
         h.h_entree,
         h.h_sortie,
         h.cfp_id,
+        (cfps.id),
         (cfps.nom) nom_cfp,
         (cfps.adresse_lot) adresse_lot_cfp,
         (cfps.adresse_ville) adresse_ville_cfp,
@@ -344,11 +345,8 @@ create or replace view v_horaire_cfp as
         (cfps.logo) logo_cfp,
         (cfps.specialisation) specialisation,
         (cfps.offrir_aux_gens) offrir_aux_gens,
-        (f.nom_formation) nom_formation,
-        (f.cfp_id) formation_cfp_id
     from horaires as h
-    join cfps on cfps.id = h.cfp_id
-    join formations f on f.cfp_id = h.cfp_id;
+    join cfps on cfps.id = h.cfp_id;
 
 create or replace view v_reseaux_cfp as
     select
