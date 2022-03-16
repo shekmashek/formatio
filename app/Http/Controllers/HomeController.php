@@ -748,7 +748,7 @@ class HomeController extends Controller
         //total_budget realise par département
         $total_realise_dep = DB::select('select ifnull(sum(montant_total),0) as total_realise,nom_departement  from v_facture_departement where entreprise_id = ? and year(due_date) =  ? and facture_encour =  ?  group by departement_id', [$entreprise_id[0]->entreprise_id,$current_year,"terminer"]);
         // $total_realise_dep[1] = array('total_realise'=>900000,'nom_departement'=>'Marketing');
-        dd($total_realise_dep);
+       // dd($total_realise_dep);
         $total_restant_dep = $total_budget[0]->total - $total_realise_dep[0]->total_realise;
 
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_restant_dep','total_realise','total_engage','total_restant','total_realise_dep'));
