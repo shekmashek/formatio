@@ -74,10 +74,12 @@ class NouveauCompteController extends Controller
 
     public function create_compte_cfp(Request $req)
     {
+        // dd($req->input());
+
+        $this->new_compte->validation_form_cfp($req);
         $qst_IA_robot = 27 - 16;
         $value_confident = $req->value_confident;
         $val_resp_robot = $req->val_robot;
-
         if ($qst_IA_robot == $val_resp_robot) {
             if ($value_confident == 1) // il approuve les règlement
             {
@@ -177,6 +179,7 @@ class NouveauCompteController extends Controller
 
     public function create_compte_employeur(Request $req)
     {
+        $this->new_compte->validation_form_etp($req);
         $qst_IA_robot = 27 - 16;
         $value_confident = $req->value_confident;
         $val_resp_robot = $req->val_robot;

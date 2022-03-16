@@ -85,162 +85,181 @@
             <div id="formulaire">
 
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h4 align="center" class="mb-2">Votre Société</strong></h4>
+                    <h6 align="center" class="mb-2">Votre Société</strong></h4>
 
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1" class="form-control-label">Logo<strong style="color:#ff0000;">*</strong></label>
-                        <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
-                    </div>
-
-                    <div class="form-group">
                         <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
                         <label for="nif_etp" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
                         <span style="color:#ff0000;" id="nif_etp_err"></span>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" name="name_etp" class="form-control input_inscription" id="name_etp" required />
-                                <label for="name_etp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
-                                <span style = "color:#ff0000;" id="name_etp_err"></span>
-                            </div>
+                        @error('nif')
+                        <div class="col-sm-6">
+                            <span style="color:#ff0000;"> {{$message}} </span>
                         </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" name="web_etp" class="form-control input_inscription" id="web_etp" />
-                                <label class="ml-3 form-control-placeholder" for="web_etp">Web</label>
+                        @enderror
 
+                        <div class="form-group">
+                            <input type="text" name="name_etp" class="form-control input_inscription" id="name_etp" required />
+                            <label for="name_etp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
+                            <span style="color:#ff0000;" id="name_etp_err"></span>
+                            @error('name_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group m-0">
-                                <label for="#" class="form-control-label">Secteur d'activité<strong style="color:#ff0000;">*</strong></label>
-                                <select class="form-select" aria-label="Default select example" name="secteur_id" required id="secteur_id">
-                                    @foreach ($secteur as $sect)
-                                    <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
-                                    @endforeach
-
-                                </select>
-                            </div>
+                            @enderror
                         </div>
 
-                    </div>
+                        <div class="form-group">
+                            <input type="text" name="web_etp" class="form-control input_inscription" id="web_etp" />
+                            <label class="ml-3 form-control-placeholder" for="web_etp">Web</label>
+                        </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group m-0">
+                                    <label for="#" class="form-control-label">Secteur d'activité<strong style="color:#ff0000;">*</strong></label>
+                                    <select class="form-select" aria-label="Default select example" name="secteur_id" required id="secteur_id">
+                                        @foreach ($secteur as $sect)
+                                        <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
-                    <input type="button" name="next" class="next action-button" value="Suivant" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1" class="form-control-label">Logo(2.5 Mo max)<strong style="color:#ff0000;">*</strong></label>
+                            <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
+                            @error('logo_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            @enderror
+                        </div>
+
+                        <input type="button" name="next" class="next action-button" value="Suivant" />
                 </fieldset>
 
 
                 {{-- --}}
 
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h4 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
+                    <h6 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" required name="matricule_resp_etp" class="form-control input_inscription" id="matricule_resp_etp" />
-                                <label for="matricule_resp_etp" class="form-control-placeholder" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <input type="text" required name="matricule_resp_etp" class="form-control input_inscription" id="matricule_resp_etp" />
+                                    <label for="matricule_resp_etp" class="form-control-placeholder" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
+                                    @error('matricule_resp_etp')
+                                    <div class="col-sm-6">
+                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" required name="nom_resp_etp" class="form-control input_inscription" id="nom_resp_etp" />
+                            <label for="nom_resp_etp" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
+                            @error('nom_resp_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="prenom_resp_etp" class="form-control input_inscription" id="prenom_resp_etp" />
+                            <label for="prenom_resp_etp" class="form-control-placeholder" align="left">Prénom</label>
+                            @error('prenom_resp_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
+                            <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
+                            <span style="color:#ff0000;" id="email_resp_etp_err"></span>
+                            @error('email_resp_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" max=10 required name="tel_resp_etp" class="form-control input_inscription" id="tel_resp_etp" />
+                            <label for="tel_resp_etp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
+                            <span style="color:#ff0000;" id="tel_resp_etp_err"></span>
+                            @error('tel_resp_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <input type="text" required name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
+                            <label for="cin_resp_etp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                            <span style="color:#ff0000;" id="cin_resp_etp_err"></span>
+                            @error('cin_resp_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <input type="text" required name="fonction_resp_etp" class="form-control input_inscription" id="fonction_resp_etp" />
+                            <label for="fonction_resp_etp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
+                            @error('fonction_resp_etp')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
+                                {{-- </div>
+                        <div class="col-md-11"> --}}
+                                <label class="form-check-label m-0" for="flexCheckDefault" align="left">
+                                    <a href="{{route('condition_generale_de_vente')}}" class="nav-item">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
+                                </label>
                             </div>
                         </div>
-                        <div class="col"></div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <input type="text" required name="nom_resp_etp" class="form-control input_inscription" id="nom_resp_etp" />
-                                <label for="nom_resp_etp" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-
+                        <div class="row justify-content-center">
+                            <h6 class="" align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-1"  style="display: grid; place-content: center;">
+                                <h6> <strong>16</strong></h6>
                             </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="form-group">
-                                <input type="text" name="prenom_resp_etp" class="form-control input_inscription" id="prenom_resp_etp" />
-                                <label for="prenom_resp_etp" class="form-control-placeholder" align="left">Prénom</label>
-
+                            <div class="col-sm-1"  style="display: grid; place-content: center;">
+                                <h6> <strong> + </strong></h6>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
-                                <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
-                                <span style = "color:#ff0000;" id="email_resp_etp_err"></span>
-
+                            <div class="col-sm-1"  style="display: grid; place-content: center;">
+                                <div class="form-group">
+                                    <input required type="number" name="val_robot" class="form-control input" placeholder="?" id="val_robot" style="width: 60px; border: none; outline: none; position:relative; top:0.5rem;" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" max=10 required name="tel_resp_etp" class="form-control input_inscription" id="tel_resp_etp" />
-                                <label for="tel_resp_etp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
-                                <span style = "color:#ff0000;" id="tel_resp_etp_err"></span>
-
+                            <div class="col-sm-1"  style="display: grid; place-content: center;">
+                                <h6> <strong> = </strong></h6>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
-                                <label for="cin_resp_etp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
-                                <span style = "color:#ff0000;" id="cin_resp_etp_err"></span>
-
+                            <div class="col-sm-1"  style="display: grid; place-content: center;">
+                                <h6> <strong> 27 </strong></h6>
                             </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" required name="fonction_resp_etp" class="form-control input_inscription" id="fonction_resp_etp" />
-                                <label for="fonction_resp_etp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-sm-1">
-                            <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px">
-                        </div>
-                        <div class="col-md-11">
-                            <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                <a href="{{route('condition_generale_de_vente')}}" class="nav-item">J'ai lu et accepter les termes de confidentiels du plateforme</a>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <h6 class="" align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-1">
-                            <h6> <strong>16</strong></h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <h6> <strong> + </strong></h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="number" name="val_robot" class="form-control input_inscription" placeholder="?" id="val_robot" style="width: 60px" />
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <h6> <strong> = </strong></h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <h6> <strong> 27 </strong></h6>
+                            <div class="col-sm-3"></div>
                         </div>
 
-                        <div class="col-sm-3"></div>
-                    </div>
+                        <input type="button" name="previous" class="previous action-button" value="Précendent" />
+                        <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
 
-                    <input type="button" name="previous" class="previous action-button" value="Précendent" />
-                    <input type="button" name="make_payment" class="next action-button" value="Suivant" />
+                        {{-- <input type="button" name="make_payment" class="next action-button" value="Suivant" /> --}}
                 </fieldset>
 
                 {{-- --}}

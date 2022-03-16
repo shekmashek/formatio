@@ -11,8 +11,8 @@ class NouveauCompte extends Model
 
     public function insert_CFP($doner)
     {
-        if($doner["web_cfp"] == null){
-            $doner["web_cfp"]=NULL;
+        if ($doner["web_cfp"] == null) {
+            $doner["web_cfp"] = NULL;
         }
         $data = [
             $doner["logo_cfp"], $doner["nom_cfp"],
@@ -30,7 +30,7 @@ class NouveauCompte extends Model
     public function insert_resp_CFP($doner, $cfp_id, $user_id)
     {
         $data = [
-           $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
+            $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
             $cfp_id, $user_id
         ];
         DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
@@ -41,12 +41,12 @@ class NouveauCompte extends Model
 
     public function insert_ETP($doner)
     {
-        if($doner["web_etp"] == null){
-            $doner["web_etp"]=NULL;
+        if ($doner["web_etp"] == null) {
+            $doner["web_etp"] = NULL;
         }
         $data = [
             $doner["nom_etp"], $doner["email_etp"], $doner["tel_etp"], $doner["web_etp"],
-            $doner["nif"], $doner["logo_etp"],$doner["secteur_id"]
+            $doner["nif"], $doner["logo_etp"], $doner["secteur_id"]
         ];
 
         DB::insert('insert into entreprises(nom_etp,email_etp,telephone_etp,site_etp,nif,logo,created_at,secteur_id) values (?,?,?,?,?,?, NOW(),?)', $data);
@@ -55,7 +55,7 @@ class NouveauCompte extends Model
     public function insert_resp_ETP($doner, $entreprise_id, $user_id)
     {
         $data = [
-            $doner["matricule"],$doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
+            $doner["matricule"], $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"], $doner["tel_resp"], $doner["fonction_resp"],
             $entreprise_id, $user_id
         ];
         DB::insert('insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
@@ -97,20 +97,83 @@ class NouveauCompte extends Model
         return $data;
     }
 
-public function verify_cin_user($valiny){
-    $data = DB::select('select * from users WHERE cin =?',[$valiny]);
-    return $data;
-}
+    public function verify_cin_user($valiny)
+    {
+        $data = DB::select('select * from users WHERE cin =?', [$valiny]);
+        return $data;
+    }
 
-public function verify_tel_user($valiny){
-    $data = DB::select('select * from users WHERE telephone =?',[$valiny]);
-    return $data;
-}
+    public function verify_tel_user($valiny)
+    {
+        $data = DB::select('select * from users WHERE telephone =?', [$valiny]);
+        return $data;
+    }
 
-public function verify_mail_user($valiny){
-    $data = DB::select('select * from users WHERE email =?',[$valiny]);
-    return $data;
-}
+    public function verify_mail_user($valiny)
+    {
+        $data = DB::select('select * from users WHERE email =?', [$valiny]);
+        return $data;
+    }
+    public function validation_form_cfp($imput)
+    {
+        $rules = [
+            'name_cfp.required' => 'la raison sociale de votre entreprise ne doit pas être null',
+            'nif.required' => 'le NIF de votre entreprise ne doit pas être null',
+            'logo_cfp.required' => 'le logo de votre entreprise ne doit pas être null',
+            'logo_cfp.file' => 'le logo de votre entreprise doit être de type "file"',
+            'logo_cfp.max' => 'la taille de votre image ne doit pas dépassé 2.5 Mo',
+            'logo_cfp.mimes' => 'votre logo doit être soit "*.png, *.jpg, *.jpeg"',
+            'nom_resp_cfp.required' => 'le Nom de votre responsable ne doit pas être null',
+            'cin_resp_cfp.required' => 'le CIN de votre responsable ne doit pas être null',
+            'fonction_resp_cfp.required' => 'votre fonction ne doit pas être null',
+            'email_resp_cfp.required' => 'votre mail ne doit pas être null',
+            'email_resp_cfp.email' => 'votre mail doit être contenir "@" !',
+            'tel_resp_cfp.required' => 'votre numero du téléphone ne doit pas être null'
+        ];
+        $critereForm = [
+            'name_cfp' => 'required',
+            'nif' => 'required',
+            'logo_cfp' => 'required|file|max:2400|mimes:jpeg,png,jpg',
+            'nom_resp_cfp' => 'required',
+            'cin_resp_cfp' => 'required|min:12',
+            'fonction_resp_cfp' => 'required',
+            'email_resp_cfp' => 'required|email',
+            'tel_resp_cfp' => 'required'
+        ];
+        //   'logo_cfp' => 'required|file|max:2400|mimes:jpeg,png,jpg',
 
+        $imput->validate($critereForm, $rules);
+    }
+
+    public function validation_form_etp($imput)
+    {
+        $rules = [
+            'matricule_resp_etp.required' => 'votre matricule ne doit pas être null',
+            'name_etp.required' => 'la raison sociale de votre entreprise ne doit pas être null',
+            'nif_etp.required' => 'le NIF de votre entreprise ne doit pas être null',
+            'logo_etp.required' => 'le logo de votre entreprise ne doit pas être null',
+            'logo_etp.file' => 'le logo de votre entreprise doit être de type "file"',
+            'logo_etp.max' => 'la taille de votre image ne doit pas dépassé 2.5 Mo',
+            'logo_etp.mimes' => 'votre logo doit être soit "*.png, *.jpg, *.jpeg"',
+            'nom_resp_etp.required' => 'le Nom de votre responsable ne doit pas être null',
+            'cin_resp_etp.required' => 'le CIN de votre responsable ne doit pas être null',
+            'fonction_resp_etp.required' => 'votre fonction ne doit pas être null',
+            'email_resp_etp.required' => 'votre mail ne doit pas être null',
+            'email_resp_etp.email' => 'votre mail doit être contenir "@" !',
+            'tel_resp_etp.required' => 'votre numero du téléphone ne doit pas être null'
+        ];
+        $critereForm = [
+            'matricule_resp_etp' => 'required',
+            'name_etp' => 'required',
+            'nif_etp' => 'required',
+            'logo_etp' => 'required|file|max:2400|mimes:jpeg,png,jpg',
+            'nom_resp_etp' => 'required',
+            'cin_resp_etp' => 'required|min:12',
+            'fonction_resp_etp' => 'required',
+            'email_resp_etp' => 'required|email',
+            'tel_resp_etp' => 'required'
+        ];
+        $imput->validate($critereForm, $rules);
+    }
 
 }

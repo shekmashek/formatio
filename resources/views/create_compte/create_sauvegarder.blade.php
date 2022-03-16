@@ -16,7 +16,7 @@
     <div class="col-md-12">
 
 
-        <div class="card">
+        {{-- <div class="card">
             <div class="row px-2">
                 <div class="col">
                 </div>
@@ -31,7 +31,29 @@
             </div>
 
 
+        </div> --}}
+        <div class="row justify-content-center" id="msform_facture">
+            <ul id="progressbars" class="mb-1">
+                <li class="active" id="etape1"></li>
+                <li  class="active" id="etape2"></li>
+                <li  class="active" id="etape3"></li>
+            </ul>
+            <div class="col-md-12">
+
+                <div id="formulaire">
+                    <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                        <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
+                        <div class="form-group">
+                            <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
+                        </div>
+                        <a href="{{route('sign-in')}}">
+                            <button type="button" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Terminé</button>
+                        </a>
+                    </fieldset>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
 

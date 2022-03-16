@@ -37,17 +37,35 @@
                     <i class="bx bxs-dashboard"></i>
                     <span class="links_name">Tableau de bord</span>
                 </a>
-                {{-- <span class="tooltip">Tableau de bord</span> --}}
+                <span class="tooltip">Tableau de bord</span>
             </li>
-            @canany(['isSuperAdmin'])
-                <li>
+
+
+            <li>
+                @canany(['isReferent'])
+                    <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name">BI</span>
+                    </a>
+                    <span class="tooltip">BI</span>
+                @endcanany
+                @canany(['isCFP'])
+                    <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name">BI</span>
+                    </a>
+                    <span class="tooltip">BI</span>
+                 @endcanany
+                @canany(['isSuperAdmin'])
                     <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
-                        <i class="iconify" data-icon="logos:microsoft-power-bi"></i>
+                        <i class='bx bxs-pie-chart-alt-2'></i>
                         <span class="links_name"> BI </span>
                     </a>
-                    {{-- <span class="tooltip">Tableau de bord</span> --}}
-                </li>
-            @endcanany
+                    <span class="tooltip">BI</span>
+                @endcanany
+            </li>
+
+
 
             @canany(['isCFP','isFormateur'])
             <li>

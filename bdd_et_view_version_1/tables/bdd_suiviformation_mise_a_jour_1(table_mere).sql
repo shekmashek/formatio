@@ -159,7 +159,7 @@ CREATE TABLE cfps (
   email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   domaine_de_formation varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
-  nif varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  nif varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   stat varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   rcs varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   cif varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
