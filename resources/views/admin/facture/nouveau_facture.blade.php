@@ -14,7 +14,7 @@
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                                 <li class="nav-item btn_next">
-                                    <a class="nav-link  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">Liste des Factures</a>
+                                    <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">Liste des Factures</a>
                                 </li>
                                 @canany(['isSuperAdmin','isCFP'])
                                 <li class="nav-item btn_next">

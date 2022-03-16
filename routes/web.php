@@ -473,7 +473,7 @@ Route::get('groupe_projet','FactureController@getGroupe_projet')->name('groupe_p
 Route::get('taxe','FactureController@getTaxe')->name('taxe');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');
-Route::get('liste_facture/{id}','FactureController@redirection_facture')->name('liste_facture');
+Route::get('liste_facture','FactureController@redirection_facture')->name('liste_facture');
 Route::get('edit_facture/{id}','FactureController@edit_facture')->name('edit_facture');
 
 

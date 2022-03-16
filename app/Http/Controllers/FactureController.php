@@ -91,7 +91,7 @@ class FactureController extends Controller
     }
 
 
-    public function listeFacture_referent($id)
+    public function listeFacture_referent()
     {
 
         $user_id = Auth::user()->id;
@@ -143,13 +143,13 @@ class FactureController extends Controller
     }
 
 
-    public function redirection_facture($id)
+    public function redirection_facture()
     {
         if (Gate::allows('isCFP')) {
-            return $this->listeFacture($id);
+            return $this->listeFacture();
         }
         if (Gate::allows('isReferent')) {
-            return $this->listeFacture_referent($id);
+            return $this->listeFacture_referent();
         }
     }
 

@@ -20,25 +20,26 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                             <li class="nav-item btn_next">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">
+                                <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
                                     Liste des Factures</a>
                             </li>
-
+                            @canany(['isCFP','isCFPrincipale'])
                             <li class="nav-item btn_next">
                                 <a class="nav-link  {{ Route::currentRouteNamed('facture') ? 'active' : '' }}" href="{{route('facture')}}">
                                     Nouveau Facture</a>
                             </li>
                             <li class="nav-item btn_next">
-                                @canany(['isCFP','isCFPPrincipale'])
-                                <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$facture[0]->num_facture)}}">
-                                    PDF</a>
-                                @endcanany
-                                @canany(['isResponsablePrincipale','isManagerPrincipale','isResponsable','isManager'])
+                            <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$facture[0]->num_facture)}}">
+                                PDF</a>
+                            </li>
+                            @endcanany
+                            @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
+                            <li class="nav-item btn_next">
                                 <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$facture[0]->num_facture])}}">
                                     PDF</a>
-                                @endcanany
-
                             </li>
+                            @endcanany
+
 
                         </ul>
 

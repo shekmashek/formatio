@@ -303,7 +303,7 @@
             @endcanany --}}
             @canany(['isCFP','isReferent'])
             <li>
-                <a href="{{route('facture')}}" class="d-flex nav_linke">
+                <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
                     <span class="links_name">Factures</span>
                 </a>
