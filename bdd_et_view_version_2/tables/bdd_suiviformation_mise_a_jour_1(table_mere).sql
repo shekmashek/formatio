@@ -108,6 +108,8 @@ CREATE TABLE role_users(
   activiter boolean not null default false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+insert into role_users(user_id,role_id,prioriter,activiter) values(1,6,True,true);
+
 CREATE TABLE type_abonnes (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   abonne_name varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -168,8 +170,7 @@ CREATE TABLE cfps (
   updated_at timestamp NULL DEFAULT current_timestamp(),
   logo varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX',
-  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
+  site_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
