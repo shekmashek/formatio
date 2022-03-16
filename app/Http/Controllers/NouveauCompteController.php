@@ -249,7 +249,7 @@ class NouveauCompteController extends Controller
                                     // $this->img->store_image("entreprise", $data["logo_etp"], $req->file('logo_etp')->getContent());
                                     $etp =  $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp]);
                                     $name = $req->nom_resp_etp . ' ' . $req->prenom_resp_etp;
-                                    // Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
+                                    Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
                                     $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
