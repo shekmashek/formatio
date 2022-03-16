@@ -37,8 +37,18 @@
                     <i class="bx bxs-dashboard"></i>
                     <span class="links_name">Tableau de bord</span>
                 </a>
-                {{-- <span class="tooltip">Tableau de bord</span> --}}
+                <span class="tooltip">Tableau de bord</span>
             </li>
+            @canany(['isSuperAdmin','isReferent','isCFP'])
+            <li>
+                <a href="{{ route('iframe_bi') }}" class="d-flex nav_linke">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="links_name">BI</span>
+                </a>
+                <span class="tooltip">BI</span>
+            </li>
+            @endcanany
+
 
             @canany(['isCFP','isFormateur'])
             <li>
@@ -372,10 +382,10 @@
                     <i class='bx bxl-sketch'></i>
                     <span class="links_name">Abonnées</span>
                 </a>
-               
+
                 <span class="tooltip">Abonnées</span>
             </li>
-           
+
             {{-- integrer dans la page
             <li>
                 <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
@@ -409,9 +419,9 @@
                 </a>
                 <span class="tooltip">Abonnement</span>
             </li>
-          
+
             @endcan
-            
+
             <li>
                 <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>

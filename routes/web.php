@@ -13,7 +13,8 @@ Route::get('/', function () {
     return view('index_accueil');
 // return view('page_travaux.plateforme_en_travaux');
 })->name('accueil_perso');
-
+// Route Bi
+Route::get('iframe_bi','HomeController@BI')->name('iframe_bi');
 
 
 //Route contact

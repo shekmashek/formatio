@@ -751,4 +751,9 @@ class HomeController extends Controller
 
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
+
+    public function BI(){
+    return view('layouts.bi');
+
+    }
 }
