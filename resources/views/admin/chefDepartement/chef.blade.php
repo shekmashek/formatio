@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="panel-heading d-flex mb-5">
             <div class="mx-2">
-                <li class="btn_enregistrer text-center" ><a href="{{route('employes')}}">Précedent</a></li>&nbsp;
+                <li class="btn_enregistrer text-center"><a href="{{route('employes')}}">Précedent</a></li>&nbsp;
             </div>
         </div>
     </div>
@@ -24,15 +24,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
-                <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2>
+                <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau employé</h2>
 
-                {{-- <form action="{{route('create_compte_employeur')}}" method="POST" enctype="multipart/form-data"> --}}
                 <form action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <input type="text" autocomplete="off" required name="matricule" class="form-control input" id="matricule" /required>
+                                <input type="text" autocomplete="off" required name="matricule" class="form-control input" id="matricule" required/>
                                 <label for="matricule" class="form-control-placeholder" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
                                 @error('matricule')
                                 <div class="col-sm-6">
@@ -54,28 +53,20 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <input type="text" autocomplete="off" required name="nom" class="form-control input" id="nom" required />
-                                <label for="nom" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                                @error('nom')
-                                <div class="col-sm-6">
-                                    <span style="color:#ff0000;"> {{$message}} </span>
-                                </div>
-                                @enderror
-                            </div>
+                    <div class="form-group">
+                        <input type="text" autocomplete="off" required name="nom" class="form-control input" id="nom" required />
+                        <label for="nom" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
+                        @error('nom')
+                        <div class="col-sm-6">
+                            <span style="color:#ff0000;"> {{$message}} </span>
                         </div>
-                        <div class="col-md-7">
-                            <div class="form-group">
-                                <input type="text" autocomplete="off" name="prenom" class="form-control input" id="prenom" required />
-                                <label for="prenom" class="form-control-placeholder" align="left">Prénom</label>
-                            </div>
-                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <input type="text" autocomplete="off" name="prenom" class="form-control input" id="prenom" required />
+                        <label for="prenom" class="form-control-placeholder" align="left">Prénom</label>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -149,7 +140,6 @@
             }
             , success: function(response) {
                 var userData = response;
-
                 if (userData.length > 0) {
                     document.getElementById("cin_err").innerHTML = "CIN appartient déjà par un autre utilisateur";
                 } else {
