@@ -20,12 +20,8 @@
 
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-5">
-
-                                    <div class="shadow p-3 mb-5 bg-body rounded ">
-
+                                <div class="col-md-5"><div class="shadow p-3 mb-5 bg-body rounded ">
                                         <h4>Entreprises</h4>
-
                                         <div class="table-responsive text-center">
                                             <table class="table">
                                                 <thead>
@@ -41,25 +37,17 @@
                                                             <td>{{$entreprise[$i]->nom_etp}}</td>
                                                             @if($iframe_etp == null)
                                                                 <td class="d-flex flex-row">
-                                                                    <form action="enregistrer_iframe_etp" method="post">
+                                                                    <form action="enregistrer_iframe_etp" method="post" class="d-flex flex-row">
                                                                         @csrf
                                                                         <input type="hidden" name="entreprise_id" value={{$entreprise[$i]->id}}>
-                                                                        <input type="text" name="iframe_url" class="form-control w-50"><button class="btn btn_next" type="submit">Ajouter </button>
+                                                                        <input type="text" name="iframe_url" class="form-control"><button class="btn btn_next" type="submit">Ajouter </button>
                                                                     </form>
                                                                 </td>
                                                             @endif
                                                             @if($iframe_etp != null)
                                                                 @for($j= 0; $j< count($iframe_etp); $j++)
                                                                     @if($iframe_etp[$j]->entreprise_id == $entreprise[$i]->id)
-                                                                        <td>{{$iframe_etp[$j]->iframe}}</td>
-                                                                    @else
-                                                                    <td>
-                                                                        <form action="enregistrer_iframe_etp" method="post">
-                                                                            @csrf
-                                                                            <input type="hidden" name="entreprise_id" value={{$entreprise[$i]->id}}>
-                                                                            <input type="text" name="iframe_url" class="form-control w-50"><button class="btn btn_next" type="submit">Ajouter </button>
-                                                                        </form>
-                                                                    </td>
+                                                                        <td> {{$iframe_etp[$j]->iframe}}</td>
                                                                     @endif
                                                                 @endfor
                                                             @endif
@@ -95,33 +83,33 @@
                                                 </thead>
                                                 <tbody>
                                                     @if(count($of)>0)
-                                                    @for($i = 0; $i < count($of); $i++) <tr>
-                                                        <td>{{$of[$i]->nom}}</td>
-                                                        @if($iframe_of == null)
-                                                        <td class="d-flex flex-row">
-                                                            <form action="enregistrer_iframe_cfp" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="cfp_id" value={{$of[$i]->id}}>
-                                                                <input type="text" name="iframe_url" class="form-control w-50"><button class="btn btn_next" type="submit">Ajouter </button>
-                                                            </form>
-                                                        </td>
-                                                        @else
-                                                        @for($j= 0; $j< count($iframe_of); $j++) @if($iframe_of[$j]->cfp_id === $of[$i]->id)
-                                                            <td>{{$iframe_of[$j]->iframe}}</td>
-                                                            @else
-                                                            <td>
-                                                                <form action="enregistrer_iframe_cfp" method="post">
+                                                        @for($i = 0; $i < count($of); $i++) <tr>
+                                                            <td>{{$of[$i]->nom}}</td>
+                                                            @if($iframe_of == null)
+                                                            <td class="d-flex flex-row">
+                                                                <form action="enregistrer_iframe_cfp" method="post" class="d-flex flex-row">
                                                                     @csrf
                                                                     <input type="hidden" name="cfp_id" value={{$of[$i]->id}}>
                                                                     <input type="text" name="iframe_url" class="form-control w-50"><button class="btn btn_next" type="submit">Ajouter </button>
                                                                 </form>
                                                             </td>
-                                                            @endif
-                                                            @endfor
+                                                            @else
+                                                                @for($j= 0; $j< count($iframe_of); $j++) @if($iframe_of[$j]->cfp_id === $of[$i]->id)
+                                                                    <td>{{$iframe_of[$j]->iframe}}</td>
+                                                                    @else
+                                                                        <td>
+                                                                            <form action="enregistrer_iframe_cfp" method="post">
+                                                                                @csrf
+                                                                                <input type="hidden" name="cfp_id" value={{$of[$i]->id}}>
+                                                                                <input type="text" name="iframe_url" class="form-control w-50"><button class="btn btn_next" type="submit">Ajouter </button>
+                                                                            </form>
+                                                                        </td>
+                                                                    @endif
+                                                                @endfor
                                                             @endif
                                                             </tr>
-                                                            @endfor
-                                                            @endif
+                                                        @endfor
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>
