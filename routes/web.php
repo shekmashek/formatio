@@ -946,3 +946,8 @@ Route::get('/fonctionnalitea', function () {
 Route::get('budget','PlanFormationController@budgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
+
+//Route iframe
+Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
+Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
+Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');

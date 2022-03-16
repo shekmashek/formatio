@@ -242,6 +242,10 @@ class FonctionGenerique extends Model
         DB::insert('insert into role_users (user_id, role_id,activiter) values (?, ?,?)', [$user_id, $role_id,$activiter]);
     }
 
+    //insertion iframe pour enntreprise et of dans la bd
 
+    public function insert_iframe($table,$colonnes,$id,$iframe){
+        DB::insert('insert into '.$table.' ('.$colonnes.', iframe) values (?, ?)', [$id, $iframe]);
+    }
 
 }

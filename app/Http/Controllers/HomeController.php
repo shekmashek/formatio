@@ -751,4 +751,41 @@ class HomeController extends Controller
 
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
+    //creation iframe
+    public function creer_iframe(){
+        $fonct = new FonctionGenerique();
+        $entreprise = $fonct->findAll("entreprises");
+        $of = $fonct->findAll('cfps');
+        $iframe_etp = $fonct->findAll("iframe_entreprise");
+        $iframe_of = $fonct->findAll("iframe_cfp");
+        return view('bi.iframe',compact('entreprise','of','iframe_etp','iframe_of'));
+    }
+    public function enregistrer_iframe_etp(Request $request){
+        $url_iframe = $request->iframe_url;
+        $etp_id = $request->entreprise_id;
+        $fonct = new FonctionGenerique();
+        $entreprise = $fonct->insert_iframe('iframe_entreprise','entreprise_id',$etp_id,$url_iframe);
+        return back();
+    }
+    public function enregistrer_iframe_cfp(Request $request){
+        $url_iframe = $request->iframe_url;
+        $cfp_id = $request->cfp_id;
+        $fonct = new FonctionGenerique();
+        $entreprise = $fonct->insert_iframe('iframe_cfp','cfp_id',$cfp_id,$url_iframe);
+        return back();
+    }
+    //liste par entreprise
+    public function iframe_etp(){
+        $fonct = new FonctionGenerique();
+        $id_etp = DB::select('select * from responsables where user_id = ?',[Auth::user()->id]);
+        $iframe_etp = $fonct->findWhereOne("iframe_entreprise","entreprise_id","",$id_etp[0]->entreprise_id);
+        return view('layouts.bi',compact('iframe_etp'));
+    }
+    //liste par of
+    public function iframe_cfp(){
+        $fonct = new FonctionGenerique();
+        $id_cfp = DB::select('select * from responsables_cfp where user_id = ?',[Auth::user()->id]);
+        $iframe_cfp = $fonct->findWhereOne("iframe_cfp","cfp_id","",$id_cfp[0]->cfp_id);
+        return view('layouts.bi',compact('iframe_cfp'));
+    }
 }
