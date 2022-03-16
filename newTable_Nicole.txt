@@ -88,3 +88,11 @@ Branche nouveau_entiter.1.0:
      add v-new view bdd_suivi_formation_29
      changer type coût previsionnel dans plan_formations
      add new table plan de formations
+
+
+####### Branche appel_offre.v.3:
+- recopier les view facture
+
+######## Branche debug_version_1:
+- recopier view v_user_role dans bdd_suivi_formation_view_0
+

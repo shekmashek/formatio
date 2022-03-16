@@ -1,21 +1,21 @@
 @extends('./layouts/admin')
 @section('content')
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{asset('img/logo_numerika/logonmrk.png')}}" sizes="90x60" type="image/png">
-    <link href="{{asset('bootstrapCss/css/bootstrap.min.css')}} " rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('login_css/css/style.css')}}">
-</head>
-<body> --}}
+<style>
+    table,
+    th {
+        font-size: 11px;
+    }
 
-    {{-- <div id="page-wrapper my-5"> --}}
+    table,
+    td {
+        font-size: 11px;
+    }
+    .button_tail {
+        font-size: 11px;
+    }
+
+</style>
         <div class="container-fluid">
-
-
             <div class="row">
                 <div class="col-lg-12">
                     <br>
@@ -75,8 +75,8 @@
                                                 <td class="text-end">{{ number_format($info->payement, 2, ',', ' ') }}</td>
                                                 <td class="text-end">{{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
                                                 <td>{{ $info->description }}</td>
-                                                <td><button class="btn btn-success btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-toggle="modal" data-target="#modal"><i class="fa fa-edit"></i></button></td>
-                                                <td><a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="btn btn-danger supprimer"><span class="fa fa-trash"></span></button></a></td>
+                                                <td><button class="button_tail btn btn_next btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button></td>
+                                                <td style="width: 60px"><a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_next supprimer"  style="color: red"><span class="fa fa-trash"></span></button></a></td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -95,8 +95,10 @@
                     </div>
                 </div>
 
+                {{-- <div class="modal fade" id="delete_modal_{{$etp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> --}}
+
                 {{-- debut modal encaissement --}}
-                <div id="modal" class="modal fade" data-backdrop="true">
+                <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

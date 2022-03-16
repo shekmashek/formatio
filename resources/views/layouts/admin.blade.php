@@ -303,7 +303,7 @@
             @endcanany --}}
             @canany(['isCFP','isReferent'])
             <li>
-                <a href="{{route('facture')}}" class="d-flex nav_linke">
+                <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
                     <span class="links_name">Factures</span>
                 </a>
@@ -372,10 +372,10 @@
                     <i class='bx bxl-sketch'></i>
                     <span class="links_name">Abonnées</span>
                 </a>
-               
+
                 <span class="tooltip">Abonnées</span>
             </li>
-           
+
             {{-- integrer dans la page
             <li>
                 <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
@@ -409,9 +409,9 @@
                 </a>
                 <span class="tooltip">Abonnement</span>
             </li>
-          
+
             @endcan
-            
+
             <li>
                 <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>

@@ -48,8 +48,6 @@ class EncaissementController extends Controller
 
     public function encaissement(Request $request)
     {
-        // $user_id = Auth::user()->id;
-        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
@@ -78,8 +76,6 @@ class EncaissementController extends Controller
 
     public function generatePDF($numero_fact,Request $request)
     {
-        // $user_id = Auth::user()->id;
-        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;

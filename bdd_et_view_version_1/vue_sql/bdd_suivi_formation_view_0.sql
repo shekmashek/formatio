@@ -2,6 +2,7 @@ create or replace view v_user_role as
     select
         rl_usr.user_id,
         rl_usr.role_id,
+        rl_usr.activiter,
         usr.name,
         usr.email,
         usr.cin,

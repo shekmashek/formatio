@@ -303,9 +303,27 @@ where
     v_facture_existant_tmp.projet_id = projets.projet_id and projets.entreprise_id = entreprises.id;
 
 
-CREATE OR REPLACE VIEW v_facture_actif AS SELECT
+CREATE OR REPLACE VIEW v_facture_projet AS SELECT
+(factures.id) facture_id,
+factures.groupe_entreprise_id,
+factures.projet_id,
+projets.nom_projet,
+projets.type_formation_id,
+type_formations.type_formation,
+groupe_entreprises.groupe_id,
+groupes.nom_groupe
+FROM
+factures,groupe_entreprises,projets,groupes,type_formations
+WHERE
+factures.projet_id = projets.id AND factures.groupe_entreprise_id = groupe_entreprises.id AND
+groupe_entreprises.groupe_id = groupes.id AND projets.id = groupes.projet_id AND projets.type_formation_id = type_formations.id
+
+
+CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
     factures.cfp_id,
+    (cfps.nom) nom_cfp,
     factures.entreprise_id,
+    v_facture_existant.nom_etp,
     (factures.id) facture_id,
     factures.num_facture,
     other_message,
@@ -329,14 +347,16 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
     FROM
-        v_facture_existant,
+        v_facture_existant,cfps,
         factures
     WHERE
-        v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND  v_facture_existant.num_facture = factures.num_facture AND factures.activiter = TRUE
+        v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND  v_facture_existant.num_facture = factures.num_facture AND factures.activiter = TRUE AND factures.cfp_id = cfps.id AND  v_facture_existant.cfp_id = cfps.id
     GROUP BY
         factures.id,
+        cfps.nom,
         factures.cfp_id,
         factures.entreprise_id,
+         v_facture_existant.nom_etp,
         factures.num_facture,
         factures.other_message,
         facture_encour,
@@ -347,11 +367,13 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture;
 
 
-CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
-(factures.id) facture_id,
+CREATE OR REPLACE VIEW v_facture_inactif_tmp AS SELECT
+    (factures.id) facture_id,
     factures.cfp_id,
+    (cfps.nom) nom_cfp,
     factures.num_facture,
     factures.entreprise_id,
+    v_facture_existant.nom_etp,
     other_message,
     (
         DATEDIFF(
@@ -373,15 +395,17 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
     FROM
-        v_facture_existant,
+        v_facture_existant,cfps,
         factures
     WHERE
-       v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND   v_facture_existant.num_facture = factures.num_facture AND factures.activiter = FALSE
+       v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND   v_facture_existant.num_facture = factures.num_facture AND factures.activiter = FALSE  AND factures.cfp_id = cfps.id AND  v_facture_existant.cfp_id = cfps.id
     GROUP BY
         factures.id,
         factures.cfp_id,
+        cfps.nom,
         factures.num_facture,
         factures.entreprise_id,
+        v_facture_existant.nom_etp,
         factures.other_message,
         facture_encour,
         v_facture_existant.description_type_facture,
@@ -389,6 +413,32 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
         v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,v_facture_existant.remise,v_facture_existant.net_commercial,v_facture_existant.net_ht,
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture;
+
+CREATE OR REPLACE VIEW v_facture_actif AS SELECT
+v_facture_actif_tmp.*,
+v_facture_projet.groupe_entreprise_id,
+v_facture_projet.nom_projet,
+v_facture_projet.type_formation_id,
+v_facture_projet.type_formation,
+v_facture_projet.groupe_id,
+v_facture_projet.nom_groupe
+FROM
+v_facture_actif_tmp,v_facture_projet
+WHERE v_facture_actif_tmp.facture_id = v_facture_projet.facture_id;
+
+CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
+v_facture_inactif_tmp.*,
+v_facture_projet.groupe_entreprise_id,
+v_facture_projet.nom_projet,
+v_facture_projet.type_formation_id,
+v_facture_projet.type_formation,
+v_facture_projet.groupe_id,
+v_facture_projet.nom_groupe
+FROM
+v_facture_inactif_tmp,v_facture_projet
+WHERE v_facture_inactif_tmp.facture_id = v_facture_projet.facture_id;
+
+
 
 create or replace view v_compte_facture_actif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_actif group by entreprise_id,cfp_id;
 create or replace view v_compte_facture_inactif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_inactif group by entreprise_id,cfp_id;

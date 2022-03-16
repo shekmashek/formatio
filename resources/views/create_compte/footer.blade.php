@@ -101,7 +101,7 @@
         });
     });
 
-    $(document).on('change', '#tel_resp_cfp', function() {
+  /*  $(document).on('change', '#tel_resp_cfp', function() {
         var result = $(this).val();
         $.ajax({
             url: '{{route("verify_tel_user")}}'
@@ -122,7 +122,7 @@
                 console.log(error);
             }
         });
-    });
+    }); */
 
     $(document).on('change', '#nif_cfp', function() {
         var nif = $(this).val();
@@ -194,7 +194,7 @@
         });
     });
 
-    $(document).on('change', '#tel_resp_etp', function() {
+ /*   $(document).on('change', '#tel_resp_etp', function() {
         var result = $(this).val();
         $.ajax({
             url: '{{route("verify_tel_user")}}'
@@ -216,7 +216,7 @@
             }
         });
     });
-
+*/
 
     $(document).on('change', '#nif_etp', function() {
         var nif = $(this).val();

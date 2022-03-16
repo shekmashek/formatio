@@ -95,7 +95,11 @@ $(document).ready(function() {
             var userData = response;
             for (var $i = 0; $i < userData.length; $i++) {
                 if(userData[$i].role_id == 3 || userData[$i].role_id == 2 || userData[$i].role_id == 5  || userData[$i].role_id == 4){
-                    document.getElementById('liste_role').innerHTML += '<li> <a href="/change_role_user/'+ userData[$i].user_id+'/'+userData[$i].role_id+'">'+ userData[$i].role_description+'</a> </li>';
+                    if(userData[$i].activiter == true){
+                        document.getElementById('liste_role').innerHTML += '<li> (<strong style="color: green">actif</strong>) '+ userData[$i].role_description+' </li>';
+                    } else {
+                        document.getElementById('liste_role').innerHTML += '<li> <a href="/change_role_user/'+ userData[$i].user_id+'/'+userData[$i].role_id+'">'+ userData[$i].role_description+'</a> </li>';
+                    }
                 } else {
                     document.getElementById('liste_role').innerHTML += '<li>'+ userData[$i].role_description+'</li>';
 
