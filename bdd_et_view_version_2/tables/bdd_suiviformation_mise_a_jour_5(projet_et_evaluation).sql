@@ -3,7 +3,7 @@ create table type_formations(
   type_formation varchar(250) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `type_formations` (`type_formation`) VALUES ('Intra entreprise'),('Inter entreprise');
+INSERT INTO type_formations (type_formation) VALUES ('Intra entreprise'),('Inter entreprise');
 
 CREATE TABLE projets (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -42,116 +42,135 @@ CREATE TABLE groupe_entreprises (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `participant_groupe` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-  `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+create table status(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  status varchar(100) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+insert into status (status)  VALUES   ('Prévisionnel'),('A venir'),('En cours'),('Terminé');
+
+create table mes_documents(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  path text not null,
+  nom_doc text not null,
+  extension varchar(8) not null,
+  groupe_id bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE participant_groupe (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
+  groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
+  created_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `details` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `lieu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `h_debut` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `h_fin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_detail` date NOT NULL,
-  `formateur_id` bigint(20) UNSIGNED NOT NULL REFERENCES formateurs(id) ON DELETE CASCADE,
-  `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
-  `projet_id` bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+CREATE TABLE details (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  lieu varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  h_debut varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  h_fin varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  date_detail date NOT NULL,
+  formateur_id bigint(20) UNSIGNED NOT NULL REFERENCES formateurs(id) ON DELETE CASCADE,
+  groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
+  projet_id bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `cour_dans_detail` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `cours_id` bigint(20) UNSIGNED NOT NULL REFERENCES cours(id) ON DELETE CASCADE,
-  `programme_id` bigint(20) UNSIGNED NOT NULL REFERENCES programmes(id) ON DELETE CASCADE,
-  `detail_id` bigint(20) UNSIGNED NOT NULL REFERENCES details(id) ON DELETE CASCADE
+CREATE TABLE cour_dans_detail (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  cours_id bigint(20) UNSIGNED NOT NULL REFERENCES cours(id) ON DELETE CASCADE,
+  programme_id bigint(20) UNSIGNED NOT NULL REFERENCES programmes(id) ON DELETE CASCADE,
+  detail_id bigint(20) UNSIGNED NOT NULL REFERENCES details(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `presences` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `status` int(2)  NOT NULL,
-   `h_entree` time,
-   `h_sortie` time,
-   `note` text,
-  `detail_id` bigint(20) UNSIGNED NOT NULL REFERENCES details(id) ON DELETE CASCADE,
-  `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+CREATE TABLE presences (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  status int(2)  NOT NULL,
+  h_entree time,
+  h_sortie time,
+  note text,
+  detail_id bigint(20) UNSIGNED NOT NULL REFERENCES details(id) ON DELETE CASCADE UNIQUE,
+  stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE UNIQUE,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `froid_evaluations` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `cours_id` bigint(20) UNSIGNED NOT NULL REFERENCES cours(id) ON DELETE CASCADE,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `projet_id` bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
-  `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+-- ALTER TABLE presences
+-- ADD CONSTRAINT presence_stg_constraint UNIQUE (detail_id,stagiaire_id);
+
+
+CREATE TABLE froid_evaluations (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  cours_id bigint(20) UNSIGNED NOT NULL REFERENCES cours(id) ON DELETE CASCADE,
+  status varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  projet_id bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
+  stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `type_champs` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `nom_champ` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `desc_champ` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+CREATE TABLE type_champs (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nom_champ varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  desc_champ varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `type_champs` (`id`, `nom_champ`, `desc_champ`, `created_at`, `updated_at`) VALUES
+INSERT INTO type_champs (id, nom_champ, desc_champ, created_at, updated_at) VALUES
 (1, 'Champs type Nombre', 'NOMBRE', NULL, NULL),
 (2, 'Champs type Case a Cocher', 'CASE', NULL, NULL),
 (3, 'Champs type Text ou commentaire', 'TEXT', NULL, NULL);
 
-CREATE TABLE `question_mere` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `qst_mere` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `desc_reponse` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+CREATE TABLE question_mere (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  qst_mere text COLLATE utf8mb4_unicode_ci NOT NULL,
+  desc_reponse text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `question_fille` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `qst_fille` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_type_champs` bigint(20) UNSIGNED NOT NULL REFERENCES type_champs(id) ON DELETE CASCADE,
-  `id_qst_mere` bigint(20) UNSIGNED NOT NULL REFERENCES question_mere(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+CREATE TABLE question_fille (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  qst_fille text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  id_type_champs bigint(20) UNSIGNED NOT NULL REFERENCES type_champs(id) ON DELETE CASCADE,
+  id_qst_mere bigint(20) UNSIGNED NOT NULL REFERENCES question_mere(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `description_champ_reponse` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `descr_champs` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_qst_fille` bigint(20) UNSIGNED NOT NULL REFERENCES question_fille(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `nb_max` int(11),
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+CREATE TABLE description_champ_reponse (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  descr_champs text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  id_qst_fille bigint(20) UNSIGNED NOT NULL REFERENCES question_fille(id) ON DELETE CASCADE,
+  cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  nb_max int(11),
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `reponse_evaluationchaud` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `reponse_desc_champ` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_desc_champ` bigint(20) UNSIGNED NOT NULL REFERENCES description_champ_reponse(id) ON DELETE CASCADE,
-  `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-  `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+CREATE TABLE reponse_evaluationchaud (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  reponse_desc_champ text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  id_desc_champ bigint(20) UNSIGNED NOT NULL REFERENCES description_champ_reponse(id) ON DELETE CASCADE,
+  stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
+  groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
+  cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -297,7 +316,7 @@ insert into description_champ_reponse values (62,'',22,1,null,null,null);
 
 CREATE TABLE avis(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
+    stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
     module_id bigint(20) UNSIGNED NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
     note decimal(5,2) not null default 0,
     commentaire text,
@@ -332,11 +351,3 @@ create table frais_annexe_formation(
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADe,
   groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES goupes(id) ON DELETE CASCADe
 );
-
-create table status(
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  status varchar(100) not null
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-insert into `status` (`status`)  VALUES   ('Prévisionnel'),('A venir'),('En cours'),('Terminé');
