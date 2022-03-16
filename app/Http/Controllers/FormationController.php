@@ -295,8 +295,15 @@ class FormationController extends Controller
     }
 
     public function detail_cfp($id){
-        $cfp = DB::select('select * from v_horaire where id = ?',[$id]);dd($cfp);
-        // $cfp = DB::select('select * from v_horaire_cfp where id = ?',[$id]);
-        return response()->view('referent.catalogue.detail_cfp',compact('cfp'));
+        $cfp = DB::select('select * from v_horaire_cfp where cfp_id = ?',[$id]);
+        $formation = DB::select('select nom_formation,id from v_formation where cfp_id = ?',[$id]);
+        return response()->view('referent.catalogue.detail_cfp',compact('cfp','formation'));
+    }
+
+    public function affichageParFormationParcfp($id_formation,$id_cfp)
+    {
+        $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2 and cfp_id = ?', [$id_formation,$id_cfp]);
+        $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_session_projet where formation_id = ? and type_formation_id = 2',[$id_formation]);
+        return view('referent.catalogue.liste_formation', compact('infos','datas'));
     }
 }

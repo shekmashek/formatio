@@ -158,7 +158,7 @@ CREATE TABLE cfps (
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  domaine_de_formation varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  slogan varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   nif varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   stat varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   rcs varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
@@ -167,7 +167,7 @@ CREATE TABLE cfps (
   updated_at timestamp NULL DEFAULT current_timestamp(),
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default 'XXXXXXX',
+  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default 'XXXXXXX',
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

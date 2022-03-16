@@ -104,7 +104,6 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.logo) logo_cfp,
         (cfps.specialisation) specialisation,
         (cfps.offrir_aux_gens) offrir_aux_gens,
-        cfps.site_cfp
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
     join type_formations tf on p.type_formation_id = tf.id

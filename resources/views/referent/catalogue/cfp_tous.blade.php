@@ -69,7 +69,7 @@
                                 <span class="btn_actions ms-3 contact_action" role="button" data-bs-toggle="collapse"
                                     href="#contact_{{ $cfp->id }}" aria-expanded="false"
                                     aria-controls="collapseprojet"><i class="bx bx-phone"></i>Contact</span>
-                                <span class="btn_actions ms-3" role="button"><a href="#"><i class="bx bx-globe"></i>Site
+                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}"><i class="bx bx-globe"></i>Site
                                         Web</a></span>
                                 <span class="btn_actions ms-3" role="button"><a href="#"><i
                                             class="bx bx-info-circle"></i>Plus d'infos</a></span>
