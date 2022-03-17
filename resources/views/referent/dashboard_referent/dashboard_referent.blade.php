@@ -16,7 +16,7 @@
         <div class="row mt-2">
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68"><b> <i class="fad fa-users "></i>&nbsp; Collaborateur </b>
-                    <a class="overr" href="{{route('collaboration')}}"><p class=" m-1 system_ pb-1">Formateurs interne<span class="system_numero">{{ count($formateur_referent)}}</span></p></a>
+                    <a class="overr" href="{{route('collaboration')}}"><p class=" m-1 system_ pb-1">Formateurs interne<span class="system_numero">TSISY</span></p></a>
                     <a class="overr" href="{{route('collaboration')}}"><p class="m-1 system_ pb-1">Entreprise<span class="system_numero">{{ count($cfps)}}</span></p></a>
                     <p class="m-1 system_ pb-1">Équipe administrative<span class="system_numero">{{$total}}</span></p>
                     <a class="overr" href="{{route('liste_participant')}}"> <p class="m-1 system_ pb-1">Employée<span class="system_numero">{{$nb_stagiaire}}</span></p></a>

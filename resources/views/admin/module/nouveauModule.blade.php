@@ -418,7 +418,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 ">
                                 <div class="">
-                                    <div class="text-center"><img src="{{asset('images/CFP/Votre-logo-1.png')}}" alt="logo" class="img-fluid" style="width: 200px; height: 100px;"></div>
+                                    <div class="text-center"><img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height: 100px;"></div>
                                 </div>
                             </div>
                             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">

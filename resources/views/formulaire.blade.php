@@ -94,7 +94,7 @@
                             <div class="form-control mb-5">
                                 <p class="text-center">Informations générales</p>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <input type="text" name="id_resp" style="float: right;" value="{{$testNull[0]->id}}" hidden>
+                                    <input type="text" name="id_resp" style="float: right;" value="{{$testNull[0]->responsable_id}}" hidden>
                                     @if ($testNull[0]->nom_resp!=null)
                                     <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$testNull[0]->nom_resp}} {{$testNull[0]->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>

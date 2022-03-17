@@ -77,8 +77,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn-group dropleft">
-                                            <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="btn-group dropstart">
+                                            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu">
@@ -125,13 +125,11 @@
         </div>
 
         <div class="col-md-7">
-
             <h4>Inviter un Centre de Formation Professionel(CFP) à partir de son responsable</h4>
             <p>
                 Pour travailler avec une Centre de Formation Professionel(CFP),il suffit simplement de se collaborer.
                 La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail vers son responsable</strong>".
             </p>
-
             <form class="form form_colab" action="{{ route('create_etp_cfp') }}" method="POST">
                 @csrf
                 <div class="form-row d-flex">
@@ -145,7 +143,6 @@
                         <button type="submit" class="btn btn-primary mt-2">Envoyer l'invitation</button>
                     </div>
                 </div>
-
             </form>
 
             @if(Session::has('success'))
@@ -164,12 +161,12 @@
                     <div class="col-md-12">
                         <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                             <li class="nav-item">
-                                <a href="#" class=" active" id="home-tab" data-toggle="tab" data-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                <a href="#" class=" active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="true">
                                     Invitations en attentes
                                 </a>
                             </li>
                             <li class="nav-item ms-5">
-                                <a href="#" class="" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                <a href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                                     Invitations réfuser
                                 </a>
                             </li>
@@ -181,14 +178,12 @@
 
 
 
-            <div class="tab-content" id="myTabContent">
+            <div class="tab-content" id="nav-tabContent">
 
-                <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active" id="nav-invitation" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive text-center">
-
                         <table class="table  table-borderless table-sm">
                             <tbody id="data_collaboration">
-
                                 @if (count($invitation)<=0) <tr>
                                     <td> Aucun invitations en attente</td>
                                     </tr>
@@ -220,15 +215,11 @@
                                     @endif
                             </tbody>
                         </table>
-
                     </div>
-
                 </div>
 
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="table-responsive text-center">
-
                         <table class="table  table-borderless table-sm">
                             <tbody>
                                 @if (count($refuse_demmande_cfp)<=0) <tr>
@@ -236,12 +227,10 @@
                                     </tr>
                                     @else
                                     @foreach($refuse_demmande_cfp as $refuse_invit)
-
                                     <tr>
                                         <td>
                                             <div align="left">
                                                 <strong>{{$refuse_invit->nom}}</strong>
-
                                             </div>
                                         </td>
                                         <td>
@@ -260,30 +249,13 @@
                                             </strong>
                                         </td>
                                     </tr>
-
-                                    {{-- <tr>
-                                                <td>
-                                                    <div align="left">
-                                                        <strong>{{$refus->nom}}</strong>
-                                    <p style="color: rgb(238, 150, 18)">{{$refus->mail_cfp}}</p>
-                                    <h6>{{$refus->domaine_de_formation}}</h6>
-                    </div>
-                    </td>
-                    <td>
-                        <strong>
-                            <h5><i class="bx bxs-x-circle"></i> en attente</h5>
-                        </strong>
-                    </td>
-                    </tr> --}}
                     @endforeach
                     @endif
                     </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

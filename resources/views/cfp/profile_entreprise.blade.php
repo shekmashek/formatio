@@ -77,8 +77,8 @@
                                 </td>
                                 <td>
 
-                                    <div class="btn-group dropleft">
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu">
@@ -166,12 +166,12 @@
                     <div class="col-md-12">
                         <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                             <li class="nav-item">
-                                <a href="#" class=" active" id="home-tab" data-toggle="tab" data-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                <a href="#" class=" active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="true">
                                     Invitations en attentes
                                 </a>
                             </li>
                             <li class="nav-item ms-5">
-                                <a href="#" class="" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                <a href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                                     Invitations réfuser
                                 </a>
                             </li>
@@ -181,9 +181,9 @@
                 </div>
             </div>
 
-            <div class="tab-content" id="myTabContent">
+            <div class="tab-content" id="nav-tabContent">
 
-                <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active" id="nav-invitation" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive text-center">
 
                         <table class="table  table-borderless table-sm">
@@ -230,7 +230,7 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
                     <div class="table-responsive text-center">
                         <table class="table  table-borderless table-sm">

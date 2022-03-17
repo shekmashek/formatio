@@ -30,7 +30,7 @@ WHERE
 
 CREATE OR REPLACE view responsables as
 SELECT
-    employers.id AS responsable_id,
+    employers.id,
     employers.entreprise_id,
     (employers.matricule_emp) matricule,
     (employers.nom_emp) nom_resp,
@@ -41,8 +41,9 @@ SELECT
     (employers.telephone_emp) telephone_resp,
     employers.user_id,
     service_id,
+    departement_entreprises_id,
     employers.photos,
-    (employers.cin_emp) cin,
+    (employers.cin_emp) cin_resp,
     (employers.date_naissance_emp) date_naissance_resp,
     employers.niveau_etude,
     employers.activiter,
@@ -56,7 +57,7 @@ SELECT
 FROM
 employers, role_users
 WHERE
-    employers.user_id = role_users.user_id and role_users.role_id=2;
+    employers.user_id = role_users.user_id  and role_users.role_id=2;
 
 
 CREATE OR REPLACE view chef_departements as

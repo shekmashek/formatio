@@ -339,7 +339,6 @@ class HomeController extends Controller
             //get the column with null value
 
             $testNull = DB::select('select * from responsables where user_id  = ? ', [Auth::user()->id]);
-
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
             $departement = DB::select('select * from departement_entreprises where id  = ? ', [$testNull[0]->departement_entreprises_id]);
 
@@ -378,7 +377,7 @@ class HomeController extends Controller
                 $refs_tmp = DB::select('select nif,stat,rcs from entreprises where id = ?', [$etp_id]);
                 $refs = $refs_tmp[0];
 
-                $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
+                // $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
 
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
                 $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
@@ -416,7 +415,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name'));
+                return view('referent.dashboard_referent.dashboard_referent', compact('etp', 'referent', 'refs', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name'));
             }
         }
 

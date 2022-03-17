@@ -98,14 +98,18 @@
                                 <tbody>
 
                                     @foreach($datas as $resp)
+                                   {{-- {{dd($resp)}} --}}
                                     <tr>
-                                        <td style="width: 10%;"><a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}">
+                                        <td style="width: 10%;">
+                                            <a class="dropdown-item" href="{{route('profil_cfp',$resp->id) }}">
                                                 @if ($resp->photos==null)
-                                                <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/users.png')}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
+                                                <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/users.png')}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0">
+                                            </a>
 
                                             @else
 
-                                            <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/'.$resp->photos)}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
+                                            <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/'.$resp->photos)}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0">
+                                         </a>
                                             @endif
                                         </td>
                                         <td>{{$resp->nom_resp." ".$resp->prenom_resp}}</td>

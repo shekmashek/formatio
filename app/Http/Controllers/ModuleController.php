@@ -133,7 +133,12 @@ class ModuleController extends Controller
         $domaine = $fonct->findAll("domaines");
         $liste = formation::orderBy('nom_formation')->get();
         $niveau = Niveau::all();
-        return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau'));
+        if (Gate::allows('isCFP')) {
+            $cfp_id  = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[Auth::user()->id])->cfp_id;
+            $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
+            return view('admin.module.nouveauModule', compact('cfp','domaine', 'liste', 'niveau'));
+        }
+        // return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau'));
     }
 
     public function get_formation(Request $req)
