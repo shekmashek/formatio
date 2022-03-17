@@ -1,0 +1,38 @@
+creation de table horaire pour enregistrer les heures d'ouverture et de fermeture des centres
+de formations
+
+CREATE TABLE horaires (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  jours varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  h_entree time,
+  h_sortie time,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL
+alter table cfps rename column domaine_de_formation to slogan(mbola ts natao script fa tanana)
+
+creation de nouvelle vue horaire, cfp et formation doncil faut changer tous les vuesou il y a
+le domaine_de_formation en slogan et ajouterla nouvelle collonne presentation
+
+On doit aussi ajouter dans le cfp des nouvelles collones en plus de la presentation:
+  - specialisation du cfp
+
+la table doit encore changer et les vues auquels elle est affiliees
+
+creer une nouvelle table pour les liens des reseaux sociaux des centres de formation
+
+CREATE TABLE reseaux_sociaux (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  lien_facebook varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_twitter varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_instagram varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_linkedin varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+creer des nouvelles vues pour le reseaux sociaux etle horair cfp

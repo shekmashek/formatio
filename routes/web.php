@@ -318,6 +318,7 @@ Route::get('result__formation','FormationController@rechercheParModule')->name('
 Route::get('search__formation','FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation','FormationController@formation_domaine')->name('domaine_formation');
 Route::get('select_par_formation/{id}','FormationController@affichageParFormation')->name('select_par_formation');
+Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}','FormationController@affichageParFormationParCfp')->name('select_par_formation_par_cfp');
 Route::get('select_par_module/{id}','FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous','FormationController@affichageTousCategories')->name('select_tous');
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','SessionController@inscription')->name('inscriptionInter');
@@ -325,7 +326,7 @@ Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','SessionController
 Route::get('annuaire','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
-
+    
 //route module
 Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'

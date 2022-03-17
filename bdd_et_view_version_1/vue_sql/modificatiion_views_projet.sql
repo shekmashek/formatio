@@ -15,12 +15,14 @@ create or replace view v_projet_session as
         cfps.adresse_region as adresse_region_cfp,
         cfps.email as mail_cfp,
         cfps.telephone as tel_cfp,
-        cfps.domaine_de_formation,
+        cfps.slogan,
+        cfps.presentation,
         cfps.nif as nif_cfp,
         cfps.stat as stat_cfp,
         cfps.rcs as rcs_cfp,
         cfps.cif as cif_cfp,
         cfps.logo as logo_cfp,
+        cfps.specialisation as specialisation,
         ts.totale_session
     from projets p
     join type_formations tf on p.type_formation_id = tf.id
@@ -37,7 +39,7 @@ create or replace view v_groupe_entreprise as
         e.adresse_quartier,
         e.adresse_code_postal,
         e.adresse_ville,
-         e.adresse_region,
+        e.adresse_region,
         e.logo,
         e.nif,
         e.stat,
@@ -94,12 +96,14 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation,
+        cfps.slogan,
+        cfps.presentation,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
-        (cfps.logo) logo_cfp
+        (cfps.logo) logo_cfp,
+        (cfps.specialisation) specialisation
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
     join type_formations tf on p.type_formation_id = tf.id
@@ -275,12 +279,14 @@ create or replace view v_projet_cfp as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation as domaine_de_formation_cfp,
+        cfps.slogan as domaine_de_formation_cfp,
+        cfps.presentation as presentation,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
         (cfps.logo) logo_cfp,
+        (cfps.specialisation) specialisation,
         tf.type_formation
     from projets p
     join cfps on cfps.id = p.cfp_id
@@ -316,3 +322,28 @@ create or replace view v_projet_formation as
         formation_id,
         nom_formation,
         cfp_id;
+
+create or replace view v_horaire_cfp as
+    select
+        h.*,
+        rs.lien_facebook,
+        rs.lien_twitter,
+        rs.lien_instagram,
+        rs.lien_linkedin,
+        (cfps.nom) nom_cfp,
+        (cfps.adresse_lot) adresse_lot_cfp,
+        (cfps.adresse_quartier) adresse_quartier_cfp,
+        (cfps.adresse_ville) adresse_ville_cfp,
+        (cfps.adresse_region) adresse_region_cfp,
+        (cfps.adresse_code_postal) adresse_code_postal_cfp,
+        (cfps.email) mail_cfp,
+        (cfps.telephone) tel_cfp,
+        (cfps.slogan) slogan,
+        (cfps.presentation) presentation,
+        (cfps.logo) logo_cfp,
+        (cfps.specialisation) specialisation,
+        (cfps.site_web) site_web
+    from horaires h
+    join cfps on cfps.id = h.cfp_id
+    join reseaux_sociaux rs on rs.cfp_id = h.cfp_id;
+

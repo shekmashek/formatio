@@ -283,7 +283,7 @@ class FormationController extends Controller
     public function annuaire(){
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $pagination = Cfp::orderBy('nom')->paginate(1);
+            $pagination = Cfp::orderBy('nom')->paginate(9);
             return view('referent.catalogue.cfp_tous', compact('pagination','initial'));
         }
     }
@@ -295,7 +295,15 @@ class FormationController extends Controller
     }
 
     public function detail_cfp($id){
-        $cfp = DB::select('select * from cfps where id = ?',[$id]);
-        return response()->view('referent.catalogue.detail_cfp',compact('cfp'));
+        $cfp = DB::select('select * from v_horaire_cfp where cfp_id = ? ',[$id]);
+        $formation = DB::select('select nom_formation,id from v_formation where cfp_id = ?',[$id]);
+        return view('referent.catalogue.detail_cfp',compact('cfp','formation'));
+    }
+
+    public function affichageParFormationParcfp($id_formation,$id_cfp)
+    {
+        $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2 and cfp_id = ?', [$id_formation,$id_cfp]);
+        $datas =DB::select('select module_id,formation_id,date_debut,date_fin from v_session_projet where formation_id = ? and type_formation_id = 2',[$id_formation]);
+        return view('referent.catalogue.liste_formation', compact('infos','datas'));
     }
 }

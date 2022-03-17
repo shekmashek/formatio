@@ -18,6 +18,7 @@
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
+    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg copie.png') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -491,14 +492,14 @@
                             @csrf
                             <div class="form-row">
                                 <div class="searchBoxMod">
-                                    <input class="searchInputMod mb-2" type="text" name="nom_formation"
+                                    <input class="searchInputMod mb-2 recherche_formation" type="text" name="nom_formation"
                                         placeholder="Rechercher par formations...">
-                                    <button class="searchButtonMod" href="#">
-                                        <i class="bx bx-search">
-                                        </i>
+                                    <button class="searchButtonMod recherche_formation" href="#">
+                                        <i class="bx bx-search"></i>
                                     </button>
-                                    <a href="{{route('liste_formation')}}" class="btn_next ms-2" role="button">Catalogue</a>
-                                    <a href="{{route('annuaire')}}" class="btn_next" role="button">Annuaire</a>
+
+                                    <a href="{{route('liste_formation')}}" class="btn_next ms-2" role="button" onclick="afficher_catalogue()">Catalogue</a>
+                                    <a href="{{route('annuaire')}}" class="btn_next" role="button" onclick="afficher_annuaire()">Annuaire</a>
                                     <a href="{{route('calendrier')}}" class="btn_next" role="button">Agenda</a>
                                 </div>
                             </div>

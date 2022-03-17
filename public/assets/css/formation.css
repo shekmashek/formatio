@@ -244,10 +244,10 @@ a:focus {
     border-radius: 25px;
 }
 .module_detail {
-    background: #7635dc;
+    background: white;
     border: none;
     border-radius: 25px;
-    color: white;
+    color: black;
     padding: 0.8rem 1rem;
 }
 
@@ -262,7 +262,7 @@ a:focus {
 }
 
 .module_detail_heure {
-    background: #ffcc3e;
+    /* background: #ffcc3e; */
     color: black;
     border: none;
     border-radius: 15px;
@@ -276,31 +276,31 @@ a:focus {
 .module_detail_heure .bx {
     position: relative;
     padding: 0.5rem 0.5rem;
-    color: #ffcc3e;
+    color: white;
     border: none;
     border-radius: 15px;
-    background: white;
+    background: black;
 }
 
 .module_detail_content {
     background: white;
-    border: none;
-    border-radius: 25px;
+    border: 1px solid rgba(128, 128, 128, 0.207);
+    border-radius: 5px;
 }
 
 .detail__intra {
     position: sticky;
     top: 3rem;
     background-color: white;
-    border: none;
-    border-radius: 25px;
+    border: 1px solid grey;
+    /* border-radius: 25px; */
 }
 .detail__prix {
     background: #7635dc;
     color: white;
     text-align: center;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    /* border-top-left-radius: 25px;
+    border-top-right-radius: 25px; */
 }
 
 .detail__modal {
@@ -355,11 +355,12 @@ a:focus {
 }
 
 .module_detail_objet {
-    background: white;
-    border: none;
-    border-radius: 25px;
+    /* background: white; */
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 5px;
     padding: 1rem 1rem;
     margin-bottom: 1.5rem;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 }
 
 .module_detail_objet .bx {
@@ -372,7 +373,4 @@ a:focus {
 margin-right: 0.5rem;
 }
 
-.encre{
-    background: #ffcc3e;
-}
 /* detail module */

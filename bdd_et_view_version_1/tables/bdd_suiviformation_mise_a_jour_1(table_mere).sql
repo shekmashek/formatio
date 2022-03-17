@@ -158,8 +158,8 @@ CREATE TABLE cfps (
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  domaine_de_formation varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
-  nif varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  slogan varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
+  nif varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   stat varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   rcs varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   cif varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
@@ -167,10 +167,35 @@ CREATE TABLE cfps (
   updated_at timestamp NULL DEFAULT current_timestamp(),
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default 'XXXXXXX',
+  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default 'XXXXXXX',
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE horaires (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  jours varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  h_entree time,
+  h_sortie time,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE reseaux_sociaux (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  lien_facebook varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_twitter varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_instagram varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  lien_linkedin varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL
+alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL
+alter table cfps rename domaine_de_formation to slogan
 
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
