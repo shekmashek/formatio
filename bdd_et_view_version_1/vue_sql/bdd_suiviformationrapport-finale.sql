@@ -247,11 +247,11 @@ where
 
 create or replace view v_programme_detail_activiter as
 select
-        v_detailmoduleformation.*,cours_id,titre_cours,programme_id,titre_programme
+        v_detailmodule.*,cours_id,titre_cours,programme_id,titre_programme
 from
-    v_detailmoduleformation,v_detail_cour
+    v_detailmodule,v_detail_cour
 where
-    v_detailmoduleformation.detail_id = v_detail_cour.detail_id;
+    v_detailmodule.detail_id = v_detail_cour.detail_id;
 
 create or replace view v_trie_detail_date as
 select groupe_id,h_debut,h_fin,date_detail from v_programme_detail_activiter group by groupe_id,h_debut,h_fin,date_detail;

@@ -176,7 +176,7 @@
                                                     </td>
                                                     @if ($prj->type_formation_id == 1)
                                                         <td>
-                                                            <a href="{{ route('nouveauRapportFinale',[$pj->groupe_id]) }}"><button class="btn rapport_finale">Rapport</button></a>
+                                                            <a style="background: none" href="{{ route('nouveauRapportFinale',[$pj->groupe_id]) }}"><button class="btn rapport_finale">Rapport</button></a>
                                                         </td>
                                                     @endif
                                                     
@@ -252,7 +252,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form action="{{ route('insert_session') }}"
-                                                                        id="formPayement" method="POST"
+                                                                         method="POST"
                                                                         class="justify-content-center me-5">
                                                                         @csrf
                                                                         <input type="hidden" name="type_formation" value="1">
@@ -290,7 +290,6 @@
                                                                                         </div>
                                                                                         <div class="text-center px-3"><button
                                                                                                 type="submit"
-                                                                                                form="formPayement"
                                                                                                 class="btn btn_enregistrer">Valider</button>
                                                                                         </div>
                                                                                     </div>

@@ -98,9 +98,9 @@ class RapportFinaleController extends Controller
             "dpi" => 130
         ]);
 
-        // return view('admin.pdf.pdf_rapport_finale',compact('data'));
-        $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
-        return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
+        return view('admin.pdf.pdf_rapport_finale',compact('data'));
+        // $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
+        // return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
     }
 
 

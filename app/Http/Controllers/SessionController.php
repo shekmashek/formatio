@@ -28,6 +28,7 @@ use App\Mail\annuler_session;
 use App\Models\getImageModel;
 use App\Presence;
 use Exception;
+use Illuminate\Support\Facades\URL;
 
 class SessionController extends Controller
 {
@@ -105,6 +106,7 @@ class SessionController extends Controller
     }
 
     public function detail_session(){
+        // dd(URL::to('/').'/sarin Gael');
         $user_id = Auth::user()->id;
         $id = request()->id_session;
         $type_formation_id = request()->type_formation;
@@ -139,7 +141,6 @@ class SessionController extends Controller
             // dd($projet);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             $documents = $drive->file_list($cfp_nom,"Mes documents");
-            
         }
         if(Gate::allows('isReferent')){
             if (Gate::allows('isReferentPrincipale')) {

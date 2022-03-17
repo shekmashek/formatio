@@ -3,7 +3,7 @@ $("#formation_id").on("change", function() {
     $("#module_id option").remove();
     $.ajax({
         method: "GET",
-        url: "/module_formation",
+        url: "{{ route('module_formation') }}",
         data: {
             id: id,
         },

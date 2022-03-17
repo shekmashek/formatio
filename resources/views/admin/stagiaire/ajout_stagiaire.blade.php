@@ -27,8 +27,8 @@
     <div class="d-flex justify-content-between">
         <h5>Liste des apprenants inscrits(es) au projet</h5>
         <div class="d-flex">
-            <button class="btn btn-secondary mx-1 align-items-center"><i class="far fa-file-pdf"></i>&nbsp; Exporter en PDF</button>
-            <button class="btn btn-secondary"><i class="far fa-file-excel"></i>&nbsp; Exporter en Excel</button>
+            {{-- <button class="btn btn-secondary mx-1 align-items-center"><i class="far fa-file-pdf"></i>&nbsp; Exporter en PDF</button>
+            <button class="btn btn-secondary"><i class="far fa-file-excel"></i>&nbsp; Exporter en Excel</button> --}}
         </div>
     </div>
     <br>
@@ -57,9 +57,9 @@
                     <td>{{ $stg->fonction_stagiaire }}</td>
                     <td>{{ $stg->nom_departement }}</td>
                     <td>{{ $stg->nom_service }}</td>
-                    <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
+                    <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
                 </tr>
-                <div class="modal fade" id="exampleModal_{{$stg->stagiaire_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="delete_stg_{{$stg->stagiaire_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header  d-flex justify-content-center" style="background-color:rgb(224,182,187);">
@@ -189,7 +189,7 @@ td{
             dataType: "html",
             success:function(response){
 
-                alert(JSON.stringify(response));
+                // alert(JSON.stringify(response));
                 var userData=JSON.parse(response);
                 $("#matricule").val(userData[0].matricule);
                 $("#nom").val(userData[0].nom_stagiaire);

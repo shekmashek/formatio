@@ -49,9 +49,12 @@
                     <p class="p-0 m-0 text-center"> Formateur(s) </p>
                     <p class="p-0 m-0 text-center"> <strong>
                        <div class="pad_img">
+                           @foreach ($formateur as $form)
+                            <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                           @endforeach()
+                            {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
                             <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;"> --}}
                        </div>
                     </strong></p>
                 </div>

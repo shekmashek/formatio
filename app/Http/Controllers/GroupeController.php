@@ -109,6 +109,21 @@ class GroupeController extends Controller
         );
 
         try{
+            if($request->date_debut >= $request->date_fin){
+                throw new Exception("Date de début doit être inférieur date de fin.");
+            }
+            if($request->date_debut == null || $request->date_fin == null){
+                throw new Exception("Date de début ou date de fin est vide.");
+            }
+            if($request->module_id == null){
+                throw new Exception("Vous devez choisir un module de formation.");
+            }
+            if($request->entreprise == null){
+                throw new Exception("Vous devez choisir une entreprise pour la formation.");
+            }
+            if($request->payement == null){
+                throw new Exception("Vous devez choisir une entreprise pour la formation.");
+            }
             DB::beginTransaction();
             $projet = new projet();
             $nom_projet = $projet->generateNomProjet();
@@ -213,6 +228,12 @@ class GroupeController extends Controller
 
     public function insert_session(Request $request){
         try{
+            if($request->date_debut >= $request->date_fin){
+                throw new Exception("Date de début doit être inférieur date de fin.");
+            }
+            if($request->date_debut == null || $request->date_fin == null){
+                throw new Exception("Date de début ou date de fin est vide.");
+            }
             DB::beginTransaction();
             $projet = $request->projet;
             $fonct = new FonctionGenerique();
