@@ -754,11 +754,11 @@ class HomeController extends Controller
     //creation iframe
     public function creer_iframe(){
         $fonct = new FonctionGenerique();
-        $entreprise = $fonct->findAll("entreprises");
+        // $entreprise = $fonct->findAll("entreprises");
         $of = $fonct->findAll('cfps');
-        $iframe_etp = $fonct->findAll("iframe_entreprise");
-        $iframe_of = $fonct->findAll("iframe_cfp");
-        return view('bi.iframe',compact('entreprise','of','iframe_etp','iframe_of'));
+        $iframe_etp = $fonct->findAll("entreprise_iframe");
+        $iframe_of = $fonct->findAll("cfp_iframe");
+        return view('bi.iframe',compact('of','iframe_etp','iframe_of'));
     }
     public function enregistrer_iframe_etp(Request $request){
         $url_iframe = $request->iframe_url;
