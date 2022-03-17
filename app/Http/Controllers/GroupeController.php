@@ -44,13 +44,19 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
-        // dd($fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]));
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $type_formation = request()->type_formation;
         $formations = $fonct->findWhere("formations", [1], [1]);
         $modules = $fonct->findAll("modules");
-        $entreprise = $fonct->findAll("v_demmande_cfp_etp");
+
+        $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+        $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+
+        $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+        $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+        $entreprise = $fonct->concatTwoList($etp2, $etp1);
+
+        // dd($entreprise);
         $payement = $fonct->findAll("type_payement");
         return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules','entreprise','payement'));
     }

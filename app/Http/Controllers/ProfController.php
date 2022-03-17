@@ -73,19 +73,10 @@ class ProfController extends Controller
 
 
         if (Gate::allows('isCFP')) {
-
-            // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-            // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
-            // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            // $formateur = $forma->getFormateur($formateur1, $formateur2);
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-
-
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
-            $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
-
+            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur'));
             if (count($formateur) <= 0) {
                 return view('admin.formateur.guide');
             } else {

@@ -114,8 +114,6 @@
                                 </div>
                                 {{-- fin  --}}
 
-
-
                                 @endforeach
                                 @endif
                         </tbody>
