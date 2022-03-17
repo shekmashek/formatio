@@ -65,7 +65,7 @@ class RoleUser extends Model
 
     public function update_role_user($user_id, $role_id)
     {
-        $tab_role_user = DB::select('select * from role_users where user_id=? and role_id!=?',[$user_id,$role_id]);
+        $tab_role_user = DB::select('select * from role_users where user_id=? and role_id!=?', [$user_id, $role_id]);
         DB::beginTransaction();
         try {
             $query = DB::update("UPDATE role_users SET activiter=true WHERE user_id=? AND role_id=?", [$user_id, $role_id]);
@@ -77,8 +77,15 @@ class RoleUser extends Model
             DB::rollback();
             echo $e->getMessage();
         }
-        return redirect()->route('home');
+        if ($role_id == 3) // stagiaire
+        {
+            return redirect()->route('calendrier');
+        } elseif ($role_id == 2) { // RH
+            return redirect()->route('home');
+        } elseif ($role_id == 5) { // Manager
+            return redirect()->route('calendrier');
+        } else {
+            return redirect()->route('home');
+        }
     }
-
-
 }

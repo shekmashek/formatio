@@ -45,6 +45,13 @@ class AppelOffreController extends Controller
             $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["entreprise_id", "publier"], [$resp_connecter->entreprise_id, true]);
             return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier','domaines'));
         }
+        if (Gate::allows('isManager')) {
+            $domaines = $this->fonct->findAll("domaines");
+            $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+            $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["entreprise_id", "publier"], [$resp_connecter->entreprise_id, false]);
+            $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["entreprise_id", "publier"], [$resp_connecter->entreprise_id, true]);
+            return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier','domaines'));
+        }
         if (Gate::allows('isCFP')) {
             $domaines = $this->fonct->findAll("domaines");
             $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [false]);

@@ -18,7 +18,7 @@ use App\User;
 use App\cfp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\FonctionGenerique;
 use function PHPSTORM_META\type;
 
 class AbonnementController extends Controller
@@ -185,7 +185,7 @@ class AbonnementController extends Controller
     //affichage des types d'abonnements
     public function ListeAbonnement()
     {
-
+            $fonct = new FonctionGenerique();
         // $role_id = User::where('Email', Auth::user()->email)->value('role_id');
 
         if (Gate::allows('isReferent')) {
@@ -195,7 +195,8 @@ class AbonnementController extends Controller
             $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '3')->get();
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '4')->get();
 
-            $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
+            // $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
+            $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[Auth::user()->id]);
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
             $abn = type_abonnement::all();
 
@@ -209,7 +210,9 @@ class AbonnementController extends Controller
             }
         }
         if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
+            $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[Auth::user()->id]);
+
+            // $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
             $abn =type_abonnement::all();
             $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 1)->get();

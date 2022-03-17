@@ -79,7 +79,7 @@ class DepartementController extends Controller
 
         $referent = DB::select('select * from responsables where entreprise_id = ? and prioriter=false', [$etp_id]);
         $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
-        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
+        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?  and prioriter=false', [$etp_id]);
 
         $user_role = DB::select('select * from v_user_role');
         $roles = $fonct->findAll("v_role_etp");

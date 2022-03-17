@@ -11,6 +11,7 @@ SELECT
     (employers.telephone_emp) telephone_stagiaire,
     employers.user_id,
     service_id,
+    branche_id,
     employers.photos,
     (employers.cin_emp) cin,
     (employers.date_naissance_emp) date_naissance,

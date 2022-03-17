@@ -240,7 +240,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
     JOIN v_detailmodule dm ON
         pg.groupe_id = dm.groupe_id
     JOIN stagiaires s ON
-        s.stagiaire_id = pg.stagiaire_id;
+        s.id = pg.stagiaire_id;
 
 
 
@@ -295,7 +295,7 @@ select
         g.date_fin,
         g.status,
         g.activiter as activiter_groupe,
-        s.stagiaire_id,
+        (s.id) stagiaire_id,
         s.matricule,
         s.nom_stagiaire,
         s.prenom_stagiaire,
@@ -326,7 +326,7 @@ select
     on g.id = p.groupe_id
     join
         stagiaires s
-        on s.stagiaire_id = p.stagiaire_id
+        on s.id = p.stagiaire_id
     join v_departement_service_entreprise d
         on s.service_id = d.service_id
     join moduleformation mf
@@ -360,7 +360,7 @@ create or replace view v_detail_presence as
 
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
-    stg.stagiaire_id,
+    (stg.id) stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
@@ -429,7 +429,7 @@ create or replace view v_detail_presence_stagiaire as
         stg.region,
         stg.lot
     from v_detail_presence dp
-    join stagiaires stg on dp.stagiaire_id = stg.stagiaire_id;
+    join stagiaires stg on dp.stagiaire_id = stg.id;
 
 
 create or replace view v_participant_groupe_detail as

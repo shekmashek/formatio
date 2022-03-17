@@ -337,7 +337,7 @@ create or replace view v_departement_service_entreprise as
 
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
-    (stg.id) stagiaire_id,
+    stg.id AS stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
@@ -351,11 +351,13 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.date_naissance,
     stg.niveau_etude,
     stg.activiter,
+    stg.branche_id,
     stg.quartier,
     stg.code_postal,
     stg.ville,
     stg.region,
     stg.lot,
+    b.nom_branche,
     e.nom_etp,
     e.adresse_rue,
     e.adresse_quartier,
@@ -374,14 +376,13 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     e.telephone_etp,
     ds.*
 FROM
-    stagiaires as stg, entreprises e, v_departement_service_entreprise ds, services
-WHERE
-    stg.entreprise_id = e.id
-    AND
-    ds.service_id = stg.service_id
-    AND
-    ds.departement_entreprise_id = services.departement_entreprise_id ;
-
+    stagiaires as stg
+    join entreprises e
+    on stg.entreprise_id = e.id
+    join v_departement_service_entreprise ds
+    on ds.service_id = stg.service_id
+    join branches b
+    on b.id = stg.branche_id;
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     (stg.id) stagiaire_id,

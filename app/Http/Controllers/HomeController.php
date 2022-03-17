@@ -98,7 +98,8 @@ class HomeController extends Controller
         if (count($request->input()) > 2) {
             return redirect()->back()->with('error', 'Remplissez les champs vides');
         } else {
-            return view('layouts.accueil_admin');
+            $phone_tmp = DB::select('select * from v_stagiaire_entreprise where user_id = ?', [Auth::user()->id]);
+            return view('layouts.accueil_admin', compact('phone_tmp'));
         }
     }
     public function remplir_info_manager(Request $request)
@@ -170,7 +171,7 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
         if (Gate::allows('isStagiairePrincipale')) {
-           //get the column with null value
+            //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from stagiaires where user_id  = ? ', [Auth::user()->id]);
 
@@ -199,7 +200,6 @@ class HomeController extends Controller
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
                     $phone_tmp =  DB::select('select * from v_stagiaire_entreprise where user_id = ?', [Auth::user()->id]);
-
                     return view('layouts.accueil_admin', compact('totale_invitation', 'phone_tmp'));
                 }
             }
@@ -233,14 +233,12 @@ class HomeController extends Controller
 
             $user_id = Auth::user()->id;
             // cfp_id
-            //  $cfp_id = Cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
 
             $cfp = Cfp::where('id', $cfp_id)->value('nom');
 
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-            // $centre_fp = cfp::where('user_id', $user_id)->value('id');
 
             $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
                 year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
@@ -301,21 +299,18 @@ class HomeController extends Controller
 
             return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir'));
         }
-        if(Gate::allows('isSuperAdminPrincipale')) {
+        if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
             // return view('layouts.accueil_admin');
         }
-        if(Gate::allows('isSuperAdmin')) {
+        if (Gate::allows('isSuperAdmin')) {
             return view('layouts.accueil_admin');
-
         }
-        if(Gate::allows('isAdminPrincipale')) {
+        if (Gate::allows('isAdminPrincipale')) {
             return view('layouts.accueil_admin');
-
         }
-        if(Gate::allows('isSuperAdmin')) {
+        if (Gate::allows('isSuperAdmin')) {
             return view('layouts.accueil_admin');
-
         }
         // if(Gate::allows('isSuperAdminPrincipale')) {
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
@@ -409,7 +404,7 @@ class HomeController extends Controller
             }
         }
 
-        if (Gate::allows('isSuperAdminPrincipale')){
+        if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
         }
         // else {
@@ -436,6 +431,13 @@ class HomeController extends Controller
         //     $totale_invitation = $this->collaboration->count_invitation();
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
         // }
+
+        if (Gate::allows('isManagerPrincipale')) {
+            return redirect()->route('calendrier');
+        }
+        if (Gate::allows('isManager')) {
+            return redirect()->route('calendrier');
+        }
     }
 
 
@@ -463,7 +465,7 @@ class HomeController extends Controller
         }
         if (Gate::allows('isReferent')) {
             //on récupère l'entreprise id de la personne connecté
-             if (Gate::allows('isReferentPrincipale')) {
+            if (Gate::allows('isReferentPrincipale')) {
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             }
             if (Gate::allows('isStagiairePrincipale')) {
@@ -494,7 +496,7 @@ class HomeController extends Controller
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
             $projet = DB::select($sql);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
-             $data = $fonct->findWhere("v_groupe_projet_entreprise_module", ["cfp_id"], [$cfp_id]);
+            $data = $fonct->findWhere("v_groupe_projet_entreprise_module", ["cfp_id"], [$cfp_id]);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -525,9 +527,10 @@ class HomeController extends Controller
         }
         if (Gate::allows('isStagiaire')) {
             $evaluation = new EvaluationChaud();
-            $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
-            $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
-            $stg_id = stagiaire::where('user_id', $user_id)->value('id');
+            // $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
+            // $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
+            // $stg_id = stagiaire::where('user_id', $user_id)->value('id');
+            $stg_id =  $fonct->findWhereMulitOne("stagiaires", ["user_id"], [$user_id])->id;
             $data = DB::select('select * from v_stagiaire_groupe where stagiaire_id = ? and groupe_id not in(select groupe_id from reponse_evaluationchaud) order by date_debut desc', [$stg_id]);
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id'));
         }
@@ -700,20 +703,21 @@ class HomeController extends Controller
     }
 
     //budget previsionnnel
-    public function budget_previsionnel(){
+    public function budget_previsionnel()
+    {
         $current_year = Carbon::now()->format('Y');
         $entreprise_id = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
 
         //get total budget de l'année courant de l'entreprise
-        $total_budget = DB::select('select ifnull(sum(budget_total),0) as total from v_budgetisation where entreprise_id = ? and annee =  ?', [$entreprise_id[0]->entreprise_id,$current_year]);
+        $total_budget = DB::select('select ifnull(sum(budget_total),0) as total from v_budgetisation where entreprise_id = ? and annee =  ?', [$entreprise_id[0]->entreprise_id, $current_year]);
         //get total budget réalisé de l'entreprise
-        $total_realise = DB::select('select ifnull(sum(montant_total),0) as realise from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id,"terminer",$current_year]);
+        $total_realise = DB::select('select ifnull(sum(montant_total),0) as realise from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id, "terminer", $current_year]);
         //get total budget engagé de l'entreprise
-        $total_engage = DB::select('select ifnull(sum(montant_total),0) as engage from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id,"en_cour",$current_year]);
+        $total_engage = DB::select('select ifnull(sum(montant_total),0) as engage from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id, "en_cour", $current_year]);
         //get total budget restant
 
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
 
-        return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
+        return view('referent.dashboard_referent.dashboard_referent_budget_prev', compact('total_budget', 'total_realise', 'total_engage', 'total_restant'));
     }
 }
