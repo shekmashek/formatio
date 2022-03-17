@@ -756,8 +756,8 @@ class HomeController extends Controller
         $fonct = new FonctionGenerique();
         // $entreprise = $fonct->findAll("entreprises");
         $of = $fonct->findAll('cfps');
-        $iframe_etp = $fonct->findAll("entreprise_iframe");
-        $iframe_of = $fonct->findAll("cfp_iframe");
+        $iframe_etp = $fonct->findAll("v_entreprise_iframe");
+        $iframe_of = $fonct->findAll("v_cfp_iframe");
         return view('bi.iframe',compact('of','iframe_etp','iframe_of'));
     }
     public function enregistrer_iframe_etp(Request $request){
