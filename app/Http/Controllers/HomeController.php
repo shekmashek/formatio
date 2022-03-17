@@ -190,7 +190,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
+                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
@@ -349,7 +349,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule") {
+                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo" ) {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }

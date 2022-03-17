@@ -468,10 +468,9 @@
         <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
-                    <img src="{{asset('images/formateurs/RAHARIFETRANicole22-12-2021.png')}}" class="img-fluid" alt="user_profile">
+                    <div class='photo_users'> </div>
                     <div class="name_job">
-                        <div class="name">Malala</div>
-                        <div class="job">Manager</div>
+                        <div class="name">Déconnexion</div>
                     </div>
                 </div>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
