@@ -791,6 +791,38 @@ class HomeController extends Controller
     }
     public function BI(){
      return view('layouts.bi');
+    }
+    //----------Entreprise---------------//
+    //modification
+    public function modifier_iframe_etp(Request $request){
+        $iframe = $request->n_iframe;
+        $entreprise = $request->id_etp;
+        $modification = new FonctionGenerique();
+        $modification->update_iframe('iframe_entreprise','iframe','entreprise_id',$entreprise,$iframe);
+        return back();
+    }
+    //suppression
+    public function supprimer_iframe_etp(Request $request){
+        $id_etp = $request->id_etp;
+        $suppression = new FonctionGenerique();
+        $suppression->supprimer_iframe('iframe_entreprise','entreprise_id',$id_etp);
+        return back();
+    }
 
+    //----------Organisme de formation---------------//
+    //modification
+    public function modifier_iframe_cfp(Request $request){
+        $iframe = $request->n_iframe_cfp;
+        $cfp = $request->id_cfp;
+        $modification = new FonctionGenerique();
+        $modification->update_iframe('iframe_cfp','iframe','cfp_id',$cfp,$iframe);
+        return back();
+    }
+    //suppression
+    public function supprimer_iframe_cfp(Request $request){
+        $id_cfp = $request->id_cfp;
+        $suppression = new FonctionGenerique();
+        $suppression->supprimer_iframe('iframe_cfp','cfp_id',$id_cfp);
+        return back();
     }
 }

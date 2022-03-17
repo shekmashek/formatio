@@ -956,3 +956,9 @@ Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->n
 
 Route::get('afficher_iframe_entreprise','HomeController@iframe_etp')->name('afficher_iframe_entreprise');
 Route::get('afficher_iframe_cfp','HomeController@iframe_cfp')->name('afficher_iframe_cfp');
+
+Route::post('modifier_iframe_etp','HomeController@modifier_iframe_etp')->name('modifier_iframe_etp');
+Route::post('supprimer_iframe_etp','HomeController@supprimer_iframe_etp')->name('supprimer_iframe_etp');
+
+Route::post('modifier_iframe_cfp','HomeController@modifier_iframe_cfp')->name('modifier_iframe_cfp');
+Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name('supprimer_iframe_cfp');
