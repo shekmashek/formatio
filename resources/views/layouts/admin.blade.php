@@ -49,7 +49,6 @@
                 <span class="tooltip">Modules</span>
             </li>
             @endcanany
-            {{-- entreprise --}}
             @canany(['isSuperAdmin','isAdmin'])
             <li>
                 <a href="{{route('liste_entreprise')}}" class="d-flex nav_linke">
@@ -72,7 +71,7 @@
             @endcanany
             @canany(['isReferent'])
             <li>
-                <a href="{{route('departement.index')}}" class="d-flex nav_linke">
+                <a href="{{route('liste_departement')}}" class="d-flex nav_linke">
                     <i class='bx bx-home-alt'></i>
                     <span class="links_name">Departements</span>
                 </a>

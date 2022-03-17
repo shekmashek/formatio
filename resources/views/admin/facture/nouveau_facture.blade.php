@@ -293,13 +293,13 @@
                         <fieldset class="shadow p-3 mb-5 bg-body rounded">
                             <h4 align="left" class="mb-2">Frais:</h4>
                                  <div class="row">
-                                <div class="col-md-3 justify-content-text">
+                                <div class="col-auto justify-content-text">
                                     <h4 align="left" class="my-2">Frais pédagogique:</h4>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-auto">
                                     <button id="addRowMontant" type="button" class="btn btn_next"> <i class="bx bx-plus"></i> Ajout montant</button>
                                 </div>
-                                <div class="col-md-7"></div>
+                                {{-- <div class="col-md-7"></div> --}}
                             </div>
 
                             <div class="row mt-1 mb-3">
