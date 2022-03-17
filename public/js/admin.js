@@ -61,7 +61,9 @@ $(document).ready(function() {
             down4 = true;
         }
     });
+
 });
+
 
 $(document).ready(function() {
     $.ajax({

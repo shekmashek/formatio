@@ -214,7 +214,34 @@ color: #7635dc;
 }
 
 .avis .bx{
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
     color: #5433FF;
     margin-right: 1rem;
+}
+
+.details_plus h5{
+    font-size: 1.8rem;
+}
+.details_plus .strong{
+    font-size: 1.3rem;
+    font-stretch: 50%;
+}
+
+.horloge{
+    color: #7635dc;
+}
+
+.formations{
+    border: 1px solid grey;
+    border-radius: 30px;
+    padding: 1rem 1rem;
+    margin: 1rem 0;
+    transition: all .5s ease;
+}
+
+.formations:hover{
+    color: white;
+    background: #7635dc;
+    border: none;
+    transform: scale(1.1);
 }

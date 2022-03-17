@@ -313,7 +313,7 @@ Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','SessionController
 Route::get('annuaire','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
-
+    
 //route module
 Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'

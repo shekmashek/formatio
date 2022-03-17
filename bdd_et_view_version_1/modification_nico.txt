@@ -19,7 +19,6 @@ le domaine_de_formation en slogan et ajouterla nouvelle collonne presentation
 
 On doit aussi ajouter dans le cfp des nouvelles collones en plus de la presentation:
   - specialisation du cfp
-  - leurs apports ce qu'ils ont a offrir aux gens
 
 la table doit encore changer et les vues auquels elle est affiliees
 

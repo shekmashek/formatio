@@ -2,31 +2,6 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
 <section class="container-fluid">
-    <div class="container-fluid g-0 p-0 recherche mb-5">
-        <div class="row g-0 m-0 pt-3">
-            <div class="col-3 logo_formation text-center">
-                <img src="{{asset('img/images/logo_fmg54Ko.png')}}" alt="logo" class="img-fluid">
-            </div>
-            <div class="col-9">
-                <form action="">
-                    <div class="form-row d-flex">
-                        <div class="col-9">
-                            <div class="form-group">
-                                <input type="text" class="form-control input" required name="organisme" id="organisme">
-                                <label for="organisme" class="form-control-placeholder"><i
-                                        class="bx bx-search me-3"></i>Numerika Center</label>
-                            </div>
-                        </div>
-                        <div class="col-3 text-center">
-                            <div class="form-group">
-                                <button type="submit" class="btn_submit">Rechercher</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="container pb-5">
         <div class="row details g-0">
             <div class="col-8 justify-content-center">
@@ -34,8 +9,22 @@
                     <div class="row details_content g-0">
                         <div class="col-3 logo_content">
                             <a href="#" class="text-center mb-2"><img src="{{asset("images/CFP/".$cfp[0]->logo_cfp)}}" alt="logo" class="img-fliud logo_img"></a>
-                            <p class="text-center m-0"><i class="bx bx-alarm"></i> Fermé aujourd'hui<br />Ouvert le
-                                mardi<br />09:00 - 17:30</p>
+                            <p class="text-center m-0 horloge"><i class="bx bx-alarm"></i>
+                                Ouvert le
+                                @php
+                                    foreach ($cfp as $cfp_h) {
+                                        setlocale(LC_TIME, "fr_FR");
+                                        $jours1 = $cfp_h->jours;
+                                        $ouverture = $cfp_h->h_entree;
+                                        $fermeture = $cfp_h->h_sortie;
+                                        $jours_today = strftime("%A", strtotime($jours1));
+                                    }
+                                    if ($jours1 = $jours_today) {
+                                            echo (strftime("%A", strtotime($jours1))."<br/>");
+                                            echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
+                                        }
+                                @endphp
+                            </p>
                         </div>
                         <div class="col-9">
                             <div class="row ps-5">
@@ -52,7 +41,7 @@
                             <div class="col d-flex flex-row mb-2 ps-5">
                                 <span class="btn_actions" role="button"><a href="#"><i
                                             class="bx bx-mail-send"></i>Email</a></span>
-                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp[0]->site_web}}"><i class="bx bx-globe"></i>Site
+                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp[0]->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
                                         Web</a></span>
                             </div>
 
@@ -172,10 +161,10 @@
                         @foreach ($cfp as $cfp)
                         <div class="row">
                             <div class="col-6">
-                                <p class="m-0">{{$cfp->jours}}</p>
+                                <p class="m-0 text-capitalize">{{$cfp->jours}}</p>
                             </div>
                             <div class="col-6">
-                                <p class="m-0">{{$cfp->h_entree}} - {{$cfp->h_sortie}}</p>
+                                <p class="m-0">{{date('H:i', strtotime($cfp->h_entree))}} - {{date('H:i', strtotime($cfp->h_sortie))}}</p>
                             </div>
                         </div>
                         @endforeach
@@ -187,16 +176,16 @@
                         <div class="row">
                             <div class="col-12 text-center">
                                 @if(isset($cfp->lien_facebook))
-                                <a href="https://{{$cfp->lien_facebook}}"><span><i class='bx bxl-facebook-circle'></i></span></a>
+                                <a href="https://{{$cfp->lien_facebook}}" target="_blank"><span><i class='bx bxl-facebook-circle'></i></span></a>
                                 @endif
                                 @if(isset($cfp->lien_twitter))
-                                <a href="https://{{$cfp->lien_twitter}}"><span><i class='bx bxl-twitter' ></i></span></a>
+                                <a href="https://{{$cfp->lien_twitter}}" target="_blank"><span><i class='bx bxl-twitter' ></i></span></a>
                                 @endif
                                 @if(isset($cfp->lien_instagram))
-                                <a href="https://{{$cfp->lien_instagram}}"><span><i class='bx bxl-instagram' ></i></span></a>
+                                <a href="https://{{$cfp->lien_instagram}}" target="_blank"><span><i class='bx bxl-instagram' ></i></span></a>
                                 @endif
                                 @if(isset($cfp->lien_linkedin))
-                                <a href="https://{{$cfp->lien_linkedin}}"><span><i class='bx bxl-linkedin' ></i></span></a>
+                                <a href="https://{{$cfp->lien_linkedin}}" target="_blank"><span><i class='bx bxl-linkedin' ></i></span></a>
                                 @endif
 
                             </div>
@@ -204,15 +193,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-9 px-5 mt-3">
+            <div class="col-9 px-5 mt-3 details_plus">
                 <div class="row">
                     <h5>Présentation de l'entreprise</h5>
 
-                    <p>{{$cfp->specialisation}}</p>
-                    <p>{{$cfp->presentation}}</p>
-                    <ul>
-                        <li>{{$cfp->offrir_aux_gens}}</li>
-                    </ul>
+                    <p class="strong">{{$cfp->specialisation}}</p>
+                    <p class="mb-2">{{$cfp->presentation}}</p>
                 </div>
                 <div id="domaines"></div>
                 <div class="row mt-5">
@@ -220,8 +206,8 @@
                     <h5>Domaines de formations</h5>
                     @foreach ($formation as $frm)
                     <div class="row">
-                        <div class="col-4">
-                            <p class="text-capitalize"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$cfp->cfp_id])}}">{{$frm->nom_formation}}</a></p>
+                        <div class="col-4 p-2">
+                            <p class="text-capitalize my-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$cfp->cfp_id])}}" class="formations">{{$frm->nom_formation}}</a></p>
                         </div>
                     </div>
                     @endforeach

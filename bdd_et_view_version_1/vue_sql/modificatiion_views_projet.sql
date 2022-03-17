@@ -23,7 +23,6 @@ create or replace view v_projet_session as
         cfps.cif as cif_cfp,
         cfps.logo as logo_cfp,
         cfps.specialisation as specialisation,
-        cfps.offrir_aux_gens as offrir_aux_gens,
         ts.totale_session
     from projets p
     join type_formations tf on p.type_formation_id = tf.id
@@ -104,8 +103,7 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
         (cfps.logo) logo_cfp,
-        (cfps.specialisation) specialisation,
-        (cfps.offrir_aux_gens) offrir_aux_gens
+        (cfps.specialisation) specialisation
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
     join type_formations tf on p.type_formation_id = tf.id
@@ -289,7 +287,6 @@ create or replace view v_projet_cfp as
         (cfps.cif) cif_cfp,
         (cfps.logo) logo_cfp,
         (cfps.specialisation) specialisation,
-        (cfps.offrir_aux_gens) offrir_aux_gens,
         tf.type_formation
     from projets p
     join cfps on cfps.id = p.cfp_id
@@ -345,7 +342,6 @@ create or replace view v_horaire_cfp as
         (cfps.presentation) presentation,
         (cfps.logo) logo_cfp,
         (cfps.specialisation) specialisation,
-        (cfps.offrir_aux_gens) offrir_aux_gens,
         (cfps.site_web) site_web
     from horaires h
     join cfps on cfps.id = h.cfp_id

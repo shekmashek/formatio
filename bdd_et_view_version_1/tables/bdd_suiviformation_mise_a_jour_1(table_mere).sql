@@ -194,9 +194,7 @@ CREATE TABLE reseaux_sociaux (
 
 
 alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL
-alter table cfps
-  add specialisation text COLLATE utf8mb4_unicode_ci NULL,
-  add offrir_aux_gens text COLLATE utf8mb4_unicode_ci NULL
+alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL
 alter table cfps rename domaine_de_formation to slogan
 
 CREATE TABLE `abonnement_cfps` (

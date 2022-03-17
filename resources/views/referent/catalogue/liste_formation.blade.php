@@ -18,7 +18,7 @@
     </div>
 
     </div>
-    <div class="container pb-5 vh-100">
+    <div class="container pb-5">
         <div class="row">
             <div class="col-lg-3 filtre_formation">
                 <div class="row">

@@ -67,6 +67,9 @@ ul li a {
     text-decoration: none;
     color: var(--second-color);
 }
+.bg-light{
+    background: white !important;
+}
 
 .sidebar {
     position: fixed;
@@ -406,6 +409,7 @@ ul li a {
     justify-content: end;
     align-items: center;
 }
+
 /* icon notifications */
 .header-right .notification-box {
     position: relative;

@@ -2,31 +2,6 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
 <section class="annuaire mb-5">
-    <div class="container-fluid g-0 p-0 recherche">
-        <div class="row g-0 m-0 pt-3">
-            <div class="col-3 logo_formation text-center">
-                <img src="{{asset('img/images/logo_fmg54Ko.png')}}" alt="logo" class="img-fluid">
-            </div>
-            <div class="col-9">
-                <form action="">
-                    <div class="form-row d-flex">
-                        <div class="col-9">
-                            <div class="form-group">
-                                <input type="text" class="form-control input" required name="organisme" id="organisme">
-                                <label for="organisme" class="form-control-placeholder"><i
-                                        class="bx bx-search me-3"></i>Numerika Center</label>
-                            </div>
-                        </div>
-                        <div class="col-3 text-center">
-                            <div class="form-group">
-                                <button type="submit" class="btn_submit">Rechercher</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="container my-5">
         <div class="row">
             <h4 class="text-center mb-3">Les Organismes de Formations près de chez vous</h4>
@@ -69,9 +44,9 @@
                                 <span class="btn_actions ms-3 contact_action" role="button" data-bs-toggle="collapse"
                                     href="#contact_{{ $cfp->id }}" aria-expanded="false"
                                     aria-controls="collapseprojet"><i class="bx bx-phone"></i>Contact</span>
-                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}"><i class="bx bx-globe"></i>Site
+                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
                                         Web</a></span>
-                                <span class="btn_actions ms-3" role="button"><a href="#"><i
+                                <span class="btn_actions ms-3" role="button"><a href="{{route('detail_cfp',$cfp->id)}}"><i
                                             class="bx bx-info-circle"></i>Plus d'infos</a></span>
                             </div>
                             <div class="contact collapse" id="contact_{{ $cfp->id }}">
@@ -123,17 +98,17 @@ $(document).ready(function() {
                         html +=     '<div class="col-10 detail_cfp">';
                         html +=         '<div class="row">';
                         html +=             '<h4><a href="'+url_detail_cfp+'">'+userData[i]['nom']+'</a></h4>';
-                        html +=             '<p>'+userData[i]['domaine_de_formation']+'</p>';
+                        html +=             '<p>'+userData[i]['slogan']+'</p>';
                         html +=             '<div class="col d-flex flex-row mb-2">';
                         html +=                 '<span class="btn_actions" role="button">';
                         html +=                     '<a href="#"><i class="bx bx-mail-send"></i>Email</a>';
                         html +=                 '</span>';
                         html +=                 '<span class="btn_actions ms-3 contact_action" role="button" data-bs-toggle="collapse"href="#contact_'+userData[i]['id']+'" aria-expanded="false" aria-controls="collapseprojet"><i class="bx bx-phone"></i>Contact</span>';
                         html +=                 '<span class="btn_actions ms-3" role="button">';
-                        html +=                     '<a href="#"><i class="bx bx-globe"></i>Site Web</a>';
+                        html +=                     '<a href="https://'+userData[i]['site_web']+'" target="_blank"><i class="bx bx-globe"></i>Site Web</a>';
                         html +=                 '</span>';
                         html +=                 '<span class="btn_actions ms-3" role="button">';
-                        html +=                     '<a href="#"><i class="bx bx-info-circle"></i>Plus d\'infos</a>';
+                        html +=                     '<a href="'+url_detail_cfp+'"><i class="bx bx-info-circle"></i>Plus d\'infos</a>';
                         html +=                 '</span>';
                         html +=             '</div>';
                         html +=             '<div class="contact collapse" id="contact_'+userData[i]['id']+'">';
