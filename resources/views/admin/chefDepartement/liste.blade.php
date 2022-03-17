@@ -58,18 +58,19 @@
                                     <tbody>
                                         @for($i = 0; $i < count($referent); $i++) <tr class="text-center content_table">
                                             <td>
-                                                {{-- @if($referent[$i]->photos == null)
-                                                <img src="{{asset('images/users/users.png')}}" width="50" height="50" class="image-ronde">
+                                                @if($referent[$i]->photos == null)
+                                                    <p  class="randomColor text-center" style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;"><span class="" style="position:relative; top: .9rem;"><b>{{$referent[$i]->nm}}{{$referent[$i]->pr}}</b></span></p>
                                                 @else
-                                                <img src="/responsable-image/{{$referent[$i]->photos}}" width="50" height="50"></td>
-                                            @endif --}}
-                                            <td>{{$referent[$i]->matricule}}</td>
-                                            <td>{{$referent[$i]->nom_resp}}</td>
-                                            <td>{{$referent[$i]->prenom_resp}}</td>
+                                                    <a href="{{asset('images/responsables/'.$referent[$i]->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/responsables/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                                @endif
+                                            </td>
+                                            <td class="" >{{$referent[$i]->matricule}}</td>
+                                            <td class="" >{{$referent[$i]->nom_resp}}</td>
+                                            <td class="" >{{$referent[$i]->prenom_resp}}</td>
 
-                                            <td>{{$referent[$i]->fonction_resp}}</td>
-                                            <td>{{$referent[$i]->email_resp}}</td>
-                                            <td>{{$referent[$i]->telephone_resp}}</td>
+                                            <td class="" >{{$referent[$i]->fonction_resp}}</td>
+                                            <td class="" >{{$referent[$i]->email_resp}}</td>
+                                            <td class="" >{{$referent[$i]->telephone_resp}}</td>
 
                                             <td>
                                                 <div align="left">
@@ -208,11 +209,12 @@
                                 <tbody>
                                     @for($i = 0; $i < count($stagiaires); $i++) <tr class="text-center content_table">
                                         <td>
-                                            {{-- @if($stagiaires[$i]->photos == null)
-                                                    <img src="{{asset('images/users/users.png')}}" width="50" height="50" class="image-ronde">
+                                            @if($stagiaires[$i]->photos == null)
+                                            <p  class="randomColor text-center" style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;"><span class="" style="position:relative; top: .9rem;"><b>{{$referent[$i]->nom}}{{$referent[$i]->prenom}}</b></span></p>
                                             @else
-                                            <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50" height="50"></td>
-                                        @endif --}}
+                                                <a href="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                                {{-- <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50" height="50"></td> --}}
+                                            @endif
                                         </td>
                                         <td>{{$stagiaires[$i]->matricule}}</td>
                                         <td>{{$stagiaires[$i]->nom_stagiaire}}</td>
@@ -332,11 +334,11 @@
                                     <tr class="text-center content_table">
                                         <td></td>
                                         {{-- <td>
-                                                @if($chefs->photos == null)
+                                            @if($referent->photos == null)
                                                 <img src="{{asset('images/users/users.png')}}" width="50" height="50" class="image-ronde">
-                                        @else
-                                        <img src="/stagiaire-image/{{$chefs->photos}}" width="50" height="50"></td>
-                                        @endif
+                                            @else
+                                                <img src="/stagiaire-image/{{$chefs->photos}}" width="50" height="50"></td>
+                                            @endif
                                         </td> --}}
                                         <td>{{$chef[$i]->matricule}}</td>
                                         <td>{{$chef[$i]->nom_chef}}</td>
@@ -439,8 +441,16 @@
     </div>
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<script type="text/javascript">
+    //Pour chaque div de classe randomColor
+    $(".randomColor").each(function() {
+      //On change la couleur de fond au hasard
+      $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16));
+    })
+</script>
 <script>
     $.ajaxSetup({
         headers: {

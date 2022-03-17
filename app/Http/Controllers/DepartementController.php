@@ -76,10 +76,12 @@ class DepartementController extends Controller
         //on va récupérer la liste des employes
         $user_id = Auth::user()->id;
         $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-
-        $referent = DB::select('select * from responsables where entreprise_id = ? and prioriter=false', [$etp_id]);
+        $referent = DB::select('select id,sexe_resp,photos,matricule,nom_resp,prenom_resp,fonction_resp,email_resp,telephone_resp,cin_resp,entreprise_id,prioriter,user_id,url_photo, SUBSTRING(prenom_resp, 1, 1) AS pr, SUBSTRING(nom_resp, 1, 1) AS nm from responsables where entreprise_id = ? and prioriter=false', [$etp_id]);
+        // $referent = DB::select(' where entreprise_id = ? and prioriter=false', [$etp_id]);
         $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
-        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
+        // $chef = DB::select('select id,matricule,nom_stagiaire,prenom_stagiaire,photos,genre_stagiaire,titre,fonction_stagiaire,mail_stagiaire,telephone_stagiaire,entreprise_id,user_id,service_id,cin, SUBSTRING(prenom_stagiaire, 1, 1) AS prenom, SUBSTRING(nom_stagiaire, 1, 1) AS nom from stagiaires where entreprise_id = ?', [$etp_id]);
+        $stagiaires = DB::select('select id,matricule,nom_stagiaire,prenom_stagiaire,photos,genre_stagiaire,titre,fonction_stagiaire,mail_stagiaire,telephone_stagiaire,entreprise_id,user_id,service_id,cin,url_photo, SUBSTRING(prenom_stagiaire, 1, 1) AS prenom, SUBSTRING(nom_stagiaire, 1, 1) AS nom from stagiaires where entreprise_id = ?', [$etp_id]);
+        // $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
 
         $user_role = DB::select('select * from v_user_role');
         $roles = $fonct->findAll("v_role_etp");

@@ -372,10 +372,10 @@
                     <i class='bx bxl-sketch'></i>
                     <span class="links_name">Abonnées</span>
                 </a>
-               
+
                 <span class="tooltip">Abonnées</span>
             </li>
-           
+
             {{-- integrer dans la page
             <li>
                 <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
@@ -409,9 +409,9 @@
                 </a>
                 <span class="tooltip">Abonnement</span>
             </li>
-          
+
             @endcan
-            
+
             <li>
                 <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>
@@ -565,7 +565,8 @@
 
                             {{-- <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p> --}}
                             <p>
-                                <div class='photo_user'> </div>
+                                <div class="mt-2"><span><i class="fas fa-user"></i></span>  <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
+                                {{-- <div class='photo_user'> </div> --}}
                             </p>
                             {{-- <p style="text-transform: capitalize;color:#801D68" class="header_img_name">
                                 &nbsp;{{Auth::user()->name}}</p> --}}
@@ -581,7 +582,7 @@
                                         <div class="row">
                                             <div class="col-md-4 ">
                                                 <span>
-                                                    <div class='photo_user'> </div>
+                                                    <div class='photo_users'> </div>
                                                 </span>
 
 
@@ -753,6 +754,24 @@
     </script>
     <script src="{{asset('js/admin.js')}}"></script>
     <script>
+        // $(document).ready(function() {
+        //     var pdp = "";
+        //     $.ajax({
+        //         url: '{{ route("profile_resp") }}'
+        //         , type: 'get'
+        //         , success: function(response) {
+        //             var userData = response;
+        //             var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 20px; height : 20px;border-radius : 100%; margin-top:6.5px; cursor: pointer;"> <i id="hide" style="position:absolute; margin-top:14px; font-size:13px" class=" ms-1 fas fa-angle-down"></i>';
+        //             html = html.replace(":?", userData);
+        //             // alert(JSON.stringify(userData));
+        //             $('.photo_user').append(html);
+        //         }
+        //         , error: function(error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // });
+
         $(document).ready(function() {
             var pdp = "";
             $.ajax({
@@ -760,10 +779,10 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 40px; height : 40px;border-radius : 100%; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 30px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
                     html = html.replace(":?", userData);
-
-                    $('.photo_user').append(html);
+                    // alert(JSON.stringify(userData));
+                    $('.photo_users').append(html);
                 }
                 , error: function(error) {
                     console.log(error);
@@ -772,6 +791,7 @@
         });
 
     </script>
+
     <script>
         $(document).ready(function() {
             var pdp = "";
@@ -780,7 +800,7 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 40px; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 30px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
                     $('.logo_etp_user').append(html);
                 }
