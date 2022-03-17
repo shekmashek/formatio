@@ -778,7 +778,7 @@ class HomeController extends Controller
     public function iframe_etp(){
         $fonct = new FonctionGenerique();
         $id_etp = DB::select('select * from responsables where user_id = ?',[Auth::user()->id]);
-        $iframe_etp = $fonct->findWhereMulitOne("iframe_entreprise",["entreprise_id"],[$id_etp[0]->entreprise_id]);
+        $iframe_etp = $fonct->findWhereMulitOne("v_entreprise_iframe",["entreprise_id"],[$id_etp[0]->entreprise_id]);
 
         return view('layouts.bi',compact('iframe_etp'));
     }
@@ -786,7 +786,7 @@ class HomeController extends Controller
     public function iframe_cfp(){
         $fonct = new FonctionGenerique();
         $id_cfp = DB::select('select * from responsables_cfp where user_id = ?',[Auth::user()->id]);
-        $iframe_cfp = $fonct->findWhereMulitOne("iframe_cfp",["cfp_id"],[$id_cfp[0]->cfp_id]);
+        $iframe_cfp = $fonct->findWhereMulitOne("v_cfp_iframe",["cfp_id"],[$id_cfp[0]->cfp_id]);
         return view('layouts.bi',compact('iframe_cfp'));
     }
     public function BI(){
