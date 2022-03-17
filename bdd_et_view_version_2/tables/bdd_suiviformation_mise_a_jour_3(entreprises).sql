@@ -50,6 +50,13 @@ CREATE TABLE services (
   foreign key(departement_entreprise_id) references departement_entreprises (id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE branches (
+  id bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+  entreprise_id bigint(20) unsigned not null,
+  nom_branche varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  foreign key(entreprise_id) references entreprises (id) on delete cascade
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE abonnements (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

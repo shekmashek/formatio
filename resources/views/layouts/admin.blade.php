@@ -72,7 +72,7 @@
             @endcanany
             @canany(['isReferent'])
             <li>
-                <a href="{{route('liste_formation')}}" class="d-flex nav_linke">
+                <a href="{{route('departement.index')}}" class="d-flex nav_linke">
                     <i class='bx bx-home-alt'></i>
                     <span class="links_name">Departements</span>
                 </a>

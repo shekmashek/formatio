@@ -154,7 +154,7 @@ GROUP BY
 
 CREATE OR REPLACE VIEW v_liste_avis AS SELECT
     module_id,
-    s.stagiaire_id,
+    (s.id) stagiaire_id,
     commentaire,
     ROUND(note / 2, 1) AS note,
     s.nom_stagiaire,
@@ -163,7 +163,7 @@ CREATE OR REPLACE VIEW v_liste_avis AS SELECT
 FROM
     avis a
 JOIN stagiaires s ON
-    a.stagiaire_id = s.stagiaire_id
+    a.stagiaire_id = s.id
 ORDER BY
     date_avis
 DESC
@@ -335,8 +335,9 @@ create or replace view v_departement_service_entreprise as
     from services s
     join departement_entreprises de on s.departement_entreprise_id = de.id;
 
+
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
-    stg.stagiaire_id,
+    (stg.id) stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
@@ -383,7 +384,7 @@ WHERE
 
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
-    stg.stagiaire_id,
+    (stg.id) stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
@@ -411,4 +412,4 @@ FROM
     historique_stagiaires as historique
 WHERE
     stg.entreprise_id = etp.id and
-    historique.stagiaire_id = stg.stagiaire_id;
+    historique.stagiaire_id = stg.id;

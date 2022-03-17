@@ -132,8 +132,9 @@ create or replace view v_groupe_projet_entreprise_module as
         mf.telephone,
         mf.pourcentage
     from
-        v_groupe_projet_entreprise vgpe
-    join moduleformation mf on vgpe.module_id = mf.module_id;
+        v_groupe_projet_entreprise vgpe, moduleformation mf
+        WHERE
+         vgpe.module_id = mf.module_id and  vgpe.cfp_id = mf.cfp_id;
 
 
 CREATE OR REPLACE VIEW v_detailmodule AS

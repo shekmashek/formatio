@@ -91,58 +91,35 @@ class EmployeurController extends Controller
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
 
-
-            if ($request->type_enregistrement == "STAGIAIRE") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
-
-                DB::beginTransaction();
+            DB::beginTransaction();
                 try {
-                    $this->fonct->insert_role_user($user_id, "3",true); // EMPLOYEUR
+                    if ($request->type_enregistrement == "STAGIAIRE") {
+                        $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
+                        $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
+                    }
+                    if ($request->type_enregistrement == "REFERENT") {
+                        $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
+                        $this->fonct->insert_role_user($user_id, "2",false,true); // RH
+                        $this->fonct->insert_role_user($user_id, "3",false,false); // EMPLOYEUR
+                    }
+                    if ($request->type_enregistrement == "MANAGER") {
+                        $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;
+                        $this->fonct->insert_role_user($user_id, "5",false,true); // MANAGER
+                        $this->fonct->insert_role_user($user_id, "3",false,false); // EMPLOYEUR
+                    }
+                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+                    DB::insert("insert into employers(matricule_emp,nom_emp,prenom,cin_emp,email_emp,telephone_emp,fonction_emp
+                    ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+
                     DB::commit();
+
                 } catch (Exception $e) {
                     DB::rollback();
                     echo $e->getMessage();
                 }
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
-                entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-            }
-            if ($request->type_enregistrement == "REFERENT") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
-
-                DB::beginTransaction();
-                try {
-                    $this->fonct->insert_role_user($user_id, "2",true); // RH
-                    $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
-                }
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                DB::insert("insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-                ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-            }
-            if ($request->type_enregistrement == "MANAGER") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;
-
-                DB::beginTransaction();
-                try {
-                    $this->fonct->insert_role_user($user_id, "5",true); // MANAGER
-                    $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
-                }
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id,$user_id];
-                DB::insert("insert into chef_departements(matricule,nom_chef,prenom_chef,cin_chef,mail_chef,telephone_chef,fonction_chef
-                ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-            }
             Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
             return back();
         }
-
 
     }
 

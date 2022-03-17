@@ -1,6 +1,6 @@
 CREATE OR REPLACE view stagiaires as
 SELECT
-    employers.id AS stagiaire_id,
+    employers.id,
     employers.entreprise_id,
     (employers.matricule_emp) matricule,
     (employers.nom_emp) nom_stagiaire,

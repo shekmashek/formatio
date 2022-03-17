@@ -50,13 +50,12 @@
 
     <div class="row w-100 bg-none mt-5 font_text">
 
-        <form action="{{ route('utilisateur_new_cfp') }}">
-            @csrf
             <p style="display: flex; justify-content:end;">
-                <button type="submit" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Formateur</button>
+                <a href="{{route('nouveau_formateur')}}">
+                <button type="button" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Formateur</button></a>
                 &nbsp;
             </p>
-        </form>
+
         <div class="col-md-5">
             <div class="shadow p-3 mb-5 bg-body rounded ">
 

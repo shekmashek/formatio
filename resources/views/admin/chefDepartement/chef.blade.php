@@ -174,7 +174,7 @@
             }
         });
     });
-
+/*
     $(document).on('change', '#phone', function() {
         var result = $(this).val();
         $.ajax({
@@ -197,7 +197,7 @@
             }
         });
     });
-
+*/
     /*---------------------------------------------------------*/
     $('#liste_etp').on('change', function() {
         $('#liste_dep').empty();

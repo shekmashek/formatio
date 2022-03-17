@@ -96,7 +96,7 @@
                                     <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_stg" style="float: right;"></p>
                                     @endif
                                 </div>
-                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                {{-- <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                     <input type="text" name="titre_stg" style="float: right;" value="{{$testNull[0]->titre}}" hidden>
                                     @if ($testNull[0]->titre!=null)
                                     <p class="p-1 m-0" style="font-size: 10px;">TITRE<span style="float: right;">{{$testNull[0]->titre}} &nbsp;<i class="fas fa-angle-right"></i></span>
@@ -110,7 +110,7 @@
                                         </select>
                                     </p>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                     @if ($testNull[0]->date_naissance!=null)
                                     <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<span style="float: right;">{{date('j \\ F Y', strtotime($testNull[0]->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>

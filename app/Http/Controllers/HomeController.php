@@ -47,15 +47,6 @@ class HomeController extends Controller
         });
     }
 
-
-    // public function index(Request $request)
-    // {
-    //     if (Auth::user()->exists) {
-    //         $totale_invitation = $this->collaboration->count_invitation();
-    //         return view('layouts.accueil_admin', compact('totale_invitation'));
-    //     }
-
-    // }
     //affichage role
     public function affichage_role(Request  $request)
     {
@@ -69,46 +60,45 @@ class HomeController extends Controller
         $id_stg = $request->input('id_stg');
 
         if ($request->input('nom_stg') != null) {
-            DB::update('update stagiaires set nom_stagiaire = ? where id = ?', [$request->input('nom_stg'), $id_stg]);
+            DB::update('update employers set nom_emp = ? where id = ?', [$request->input('nom_stg'), $id_stg]);
         }
-        if ($request->input('titre_stg') != null) {
-            DB::update('update stagiaires set titre = ? where id = ?', [$request->input('titre_stg'), $id_stg]);
-        }
+        // if ($request->input('titre_stg') != null) {
+        //     DB::update('update employers set titre = ? where id = ?', [$request->input('titre_stg'), $id_stg]);
+        // }
         if ($request->input('date_naissance_stg') != null) {
-            DB::update('update stagiaires set date_naissance = ? where id = ?', [$request->input('date_naissance_stg'), $id_stg]);
+            DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_stg'), $id_stg]);
         }
         if ($request->input('genre_stg') != null) {
-            DB::update('update stagiaires set genre_stagiaire = ? where id = ?', [$request->input('genre_stg'), $id_stg]);
+            DB::update('update employers set sexe_emp = ? where id = ?', [$request->input('genre_stg'), $id_stg]);
         }
         if ($request->input('tel_stg') != null) {
-            DB::update('update stagiaires set telephone_stagiaire = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
+            DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
         }
         if ($request->input('cin_stg') != null) {
-            DB::update('update stagiaires set cin = ? where id = ?', [$request->input('cin'), $id_stg]);
+            DB::update('update employers set cin_emp = ? where id = ?', [$request->input('cin'), $id_stg]);
         }
         if ($request->input('lot') != null) {
-            DB::update('update stagiaires set lot = ? where id = ?', [$request->input('lot'), $id_stg]);
+            DB::update('update employers set adresse_lot = ? where id = ?', [$request->input('lot'), $id_stg]);
         }
         if ($request->input('quartier') != null) {
-            DB::update('update stagiaires set quartier = ? where id = ?', [$request->input('quartier'), $id_stg]);
+            DB::update('update employers set adresse_quartier = ? where id = ?', [$request->input('quartier'), $id_stg]);
         }
         if ($request->input('ville') != null) {
-            DB::update('update stagiaires set ville = ? where id = ?', [$request->input('ville'), $id_stg]);
+            DB::update('update employers set adresse_ville = ? where id = ?', [$request->input('ville'), $id_stg]);
         }
         if ($request->input('code_postal') != null) {
-            DB::update('update stagiaires set code_postal = ? where id = ?', [$request->input('code_postal'), $id_stg]);
+            DB::update('update employers set adresse_code_postal = ? where id = ?', [$request->input('code_postal'), $id_stg]);
         }
         if ($request->input('region') != null) {
-            DB::update('update stagiaires set region = ? where id = ?', [$request->input('region'), $id_stg]);
+            DB::update('update employers set adresse_region = ? where id = ?', [$request->input('region'), $id_stg]);
         }
         if ($request->input('niveau_stg') != null) {
-            DB::update('update stagiaires set niveau_etude = ? where id = ?', [$request->input('niveau_stg'), $id_stg]);
+            DB::update('update employers set niveau_etude = ? where id = ?', [$request->input('niveau_stg'), $id_stg]);
         }
         if (count($request->input()) > 2) {
             return redirect()->back()->with('error', 'Remplissez les champs vides');
         } else {
-            $totale_invitation = $this->collaboration->count_invitation();
-            return view('layouts.accueil_admin', compact('totale_invitation'));
+            return view('layouts.accueil_admin');
         }
     }
     public function remplir_info_manager(Request $request)
@@ -116,16 +106,16 @@ class HomeController extends Controller
         $id_chef = $request->input('id_chef');
 
         if ($request->input('nom_chef') != null) {
-            DB::update('update chef_departements set nom_chef = ? where id = ?', [$request->input('nom_chef'), $id_chef]);
+            DB::update('update employers set nom_emp = ? where id = ?', [$request->input('nom_chef'), $id_chef]);
         }
         if ($request->input('genre_chef') != null) {
-            DB::update('update chef_departements set genre_chef = ? where id = ?', [$request->input('genre_chef'), $id_chef]);
+            DB::update('update employers set sexe_emp = ? where id = ?', [$request->input('genre_chef'), $id_chef]);
         }
         if ($request->input('tel_chef') != null) {
-            DB::update('update chef_departements set telephone_chef = ? where id = ?', [$request->input('tel_chef'), $id_chef]);
+            DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_chef'), $id_chef]);
         }
         if ($request->input('cin_chef') != null) {
-            DB::update('update chef_departements set cin_chef = ? where id = ?', [$request->input('cin_chef'), $id_chef]);
+            DB::update('update employers set cin_emp = ? where id = ?', [$request->input('cin_chef'), $id_chef]);
         }
 
 
@@ -141,34 +131,34 @@ class HomeController extends Controller
         $id_resp = $request->input('id_resp');
 
         if ($request->input('nom_resp') != null) {
-            DB::update('update responsables set nom_resp = ? where id = ?', [$request->input('nom_resp'), $id_resp]);
+            DB::update('update employers set nom_emp = ? where id = ?', [$request->input('nom_resp'), $id_resp]);
         }
         if ($request->input('date_naissance_resp') != null) {
-            DB::update('update responsables set date_naissance_resp = ? where id = ?', [$request->input('date_naissance_resp'), $id_resp]);
+            DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_resp'), $id_resp]);
         }
         if ($request->input('genre') != null) {
-            DB::update('update responsables set sexe_resp = ? where id = ?', [$request->input('genre'), $id_resp]);
+            DB::update('update employers set sexe_emp = ? where id = ?', [$request->input('genre'), $id_resp]);
         }
         if ($request->input('tel_resp') != null) {
-            DB::update('update responsables set telephone_resp = ? where id = ?', [$request->input('tel_resp'), $id_resp]);
+            DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_resp'), $id_resp]);
         }
         if ($request->input('cin_resp') != null) {
-            DB::update('update responsables set cin_resp = ? where id = ?', [$request->input('cin_resp'), $id_resp]);
+            DB::update('update employers set cin_emp = ? where id = ?', [$request->input('cin_resp'), $id_resp]);
         }
         if ($request->input('lot') != null) {
-            DB::update('update responsables set adresse_lot = ? where id = ?', [$request->input('lot'), $id_resp]);
+            DB::update('update employers set adresse_lot = ? where id = ?', [$request->input('lot'), $id_resp]);
         }
         if ($request->input('quartier') != null) {
-            DB::update('update responsables set adresse_quartier = ? where id = ?', [$request->input('quartier'), $id_resp]);
+            DB::update('update employers set adresse_quartier = ? where id = ?', [$request->input('quartier'), $id_resp]);
         }
         if ($request->input('ville') != null) {
-            DB::update('update responsables set adresse_ville = ? where id = ?', [$request->input('ville'), $id_resp]);
+            DB::update('update employers set adresse_ville = ? where id = ?', [$request->input('ville'), $id_resp]);
         }
         if ($request->input('code_postal') != null) {
-            DB::update('update responsables set adresse_code_postal = ? where id = ?', [$request->input('code_postal'), $id_resp]);
+            DB::update('update employers set adresse_code_postal = ? where id = ?', [$request->input('code_postal'), $id_resp]);
         }
         if ($request->input('region') != null) {
-            DB::update('update responsables set adresse_region = ? where id = ?', [$request->input('region'), $id_resp]);
+            DB::update('update employers set adresse_region = ? where id = ?', [$request->input('region'), $id_resp]);
         }
         if (count($request->input()) > 2) {
             return redirect()->back()->with('error', 'Remplissez les champs vides');
@@ -458,13 +448,9 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         $totale_invitation = 0;
 
-        // $totale_invitation = $this->collaboration->count_invitation();
         $entp = new entreprise();
         $status = DB::select('select * from status');
         $type_formation_id = $request->type_formation;
-        // dd($type_formation_id);
-        //récupérer id de l'utilisateur en fonction de l'email
-        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
         $data = [];
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
 
@@ -477,12 +463,7 @@ class HomeController extends Controller
         }
         if (Gate::allows('isReferent')) {
             //on récupère l'entreprise id de la personne connecté
-
-            // $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            // $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
-            // $cfp = $fonct->findAll("cfps");
-            // return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation'));
-            if (Gate::allows('isReferentPrincipale')) {
+             if (Gate::allows('isReferentPrincipale')) {
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             }
             if (Gate::allows('isStagiairePrincipale')) {
@@ -493,9 +474,6 @@ class HomeController extends Controller
             }
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request);
             $data = DB::select($sql);
-            // $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","type_formation_id"], [$entreprise_id,$type_formation_id]);
-            // dd($data);
-            // $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id'));
         }
@@ -511,22 +489,12 @@ class HomeController extends Controller
         //     return view('layouts.accueil_admin');
         // }
         elseif (Gate::allows('isCFP')) {
-
-            // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
             $projet = DB::select($sql);
-            // dd($projet);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
-            // $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
-            // if($type_formation_id == 1){
-            //     $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
-            // }
-            // elseif($type_formation_id == 2){
-            //     $data = $fonct->findWhere("v_projet_session_inter", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
-            // }
-            $data = $fonct->findWhere("v_groupe_projet_entreprise_module", ["cfp_id"], [$cfp_id]);
+             $data = $fonct->findWhere("v_groupe_projet_entreprise_module", ["cfp_id"], [$cfp_id]);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -536,7 +504,6 @@ class HomeController extends Controller
             $module = $fonct->findAll("modules");
 
             $type_formation = DB::select('select * from type_formations');
-
             return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation'));
         }
         if (Gate::allows('isFormateur')) {
@@ -561,7 +528,6 @@ class HomeController extends Controller
             $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
             $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
             $stg_id = stagiaire::where('user_id', $user_id)->value('id');
-            // $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
             $data = DB::select('select * from v_stagiaire_groupe where stagiaire_id = ? and groupe_id not in(select groupe_id from reponse_evaluationchaud) order by date_debut desc', [$stg_id]);
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id'));
         }

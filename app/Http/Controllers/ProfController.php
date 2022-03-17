@@ -158,7 +158,7 @@ class ProfController extends Controller
         $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;
         DB::beginTransaction();
         try {
-            $fonct->insert_role_user($user_id, "4",true); // formateur
+            $fonct->insert_role_user($user_id, "4",true,true); // formateur user_id,role_id,prioriter,activiter
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
