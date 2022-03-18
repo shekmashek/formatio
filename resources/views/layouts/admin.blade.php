@@ -413,7 +413,7 @@
             @endcan
             
             <li>
-                <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
+                {{-- <a href="{{route('recherche_admin')}}" class="d-flex nav_linke"> --}}
                     <i class='bx bxs-notepad'></i>
                     <span class="links_name">Reporting</span>
                 </a>
@@ -718,7 +718,7 @@
                                     <div class="footer_list ms-2 me-2">
                                         <a href="{{route('condition_generale_de_vente')}}"
                                             style="color:#801D68 !important" target="_blank">
-                                            <p>Condition d'utilisation</p>
+                                            <p>Conditions d'utilisation</p>
                                         </a>
                                     </div>
                                     <div class="footer_list ms-2 me-2">

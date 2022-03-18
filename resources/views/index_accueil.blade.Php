@@ -202,7 +202,7 @@
                     <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Contactez-nous</a></div>
                     <div class="bordure"><a href="{{url('politique_confidentialites')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Politique de confidentialités</a></div>
 
-                    <div class="bordure" > <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
+                    <div class="bordure" > <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Conditions d'utilisation</a> </div>
                     <div class="bordure"> <a href="{{url('tarifs')}}" style="color:#801D68 !important" target="_blank"> Tarifs</a></div>
                     <div class="bordure">Crédits</div>
                     <div> &nbsp; Version 0.9</div>
