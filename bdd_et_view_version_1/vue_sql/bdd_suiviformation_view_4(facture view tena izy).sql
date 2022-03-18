@@ -316,7 +316,7 @@ FROM
 factures,groupe_entreprises,projets,groupes,type_formations
 WHERE
 factures.projet_id = projets.id AND factures.groupe_entreprise_id = groupe_entreprises.id AND
-groupe_entreprises.groupe_id = groupes.id AND projets.id = groupes.projet_id AND projets.type_formation_id = type_formations.id
+groupe_entreprises.groupe_id = groupes.id AND projets.id = groupes.projet_id AND projets.type_formation_id = type_formations.id;
 
 
 CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
