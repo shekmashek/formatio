@@ -100,7 +100,7 @@
 
         <div class="row mt-5">
 
-            <h3>Nouveaux Stagiaires</h3>
+            <h3>Nouveaux employers</h3>
 
             <div class="col-md-12 shadow p-3 mb-5 bg-body rounded">
                 <form name="formInsert" id="formInsert" action="{{route('save_multi_stagiaire_exproter_excel')}}" method="POST" enctype="multipart/form-data" class="form_insert_formateur form_colab">

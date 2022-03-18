@@ -61,7 +61,6 @@ class CollaborationController extends Controller
             return back()->with('success', "une invitation a été envoyé sur l'adresse mail en démandant!");
         }
     }
-s
 
     public function create_etp_cfp(Request $req)
     {
