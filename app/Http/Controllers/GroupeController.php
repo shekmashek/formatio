@@ -56,7 +56,6 @@ class GroupeController extends Controller
         $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
         $entreprise = $fonct->concatTwoList($etp2, $etp1);
 
-         dd($entreprise);
         $payement = $fonct->findAll("type_payement");
         return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules','entreprise','payement'));
     }
