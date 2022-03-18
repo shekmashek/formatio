@@ -172,24 +172,33 @@
                 </div>
                 <div class="row avis mt-3">
                     <div class="col-12">
+                        @if (count($reseau_sociaux)>0)
                         <h5>Trouvez-nous sur</h5>
+                        @foreach ($reseau_sociaux as $reseau)
                         <div class="row">
                             <div class="col-12 text-center">
-                                @if(isset($cfp->lien_facebook))
-                                <a href="https://{{$cfp->lien_facebook}}" target="_blank"><span><i class='bx bxl-facebook-circle'></i></span></a>
+                                @if(isset($reseau->lien_facebook))
+                                <a href="https://{{$reseau->lien_facebook}}" target="_blank"><span><i class='bx bxl-facebook-circle'></i></span></a>
                                 @endif
-                                @if(isset($cfp->lien_twitter))
-                                <a href="https://{{$cfp->lien_twitter}}" target="_blank"><span><i class='bx bxl-twitter' ></i></span></a>
+                                @if(isset($reseau->lien_twitter))
+                                <a href="https://{{$reseau->lien_twitter}}" target="_blank"><span><i class='bx bxl-twitter' ></i></span></a>
                                 @endif
-                                @if(isset($cfp->lien_instagram))
-                                <a href="https://{{$cfp->lien_instagram}}" target="_blank"><span><i class='bx bxl-instagram' ></i></span></a>
+                                @if(isset($reseau->lien_instagram))
+                                <a href="https://{{$reseau->lien_instagram}}" target="_blank"><span><i class='bx bxl-instagram' ></i></span></a>
                                 @endif
-                                @if(isset($cfp->lien_linkedin))
-                                <a href="https://{{$cfp->lien_linkedin}}" target="_blank"><span><i class='bx bxl-linkedin' ></i></span></a>
+                                @if(isset($reseau->lien_linkedin))
+                                <a href="https://{{$reseau->lien_linkedin}}" target="_blank"><span><i class='bx bxl-linkedin' ></i></span></a>
                                 @endif
 
                             </div>
                         </div>
+                        @endforeach
+
+                        @else
+                        <h5>Aucun réseau pour cette organisme de formation</h5>
+
+                        @endif
+
                     </div>
                 </div>
             </div>

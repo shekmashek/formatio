@@ -193,9 +193,9 @@ CREATE TABLE reseaux_sociaux (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL
-alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL
-alter table cfps rename domaine_de_formation to slogan
+alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL;
+alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
+alter table cfps rename column domaine_de_formation to slogan;
 
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

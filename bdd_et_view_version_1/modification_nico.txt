@@ -35,4 +35,4 @@ CREATE TABLE reseaux_sociaux (
   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-creer des nouvelles vues pour le reseaux sociaux etle horair cfp
+creer des nouvelles vues pour le reseaux sociaux etle horair cfp dans view modification_view_projet.sql
