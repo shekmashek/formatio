@@ -440,7 +440,7 @@
             @endcan
 
             <li>
-                {{-- <a href="{{route('recherche_admin')}}" class="d-flex nav_linke"> --}}
+                <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>
                     <span class="links_name">Reporting</span>
                 </a>
