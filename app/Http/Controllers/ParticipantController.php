@@ -981,8 +981,6 @@ class ParticipantController extends Controller
             $doner["matricule"] = $req["matricule_" . $i];
             $doner["nom"]  = $req["nom_" . $i];
             $doner["prenom"]  = $req["prenom_" . $i];
-            $doner["sexe"]  = $req["sexe_" . $i];
-            $doner["dte"]  = $req["naissance_" . $i];
             $doner["cin"]  = $req["cin_" . $i];
             $doner["email"]  = $req["email_" . $i];
             $doner["tel"]  = $req["tel_" . $i];
@@ -991,7 +989,7 @@ class ParticipantController extends Controller
 
             if ($req["matricule_" . $i] != null && $req["nom_" . $i] != null) {
                 if (
-                    $req["prenom_" . $i] != null && $req["sexe_" . $i] != null && $req["naissance_" . $i] != null && $req["cin_" . $i] != null
+                    $req["prenom_" . $i] != null  && $req["cin_" . $i] != null
                     && $req["email_" . $i] != null && $req["tel_" . $i] != null && $req["fonction_" . $i] != null
                 ) {
 
@@ -1014,6 +1012,8 @@ class ParticipantController extends Controller
                             $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$entreprise_id]);
 
                             $stg->insert_multi($doner, $user_stg_id, $entreprise_id);
+                            $fonct->insert_role_user($user_id, "3", false, true); // STG (user_id, role_id, prioriter, activiter)
+
 
                             Mail::to($doner['email'])->send(new save_new_compte_stagiaire_Mail($doner["nom"].' '.$doner["prenom"],$doner['email'],$etp->nom_etp));
 

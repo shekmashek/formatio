@@ -15,7 +15,7 @@ create or replace view v_projet_session as
         cfps.adresse_region as adresse_region_cfp,
         cfps.email as mail_cfp,
         cfps.telephone as tel_cfp,
-        cfps.domaine_de_formation,
+        (cfps.slogan) domaine_de_formation,
         cfps.nif as nif_cfp,
         cfps.stat as stat_cfp,
         cfps.rcs as rcs_cfp,
@@ -94,13 +94,13 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation,
+        (cfps.slogan) domaine_de_formation,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
         (cfps.logo) logo_cfp,
-        cfps.site_cfp
+        cfps.site_web
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
     join type_formations tf on p.type_formation_id = tf.id
@@ -259,7 +259,7 @@ create or replace view v_projet_cfp as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation as domaine_de_formation_cfp,
+        cfps.slogan as domaine_de_formation_cfp,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
@@ -494,7 +494,7 @@ create or replace view v_projet_session_inter as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation as domaine_de_formation_cfp,
+        cfps.slogan as domaine_de_formation_cfp,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
@@ -567,6 +567,10 @@ create or replace view v_session_projet as
     groupes g join projets p
     on g.projet_id = p.id
     join moduleformation mf on mf.module_id = g.module_id;
+
+
+
+
 
 
 create or replace view v_evaluation_apprenant as

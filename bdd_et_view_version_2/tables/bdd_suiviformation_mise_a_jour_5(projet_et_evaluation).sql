@@ -95,8 +95,8 @@ CREATE TABLE presences (
   h_entree time,
   h_sortie time,
   note text,
-  detail_id bigint(20) UNSIGNED NOT NULL REFERENCES details(id) ON DELETE CASCADE UNIQUE,
-  stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE UNIQUE,
+  detail_id bigint(20) UNSIGNED NOT NULL UNIQUE REFERENCES details(id) ON DELETE CASCADE ,
+  stagiaire_id bigint(20) UNSIGNED NOT NULL UNIQUE REFERENCES employers(id) ON DELETE CASCADE ,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

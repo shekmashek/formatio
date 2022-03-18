@@ -25,7 +25,7 @@ JOIN secteurs s ON s.id = e.secteur_id;
 
 CREATE OR REPLACE VIEW v_plan_formation as
 SELECT
-    (s.stagiaire_id) id,
+    (s.id) id,
     s.nom_stagiaire,
     s.prenom_stagiaire,
     s.service_id,
@@ -50,7 +50,7 @@ FROM
 JOIN plan_formations p ON  p.recueil_information_id = r.id
 JOIN formations f ON f.id = r.formation_id
 JOIN annee_plans a ON a.id = r.annee_plan_id
-JOIN stagiaires s ON s.stagiaire_id = r.stagiaire_id
+JOIN stagiaires s ON s.id = r.stagiaire_id
 JOIN services serv ON serv.id = s.service_id
 JOIN departement_entreprises dep ON dep.id = serv.departement_entreprise_id;
 

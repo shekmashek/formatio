@@ -41,6 +41,9 @@
         font-size: 13px;
     } */
 
+    p,h6,h5,h4,h2,h1{
+        font-size: 12px;
+    }
     .nav_bar_list:hover {
         background-color: transparent;
     }
@@ -64,17 +67,17 @@
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_participant') ? 'active' : '' }}" aria-current="page" href="{{route('liste_participant')}}">
-                                    <i class="fa fa-list">Liste des stagiaires</i></a>
+                            <li class="nav-item btn_next">
+                                <a class="nav-link  {{ Route::currentRouteNamed('employes') ? 'active' : '' }}" aria-current="page" href="{{route('employes')}}">
+                                    Liste des employers</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::currentRouteNamed('nouveau_participant') ? 'active' : '' }}" aria-current="page" href="{{route('nouveau_participant')}}">
-                                    <i class="fa fa-plus"> Nouveau stagiaire</i></a>
+                            <li class="nav-item btn_next">
+                                <a class="nav-link {{ Route::currentRouteNamed('departement.create') ? 'active' : '' }}" aria-current="page" href="{{route('departement.create')}}">
+                                    Nouveau employer</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item btn_next">
                                 <a class="nav-link {{ Route::currentRouteNamed('export_excel_new_participant') ? 'active' : '' }}" aria-current="page" href="{{route('export_excel_new_participant')}}">
-                                    <i class="fa fa-plus"> export participant</i></a>
+                                    Export des nouveaux employers</a>
                             </li>
 
                         </ul>
@@ -84,13 +87,12 @@
             </nav>
         </div>
 
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-8">
+        <div class="row my-2">
+            <div class="col-md-12">
                 <h6>Comment ajouter plusieurs stagiaires d'une seule coup?</h6>
                 <p>Tout d'abord, vous devrez avoir un fichier excel des listes des stagiaires avec des exception comportant seulement ses colonnes requis pour les informations minimum:</p>
                 <p>1°):<strong> Maximum 30 personne(s) </strong></p>
-                <p>2°):Les champs neccéssaire: <strong> "Matricule" , "Nom", "Prénom", " Genre ou Sexe (ex: F ou M)", "Date Naissance (ex:Jour/Mois/Année) ", "CIN", "email", " Télephone"," Fonction" </strong></p>
+                <p>2°):Les champs neccéssaire: <strong> "Matricule" , "Nom", "Prénom", "CIN", "email", " Télephone"," Fonction" </strong></p>
                 <p>3°): Faire <strong>copier coller </strong> les données en sélectionnants la prémière ligne ou utiliser la racourcie CRTL+A et CRTL+C (pour copier) et CRTL+V pour coller</p>
             </div>
             {{-- <div class="col-md-4"></div> --}}
@@ -126,19 +128,18 @@
                     </div><br>
             </div>
             <div class="form-group">
-                <label for="etp">Departement</label><br>
-                <select name="departement_id" class="form-control" id="departement_id">
-                    {{-- <option value="">Choisissez un département...</option> --}}
+                <select name="departement_id" class="form-select selectP input" id="departement_id">
                     @foreach ($liste_dep as $liste)
                     <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
                     @endforeach
-
                 </select>
+                <label for="departement_id" class="form-control-placeholder">Departement <strong style="color: red">*</strong></label><br>
+
             </div><br>
             @endcanany
             @can('isReferent')
             <div class="form-group">
-                <label for="etp">Departement</label><br>
+                <label for="etp">Departement <strong style="color: red">*</strong></label><br>
                 <select name="departement_id" class="form-control" id="departement_id">
                     {{-- <option value="">Choisissez un département...</option> --}}
                     @foreach ($liste_dep as $liste)
@@ -150,7 +151,7 @@
 
             @can('isManager')
             <div class="form-group">
-                <label for="etp">Departement</label><br>
+                <label for="etp">Departement <strong style="color: red">*</strong></label><br>
                 <select name="departement_departement_" class="form-control" id="departement_id">
                     @foreach ($liste_dep as $liste)
                     <option value="{{$liste->departement_id}}">{{$liste->nom_departement}}</option>
@@ -159,126 +160,114 @@
             </div><br>
             @endcan
 
+        <table id="example" class="">
+            <thead>
+                <tr align="center">
+                    <th>Matricule <strong style="color: red">*</strong> </th>
+                    <th>Nom <strong style="color: red">*</strong> </th>
+                    <th>Prénom <strong style="color: red">*</strong> </th>
+                    {{-- <th>Sexe <strong style="color: red">*</strong> </th>
+                    <th>Date de naissance <strong style="color: red">*</strong> </th> --}}
+                    <th>CIN <strong style="color: red">*</strong> </th>
+                    <th>Email <strong style="color: red">*</strong> </th>
+                    <th>Télephone <strong style="color: red">*</strong> </th>
+                    <th>Fonction <strong style="color: red">*</strong> </th>
+                </tr>
+            </thead>
+            <tbody id="newRowMontant">
 
-                    {{-- <div class="form-group">
-                        <label for="">Département</label>
-                        <select name="departement_id" class="form-select" aria-label="Default select example">
-                            @foreach ($liste_dep as $liste)
-                            <option value="{{$liste->id}}">{{$liste->nom_departement}}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-                    <table id="example" class="">
-                        <thead>
-                            <tr align="center">
-                                <th>Matricule <strong style="color: red">*</strong> </th>
-                                <th>Nom <strong style="color: red">*</strong> </th>
-                                <th>Prénom <strong style="color: red">*</strong> </th>
-                                <th>Sexe <strong style="color: red">*</strong> </th>
-                                <th>Date de naissance <strong style="color: red">*</strong> </th>
-                                <th>CIN <strong style="color: red">*</strong> </th>
-                                <th>Email <strong style="color: red">*</strong> </th>
-                                <th>Télephone <strong style="color: red">*</strong> </th>
-                                <th>Fonction <strong style="color: red">*</strong> </th>
-                            </tr>
-                        </thead>
-                        <tbody id="newRowMontant">
+                @for($i = 1; $i <= 30; $i++) <tr>
+                    <td>
+                        <div class="input-group">
+                            <input class=" ml-2 form-control" placeholder="matricule de l'employer N°{{$i}}" type="text" name="matricule_{{$i}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="nom_{{$i}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="prenom_{{$i}}">
+                        </div>
+                    </td>
+                    {{-- <td>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="sexe_{{$i}}" pattern="[A-Za-z' -]{1,1}" title="1 caractère">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="naissance_{{$i}}">
+                        </div>
+                    </td> --}}
+                    <td>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="cin_{{$i}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input class="form-control" type="email" name="email_{{$i}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="tel_{{$i}}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="fonction_{{$i}}">
+                        </div>
+                    </td>
+                    </tr>
+                    @endfor
 
-                            @for($i = 1; $i <= 30; $i++) <tr>
-                                <td>
-                                    <div class="input-group">
-                                        <label  class=" m-0 mt-3 pt-1 pe-é"><strong class="m-0" style="color: black">{{$i}}</strong></label>
-                                        {{-- <label class="input-group-text" id="inputGroup-sizing-default">{{$i}}</label> --}}
-                                        <input class=" ml-2 form-control" type="text" name="matricule_{{$i}}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="nom_{{$i}}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="prenom_{{$i}}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="sexe_{{$i}}" pattern="[A-Za-z' -]{1,1}" title="1 caractère">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="naissance_{{$i}}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="cin_{{$i}}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="email" name="email_{{$i}}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="tel_{{$i}}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" name="fonction_{{$i}}">
-                                    </div>
-                                </td>
-                                </tr>
-                                @endfor
-
-                        </tbody>
-                    </table>
-                    <div class="form-group mt-5">
-                        <button type="submit" class="btn btn-success">sauvegarder</button>
-
-                    </div>
-                </form>
-            </div>
+            </tbody>
+        </table>
+        <div class=" text-center">
+            <button type="submit" class="btn btn-lg btn_enregistrer">Sauvegarder</button>
         </div>
-
+        </form>
     </div>
+</div>
 
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script type="text/javascript">
-        $(document).ready(function() {
+</div>
 
-            $('td input').bind('paste', null, function(e) {
-                $txt = $(this);
-                setTimeout(function() {
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script type="text/javascript">
+    $(document).ready(function() {
 
-                    // var values = $txt.val().split(/\s+/);
-                    var values = $txt.val().split(/\t+/);
-                    var currentRowIndex = $txt.parent().parent().index();
-                    var currentColIndex = $txt.parent().index();
+        $('td input').bind('paste', null, function(e) {
+            $txt = $(this);
+            setTimeout(function() {
 
-                    var totalRows = $('#example tbody tr').length;
-                    var totalCols = $('#example thead th').length;
+                // var values = $txt.val().split(/\s+/);
+                var values = $txt.val().split(/\t+/);
+                var currentRowIndex = $txt.parent().parent().index();
+                var currentColIndex = $txt.parent().index();
 
-                    var count = 0;
+                var totalRows = $('#example tbody tr').length;
+                var totalCols = $('#example thead th').length;
 
-                    for (var j = currentRowIndex; j < totalRows; j++) {
-                        for (var i = currentColIndex; i < totalCols; i++) {
+                var count = 0;
 
-                            var value = values[count];
+                for (var j = currentRowIndex; j < totalRows; j++) {
+                    for (var i = currentColIndex; i < totalCols; i++) {
 
-                            var inp = $('#example tbody tr').eq(j).find('td').eq(i).find('input');
+                        var value = values[count];
 
-                            count += 1;
-                            inp.val(value);
-                        }
+                        var inp = $('#example tbody tr').eq(j).find('td').eq(i).find('input');
+
+                        count += 1;
+                        inp.val(value);
                     }
-                }, 0);
-            });
+                }
+            }, 0);
         });
+    });
 
 
 
@@ -305,8 +294,7 @@
 
     });
 
-
-    </script>
+</script>
 
 </div>
 @endsection

@@ -18,7 +18,7 @@ CREATE OR REPLACE VIEW v_chef_departement_entreprise AS SELECT
     chef_etp.departement_entreprise_id as departement_id,
     dep.nom_departement as departement,
     dep.entreprise_id as entreprise_id,
-    chef.chef_departement_id as chef_id,
+    chef.id as chef_id,
     chef.nom_chef,
     chef.prenom_chef,
     chef.genre_chef,
@@ -33,7 +33,7 @@ FROM
     chef_dep_entreprises chef_etp,
     departement_entreprises dep
 WHERE
-    chef.chef_departement_id = chef_etp.chef_departement_id
+    chef.id = chef_etp.chef_departement_id
 AND
     dep.id = chef_etp.departement_entreprise_id;
 

@@ -15,7 +15,7 @@ create or replace view v_projet_session as
         cfps.adresse_region as adresse_region_cfp,
         cfps.email as mail_cfp,
         cfps.telephone as tel_cfp,
-        cfps.domaine_de_formation,
+        (cfps.slogan) domaine_de_formation,
         cfps.nif as nif_cfp,
         cfps.stat as stat_cfp,
         cfps.rcs as rcs_cfp,
@@ -38,7 +38,7 @@ create or replace view v_groupe_entreprise as
         e.adresse_quartier,
         e.adresse_code_postal,
         e.adresse_ville,
-         e.adresse_region,
+        e.adresse_region,
         e.logo,
         e.nif,
         e.stat,
@@ -96,7 +96,7 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation,
+        (cfps.slogan) domaine_de_formation,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
@@ -259,7 +259,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
     JOIN v_detailmodule dm ON
         pg.groupe_id = dm.groupe_id
     JOIN stagiaires s ON
-        s.stagiaire_id = pg.stagiaire_id;
+        s.id = pg.stagiaire_id;
 
 
 
@@ -278,7 +278,7 @@ create or replace view v_projet_cfp as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation as domaine_de_formation_cfp,
+        cfps.slogan as domaine_de_formation_cfp,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
