@@ -235,33 +235,7 @@
         </div>
     </div>
 </div>
-            {{-- <div>
-                <h2>Responsabilités et garanties du Client</h2>
-                <h6>1. Le Client est seul responsable du respect des lois et règlements en vigueur applicables à son activité. Il est notamment seul responsable du bon accomplissement de toutes les formalités administratives, fiscales et/ ou sociales qui lui incombent en relation avec son utilisation des Services.</h6><br>
-                <h6>2. Le Client reconnait être seul responsable du traitement des données à caractère personnel pouvant être collectées à travers les Services et s’engage à respecter la législation applicable. Formation.mg n’intervient qu’en qualité de sous-traitant et met en œuvre les moyens nécessaires au maintien de la sécurité et de la confidentialité desdites données. </h6><br>
-                <h6>3.
-                Le Client s’interdit, en son nom et au nom des Utilisateurs, de céder, concéder ou transférer tout ou partie de ses droits ou obligations au titre des présentes à un quelconque tiers, y compris si ce tiers a un lien direct ou indirect avec le Client, de quelque manière que ce soit.
-                <h6>4.
-                Le Client est informé et accepte que la mise en œuvre des Services nécessite qu’il soit connecté à internet et que la qualité des Services dépend directement de cette connexion.
-                <h6>5.
-                Le Client déclare avoir pris connaissance des caractéristiques et des fonctionnalités de l’Application, qu’il est informé de la configuration technique nécessaire à son utilisation, qu’il a reçu de Formation.mg tous conseils, instructions et précisions qui lui sont nécessaires pour souscrire aux Services en toute connaissance de cause, qu’il dispose ainsi d’une connaissance suffisante des Services et qu’il a, préalablement aux présentes, suffisamment échangé avec Formation.mg pour s’assurer que les Services correspondent à ses attentes, besoins et contraintes.
-                <h6>6.
-                De façon générale, le Client s’engage à ne rien faire qui puisse, de quelque manière que ce soit, nuire à l’image de marque ou à la réputation de Formation.mg.
-                <h6>7.
-                Le Client est seul responsable des contenus de toute nature (rédactionnels, graphiques, audios, audiovisuels ou autres) qu’il publie sur l’Application et de toute conséquence qui en découlerait.
-                <h6>8.
-                Le Client garantit à Formation.mg qu’il dispose de tous les droits et autorisations nécessaires à la diffusion de ces Contenus. Il s’engage à ce que lesdits Contenus soient licites, ne portent pas atteinte à l’ordre public, aux bonnes mœurs ou aux droits de tiers, n’enfreignent aucune disposition législative ou règlementaire et plus généralement, ne soient aucunement susceptibles de mettre en jeu la responsabilité civile ou pénale de Formation.mg.
-                Le Client s’interdit ainsi de diffuser, notamment et sans que cette liste soit exhaustive :
-                des Contenus pédopornographiques, pornographiques, diffamatoires, injurieux, racistes, obscènes, indécents, choquants, violents, xénophobes ou révisionnistes,
-                des Contenus contrefaisants,
-                des Contenus attentatoires à l’image d’un tiers,
-                des Contenus mensongers, trompeurs ou proposant ou promouvant des activités illicites, frauduleuses ou trompeuses,
-                et plus généralement des Contenus susceptibles de porter atteinte aux droits de tiers ou d’être préjudiciables à des tiers, de quelque manière et sous quelque forme que ce soit.
-                <h6>9.
-                Le Client garantit Formation.mg contre toutes plaintes, réclamations, actions et/ou revendications quelconques que Formation.mg pourrait subir du fait d’un manquement par le Client de l’une quelconque de ses obligations ou garanties aux termes des présentes. Il s’engage à indemniser Formation.mg de tout préjudice qu’il subirait et à lui payer tous les frais, charges et/ou condamnations qu’il pourrait avoir à supporter de ce fait.
-
-            </div> --}}
-
+           
         </main>
         <footer class="footer_container">
 
