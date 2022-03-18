@@ -372,10 +372,10 @@
                     <i class='bx bxl-sketch'></i>
                     <span class="links_name">Abonnées</span>
                 </a>
-               
+
                 <span class="tooltip">Abonnées</span>
             </li>
-           
+
             {{-- integrer dans la page
             <li>
                 <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
@@ -409,9 +409,9 @@
                 </a>
                 <span class="tooltip">Abonnement</span>
             </li>
-          
+
             @endcan
-            
+
             <li>
                 <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>
@@ -599,8 +599,8 @@
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
                                             <ul id="liste_role" style="float: right">
-                                            Accès:
-                                        </ul>
+                                                Accès:
+                                            </ul>
                                             {{-- @if(Auth::user()->role_id == 1)
                                             <span class="text-muted d-block mb-2">Admin</span>
                                             @endif
