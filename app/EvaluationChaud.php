@@ -70,18 +70,18 @@ class EvaluationChaud extends Model
         return $verify[0]->verify;
     }
 
-    public function insert($reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id){
+    public function insert($point,$reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id){
 
         DB::beginTransaction();
 
         try {
-            DB::insert("INSERT INTO reponse_evaluationchaud(reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,$groupe_id,$cfp_id,NOW(),NOW())",
-            [$reponse,$id_desc_champ,$id_stag]);
+            DB::insert("INSERT INTO reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,?,$groupe_id,$cfp_id,NOW(),NOW())",
+            [$point,$reponse,$id_desc_champ,$id_stag]);
             DB::commit();
-            $message['success']="Votre evaluation à chaud est terminer avec succes!";
+            $message['success']="Votre évaluation à chaud est terminée avec succès.";
         } catch (\Exception $e) {
             DB::rollback();
-            $message['error']="Désoler,pendant votre evaluation il y en a des bug de connection, veuillez recommencer merci";
+            $message['error']="Désolé, votre évaluation a échoué, veuillez recommencer merci.";
             throw $e;
         }
         return $message;
@@ -99,21 +99,24 @@ class EvaluationChaud extends Model
             {
                 $valiny['result'][$i] = $imput["nb_qst_fille_".$qst_fille[$i]->id];
                 $valiny['id_champ'][$i] = $imput["id_champ_".$qst_fille[$i]->id];
+                $valiny['point'][$i] = $imput["nb_qst_fille_".$qst_fille[$i]->id];
             } elseif ($qst_fille[$i]->desc_champ == "TEXT")
             {
                 $valiny['result'][$i] = $imput["txt_qst_fille_".$qst_fille[$i]->id];
                 $valiny['id_champ'][$i] = $imput["id_champ_".$qst_fille[$i]->id];
+                $valiny['point'][$i] = 0;
             } else
             {
                 $tmp = $imput["case_qst_fille_".$qst_fille[$i]->id];
                 $str= explode("concat", $tmp);
                 $valiny['result'][$i] =$str[0];
                 $valiny['id_champ'][$i] = $str[1];
+                $valiny['point'][$i] = $str[2];
             }
         }
         //============ insert multiple
         for ($j=0; $j <count($valiny['result']) ; $j++) {
-            $message= $this->insert($valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id);
+            $message= $this->insert($valiny['point'][$j],$valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id);
         }
 
         return $message;
