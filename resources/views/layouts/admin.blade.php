@@ -602,17 +602,16 @@
                             <div class="container pdp_profil_card ">
                                 <div class="card" style="width: 400px;height:400px">
                                     <div class="card-title">
-
-
                                         <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
                                         <hr class="ms-0" style="color:lightgrey">
                                         <div class="row">
                                             <div class="col-md-4 ">
                                                 <span>
-                                                    <div class='photo_users'> </div>
+                                                        <div style="display: grid; place-content: center">
+                                                            <div class='randomColor photo_users' style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center">
+                                                            </div>
+                                                    </div>
                                                 </span>
-
-
                                             </div>
 
                                             <div class="col-md-8">
@@ -627,8 +626,8 @@
                                         <div class="text-center">
                                             <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
                                             <ul id="liste_role" style="float: right">
-                                            Accès:
-                                        </ul>
+                                                Accès:
+                                            </ul>
                                             {{-- @if(Auth::user()->role_id == 1)
                                             <span class="text-muted d-block mb-2">Admin</span>
                                             @endif
@@ -780,24 +779,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script src="{{asset('js/admin.js')}}"></script>
+    <script type="text/javascript">
+        //Pour chaque div de classe randomColor
+        $(".randomColor").each(function() {
+        //On change la couleur de fond au hasard
+        $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16));
+        })
+    </script>
     <script>
-        // $(document).ready(function() {
-        //     var pdp = "";
-        //     $.ajax({
-        //         url: '{{ route("profile_resp") }}'
-        //         , type: 'get'
-        //         , success: function(response) {
-        //             var userData = response;
-        //             var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 20px; height : 20px;border-radius : 100%; margin-top:6.5px; cursor: pointer;"> <i id="hide" style="position:absolute; margin-top:14px; font-size:13px" class=" ms-1 fas fa-angle-down"></i>';
-        //             html = html.replace(":?", userData);
-        //             // alert(JSON.stringify(userData));
-        //             $('.photo_user').append(html);
-        //         }
-        //         , error: function(error) {
-        //             console.log(error);
-        //         }
-        //     });
-        // });
 
         $(document).ready(function() {
             var pdp = "";
@@ -806,10 +795,16 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 30px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
-                    html = html.replace(":?", userData);
-                    // alert(JSON.stringify(userData));
-                    $('.photo_users').append(html);
+                    if(userData['photo'] == 'oui'){
+                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 37px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
+                        html = html.replace(":?", userData);
+                        // alert(JSON.stringify(userData));
+                        $('.photo_users').append(html);
+                    }
+                    if(userData['photo'] == 'non'){
+                        var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];
+                        $('.photo_users').append(html);
+                    }
                 }
                 , error: function(error) {
                     console.log(error);
