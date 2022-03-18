@@ -1,3 +1,4 @@
+remplacer site_cfp par site_web
 creation de table horaire pour enregistrer les heures d'ouverture et de fermeture des centres
 de formations
 
@@ -19,6 +20,7 @@ le domaine_de_formation en slogan et ajouterla nouvelle collonne presentation
 
 On doit aussi ajouter dans le cfp des nouvelles collones en plus de la presentation:
   - specialisation du cfp
+alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
 
 la table doit encore changer et les vues auquels elle est affiliees
 
