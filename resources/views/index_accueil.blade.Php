@@ -10,70 +10,67 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     {{-- Lien font awesome icons --}}
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{asset('../assets/css/smooth_page.css')}}">
-    <link rel="stylesheet" href="{{ asset('maquette/style_maquette.css') }}">
     <script src="{{ asset('maquette/javascript.js') }}"></script>
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg copie.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/index_accueil.css')}}">
     <title>Formation.mg</title>
 </head>
 <body>
-    <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
+    {{-- <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
         <i class="far fa-arrow-up"></i>
-    </button>
+    </button> --}}
     <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-light navbar_accueil " >
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top pb-0" >
             <div class="container-fluid">
                 <div class="left_menu ms-2">
-                    <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="40px" height="25px"> Formation.mg</p>
+                    <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" > Formation.mg</p>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fonctionnalités</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item mt-2" href="{{url('moderne')}}" target="_blank"><i class="far fa-mouse-pointer center" style="color:rgb(107, 204, 148); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(198,246,213); "></i> &nbsp; Moderne, flexible et sécurusé</a></li>
-                                <li><a class="dropdown-item mt-2" href="{{url('gestiond')}}" target="_blank"><i class="fad fa-file-alt" style="color:rgb(70, 151, 150); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(178,245,234); "></i> &nbsp; Gestion docummentaire</a></li>
+                        <li class="nav-item dropdown icon_background">
+                            <a class="nav-link dropdown-toggle links" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fonctionnalités</a>
+                            <ul class="dropdown-menu p-3" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item pt-2" href="{{url('moderne')}}" target="_blank"><i class="far fa-mouse-pointer center icon_back"></i> &nbsp; Moderne, flexible et sécurusé</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('gestiond')}}" target="_blank"><i class="fad fa-file-alt icon_back2"></i> &nbsp; Gestion docummentaire</a></li>
                                 {{-- <li><hr class="dropdown-divider"></li> --}}
-                                <li><a class="dropdown-item mt-2" href="{{url('gestionf')}}" target="_blank"><i class="fad fa-euro-sign" style="color:rgb(76,81,191); padding: 8px 11px; border-radius: 100%; font-size: 13px; background-color: rgb(195,218,254); "></i> &nbsp; Gestion financière</a></li>
-                                <li><a class="dropdown-item mt-2" href="{{url('gestiona')}}" target="_blank"><i class="fad fa-calendar-check" style="color:rgb(186, 79, 141); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(254,252,191); "></i>&nbsp; Gestion administrative</a></li>
-                                <li><a class="dropdown-item mt-2" href="{{url('gestionc')}}" target="_blank"><i class="far fa-users" style="color:rgb(43,108,176); padding: 8px 7px; border-radius: 100%; font-size: 13px; background-color: rgb(190,227,248); "></i>&nbsp; Gestion commerciale</a></li>
-                                <li><a class="dropdown-item mt-2" href="{{url('qualite')}}" target="_blank"><i class="fad fa-clipboard" style="color:rgb(192,86,33); padding: 8px 10px; border-radius: 100%; font-size: 13px; background-color: rgb(254,235,200); "></i>&nbsp;&nbsp; Qualité</a></li>
-                                <li><a class="dropdown-item mt-2" href="{{url('communication')}}" target="_blank"><i class="fad fa-comments-alt" style="color:rgb(200,58,58); padding: 8px 8px; border-radius: 100%; font-size: 13px; background-color: rgb(254,235,200); "></i>&nbsp;&nbsp;Communication</a></li>
-                                <li><a class="dropdown-item mt-2" href="{{url('elearning')}}" target="_blank"><i class="fad fa-laptop" style="color:rgb(183,121,31); padding: 8px 7px; border-radius: 100%; font-size: 13px; background-color: rgb(254,252,191); "></i>&nbsp;&nbsp;E-learning</a></li>
-                                <li><a class="dropdown-item mt-2" href="{{url('fonctionnalitea')}}" target="_blank"><i class="fad fa-search" style="color:rgb(100, 60, 194); padding: 8px 9px; border-radius: 100%; font-size: 13px; background-color: rgb(233,216,253); "></i>&nbsp;&nbsp;Fonctionnalités avancées</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('gestionf')}}" target="_blank"><i class="fad fa-euro-sign icon_back3"></i> &nbsp; Gestion financière</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('gestiona')}}" target="_blank"><i class="fad fa-calendar-check icon_back4"></i>&nbsp; Gestion administrative</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('gestionc')}}" target="_blank"><i class="far fa-user icon_back5"></i>&nbsp; Gestion commerciale</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('qualite')}}" target="_blank"><i class="fad fa-clipboard icon_back6"></i>&nbsp; Qualité</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('communication')}}" target="_blank"><i class="fad fa-comments-alt icon_back7"></i>&nbsp; Communication</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('elearning')}}" target="_blank"><i class="fad fa-laptop icon_back8"></i>&nbsp; E-learning</a></li>
+                                <li><a class="dropdown-item pt-2" href="{{url('fonctionnalitea')}}" target="_blank"><i class="fad fa-search icon_back9"></i>&nbsp; Fonctionnalités avancées</a></li>
                             </ul>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url('tarifs')}}" target="_blank">Tarifs</a>
+                        <li class="nav-item ms-2">
+                            <a class="nav-link links " href="{{url('tarifs')}}" target="_blank">Tarifs</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">À propos</a>
+                        <li class="nav-item ms-2">
+                            <a class="nav-link links" href="#">À propos</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url('contact')}}" target="_blank">Contactez-nous</a>
+                        <li class="nav-item ms-2">
+                            <a class="nav-link links" href="{{url('contact')}}" target="_blank">Contactez-nous</a>
                         </li>
 
                     </ul>
-                    <form class="d-flex">
-                        <li class="nav-item">
-                            <a style="color:rgb(75, 75, 75);" href="{{ route('sign-in') }}">Se connecter </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" style="color:rgb(79, 79, 79); padding: 10px 5px; border: 1px solid #7535DC; border-radius: 35px; font-size: 13px;">Voir une démo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('create+compte+client')}}" style="color:white; padding: 10px 5px; border: 1px solid #7535DC; border-radius: 35px; font-size: 13px; background-color: #7b42d6; ">Créer un compte</a>
-                        </li>
+                    <div class="menu_action">
+                        <ul class="d-flex">
+                            <li class="nav-item">
+                                <a href="{{ route('sign-in') }}" class="btn_login me-2" role="button">Se connecter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('create+compte+client')}}" class="btn_creerCompte me-2" role="button">Créer un compte</a>
+                            </li>
 
-                    </form>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <main>
-        <div class=" p-5 m-0 container-fluid" style="font-size: 14px">
+    <main class="mt-5 mb-5">
+        {{-- <div class=" p-5 m-0 container-fluid" style="font-size: 14px">
             <div class="row ">
                 <div class="p-0 col-lg-6">
                     <div class="shadow p-3 mb-4 bg-body rounded" style="height: 160px">
@@ -93,7 +90,6 @@
                                 <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Référent</p>
                                 <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Apprenant</p>
                                 <p style="font-size: 10px;margin:0; color: rgb(158, 157, 157)"> - Manager </p>
-                                {{-- <img class=" ms-5 img-fluid rounded-3" src="{{ asset('maquette/collaboration.jpg') }}" alt="" style="height:50px; width:120px"><br> --}}
                                 <a style="background-color: #9d76dc; color:white; font-size: 12px; margin-top: 15px " class="btn" href="{{url('contact')}}" target="_blank">Contactez notre service commerciale</a>
                             </div>
                         </div>
@@ -110,7 +106,6 @@
                                     Nous serons ravis de vous faire découvrir les horizons de notre logiciel et en quoi il vous est indispensable.
                                 </p>
                                 <a href="{{url('tarifs')}}" style="color: #9d76dc;;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
-                                {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn mb-2" href="">Demander une demo</a> --}}
                             </div>
                             <div class="col" align="center">
                                 <img class=" img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="" style="height:70px; width:130px"><br>
@@ -135,7 +130,6 @@
                                     Rapprochez-vous de vos clients, envoyez leurs des évaluations digitalisées et personnalisables et obtenez des feedbacks instantanés
                                 </p>
                                 <a href="{{url('tarifs')}}" style="color: #9d76dc;;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
-                                {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn mb-2" href="{{route('create+compte+client')}}">Creer un compte pro</a> --}}
                             </div>
                             <div class="col" align="center">
                                 <img class=" img-fluid" src="{{ asset('maquette/demos.jpg') }}" alt="" style="height:90px; width:130px"><br>
@@ -158,7 +152,6 @@
                                     les archives en paperasse volumineuses,...
                                 </P>
                                 <a href="{{url('tarifs')}}" style="color: #9d76dc;;font-size: 11px">&nbsp; Voir plus >&nbsp;</a>
-                                {{-- <a style="background-color: #801D68; color:white; font-size: 11px " class="btn" href="{{route('create+compte+client')}}">Creer un compte pro</a> --}}
                             </div>
                             <div class="col" align="center">
                                 <img class=" img-fluid" src="{{ asset('maquette/formation.jpg') }}" alt="" alt="" style="height:100px; width:130px"><br>
@@ -168,19 +161,19 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </main>
-    <footer class="footer_container">
-        <div class="d-flex justify-content-center pt-3">
+    <footer class="footer_all">
+        <div class="d-flex justify-content-center align-items-center pt-3">
             <div class="bordure">&copy; Copyright 2022</div>
-            <div class="bordure"><a href="{{url('info_legale')}}" style="color:#801D68 !important" target="_blank">Informations légales</a></div>
-            <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Contactez-nous</a></div>
-            <div class="bordure"><a href="{{url('politique_confidentialites')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Politique de confidentialités</a></div>
+            <div class="bordure"><a href="{{url('info_legale')}}" target="_blank">Informations légales</a></div>
+            <div class="bordure"><a href="{{url('contact')}}" target="_blank">Contactez-nous</a></div>
+            <div class="bordure"><a href="{{url('politique_confidentialites')}}" target="_blank">Politique de confidentialités</a></div>
 
-            <div class="bordure"> <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
-            <div class="bordure"> <a href="{{url('tarifs')}}" style="color:#801D68 !important" target="_blank"> Tarifs</a></div>
-            <div class="bordure">Crédits</div>
-            <div> &nbsp; Version 0.9</div>
+            <div class="bordure"> <a href="{{route('condition_generale_de_vente')}}" target="_blank"> Condition d'utilisation</a> </div>
+            <div class="bordure"> <a href="{{url('tarifs')}}" target="_blank"> Tarifs</a></div>
+            <div class="bordure"><a href="#" target="_blank">Crédits</a></div>
+            <div class="ps-3 version">V 1.0.9</div>
         </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

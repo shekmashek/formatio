@@ -18,7 +18,7 @@
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
-    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg copie.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg54Ko.png') }}" type="image/x-icon">
 </head>
 
 <body>
