@@ -129,6 +129,7 @@ CREATE TABLE responsables (
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   activiter boolean not null default true,
   prioriter boolean not null default false,
+  url_photo VARCHAR(155),
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

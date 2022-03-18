@@ -18,6 +18,7 @@
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
+    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg copie.png') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -37,8 +38,35 @@
                     <i class="bx bxs-dashboard"></i>
                     <span class="links_name">Tableau de bord</span>
                 </a>
-                {{-- <span class="tooltip">Tableau de bord</span> --}}
+                <span class="tooltip">Tableau de bord</span>
             </li>
+
+
+            <li>
+                @canany(['isReferent'])
+                    <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name">BI</span>
+                    </a>
+                    <span class="tooltip">BI</span>
+                @endcanany
+                @canany(['isCFP'])
+                    <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name">BI</span>
+                    </a>
+                    <span class="tooltip">BI</span>
+                 @endcanany
+                @canany(['isSuperAdmin'])
+                    <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name"> BI </span>
+                    </a>
+                    <span class="tooltip">BI</span>
+                @endcanany
+            </li>
+
+
 
             @canany(['isCFP','isFormateur'])
             <li>
@@ -412,7 +440,7 @@
             @endcan
 
             <li>
-                <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
+                {{-- <a href="{{route('recherche_admin')}}" class="d-flex nav_linke"> --}}
                     <i class='bx bxs-notepad'></i>
                     <span class="links_name">Reporting</span>
                 </a>
@@ -440,10 +468,9 @@
         <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
-                    <img src="{{asset('images/formateurs/RAHARIFETRANicole22-12-2021.png')}}" class="img-fluid" alt="user_profile">
+                    <div class='photo_users'> </div>
                     <div class="name_job">
-                        <div class="name">Malala</div>
-                        <div class="job">Manager</div>
+                        <div class="name">Déconnexion</div>
                     </div>
                 </div>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -464,14 +491,14 @@
                             @csrf
                             <div class="form-row">
                                 <div class="searchBoxMod">
-                                    <input class="searchInputMod mb-2" type="text" name="nom_formation"
+                                    <input class="searchInputMod mb-2 recherche_formation" type="text" name="nom_formation"
                                         placeholder="Rechercher par formations...">
-                                    <button class="searchButtonMod" href="#">
-                                        <i class="bx bx-search">
-                                        </i>
+                                    <button class="searchButtonMod recherche_formation" href="#">
+                                        <i class="bx bx-search"></i>
                                     </button>
-                                    <a href="{{route('liste_formation')}}" class="btn_next ms-2" role="button">Catalogue</a>
-                                    <a href="{{route('annuaire')}}" class="btn_next" role="button">Annuaire</a>
+
+                                    <a href="{{route('liste_formation')}}" class="btn_next ms-2" role="button" onclick="afficher_catalogue()">Catalogue</a>
+                                    <a href="{{route('annuaire')}}" class="btn_next" role="button" onclick="afficher_annuaire()">Annuaire</a>
                                     <a href="{{route('calendrier')}}" class="btn_next" role="button">Agenda</a>
                                 </div>
                             </div>
@@ -564,7 +591,8 @@
 
                             {{-- <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p> --}}
                             <p>
-                                <div class='photo_user'> </div>
+                                <div class="mt-2"><span><i class="fas fa-user"></i></span>  <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
+                                {{-- <div class='photo_user'> </div> --}}
                             </p>
                             {{-- <p style="text-transform: capitalize;color:#801D68" class="header_img_name">
                                 &nbsp;{{Auth::user()->name}}</p> --}}
@@ -580,7 +608,7 @@
                                         <div class="row">
                                             <div class="col-md-4 ">
                                                 <span>
-                                                    <div class='photo_user'> </div>
+                                                    <div class='photo_users'> </div>
                                                 </span>
 
 
@@ -717,7 +745,7 @@
                                     <div class="footer_list ms-2 me-2">
                                         <a href="{{route('condition_generale_de_vente')}}"
                                             style="color:#801D68 !important" target="_blank">
-                                            <p>Condition d'utilisation</p>
+                                            <p>Conditions d'utilisation</p>
                                         </a>
                                     </div>
                                     <div class="footer_list ms-2 me-2">
@@ -743,7 +771,7 @@
         {{-- footer --}}
     </div>
     </div>
-
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js" integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
@@ -752,6 +780,24 @@
     </script>
     <script src="{{asset('js/admin.js')}}"></script>
     <script>
+        // $(document).ready(function() {
+        //     var pdp = "";
+        //     $.ajax({
+        //         url: '{{ route("profile_resp") }}'
+        //         , type: 'get'
+        //         , success: function(response) {
+        //             var userData = response;
+        //             var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 20px; height : 20px;border-radius : 100%; margin-top:6.5px; cursor: pointer;"> <i id="hide" style="position:absolute; margin-top:14px; font-size:13px" class=" ms-1 fas fa-angle-down"></i>';
+        //             html = html.replace(":?", userData);
+        //             // alert(JSON.stringify(userData));
+        //             $('.photo_user').append(html);
+        //         }
+        //         , error: function(error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // });
+
         $(document).ready(function() {
             var pdp = "";
             $.ajax({
@@ -759,10 +805,10 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 40px; height : 40px;border-radius : 100%; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 30px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
                     html = html.replace(":?", userData);
-
-                    $('.photo_user').append(html);
+                    // alert(JSON.stringify(userData));
+                    $('.photo_users').append(html);
                 }
                 , error: function(error) {
                     console.log(error);
@@ -771,6 +817,7 @@
         });
 
     </script>
+
     <script>
         $(document).ready(function() {
             var pdp = "";
@@ -779,7 +826,7 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 40px; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 30px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
                     $('.logo_etp_user').append(html);
                 }

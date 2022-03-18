@@ -13,7 +13,8 @@ Route::get('/', function () {
     return view('index_accueil');
 // return view('page_travaux.plateforme_en_travaux');
 })->name('accueil_perso');
-
+// Route Bi
+Route::get('iframe_bi','HomeController@BI')->name('iframe_bi');
 
 
 //Route contact
@@ -47,7 +48,8 @@ Auth::routes();
 Route::get('/user',function(){
     return view('suivi/user');
 });
-
+// route recheche personne qui suivi une formation dans une entreprise
+Route::get('recherche_input','RecherchemultiController@recherche')->name('recherche_input');
 Route::get('/home/{id?}','HomeController@index')->name('home');
 Route::get('/hometdbf/{id?}','HomeControllerTDBF@index')->name('hometdbf');
 Route::get('/hometdbq/{id?}','HomeControllerTDBQ@index')->name('hometdbq');
@@ -317,6 +319,7 @@ Route::get('result__formation','FormationController@rechercheParModule')->name('
 Route::get('search__formation','FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation','FormationController@formation_domaine')->name('domaine_formation');
 Route::get('select_par_formation/{id}','FormationController@affichageParFormation')->name('select_par_formation');
+Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}','FormationController@affichageParFormationParCfp')->name('select_par_formation_par_cfp');
 Route::get('select_par_module/{id}','FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous','FormationController@affichageTousCategories')->name('select_tous');
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','SessionController@inscription')->name('inscriptionInter');
@@ -949,3 +952,18 @@ Route::get('/fonctionnalitea', function () {
 Route::get('budget','PlanFormationController@budgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
+
+//Route iframe
+Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
+Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
+Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');
+
+
+Route::get('afficher_iframe_entreprise','HomeController@iframe_etp')->name('afficher_iframe_entreprise');
+Route::get('afficher_iframe_cfp','HomeController@iframe_cfp')->name('afficher_iframe_cfp');
+
+Route::post('modifier_iframe_etp','HomeController@modifier_iframe_etp')->name('modifier_iframe_etp');
+Route::post('supprimer_iframe_etp','HomeController@supprimer_iframe_etp')->name('supprimer_iframe_etp');
+
+Route::post('modifier_iframe_cfp','HomeController@modifier_iframe_cfp')->name('modifier_iframe_cfp');
+Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name('supprimer_iframe_cfp');

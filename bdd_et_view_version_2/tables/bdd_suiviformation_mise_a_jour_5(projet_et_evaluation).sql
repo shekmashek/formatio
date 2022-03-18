@@ -102,10 +102,6 @@ CREATE TABLE presences (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- ALTER TABLE presences
--- ADD CONSTRAINT presence_stg_constraint UNIQUE (detail_id,stagiaire_id);
-
-
 CREATE TABLE froid_evaluations (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   cours_id bigint(20) UNSIGNED NOT NULL REFERENCES cours(id) ON DELETE CASCADE,

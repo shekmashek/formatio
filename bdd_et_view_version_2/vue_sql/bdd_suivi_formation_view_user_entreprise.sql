@@ -12,6 +12,7 @@ SELECT
     employers.user_id,
     service_id,
     branche_id,
+    url_photo,
     employers.photos,
     (employers.cin_emp) cin,
     (employers.date_naissance_emp) date_naissance,
@@ -42,6 +43,7 @@ SELECT
     (employers.telephone_emp) telephone_resp,
     employers.user_id,
     service_id,
+    url_photo,
     departement_entreprises_id,
     employers.photos,
     (employers.cin_emp) cin_resp,
@@ -63,7 +65,7 @@ WHERE
 
 CREATE OR REPLACE view chef_departements as
 SELECT
-    employers.id AS chef_departement_id,
+    employers.id,
     employers.entreprise_id,
     (employers.matricule_emp) matricule,
     (employers.nom_emp) nom_chef,
@@ -74,6 +76,7 @@ SELECT
     (employers.telephone_emp) telephone_chef,
     employers.user_id,
     service_id,
+    url_photo,
     employers.photos,
     (employers.cin_emp) cin_chef,
     (employers.date_naissance_emp) date_naissance_chef,

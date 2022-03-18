@@ -5,6 +5,7 @@ CREATE TABLE formateurs (
   mail_formateur varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   numero_formateur varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   photos varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  url_photo VARCHAR(155),
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp(),
   genre varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -18,10 +19,11 @@ CREATE TABLE formateurs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+
 CREATE TABLE competence_formateurs (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   competence varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  formateur_id bigint(20) UNSIGNED NOT NULL REFERENCES formateurs(id) ON DELETE CASCADE,
+  formateur_id bigint(20) UNSIGNED NOT NULL REFERENCES administrateurs(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp(),
   domaine varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -35,7 +37,7 @@ CREATE TABLE experience_formateurs (
   debut_travail date NOT NULL,
   fin_travail date default current_timestamp(),
   taches varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  formateur_id bigint(20) UNSIGNED NOT NULL REFERENCES formateurs(id) ON DELETE CASCADE,
+  formateur_id bigint(20) UNSIGNED NOT NULL REFERENCES administrateurs(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

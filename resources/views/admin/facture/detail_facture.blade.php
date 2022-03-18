@@ -81,8 +81,8 @@
                                         <h6></h6><br>
                                         <h6>mail: {{$cfp->email}}</h6>
                                         <h6>tél: {{$cfp->telephone}}</h6>
-                                        @if($cfp->site_cfp!=null)
-                                        <h6>site: {{$cfp->site_cfp}}</h6>
+                                        @if($cfp->site_web!=null)
+                                        <h6>site: {{$cfp->site_web}}</h6>
                                         @endif
                                     </div>
                                 </div>

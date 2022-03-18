@@ -181,7 +181,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
+                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
@@ -333,7 +333,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule") {
+                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo" ) {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
@@ -483,7 +483,7 @@ class HomeController extends Controller
             //on récupère l'entreprise id de la personne connecté
 
             $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
+            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         }
@@ -719,5 +719,79 @@ class HomeController extends Controller
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
 
         return view('referent.dashboard_referent.dashboard_referent_budget_prev', compact('total_budget', 'total_realise', 'total_engage', 'total_restant'));
+    }
+    //creation iframe
+    public function creer_iframe(){
+        $fonct = new FonctionGenerique();
+        // $entreprise = $fonct->findAll("entreprises");
+        $of = $fonct->findAll('cfps');
+        $iframe_etp = $fonct->findAll("v_entreprise_iframe");
+        $iframe_of = $fonct->findAll("v_cfp_iframe");
+        return view('bi.iframe',compact('of','iframe_etp','iframe_of'));
+    }
+    public function enregistrer_iframe_etp(Request $request){
+        $url_iframe = $request->iframe_url;
+        $etp_id = $request->entreprise_id;
+        $fonct = new FonctionGenerique();
+        $entreprise = $fonct->insert_iframe('iframe_entreprise','entreprise_id',$etp_id,$url_iframe);
+        return back();
+    }
+    public function enregistrer_iframe_cfp(Request $request){
+        $url_iframe = $request->iframe_url;
+        $cfp_id = $request->cfp_id;
+        $fonct = new FonctionGenerique();
+        $entreprise = $fonct->insert_iframe('iframe_cfp','cfp_id',$cfp_id,$url_iframe);
+        return back();
+    }
+    //liste par entreprise
+    public function iframe_etp(){
+        $fonct = new FonctionGenerique();
+        $id_etp = DB::select('select * from responsables where user_id = ?',[Auth::user()->id]);
+        $iframe_etp = $fonct->findWhereMulitOne("v_entreprise_iframe",["entreprise_id"],[$id_etp[0]->entreprise_id]);
+
+        return view('layouts.bi',compact('iframe_etp'));
+    }
+    //liste par of
+    public function iframe_cfp(){
+        $fonct = new FonctionGenerique();
+        $id_cfp = DB::select('select * from responsables_cfp where user_id = ?',[Auth::user()->id]);
+        $iframe_cfp = $fonct->findWhereMulitOne("v_cfp_iframe",["cfp_id"],[$id_cfp[0]->cfp_id]);
+        return view('layouts.bi',compact('iframe_cfp'));
+    }
+    public function BI(){
+     return view('layouts.bi');
+    }
+    //----------Entreprise---------------//
+    //modification
+    public function modifier_iframe_etp(Request $request){
+        $iframe = $request->n_iframe;
+        $entreprise = $request->id_etp;
+        $modification = new FonctionGenerique();
+        $modification->update_iframe('iframe_entreprise','iframe','entreprise_id',$entreprise,$iframe);
+        return back();
+    }
+    //suppression
+    public function supprimer_iframe_etp(Request $request){
+        $id_etp = $request->id_etp;
+        $suppression = new FonctionGenerique();
+        $suppression->supprimer_iframe('iframe_entreprise','entreprise_id',$id_etp);
+        return back();
+    }
+
+    //----------Organisme de formation---------------//
+    //modification
+    public function modifier_iframe_cfp(Request $request){
+        $iframe = $request->n_iframe_cfp;
+        $cfp = $request->id_cfp;
+        $modification = new FonctionGenerique();
+        $modification->update_iframe('iframe_cfp','iframe','cfp_id',$cfp,$iframe);
+        return back();
+    }
+    //suppression
+    public function supprimer_iframe_cfp(Request $request){
+        $id_cfp = $request->id_cfp;
+        $suppression = new FonctionGenerique();
+        $suppression->supprimer_iframe('iframe_cfp','cfp_id',$id_cfp);
+        return back();
     }
 }

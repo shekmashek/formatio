@@ -10,7 +10,7 @@
 @endif
 <section class="detail__formation mb-5">
     <div class="container py-5">
-        <div class="row bg-light justify-content-space-between py-3 px-5 back" id="border_premier">
+        <div class="row justify-content-space-between py-3 px-5 back" id="border_premier">
             <div class="col-lg-8 col-md-8 pe-5 module_detail">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
@@ -57,8 +57,7 @@
                     <div class="col-lg-12">
                         <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
-                        <a href="#programme__formation"><button type="button" class="btn encre">Consulter le
-                                programme de cette formation</button></a>
+                        <a href="#programme__formation" class="btn_next" role="button">Consulter le programme de cette formation</a>
                     </div>
                 </div>
                 {{-- section 1 --}}
@@ -133,6 +132,7 @@
                     </div>
                 </div>
                 @endforeach
+                <div id="programme__formation"></div>
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row module_detail_content mt-5">
