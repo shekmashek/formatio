@@ -7,10 +7,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\getImageModel;
+use App\Models\FonctionGenerique;
+
 class DocumentController extends Controller
 {
     public function __construct()
     {
+        $this->fonct = new FonctionGenerique();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if(Auth::user()->exists == false) return redirect()->route('sign-in');
@@ -20,8 +23,9 @@ class DocumentController extends Controller
     public function index()
     {
         $document = new getImageModel();
-        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-        $nom_cfp = $rqt[0]->nom;
+        $rqt = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::id()]);
+        // $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
+        $nom_cfp = $rqt->nom_cfp;
         // $document->create_folder($nom_cfp);
         $get_nom_cfp = $document->get_folder($nom_cfp);
 

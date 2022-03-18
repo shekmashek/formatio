@@ -24,15 +24,27 @@ class RecherchemultiController extends Controller
         $id_etp = responsable::where('user_id',Auth::id())->value('entreprise_id');
         $branches=branche::where('entreprise_id',$id_etp)->get();
         $stagiaires=stagiaire::where('entreprise_id',$id_etp)->get();
-        $departement=departementEntreprise::where('entreprise_id',$id_etp)->get();
+        $departement=DepartementEntreprise::where('entreprise_id',$id_etp)->get();
         $service = db::select('select * from v_departement_service_entreprise  where entreprise_id = ?',[$id_etp]);
         $dom_mod=db::select('select * from v_groupe_projet_entreprise_module where entreprise_id = ?',[$id_etp]);
-
         // $module=Module::all();
         // $liste_serv = db::select('select * from v_departement_service_entreprise  where entreprise_id = ? ',[$id_etp]);
         return view('projet_session.recherche_admin',compact('branches','stagiaires','departement','service','dom_mod'));
     }
+    // public function recherche(Request $request){
+      
+    //     $id_etp = responsable::where('user_id',Auth::id())->value('entreprise_id');
+    //     $nom=$request->nom;
+    //     $matricule=$request->matricule;
+    //     $input=stagiaire::where('entreprise_id',$id_etp)
+    //                     // ->orWhere('nom_stagiaire','LIKE','%' . $nom . '%')
+    //                     // ->orWhere('prenom_stagiaire','LIKE','%' . $nom . '%')
+    //                     ->orWhere('matricule','LIKE','%' . $matricule . '%')
+    //                     ->get();
+    //     return view('projet_session.result',compact('input'));
 
+    // }
+// 
     /**
      * Show the form for creating a new resource.
      *

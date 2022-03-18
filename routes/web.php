@@ -48,7 +48,8 @@ Auth::routes();
 Route::get('/user',function(){
     return view('suivi/user');
 });
-
+// route recheche personne qui suivi une formation dans une entreprise
+Route::get('recherche_input','RecherchemultiController@recherche')->name('recherche_input');
 Route::get('/home/{id?}','HomeController@index')->name('home');
 Route::get('/hometdbf/{id?}','HomeControllerTDBF@index')->name('hometdbf');
 Route::get('/hometdbq/{id?}','HomeControllerTDBQ@index')->name('hometdbq');
