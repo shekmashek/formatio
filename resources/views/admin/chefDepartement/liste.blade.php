@@ -71,7 +71,6 @@
                                             <td class="" >{{$referent[$i]->fonction_resp}}</td>
                                             <td class="" >{{$referent[$i]->email_resp}}</td>
                                             <td class="" >{{$referent[$i]->telephone_resp}}</td>
-
                                             <td>
                                                 <div align="left">
                                                     @foreach ($roles_actif_referent as $role_asigner_referent)
