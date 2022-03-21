@@ -515,7 +515,6 @@ class HomeController extends Controller
 
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
             $projet = DB::select($sql);
             // dd($projet);
@@ -527,7 +526,7 @@ class HomeController extends Controller
             // elseif($type_formation_id == 2){
             //     $data = $fonct->findWhere("v_projet_session_inter", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
             // }
-            $data = $fonct->findWhere("v_groupe_projet_entreprise_module", ["cfp_id"], [$cfp_id]);
+            $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -537,7 +536,6 @@ class HomeController extends Controller
             $module = $fonct->findAll("modules");
 
             $type_formation = DB::select('select * from type_formations');
-
             return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation'));
         }
         if (Gate::allows('isFormateur')) {

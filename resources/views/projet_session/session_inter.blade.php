@@ -10,6 +10,13 @@
             <input type="hidden" name="module_id" value="{{$module_id}}">
             <div class="row">
                 <h5 class="mb-4 text-center">Ajouter votre nouvelle Session</h5>
+                @if (Session::has('groupe_error'))
+                    <div class="alert alert-danger ms-2 me-2">
+                        <ul>
+                            <li>{!! \Session::get('groupe_error') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="form-group">
                     <div class="form-row d-flex">
                         <div class="col">
@@ -61,6 +68,9 @@
             </div>
         </form>
     </div>
+
+   
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="{{asset('js/projet_inter_intra.js')}}"></script>
 @endsection

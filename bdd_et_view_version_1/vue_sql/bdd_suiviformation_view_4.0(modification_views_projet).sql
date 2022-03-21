@@ -108,6 +108,80 @@ create or replace view v_groupe_projet_entreprise as
     join cfps on cfps.id = p.cfp_id;
 
 
+create or replace view v_groupe_projet_module as
+    select
+        p.nom_projet,
+        p.type_formation_id,
+        p.cfp_id,
+        p.created_at as date_projet,
+        p.status as status_projet,
+        p.activiter as activiter_projet,
+        tf.type_formation,
+        (cfps.nom) nom_cfp,
+        (cfps.adresse_lot) adresse_lot_cfp,
+        (cfps.adresse_ville) adresse_ville_cfp,
+        (cfps.adresse_region) adresse_region_cfp,
+        (cfps.email) mail_cfp,
+        (cfps.telephone) tel_cfp,
+        cfps.domaine_de_formation,
+        (cfps.nif) nif_cfp,
+        (cfps.stat) stat_cfp,
+        (cfps.rcs) rcs_cfp,
+        (cfps.cif) cif_cfp,
+        (cfps.logo) logo_cfp,
+        cfps.site_cfp,
+        g.id as groupe_id,
+        g.max_participant,
+        g.min_participant,
+        g.nom_groupe,
+        g.projet_id,
+        g.module_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        case g.status
+            when 0 then 'Créer'
+            when 1 then 'Prévisionnel'
+            when 2 then 'A venir'
+            when 3 then 'En cours'
+            when 4 then 'Terminé'
+        end item_status_groupe,
+        case g.status
+            when 0 then 'Créer'
+            when 1 then 'status_grise'
+            when 2 then 'status_confirme'
+            when 3 then 'statut_active'
+            when 4 then 'status_termine'
+        end class_status_groupe,
+        g.activiter as activiter_groupe,
+        g.type_payement_id,
+        mf.reference,
+        mf.nom_module,
+        mf.prix,
+        mf.duree,
+        mf.modalite_formation,
+        mf.duree_jour,
+        mf.objectif,
+        mf.prerequis,
+        mf.description,
+        mf.materiel_necessaire,
+        mf.cible,
+        mf.niveau_id,
+        mf.niveau,
+        mf.formation_id,
+        mf.nom_formation,
+        mf.domaine_id,
+        mf.nom,
+        mf.email,
+        mf.telephone,
+        mf.pourcentage
+    from groupes g 
+    join moduleformation mf on mf.module_id = g.module_id
+    join projets p on p.id = g.projet_id
+    join type_formations tf on p.type_formation_id = tf.id
+    join cfps on cfps.id = p.cfp_id;
+
+
 create or replace view v_groupe_projet_entreprise_module as
     select
         vgpe.*,
@@ -148,7 +222,6 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         d.projet_id,
         d.groupe_id,
         d.cfp_id,
-        g.entreprise_id,
         g.max_participant,
         g.min_participant,
         g.nom_groupe,
@@ -157,6 +230,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         g.date_fin,
         g.status_groupe,
         g.activiter_groupe,
+        g.logo as logo_entreprise,
+        g.nom_etp,
         mf.reference,
         mf.nom_module,
         mf.formation_id,
@@ -168,7 +243,9 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         f.mail_formateur,
         f.numero_formateur,
         p.nom_projet,
-        (c.nom) nom_cfp
+        (c.nom) nom_cfp,
+        p.type_formation_id,
+        tf.type_formation
     FROM
         details d
     JOIN v_groupe_projet_entreprise g ON
@@ -183,6 +260,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         p.cfp_id = c.id
     JOIN domaines dom ON
         mf.domaine_id = dom.id
+    join type_formations tf 
+        on tf.id = p.type_formation_id
     GROUP BY
     d.id,
     d.lieu,
@@ -201,6 +280,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     g.date_fin,
     g.status_groupe,
     g.activiter_groupe,
+    g.logo,
+    g.nom_etp,
     mf.reference,
     mf.nom_module,
     mf.formation_id,
@@ -213,7 +294,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     f.numero_formateur,
     p.nom_projet,
     c.nom,
-    g.entreprise_id
+    p.type_formation_id,
+    tf.type_formation
     ;
 
 
@@ -531,7 +613,7 @@ create or replace view v_formateur_projet as
         f.cin,
         f.specialite,
         f.niveau,
-        d.projet_id
+        d.groupe_id
     from
         v_demmande_cfp_formateur f join details d on f.formateur_id = d.formateur_id
     group by
@@ -547,7 +629,7 @@ create or replace view v_formateur_projet as
         f.cin,
         f.specialite,
         f.niveau,
-        d.projet_id;
+        d.groupe_id;
 
 
 create or replace view v_programme_detail_activiter as

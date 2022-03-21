@@ -74,6 +74,13 @@
         transform: scale(1.1);
     }
 </style>
+@if (Session::has('detail_error'))
+    <div class="alert alert-danger ms-2 me-2">
+        <ul>
+            <li>{!! Session::get('detail_error') !!}</li>
+        </ul>
+    </div>
+@endif
 @if (count($datas) <= 0) @if ($type_formation_id==1) <form onsubmit="change_active()" id="non_existante"
     action="{{ route('detail.store') }}" method="post">
     @endif
@@ -364,8 +371,10 @@
                                             <a href="" aria-current="page" data-bs-toggle="modal"
                                                 data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i
                                                     class="fa fa-edit ms-2" style="color:rgb(130,33,100);"></i></a>
-                                            <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i
-                                                    class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a>
+                                            {{-- <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i
+                                                    class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a> --}}
+                                                    <button type="button" style="background: none" data-bs-toggle="modal" data-bs-target="#delete_detail_{{$d->detail_id}}"><i
+                                                        class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></button>
                                         </td>
                                         @endcanany
                                         {{-- @canany(['isFormateur'])
@@ -384,6 +393,23 @@
                                                     class="glyphicon glyphicon-remove"></span> Supprimer</button></td>
                                         --}}
                                         @canany('isCFP')
+
+                                        <div class="modal fade" id="delete_detail_{{$d->detail_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Non </button>
+                                                        <button type="button" class="btn btn-secondary"><a href="{{ route('destroy_detail',[$d->detail_id]) }}" >Oui</a></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="modal fade" id="modal_modifier_detail_{{ $d->detail_id }}">
                                             <div class="modal-dialog">
                                                 <div class="modal-content p-3">
@@ -396,53 +422,56 @@
                                                         method="post">
                                                         @csrf
                                                         <input type="hidden" name="detail" value="{{ $d->detail_id }}">
-                                                        <div class="form-group mx-auto">
-                                                            <label for="formateur">Formateur</label><br>
-                                                            <select class="form-control" id="formateur"
-                                                                name="formateur">
-                                                                <option value="{{ $d->formateur_id }}">{{
-                                                                    $d->nom_formateur.' '.$d->prenom_formateur }}
-                                                                </option>
-                                                                @foreach ($formateur as $format)
-                                                                <option value="{{ $format->formateur_id }}">
-                                                                    {{ $format->nom_formateur }}
-                                                                    {{ $format->prenom_formateur }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            <p><strong style="color: red" id="err_formateur"></strong>
-                                                            </p>
-                                                        </div>
-                                                        <div class="form-group mx-auto">
-                                                            <label for="lieu">Lieu</label>
-                                                            <input type="text" class="form-control" id="lieu"
-                                                                name="lieu" placeholder="Lieu" value="{{ $d->lieu }}">
-
-                                                        </div>
-                                                        <div class="form-group mx-auto">
-                                                            <label for="date">Date</label>
-                                                            <input type="date" class="form-control" id="date_detail"
-                                                                name="date" min="{{ $projet[0]->date_debut }}"
-                                                                max="{{ $projet[0]->date_fin }}"
-                                                                value="{{ $d->date_detail }}">
-                                                        </div>
-                                                        <div class="form-group mx-auto">
-                                                            <label for="debut">Heure début</label>
-                                                            <input type="time" class="form-control" id="debut"
-                                                                name="debut" min="07:00" max="17:00"
-                                                                value="{{ $d->h_debut }}">
-                                                        </div>
-                                                        <div class="form-group mx-auto">
-                                                            <label for="fin">Heure fin</label>
-                                                            <input type="time" class="form-control" id="fin" name="fin"
-                                                                min="08:00" max="18:08" value="{{ $d->h_fin }}">
-                                                        </div>
-                                                        <div class="d-flex justify-content-around mb-3">
-                                                            <button class="btn btn-danger"
-                                                                data-bs-dismiss="modal">Annuler</button>
-                                                            <input type="submit" id="ajouter"
-                                                                style="background-color: #822164"
-                                                                class="btn btn-primary" value="Modifier">
-                                                        </div>
+                                                            <div class="row">
+                                                                <div class="form-group mx-auto col-md-12">
+                                                                    <label for="formateur">Formateur</label><br>
+                                                                    <select class="form-control" id="formateur"
+                                                                        name="formateur">
+                                                                        <option value="{{ $d->formateur_id }}">{{
+                                                                            $d->nom_formateur.' '.$d->prenom_formateur }}
+                                                                        </option>
+                                                                        @foreach ($formateur as $format)
+                                                                        <option value="{{ $format->formateur_id }}">
+                                                                            {{ $format->nom_formateur }}
+                                                                            {{ $format->prenom_formateur }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <p><strong style="color: red" id="err_formateur"></strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="form-group mx-auto col-md-12">
+                                                                    <label for="lieu">Lieu</label>
+                                                                    <input type="text" class="form-control" id="lieu"
+                                                                        name="lieu" placeholder="Lieu" value="{{ $d->lieu }}">
+        
+                                                                </div>
+                                                                <div class="form-group mx-auto col-md-12">
+                                                                    <label for="date">Date</label>
+                                                                    <input type="date" class="form-control" id="date_detail"
+                                                                        name="date" min="{{ $projet[0]->date_debut }}"
+                                                                        max="{{ $projet[0]->date_fin }}"
+                                                                        value="{{ $d->date_detail }}">
+                                                                </div>
+                                                                <div class="form-group mx-auto col-md-12">
+                                                                    <label for="debut">Heure début</label>
+                                                                    <input type="time" class="form-control" id="debut"
+                                                                        name="debut" min="07:00" max="17:00"
+                                                                        value="{{ $d->h_debut }}">
+                                                                </div>
+                                                                <div class="form-group mx-auto col-md-12">
+                                                                    <label for="fin">Heure fin</label>
+                                                                    <input type="time" class="form-control" id="fin" name="fin"
+                                                                        min="08:00" max="18:08" value="{{ $d->h_fin }}">
+                                                                </div>
+                                                                <div class="d-flex justify-content-around mt-3 col-md-12">
+                                                                    <button class="btn btn-danger"
+                                                                        data-bs-dismiss="modal">Annuler</button>
+                                                                    <input type="submit" id="ajouter"
+                                                                        style="background-color: #822164"
+                                                                        class="btn btn-primary" value="Modifier">
+                                                                </div>
+                                                            </div>
+                                                        
                                                     </form>
                                                 </div>
                                             </div>
@@ -470,6 +499,7 @@
                                         <div class="form-group mx-auto">
                                             <label for="formateur">Formateur</label><br>
                                             <select class="form-control" id="formateur" name="formateur[]">
+                                                <option type="hidden">Choissisez un formateur ...</option>
                                                 @foreach ($formateur as $format)
                                                 <option value="{{ $format->formateur_id }}">
                                                     {{ $format->nom_formateur }}

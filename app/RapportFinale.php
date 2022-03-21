@@ -15,7 +15,7 @@ class RapportFinale extends Model
     public function insert_obj_globau($data,$obj_id,$id_projet,$cfp_id){
         DB::beginTransaction();
         try{
-            DB::insert('insert into objectif_globaux (description, but_objectif_id,cfp_id ,projet_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$cfp_id,$id_projet]);
+            DB::insert('insert into objectif_globaux (description, but_objectif_id,cfp_id ,groupe_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$cfp_id,$id_projet]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();
@@ -50,7 +50,7 @@ class RapportFinale extends Model
     public function insert_objectif_pedagogique($data,$obj_id,$id_projet,$cfp_id){
         DB::beginTransaction();
         try{
-            DB::insert('insert into objectif_pedagogique (description, pedagogique_id, projet_id,cfp_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$id_projet,$cfp_id]);
+            DB::insert('insert into objectif_pedagogique (description, pedagogique_id, groupe_id,cfp_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$id_projet,$cfp_id]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();
@@ -85,7 +85,7 @@ class RapportFinale extends Model
     public function insert_objectif_conclusion($data,$id_projet,$cfp_id){
         DB::beginTransaction();
         try{
-            DB::insert('insert into conclusion (description , projet_id, cfp_id,created_at, updated_at) values (?, ?, ?,NOW(), NOW())', [$data,$id_projet,$cfp_id]);
+            DB::insert('insert into conclusion (description , groupe_id, cfp_id,created_at, updated_at) values (?, ?, ?,NOW(), NOW())', [$data,$id_projet,$cfp_id]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();
@@ -120,7 +120,7 @@ class RapportFinale extends Model
     public function insert_objectif_feedback($data,$id_projet,$cfp_id){
         DB::beginTransaction();
         try{
-            DB::insert('insert into  feed_back (description , projet_id,cfp_id, created_at, updated_at) values (?, ?, ?, NOW(), NOW())', [$data,$id_projet,$cfp_id]);
+            DB::insert('insert into  feed_back (description , groupe_id,cfp_id, created_at, updated_at) values (?, ?, ?, NOW(), NOW())', [$data,$id_projet,$cfp_id]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();
@@ -155,7 +155,7 @@ class RapportFinale extends Model
     public function insert_evaluation_resultat($data,$id_projet,$cfp_id){
         DB::beginTransaction();
         try{
-            DB::insert('insert into  evaluation_resultat (description , projet_id, cfp_id, created_at, updated_at) values (?, ?, ?, NOW(), NOW())', [$data,$id_projet,$cfp_id]);
+            DB::insert('insert into  evaluation_resultat (description , groupe_id, cfp_id, created_at, updated_at) values (?, ?, ?, NOW(), NOW())', [$data,$id_projet,$cfp_id]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();
@@ -190,7 +190,7 @@ class RapportFinale extends Model
     public function insert_recommandation($data,$obj_id,$id_projet,$cfp_id){
         DB::beginTransaction();
         try{
-            DB::insert('insert into detail_recommandation (description, recommandation_id, projet_id, cfp_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$id_projet,$cfp_id]);
+            DB::insert('insert into detail_recommandation (description, recommandation_id, groupe_id, cfp_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$id_projet,$cfp_id]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();
@@ -226,7 +226,7 @@ class RapportFinale extends Model
         DB::beginTransaction();
         try{
             $valiny = number_format($data, 3, ',', '.');
-            DB::insert('insert into detail_evaluation_action_formation (pourcent, evaluation_action_formation_id, projet_id,cfp_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$id_projet,$cfp_id]);
+            DB::insert('insert into detail_evaluation_action_formation (pourcent, evaluation_action_formation_id, groupe_id,cfp_id, created_at, updated_at) values (?, ?, ?, ?, NOW(), NOW())', [$data,$obj_id,$id_projet,$cfp_id]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();
@@ -238,7 +238,7 @@ class RapportFinale extends Model
         DB::beginTransaction();
         try{
             $valiny = number_format($data, 3, ',', '.');
-            DB::update("update detail_evaluation_action_formation set pourcent = ".$data.",updated_at=NOW() where evaluation_action_formation_id=? and projet_id=?", [$obj_id,$id_projet]);
+            DB::update("update detail_evaluation_action_formation set pourcent = ".$data.",updated_at=NOW() where evaluation_action_formation_id=? and groupe_id=?", [$obj_id,$id_projet]);
             DB::commit();
         } catch(Exception $e){
             DB::rollback();

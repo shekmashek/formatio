@@ -49,9 +49,12 @@
                     <p class="p-0 m-0 text-center"> Formateur(s) </p>
                     <p class="p-0 m-0 text-center"> <strong>
                        <div class="pad_img">
+                           @foreach ($formateur as $form)
+                            <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                           @endforeach()
+                            {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
                             <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;"> --}}
                        </div>
                     </strong></p>
                 </div>
@@ -84,78 +87,101 @@
                             @endif
                         </button>
                     </div>
-                    
-                        <div>
-                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
-                                <p class="m-0 p-0">APPRENANTS</p>
-                                @if(count($stagiaire) == 0)
-                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                                @endif
-                                @if(count($stagiaire) != 0)
-                                <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
-                                @endif
-                            </button>
-                        </div>
-                        @if ($type_formation_id == 1)    
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'ressource')" style="width: 100%">
-                            <p class="m-0 p-0">RESSOURCES</p>
-                            @if(count($ressource) == 0)
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                            @endif
-                            @if(count($ressource) != 0)
-                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
-                            @endif
-                        </button>
-                    </div>
-                    @can('isReferent')
-                        <div>
-                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
-                                <p class="m-0 p-0">FRAIS ANNEXES</p>
-                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                            </button>
-                        </div>
-                    @endcan
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
-                            <p class="m-0 p-0">DOCUMENT</p>
-                            {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
-                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
-                        </button>
-                    </div>
-                    @canany(['isStagiaire'])
-                        <div>
-                            <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
-                                <p class="m-0 p-0">EVALUATION</p>
-                                <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                            </button>
-                        </div>
-                    @endcanany
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'emargement')" style="width: 100%">
-                            <p class="m-0 p-0">EMARGEMENT</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
-                            <p class="m-0 p-0">PRE EVALUATION</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                            <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'rapport')" style="width: 100%">
-                            <p class="m-0 p-0">RAPPORT</p>
-                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                        </button>
-                    </div>
+                    @if ($type_formation_id == 1)
+                        @canany(['isCFP'])
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
+                                    <p class="m-0 p-0">APPRENANTS</p>
+                                    @if(count($stagiaire) == 0)
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    @endif
+                                    @if(count($stagiaire) != 0)
+                                    <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                    @endif
+                                </button>
+                            </div>
+                        @endcanany
                     @endif
+
+                    @if ($type_formation_id == 2)
+                        @canany(['isReferent'])
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
+                                    <p class="m-0 p-0">APPRENANTS</p>
+                                    @if(count($stagiaire) == 0)
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    @endif
+                                    @if(count($stagiaire) != 0)
+                                    <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                    @endif
+                                </button>
+                            </div>
+                        @endcanany
+                    @endif
+
+                           
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'ressource')" style="width: 100%">
+                                    <p class="m-0 p-0">RESSOURCES</p>
+                                    @if(count($ressource) == 0)
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    @endif
+                                    @if(count($ressource) != 0)
+                                    <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                    @endif
+                                </button>
+                            </div>
+                           
+                            @can('isReferent')
+                                <div>
+                                    <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
+                                        <p class="m-0 p-0">FRAIS ANNEXES</p>
+                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    </button>
+                                </div>
+                            @endcan
+                            
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
+                                    <p class="m-0 p-0">DOCUMENT</p>
+                                    {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
+                                    <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                </button>
+                            </div>
+                            @if ($type_formation_id == 1)
+                            @canany(['isStagiaire'])
+                                <div>
+                                    <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
+                                        <p class="m-0 p-0">EVALUATION</p>
+                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    </button>
+                                </div>
+                            @endcanany
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'emargement')" style="width: 100%">
+                                    <p class="m-0 p-0">EMARGEMENT</p>
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
+                                    <p class="m-0 p-0">PRE EVALUATION</p>
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
+                                    <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'rapport')" style="width: 100%">
+                                    <p class="m-0 p-0">RAPPORT</p>
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                </button>
+                            </div>
+                        @endif
                 </div>
             </div>
 
@@ -183,10 +209,20 @@
                             @include('admin.detail.detail')
                       </div>
                       {{-- @if ($type_formation_id == 1) --}}
-                        <div id="apprenant" class="tabcontent">
-                            @include('admin.stagiaire.ajout_stagiaire')
-                        </div>
-                      {{-- @endif --}}
+                      @if ($type_formation_id == 1)
+                        @canany(['isCFP'])
+                            <div id="apprenant" class="tabcontent">
+                                @include('admin.stagiaire.ajout_stagiaire')
+                            </div>
+                        @endcanany
+                      @endif
+                      @if ($type_formation_id == 2)
+                        @canany(['isReferent'])
+                            <div id="apprenant" class="tabcontent">
+                                @include('admin.stagiaire.ajout_stagiaire')
+                            </div>
+                        @endcanany
+                      @endif
 
                       <div id="ressource" class="tabcontent">
                         @include('projet_session.ressource')

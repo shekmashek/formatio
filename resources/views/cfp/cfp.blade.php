@@ -69,7 +69,7 @@
                                         <div align="left">
                                             <strong>{{$centre->nom}}</strong>
                                             <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
-                                            <h6>{{$centre->domaine_de_formation}}</h6>
+                                            <h6>{{$centre->slogan}}</h6>
                                         </div>
                                     <td>
                                         <div align="rigth">
@@ -199,7 +199,7 @@
                                             <div align="left">
                                                 <strong>{{$invit_cfp->nom_cfp}}</strong>
                                                 <p style="color: rgb(238, 150, 18)">{{$invit_cfp->mail_cfp}}</p>
-                                                <h6>{{$invit_cfp->domaine_de_formation}}</h6>
+                                                <h6>{{$invit_cfp->slogan}}</h6>
                                             </div>
                                         </td>
                                         <td>
@@ -246,7 +246,7 @@
                                         </td>
                                         <td>
                                             <div align="left">
-                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$refuse_invit->domaine_de_formation}})</strong></p>
+                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$refuse_invit->slogan}})</strong></p>
                                             </div>
                                         </td>
                                         <td>
@@ -266,7 +266,7 @@
                                                     <div align="left">
                                                         <strong>{{$refus->nom}}</strong>
                                     <p style="color: rgb(238, 150, 18)">{{$refus->mail_cfp}}</p>
-                                    <h6>{{$refus->domaine_de_formation}}</h6>
+                                    <h6>{{$refus->slogan}}</h6>
                     </div>
                     </td>
                     <td>
