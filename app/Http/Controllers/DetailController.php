@@ -57,7 +57,11 @@ class DetailController extends Controller
             $detail = DB::select('select * from v_detailmodule');
         }
         if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+
+
+            $fonct = new FonctionGenerique();
+            $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+            $cfp_id = $rqt->cfp_id;
             if ($module!=null) {
                 $detail = DB::select('select * from v_detailmodule where nom_module = "' . $module.'" and cfp_id = '.$cfp_id);
             }
@@ -271,7 +275,7 @@ class DetailController extends Controller
                 }
                 if($request['formateur'][$i]== null){
                     throw new Exception("Vous devez choisir le formateur.");
-                } 
+                }
                 if($request['debut'][$i]== null || $request['fin'][$i] == null){
                     throw new Exception("Vous devez completer l'heure de la scéance.");
                 }
@@ -350,7 +354,7 @@ class DetailController extends Controller
             }
             if($formateur == null){
                 throw new Exception("Vous devez choisir le formateur.");
-            } 
+            }
             if($h_debut == null || $h_fin == null){
                 throw new Exception("Vous devez completer l'heure de la scéance.");
             }
@@ -366,7 +370,7 @@ class DetailController extends Controller
         }catch(Exception $e){
             return back()->with('detail_error',$e->getMessage());
         }
-        
+
         // return response()->json(
         //     [
         //         'success' => true,
@@ -374,7 +378,7 @@ class DetailController extends Controller
 
         //     ]
         // );
-        
+
     }
 
     public function destroy(Request $request)
