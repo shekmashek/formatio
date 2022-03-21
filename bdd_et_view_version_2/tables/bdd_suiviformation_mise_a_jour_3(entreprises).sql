@@ -21,6 +21,7 @@ CREATE TABLE entreprises (
   adresse_ville varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   logo varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  url_logo VARCHAR(155),
   nif varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   stat varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   rcs varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
