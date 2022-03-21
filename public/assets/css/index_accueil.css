@@ -11,6 +11,7 @@
   --color-child: #801d68;
   --color-child1: #542356;
   --button-color: #7635dc;
+  --button-color2nd: #4222c3;
   --font-sidebar-color: #637381;
   --font-size-sidebar: 13px;
 }
@@ -37,6 +38,7 @@ ul li {
   list-style: none;
   text-decoration: none;
 }
+/* header */
 
 .header {
   height: var(--header-height);
@@ -188,6 +190,137 @@ ul li {
   transform: scale(1.1);
   background-position: right center;
 }
+/* header */
+
+/* section1 */
+.section1{
+  background-image: url('../../images/background_images/17section1.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  color: white;
+}
+
+.section1_text{
+  text-align: start;
+  padding-top: 7rem;
+  padding-left: 7rem;
+  position: relative;
+  top: 6rem;
+}
+
+.section1_text h1{
+  font-size: 3.5rem;
+  word-wrap: break-word;
+  font-weight: 900;
+  text-transform: capitalize;
+  letter-spacing: 3px;
+}
+
+.section1_text p{
+  font-size: 1.5rem;
+  margin-bottom: 5rem;
+}
+
+.section1_text .commencer{
+  padding: 1rem 3rem;
+  color: white;
+  background: linear-gradient(60deg, #7635dc, #4222c3);
+  border: none;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  /* transition: all 0.5s ease; */
+}
+
+.section1_text .commencer:hover{
+  background: white;
+  color: #4222c3;
+  /* transform: scale(1.1); */
+}
+/* section1 */
+
+/* section2 */
+.section2{
+  margin-bottom: 8rem;
+}
+
+.section2_img{
+  display: grid;
+  place-content: center;
+  margin-bottom: 4rem;
+}
+
+@keyframes images{
+  0%{
+    opacity: 0;
+  }
+  25%{
+    transform: rotate(360deg);
+  }
+  50%{
+    transform: rotate(-180deg);
+  }
+  75%{
+    opacity: 1;
+  }
+}
+
+.section2_img img{
+  height: 20rem;
+  width: 20rem;
+  animation-name: images;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-delay: 5s;
+}
+
+.section2 .text_about{
+  display: grid;
+  place-content: center;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.section2 .text_about p{
+  font-size: 1.2rem;
+  line-height: 3rem;
+}
+/* section2 */
+
+/* section3 */
+.section3{
+  margin-bottom: 8rem;
+}
+.section3 .text{
+  padding-right: 1rem;
+  display: grid;
+  place-content: center;
+}
+
+.section3 .text p{
+font-size: 1.2rem;
+line-height: 2rem;
+}
+/* section3 */
+
+/* section4 */
+.section4{
+  margin-bottom: 8rem;
+}
+
+.section4 .text{
+  padding-left: 3rem;
+  display: grid;
+  place-content: center;
+}
+
+.section4 .text p{
+font-size: 1.2rem;
+line-height: 2rem;
+}
+/* section4 */
 
 /* footer */
 
