@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <script src="{{ asset('maquette/javascript.js') }}"></script>
     <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{asset('assets/css/index_accueil.css')}}">
     <title> Formation.mg </title>
 </head>
 <body>
