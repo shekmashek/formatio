@@ -221,9 +221,3 @@ create table detail_evaluation_action_formation(
     updated_at timestamp,
     groupe_id  bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-ALTER TABLE detail_evaluation_action_formation
-	DROP FOREIGN KEY detail_evaluation_action_formation_ibfk_2;
-
-alter table detail_evaluation_action_formation 
-  add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE;
