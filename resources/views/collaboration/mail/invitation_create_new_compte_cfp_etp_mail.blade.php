@@ -19,6 +19,5 @@
         {{-- L'équipe de <strong>formation.mg</strong> --}}
     </p>
     <a href="{{'condition_generale_de_vente'}}">visiter notre page d'aide</a>
-
 </body>
 </html>
