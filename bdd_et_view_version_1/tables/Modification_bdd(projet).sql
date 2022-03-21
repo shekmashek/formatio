@@ -60,6 +60,7 @@ create table mes_documents(
   groupe_id bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+drop table if exists detail_evaluation_action_formation;
 create table detail_evaluation_action_formation(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     pourcent decimal(5,2) not null,
