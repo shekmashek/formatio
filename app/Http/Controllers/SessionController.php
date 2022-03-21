@@ -278,7 +278,7 @@ class SessionController extends Controller
             $demandeur = DB::select('select nom_cfp from v_demmande_cfp_formateur where user_id_formateur = ?',[$id_user])[0]->nom_cfp;
         }
         if(Gate::allows('isReferent')){
-            $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id_responsable = ?',[$id_user])[0]->nom_etp;
+            $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id= ?',[$id_user])[0]->nom_etp;
         }
         DB::insert('insert into ressources(description,demandeur,groupe_id) values(?,?,?)',[$ressource,$demandeur,$groupe_id]);
         $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
@@ -300,7 +300,7 @@ class SessionController extends Controller
 
     public function insert_frais_annexe(Request $request){
         $id_user = Auth::user()->id;
-        $etp_id = DB::select('select entreprise_id from v_responsable_entreprise where user_id_responsable = ?',[$id_user])[0]->entreprise_id;
+        $etp_id = DB::select('select entreprise_id from v_responsable_entreprise where user_id = ?',[$id_user])[0]->entreprise_id;
         $description = $request->description;
         $montant = $request->montant;
         $groupe_id = $request->groupe;
@@ -454,10 +454,11 @@ class SessionController extends Controller
     public function telecharger_fichier(){
         $user_id = Auth::user()->id;
         // $cfp = Cfp::where('user_id', $user_id)->value('nom');
-        $fonct = new FonctionGenerique();
-        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        // $fonct = new FonctionGenerique();
+        // $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+
         // $cfp_id = $resp->cfp_id;
-        $cfp = $resp->nom_cfp;
+        // $cfp = $resp->nom_cfp;
         $namefile = request()->filename;
         $cfp = request()->cfp;
         $extension = request()->extension;
