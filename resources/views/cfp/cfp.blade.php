@@ -69,11 +69,11 @@
                                         <div align="left">
                                             <strong>{{$centre->nom}}</strong>
                                             <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
-                                            <h6>{{$centre->domaine_de_formation}}</h6>
+                                            <h6>{{$centre->slogan}}</h6>
                                         </div>
                                     <td>
                                         <div align="rigth">
-                                            <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
+                                            <h3  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h3>
                                         </div>
                                     </td>
                                     <td>
@@ -192,7 +192,7 @@
                                             <div align="left">
                                                 <strong>{{$invit_cfp->nom_cfp}}</strong>
                                                 <p style="color: rgb(238, 150, 18)">{{$invit_cfp->mail_cfp}}</p>
-                                                <h6>{{$invit_cfp->domaine_de_formation}}</h6>
+                                                <h6>{{$invit_cfp->slogan}}</h6>
                                             </div>
                                         </td>
                                         <td>
