@@ -199,7 +199,7 @@ CREATE TABLE responsables_cfp(
   fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
@@ -211,6 +211,12 @@ CREATE TABLE responsables_cfp(
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+create table detail_evaluation_action_formation(
+    id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    pourcent decimal(5,2) not null,
+    evaluation_action_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES evaluation_action_formation(id) ON DELETE CASCADE,
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE detail_evaluation_action_formation
 	DROP FOREIGN KEY detail_evaluation_action_formation_ibfk_2;
