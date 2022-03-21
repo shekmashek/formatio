@@ -15,6 +15,7 @@ use App\Models\getImageModel;
 use App\NouveauCompte;
 use App\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 
 class NouveauCompteController extends Controller
 {
@@ -86,6 +87,8 @@ class NouveauCompteController extends Controller
                 // ======== cfp
                 $date = date('d-m-y');
                 $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
+                // $url = URL::to('/')."/".$data["logo_etp"];
+
                 $data["nom_cfp"] = $req->name_cfp;
                 $data["email_cfp"] = $req->email_resp_cfp;
                 $data["tel_cfp"] = $req->tel_resp_cfp;
@@ -106,14 +109,11 @@ class NouveauCompteController extends Controller
                 $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_cfp]);
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_cfp]);
 
-                $verify_resp_tel = $this->fonct->findWhere("users", ["telephone"], [$req->tel_resp_cfp]);
-
                 if (count($verify) <= 0) { // cfp n'existe pas
 
                     if (count($verify_cfp_nif) <= 0) {
                         if (count($verify_resp_cin) <= 0) {
                             if (count($verify_resp_mail) <= 0) {
-                                if (count($verify_resp_tel) <= 0) {
 
                                     $this->user->name = $req->nom_resp_cfp . " " . $req->prenom_resp_cfp;
                                     $this->user->email = $req->email_resp_cfp;
@@ -131,7 +131,7 @@ class NouveauCompteController extends Controller
                                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
                                     DB::beginTransaction();
                                     try {
-                                        $this->fonct->insert_role_user($user_id, "7", true); // CFP
+                                        $this->fonct->insert_role_user($user_id, "7", true, true); // CFP (user_id, role_id, prioriter, activiter)
                                         DB::commit();
                                     } catch (Exception $e) {
                                         DB::rollback();
@@ -153,9 +153,6 @@ class NouveauCompteController extends Controller
                                     }
 
                                     return redirect()->route('inscription_save');
-                                } else {
-                                    return back()->with('error', 'télephone existe déjà!');
-                                }
                             } else {
                                 return back()->with('error', 'email existe déjà!');
                             }
@@ -179,17 +176,19 @@ class NouveauCompteController extends Controller
 
     public function create_compte_employeur(Request $req)
     {
-        $this->new_compte->validation_form_etp($req);
+        // $this->new_compte->validation_form_etp($req);
         $qst_IA_robot = 27 - 16;
         $value_confident = $req->value_confident;
         $val_resp_robot = $req->val_robot;
-
         if ($qst_IA_robot == $val_resp_robot) {
+
             if ($value_confident == 1) // il approuve les règlement
             {
                 // ======== entreprise
                 $date = date('d-m-y');
                 $data["logo_etp"]  = str_replace(' ', '_', $req->name_etp .  '' . $req->tel_etp . '' . $date . '.' . $req->file('logo_etp')->extension());
+                // $url = URL::to('/')."/".$data["logo_etp"];
+
                 $data["nom_etp"] = $req->name_etp;
                 $data["email_etp"] = $req->email_resp_etp;
                 $data["tel_etp"] = $req->tel_resp_etp;
@@ -221,7 +220,6 @@ class NouveauCompteController extends Controller
                             if (count($verify_resp_mail) <= 0) {
                                 if (count($verify_resp_tel) <= 0) {
 
-
                                     $this->user->name = $req->nom_resp_etp . " " . $req->prenom_resp_etp;
                                     $this->user->email = $req->email_resp_etp;
                                     $this->user->cin = $req->cin_resp_etp;
@@ -238,8 +236,8 @@ class NouveauCompteController extends Controller
                                     $this->new_compte->insert_resp_ETP($resp, $etp_id, $user_id);
                                     DB::beginTransaction();
                                     try {
-                                        $this->fonct->insert_role_user($user_id, "2", true); // referent
-                                        $this->fonct->insert_role_user($user_id, "3", false); // stagiaires
+                                        $this->fonct->insert_role_user($user_id, "2",true, true); // referent (user_id, role_id, prioriter, activiter)
+                                        $this->fonct->insert_role_user($user_id, "3",false, false); // stagiaires (user_id, role_id, prioriter, activiter)
                                         DB::commit();
                                     } catch (Exception $e) {
                                         DB::rollback();
