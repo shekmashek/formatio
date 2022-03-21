@@ -29,3 +29,4 @@ modification vue v_trie_detail_date (bdd_suiviformationrapport-finale)
 ------ Mars 18
 modification table reponse_evaluationchaud (bdd_suiviformation_mise_a_jour_5(projet_et_evaluation))
         ALTER table reponse_evaluationchaud add column points int default 0;
+

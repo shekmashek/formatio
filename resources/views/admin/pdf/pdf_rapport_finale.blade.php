@@ -360,7 +360,7 @@ hr{
             <p>Lieu : Siège {{$data["projet"]->nom_etp.' '.$data["lieu_string"]}}</p>
 
             @foreach ($data["detail_formation"] as $detail)
-                <p>Date : 
+                <p>Date :
                     @php
                         setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($detail->date_debut));
                     @endphp
@@ -731,7 +731,7 @@ hr{
 
 
 
-{{-- 
+{{--
     <div class="row my-1">
         <div class="col-md-12">
 
@@ -783,7 +783,7 @@ hr{
             <th>&copy;20{{date('y')}}</th>
             <th>{{ $data["projet"]->mail_cfp }}</th>
             <th>{{ $data["projet"]->tel_cfp }}</th>
-            <th><a href="">{{ $data["projet"]->site_cfp }}</a></th>
+            <th><a href="">{{ $data["projet"]->site_web }}</a></th>
         </tr>
 </table>
 

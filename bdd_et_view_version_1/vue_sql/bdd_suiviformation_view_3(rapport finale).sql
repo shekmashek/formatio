@@ -218,14 +218,16 @@ CREATE OR REPLACE VIEW v_trie_detail_programme AS SELECT
     cfp_id,
     projet_id,
     programme_id,
-    titre_programme
+    titre_programme,
+    groupe_id
 FROM
     v_programme_detail_activiter
 GROUP BY
     cfp_id,
     projet_id,
     programme_id,
-    titre_programme;
+    titre_programme,
+    groupe_id;
 
 
 

@@ -101,6 +101,7 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
         (cfps.logo) logo_cfp,
+        cfps.site_web,
         (cfps.specialisation) specialisation
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
@@ -123,13 +124,13 @@ create or replace view v_groupe_projet_module as
         (cfps.adresse_region) adresse_region_cfp,
         (cfps.email) mail_cfp,
         (cfps.telephone) tel_cfp,
-        cfps.domaine_de_formation,
+        cfps.slogan,
         (cfps.nif) nif_cfp,
         (cfps.stat) stat_cfp,
         (cfps.rcs) rcs_cfp,
         (cfps.cif) cif_cfp,
         (cfps.logo) logo_cfp,
-        cfps.site_cfp,
+        cfps.site_web,
         g.id as groupe_id,
         g.max_participant,
         g.min_participant,
@@ -175,7 +176,7 @@ create or replace view v_groupe_projet_module as
         mf.email,
         mf.telephone,
         mf.pourcentage
-    from groupes g 
+    from groupes g
     join moduleformation mf on mf.module_id = g.module_id
     join projets p on p.id = g.projet_id
     join type_formations tf on p.type_formation_id = tf.id
@@ -260,7 +261,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         p.cfp_id = c.id
     JOIN domaines dom ON
         mf.domaine_id = dom.id
-    join type_formations tf 
+    join type_formations tf
         on tf.id = p.type_formation_id
     GROUP BY
     d.id,

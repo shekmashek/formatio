@@ -240,5 +240,6 @@ CREATE TABLE responsables_cfp(
 ALTER TABLE detail_evaluation_action_formation
 	DROP FOREIGN KEY detail_evaluation_action_formation_ibfk_2;
 
-alter table detail_evaluation_action_formation 
+alter table detail_evaluation_action_formation
   add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE;
+

@@ -31,13 +31,13 @@ class RapportFinaleController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-    
+
         $data = array();
 
         $data['responsable'] = $resp;
 
         $projet_id = $req->projet_id;
-        $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where projet_id = ?', [$projet_id])[0]->entreprise_id;
+        $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where groupe_id = ?', [$projet_id])[0]->entreprise_id;
         $para=["entreprise_id","groupe_id"];
         $val=[$entreprise_id,$req->projet_id];
         $para2=["groupe_id"];
@@ -116,7 +116,8 @@ class RapportFinaleController extends Controller
         $fonct = new FonctionGenerique();
 
         $projet_id = $req->projet_id;
-        $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where projet_id = ?', [$projet_id])[0]->entreprise_id;
+
+        $entreprise_id = DB::select('select entreprise_id from v_groupe_projet_entreprise where groupe_id = ?', [$projet_id])[0]->entreprise_id;
 
         $para=["entreprise_id","groupe_id"];
         $val=[$entreprise_id,$req->projet_id];
