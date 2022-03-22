@@ -70,12 +70,13 @@
 
 </style>
 
+<form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
+    @csrf
+
 <div class="row justify-content-center">
     <div class="col-md-12">
 
-        <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
-            @csrf
-            <ul id="progressbars" class="mb-1">
+           <ul id="progressbars" class="mb-1">
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>
@@ -127,7 +128,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlInput1" class="form-control-label">Logo(2.5 Mo max)<strong style="color:#ff0000;">*</strong></label>
+                            <label for="exampleFormControlInput1" class="form-control-label">Logo(60Ko max)<strong style="color:#ff0000;">*</strong></label>
                             <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
                             @error('logo_etp')
                             <div class="col-sm-6">
@@ -285,10 +286,10 @@
             </div>
 
 
-        </form>
+
 
     </div>
 </div>
-
+</form>
 @endsection
 @extends('create_compte.footer')
