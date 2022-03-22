@@ -16,6 +16,7 @@ class CfpController extends Controller
 {
     public function __construct()
     {
+        $this->fonct  = new FonctionGenerique();
 
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
@@ -48,6 +49,10 @@ class CfpController extends Controller
     }
     //modification du profil
     public function edit_logo($id,Request $request){
-        
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfps = $this->fonct->findWhereMulitOne("cfps",["id"],[$responsable->cfp_id]);
+        dd($cfps);
+        return view('cfp.responsable_cfp.modification_profil.edit_photo', compact('responsable'));
     }
 }

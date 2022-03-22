@@ -15,11 +15,16 @@
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center">
                                 <div class="m-b-25 mt-2">
+                                    <div class="hover">
+                                        <a href="{{ route('modification_logo',$cfp->id) }}">
+                                        
                                     {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
-                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
+                                        <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{ route('modification_logo') }}">
+                                    <a href="{{ route('modification_logo',$cfp->id) }}">
                                      <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
                                     </a>
                                 </div>
