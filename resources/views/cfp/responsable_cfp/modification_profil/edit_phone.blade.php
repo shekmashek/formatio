@@ -49,31 +49,25 @@
 </style>
 <center>
 
-    <div class="col-lg-4">
-        <div class="p-3 form-control">
-            <p style="text-align: left">Modifier le nom et prénom</p>
-            <form   class="btn-submit" action="{{route('enregistrer_modification_nom',$responsable->id)}}" method="post" enctype="multipart/form-data">
-                @csrf
+<div class="col-lg-4">
+    <div class="p-3 form-control">
+        <p style="text-align: left">Téléphone</p>
+        <form   class="btn-submit" action="{{route('enregistrer_modification_telephone',$responsable->id)}}" method="post" enctype="multipart/form-data">
+            @csrf
+
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value="   {{ $responsable->nom_resp_cfp }}" class="form-control test input"  name="nom">
-
+                        <input type="text" class="form-control tes input"  name="phone" value="{{ $responsable->telephone_resp_cfp }}">
                     </div>
                 </div>
-                <div class="row px-3 mt-4">
-                    <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input" value="   {{ $responsable->prenom_resp_cfp }}"  name="prenom">
 
-                        </div>
-                </div>
 
-                <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
-            </form>
-            <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+<button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
+</form>
+<div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>
-        </div>
-    </div>
 </div>
-
+</div>
+</div>
 
 @endsection

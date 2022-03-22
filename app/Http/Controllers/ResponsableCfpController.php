@@ -180,7 +180,19 @@ class ResponsableCfpController extends Controller
         return view('cfp.responsable_cfp.modification_profil.edit_genre', compact('responsable'));
     }
     public function edit_mdp($id,Request $request){
-
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_mdp', compact('responsable'));
+    }
+    public function edit_mail($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_email', compact('responsable'));
+    }
+    public function edit_phone($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_phone', compact('responsable'));
     }
     //update responsable cfp
     public function update_nom_responsable($id,Request $request){
@@ -194,6 +206,27 @@ class ResponsableCfpController extends Controller
     }
     public function update_genre_responsable($id,Request $request){
         DB::update('update responsables_cfp set sexe_resp_cfp = ? where user_id = ?', [$request->genre, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_mdp_responsable($id,Request $request){
+        $users =  db::select('select * from users where id = ?', [Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->new_password);
+        if (Hash::check($request->get('ancien_password'), $pwd)) {
+            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+            return redirect()->route('profil_du_responsable');
+        } else {
+            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        }
+    }
+    public function update_email_responsable($id,Request $request){
+        DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
+        DB::update('update responsables_cfp set email_resp_cfp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_telephone_responsable($id,Request $request){
+        DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::id()]);
+        DB::update('update responsables_cfp set telephone_resp_cfp = ? where user_id = ?', [$request->phone, Auth::id()]);
         return redirect()->route('profil_du_responsable');
     }
 }

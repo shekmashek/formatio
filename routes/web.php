@@ -986,3 +986,6 @@ Route::get('/modification_matricule/{id}','ResponsableCfpController@edit_matricu
 Route::post('/enregistrer_modification_nom/{id}','ResponsableCfpController@update_nom_responsable')->name('enregistrer_modification_nom');
 Route::post('/enregistrer_modification_date_de_naissance/{id}','ResponsableCfpController@update_dtn_responsable')->name('enregistrer_modification_date_de_naissance');
 Route::post('/enregistrer_modification_genre/{id}','ResponsableCfpController@update_genre_responsable')->name('enregistrer_modification_genre');
+Route::post('/enregistrer_modification_mdp/{id}','ResponsableCfpController@update_mdp_responsable')->name('enregistrer_modification_mdp');
+Route::post('/enregistrer_modification_email/{id}','ResponsableCfpController@update_email_responsable')->name('enregistrer_modification_email');
+Route::post('/enregistrer_modification_telephone/{id}','ResponsableCfpController@update_telephone_responsable')->name('enregistrer_modification_telephone');

@@ -75,7 +75,7 @@
                     </a>
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_pwd_resp',$refs->id)}} ">
+                    <a href="{{route('modification_mdp',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
@@ -91,14 +91,14 @@
                 <p class="text-center">Coordonnées</p>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_mail_resp',$refs->id)}} ">
+                    <a href="{{route('modification_email',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_phone_resp',$refs->id)}} ">
+                    <a href="{{route('modificationn_telephone',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                         </p>
