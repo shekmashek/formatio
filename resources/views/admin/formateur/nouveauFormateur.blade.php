@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <br>
-                <h3>Nouveau Formation</h3>
+                <h3>Nouveau Formateur</h3>
             </div>
 
 

@@ -22,6 +22,7 @@ class ResponsableCfpController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
 
 
@@ -161,5 +162,26 @@ class ResponsableCfpController extends Controller
         $resp = new ResponsableCfpModel();
         $result = $resp->delete_resp_CFP($req->id);
         return $result;
+    }
+    //modification
+    public function edit_nom($id){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_nom', compact('responsable'));
+    }
+    public function edit_naissance($id){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_dtn', compact('responsable'));
+    }
+    //update responsable cfp
+    public function update_nom_responsable($id,Request $request){
+        DB::update('update users set name = ? where id = ?', [$request->nom.' '.$request->prenom, Auth::id()]);
+        DB::update('update responsables_cfp set nom_resp_cfp = ?,prenom_resp_cfp = ? where user_id = ?', [$request->nom,$request->prenom, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_dtn_responsable($id,Request $request){
+         DB::update('update responsables_cfp set date_naissance_resp_cfp = ? where user_id = ?', [$request->date_naissance, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
     }
 }
