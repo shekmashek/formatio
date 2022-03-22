@@ -681,8 +681,8 @@ create or replace view v_montant_session as
         pg.groupe_id,
         count(pg.stagiaire_id) as nombre_stg,
         (sum(mf.prix)) as montant_session
-    from participant_groupe pg
-    join groupes g 
+    from groupes g  
+    left join participant_groupe pg
     on pg.groupe_id = g.id
     join moduleformation mf
     on mf.module_id = g.module_id 
