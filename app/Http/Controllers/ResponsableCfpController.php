@@ -11,6 +11,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
 use App\ResponsableCfpModel;
+use Illuminate\Support\Facades\File;
 
 class ResponsableCfpController extends Controller
 {
@@ -164,6 +165,12 @@ class ResponsableCfpController extends Controller
         return $result;
     }
     //modification
+    public function edit_photo($id, Request $request)
+    {
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_photo', compact('responsable'));
+    }
     public function edit_nom($id){
         $user_id =  $users = Auth::user()->id;
         $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
@@ -194,6 +201,23 @@ class ResponsableCfpController extends Controller
         $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
         return view('cfp.responsable_cfp.modification_profil.edit_phone', compact('responsable'));
     }
+    public function edit_cin($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_cin', compact('responsable'));
+    }
+    public function edit_adresse($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_adresse', compact('responsable'));
+    }
+    public function edit_fonction($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_fonction', compact('responsable'));
+    }
+
+
     //update responsable cfp
     public function update_nom_responsable($id,Request $request){
         DB::update('update users set name = ? where id = ?', [$request->nom.' '.$request->prenom, Auth::id()]);
@@ -227,6 +251,33 @@ class ResponsableCfpController extends Controller
     public function update_telephone_responsable($id,Request $request){
         DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::id()]);
         DB::update('update responsables_cfp set telephone_resp_cfp = ? where user_id = ?', [$request->phone, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_cin_responsable($id,Request $request){
+        DB::update('update users set cin = ? where id = ?', [$request->cin, Auth::id()]);
+        DB::update('update responsables_cfp set cin_resp_cfp = ? where user_id = ?', [$request->cin, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_adresse_responsable($id,Request $request){
+        DB::update('update responsables_cfp set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_fonction_responsable($id,Request $request){
+        DB::update('update responsables_cfp set fonction_resp_cfp = ? where user_id = ?', [$request->fonction, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_photo_responsable($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $image_ancien = $responsable->photos_resp_cfp;
+        //supprimer l'ancienne image
+        File::delete(public_path("images/responsables/".$image_ancien));
+        //enregiistrer la nouvelle photo
+        $image = $request->file('image');
+        $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+        $destinationPath = 'images/responsables';
+        $image->move($destinationPath, $nom_image);
+        DB::update('update responsables_cfp set photos_resp_cfp = ? where user_id = ?', [$nom_image, Auth::id()]);
         return redirect()->route('profil_du_responsable');
     }
 }

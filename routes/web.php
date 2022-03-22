@@ -972,6 +972,7 @@ Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name(
 //affichage profil
 Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent')->name('profil_du_responsable');
 //Route pour modifier chaque champs pour responsable
+Route::get('/modification_photo{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
 Route::get('/modification_nom/{id}','ResponsableCfpController@edit_nom')->name('modification_nom');
 Route::get('/modification_date_de_naissance/{id}','ResponsableCfpController@edit_naissance')->name('modification_date_de_naissance');
 Route::get('/modification_genre/{id}','ResponsableCfpController@edit_genre')->name('modification_genre');
@@ -983,9 +984,14 @@ Route::get('/modificationn_adresse/{id}','ResponsableCfpController@edit_adresse'
 Route::get('/modification_fonction/{id}','ResponsableCfpController@edit_fonction')->name('modification_fonction');
 Route::get('/modification_matricule/{id}','ResponsableCfpController@edit_matricule')->name('modification_matricule');
 
+
+Route::post('/enregistrer_modification_photo/{id}','ResponsableCfpController@update_photo_responsable')->name('enregistrer_modification_photo');
 Route::post('/enregistrer_modification_nom/{id}','ResponsableCfpController@update_nom_responsable')->name('enregistrer_modification_nom');
 Route::post('/enregistrer_modification_date_de_naissance/{id}','ResponsableCfpController@update_dtn_responsable')->name('enregistrer_modification_date_de_naissance');
 Route::post('/enregistrer_modification_genre/{id}','ResponsableCfpController@update_genre_responsable')->name('enregistrer_modification_genre');
 Route::post('/enregistrer_modification_mdp/{id}','ResponsableCfpController@update_mdp_responsable')->name('enregistrer_modification_mdp');
 Route::post('/enregistrer_modification_email/{id}','ResponsableCfpController@update_email_responsable')->name('enregistrer_modification_email');
 Route::post('/enregistrer_modification_telephone/{id}','ResponsableCfpController@update_telephone_responsable')->name('enregistrer_modification_telephone');
+Route::post('/enregistrer_modification_cin/{id}','ResponsableCfpController@update_cin_responsable')->name('enregistrer_modification_cin');
+Route::post('/enregistrer_modification_adresse/{id}','ResponsableCfpController@update_adresse_responsable')->name('enregistrer_modification_adresse');
+Route::post('/enregistrer_modification_fonction/{id}','ResponsableCfpController@update_fonction_responsable')->name('enregistrer_modification_fonction');

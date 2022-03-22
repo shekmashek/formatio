@@ -796,7 +796,6 @@ class ParticipantController extends Controller
             $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
             $entreprise = $fonct->findWhereMulitOne("entreprises",["id"],[$stagiaire->entreprise_id]);
             if($service == null){
-                dd('eto');
                 $departement = [];
             }else{
                 $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);

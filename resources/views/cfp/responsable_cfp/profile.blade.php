@@ -28,7 +28,7 @@
                 <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
                     <p class="p-1 m-0" style="font-size: 10px;">PHOTO
                     </p>
-                    <a href="{{route('edit_photos_resp',$refs->id)}}">
+                    <a href="{{route('modification_photo',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos_resp_cfp==null)
                         <img src="{{asset('images/users/user.png')}}" class="image-ronde">
@@ -112,7 +112,7 @@
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_adresse_resp',$refs->id)}} ">
+                    <a href="{{route('modificationn_adresse',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE <span style="float: right;">
                             <span style="float: right">
                             @if ($refs->adresse_lot==null)
@@ -140,9 +140,9 @@
                             @endif
 
                             @if($refs->adresse_code_postal==null)
-                            Postal: <strong style="color: red">incomplète</strong>&nbsp;
+                            CP: <strong style="color: red">incomplète</strong>&nbsp;
                             @else
-                            Postal: {{$refs->adresse_code_postal}} &nbsp;
+                            CP: {{$refs->adresse_code_postal}} &nbsp;
                             @endif
 
                             <i class="fas fa-angle-right"></i></span>
@@ -152,7 +152,7 @@
                 </div>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_fonction_resp',$refs->id)}} ">
+                    <a href="{{route('modification_fonction',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$refs->fonction_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
