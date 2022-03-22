@@ -49,7 +49,7 @@
     </style>
 
     <div class="row w-100 bg-none mt-5 font_text">
-
+        <a href="{{route('nouveau_formateur')}}">Nouveau Formateur</a>
         <div class="col-md-5">
             <div class="shadow p-3 mb-5 bg-body rounded ">
 
