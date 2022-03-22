@@ -678,12 +678,12 @@ where
 
 create or replace view v_montant_session as
     select 
-        pg.groupe_id,
-        count(pg.stagiaire_id) as nombre_stg,
-        (sum(mf.prix)) as montant_session
-    from participant_groupe pg
-    join groupes g 
+        g.id as groupe_id,
+        ifnull(count(pg.stagiaire_id),0) as nombre_stg,
+        ifnull((mf.prix * count(pg.stagiaire_id)),0) as montant_session
+    from groupes g  
+    left join participant_groupe pg
     on pg.groupe_id = g.id
     join moduleformation mf
     on mf.module_id = g.module_id 
-    group by groupe_id;
+    group by g.id;

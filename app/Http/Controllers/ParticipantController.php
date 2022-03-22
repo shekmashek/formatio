@@ -441,9 +441,10 @@ class ParticipantController extends Controller
         $fonct = new FonctionGenerique();
         $stagiaire = $fonct->findWhereMulitOne("stagiaires",["id"],[$id]);
         $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
-        $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
+        // $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
         $branche = $fonct->findWhereMulitOne("branches",["entreprise_id"],[$stagiaire->entreprise_id]);
-        return view('admin.participant.edit_niveau', compact('stagiaire','service','departement','branche'));
+        // return view('admin.participant.edit_niveau', compact('stagiaire','service','departement','branche'));
+        return view('admin.participant.edit_niveau', compact('stagiaire','service','branche'));
     }
     public function edit_departement($id, Request $request){
         $user_id =  $users = Auth::user()->id;
@@ -796,7 +797,6 @@ class ParticipantController extends Controller
             $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
             $entreprise = $fonct->findWhereMulitOne("entreprises",["id"],[$stagiaire->entreprise_id]);
             if($service == null){
-                dd('eto');
                 $departement = [];
             }else{
                 $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
