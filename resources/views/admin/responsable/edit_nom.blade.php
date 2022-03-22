@@ -69,7 +69,7 @@
                 </div>
 
 
-                        <select hidden value="{{$responsable->sexe_resp}}" name="genre" class="form-select test" id="genre"  >
+                        {{-- <select hidden value="{{$responsable->sexe_resp}}" name="genre" class="form-select test" id="genre"  >
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
@@ -109,7 +109,7 @@
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($responsable)->departement)->nom_departement }}" readonly>
 
-
+ --}}
 
 <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
 </form>

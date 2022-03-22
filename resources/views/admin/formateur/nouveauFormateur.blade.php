@@ -326,6 +326,7 @@ $(document).on('change', '#cin', function() {
         });
     });
 
+    /*
     $(document).on('change', '#phone', function() {
         var result = $(this).val();
         $.ajax({
@@ -348,7 +349,7 @@ $(document).on('change', '#cin', function() {
             }
         });
     });
-
+*/
 
     //add row1
     $(document).on('click', '#addRow1', function() {

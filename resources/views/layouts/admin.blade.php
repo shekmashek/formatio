@@ -11,12 +11,8 @@
     <title>Formation.mg</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
-        integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg54Ko.png') }}" type="image/x-icon">
 </head>
@@ -44,25 +40,25 @@
 
             <li>
                 @canany(['isReferent'])
-                    <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
-                        <i class='bx bxs-pie-chart-alt-2'></i>
-                        <span class="links_name">BI</span>
-                    </a>
-                    <span class="tooltip">BI</span>
+                <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="links_name">BI</span>
+                </a>
+                <span class="tooltip">BI</span>
                 @endcanany
                 @canany(['isCFP'])
-                    <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
-                        <i class='bx bxs-pie-chart-alt-2'></i>
-                        <span class="links_name">BI</span>
-                    </a>
-                    <span class="tooltip">BI</span>
-                 @endcanany
+                <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="links_name">BI</span>
+                </a>
+                <span class="tooltip">BI</span>
+                @endcanany
                 @canany(['isSuperAdmin'])
-                    <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
-                        <i class='bx bxs-pie-chart-alt-2'></i>
-                        <span class="links_name"> BI </span>
-                    </a>
-                    <span class="tooltip">BI</span>
+                <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="links_name"> BI </span>
+                </a>
+                <span class="tooltip">BI</span>
                 @endcanany
             </li>
 
@@ -211,10 +207,10 @@
             </li>
             {{-- <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Formateur</span>
-                </a>
-                <span class="tooltip">Nouveau Formateur</span>
+            <i class='bx bxs-bank'></i>
+            <span class="links_name">Nouveau Formateur</span>
+            </a>
+            <span class="tooltip">Nouveau Formateur</span>
             </li> --}}
             {{-- integrer dans la page
             <li>
@@ -491,8 +487,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="searchBoxMod">
-                                    <input class="searchInputMod mb-2 recherche_formation" type="text" name="nom_formation"
-                                        placeholder="Rechercher par formations...">
+                                    <input class="searchInputMod mb-2 recherche_formation" type="text" name="nom_formation" placeholder="Rechercher par formations...">
                                     <button class="searchButtonMod recherche_formation" href="#">
                                         <i class="bx bx-search"></i>
                                     </button>
@@ -591,7 +586,7 @@
 
                             {{-- <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p> --}}
                             <p>
-                                <div class="mt-2"><span><i class="fas fa-user"></i></span>  <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
+                                <div class="mt-2"><span><i class="fas fa-user"></i></span> <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
                                 {{-- <div class='photo_user'> </div> --}}
                             </p>
                             {{-- <p style="text-transform: capitalize;color:#801D68" class="header_img_name">
@@ -606,9 +601,8 @@
                                         <div class="row">
                                             <div class="col-md-4 ">
                                                 <span>
-                                                        <div style="display: grid; place-content: center">
-                                                            <div class='randomColor photo_users' style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center">
-                                                            </div>
+                                                    <div style="display: grid; place-content: center" class="">
+                                                        <div class="randomColor photo_users" style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center"></div>
                                                     </div>
                                                 </span>
                                             </div>
@@ -742,8 +736,7 @@
                                         </a>
                                     </div>
                                     <div class="footer_list ms-2 me-2">
-                                        <a href="{{route('condition_generale_de_vente')}}"
-                                            style="color:#801D68 !important" target="_blank">
+                                        <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank">
                                             <p>Conditions d'utilisation</p>
                                         </a>
                                     </div>
@@ -781,12 +774,12 @@
     <script type="text/javascript">
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
-        //On change la couleur de fond au hasard
-        $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16));
+            //On change la couleur de fond au hasard
+            $(this).css("background-color", '#' + (Math.random() * 0xFFFFFF << 0).toString(16));
         })
+
     </script>
     <script>
-
         $(document).ready(function() {
             var pdp = "";
             $.ajax({
@@ -794,14 +787,14 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    if(userData['photo'] == 'oui'){
+
+                    if (userData['photo'] == 'oui') {
                         var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 37px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
-                        html = html.replace(":?", userData);
-                        // alert(JSON.stringify(userData));
+                        html = html.replace(":?", userData['user']);
                         $('.photo_users').append(html);
                     }
-                    if(userData['photo'] == 'non'){
-                        var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];
+                    if (userData['photo'] == 'non') {
+                        var html = '' + userData['user'][0]['nm'] + '' + userData['user'][0]['pr'] + '';
                         $('.photo_users').append(html);
                     }
                 }

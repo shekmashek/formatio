@@ -148,7 +148,7 @@
                     <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                          <li class="nav-item me-5">
                             <a href="#" class="active" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="true">
-                                Facture Valider
+                                Facture à payer
                                 @if (count($facture_actif) > 0)
                                 <strong style="color: red">({{count($facture_actif)}})</strong>
                                 @endif
@@ -156,7 +156,7 @@
                         </li>
                         <li class="nav-item me-5">
                             <a href="#" class="" id="nav-encour-tab" data-bs-toggle="tab" data-bs-target="#nav-encour" type="button" role="tab" aria-controls="nav-encour" aria-selected="false">
-                                Facture En Cour
+                                Facture en cour
                                 @if (count($facture_encour) > 0)
                                 <strong style="color: red">({{count($facture_encour)}})</strong>
                                 @endif
@@ -164,7 +164,7 @@
                         </li>
                         <li class="nav-item me-5">
                             <a href="#" class="" id="nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
-                                Facture Payer
+                                Facture payer
                                 @if (count($facture_payer) > 0)
                                 <strong style="color: red">({{count($facture_payer)}})</strong>
                                 @endif
@@ -181,7 +181,7 @@
                     {{-- <div class="container-fluid">
                         <div class="row">
                             <div class="col"> --}}
-                    <h6 style="color: #AA076B">Facture Validé</h6>
+                    <h6 style="color: #AA076B">Facture à payer</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>
@@ -198,6 +198,8 @@
                         <tbody>
                             @if (count($facture_actif) > 0)
                             @foreach ($facture_actif as $actif)
+                            @if ($actif->facture_encour == "valider")
+
                             <tr>
                                 <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
                                 <th>
@@ -214,7 +216,6 @@
                                 @else
                                 <td style="color:red;">temps de payement a éxpirer!</td>
                                 @endif
-                                    @if ($actif->facture_encour == "valider")
                                     <td style="color:red;"><i class="fa fa-bolt"></i>{{$actif->facture_encour}}</td>
                                     @canany(['isCFP'])
                                     <td>
@@ -237,50 +238,7 @@
                                         </div>
                                     </td>
                                     @endcanany
-                                    @elseif ($actif->facture_encour == "en_cour")
-                                    <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
-                                    @canany(['isCFP'])
-                                    <td>
 
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a href="#" class="dropdown-item">
-                                                        <button type="button" class=" btn btn_enregistrer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
-                                                    </a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_enregistrer">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    @endcanany
-                                    @else
-                                    <td style="color:rgb(15, 221, 67);"><i class="fa fa-check-circle"></i><i class="fa fa-check-circle"></i> {{$actif->facture_encour}}</td>
-                                    @canany(['isCFP'])
-                                    <td>
-
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_enregistrer">PDF</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endcanany
                                     @endif
                             </tr>
                             @endforeach
@@ -295,7 +253,7 @@
                 {{-- --}}
 
                 <div class="tab-pane fade " id="nav-encour" role="tabpanel" aria-labelledby="nav-encour-tab">
-                    <h6 style="color: #AA076B">Facture En Cour</h6>
+                    <h6 style="color: #AA076B">Facture en cour</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>
@@ -365,7 +323,7 @@
                 {{-- --}}
 
                 <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
-                    <h6 style="color: #AA076B">Facture Payer</h6>
+                    <h6 style="color: #AA076B">Facture payer</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>

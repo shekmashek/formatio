@@ -218,7 +218,7 @@ class NouveauCompteController extends Controller
                     if (count($verify_etp_nif) <= 0) {
                         if (count($verify_resp_cin) <= 0) {
                             if (count($verify_resp_mail) <= 0) {
-                                if (count($verify_resp_tel) <= 0) {
+                                // if (count($verify_resp_tel) <= 0) {
 
                                     $this->user->name = $req->nom_resp_etp . " " . $req->prenom_resp_etp;
                                     $this->user->email = $req->email_resp_etp;
@@ -257,9 +257,9 @@ class NouveauCompteController extends Controller
                                     } else {
                                         return redirect()->route('inscription_save');
                                     }
-                                } else {
-                                    return back()->with('error', 'télephone existe déjà!');
-                                }
+                                // } else {
+                                //     return back()->with('error', 'télephone existe déjà!');
+                                // }
                             } else {
                                 return back()->with('error', 'email existe déjà!');
                             }

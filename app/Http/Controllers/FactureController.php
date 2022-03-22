@@ -73,7 +73,7 @@ class FactureController extends Controller
 
         $mode_payement = DB::select('select * from mode_financements');
 
-        $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
+        $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour","cfp_id"], ["valider",$cfp_id], "facture_id", 0, 10);
         $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
         $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0, 10);
         $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0, 10);
@@ -96,7 +96,7 @@ class FactureController extends Controller
 
         $user_id = Auth::user()->id;
         $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
-        $facture_actif = $this->fonct->findWhere("v_facture_actif", ["entreprise_id"], [$entreprise_id]);
+        $facture_actif = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "entreprise_id"], ["valider",$entreprise_id]);
         $facture_payer = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id]);
         $facture_encour = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "entreprise_id"], ["en_cour", $entreprise_id]);
         return view('admin.facture.facture_etp', compact('facture_actif', 'facture_payer', 'facture_encour'));

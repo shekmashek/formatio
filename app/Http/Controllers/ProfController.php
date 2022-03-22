@@ -124,6 +124,7 @@ class ProfController extends Controller
         $frm->prenom_formateur = $request->prenom;
         $frm->mail_formateur = $request->mail;
         $frm->numero_formateur = $request->phone;
+        //dd($request->input());
         $frm->genre = $request->sexe;
         $frm->date_naissance = $request->date_naissance;
         $frm->adresse = $request->adresse;

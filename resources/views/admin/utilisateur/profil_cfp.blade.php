@@ -83,18 +83,18 @@
                                         <br><br>
                                         <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Domaine de formation</p>
                                         <h6 class="text-muted f-w-400">
-                                            @if ($cfp->domaine_de_formation==NULL)
+                                            @if ($cfp->slogan==NULL)
                                             <strong style="color: red">incomplète</strong>
                                             @else
-                                            {{ $cfp->domaine_de_formation }}
+                                            {{ $cfp->slogan }}
                                             @endif
                                         </h6>
                                         <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Site web officiel</p>
                                         <h6 class="text-muted f-w-400">
-                                            @if ($cfp->site_cfp==NULL)
+                                            @if ($cfp->site_web==NULL)
                                             <strong style="color: rgb(202, 98, 98)">aucun site a été mentionner</strong>
                                             @else
-                                            {{ $cfp->site_cfp }}
+                                            {{ $cfp->site_web }}
                                             @endif
                                         </h6>
                                     </div>
@@ -166,10 +166,10 @@
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-phone"></i>&nbsp;Téléphone<strong style="color:#ff0000;">*</strong></span>
                             <input autocomplete="off" type="text" name="telephone_cfp" class="form-control formPayement" required="required" value="{{$cfp->telephone}}"> </div>
-                        @if ($cfp->site_cfp!=NULL)
+                        @if ($cfp->site_web!=NULL)
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="fa fa-globe"></i>&nbsp; Site web officiel</span>
-                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required" value="{{$cfp->site_cfp}}"> </div>
+                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required" value="{{$cfp->site_web}}"> </div>
 
                         @else
                         <div class="inputbox inputboxP mt-3">

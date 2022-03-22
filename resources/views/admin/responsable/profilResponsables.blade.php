@@ -86,12 +86,13 @@
                     <a href="{{route('edit_photos_resp',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos==null)
-                        <img src="{{asset('images/users/user.png')}}" class="image-ronde">
+                        <div style="display: grid; place-content: center">
+                            <div class='randomColor photo_users' style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center">
+                            </div>
+                        </div>
                         @else
                         <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                         @endif
-
-
                     </a>
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">

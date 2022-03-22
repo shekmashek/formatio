@@ -22,6 +22,8 @@ use App\Models\FonctionGenerique;
 use App\Exports\ResponsableExport;
 use Excel;
 
+use Illuminate\Support\Facades\URL;
+
 class ResponsableController extends Controller
 {
     public function __construct()
@@ -42,17 +44,14 @@ class ResponsableController extends Controller
             if (Gate::allows('isReferentPrincipale')) {
                 $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
                 $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
-
             }
             if (Gate::allows('isStagiairePrincipale')) {
                 $resp_etp_connecter = $fonct->findWhereMulitOne('stagiaires', ["user_id"], [$user_id]);
                 $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
-
             }
             if (Gate::allows('isManagerPrincipale')) {
                 $resp_etp_connecter = $fonct->findWhereMulitOne('chef_departements', ["user_id"], [$user_id]);
                 $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
-
             }
             return view('admin.entreprise.responsable.nouveau_responsable', compact('resp_etp_connecter', 'responsable'));
         }
@@ -105,8 +104,8 @@ class ResponsableController extends Controller
 
                             DB::beginTransaction();
                             try {
-                                $fonct->insert_role_user($use_id_inserer, "2"); // referent etp
-                                $fonct->insert_role_user($use_id_inserer, "3"); // stagiaire
+                                $fonct->insert_role_user($use_id_inserer, "2", true, true); // referent etp
+                                $fonct->insert_role_user($use_id_inserer, "3", false, true); // stagiaire
                                 DB::commit();
                             } catch (Exception $e) {
                                 DB::rollback();
@@ -241,8 +240,8 @@ class ResponsableController extends Controller
 
         DB::beginTransaction();
         try {
-            $this->fonct->insert_role_user($user_id, "2",true); // Referent
-            $this->fonct->insert_role_user($user_id, "3",false); // Manager
+            $this->fonct->insert_role_user($user_id, "2", true); // Referent
+            $this->fonct->insert_role_user($user_id, "3", false); // Manager
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -276,7 +275,6 @@ class ResponsableController extends Controller
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
                 $refs = responsable::findOrFail($id);
             }
-
             return view('admin.responsable.profilResponsables', compact('refs'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
@@ -486,13 +484,20 @@ class ResponsableController extends Controller
     //modification photos
     public function update_photos_resp(Request $request)
     {
-        //  stocker la photo dans google drive
-        $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-        $dossier = 'responsable';
-        $stock_stg = new getImageModel();
-        // $nom_image = $request->image->getClientOriginalName();
-        $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
-        DB::update('update responsables set photos = ? where user_id = ?', [$nom_image, Auth::id()]);
+        $fonct = new FonctionGenerique();
+        $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+        $date = date('d-m-y h:m:s');
+        $back_pho_ancient = $resp_etp->photos;
+
+        $nom_image  = str_replace(' ', '_', $resp_etp->nom_resp .  '' . $resp_etp->telephone_resp . '' . $date . '.' . $request->file('photos')->extension());
+        $url = URL::to('/') . "/images/responsables/" . $nom_image;
+
+        DB::update('update employers set photos = ?, url_photo=? where user_id = ? and id=?', [$nom_image, $url, Auth::user()->id, $resp_etp->id]);
+        $request->photos->move(public_path('images/responsables'), $nom_image);  //save image responsables
+
+        if ($resp_etp->photos != null) {
+            File::delete("images/responsables/" . $back_pho_ancient);
+        }
         return redirect()->route('affResponsable');
     }
     //update password
