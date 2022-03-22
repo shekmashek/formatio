@@ -311,6 +311,8 @@ class ResponsableController extends Controller
         $responsable = responsable::findOrFail($id);
         return view('admin.responsable.edit_nom', compact('responsable'));
     }
+
+
     public function edit_naissance($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
@@ -521,6 +523,50 @@ class ResponsableController extends Controller
         DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
         return redirect()->route('affResponsable');
     }
+
+    public function update_nom($id, Request $request)
+    {
+        $fonct = new FonctionGenerique();
+        $user_id =  $users = Auth::user()->id;
+
+        $nom = $request->nom;
+        $prenom = $request->prenom;
+
+        if (Gate::allows('isReferent')) {
+            DB::beginTransaction();
+            try {
+                DB::update('update users set name = ? where id = ?', [$nom . " " . $prenom, $user_id]);
+                DB::update('update employers set nom_emp = ?, prenom=? where id = ? and user_id=?', [$nom, $prenom, $id, $user_id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+            return redirect()->route('affResponsable', $id);
+            // dd("update employers set nom_emp = ?, prenom=? where id = ? and user_id', [$nom,$prenom,$id,$user_id]");
+        }
+    }
+
+    public function update_dte_naissance($id, Request $request)
+    {
+        $fonct = new FonctionGenerique();
+        $user_id =  $users = Auth::user()->id;
+
+        $dte = $request->date_naissance;
+
+        if (Gate::allows('isReferent')) {
+            DB::beginTransaction();
+            try {
+                DB::update('update employers set date_naissance_emp = ? where id = ? and user_id=?', [$dte, $id, $user_id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+            return redirect()->route('affResponsable', $id);
+        }
+    }
+
     public function update(Request $request, $id)
     {
 

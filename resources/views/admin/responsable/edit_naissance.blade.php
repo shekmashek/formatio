@@ -52,11 +52,10 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Anniversaire</p>
-        <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_responsable.dte_naissance',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
-                    <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
-                    {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
+                    {{-- <input type="hidden" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
 
 
                         <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
@@ -67,7 +66,7 @@
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
-                        </select>
+                        </select> --}}
 
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
@@ -77,7 +76,7 @@
                     </div>
                 </div>
 
-                          <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="cin" >
+                          {{-- <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="cin" >
 
                         <input type="hidden" class="form-control test"  name="mail" value="{{ $responsable->email_resp }}" >
 
@@ -105,7 +104,7 @@
                     <input type="hidden" value="{{ $responsable->poste_resp }}"  class="form-control"  name="poste"  readonly>
 
 
-                    <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($responsable)->departement)->nom_departement }}" readonly>
+                    <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($responsable)->departement)->nom_departement }}" readonly> --}}
 
 
 

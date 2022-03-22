@@ -219,7 +219,10 @@ Route::get('/edit_responsable','ResponsableController@edit')->name('edit_respons
 
 Route::get('/destroy_responsable','ResponsableController@destroy')->name('destroy_responsable');
 
-Route::post('/update_responsable/{id?}','ResponsableController@update')->name('update_responsable');
+// Route::post('/update_responsable/{id?}','ResponsableController@update')->name('update_responsable');
+Route::post('/update_responsable/{id?}','ResponsableController@update_nom')->name('update_responsable');
+Route::post('/update_responsable.dte_naissance/{id?}','ResponsableController@update_dte_naissance')->name('update_responsable.dte_naissance');
+
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
@@ -485,6 +488,9 @@ Route::get('delete_facture/{num_facture}','FactureController@destroy')->name('de
 Route::get('frais_annexe','FactureController@getFrais_annexe')->name('frais_annexe');
 Route::get('groupe_projet','FactureController@getGroupe_projet')->name('groupe_projet');
 Route::get('taxe','FactureController@getTaxe')->name('taxe');
+Route::get('/save_facture',function(){
+    return view('admin.facture.save_facture');
+})->name('save_facture');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');
 Route::get('liste_facture','FactureController@redirection_facture')->name('liste_facture');

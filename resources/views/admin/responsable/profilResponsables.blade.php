@@ -81,7 +81,8 @@
                 <p class="text-center">Informations générales</p>
 
                 <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
-                    <p class="p-1 m-0" style="font-size: 10px;">PHOTO
+                    <p class="p-1 m-0" style="font-size: 10px;">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal_photo"> PHOTO <i class="bx bx-edit" style="color: blue"></i></a>
                     </p>
                     <a href="{{route('edit_photos_resp',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
@@ -97,15 +98,20 @@
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                     <a href="{{route('edit_nom_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$refs->nom_resp}} {{$refs->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_name">
+                                NOM <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">{{$refs->nom_resp}} {{$refs->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
 
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                     <a href="{{route('edit_naissance_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($refs->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_dte">
+                                ANNIVERSAIRE <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">{{date('j \\ F Y', strtotime($refs->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
@@ -113,13 +119,19 @@
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                     <a href="{{route('edit_genre_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$refs->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_sexe">
+                                GENRE <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">{{$refs->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                     <a href="{{route('edit_pwd_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_mdp">
+                                Mot de passe <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
@@ -135,14 +147,20 @@
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
                     <a href="{{route('edit_mail_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_email">
+                                ADRESSE E-MAIL <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">{{$refs->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
                     <a href="{{route('edit_phone_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_phone">
+                                TELEPHONE <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">{{$refs->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                         </p>
                     </a>
@@ -150,13 +168,19 @@
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
                     <a href="{{route('edit_cin_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$refs->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cin">
+                                CIN <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">{{$refs->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
                     <a href="{{route('edit_adresse_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$refs->adresse_lot}} &nbsp;{{$refs->adresse_quartier}} &nbsp;{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_adresse">
+                                ADRESSE <i class="bx bx-edit" style="color: blue"></i></a>
+                            <span style="float: right;">{{$refs->adresse_lot}} &nbsp;{{$refs->adresse_quartier}} &nbsp;{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
@@ -179,7 +203,7 @@
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 10px;">Poste responsable<span style="float: right;">{{$refs->poste_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;">Poste responsable<span style="float: right;">{{$refs->poste_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
@@ -207,4 +231,447 @@
         </div>
     </div>
 
-    @endsection
+
+    <div id="modal_photo" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du photo</h6>
+                        <h5><strong></strong></h5>
+
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formPhoto" action="{{route('update_photos_resp')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row px-3 mt-4">
+                            <div class="form-group mt-1 mb-1">
+                                <center>
+                                    <div class="image-upload">
+                                        <label for="file-input">
+                                            <div class="upload-icon">
+                                                @if($refs->photos==null)
+                                                <div style="display: grid; place-content: center">
+                                                    <div class='randomColor photo_users' style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center">
+                                                    </div>
+                                                </div>
+                                                @else
+                                                <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
+                                                @endif
+                                            </div>
+                                        </label>
+                                    </div>
+                                </center>
+                                <input id="file-input" required type="file" name="photos" />
+                            </div>
+                        </div>
+                        <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formPhoto" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    {{-- moddification nom pernom  --}}
+
+    <div id="modal_name" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du Nom et Prénom</h6>
+                        <h5><strong></strong></h5>
+
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formName" action="{{route('update_responsable',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Nom<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="nom" class="form-control formName" required="required" value="{{ $refs->nom_resp }}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Prénom</span>
+                            <input autocomplete="off" type="text" name="prenom" class="form-control formName" required="required" value="{{ $refs->prenom_resp }}">
+                        </div>
+
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formName" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- moddification date de naissance  --}}
+
+    <div id="modal_dte" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du date de naissance</h6>
+                        <h5><strong></strong></h5>
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Date de naissance<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="date" name="date_naissance" class="form-control formDte" required="required" value="{{ $refs->date_naissance_resp}}">
+                        </div>
+
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    {{-- moddification Sexe  --}}
+
+    <div id="modal_sexe" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification duSexe</h6>
+                        <h5><strong></strong></h5>
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Sexe<strong style="color:#ff0000;">*</strong></span>
+                            <select name="genre" class="form-select test input" id="genre">
+                                <option value="homme">Homme</option>
+                                <option value="femme">Femme</option>
+
+                            </select>
+                        </div>
+
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    {{-- modification de mot de passe  --}}
+
+    <div id="modal_mdp" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du mot de passe</h6>
+                        <h5><strong></strong></h5>
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Nouveau mot de passe<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="password" name="new_mdp" class="form-control formDte" required="required" placeholder="nouveau mot de passe">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Rétapez le nouveau mot de passe<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="password" name="retap_new_mdp" class="form-control formDte" required="required" placeholder="rétapez le nouveau mot de passe">
+                        </div>
+
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- modification de mail  --}}
+
+    <div id="modal_email" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du mail</h6>
+                        <h5><strong></strong></h5>
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Nouveau e-mail<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="email" name="new_mdp" class="form-control formDte" required="required" value="{{$refs->email_resp}}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Rétapez le nouveau e-mail<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="email" name="retap_new_mdp" class="form-control formDte" required="required" placeholder="rétapez le nouveau e-mail">
+                        </div>
+
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- modification de telephone  --}}
+
+    <div id="modal_phone" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du numéro de télephone</h6>
+                        <h5><strong></strong></h5>
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Nouveau numéro de télephone<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="new_mdp" class="form-control formDte" required="required" value="{{$refs->telephone_resp}}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Rétapez le numéro de télephone<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="retap_new_mdp" class="form-control formDte" required="required" placeholder="rétapez le nouveau numéro du télephone">
+                        </div>
+
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- modification du CIN  --}}
+
+    <div id="modal_cin" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du CIN</h6>
+                        <h5><strong></strong></h5>
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Nouveau numéro de CIN<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="new_mdp" class="form-control formDte" required="required" value="{{$refs->cin_resp}}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Rétapez le numéro de CIN<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="retap_new_mdp" class="form-control formDte" required="required" placeholder="rétapez le nouveau numéro du télephone">
+                        </div>
+
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- modification des Adresse  --}}
+
+    <div id="modal_adresse" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification des Adresses</h6>
+                        <h5><strong></strong></h5>
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Lot ou Rue<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="new_mdp" class="form-control formDte" required="required" value="{{$refs->adresse_lot}}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Quartier<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="retap_new_mdp" class="form-control formDte" required="required" value="{{$refs->adresse_quartier}}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Ville<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="retap_new_mdp" class="form-control formDte" required="required" value="{{$refs->adresse_ville}}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Code Postal<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="retap_new_mdp" class="form-control formDte" required="required" value="{{$refs->adresse_code_postal}}">
+                        </div>
+                        <div class="inputbox inputboxP mt-3">
+                            <span><i class="bx bx-envelope"></i>&nbsp;Région<strong style="color:#ff0000;">*</strong></span>
+                            <input autocomplete="off" type="text" name="retap_new_mdp" class="form-control formDte" required="required" value="{{$refs->adresse_region}}">
+                        </div>
+                        <div class="mt-4 mb-4">
+                            <div class="mt-4 mb-4 d-flex justify-content-between">
+                                <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                                <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    {{-- <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h6>Modification du photo</h6>
+                        <h5><strong></strong></h5>
+
+                    </div>
+                    <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('utilisateur_update_cfp',1) }}" id="formPayement" method="POST">
+    @csrf
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bxs-graduation"></i>&nbsp; Raison sociale<strong style="color:red">*</strong> </span>
+        <input autocomplete="off" type="text" name="nom_cfp" class="form-control formPayement" required="required" value="">
+
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bxs-graduation"></i>&nbsp; Domaine de formation<strong style="color:red">*</strong> </span>
+        <textarea autocomplete="off" required class="form-control" id="exampleFormControlTextarea1" rows="3" name="domaine_cfp"></textarea>
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bx-envelope"></i>&nbsp;NIF<strong style="color:#ff0000;">*</strong></span>
+        <input autocomplete="off" type="text" name="nif_cfp" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bx-envelope"></i>&nbsp;STAT<strong style="color:#ff0000;">*</strong></span>
+        <input autocomplete="off" type="text" name="stat_cfp" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bx-envelope"></i>&nbsp;CIF<strong style="color:#ff0000;">*</strong></span>
+        <input autocomplete="off" type="text" name="cif_cfp" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bx-envelope"></i>&nbsp;RCS<strong style="color:#ff0000;">*</strong></span>
+        <input autocomplete="off" type="text" name="rcs_cfp" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bx-envelope"></i>&nbsp;Email<strong style="color:#ff0000;">*</strong></span>
+        <input autocomplete="off" type="email" name="email_cfp" class="form-control formPayement" required="required" value="">
+    </div>
+
+    <div class="inputbox inputboxP mt-3">
+        <span><i class="bx bx-phone"></i>&nbsp;Téléphone<strong style="color:#ff0000;">*</strong></span>
+        <input autocomplete="off" type="text" name="telephone_cfp" class="form-control formPayement" required="required" value=""> </div>
+
+
+
+    <div class="inputbox inputboxP mt-3">
+        <span>Lot<strong style="color:#ff0000;">*</strong></span>
+        <input type="text" name="adresse_lot" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span>Quartier<strong style="color:#ff0000;">*</strong></span>
+        <input type="text" name="adresse_quartier" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span>Ville<strong style="color:#ff0000;">*</strong></span>
+        <input type="text" name="adresse_ville" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3">
+        <span>Région<strong style="color:#ff0000;">*</strong></span>
+        <input type="text" name="adresse_region" class="form-control formPayement" required="required" value="">
+    </div>
+    <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
+    <div class="mt-4 mb-4">
+        <div class="mt-4 mb-4 d-flex justify-content-between">
+            <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+            <button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button> </div>
+    </div>
+
+
+    </form>
+</div>
+
+</div>
+</div>
+</div> --}}
+
+
+@endsection

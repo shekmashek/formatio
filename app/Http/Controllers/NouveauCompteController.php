@@ -87,7 +87,7 @@ class NouveauCompteController extends Controller
                 // ======== cfp
                 $date = date('d-m-y');
                 $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
-                // $url = URL::to('/')."/".$data["logo_etp"];
+                $url = URL::to('/')."/".$data["logo_cfp"];
 
                 $data["nom_cfp"] = $req->name_cfp;
                 $data["email_cfp"] = $req->email_resp_cfp;
@@ -125,7 +125,7 @@ class NouveauCompteController extends Controller
                                     $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_cfp)->value('id');
-                                    $this->new_compte->insert_CFP($data);
+                                    $this->new_compte->insert_CFP($data,$url);
 
                                     $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp])->id;
                                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
@@ -187,7 +187,7 @@ class NouveauCompteController extends Controller
                 // ======== entreprise
                 $date = date('d-m-y');
                 $data["logo_etp"]  = str_replace(' ', '_', $req->name_etp .  '' . $req->tel_etp . '' . $date . '.' . $req->file('logo_etp')->extension());
-                // $url = URL::to('/')."/".$data["logo_etp"];
+                $url = URL::to('/')."/".$data["logo_etp"];
 
                 $data["nom_etp"] = $req->name_etp;
                 $data["email_etp"] = $req->email_resp_etp;
@@ -229,7 +229,7 @@ class NouveauCompteController extends Controller
                                     $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_etp)->value('id');
-                                    $this->new_compte->insert_ETP($data, $user_id);
+                                    $this->new_compte->insert_ETP($data,$url);
 
                                     $etp_id = $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp])->id;
                                     $resp_etp = $this->fonct->findWhere("responsables", ["entreprise_id"], [$etp_id]);

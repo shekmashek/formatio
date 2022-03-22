@@ -90,22 +90,7 @@
                         <li id="etape4"><strong></strong></li>
                         <li id="etape5"><strong></strong></li>
                         <li id="etape6"><strong></strong></li>
-                        {{-- <li class="active" id="etape1"><strong>Entreprise</strong></li>
-                        <li id="etape2"><strong>numéro Facture</strong></li>
-                        <li id="etape3"><strong>dates</strong></li>
-                        <li id="etape4"><strong>mode de paiement</strong></li>
-                        <li id="etape5"><strong>frais</strong></li>
-                        <li id="etape6"><strong>sauvegarder</strong></li> --}}
                     </ul>
-
-                    {{-- <ul id="progressbar">
-                        <li class="active" id="personal"><strong>Entreprise</strong></li>
-                        <li id="account"><strong>numéro Facture</strong></li>
-                        <li id="personal"><strong>dates</strong></li>
-                        <li id="payment"><strong>mode de paiement</strong></li>
-                        <li id="payment"><strong>frais</strong></li>
-                        <li id="confirm"><strong>sauvegarder</strong></li>
-                    </ul> --}}
 
                     <div id="formulaire">
 
@@ -116,6 +101,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
+
                                         <select class="form-select selectP input" id="entreprise_id" name="entreprise_id" aria-label="Default select example">
                                             <option onselected>Choisir l'entreprise à facturer...</option>
                                             @foreach ($entreprise as $tp)
@@ -124,6 +110,9 @@
                                         </select>
                                         <label class="ml-3 form-control-placeholder" for="formation_id">Entreprise à
                                             facturer<strong style="color:#ff0000;">*</strong></label>
+                                            @if (count($entreprise)<0)
+                                            <span style="color:#ff0000;" id="projet_id_err">Pour creer une facture, vous devrez vous collaborer avec une entreprise </span>
+                                            @endif
                                     </div>
                                 </div>
                                 <div class="col">
@@ -172,7 +161,7 @@
                                 <div class="col">
                                     {{-- <div class="form-group"> --}}
                                     <label align="left" for="down_bc" class="form-label">
-                                        Upload Bon de Commande(Format pdf :maximum 1.5M.0)<strong style="color:#ff0000;">*</strong>
+                                        Upload Bon de Commande(maximum 1.5M.0)<strong style="color:#ff0000;">*</strong>
                                     </label>
                                     <input type="file" class="form-control" id="down_bc" name="down_bc">
                                     @error('down_bc')
@@ -183,8 +172,7 @@
                                 </div>
                                 <div class="col">
                                     {{-- <div class="form-group"> --}}
-                                    <label align="left" for="down_bc" class="form-label">Upload Devis(Format pdf
-                                        :maximum 1.5M.0)<strong style="color:#ff0000;">*</strong></label>
+                                    <label align="left" for="down_bc" class="form-label">Upload Devis(maximum 1.5M.0)<strong style="color:#ff0000;">*</strong></label>
                                     <input type="file" class="form-control " id="down_fa" name="down_fa">
                                     @error('down_fa')
                                     <span style="color:#ff0000;"> {{$message}} </span>
@@ -196,7 +184,7 @@
 
 
 
-                            <input type="button" name="previous" class="previous action-button" value="Précendent" />
+                            <input type="button" name="previous" class="previous action-button" value="Précedent" />
                             <input type="button" name="next" class="next action-button" value="Suivant" />
                         </fieldset>
 
@@ -284,7 +272,7 @@
 
                             </div>
 
-                            <input type="button" name="previous" class="previous action-button" value="Précendent" />
+                            <input type="button" name="previous" class="previous action-button" value="Précedent" />
                             <input type="button" name="make_payment" class="next action-button" value="Suivant" />
                         </fieldset>
 
@@ -337,14 +325,13 @@
                                 </div>
                             </div>
 
-                            <input type="button" name="previous" class="previous action-button" value="Précendent" />
-                            <input type="button" name="next" class="next action-button" value="Suivant" />
+                            <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                            <input type="submit" class=" action-button" value="Sauvegarder" />
                         </fieldset>
 
                         {{-- etpate 6 --}}
 
-                        <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                            {{-- <div class="form-card"> --}}
+                        {{-- <fieldset class="shadow p-3 mb-5 bg-body rounded">
                             <h2 class="fs-title text-center">Bravo ! les champs sont complet</h2> <br><br>
                             <div class="row justify-content-center">
                                 <div class="col-3">
@@ -358,9 +345,7 @@
                                         <input type="submit" class="next action-button" value="Sauvegarder" />
                                     </div>
                                 </div>
-                                {{--
-                                </div> --}}
-                        </fieldset>
+                         </fieldset> --}}
 
 
                     </div>
@@ -519,7 +504,7 @@
                 html += '</div></div>';
 
                 html += '<div class="col-auto justify-center"><div class="form-group">';
-                html += '<button id="removeRow" type="button" class="btn btn-danger"  style="position:relative; top: 2.3rem"><i class="fa fa-trash"></i></button>';
+                html += '<button id="removeRow" type="button" class="btn btn-danger"  style="position:relative; top: 0.7rem; botton: 1.3rem"><i class="fa fa-trash"></i></button>';
                 html += '</div></div>';
                 html += '</div><br>';
 
@@ -589,7 +574,7 @@
                 html += '</div></div>';
 
                 html += '<div class="col-auto"><div class="input-group-append">';
-                html += '<button id="removeRowMontant" type="button" class="btn btn-danger" style="position:relative; top: 2.3rem"><i class="fa fa-trash"></i></button>';
+                html += '<button id="removeRowMontant" type="button" class="btn btn-danger" style="position:relative; top: 0.7rem; botton: 1.3rem"><i class="fa fa-trash"></i></button>';
                 html += '</div></div>';
                 html += '</div>';
                 html += '</div><br>';

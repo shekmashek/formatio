@@ -9,7 +9,7 @@ use App\Models\FonctionGenerique;
 class NouveauCompte extends Model
 {
 
-    public function insert_CFP($doner)
+    public function insert_CFP($doner,$url)
     {
         if ($doner["web_cfp"] == null) {
             $doner["web_cfp"] = NULL;
@@ -17,10 +17,10 @@ class NouveauCompte extends Model
         $data = [
             $doner["logo_cfp"], $doner["nom_cfp"],
             $doner["email_cfp"], $doner["tel_cfp"], $doner["web_cfp"],
-            $doner["nif"]
+            $doner["nif"],$url
         ];
 
-        DB::insert('insert into cfps(logo,nom,email,telephone,site_web,nif,created_at) values (?,?,?,?,?,?,NOW())', $data);
+        DB::insert('insert into cfps(logo,nom,email,telephone,site_web,nif,created_at,url_logo) values (?,?,?,?,?,?,NOW(),?)', $data);
         DB::commit();
 
         // insert into cfps(logo,nom,adresse_ville,email,telephone,site_cfp,nif,adresse_lot,adresse_quartier,adresse_code_postal,adresse_region,created_at,user_id) values ('noam_cfp','Numerika Center','Tana','antoenjara1998@gmail.com','0328683700','ituniversity.com','1324567897865434','Analamahitsy','Q-analamahitsy','s','43','NOW()','41');
@@ -39,17 +39,17 @@ class NouveauCompte extends Model
     }
 
 
-    public function insert_ETP($doner)
+    public function insert_ETP($doner,$url)
     {
         if ($doner["web_etp"] == null) {
             $doner["web_etp"] = NULL;
         }
         $data = [
             $doner["nom_etp"], $doner["email_etp"], $doner["tel_etp"], $doner["web_etp"],
-            $doner["nif"], $doner["logo_etp"], $doner["secteur_id"]
+            $doner["nif"], $doner["logo_etp"], $doner["secteur_id"],$url
         ];
 
-        DB::insert('insert into entreprises(nom_etp,email_etp,telephone_etp,site_etp,nif,logo,created_at,secteur_id) values (?,?,?,?,?,?, NOW(),?)', $data);
+        DB::insert('insert into entreprises(nom_etp,email_etp,telephone_etp,site_etp,nif,logo,created_at,secteur_id,url_logo) values (?,?,?,?,?,?, NOW(),?,?)', $data);
         DB::commit();
     }
     public function insert_resp_ETP($doner, $entreprise_id, $user_id)
