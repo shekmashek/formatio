@@ -16,7 +16,6 @@ Route::get('/', function () {
 // Route Bi
 Route::get('iframe_bi','HomeController@BI')->name('iframe_bi');
 
-
 //Route contact
 Route::get('contact',function(){
     return view('contact');

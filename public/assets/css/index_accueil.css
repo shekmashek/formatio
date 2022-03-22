@@ -225,19 +225,19 @@ ul li {
 
 .section1_text .commencer{
   padding: 1rem 3rem;
-  color: white;
-  background: linear-gradient(60deg, #7635dc, #4222c3);
+  color: #4222c3;
+  background: white;
   border: none;
   border-radius: 30px;
-  font-size: 1.5rem;
-  font-weight: 800;
-  /* transition: all 0.5s ease; */
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.5s ease;
 }
 
 .section1_text .commencer:hover{
-  background: white;
-  color: #4222c3;
-  /* transform: scale(1.1); */
+  background-image: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
+  color: white;
+  transform: scale(1.5);
 }
 /* section1 */
 
@@ -276,22 +276,36 @@ ul li {
   animation-delay: 5s;
 }
 
+.section2 h1{
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
 .section2 .text_about{
   display: grid;
   place-content: center;
-  width: 75%;
+  width: 50%;
   margin: 0 auto;
 }
 
 .section2 .text_about p{
-  font-size: 1.2rem;
-  line-height: 3rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: grey;
 }
 /* section2 */
 
 /* section3 */
 .section3{
   margin-bottom: 8rem;
+}
+.section3 h1{
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 3px;
 }
 .section3 .text{
   padding-right: 1rem;
@@ -300,14 +314,21 @@ ul li {
 }
 
 .section3 .text p{
-font-size: 1.2rem;
-line-height: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
 }
 /* section3 */
 
 /* section4 */
 .section4{
   margin-bottom: 8rem;
+}
+
+.section4 h1{
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 3px;
 }
 
 .section4 .text{
@@ -317,10 +338,200 @@ line-height: 2rem;
 }
 
 .section4 .text p{
-font-size: 1.2rem;
-line-height: 2rem;
+font-size: 0.875rem;
+  line-height: 1.5rem;
 }
 /* section4 */
+
+/* section5 */
+.section5{
+  height: 11.063rem;
+  background-image: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
+  padding-top: 3.7rem;
+  margin-bottom: 8rem;
+}
+
+.section5 .text h1{
+  font-size: 2.5rem;
+  word-wrap: break-word;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 2px;
+}
+
+.section5 .image .commencer{
+  padding: 1rem 3rem;
+  color: #4222c3;
+  background: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.5s ease;
+  position: relative;
+  top: 1rem;
+  text-transform: uppercase;
+}
+
+.section5 .image .commencer:hover{
+  background-image: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
+  color: white;
+  transform: scale(1.5);
+}
+/* section5 */
+
+/* section6 */
+.section6{
+  margin-bottom: 8rem;
+}
+
+.section6 h1{
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.section6 .text_about{
+  display: grid;
+  place-content: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.section6 .text_about p{
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: grey;
+}
+
+.card_fonctions .icon .bx{
+  padding: 1rem 1rem;
+  border: none;
+  border-radius: 100%;
+  color: white;
+  font-size: 3.5rem;
+  background: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
+}
+
+.card_content h4{
+  font-weight: 700;
+}
+/* section6 */
+
+/* section7 */
+.section7{
+  margin-bottom: 8rem;
+}
+.section7 h1{
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+.section7 .text{
+  padding-right: 1rem;
+  display: grid;
+  place-content: center;
+}
+
+.section7 .text p{
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.section7 .commencer{
+  padding: 1rem 3rem;
+  color: white;
+  background-image: linear-gradient( 135deg, #3813C2 10%, #FF6FD8 100%);
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.5s ease;
+  margin-top: 2rem;
+  text-transform: uppercase;
+  width: 35%;
+}
+
+.section7 .commencer:hover{
+  background: #FF6FD8;
+  transform: scale(1.1);
+  background-position: right center;
+}
+/* section7 */
+
+/* section8 */
+.section8{
+  height: 11.063rem;
+  display: grid;
+  place-content: center;
+  background: #8e8e8e;
+  text-align: center;
+}
+
+.section8 a{
+  color: white;
+  font-size: 1.5rem;
+}
+/* section8 */
+
+/* section9 */
+
+.section9{
+  height: 11.063rem;
+  display: grid;
+  place-content: center;
+  background: black;
+  text-align: center;
+}
+
+.section9 a{
+  color: white;
+  font-size: 1.5rem;
+}
+
+.droits{
+  color: #959595;
+}
+
+.droits span a{
+  color: #959595;
+  font-size: 14px;
+  text-decoration-line: underline;
+}
+
+.droits span a:hover{
+  color: #7635dc;
+}
+/* section9 */
+
+/* contact */
+.contact_content h1{
+  font-size: 30px;
+  color: #333;
+}
+
+.contact_form .commencer{
+  padding: 1rem 3rem;
+  color: white;
+  background-image: linear-gradient( 135deg, #3813C2 10%, #FF6FD8 100%);
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.5s ease;
+  text-transform: uppercase;
+  width: 35%;
+  margin: 0 auto;
+}
+
+.contact_form .commencer:hover{
+  background: #FF6FD8;
+  transform: scale(1.1);
+  background-position: right center;
+}
+/* contact */
 
 /* footer */
 
@@ -336,18 +547,19 @@ line-height: 2rem;
 }
 
 .bordure{
-    border-right: 1px solid var(--color-child1);
-    /* padding-right: 20px;
-    padding-top: 5px; */
-    /* height: 30px; */
+    border-right: 1px solid white;
     padding-left: 1rem;
     padding-right: 1rem;
     text-align: center;
-    font-size: 10px;
+    font-size: 14px;
+    color: #959595;
+    display: grid;
+    place-content: center;
 }
 
 .bordure a{
-    color: black;
+  font-size: 14px;
+    color: #959595;
     transition: all .5s ease;
 }
 
@@ -357,8 +569,33 @@ line-height: 2rem;
 }
 
 .version{
-    font-size: 10px;
+  display: grid;
+  place-content: center;
+    color: #959595;
+    font-size: 14px;
 }
 
 /* footer */
+
+/* .btn-floating{
+  z-index: 10;
+  position: relative;
+  bottom: 2rem;
+  right: 0;
+  background-color: red;
+  padding: 2rem 2rem;
+} */
+
+.fa-arrow-up{
+  color: white;
+}
+#btn-back-to-top {
+  position: fixed;
+  bottom: 3.5rem;
+  right: 1.25rem;
+  display: none;
+  padding: 1rem 1rem;
+  border: none;
+  background-color: #7635dc;
+}
 
