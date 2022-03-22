@@ -106,7 +106,7 @@
                 </div>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_cin_resp',$refs->id)}} ">
+                    <a href="{{route('modification_cin',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$refs->cin_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
