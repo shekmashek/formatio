@@ -674,3 +674,16 @@ from
     v_stagiaire_groupe,detail_evaluation_apprenants
 where
     v_stagiaire_groupe.participant_groupe_id = detail_evaluation_apprenants.participant_groupe_id ;
+
+
+create or replace view v_montant_session as
+    select 
+        pg.groupe_id,
+        count(pg.stagiaire_id) as nombre_stg,
+        (sum(mf.prix)) as montant_session
+    from participant_groupe pg
+    join groupes g 
+    on pg.groupe_id = g.id
+    join moduleformation mf
+    on mf.module_id = g.module_id 
+    group by groupe_id;

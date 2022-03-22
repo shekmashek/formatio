@@ -14,7 +14,9 @@
             </div>
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>7 000 000 Ar</strong>  </p>
+                <p class="numero_session text-dark mt-3"> <strong>@php
+                    echo number_format($prix->montant_session,2,"."," ");
+                @endphp Ar</strong>  </p>
                 <p class="m-0">&nbsp;; apprenants inscrits : &nbsp;</p>
                 <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
             </div>
