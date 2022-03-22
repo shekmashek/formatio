@@ -183,6 +183,7 @@ class SessionController extends Controller
         //     $detail = $data['detail'];
         // }
 
+        $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
@@ -206,7 +207,8 @@ class SessionController extends Controller
         // $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
         // $detail = $evaluation->findDetailProject($matricule,$session_id); // return les information du project avec detail et information du stagiaire
         // dd($detail);
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id'));
+        // dd($prix);
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix'));
     }
 
     public function getFormateur(){

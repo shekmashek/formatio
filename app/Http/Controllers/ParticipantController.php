@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\branche;
 use App\chefDepartement;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -794,9 +795,15 @@ class ParticipantController extends Controller
             $stagiaire = $fonct->findWhereMulitOne("stagiaires",["matricule"],[$matricule]);
             $service = $fonct->findWhereMulitOne("services",["id"],[$stagiaire->service_id]);
             $entreprise = $fonct->findWhereMulitOne("entreprises",["id"],[$stagiaire->entreprise_id]);
-
-            $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
+            if($service == null){
+                dd('eto');
+                $departement = [];
+            }else{
+                $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
+            }
             $branche = $fonct->findWhereMulitOne("branches",["entreprise_id"],[$stagiaire->entreprise_id]);
+
+
             return view('admin.participant.profile', compact('entreprise','stagiaire','service','departement','branche'));
             // $stagiaires = db::select('select * from stagiaires where matricule = ?',[$matricule]);
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
