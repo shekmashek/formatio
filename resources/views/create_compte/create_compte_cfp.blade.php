@@ -110,7 +110,7 @@
                             <span style="color:#ff0000;" id="nif_cfp_err"></span>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput1" class="form-control-label">Logo(2.5 Mo max)<strong style="color:#ff0000;">*</strong></label>
+                            <label for="exampleFormControlInput1" class="form-control-label">Logo(60Ko max)<strong style="color:#ff0000;">*</strong></label>
                             <input type="file" required name="logo_cfp" class="form-control" id="logo_cfp" />
                             @error('logo_cfp')
                             <div class="col-sm-6">
@@ -193,7 +193,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center" >
-                            <h6 class="mt-5 mb-2" align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
+                            <h6 align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
                             <div class="col-sm-3"></div>
                             <div class="col-sm-1" style="display: grid; place-content: center;">
                                 <h6> <strong>16</strong></h6>
@@ -216,14 +216,14 @@
                             <div class="col-sm-3"></div>
                         </div>
 
-                        <input type="button" name="previous" class="previous action-button" value="Précendent" />
-                        <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
+                        <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                        <button type="submit" class=" action-button">Confirmer</button>
 
                         {{-- <input type="button" name="make_payment" class="next action-button" value="Suivant" /> --}}
                 </fieldset>
 
                 {{-- --}}
-
+                {{--
                 <fieldset class="shadow p-3 mb-5 bg-body rounded">
                     <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
                     <div class="form-group">
@@ -231,7 +231,7 @@
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Précedent" />
                     <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
-                </fieldset>
+                </fieldset> --}}
 
 
                 {{-- --}}
