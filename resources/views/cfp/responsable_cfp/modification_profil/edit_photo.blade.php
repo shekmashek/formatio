@@ -60,7 +60,14 @@
         }
 </style>
 <center>
-
+ {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
+ @if (\Session::has('error'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!! \Session::get('error') !!}</li>
+     </ul>
+ </div>
+@endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
             <p style="text-align: left">Modifier la fonction</p>

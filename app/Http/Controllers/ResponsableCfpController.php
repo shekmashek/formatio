@@ -267,17 +267,24 @@ class ResponsableCfpController extends Controller
         return redirect()->route('profil_du_responsable');
     }
     public function update_photo_responsable($id,Request $request){
-        $user_id =  $users = Auth::user()->id;
-        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-        $image_ancien = $responsable->photos_resp_cfp;
-        //supprimer l'ancienne image
-        File::delete(public_path("images/responsables/".$image_ancien));
-        //enregiistrer la nouvelle photo
         $image = $request->file('image');
-        $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-        $destinationPath = 'images/responsables';
-        $image->move($destinationPath, $nom_image);
-        DB::update('update responsables_cfp set photos_resp_cfp = ? where user_id = ?', [$nom_image, Auth::id()]);
+        if($image != null){
+            $user_id =  $users = Auth::user()->id;
+            $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+            $image_ancien = $responsable->photos_resp_cfp;
+            //supprimer l'ancienne image
+            File::delete(public_path("images/responsables/".$image_ancien));
+            //enregiistrer la nouvelle photo
+
+            $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+            $destinationPath = 'images/responsables';
+            $image->move($destinationPath, $nom_image);
+            DB::update('update responsables_cfp set photos_resp_cfp = ? where user_id = ?', [$nom_image, Auth::id()]);
+
+        }
+        else{
+            return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+        }
         return redirect()->route('profil_du_responsable');
     }
 }
