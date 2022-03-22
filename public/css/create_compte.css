@@ -142,7 +142,7 @@ select.list-dt:focus {
     margin-bottom: 30px;
     overflow: hidden;
     color: lightgrey;
-    height: 4.7rem !important;
+    /* height: 4.7rem !important; */
 }
 
 #progressbars .active {

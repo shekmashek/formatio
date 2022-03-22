@@ -63,7 +63,7 @@
             <div class="col-md-5 ">
                 @yield('content')
 
-                <p>Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ici.</a> Vous voulez revenir à l'accueil?  Appuyez sur <a href="{{route('create+compte+client')}}" style="color: blue">accueil</a></p>
+                <p style="font-size: 10px" class="mt-2">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ici.</a> Vous voulez revenir à l'accueil?  Appuyez sur <a href="{{route('create+compte+client')}}" style="color: blue">accueil</a></p>
 
             </div>
             {{-- <div class="col-md-2"></div> --}}

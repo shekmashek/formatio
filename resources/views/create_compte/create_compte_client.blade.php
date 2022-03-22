@@ -76,7 +76,7 @@
 <div class="row justify-content-center">
     <div class="col-md-12">
 
-           <ul id="progressbars" class="mb-1">
+           <ul id="progressbars" class="mt-0">
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>
@@ -85,7 +85,7 @@
 
             <div id="formulaire">
 
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                <fieldset class="shadow p-3 bg-body rounded">
                     <h6 align="center" class="mb-2">Votre Société</strong></h4>
 
                         <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
@@ -143,7 +143,7 @@
 
                 {{-- --}}
 
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                <fieldset class="shadow p-3 bg-body rounded">
                     <h6 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
                         <div class="row">
@@ -234,7 +234,7 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <h6 class="" align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
+                            <h6 class="" align="left"><strong style="font-size: 15px">Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
                             <div class="col-sm-3"></div>
                             <div class="col-sm-1"  style="display: grid; place-content: center;">
                                 <h6> <strong>16</strong></h6>

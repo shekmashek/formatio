@@ -74,16 +74,16 @@
 
         <form action="{{route('create_compte_cfp')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
             @csrf
-            <ul id="progressbars" class="mb-1">
-                <li class="active" id="etape1"></li>
-                <li id="etape2"></li>
-                <li id="etape3"></li>
-                {{-- <li id="confirm"></li> --}}
-            </ul>
 
-            <div id="formulaire">
+            <div id="formulaire" class="mt-0">
+                <ul id="progressbars">
+                    <li class="active" id="etape1"></li>
+                    <li id="etape2"></li>
+                    <li id="etape3"></li>
+                    {{-- <li id="confirm"></li> --}}
+                </ul>
 
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                <fieldset class="shadow mt-0 p-3 bg-body rounded">
                     <h6 align="left" class="mb-2">Veuillez entrer le profil professionnel de votre organisation</strong></h4>
                         <div class="form-group">
                             <input type="text" name="name_cfp" class="form-control input_inscription" id="name_cfp" required />
@@ -124,7 +124,7 @@
 
                 {{-- --}}
 
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                <fieldset class="shadow p-3 bg-body rounded">
                     <h6 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
                         <div class="form-group">
@@ -188,12 +188,12 @@
                             <div class="col-sm-12">
                                 <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
                                 <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                    <a href="{{route('condition_generale_de_vente')}}" class="nav-item">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong>  du plateforme</a>
+                                    <a href="{{route('condition_generale_de_vente')}}" class="nav-item" style="font-size: 14px">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong>  du plateforme</a>
                                 </label>
                             </div>
                         </div>
                         <div class="row justify-content-center" >
-                            <h6 align="left"><strong>Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
+                            <h6 align="left"><strong style="font-size: 15px">Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
                             <div class="col-sm-3"></div>
                             <div class="col-sm-1" style="display: grid; place-content: center;">
                                 <h6> <strong>16</strong></h6>
