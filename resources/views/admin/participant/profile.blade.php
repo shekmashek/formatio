@@ -1,28 +1,31 @@
 @extends('./layouts/admin')
 @section('content')
     <style>
-       .image-ronde{
-  width : 30px; height : 30px;
-  border: none;
-  -moz-border-radius : 75px;
-  -webkit-border-radius : 75px;
-  border-radius : 75px;
-}
-.hover:hover{
-    background-color: rgb(233, 220, 220);
-    cursor: pointer;
-}
-    </style>
-     <div class="row">
-          {{-- <div class="col-lg-4 col-md-6">
-                <div class="formation-service">  --}}
+        .image-ronde {
+            width: 30px;
+            height: 30px;
+            border: none;
+            -moz-border-radius: 75px;
+            -webkit-border-radius: 75px;
+            border-radius: 75px;
+        }
 
-                            {{-- @foreach ($stagiaires as $stagiaire)
+        .hover:hover {
+            background-color: rgb(233, 220, 220);
+            cursor: pointer;
+        }
+
+    </style>
+    <div class="row">
+        {{-- <div class="col-lg-4 col-md-6">
+                <div class="formation-service"> --}}
+
+        {{-- @foreach ($stagiaires as $stagiaire)
 
                                     <center> --}}
 
 
-                                  {{-- <div class="m-b-25"> <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde">
+        {{-- <div class="m-b-25"> <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde">
                                     </div>
                                     @can('isStagiaire')
                                     <a href="{{route('edit_participant',$stagiaire->id)}} " ><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
@@ -89,157 +92,183 @@
                             @endforeach
 
                         </div> --}}
-                        <div class="row mt-2">
+        <div class="row mt-2">
 
-                            <div class="col-lg-4">
+            <div class="col-lg-4">
 
-                                <div class="form-control">
-                                    <p class="text-center">Informations générales</p>
+                <div class="form-control">
+                    <p class="text-center">Informations générales</p>
 
-                                    <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
-                                    <p class="p-1 m-0" style="font-size: 10px;">PHOTO
+                    <div class="d-flex align-items-center justify-content-between hover"
+                        style="border-bottom: solid 1px #d399c2;">
+                        <p class="p-1 m-0" style="font-size: 10px;">PHOTO
 
-                                    </p>
-                                    <a href="{{route('edit_photos',$stagiaire->id)}} " >
-                                    <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde"></a>
-                                   </div>
-                                   <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{route('edit_nom',$stagiaire->id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{ $stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        </p>
+                        <a href="{{ route('edit_photos', $stagiaire->id) }} ">
+                            <img src="{{ asset('images/stagiaires/' . $stagiaire->photos) }}" class="image-ronde"></a>
+                    </div>
+                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                        <a href="{{ route('edit_nom', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">NOM<span
+                                    style="float: right;">{{ $stagiaire->nom_stagiaire }}
+                                    {{ $stagiaire->prenom_stagiaire }}&nbsp;<i class="fas fa-angle-right"></i></span>
 
-                                    </p></a>
+                            </p>
+                        </a>
 
-                                   </div>
-                                   <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{route('edit_naissance',$stagiaire->id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($stagiaire->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                        <a href="{{ route('edit_naissance', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">ANNIVERSAIRE<span
+                                    style="float: right;">{{ date('j \\ F Y', strtotime($stagiaire->date_naissance)) }}&nbsp;<i
+                                        class="fas fa-angle-right"></i></span>
 
-                                    </p></a>
+                            </p>
+                        </a>
 
-                                   </div>
-                                   <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{route('edit_genre',$stagiaire->id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$stagiaire->genre_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                    </a>
-                                   </div>
-                                    <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                        <a href="{{ route('edit_genre', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">GENRE<span
+                                    style="float: right;">{{ $stagiaire->genre_stagiaire }}&nbsp;<i
+                                        class="fas fa-angle-right"></i></span>
+                            </p>
+                        </a>
+                    </div>
+                    <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                </div>
+            </div>
 
 
-                                <div class="col-lg-4">
+            <div class="col-lg-4">
 
-                                    <div class="form-control">
-                                        <p class="text-center">Coordonnées</p>
+                <div class="form-control">
+                    <p class="text-center">Coordonnées</p>
 
-                                        <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_mail',$stagiaire->id)}} " >
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$stagiaire->mail_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_mail', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span
+                                    style="float: right;">{{ $stagiaire->mail_stagiaire }}&nbsp;<i
+                                        class="fas fa-angle-right"></i></span>
 
-                                        </p>
-                                            </a>
-                                        </div>
-                                        <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_phone',$stagiaire->id)}} " >
-                                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$stagiaire->telephone_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                            </p>
+                        </a>
+                    </div>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_phone', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span
+                                    style="float: right;">{{ $stagiaire->telephone_stagiaire }}&nbsp;<i
+                                        class="fas fa-angle-right"></i> </span>
 
-                                        </p>
-                                            </a>
-                                        </div>
+                            </p>
+                        </a>
+                    </div>
 
-                                        <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_cin',$stagiaire->id)}} " >
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$stagiaire->cin}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
-                                            </a>
-                                        </div>
-                                        <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                     {{-- <a href="{{route('edit_adresse',$stagiaire->id)}} " >
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_cin', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">CIN<span
+                                    style="float: right;">{{ $stagiaire->cin }}&nbsp;<i
+                                        class="fas fa-angle-right"></i></span>
+                            </p>
+                        </a>
+                    </div>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        {{-- <a href="{{route('edit_adresse',$stagiaire->id)}} " >
                                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$stagiaire->lot}} &nbsp;{{$stagiaire->quartier}} &nbsp;{{$stagiaire->ville}} &nbsp;{{$stagiaire->code_postal}}&nbsp;{{$stagiaire->region}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                         </p>
                                      </a> --}}
-                                        </div>
-                                        <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_fonction',$stagiaire->id)}} " >
-                                        <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$stagiaire->fonction_stagiaire}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
-                                            </a>
-                                        </div>
-                                        <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                            <a href="{{route('edit_niveau',$stagiaire->id)}} " >
-                                        <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<span style="float: right;">{{$stagiaire->niveau_etude}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
-                                            </a>
-                                        </div>
+                    </div>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_fonction', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span
+                                    style="float: right;">{{ $stagiaire->fonction_stagiaire }}&nbsp;<i
+                                        class="fas fa-angle-right"></i></span>
+                            </p>
+                        </a>
+                    </div>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_niveau', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<span
+                                    style="float: right;">{{ $stagiaire->niveau_etude }}&nbsp;<i
+                                        class="fas fa-angle-right"></i></span>
+                            </p>
+                        </a>
+                    </div>
 
-                                        <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-                                    </div>
-                            </div>
-                            <div class="col-lg-4">
+                    <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
 
-                                <div class="form-control">
-                                    <p class="text-center">Informations professionnelles</p>
+                <div class="form-control">
+                    <p class="text-center">Informations professionnelles</p>
 
-                                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_matricule',$stagiaire->id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">MATRICULE<span style="float: right;">{{$stagiaire->matricule}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_matricule', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">MATRICULE<span
+                                    style="float: right;">{{ $stagiaire->matricule }}&nbsp;<i
+                                        class="fas fa-angle-right"></i></span>
 
-                                    </p>
-                                        </a>
-                                    </div>
+                            </p>
+                        </a>
+                    </div>
 
-                                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        {{-- <a href="{{route('edit_entreprise',$stagiaire->id)}} " > --}}
-                                    <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        {{-- <a href="{{route('edit_entreprise',$stagiaire->id)}} " > --}}
+                        <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span
+                                style="float: right;">{{ $entreprise->nom_etp }} &nbsp;<i
+                                    class="fas fa-angle-right"></i></span>
 
-                                    </p>
-                                        </a>
+                        </p>
+                        </a>
 
-                                    </div>
+                    </div>
 
-                                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
 
-                                    <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">
-                                        @if ($departement->id==null)
+                        <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">
+                                @if (count($departement) <= 0)
+                                    <strong style="color: red">incomplète</strong>&nbsp;
+                                @else
+                                    {{ $departement->nom_departement }}&nbsp;
+                                @endif
+                                <i class="fas fa-angle-right"></i>
+                            </span>
+                        </p>
+                        </a>
+                    </div>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_departement', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">SERVICE<span style="float: right;">
+                                    @if (count($service) <= 0)
                                         <strong style="color: red">incomplète</strong>&nbsp;
-                                        @else
-                                        {{$departement->nom_departement}}&nbsp;
-                                        @endif
-                                        <i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                        </a>
-                                    </div>
-                                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_departement',$stagiaire->id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">SERVICE<span style="float: right;">
-                                        @if ($service->id==null)
+                                    @else
+                                        {{ $service->nom_service }}&nbsp;
+                                    @endif
+                                    <i class="fas fa-angle-right"></i>
+                                </span>
+                            </p>
+                        </a>
+                    </div>
+                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                        <a href="{{ route('edit_branche', $stagiaire->id) }} ">
+                            <p class="p-1 m-0" style="font-size: 10px;">BRANCHE<span style="float: right;">
+                                    @if ($branche->id == null)
                                         <strong style="color: red">incomplète</strong>&nbsp;
-                                        @else
-                                        {{$service->nom_service}}&nbsp;
-                                        @endif
-                                        <i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                        </a>
-                                    </div>
-                                    <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                        <a href="{{route('edit_branche',$stagiaire->id)}} " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">BRANCHE<span style="float: right;">
-                                        @if ($branche->id==null)
-                                        <strong style="color: red">incomplète</strong>&nbsp;
-                                        @else
-                                        {{$branche->nom_branche}}&nbsp;
-                                        @endif
-                                        <i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                        </a>
-                                    </div>
+                                    @else
+                                        {{ $branche->nom_branche }}&nbsp;
+                                    @endif
+                                    <i class="fas fa-angle-right"></i>
+                                </span>
+                            </p>
+                        </a>
+                    </div>
 
 
-                                    <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-                                </div>
-                        </div>
+                    <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+                </div>
+            </div>
 
-    </div>
-@endsection
+        </div>
+    @endsection
