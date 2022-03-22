@@ -228,7 +228,7 @@
                                 {{-- </div>
                         <div class="col-md-11"> --}}
                                 <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                    <a href="{{route('condition_generale_de_vente')}}" class="nav-item">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
+                                    <a href="{{route('condition_generale_de_vente')}}" class="nav-item" target="_blank">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
                                 </label>
                             </div>
                         </div>

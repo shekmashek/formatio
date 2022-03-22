@@ -114,6 +114,24 @@ class NouveauCompte extends Model
         $data = DB::select('select * from users WHERE email =?', [$valiny]);
         return $data;
     }
+
+    public function validation_form_photo_cfp($imput)
+    {
+        $rules = [
+            'logo_cfp.required' => 'le logo de votre entreprise ne doit pas être null',
+            'logo_cfp.file' => 'le logo de votre entreprise doit être de type "file"',
+            'logo_cfp.max' => 'la taille de votre image ne doit pas dépassé 60 Ko',
+            'logo_cfp.mimes' => 'votre logo doit être soit "*.png, *.jpg, *.jpeg"'
+            ];
+        $critereForm = [
+            'logo_cfp' => 'required|file|max:60|mimes:jpeg,png,jpg'
+        ];
+        //   'logo_cfp' => 'required|file|max:2400|mimes:jpeg,png,jpg',
+
+    $val = $imput->validate($critereForm, $rules);
+    return $val;
+    }
+
     public function validation_form_cfp($imput)
     {
         $rules = [

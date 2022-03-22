@@ -101,6 +101,42 @@
         });
     });
 
+    $(document).on('change', '#logo_cfp', function() {
+/*        var v = $(this).input(); */
+    /*    var v = $('input[type=file]').val(); */
+  /*  var v = document.getElementById('logo_cfp').files; */
+  var v = $(this).files;
+
+        $.ajax({
+            url: '{{route("verify_tail_photo")}}'
+            , type: 'get'
+            , data: {
+                valiny: v
+            }
+            , success: function(response) {
+                var userData = response;
+/*
+
+*/
+                /*    return response()->json(['error'=>$val->errors()->all()]); /
+/*
+                if (userData.length > 0) {
+                    document.getElementById("email_resp_cfp_err").innerHTML = "mail existe déjà";
+                } else {
+                    document.getElementById("email_resp_cfp_err").innerHTML = "";
+                } */
+            }
+            , error: function(error) {
+                if(error.errors!=null){
+                    document.getElementById("success").innerHTML='';
+                    error.errors.name ?
+                        document.getElementById("error_logo_cfp").innerHTML=error.errors.logo_cfp
+                    :
+                        document.getElementById("error_logo_cfp").innerHTML='';
+            }
+            }
+        });
+    });
   /*  $(document).on('change', '#tel_resp_cfp', function() {
         var result = $(this).val();
         $.ajax({
