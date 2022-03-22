@@ -18,6 +18,7 @@ creation table status(Modification_bdd(projet))
 ALTER TABLE groupe_entreprises
 ADD CONSTRAINT incription UNIQUE (groupe_id,entreprise_id);
 
+
 --------Mars 14
 modification vue  v_formateur_projet (bdd_suiviformation_view_4.0(modification_views_projet))
 modification vue  v_groupe_projet_module (bdd_suiviformation_view_4.0(modification_views_projet))
@@ -32,3 +33,6 @@ modification table reponse_evaluationchaud (bdd_suiviformation_mise_a_jour_5(pro
 
 --------mars 22
 creation de vue v_montant_session => bdd_suiviformation_view_4.0(modification_views_projet)
+
+ALTER TABLE participant_groupe
+ADD CONSTRAINT incription_session UNIQUE (groupe_id,stagiaire_id);

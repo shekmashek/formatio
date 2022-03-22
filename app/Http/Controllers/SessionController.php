@@ -243,7 +243,9 @@ class SessionController extends Controller
     public function getOneStagiaire(Request $request)
     {
         $id = $request->Id;
-        $stg = DB::select('select * from v_stagiaire_entreprise where matricule = ?',[$id]);
+        $etp = $request->etp;
+        // $stg = DB::select('select * from v_stagiaire_entreprise where matricule = ?',[$id]);
+        $stg = DB::select('select * from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
         return response()->json($stg);
     }
 

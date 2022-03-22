@@ -153,7 +153,8 @@ class GroupeController extends Controller
     public function storeInter(Request $request)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $type_formation = $request->type_formation;
         //condition de validation de formulaire
         $request->validate(

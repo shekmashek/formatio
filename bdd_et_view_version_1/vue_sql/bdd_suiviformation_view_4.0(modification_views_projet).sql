@@ -448,7 +448,8 @@ create or replace view v_detail_presence as
 
 
 
-CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
+CREATE OR REPLACE VIEW v_stagiaire_entreprise AS 
+SELECT
     stg.id AS stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
