@@ -975,6 +975,7 @@ Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent
 Route::get('/modification_nom/{id}','ResponsableCfpController@edit_nom')->name('modification_nom');
 Route::get('/modification_date_de_naissance/{id}','ResponsableCfpController@edit_naissance')->name('modification_date_de_naissance');
 Route::get('/modification_genre/{id}','ResponsableCfpController@edit_genre')->name('modification_genre');
+Route::get('/modification_mdp/{id}','ResponsableCfpController@edit_mdp')->name('modification_mdp');
 Route::get('/modification_email/{id}','ResponsableCfpController@edit_mail')->name('modification_email');
 Route::get('/modificationn_telephone/{id}','ResponsableCfpController@edit_phone')->name('modificationn_telephone');
 Route::get('/modification_cin/{id}','ResponsableCfpController@edit_cin')->name('modification_cin');
@@ -984,3 +985,4 @@ Route::get('/modification_matricule/{id}','ResponsableCfpController@edit_matricu
 
 Route::post('/enregistrer_modification_nom/{id}','ResponsableCfpController@update_nom_responsable')->name('enregistrer_modification_nom');
 Route::post('/enregistrer_modification_date_de_naissance/{id}','ResponsableCfpController@update_dtn_responsable')->name('enregistrer_modification_date_de_naissance');
+Route::post('/enregistrer_modification_genre/{id}','ResponsableCfpController@update_genre_responsable')->name('enregistrer_modification_genre');

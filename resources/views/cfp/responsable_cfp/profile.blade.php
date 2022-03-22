@@ -61,7 +61,7 @@
 
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_genre_resp',$refs->id)}} ">
+                    <a href="{{route('modification_genre',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">GENRE
                             <span style="float: right;">
                             @if ($refs->sexe_resp_cfp==null)
