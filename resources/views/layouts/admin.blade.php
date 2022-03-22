@@ -674,7 +674,7 @@
                                             <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-2 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isCFPPrincipale')
-                                            <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
+                                            <a href="{{route('profil_du_responsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             <hr style="color:lightgrey">
 

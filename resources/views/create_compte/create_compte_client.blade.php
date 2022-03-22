@@ -70,12 +70,13 @@
 
 </style>
 
+<form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
+    @csrf
+
 <div class="row justify-content-center">
     <div class="col-md-12">
 
-        <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
-            @csrf
-            <ul id="progressbars" class="mb-1">
+           <ul id="progressbars" class="mb-1">
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>
@@ -127,7 +128,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlInput1" class="form-control-label">Logo(2.5 Mo max)<strong style="color:#ff0000;">*</strong></label>
+                            <label for="exampleFormControlInput1" class="form-control-label">Logo(60Ko max)<strong style="color:#ff0000;">*</strong></label>
                             <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
                             @error('logo_etp')
                             <div class="col-sm-6">
@@ -256,41 +257,39 @@
                             <div class="col-sm-3"></div>
                         </div>
 
-                        <input type="button" name="previous" class="previous action-button" value="Précendent" />
-                        <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
-
+                        <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                        <button type="submit" class=" action-button">Confirmer</button>
                         {{-- <input type="button" name="make_payment" class="next action-button" value="Suivant" /> --}}
                 </fieldset>
 
                 {{-- --}}
 
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                {{-- <fieldset class="shadow p-3 mb-5 bg-body rounded">
                     <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
                     <div class="form-group">
                         <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Précedent" />
                     <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
-                </fieldset>
+                </fieldset> --}}
 
 
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
+                {{-- <fieldset class="shadow p-3 mb-5 bg-body rounded">
                     <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez acepter la validation sur votre mail</strong></h5>
                     <div class="form-group">
                         <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
                     </div>
-                    {{-- <input type="button" name="previous" class="previous action-button" value="Précendent" /> --}}
                     <button type="submit" class="action-button">lancer</button>
-                </fieldset>
+                </fieldset> --}}
 
                 {{-- --}}
             </div>
 
 
-        </form>
+
 
     </div>
 </div>
-
+</form>
 @endsection
 @extends('create_compte.footer')

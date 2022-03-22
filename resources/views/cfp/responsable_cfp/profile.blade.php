@@ -40,7 +40,7 @@
                     </a>
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_nom_resp',$refs->id)}} ">
+                    <a href="{{route('modification_nom',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$refs->nom_resp_cfp}} {{$refs->prenom_resp_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
@@ -48,7 +48,7 @@
 
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_naissance_resp',$refs->id)}} ">
+                    <a href="{{route('modification_date_de_naissance',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE
                         @if ($refs->date_naissance_resp_cfp==null)
                         <span style="float: right; color:red">incomplète&nbsp;
@@ -61,7 +61,7 @@
 
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_genre_resp',$refs->id)}} ">
+                    <a href="{{route('modification_genre',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">GENRE
                             <span style="float: right;">
                             @if ($refs->sexe_resp_cfp==null)
