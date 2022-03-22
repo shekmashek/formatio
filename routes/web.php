@@ -997,3 +997,4 @@ Route::post('/enregistrer_modification_adresse/{id}','ResponsableCfpController@u
 Route::post('/enregistrer_modification_fonction/{id}','ResponsableCfpController@update_fonction_responsable')->name('enregistrer_modification_fonction');
 
 //------------------------MODIFIER PROFIL OF---------------------------------//
+Route::get('/modification_logo{id}','CfpController@edit_logo')->name('modification_logo');

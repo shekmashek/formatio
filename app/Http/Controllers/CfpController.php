@@ -46,4 +46,8 @@ class CfpController extends Controller
         $dossier = 'entreprise';
         return $get_img->get_image($logo_cfp, $dossier);
     }
+    //modification du profil
+    public function edit_logo($id,Request $request){
+        
+    }
 }
