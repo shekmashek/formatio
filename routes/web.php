@@ -967,7 +967,7 @@ Route::post('supprimer_iframe_etp','HomeController@supprimer_iframe_etp')->name(
 Route::post('modifier_iframe_cfp','HomeController@modifier_iframe_cfp')->name('modifier_iframe_cfp');
 Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name('supprimer_iframe_cfp');
 
-//------------------------MODIFIER RESPONSABLE OF---------------------------------//
+//------------------------MODIFIER PROFIL RESPONSABLE OF---------------------------------//
 //affichage profil
 Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent')->name('profil_du_responsable');
 //Route pour modifier chaque champs pour responsable
@@ -994,3 +994,6 @@ Route::post('/enregistrer_modification_telephone/{id}','ResponsableCfpController
 Route::post('/enregistrer_modification_cin/{id}','ResponsableCfpController@update_cin_responsable')->name('enregistrer_modification_cin');
 Route::post('/enregistrer_modification_adresse/{id}','ResponsableCfpController@update_adresse_responsable')->name('enregistrer_modification_adresse');
 Route::post('/enregistrer_modification_fonction/{id}','ResponsableCfpController@update_fonction_responsable')->name('enregistrer_modification_fonction');
+
+//------------------------MODIFIER PROFIL OF---------------------------------//
+Route::get('/modification_logo{id}','CfpController@edit_logo')->name('modification_logo');
