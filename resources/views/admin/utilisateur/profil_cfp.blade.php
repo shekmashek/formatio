@@ -18,7 +18,11 @@
                                     {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
                                     <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
                                 </div>
-                                <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <a href="">
+                                     <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
+                                    </a>
+                                </div>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 <div class="row">
