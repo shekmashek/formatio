@@ -194,7 +194,7 @@ ul li {
 
 /* section1 */
 .section1{
-  background-image: url('../../images/background_images/17section1.png');
+  background-image: url('../../images/background_images/17section1.webp');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -405,6 +405,12 @@ font-size: 0.875rem;
   color: grey;
 }
 
+.card_content p{
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: grey;
+}
+
 .card_fonctions .icon .bx{
   padding: 1rem 1rem;
   border: none;
@@ -433,6 +439,11 @@ font-size: 0.875rem;
   padding-right: 1rem;
   display: grid;
   place-content: center;
+}
+
+.section7 image{
+  max-width: 80% !important;
+  height: 80%;
 }
 
 .section7 .text p{
