@@ -176,7 +176,7 @@
                 </div> --}}
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
-                    <a href="{{route('profil_cfp',$refs->cfp_id)}}">
+                    <a href="{{route('profil_of',$refs->cfp_id)}}">
                         <p class="p-1 m-0" style="font-size: 10px;">ORGANISME DE FORMATION<span style="float: right;">{{$refs->nom_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>

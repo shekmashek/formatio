@@ -157,7 +157,7 @@ Route::get('/utilisateur_entreprise_delete/{id}','UtilisateurControlleur@delete_
 Route::get('/utilisateur_new_cfp','UtilisateurControlleur@new_cfp')->name('utilisateur_new_cfp');
 Route::get('/utilisateur_new_etp','UtilisateurControlleur@new_entreprise')->name('utilisateur_new_etp');
 
-Route::get('/profil_cfp/{id}','UtilisateurControlleur@profil_cfp')->name('profil_cfp');
+Route::get('/profil_of/{id}','UtilisateurControlleur@profil_cfp')->name('profil_of');
 Route::post('/utilisateur_register_cfp','UtilisateurControlleur@register_cfp')->name('utilisateur_register_cfp');
 Route::post('/utilisateur_update_cfp/{id}','UtilisateurControlleur@update_cfp')->name('utilisateur_update_cfp');
 Route::post('/utilisateur_update_etp/{id}','UtilisateurControlleur@update_entreprise')->name('utilisateur_update_etp');

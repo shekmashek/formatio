@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\URL;
 
 class ProfController extends Controller
 {
@@ -144,13 +145,12 @@ class ProfController extends Controller
         $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
         $str = 'images/formateurs';
 
-        //stocker logo dans google drive
-        $dossier = 'formateur';
-        $stock_formateur = new getImageModel();
-        // $stock_formateur->store_image($dossier,$nom_image,$request->file('image')->getContent());
-        // $request->image->move(public_path($str), $nom_image);
+        $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
+
+        $request->image->move(public_path($str), $nom_image);
 
         $frm->photos = $nom_image;
+        $frm->url_photo = $url_photo;
 
         $user = new User();
         $user->name = $request->nom . " " . $request->prenom;
