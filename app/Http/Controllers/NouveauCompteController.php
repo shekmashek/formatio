@@ -73,6 +73,13 @@ class NouveauCompteController extends Controller
         return response()->json($data);
     }
 
+    public function verify_tail_photo(Request $req){
+        $val = $this->new_compte->validation_form_photo_cfp($req);
+
+       return response()->json([$val->errors()->all()]);
+
+    }
+
     public function create_compte_cfp(Request $req)
     {
         // dd($req->input());
@@ -87,7 +94,7 @@ class NouveauCompteController extends Controller
                 // ======== cfp
                 $date = date('d-m-y');
                 $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
-                $url = URL::to('/')."/".$data["logo_cfp"];
+                $url = URL::to('/')."/images/CFP/".$data["logo_cfp"];
 
                 $data["nom_cfp"] = $req->name_cfp;
                 $data["email_cfp"] = $req->email_resp_cfp;
@@ -187,7 +194,7 @@ class NouveauCompteController extends Controller
                 // ======== entreprise
                 $date = date('d-m-y');
                 $data["logo_etp"]  = str_replace(' ', '_', $req->name_etp .  '' . $req->tel_etp . '' . $date . '.' . $req->file('logo_etp')->extension());
-                $url = URL::to('/')."/".$data["logo_etp"];
+                 $url = URL::to('/')."/images/entreprises/".$data["logo_etp"];
 
                 $data["nom_etp"] = $req->name_etp;
                 $data["email_etp"] = $req->email_resp_etp;

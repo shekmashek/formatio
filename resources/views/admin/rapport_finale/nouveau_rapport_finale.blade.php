@@ -325,9 +325,30 @@ h6{
         </div>
     </div>
 
-    <hr>
-
     <div class="row">
+        <div class="col-md-12 text-center">
+                    <p>
+                        {{-- {{$object->description}} --}}
+                        Objectif(s) global(aux) de la formation :
+                    </p>
+
+                    {{-- @foreach ($data["data_desc_objectif"] as $dataq)
+                    @if ($dataq->but_objectif_id == $object->id) --}}
+
+                    <li>
+                        {{-- {{$dataq->description}} --}}
+                        {{ $data["data_desc_objectif"]->objectif }}
+                    </li>
+
+                    {{-- @endif
+                    @endforeach --}}
+
+               
+           
+        </div>
+    </div>
+
+    {{-- <div class="row">
         <div class="col-md-5">
             <form method="HEAD" action="{{route('desc_objectif',$data["projet"]->projet_id)}}">
                 @if(Session::has('success_objectif_globaux'))
@@ -413,7 +434,7 @@ h6{
 
         </div>
         <div class="col-md-1"></div>
-    </div>
+    </div> --}}
 
 </div>
 
@@ -1106,7 +1127,7 @@ h6{
 <div class="container">
     <div class="row">
         <div class="col-m-12">
-            <a href="{{ route('downRapportFinale',[$data["projet"]->projet_id]) }}"><button type="button" class="btn btn-outline-secondary"><i class="bx bxs-file-pdf"></i>Exporter en pdf</button></a>
+            <a href="{{ route('downRapportFinale',[$data["projet"]->groupe_id]) }}"><button type="button" class="btn btn-outline-secondary"><i class="bx bxs-file-pdf"></i>Exporter en pdf</button></a>
         </div>
     </div>
 </div>

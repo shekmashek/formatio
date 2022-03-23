@@ -492,7 +492,6 @@ class HomeController extends Controller
         // }
         elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
             $projet = DB::select($sql);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);

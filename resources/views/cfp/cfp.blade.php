@@ -233,7 +233,7 @@
                                         </td>
                                         <td>
                                             <div align="left">
-                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$refuse_invit->domaine_de_formation}})</strong></p>
+                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$refuse_invit->slogan}})</strong></p>
                                             </div>
                                         </td>
                                         <td>
@@ -247,6 +247,24 @@
                                             </strong>
                                         </td>
                                     </tr>
+<<<<<<< HEAD
+=======
+
+                                    {{-- <tr>
+                                                <td>
+                                                    <div align="left">
+                                                        <strong>{{$refus->nom}}</strong>
+                                    <p style="color: rgb(238, 150, 18)">{{$refus->mail_cfp}}</p>
+                                    <h6>{{$refus->slogan}}</h6>
+                    </div>
+                    </td>
+                    <td>
+                        <strong>
+                            <h5><i class="bx bxs-x-circle"></i> en attente</h5>
+                        </strong>
+                    </td>
+                    </tr> --}}
+>>>>>>> debug_inscription_nicole
                     @endforeach
                     @endif
                     </tbody>

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Models\FonctionGenerique;
+use Exception;
 use PDF;
 
 class DetailController extends Controller
@@ -56,7 +57,11 @@ class DetailController extends Controller
             $detail = DB::select('select * from v_detailmodule');
         }
         if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+
+
+            $fonct = new FonctionGenerique();
+            $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+            $cfp_id = $rqt->cfp_id;
             if ($module!=null) {
                 $detail = DB::select('select * from v_detailmodule where nom_module = "' . $module.'" and cfp_id = '.$cfp_id);
             }
@@ -262,12 +267,27 @@ class DetailController extends Controller
                 'fin.required' => 'Veuillez remplir le champ'
             ]
         );
-
-        for ($i = 0; $i < count($request['lieu']); $i++) {
-            DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $request['formateur'][$i], $request->groupe, $request->projet, $cfp_id]);
+        try{
+            DB::beginTransaction();
+            for ($i = 0; $i < count($request['lieu']); $i++) {
+                if($request['lieu'][$i]== null){
+                    throw new Exception("Vous devez completer le champ lieu.");
+                }
+                if($request['formateur'][$i]== null){
+                    throw new Exception("Vous devez choisir le formateur.");
+                }
+                if($request['debut'][$i]== null || $request['fin'][$i] == null){
+                    throw new Exception("Vous devez completer l'heure de la scéance.");
+                }
+                DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $request['formateur'][$i], $request->groupe, $request->projet, $cfp_id]);
+            }
+            DB::update('update groupes set status = 1 where id = ?', [$request->groupe]);
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollBack();
+            return back()->with('detail_error',$e->getMessage());
         }
-        DB::update('update groupes set status = 1 where id = ?', [$request->groupe]);
-        return back();
     }
 
     public function storeInter(Request $request)
@@ -328,7 +348,17 @@ class DetailController extends Controller
         $h_fin = $request->fin;
         $formateur = $request->formateur;
         $date_detail = $request->date;
-        detail::where('id', $id)
+        try{
+            if($lieu== null){
+                throw new Exception("Vous devez completer le champ lieu.");
+            }
+            if($formateur == null){
+                throw new Exception("Vous devez choisir le formateur.");
+            }
+            if($h_debut == null || $h_fin == null){
+                throw new Exception("Vous devez completer l'heure de la scéance.");
+            }
+            detail::where('id', $id)
             ->update([
                 'formateur_id' => $formateur,
                 'lieu' => $lieu,
@@ -336,6 +366,11 @@ class DetailController extends Controller
                 'h_fin' => $h_fin,
                 'date_detail' => $date_detail,
             ]);
+            return back();
+        }catch(Exception $e){
+            return back()->with('detail_error',$e->getMessage());
+        }
+
         // return response()->json(
         //     [
         //         'success' => true,
@@ -343,7 +378,7 @@ class DetailController extends Controller
 
         //     ]
         // );
-        return back();
+
     }
 
     public function destroy(Request $request)

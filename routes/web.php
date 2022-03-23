@@ -744,6 +744,8 @@ Route::get('verify_cin_user','NouveauCompteController@verify_cin_user')->name('v
 Route::get('verify_name_cfp','NouveauCompteController@verify_name_cfp')->name('verify_name_cfp');
 Route::get('verify_name_etp','NouveauCompteController@verify_name_etp')->name('verify_name_etp');
 
+Route::get('verify_tail_photo','NouveauCompteController@verify_tail_photo')->name('verify_tail_photo');
+
 
 
 Route::post('create_compte_cfp','NouveauCompteController@create_compte_cfp')->name('create_compte_cfp');

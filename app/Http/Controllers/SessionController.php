@@ -28,6 +28,7 @@ use App\Mail\annuler_session;
 use App\Models\getImageModel;
 use App\Presence;
 use Exception;
+use Illuminate\Support\Facades\URL;
 
 class SessionController extends Controller
 {
@@ -105,6 +106,7 @@ class SessionController extends Controller
     }
 
     public function detail_session(){
+        // dd(URL::to('/').'/sarin Gael');
         $user_id = Auth::user()->id;
         $id = request()->id_session;
         $type_formation_id = request()->type_formation;
@@ -130,10 +132,13 @@ class SessionController extends Controller
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             if($type_formation_id  == 1){
                 $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+                $entreprise_id = $projet[0]->entreprise_id;
             }
             elseif($type_formation_id  == 2) {
                 $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+                $entreprise_id = null;
             }
+            // dd($projet);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
@@ -147,20 +152,22 @@ class SessionController extends Controller
             if (Gate::allows('isManagerPrincipale')) {
                 $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
             }
-            $formateur = NULL;
+            $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
             $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);
+            $entreprise_id = $etp_id;
         }
         if(Gate::allows('isFormateur')){
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
-            $formateur = NULL;
+            $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
+            $entreprise_id = $projet[0]->entreprise_id;
         }
         // if(Gate::allows('isStagiaire')){
         //     $evaluation = new EvaluationChaud();
@@ -199,7 +206,7 @@ class SessionController extends Controller
         // $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
         // $detail = $evaluation->findDetailProject($matricule,$session_id); // return les information du project avec detail et information du stagiaire
         // dd($detail);
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id'));
     }
 
     public function getFormateur(){
@@ -271,7 +278,7 @@ class SessionController extends Controller
             $demandeur = DB::select('select nom_cfp from v_demmande_cfp_formateur where user_id_formateur = ?',[$id_user])[0]->nom_cfp;
         }
         if(Gate::allows('isReferent')){
-            $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id_responsable = ?',[$id_user])[0]->nom_etp;
+            $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id= ?',[$id_user])[0]->nom_etp;
         }
         DB::insert('insert into ressources(description,demandeur,groupe_id) values(?,?,?)',[$ressource,$demandeur,$groupe_id]);
         $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
@@ -293,7 +300,7 @@ class SessionController extends Controller
 
     public function insert_frais_annexe(Request $request){
         $id_user = Auth::user()->id;
-        $etp_id = DB::select('select entreprise_id from v_responsable_entreprise where user_id_responsable = ?',[$id_user])[0]->entreprise_id;
+        $etp_id = DB::select('select entreprise_id from v_responsable_entreprise where user_id = ?',[$id_user])[0]->entreprise_id;
         $description = $request->description;
         $montant = $request->montant;
         $groupe_id = $request->groupe;
@@ -447,10 +454,11 @@ class SessionController extends Controller
     public function telecharger_fichier(){
         $user_id = Auth::user()->id;
         // $cfp = Cfp::where('user_id', $user_id)->value('nom');
-        $fonct = new FonctionGenerique();
-        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        // $fonct = new FonctionGenerique();
+        // $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+
         // $cfp_id = $resp->cfp_id;
-        $cfp = $resp->nom_cfp;
+        // $cfp = $resp->nom_cfp;
         $namefile = request()->filename;
         $cfp = request()->cfp;
         $extension = request()->extension;

@@ -14,17 +14,10 @@
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="min_part"
-                                        required onfocus="(this.type='number')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                        minimal</label>
-                                </div>
-                            </div>
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
                                     <input type="text" id="min" class="form-control input" name="date_debut"
                                         required onfocus="(this.type='date')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Date debut du session</label>
+                                    <label class="ml-3 form-control-placeholder" for="min">Date debut du session<strong
+                                        class="text-danger">*</strong></label>
                                 </div>
                             </div>
                             <div class="row px-3 mt-2">
@@ -36,7 +29,8 @@
                                         <option value="{{$form->id}}">{{$form->nom_formation}}</option>
                                         @endforeach
                                     </select>
-                                    <label class="ml-3 form-control-placeholder" for="formation_id">Formations</label>
+                                    <label class="ml-3 form-control-placeholder" for="formation_id">Formations<strong
+                                        class="text-danger">*</strong></label>
                                 </div>
                             </div>
                             <div class="row px-3 mt-2">
@@ -48,7 +42,16 @@
                                         <option value="{{ $etp->entreprise_id }}">{{ $etp->nom_etp }}</option>
                                         @endforeach
                                     </select>
-                                    <label class="ml-3 form-control-placeholder" for="etp_id">Entreprises</label>
+                                    <label class="ml-3 form-control-placeholder" for="etp_id">Entreprises<strong
+                                        class="text-danger">*</strong></label>
+                                </div>
+                            </div>
+                            <div class="row px-3 mt-2">
+                                <div class="form-group mt-1 mb-1">
+                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="min_part"
+                                        required onfocus="(this.type='number')">
+                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
+                                        minimal</label>
                                 </div>
                             </div>
                             <div class="text-center "><button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button></div>
@@ -56,17 +59,10 @@
                         <div class="col">
                             <div class="row px-3 mt-2">
                                 <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="max_part"
-                                        required onfocus="(this.type='number')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                        maximal</label>
-                                </div>
-                            </div>
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
                                     <input type="text" id="min" class="form-control input" name="date_fin"
                                         required onfocus="(this.type='date')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Date fin du session</label>
+                                    <label class="ml-3 form-control-placeholder" for="min">Date fin du session<strong
+                                        class="text-danger">*</strong></label>
                                 </div>
                             </div>
                             <div class="row px-3 mt-2">
@@ -78,7 +74,8 @@
                                         <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
                                         @endforeach
                                     </select>
-                                    <label class="ml-3 form-control-placeholder" for="module_id">Modules</label>
+                                    <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
+                                        class="text-danger">*</strong></label>
                                     <span style="color:#ff0000;" id="module_id_err">Aucun module détecté! veuillez
                                         choisir la formation</span>
                                 </div>
@@ -92,7 +89,16 @@
                                         <option value="{{ $paye->id }}">{{ $paye->type }}</option>
                                         @endforeach
                                     </select>
-                                    <label class="ml-3 form-control-placeholder" for="payement_id">Mode de Payement</label>
+                                    <label class="ml-3 form-control-placeholder" for="payement_id">Mode de Payement<strong
+                                        class="text-danger">*</strong></label>
+                                </div>
+                            </div>
+                            <div class="row px-3 mt-2">
+                                <div class="form-group mt-1 mb-1">
+                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="max_part"
+                                        required onfocus="(this.type='number')">
+                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
+                                        maximal</label>
                                 </div>
                             </div>
                             <div class="text-center "><button type="button" class="btn  btn_annuler" data-dismiss="modal">Annuler</button></div>
@@ -102,5 +108,43 @@
         </form>
     </div>
 </div>
-<script src="{{asset('js/projet_inter_intra.js')}}"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{-- <script src="{{asset('js/projet_inter_intra.js')}}"></script> --}}
+<script>
+    $("#formation_id").on("change", function() {
+        var id = $("#formation_id").val();
+        $("#module_id option").remove();
+        $.ajax({
+            method: "GET",
+            url: "{{ route('module_formation') }}",
+            data: {
+                id: id,
+            },
+            dataType: "html",
+            _token: "{{ csrf_token() }}",
+            success: function(response) {
+                var data = JSON.parse(response);
+                if (data.length <= 0) {
+                    document.getElementById("module_id_err").innerHTML =
+                        "Aucun module a été détecter! veuillez choisir la formation";
+                } else {
+                    document.getElementById("module_id_err").innerHTML = "";
+                    for (var $i = 0; $i < data.length; $i++) {
+                        $("#module_id").append(
+                            '<option value="' +
+                                data[$i].id +
+                                '">' +
+                                data[$i].nom_module +
+                                "</option>"
+                        );
+                    }
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            },
+        });
+    });
+
+</script>
 @endsection

@@ -68,7 +68,7 @@
                     <div class="col-6 justify-content-around">
                          <div class = "liste_fichier">
 
-                            <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('download_file',['id'=>$id,'filename'=>$res[$i]['filename']])}}"> {{$res[$i]['filename'].'.'.$res[$i]['extension']}} </a> </span> &nbsp;&nbsp;
+                            <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('download_file',['id'=>$id,'filename'=>$res[$i]['filename'],'extension'=>$res[$i]['extension']])}}"> {{$res[$i]['filename'].'.'.$res[$i]['extension']}} </a> </span> &nbsp;&nbsp;
                             <br>
                         </div><br>
                     </div><br>

@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <span class="" style = "background-color: #801D68;color:white"><i class="fa fa-plus"></i>&nbsp; <a href="" data-toggle="modal" data-target="#creer_dossier"> Créer un nouveau dossier </a> </span>
+            <span class="" style = "background-color: #801D68;color:white"><i class="fa fa-plus"></i>&nbsp; <a href="" data-bs-toggle="modal" data-bs-target="#creer_dossier"> Créer un nouveau dossier </a> </span>
         </div><br><br>
         <hr>
     </div>
@@ -55,11 +55,11 @@
                 <span class = "sous_dossier me-2 ms-2 mt-2 mb-2"><i class="fa fa-folder"></i>&nbsp; <a href="{{route('liste_fichier',$get_sub_folder[$i]['name'])}}"> {{$get_sub_folder[$i]['name']}} </a>  &nbsp;&nbsp;
                     @if ($get_sub_folder[$i]['name']!="Mes documents")
                         <div class=" btn-group dropend">
-                            <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <li style="font-size:15px"><a href="#" data-toggle="modal"  data-target="#exampleModal_{{$get_sub_folder[$i]['name']}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li>
+                                <li style="font-size:15px"><a href="#" data-bs-toggle="modal"  data-bs-target="#exampleModal_{{$get_sub_folder[$i]['name']}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li>
                             </div>
                         </div>
                     @endif
