@@ -160,7 +160,7 @@ CREATE TABLE `tarif_categories` (
 
 
 CREATE TABLE cfps (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,74
   nom varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',

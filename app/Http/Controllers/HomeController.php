@@ -179,6 +179,9 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
+        if (Gate::allows('isFormateurPrincipale')) {
+            return redirect()->route('calendrier');
+        }  
         if (Gate::allows('isStagiairePrincipale')) {
            //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
