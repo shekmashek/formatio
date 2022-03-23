@@ -5,6 +5,8 @@ use App\Http\Controllers\NiveauController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use phpseclib3\Crypt\RC2;
+
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -157,7 +159,7 @@ Route::get('/utilisateur_entreprise_delete/{id}','UtilisateurControlleur@delete_
 Route::get('/utilisateur_new_cfp','UtilisateurControlleur@new_cfp')->name('utilisateur_new_cfp');
 Route::get('/utilisateur_new_etp','UtilisateurControlleur@new_entreprise')->name('utilisateur_new_etp');
 
-Route::get('/profil_of/{id}','UtilisateurControlleur@profil_cfp')->name('profil_of');
+
 Route::post('/utilisateur_register_cfp','UtilisateurControlleur@register_cfp')->name('utilisateur_register_cfp');
 Route::post('/utilisateur_update_cfp/{id}','UtilisateurControlleur@update_cfp')->name('utilisateur_update_cfp');
 Route::post('/utilisateur_update_etp/{id}','UtilisateurControlleur@update_entreprise')->name('utilisateur_update_etp');
@@ -971,7 +973,7 @@ Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name(
 //affichage profil
 Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent')->name('profil_du_responsable');
 //Route pour modifier chaque champs pour responsable
-Route::get('/modification_photo{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
+Route::get('/modification_photo/{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
 Route::get('/modification_nom/{id}','ResponsableCfpController@edit_nom')->name('modification_nom');
 Route::get('/modification_date_de_naissance/{id}','ResponsableCfpController@edit_naissance')->name('modification_date_de_naissance');
 Route::get('/modification_genre/{id}','ResponsableCfpController@edit_genre')->name('modification_genre');
@@ -996,4 +998,13 @@ Route::post('/enregistrer_modification_adresse/{id}','ResponsableCfpController@u
 Route::post('/enregistrer_modification_fonction/{id}','ResponsableCfpController@update_fonction_responsable')->name('enregistrer_modification_fonction');
 
 //------------------------MODIFIER PROFIL OF---------------------------------//
-Route::get('/modification_logo{id}','CfpController@edit_logo')->name('modification_logo');
+Route::get('/profil_of/{id}','UtilisateurControlleur@profil_cfp')->name('profil_of');
+Route::get('/modification_logo/{id}','CfpController@edit_logo')->name('modification_logo');
+Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
+Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
+Route::get('/modification_adresse/{id}','CfpController@edit_adresse')->name('modification_adresse');
+
+
+Route::post('/enregistrer_modification_logo_cfp/{id}','CfpController@modifier_logo')->name('enregistrer_modification_logo_cfp');
+Route::post('/enregistrer_modification_nom_cfp/{id}','CfpController@modifier_nom')->name('enregistrer_modification_nom_cfp');
+Route::post('/enregistrer_modification_adresse_cfp/{id}','CfpController@modifier_adresse')->name('enregistrer_modification_adresse_cfp');

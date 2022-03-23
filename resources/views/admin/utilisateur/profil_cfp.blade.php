@@ -17,14 +17,14 @@
                                 <div class="m-b-25 mt-2">
                                     <div class="hover">
                                         <a href="{{ route('modification_logo',$cfp->id) }}">
-                                        
+
                                     {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
                                         <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
                                         </a>
                                     </div>
                                 </div>
-                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <a href="{{ route('modification_logo',$cfp->id) }}">
+                                <div class="hover" >
+                                    <a href="{{ route('modification_nom_organisme',$cfp->id) }}">
                                      <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
                                     </a>
                                 </div>
@@ -47,7 +47,7 @@
                                         <hr>
                                         <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+                                            <a href="{{route('modification_adresse',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     lot:
                                                     @if($cfp->adresse_lot==NULL)
@@ -59,7 +59,7 @@
                                             </a>
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+                                            <a href="{{route('modification_adresse',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     quartier:
                                                     @if($cfp->adresse_quartier==NULL)
@@ -72,7 +72,7 @@
                                         </div>
 
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+                                            <a href="{{route('modification_adresse',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     ville:
                                                     @if($cfp->adresse_ville==NULL)
@@ -84,7 +84,7 @@
                                             </a>
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+                                            <a href="{{route('modification_adresse',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     region:
                                                     @if($cfp->adresse_region==NULL)

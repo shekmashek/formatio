@@ -11,6 +11,8 @@ use App\Mail\entrepriseMail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
 use App\Models\getImageModel;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 
 class CfpController extends Controller
 {
@@ -49,10 +51,46 @@ class CfpController extends Controller
     }
     //modification du profil
     public function edit_logo($id,Request $request){
-        $user_id =  $users = Auth::user()->id;
-        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-        $cfps = $this->fonct->findWhereMulitOne("cfps",["id"],[$responsable->cfp_id]);
-        dd($cfps);
-        return view('cfp.responsable_cfp.modification_profil.edit_photo', compact('responsable'));
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_photo', compact('cfp'));
+    }
+    public function edit_nom($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_nom', compact('cfp'));
+    }
+    public function edit_adresse($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_adresse', compact('cfp'));
+    }
+
+
+    public function modifier_logo($id,Request $request){
+        $image = $request->file('image');
+        if($image != null){
+            $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+            $image_ancien = $cfp->logo;
+            //supprimer l'ancienne image
+            File::delete(public_path("images/CFP/".$image_ancien));
+            //enregiistrer la nouvelle photo
+            $nom_image = str_replace(' ', '_', $request->nom . '.' . $request->image->extension());
+            $destinationPath = 'images/CFP';
+            $image->move($destinationPath, $nom_image);
+            //onn modifie ainsi l'url
+            $url_logo = URL::to('/')."/images/CFP/".$nom_image;
+
+            DB::update('update cfps set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
+
+        }
+        else{
+            return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+        }
+        return redirect()->route('profil_of',[$id]);
+    }
+    public function modifier_nom($id,Request $request){
+        DB::update('update cfps set nom = ? where id = ?', [$request->nom,$id]);
+        return redirect()->route('profil_of',[$id]);
+    }
+    public function modifier_adresse($id,Request $request){
+
     }
 }
