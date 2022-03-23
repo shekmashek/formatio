@@ -108,28 +108,16 @@
             document.getElementById("error_logo_cfp").innerHTML = '';
         }
     });
-    /*  $(document).on('change', '#tel_resp_cfp', function() {
-          var result = $(this).val();
-          $.ajax({
-              url: '{{route("verify_tel_user")}}'
-              , type: 'get'
-              , data: {
-                  valiny: result
-              }
-              , success: function(response) {
-                  var userData = response;
+    $(document).on('change', '#tel_resp_cfp', function() {
+        if ($(this).val().length > 13) {
+            document.getElementById("tel_resp_cfp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
+        } else {
+            document.getElementById("tel_resp_cfp_err").innerHTML = '';
+        }
 
-                  if (userData.length > 0) {
-                      document.getElementById("tel_resp_cfp_err").innerHTML = "Télephone existes déjà";
-                  } else {
-                      document.getElementById("tel_resp_cfp_err").innerHTML = "";
-                  }
-              }
-              , error: function(error) {
-                  console.log(error);
-              }
-          });
-      }); */
+    });
+
+
 
     $(document).on('change', '#nif_cfp', function() {
         var nif = $(this).val();
@@ -163,6 +151,15 @@
         } else {
             document.getElementById("error_logo_etp").innerHTML = '';
         }
+    });
+
+    $(document).on('change', '#tel_resp_etp', function() {
+        if ($(this).val().length > 13) {
+            document.getElementById("tel_resp_etp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
+        } else {
+            document.getElementById("tel_resp_etp_err").innerHTML = '';
+        }
+
     });
 
     $(document).on('change', '#cin_resp_etp', function() {
