@@ -139,18 +139,9 @@
                         </div>
                         <div class="col-6 text">
                             <h1 class="mb-5">Vous êtes un organisme de formation ?</h1>
-                            <p>Disposez d’une base de données centralisée, gagnez en temps et en économie.</p>
-                            <p>Retrouvez tout ce dont vous avez besoin dans un seul et unique endroit : la gestion
-                                de vos formations (session , exécution ...),
-                                vos facturations, vos devis, votre espace professionnel ( dressage et modification
-                                de vos catalogues).
-                            </p>
-                            <p>Investissez dans le futur! Digitalisez votre activité et ayez une longueur
-                                d’avance sur les autres.
-                            </p>
-                            <p>Améliorez votre communication et votre suivi commercial.<br>
-                                Rapprochez-vous de vos clients, envoyez leurs des évaluations digitalisées et
-                                personnalisables et obtenez des feedbacks instantanés.
+                            <p>Toutes nos fonctionnalités sont faites pour perfectionner vos services !</p>
+                            <p>Gestion de formation, facturation, documentation, commerciale ainsi que le Power BI sur mesure intégré, des outils élaborés pour faciliter, améliorer le pilotage
+                                et les prises de décidions stratégiques au sein de votre entreprise, vous permettant ainsi d'atteindre vos objectifs avec agilité.
                             </p>
                         </div>
                     </div>
