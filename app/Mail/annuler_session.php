@@ -26,7 +26,8 @@ class annuler_session extends Mailable
         $this->date_fin = $date_fin;
     }
 
-    /**
+    /**ù
+     * 
      * Build the message.
      *
      * @return $this
