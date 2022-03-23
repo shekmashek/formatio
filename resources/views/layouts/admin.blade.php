@@ -18,7 +18,7 @@
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
-    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg54Ko.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -156,6 +156,15 @@
                     <span class="links_name">Projets</span>
                 </a>
                 <span class="tooltip">Projets</span>
+            </li>
+            @endcanany
+            @canany(['isReferent'])
+            <li>
+                <a href="{{route('projet_interne')}}" class="d-flex nav_linke">
+                    <i class='bx bxl-netlify'></i>
+                    <span class="links_name">Formation Interne</span>
+                </a>
+                <span class="tooltip">Formation Interne</span>
             </li>
             @endcanany
             @canany(['isStagiaire'])
@@ -441,7 +450,7 @@
             @endcan
 
             <li>
-                {{-- <a href="{{route('recherche_admin')}}" class="d-flex nav_linke"> --}}
+                <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>
                     <span class="links_name">Reporting</span>
                 </a>

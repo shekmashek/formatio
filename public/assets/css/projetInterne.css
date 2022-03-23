@@ -1,0 +1,99 @@
+.projet_interne{
+    display: grid;
+    place-content: center;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    border: none;
+    border-radius: 5px;
+}
+
+h3{
+    color: #333;
+}
+
+.p1{
+    background-image: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+
+    transition: all .5s ease;
+}
+
+.p2{
+    background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+    transition: all .5s ease;
+}
+
+.p3{
+    background-image: linear-gradient( 135deg, #52E5E7 10%, #130CB7 100%);
+    transition: all .5s ease;
+}
+
+.p1:hover{
+    background-image: linear-gradient( 135deg, #FAB2FF 10%, #1904E5 100%);
+    transform: scale(1.1);
+}
+
+.p1:hover span .bx{
+    transform: rotate(360deg);
+}
+
+.p2:hover{
+    /* background-image: linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%); */
+    background-image: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
+    transform: scale(1.1);
+}
+
+.p3:hover{
+    background-image: linear-gradient( 135deg, #FAB2FF 10%, #1904E5 100%);
+    transform: scale(1.1);
+}
+
+
+.projet_interne a{
+    color: white;
+}
+
+.projet_interne a:focus{
+    text-decoration: none;
+}
+
+.projet_interne span .bx{
+    display: grid;
+    place-content: center;
+    font-size: 5rem;
+    transition: all 1s;
+}
+
+.p1:hover span .bx{
+transform: rotate(45deg);
+}
+
+.p2:hover span .bx{
+    transform: translateY(20px);
+}
+
+.p3:hover span .bx{
+    transform: rotate(-45deg);
+}
+
+.projet_interne p{
+    text-transform: uppercase;
+    font-size: 1.8rem;
+}
+
+/* ----------------  formations  ---------------- */
+
+
+
+/* ----------------  formations  ---------------- */
+
+/* ----------------  formateurs  ---------------- */
+
+
+
+/* ----------------  formateurs  ---------------- */
+
+/* ----------------  projets  ---------------- */
+
+
+
+/* ----------------  projets  ---------------- */

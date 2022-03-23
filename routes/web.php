@@ -94,6 +94,11 @@ Route::get('accueil_projet','ProjetControlleur@accueilProjet')->name('accueil_pr
 Route::get('projet_intra','ProjetControlleur@intraFormProjet')->name('projet_intra');
 Route::get('projet_inter','ProjetControlleur@interFormProjet')->name('projet_inter');
 Route::get('module_formation_intra','GroupeController@module_formation_intra')->name('module_formation_intra');
+// route projet interne
+Route::get('projet_interne','ProjetControlleur@projetInterne')->name('projet_interne');
+Route::get('formations','ProjetControlleur@formations')->name('formations');
+Route::get('formateurs','ProjetControlleur@formateurs')->name('formateurs');
+Route::get('projets','ProjetControlleur@projets')->name('projets');
 
 
 

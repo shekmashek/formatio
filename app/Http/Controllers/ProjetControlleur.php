@@ -121,5 +121,19 @@ class ProjetControlleur extends Controller
         return view('projet_session.projet_inter_form');
     }
 
+    public function projetInterne(){
+        return view('referent.projet_Interne.projet_interne');
+    }
 
+    public function formations(){
+        return view('referent.projet_Interne.formations.formation');
+    }
+
+    public function formateurs(){
+        return view('referent.projet_Interne.formateurs.formateur');
+    }
+
+    public function projets(){
+        return view('referent.projet_Interne.projets.projet');
+    }
 }
