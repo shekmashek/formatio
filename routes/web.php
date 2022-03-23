@@ -1013,4 +1013,4 @@ Route::post('/enregistrer_modification_logo_cfp/{id}','CfpController@modifier_lo
 Route::post('/enregistrer_modification_nom_cfp/{id}','CfpController@modifier_nom')->name('enregistrer_modification_nom_cfp');
 Route::post('/enregistrer_modification_adresse_cfp/{id}','CfpController@modifier_adresse')->name('enregistrer_modification_adresse_cfp');
 Route::post('/enregistrer_modification_slogan_cfp/{id}','CfpController@modifier_slogan')->name('enregistrer_modification_slogan_cfp');
-Route::post('/enregistrer_modification_site_cfp/{id}','CfpController@modifier_site')->name('enregistrer_modification_slogan_site');
+Route::post('/enregistrer_modification_site_cfp/{id}','CfpController@modifier_site')->name('enregistrer_modification_site_cfp');

@@ -52,12 +52,12 @@
 
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Modifier le slogan de l'organisme</p>
-            <form   class="btn-submit" action="{{route('enregistrer_modification_slogan_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
+            <p style="text-align: left">Modifier le nom de l'organisme</p>
+            <form   class="btn-submit" action="{{route('enregistrer_modification_site_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value="   {{ $cfp->slogan}}" class="form-control test input"  name="slogan">
+                    <input type="text" value="   {{ $cfp->site_web}}" class="form-control test input"  name="site">
 
                     </div>
                 </div>

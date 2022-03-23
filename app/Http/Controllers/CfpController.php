@@ -82,25 +82,31 @@ class CfpController extends Controller
 
     public function modifier_logo($id,Request $request){
         $image = $request->file('image');
-        if($image != null){
-            $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
-            $image_ancien = $cfp->logo;
-            //supprimer l'ancienne image
-            File::delete(public_path("images/CFP/".$image_ancien));
-            //enregiistrer la nouvelle photo
-            $nom_image = str_replace(' ', '_', $request->nom . '.' . $request->image->extension());
-            $destinationPath = 'images/CFP';
-            $image->move($destinationPath, $nom_image);
-            //onn modifie ainsi l'url
-            $url_logo = URL::to('/')."/images/CFP/".$nom_image;
-
-            DB::update('update cfps set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
-
+        if($image->getSize() > 60000){
+            return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
         }
         else{
-            return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+            if($image != null){
+                $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+                $image_ancien = $cfp->logo;
+                //supprimer l'ancienne image
+                File::delete(public_path("images/CFP/".$image_ancien));
+                //enregiistrer la nouvelle photo
+                $nom_image = str_replace(' ', '_', $request->nom . '.' . $request->image->extension());
+                $destinationPath = 'images/CFP';
+                $image->move($destinationPath, $nom_image);
+                //onn modifie ainsi l'url
+                $url_logo = URL::to('/')."/images/CFP/".$nom_image;
+
+                DB::update('update cfps set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
+
+            }
+            else{
+                return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+            }
+            return redirect()->route('profil_of',[$id]);
         }
-        return redirect()->route('profil_of',[$id]);
+
     }
     public function modifier_nom($id,Request $request){
         DB::update('update cfps set nom = ? where id = ?', [$request->nom,$id]);

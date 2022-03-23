@@ -124,7 +124,7 @@
                                             </a>
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="{{route('modification_site_web')}}">
+                                            <a href="{{route('modification_site_web',$cfp->id)}}">
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Site web officiel</p>
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($cfp->site_web==NULL)
