@@ -70,6 +70,14 @@ class CfpController extends Controller
         $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
         return view('cfp.modification_profil.edit_email', compact('cfp'));
     }
+    public function edit_slogan($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_slogan', compact('cfp'));
+    }
+    public function edit_site($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_site', compact('cfp'));
+    }
 
 
     public function modifier_logo($id,Request $request){
@@ -100,6 +108,14 @@ class CfpController extends Controller
     }
     public function modifier_adresse($id,Request $request){
         DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, $id]);
+        return redirect()->route('profil_of',[$id]);
+    }
+    public function modifier_slogan($id,Request $request){
+        DB::update('update cfps set slogan = ? where id = ?', [$request->slogan, $id]);
+        return redirect()->route('profil_of',[$id]);
+    }
+    public function modifier_site($id,Request $request){
+        DB::update('update cfps set site_web = ? where id = ?', [$request->site, $id]);
         return redirect()->route('profil_of',[$id]);
     }
 

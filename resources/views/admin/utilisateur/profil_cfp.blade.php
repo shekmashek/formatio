@@ -111,9 +111,9 @@
 
                                     <div class="col-lg-6">
                                         <br><br>
-                                        <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Domaine de formation</p>
+                                        <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Slogan</p>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+                                            <a href="{{route('modification_slogan',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($cfp->slogan==NULL)
                                                     <strong style="color: red">incomplète</strong>
@@ -124,7 +124,7 @@
                                             </a>
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+                                            <a href="{{route('modification_site_web')}}">
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Site web officiel</p>
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($cfp->site_web==NULL)

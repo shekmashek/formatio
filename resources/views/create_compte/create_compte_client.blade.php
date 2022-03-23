@@ -183,6 +183,7 @@
                             @enderror
                         </div>
 
+
                         <div class="form-group">
                             <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
                             <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
