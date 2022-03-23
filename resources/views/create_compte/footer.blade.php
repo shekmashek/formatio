@@ -22,39 +22,39 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     $(document).on('change', '#name_entreprise', function() {
-            var id = $(this).val();
-            document.getElementById('name_entreprise_desc').innerHTML = id;
-            console.log(document.getElementById('name_entreprise_desc').value);
+        var id = $(this).val();
+        document.getElementById('name_entreprise_desc').innerHTML = id;
+        console.log(document.getElementById('name_entreprise_desc').value);
+    });
+
+    // ====== autoComplet Champs search nom entreprise
+
+    $(document).ready(function() {
+        $('#name_entreprise_search').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                    , type: 'GET'
+                    , url: "{{route('search_entreprise_referent')}}"
+                    , data: {
+                        search: request.term
+                    }
+                    , success: function(data) {
+                        response(data);
+                    }
+                });
+            }
+            , minlength: 1
+            , autoFocus: true
+            , select: function(e, ui) {
+                $('#name_entreprise_search').val(ui.item.nom_resp);
+            }
         });
+    });
 
-        // ====== autoComplet Champs search nom entreprise
-
-        $(document).ready(function() {
-            $('#name_entreprise_search').autocomplete({
-                source: function(request, response) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                        , type: 'GET'
-                        , url: "{{route('search_entreprise_referent')}}"
-                        , data: {
-                            search: request.term
-                        }
-                        , success: function(data) {
-                            response(data);
-                        }
-                    });
-                }
-                , minlength: 1
-                , autoFocus: true
-                , select: function(e, ui) {
-                    $('#name_entreprise_search').val(ui.item.nom_resp);
-                }
-            });
-        });
-
-        /*-----------------------------------------------*/
+    /*-----------------------------------------------*/
     $(document).on('change', '#cin_resp_cfp', function() {
         var result = $(this).val();
         $.ajax({
@@ -102,63 +102,34 @@
     });
 
     $(document).on('change', '#logo_cfp', function() {
-/*        var v = $(this).input(); */
-    /*    var v = $('input[type=file]').val(); */
-  /*  var v = document.getElementById('logo_cfp').files; */
-  var v = $(this).files;
-
-        $.ajax({
-            url: '{{route("verify_tail_photo")}}'
-            , type: 'get'
-            , data: {
-                valiny: v
-            }
-            , success: function(response) {
-                var userData = response;
-/*
-
-*/
-                /*    return response()->json(['error'=>$val->errors()->all()]); /
-/*
-                if (userData.length > 0) {
-                    document.getElementById("email_resp_cfp_err").innerHTML = "mail existe déjà";
-                } else {
-                    document.getElementById("email_resp_cfp_err").innerHTML = "";
-                } */
-            }
-            , error: function(error) {
-                if(error.errors!=null){
-                    document.getElementById("success").innerHTML='';
-                    error.errors.name ?
-                        document.getElementById("error_logo_cfp").innerHTML=error.errors.logo_cfp
-                    :
-                        document.getElementById("error_logo_cfp").innerHTML='';
-            }
-            }
-        });
+        if (this.files[0].size > 60) {
+            document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+        } else {
+            document.getElementById("error_logo_cfp").innerHTML = '';
+        }
     });
-  /*  $(document).on('change', '#tel_resp_cfp', function() {
-        var result = $(this).val();
-        $.ajax({
-            url: '{{route("verify_tel_user")}}'
-            , type: 'get'
-            , data: {
-                valiny: result
-            }
-            , success: function(response) {
-                var userData = response;
+    /*  $(document).on('change', '#tel_resp_cfp', function() {
+          var result = $(this).val();
+          $.ajax({
+              url: '{{route("verify_tel_user")}}'
+              , type: 'get'
+              , data: {
+                  valiny: result
+              }
+              , success: function(response) {
+                  var userData = response;
 
-                if (userData.length > 0) {
-                    document.getElementById("tel_resp_cfp_err").innerHTML = "Télephone existes déjà";
-                } else {
-                    document.getElementById("tel_resp_cfp_err").innerHTML = "";
-                }
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
-    }); */
+                  if (userData.length > 0) {
+                      document.getElementById("tel_resp_cfp_err").innerHTML = "Télephone existes déjà";
+                  } else {
+                      document.getElementById("tel_resp_cfp_err").innerHTML = "";
+                  }
+              }
+              , error: function(error) {
+                  console.log(error);
+              }
+          });
+      }); */
 
     $(document).on('change', '#nif_cfp', function() {
         var nif = $(this).val();
@@ -185,6 +156,14 @@
 
 
     /*================= entreprise =====================*/
+
+    $(document).on('change', '#logo_etp', function() {
+        if (this.files[0].size > 60) {
+            document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+        } else {
+            document.getElementById("error_logo_etp").innerHTML = '';
+        }
+    });
 
     $(document).on('change', '#cin_resp_etp', function() {
         var result = $(this).val();
@@ -230,7 +209,7 @@
         });
     });
 
- /*   $(document).on('change', '#tel_resp_etp', function() {
+    /*   $(document).on('change', '#tel_resp_etp', function() {
         var result = $(this).val();
         $.ajax({
             url: '{{route("verify_tel_user")}}'

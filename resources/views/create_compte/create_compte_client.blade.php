@@ -135,6 +135,8 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
+                            <p id="error_logo_etp" style="color:#ff0000;"></p>
+
                         </div>
 
                         <input type="button" name="next" class="next action-button" value="Suivant" />

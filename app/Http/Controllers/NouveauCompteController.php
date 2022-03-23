@@ -75,9 +75,9 @@ class NouveauCompteController extends Controller
 
     public function verify_tail_photo(Request $req){
         $val = $this->new_compte->validation_form_photo_cfp($req);
-        if ($val->passes()) {
-            return response()->json(['error'=>$val->errors()->all()]);
-        }
+
+       return response()->json([$val->errors()->all()]);
+
     }
 
     public function create_compte_cfp(Request $req)
