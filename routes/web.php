@@ -206,6 +206,7 @@ Route::get('/destroy_formateur','ProfController@destroy')->name('destroy_formate
 Route::post('desactivation_formateur','ProfController@desactivation_formateur')->name('desactivation_formateur');
 //profil
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
+Route::get('profilProf/{id_formateur}','ProfController@cvProf')->name('profilProf');
 
 //route responsable
 Route::resource('responsable','ResponsableController')->except([
@@ -956,7 +957,6 @@ Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->
 Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
 Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
 Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');
-
 
 Route::get('afficher_iframe_entreprise','HomeController@iframe_etp')->name('afficher_iframe_entreprise');
 Route::get('afficher_iframe_cfp','HomeController@iframe_cfp')->name('afficher_iframe_cfp');

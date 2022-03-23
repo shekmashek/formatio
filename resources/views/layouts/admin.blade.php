@@ -68,7 +68,7 @@
 
 
 
-            @canany(['isCFP','isFormateur'])
+            @canany(['isCFP'])
             <li>
                 <a href="{{route('liste_module')}}" class="d-flex nav_linke">
                     <i class="bx bx-customize"></i>
@@ -436,6 +436,16 @@
                     <span class="links_name">Abonnement</span>
                 </a>
                 <span class="tooltip">Abonnement</span>
+            </li>
+
+            @endcan
+            @can('isFormateur')
+            <li>
+                <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex nav_linke">
+                    <i class='bx bxs-notepad'></i>
+                    <span class="links_name">Mon CV</span>
+                </a>
+                <span class="tooltip">Mon CV</span>
             </li>
 
             @endcan
