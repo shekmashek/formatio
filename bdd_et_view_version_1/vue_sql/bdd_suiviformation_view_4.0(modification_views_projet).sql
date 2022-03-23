@@ -499,7 +499,7 @@ select
     join
         stagiaires s
         on s.id = p.stagiaire_id
-    join v_departement_service_entreprise d
+    left join v_departement_service_entreprise d
         on s.service_id = d.service_id
     join moduleformation mf
         on mf.module_id = g.module_id;
