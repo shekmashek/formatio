@@ -49,7 +49,7 @@
     </style>
 
     <div class="row w-100 bg-none mt-5 font_text">
-
+        <a href="{{route('nouveau_formateur')}}">Nouveau Formateur</a>
         <div class="col-md-5">
             <div class="shadow p-3 mb-5 bg-body rounded ">
 
@@ -78,7 +78,7 @@
                                     </td>
                                     <td>
                                         <div class=" btn-group dropleft">
-                                            <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </button>
 
@@ -87,7 +87,7 @@
 
                                                 <a href="{{route('profilFormateur',[$frm->formateur_id])}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-user" aria-hidden="true" style="font-size:15px"></i>&nbsp;&nbsp;CV</a>
                                                 @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Mettre fin à la collaboration</strong></a>
                                                 @endcanany
                                             </div>
                                         </div>

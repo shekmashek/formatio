@@ -16,7 +16,6 @@ Route::get('/', function () {
 // Route Bi
 Route::get('iframe_bi','HomeController@BI')->name('iframe_bi');
 
-
 //Route contact
 Route::get('contact',function(){
     return view('contact');
@@ -223,7 +222,7 @@ Route::post('/update_responsable/{id?}','ResponsableController@update')->name('u
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
 Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
-Route::get('/affResponsableCfp/{id?}', 'ResponsableCfpController@affReferent')->name('affResponsableCfp');
+
 
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
@@ -967,3 +966,34 @@ Route::post('supprimer_iframe_etp','HomeController@supprimer_iframe_etp')->name(
 
 Route::post('modifier_iframe_cfp','HomeController@modifier_iframe_cfp')->name('modifier_iframe_cfp');
 Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name('supprimer_iframe_cfp');
+
+//------------------------MODIFIER PROFIL RESPONSABLE OF---------------------------------//
+//affichage profil
+Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent')->name('profil_du_responsable');
+//Route pour modifier chaque champs pour responsable
+Route::get('/modification_photo{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
+Route::get('/modification_nom/{id}','ResponsableCfpController@edit_nom')->name('modification_nom');
+Route::get('/modification_date_de_naissance/{id}','ResponsableCfpController@edit_naissance')->name('modification_date_de_naissance');
+Route::get('/modification_genre/{id}','ResponsableCfpController@edit_genre')->name('modification_genre');
+Route::get('/modification_mdp/{id}','ResponsableCfpController@edit_mdp')->name('modification_mdp');
+Route::get('/modification_email/{id}','ResponsableCfpController@edit_mail')->name('modification_email');
+Route::get('/modificationn_telephone/{id}','ResponsableCfpController@edit_phone')->name('modificationn_telephone');
+Route::get('/modification_cin/{id}','ResponsableCfpController@edit_cin')->name('modification_cin');
+Route::get('/modificationn_adresse/{id}','ResponsableCfpController@edit_adresse')->name('modificationn_adresse');
+Route::get('/modification_fonction/{id}','ResponsableCfpController@edit_fonction')->name('modification_fonction');
+Route::get('/modification_matricule/{id}','ResponsableCfpController@edit_matricule')->name('modification_matricule');
+
+
+Route::post('/enregistrer_modification_photo/{id}','ResponsableCfpController@update_photo_responsable')->name('enregistrer_modification_photo');
+Route::post('/enregistrer_modification_nom/{id}','ResponsableCfpController@update_nom_responsable')->name('enregistrer_modification_nom');
+Route::post('/enregistrer_modification_date_de_naissance/{id}','ResponsableCfpController@update_dtn_responsable')->name('enregistrer_modification_date_de_naissance');
+Route::post('/enregistrer_modification_genre/{id}','ResponsableCfpController@update_genre_responsable')->name('enregistrer_modification_genre');
+Route::post('/enregistrer_modification_mdp/{id}','ResponsableCfpController@update_mdp_responsable')->name('enregistrer_modification_mdp');
+Route::post('/enregistrer_modification_email/{id}','ResponsableCfpController@update_email_responsable')->name('enregistrer_modification_email');
+Route::post('/enregistrer_modification_telephone/{id}','ResponsableCfpController@update_telephone_responsable')->name('enregistrer_modification_telephone');
+Route::post('/enregistrer_modification_cin/{id}','ResponsableCfpController@update_cin_responsable')->name('enregistrer_modification_cin');
+Route::post('/enregistrer_modification_adresse/{id}','ResponsableCfpController@update_adresse_responsable')->name('enregistrer_modification_adresse');
+Route::post('/enregistrer_modification_fonction/{id}','ResponsableCfpController@update_fonction_responsable')->name('enregistrer_modification_fonction');
+
+//------------------------MODIFIER PROFIL OF---------------------------------//
+Route::get('/modification_logo{id}','CfpController@edit_logo')->name('modification_logo');

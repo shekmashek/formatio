@@ -14,7 +14,9 @@
             </div>
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>7 000 000 Ar</strong>  </p>
+                <p class="numero_session text-dark mt-3"> <strong>@php
+                    echo number_format($prix->montant_session,2,"."," ");
+                @endphp Ar</strong>  </p>
                 <p class="m-0">&nbsp;; apprenants inscrits : &nbsp;</p>
                 <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
             </div>
@@ -50,7 +52,7 @@
                     <p class="p-0 m-0 text-center"> <strong>
                        <div class="pad_img">
                            @foreach ($formateur as $form)
-                            <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                                <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
                            @endforeach()
                             {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
                             <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
@@ -119,7 +121,7 @@
                         @endcanany
                     @endif
 
-                           
+
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'ressource')" style="width: 100%">
                                     <p class="m-0 p-0">RESSOURCES</p>
@@ -131,7 +133,7 @@
                                     @endif
                                 </button>
                             </div>
-                           
+
                             @can('isReferent')
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
@@ -140,7 +142,7 @@
                                     </button>
                                 </div>
                             @endcan
-                            
+
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
                                     <p class="m-0 p-0">DOCUMENT</p>

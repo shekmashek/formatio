@@ -55,8 +55,8 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $document = new getImageModel();
-        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-        $nom_cfp = $rqt[0]->nom;
+        $rqt = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::id()]);
+        $nom_cfp = $rqt->nom_cfp;
         $document->create_folder($nom_cfp);
         $document->create_sub_folder($nom_cfp,$request->nom_sous_dossier);
         return redirect()->route('gestion_documentaire');
@@ -71,8 +71,9 @@ class DocumentController extends Controller
     public function show($id)
     {
         $document = new getImageModel();
-        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-        $nom_cfp = $rqt[0]->nom;
+        $fonct = new FonctionGenerique();
+        $rqt =  $fonct->findWhereMulitOne('v_responsable_cfp',['user_id'],[Auth::user()->id]);
+        $nom_cfp = $rqt->nom_cfp;
         $get_nom_cfp = $document->get_folder($nom_cfp);
         $get_sub_folder =  $document->get_sub_folder($nom_cfp);
         $nb_sub_folder = count($get_sub_folder);
@@ -123,8 +124,10 @@ class DocumentController extends Controller
        }
        else{
             $sub_folder = $request->sous_dossier;
-            $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-            $nom_cfp = $rqt[0]->nom;
+
+            $fonct = new FonctionGenerique();
+            $rqt =  $fonct->findWhereMulitOne('v_responsable_cfp',['user_id'],[Auth::user()->id]);
+            $nom_cfp = $rqt->nom_cfp;
 
             $document = new getImageModel();
             $document->store_document($nom_cfp,$sub_folder,$request->file('documents')->getClientOriginalName(),$request->file('documents')->getContent());
@@ -137,19 +140,19 @@ class DocumentController extends Controller
     public function download_file(){
         $id = request()->id;
         $namefile = request()->filename;
-
-         $document = new getImageModel();
-        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-        $nom_cfp = $rqt[0]->nom;
+        $extension = request()->extension;
+        $document = new getImageModel();
+        $rqt = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::id()]);
+        $nom_cfp = $rqt->nom_cfp;
         $get_nom_cfp = $document->get_folder($nom_cfp);
         $get_sub_folder =  $document->get_sub_folder($nom_cfp);
         $nb_sub_folder = count($get_sub_folder);
         $listes = new getImageModel();
-        return $listes->download_file($nom_cfp,$id,$namefile);
+        return $listes->download_file($nom_cfp,$id,$namefile,$extension);
     }
     public function delete_folder(Request $request){
-        $rqt = DB::select('select * from cfps where user_id = ?', [Auth::id()]);
-        $nom_cfp = $rqt[0]->nom;
+        $rqt = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::id()]);
+        $nom_cfp = $rqt->nom_cfp;
         $docs = new getImageModel();
         $docs->delete_folder($nom_cfp,$request->id);
         return back();

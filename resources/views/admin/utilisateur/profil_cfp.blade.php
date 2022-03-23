@@ -1,6 +1,9 @@
 @extends('./layouts/admin')
 @section('content')
 <div class="page-content page-container" id="page-content">
+    <div class="col" style="margin-left: 25px">
+        <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+    </div>
     @foreach ($liste_cfps as $cfp)
 
 
@@ -12,17 +15,22 @@
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center">
                                 <div class="m-b-25 mt-2">
+                                    <div class="hover">
+                                        <a href="{{ route('modification_logo',$cfp->id) }}">
+                                        
                                     {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
-                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
+                                        <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
+                                        </a>
+                                    </div>
                                 </div>
-                                <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
+                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <a href="{{ route('modification_logo',$cfp->id) }}">
+                                     <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
+                                    </a>
+                                </div>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 <div class="row">
-                                    <div class="col">
-                                        <a href="{{route('utilisateur_cfp')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> retour</button></a>
-
-                                    </div>
                                     <div class="col">
                                         @canany(['isAdminPrincipale','isSuperAdminPrincipale'])
                                         <button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal"> <i class="bx bx-edit"></i> modifier profile</button>
@@ -38,65 +46,95 @@
                                         <h6 class="m-b-20  f-w-600">Centre de formaton</h6>
                                         <hr>
                                         <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
-                                        <h6 class="text-muted f-w-400">
-                                            lot:
-                                            @if($cfp->adresse_lot==NULL)
-                                            <strong style="color: red">incomplète</strong>
-                                            @else
-                                            {{ $cfp->adresse_lot }}
-                                            @endif
-                                        </h6>
-                                        <h6 class="text-muted f-w-400">
-                                            quartier:
-                                            @if($cfp->adresse_quartier==NULL)
-                                            <strong style="color: red">incomplète</strong>
-                                            @else
-                                            {{ $cfp->adresse_quartier }}
-                                            @endif
-                                        </h6>
-                                        <h6 class="text-muted f-w-400">
-                                            ville:
-                                            @if($cfp->adresse_ville==NULL)
-                                            <strong style="color: red">incomplète</strong>
-                                            @else
-                                            {{ $cfp->adresse_ville }}
-                                            @endif
-                                        </h6>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                <h6 class="text-muted f-w-400">
+                                                    lot:
+                                                    @if($cfp->adresse_lot==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{ $cfp->adresse_lot }}
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                <h6 class="text-muted f-w-400">
+                                                    quartier:
+                                                    @if($cfp->adresse_quartier==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{ $cfp->adresse_quartier }}
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
 
-                                        <h6 class="text-muted f-w-400">
-                                            region:
-                                            @if($cfp->adresse_region==NULL)
-                                            <strong style="color: red">incomplète</strong>
-                                            @else
-                                            {{ strtoupper($cfp->adresse_region) }}
-                                            @endif
-                                        </h6>
-
-                                        <p class="m-b-10 m-t-2 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
-                                        <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
-
-                                        <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
-                                        <h6 class="text-muted f-w-400">{{ $cfp->telephone }}</h6>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                <h6 class="text-muted f-w-400">
+                                                    ville:
+                                                    @if($cfp->adresse_ville==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{ $cfp->adresse_ville }}
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                <h6 class="text-muted f-w-400">
+                                                    region:
+                                                    @if($cfp->adresse_region==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{ strtoupper($cfp->adresse_region) }}
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                 <p class="m-b-10 m-t-2 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
+                                                <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
+                                            </a>
+                                        </div>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
+                                                <h6 class="text-muted f-w-400">{{ $cfp->telephone }}</h6>
+                                            </a>
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <br><br>
                                         <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Domaine de formation</p>
-                                        <h6 class="text-muted f-w-400">
-                                            @if ($cfp->domaine_de_formation==NULL)
-                                            <strong style="color: red">incomplète</strong>
-                                            @else
-                                            {{ $cfp->domaine_de_formation }}
-                                            @endif
-                                        </h6>
-                                        <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Site web officiel</p>
-                                        <h6 class="text-muted f-w-400">
-                                            @if ($cfp->site_cfp==NULL)
-                                            <strong style="color: rgb(202, 98, 98)">aucun site a été mentionner</strong>
-                                            @else
-                                            {{ $cfp->site_cfp }}
-                                            @endif
-                                        </h6>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                <h6 class="text-muted f-w-400">
+                                                    @if ($cfp->slogan==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{ $cfp->slogan }}
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="">
+                                                <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Site web officiel</p>
+                                                <h6 class="text-muted f-w-400">
+                                                    @if ($cfp->site_web==NULL)
+                                                    <strong style="color: rgb(202, 98, 98)">incomplète</strong>
+                                                    @else
+                                                    {{ $cfp->site_web }}
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -166,10 +204,10 @@
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="bx bx-phone"></i>&nbsp;Téléphone<strong style="color:#ff0000;">*</strong></span>
                             <input autocomplete="off" type="text" name="telephone_cfp" class="form-control formPayement" required="required" value="{{$cfp->telephone}}"> </div>
-                        @if ($cfp->site_cfp!=NULL)
+                        @if ($cfp->site_web!=NULL)
                         <div class="inputbox inputboxP mt-3">
                             <span><i class="fa fa-globe"></i>&nbsp; Site web officiel</span>
-                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required" value="{{$cfp->site_cfp}}"> </div>
+                            <input autocomplete="off" type="text" name="site_web" class="form-control formPayement" required="required" value="{{$cfp->site_web}}"> </div>
 
                         @else
                         <div class="inputbox inputboxP mt-3">

@@ -98,9 +98,9 @@ class RapportFinaleController extends Controller
             "dpi" => 130
         ]);
 
-        return view('admin.pdf.pdf_rapport_finale',compact('data'));
-        // $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
-        // return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
+       // return view('admin.pdf.pdf_rapport_finale',compact('data'));
+        $pdf = PDF::loadView('admin.pdf.pdf_rapport_finale',compact('data'));
+        return $pdf->download('Rapport finale '.$data["projet"]->nom_etp.' sur le projet '.$data["projet"]->nom_projet.'.pdf');
     }
 
 
@@ -249,7 +249,9 @@ class RapportFinaleController extends Controller
     //====================================== Pedagogique
     public function new_pedagogique($idProjet,Request $request){
         $id_user = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+        $cfp_id = $rqt->cfp_id;
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -286,7 +288,9 @@ class RapportFinaleController extends Controller
 
     public function new_conclusion($idProjet,Request $request){
         $id_user = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+        $cfp_id = $rqt->cfp_id;
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -318,7 +322,9 @@ class RapportFinaleController extends Controller
 
     public function new_feedback($idProjet,Request $request){
         $id_user = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+        $cfp_id = $rqt->cfp_id;
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -350,7 +356,9 @@ class RapportFinaleController extends Controller
 
     public function new_evaluation_resultat($idProjet,Request $request){
         $id_user = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+        $cfp_id = $rqt->cfp_id;
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];
@@ -382,7 +390,9 @@ class RapportFinaleController extends Controller
 
     public function new_recommandation($idProjet,Request $request){
         $id_user = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+        $cfp_id = $rqt->cfp_id;
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $desc_recommandation = $fonct->findAll("recommandation");
@@ -419,7 +429,9 @@ class RapportFinaleController extends Controller
 
     public function new_evaluation_action_formation($idProjet,Request $request){
         $id_user = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
+        $cfp_id = $rqt->cfp_id;
         $rapport = new RapportFinale();
         $fonct = new FonctionGenerique();
         $para2=["projet_id"];

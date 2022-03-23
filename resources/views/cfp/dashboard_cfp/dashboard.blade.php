@@ -64,15 +64,15 @@
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68;height:151px"><b> <i class="fas fa-building"></i> &nbsp; Profil de l'organisation ({{  $nom_profil_organisation }}) </b>
                     @if ($ref->adresse_lot==null or $ref->adresse_quartier==null and $ref->adresse_code_postal==null and $ref->adresse_ville==null and $ref->adresse_region==null)
-                        <a class="overr" href="{{route('affResponsableCfp')}}"> <p class="p-0 m-1 system_ pb-1">Adresse<span class="system_numeroAlert">Incomplet</span></p></a>
+                        <a class="overr" href="{{route('profil_du_responsable')}}"> <p class="p-0 m-1 system_ pb-1">Adresse<span class="system_numeroAlert">Incomplet</span></p></a>
                     @else
-                        <a class="overr" href="{{route('affResponsableCfp')}}"><p class="m-1 system_ pb-1">Adresse<span class="system_numeroSuccess">Complet</span></p></a>
+                        <a class="overr" href="{{route('profil_du_responsable')}}"><p class="m-1 system_ pb-1">Adresse<span class="system_numeroSuccess">Complet</span></p></a>
                     @endif
 
                     @if ($ref->nif==null or $ref->stat==null or $ref->rcs==null)
-                        <a class="overr" href="{{route('affResponsableCfp')}}"><p class="p-0 m-1 system_ pb-1">Informations légales<span class="system_numeroAlert">Incomplet</span></p></a>
+                        <a class="overr" href="{{route('profil_du_responsable')}}"><p class="p-0 m-1 system_ pb-1">Informations légales<span class="system_numeroAlert">Incomplet</span></p></a>
                     @else
-                        <a class="overr" href="{{route('affResponsableCfp')}}"><p class="m-1 system_ pb-1">Informations légales<span class="system_numeroSuccess">Complet</span></p></a>
+                        <a class="overr" href="{{route('profil_du_responsable')}}"><p class="m-1 system_ pb-1">Informations légales<span class="system_numeroSuccess">Complet</span></p></a>
                     @endif
 
                     {{-- <p class="m-1 system_nums pb-1 d-flex">Information légale &nbsp;&nbsp;&nbsp;

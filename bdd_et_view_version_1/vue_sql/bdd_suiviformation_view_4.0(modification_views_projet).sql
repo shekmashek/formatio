@@ -232,6 +232,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         g.status_groupe,
         g.activiter_groupe,
         g.logo as logo_entreprise,
+        g.entreprise_id,
         g.nom_etp,
         mf.reference,
         mf.nom_module,
@@ -282,6 +283,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     g.status_groupe,
     g.activiter_groupe,
     g.logo,
+    g.entreprise_id,
     g.nom_etp,
     mf.reference,
     mf.nom_module,
@@ -446,7 +448,8 @@ create or replace view v_detail_presence as
 
 
 
-CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
+CREATE OR REPLACE VIEW v_stagiaire_entreprise AS 
+SELECT
     stg.id AS stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
@@ -672,3 +675,16 @@ from
     v_stagiaire_groupe,detail_evaluation_apprenants
 where
     v_stagiaire_groupe.participant_groupe_id = detail_evaluation_apprenants.participant_groupe_id ;
+
+
+create or replace view v_montant_session as
+    select 
+        g.id as groupe_id,
+        ifnull(count(pg.stagiaire_id),0) as nombre_stg,
+        ifnull((mf.prix * count(pg.stagiaire_id)),0) as montant_session
+    from groupes g  
+    left join participant_groupe pg
+    on pg.groupe_id = g.id
+    join moduleformation mf
+    on mf.module_id = g.module_id 
+    group by g.id;
