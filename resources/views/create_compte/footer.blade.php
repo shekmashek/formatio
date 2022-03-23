@@ -102,12 +102,31 @@
     });
 
     $(document).on('change', '#logo_cfp', function() {
-        if (this.files[0].size > 60) {
-            document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+        var test = $(this).val().split('.').pop();
+
+        document.getElementById("error_logo_cfp").innerHTML = '';
+
+        if (""+test == "jpg" || ""+test == "jpeg" || ""+test == "png") {
+            if (this.files[0].size > 60) {
+                document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+            } else {
+                document.getElementById("error_logo_cfp").innerHTML = '';
+            }
         } else {
+            document.getElementById("error_logo_cfp").innerHTML = "les extension de type *.jpg, *.png et *.jpeg seulement sont autorisé";
+        }
+
+        /*      var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            document.getElementById("error_logo_cfp").innerHTML = "les extension de type *.jpg, *.png et *.jpeg seulement sont autorisé";
+
+        }else {
             document.getElementById("error_logo_cfp").innerHTML = '';
         }
+*/
+
     });
+
     $(document).on('change', '#tel_resp_cfp', function() {
         if ($(this).val().length > 13) {
             document.getElementById("tel_resp_cfp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
@@ -146,10 +165,16 @@
     /*================= entreprise =====================*/
 
     $(document).on('change', '#logo_etp', function() {
-        if (this.files[0].size > 60) {
-            document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+        var test = $(this).val().split('.').pop();
+
+        if (""+test == "jpg" || ""+test == "jpeg" || ""+test == "png") {
+            if (this.files[0].size > 60) {
+                document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+            } else {
+                document.getElementById("error_logo_etp").innerHTML = '';
+            }
         } else {
-            document.getElementById("error_logo_etp").innerHTML = '';
+            document.getElementById("error_logo_etp").innerHTML = "les extension de type *.jpg, *.png et *.jpeg seulement sont autorisé";
         }
     });
 
