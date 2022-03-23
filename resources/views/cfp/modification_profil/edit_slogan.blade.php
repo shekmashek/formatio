@@ -49,7 +49,13 @@
     <a href="{{route('profil_of',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
 </div>
 <center>
-
+    @if (\Session::has('error_slogan'))
+        <div class="alert alert-danger col-md-4">
+            <ul>
+                <li>{!! \Session::get('error_slogan') !!}</li>
+            </ul>
+        </div>
+    @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
             <p style="text-align: left">Modifier le slogan de l'organisme</p>

@@ -109,20 +109,43 @@ class CfpController extends Controller
 
     }
     public function modifier_nom($id,Request $request){
+       if($request->nom == null){
+        return redirect()->back()->with('error_nom', 'Entrez le nom de votre organisme avant de cliquer sur enregistrer');
+       }
+       else{
         DB::update('update cfps set nom = ? where id = ?', [$request->nom,$id]);
         return redirect()->route('profil_of',[$id]);
+       }
+
     }
     public function modifier_adresse($id,Request $request){
-        DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, $id]);
-        return redirect()->route('profil_of',[$id]);
+        if($request->adresse_lot == null or $request->adresse_quartier == null or $request->adresse_code_postal == null or $request->adresse_ville == null or $request->adresse_region == null){
+            return redirect()->back()->with('error_adresse', 'Entrez l\'adresse complète de votre organisme avant de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, $id]);
+            return redirect()->route('profil_of',[$id]);
+        }
+
     }
     public function modifier_slogan($id,Request $request){
-        DB::update('update cfps set slogan = ? where id = ?', [$request->slogan, $id]);
-        return redirect()->route('profil_of',[$id]);
+        if($request->slogan==null){
+            return redirect()->back()->with('error_slogan', 'Entrez le slogan de votre organisme avant de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update cfps set slogan = ? where id = ?', [$request->slogan, $id]);
+            return redirect()->route('profil_of',[$id]);
+        }
+
     }
     public function modifier_site($id,Request $request){
-        DB::update('update cfps set site_web = ? where id = ?', [$request->site, $id]);
-        return redirect()->route('profil_of',[$id]);
+        if($request->site==null){
+            return redirect()->back()->with('error_site', 'Entrez le site de votre organisme avant de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update cfps set site_web = ? where id = ?', [$request->site, $id]);
+            return redirect()->route('profil_of',[$id]);
+        }
     }
 
 }
