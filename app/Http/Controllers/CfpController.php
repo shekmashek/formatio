@@ -62,6 +62,14 @@ class CfpController extends Controller
         $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
         return view('cfp.modification_profil.edit_adresse', compact('cfp'));
     }
+    public function edit_email($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_email', compact('cfp'));
+    }
+    public function edit_telephone($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_email', compact('cfp'));
+    }
 
 
     public function modifier_logo($id,Request $request){
@@ -91,6 +99,8 @@ class CfpController extends Controller
         return redirect()->route('profil_of',[$id]);
     }
     public function modifier_adresse($id,Request $request){
-
+        DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, $id]);
+        return redirect()->route('profil_of',[$id]);
     }
+
 }

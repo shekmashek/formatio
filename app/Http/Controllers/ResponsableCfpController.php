@@ -229,7 +229,11 @@ class ResponsableCfpController extends Controller
         return redirect()->route('profil_du_responsable');
     }
     public function update_genre_responsable($id,Request $request){
-        DB::update('update responsables_cfp set sexe_resp_cfp = ? where user_id = ?', [$request->genre, Auth::id()]);
+
+        if($request->genre == "Homme") $genre = 2;
+        if($request->genre == "Femme") $genre = 1;
+
+        DB::update('update responsables_cfp set sexe_resp_cfp = ? where user_id = ?', [$genre, Auth::id()]);
         return redirect()->route('profil_du_responsable');
     }
     public function update_mdp_responsable($id,Request $request){
@@ -244,13 +248,17 @@ class ResponsableCfpController extends Controller
         }
     }
     public function update_email_responsable($id,Request $request){
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
         DB::update('update responsables_cfp set email_resp_cfp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+        DB::update('update cfps set email = ? where id = ?', [$request->mail_resp, $cfp_id]);
         return redirect()->route('profil_du_responsable');
     }
     public function update_telephone_responsable($id,Request $request){
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
         DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::id()]);
         DB::update('update responsables_cfp set telephone_resp_cfp = ? where user_id = ?', [$request->phone, Auth::id()]);
+        DB::update('update cfps set telephone = ? where id = ?', [$request->phone, $cfp_id]);
         return redirect()->route('profil_du_responsable');
     }
     public function update_cin_responsable($id,Request $request){

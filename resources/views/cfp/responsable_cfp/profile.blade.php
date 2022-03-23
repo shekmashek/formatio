@@ -68,7 +68,7 @@
                             <strong  style="color:red">
                             incomplète</strong>&nbsp;
                             @else
-                           {{$refs->sexe_resp_cfp}}&nbsp;
+                           {{$refs->genre}}&nbsp;
                             @endif
                             <i class="fas fa-angle-right"></i></span>
                         </p>
@@ -98,7 +98,7 @@
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('modificationn_telephone',$refs->id)}} ">
+                    <a href="{{route('modification_telephone',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                         </p>

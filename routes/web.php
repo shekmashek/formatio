@@ -979,7 +979,7 @@ Route::get('/modification_date_de_naissance/{id}','ResponsableCfpController@edit
 Route::get('/modification_genre/{id}','ResponsableCfpController@edit_genre')->name('modification_genre');
 Route::get('/modification_mdp/{id}','ResponsableCfpController@edit_mdp')->name('modification_mdp');
 Route::get('/modification_email/{id}','ResponsableCfpController@edit_mail')->name('modification_email');
-Route::get('/modificationn_telephone/{id}','ResponsableCfpController@edit_phone')->name('modificationn_telephone');
+Route::get('/modification_telephone/{id}','ResponsableCfpController@edit_phone')->name('modification_telephone');
 Route::get('/modification_cin/{id}','ResponsableCfpController@edit_cin')->name('modification_cin');
 Route::get('/modificationn_adresse/{id}','ResponsableCfpController@edit_adresse')->name('modificationn_adresse');
 Route::get('/modification_fonction/{id}','ResponsableCfpController@edit_fonction')->name('modification_fonction');
@@ -1002,7 +1002,7 @@ Route::get('/profil_of/{id}','UtilisateurControlleur@profil_cfp')->name('profil_
 Route::get('/modification_logo/{id}','CfpController@edit_logo')->name('modification_logo');
 Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
 Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
-Route::get('/modification_adresse/{id}','CfpController@edit_adresse')->name('modification_adresse');
+Route::get('/modification_adresse_organisme/{id}','CfpController@edit_adresse')->name('modification_adresse_organisme');
 
 
 Route::post('/enregistrer_modification_logo_cfp/{id}','CfpController@modifier_logo')->name('enregistrer_modification_logo_cfp');

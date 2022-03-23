@@ -56,12 +56,12 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                        <select  value="{{$responsable->sexe_resp_cfp}}" name="genre" class="form-select test input" id="genre"  >
-                        <option value="{{$responsable->sexe_resp_cfp}}"  >Homme</option>
+                        <select name="genre" class="form-select test input" id="genre"  >
+                        <option value="Homme"  >Homme</option>
                         <option value="Femme">Femme</option>
 
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
+
                     </div>
                 </div>
                 <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>

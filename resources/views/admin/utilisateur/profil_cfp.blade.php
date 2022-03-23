@@ -47,7 +47,7 @@
                                         <hr>
                                         <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="{{route('modification_adresse',$cfp->id)}}">
+                                            <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     lot:
                                                     @if($cfp->adresse_lot==NULL)
@@ -59,7 +59,7 @@
                                             </a>
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="{{route('modification_adresse',$cfp->id)}}">
+                                            <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     quartier:
                                                     @if($cfp->adresse_quartier==NULL)
@@ -72,7 +72,7 @@
                                         </div>
 
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="{{route('modification_adresse',$cfp->id)}}">
+                                            <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     ville:
                                                     @if($cfp->adresse_ville==NULL)
@@ -84,7 +84,7 @@
                                             </a>
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="{{route('modification_adresse',$cfp->id)}}">
+                                            <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     region:
                                                     @if($cfp->adresse_region==NULL)
@@ -96,16 +96,16 @@
                                             </a>
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+
                                                  <p class="m-b-10 m-t-2 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
                                                 <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
-                                            </a>
+
                                         </div>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="">
+
                                                 <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
                                                 <h6 class="text-muted f-w-400">{{ $cfp->telephone }}</h6>
-                                            </a>
+
                                         </div>
                                     </div>
 

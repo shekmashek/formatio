@@ -95,4 +95,11 @@ Branche nouveau_entiter.1.0:
 
 ######## Branche debug_version_1:
 - recopier view v_user_role dans bdd_suivi_formation_view_0
+- insertion d'une nouvelle table genre dans table mère
+- supprimer table sexe_resp_cfp : ALTER TABLE responsables_cfp DROP sexe_resp_cfp
+- Ajout d'une nouvelle colonne :
+ALTER TABLE responsables_cfp
+    ADD sexe_resp_cfp bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(sexe_resp_cfp) REFERENCES genre(id);
+- Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
 
