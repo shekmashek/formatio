@@ -36,3 +36,7 @@ creation de vue v_montant_session => bdd_suiviformation_view_4.0(modification_vi
 
 ALTER TABLE participant_groupe
 ADD CONSTRAINT incription_session UNIQUE (groupe_id,stagiaire_id);
+
+--------mars 23
+
+creation view v_detail_session => bdd_suiviformation_view_4.0(modification_views_projet)

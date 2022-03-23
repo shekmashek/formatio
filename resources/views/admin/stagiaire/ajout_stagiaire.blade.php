@@ -17,7 +17,7 @@
             <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
             <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
             <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
-            <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span>
+            {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
             <span class="span_ajout" id="boutton_add">
                 <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
              </span>

@@ -302,6 +302,89 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     ;
 
 
+create or replace view v_detail_session as 
+    select
+        d.id AS detail_id,
+        d.lieu,
+        d.h_debut,
+        d.h_fin,
+        d.date_detail,
+        d.formateur_id,
+        d.projet_id,
+        d.groupe_id,
+        d.cfp_id,
+        g.max_participant,
+        g.min_participant,
+        g.nom_groupe,
+        g.module_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        g.activiter as activiter_groupe,
+        mf.reference,
+        mf.nom_module,
+        mf.formation_id,
+        dom.id as id_domaine,
+        dom.nom_domaine,
+        mf.nom_formation,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.numero_formateur,
+        p.nom_projet,
+        (c.nom) nom_cfp,
+        p.type_formation_id,
+        tf.type_formation
+    FROM
+        details d
+    JOIN groupes g ON
+        d.groupe_id = g.id
+    JOIN moduleformation mf ON
+        mf.module_id = g.module_id
+    JOIN formateurs f ON
+        f.id = d.formateur_id
+    JOIN projets p ON
+        d.projet_id = p.id
+    JOIN cfps c ON
+        p.cfp_id = c.id
+    JOIN domaines dom ON
+        mf.domaine_id = dom.id
+    join type_formations tf
+        on tf.id = p.type_formation_id
+    GROUP BY
+    d.id,
+    d.lieu,
+    d.h_debut,
+    d.h_fin,
+    d.date_detail,
+    d.formateur_id,
+    d.projet_id,
+    d.groupe_id,
+    d.cfp_id,
+    g.max_participant,
+    g.min_participant,
+    g.nom_groupe,
+    g.module_id,
+    g.date_debut,
+    g.date_fin,
+    g.status,
+    g.activiter,
+    mf.reference,
+    mf.nom_module,
+    mf.formation_id,
+    dom.id,
+    dom.nom_domaine,
+    mf.nom_formation,
+    f.nom_formateur,
+    f.prenom_formateur,
+    f.mail_formateur,
+    f.numero_formateur,
+    p.nom_projet,
+    c.nom,
+    p.type_formation_id,
+    tf.type_formation
+    ;
+
 CREATE OR REPLACE VIEW v_participant_groupe AS
     SELECT
         dm.*,
