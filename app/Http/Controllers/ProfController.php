@@ -378,7 +378,7 @@ class ProfController extends Controller
 
     public function cvProf(Request $request,$id)
     {
-        
+
         $id = formateur::where('user_id', $id)->value('id');
         $formateur = formateur::where('id', $id)->get();
         $competence = competenceFormateur::where('formateur_id', $id)->get();
@@ -387,12 +387,18 @@ class ProfController extends Controller
     }
     public function profile_formateur($id = null)
     {
-        if(Gate::allows('isFormateur')){
-            $user_id = Auth::user()->id;
-            $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where user_id = ?',[$user_id])[0];
-        }else{
-            $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
-        }
+        // $user_id =  $users = Auth::user()->id;
+         if (Gate::allows('isFormateur')){
+            $id = formateur::where('user_id', Auth::user()->id)->value('id');
+
+            $formateur = formateur::findOrFail($id);
+         }
+         else{
+            $formateur = formateur::findOrFail($id);
+
+         }
+
+
         return view('admin.formateur.profile_formateur', compact('formateur'));
     }
 
@@ -400,7 +406,6 @@ class ProfController extends Controller
     public function set_profile_formateur()
     {
         $user = Auth::user()->id;
-
         $formateur = formateur::where('user_id', $user)->get();
         return view('admin.formateur.profile_formateurs', compact('formateur'));
     }

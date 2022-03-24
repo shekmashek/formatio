@@ -100,13 +100,29 @@
 
                         <input type="hidden" class="form-control test input"  name="mail" value="   {{ $stagiaire->mail_stagiaire }}" >
 
-                          <div class="row px-3 mt-4">
-                            <div class="form-group mt-1 mb-1">
-                              <input type="password" class="form-control test input" value=""  name="password" placeholder="">
-                              <label class="ml-3 form-control-placeholder"  style="font-size:13px;color:#801D68">Mot de passe</label>
+                        <div class="row px-3 mt-4">
+                          <div class="form-group mt-1 mb-1">
 
-                            </div>
-                          </div>
+                      <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="">
+                      <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Ancien mot de passe</label>
+                      {{-- si l'ancien mot de passe est incorrect --}}
+                      @if (\Session::has('error'))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{!! \Session::get('error') !!}</li>
+                            </ul>
+                        </div>
+                      @endif
+                          {{-- nouveau mot de passe --}}
+                        <div class="row px-3 mt-4">
+                            <div class="form-group mt-1 mb-1">
+
+                        <input type="password" class="form-control test input" value=""  name="new_password" placeholder="">
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nouveau mot de passe</label>
+
+
+                    </div>
+                </div>
                         <input type="hidden" class="form-control test"  name="phone" value="{{ $stagiaire->telephone_stagiaire }}">
                         <input type="hidden" class="form-control test" value=""  name="password" placeholder="">
                           <input type="hidden" class="form-control test" id="lot" name="lot" placeholder="Lot" value="{{ $stagiaire->lot}}">

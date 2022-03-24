@@ -43,21 +43,21 @@
   background-color: white;
 }
 </style>
-<center>                
+<center>
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <p style="text-align: left">Photos de profile</p>
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
-              
+
                     <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test"  name="nom">
-                
-              
+
+
                         <input type="hidden" class="form-control test" value="   {{ $formateur->prenom_formateur }}"  name="prenom">
                         <input type="hidden" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
-                         
-                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}"> 
+
+                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}">
 
             <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
@@ -65,13 +65,13 @@
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                        <img src="{{asset('images/formateurs/'.$formateur->photos)}}" id = "photo_stg"  class="image-ronde"> 
+                        <img src="{{asset('images/formateurs/'.$formateur->photos)}}" id = "photo_stg"  class="image-ronde">
                       {{-- <input type="text" id = 'vartemp'> --}}
               </div>
                   </label>
                      <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
                   </div>
-            </center>  
+            </center>
         </div>
     </div>
                         {{-- <select hidden  value="{{$formateur->genre}}" name="genre" class="form-select test" id="genre"  >
@@ -80,31 +80,31 @@
 
                         </select> --}}
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
- 
-                       
-                      
+
+
+
                         <input type="hidden" class="form-control test" name="genre" value="{{ $formateur->genre_id }}">
                         <input type="hidden" class="form-control test" name="dateNais" value="{{ $formateur->date_naissance }}">
-                        
+
                           <input type="hidden" value="{{ $formateur->cin}}" class="form-control test"  name="cin" >
 
                         <input type="hidden" class="form-control test"  name="mail" value="   {{ $formateur->mail_formateur }}" >
 
-                        
-                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $formateur->numero_formateur }}"> 
-                                       <input type="hidden" class="form-control test" value=""  name="password" placeholder="">  
-                          
 
-                      
+                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $formateur->numero_formateur }}">
+                                       <input type="hidden" class="form-control test" value=""  name="password" placeholder="">
+
+
+
                   <input type="hidden" class="form-control test"  name="specialite" value="   {{ $formateur->specialite }}">
-               
 
-               
-               
+
+
+
 <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-</center> 
+</center>
 </div>
 </div>
 </div>
@@ -123,16 +123,16 @@
         display: none;
     }
       </style>
-    
-    
-    
+
+
+
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-    
+
       // $(document).ready(function(){
       //   alert("Bien venu");
-      // });
+
       $('#file-input').change( function(event) {
         $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
         $("img.icon").parents('.upload-icon').addClass('has-img');
@@ -142,16 +142,16 @@
       function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-    
+
                 reader.onload = function (e) {
                     //alert(e.target.result);
                     $('#photo_stg').attr('src', e.target.result);
                 }
-    
+
                 reader.readAsDataURL(input.files[0]);
             }
         }
-    
-    
+
+
     </script>
 @endsection

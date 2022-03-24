@@ -1,0 +1,4 @@
+---------mars 24
+recréer v_demmande_cfp_formateur
+
+creation vu v_projet_formateur

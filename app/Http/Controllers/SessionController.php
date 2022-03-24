@@ -164,11 +164,19 @@ class SessionController extends Controller
         if(Gate::allows('isFormateur')){
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
+            if($type_formation_id  == 1){
+                $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+                $entreprise_id = $projet[0]->entreprise_id;
+            }
+            elseif($type_formation_id  == 2) {
+                $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+                $entreprise_id = null;
+            }
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
-            $datas = $fonct->findWhere("v_detail_session", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
-            $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
+            // $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
-            $entreprise_id = $projet[0]->entreprise_id;
+            // $entreprise_id = $projet[0]->entreprise_id;
         }
         // if(Gate::allows('isStagiaire')){
         //     $evaluation = new EvaluationChaud();
@@ -286,7 +294,7 @@ class SessionController extends Controller
             $demandeur = Auth::user()->name;
         }
         if(Gate::allows('isFormateur')){
-            $demandeur = DB::select('select nom_cfp from v_demmande_cfp_formateur where user_id_formateur = ?',[$id_user])[0]->nom_cfp;
+            $demandeur = DB::select('select nom from v_demmande_cfp_formateur where user_id_formateur = ?',[$id_user])[0]->nom;
         }
         if(Gate::allows('isReferent')){
             $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id= ?',[$id_user])[0]->nom_etp;
