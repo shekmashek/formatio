@@ -21,11 +21,8 @@ use App\Models\FonctionGenerique;
 /* ====================== Exportation Excel ============= */
 use App\Exports\ResponsableExport;
 use Excel;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\URL;
-=======
 use Exception;
->>>>>>> correction_profil
 
 class ResponsableController extends Controller
 {

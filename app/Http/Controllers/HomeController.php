@@ -147,7 +147,8 @@ class HomeController extends Controller
             DB::update('update responsables set date_naissance_resp = ? where id = ?', [$request->input('date_naissance_resp'), $id_resp]);
         }
         if ($request->input('genre') != null) {
-            DB::update('update responsables set sexe_resp = ? where id = ?', [$request->input('genre'), $id_resp]);
+            if($request->input('genre')=="Homme") $genre = 2; else $genre = 1;
+            DB::update('update responsables set genre_id = ? where id = ?', [$genre, $id_resp]);
         }
         if ($request->input('tel_resp') != null) {
             DB::update('update responsables set telephone_resp = ? where id = ?', [$request->input('tel_resp'), $id_resp]);
@@ -181,7 +182,7 @@ class HomeController extends Controller
     {
         if (Gate::allows('isFormateurPrincipale')) {
             return redirect()->route('calendrier');
-        }  
+        }
         if (Gate::allows('isStagiairePrincipale')) {
            //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
