@@ -411,7 +411,8 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     f.mail_formateur,
     f.numero_formateur,
     f.photos,
-    f.genre,
+    f.genre_id,
+    g.genre,
     f.date_naissance,
     f.adresse,
     f.cin,
@@ -425,6 +426,8 @@ JOIN cfps c ON
     c.id = d.demmandeur_cfp_id
 JOIN formateurs f ON
     f.id = d.inviter_formateur_id
+join genre g on
+    g.id = f.genre_id
 WHERE
     d.activiter = 1;
 

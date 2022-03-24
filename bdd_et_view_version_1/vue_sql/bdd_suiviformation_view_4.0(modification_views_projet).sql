@@ -688,3 +688,15 @@ create or replace view v_montant_session as
     join moduleformation mf
     on mf.module_id = g.module_id 
     group by g.id;
+
+
+
+create or replace view v_projet_formateur as 
+    select 
+        gpm.*,
+        fp.formateur_id
+    from 
+        v_formateur_projet fp 
+    join 
+        v_groupe_projet_module gpm
+    on gpm.groupe_id = fp.groupe_id;

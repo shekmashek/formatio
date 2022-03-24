@@ -4,8 +4,9 @@
     <div class="container-fluid mb-5">
         <div class="row">
             <h3 class="mt-5 mb-3 text-center">Listes des Projets Intra et Inter</h3>
+            @canany(['isReferent', 'isCFP'])
             <div class="col-2 pe-3">
-                @canany(['isReferent', 'isCFP'])
+                
                     <div class="row mb-3 p-2 filtre_date">
                         <h6 class="text-center mt-2">Filtrer vos Projets</h6>
                         <form action="{{ route('liste_projet') }}" method="GET">
@@ -56,13 +57,13 @@
 
                         </form>
                     </div>
-                @endcanany
+                
             </div>
-
+            @endcanany
 
             <div class="col-10 ps-5">
                 <div class="row">
-                @canany(['isCFP', 'isFormateur'])
+                @canany(['isCFP'])
                     <div class="m" id="corps">
                         @if (count($projet) <= 0)
                             <div class="row d-flex mt-3 titre_projet p-1 mb-1">
@@ -347,6 +348,52 @@
                         @endforeach
                     </div>
                 @endcanany
+                @can('isFormateur')
+                    @if (count($data) <= 0)
+                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+                            <span class="text-center">Vous n'avez pas encore du projet.</span>
+                        </div>
+                    @else
+                        <table class="table table-stroped m-0 p-0">
+                            <thead class="thead_projet">
+                                <th>Projet</th>
+                                <th>Type de formation</th>
+                                <th> Session </th>
+                                <th>Date session</th>
+                                <th> Centre de formation </th>
+                                <th> Date du projet</th>
+
+                                <th> Statut </th>
+                            </thead>
+                            <tbody class="tbody_projet">
+                                @foreach ($data as $pj)
+                                    <tr class="m-0">
+                                        <td>{{ $pj->nom_projet }}</td>
+                                        <td>
+                                            @if ($pj->type_formation_id == 1)
+                                            <h6 class="m-0"><button
+                                                    class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button></h6>
+                                            &nbsp;&nbsp;
+                                            @elseif ($pj->type_formation_id == 2)
+                                                <h6 class="m-0"><button
+                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>&nbsp;&nbsp;
+                                            @endif
+                                        </td>
+                                        <td> <a
+                                                href="{{ route('detail_session', [$pj->groupe_id,$pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
+                                        </td>
+                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
+                                        <td> {{ $pj->nom_cfp }} </td>
+                                        <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
+                                        <td>
+                                            <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @endcan
                 @can('isReferent')
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
