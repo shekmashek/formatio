@@ -56,7 +56,7 @@ class ChefDepartementController extends Controller
         } else {
             $chefDepart->nom_chef = $request->nom;
             $chefDepart->prenom_chef = $request->prenom;
-            $chefDepart->genre_chef = $request->genre_chef;
+            $chefDepart->genre_id = $request->genre_chef;
             $chefDepart->fonction_chef = $request->fonction;
             $chefDepart->mail_chef = $request->mail;
             $chefDepart->telephone_chef = $request->phone;

@@ -63,6 +63,7 @@
                       
                    
                         <input type="hidden" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
+                        <input type="hidden" class="form-control test input" value="{{ $formateur->genre_id }}"  name="genre">
                          
       
             {{-- <center>
@@ -76,11 +77,11 @@
                      <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
                   </div> --}}
             
-               <select hidden  value="{{$formateur->genre}}" name="genre" class="form-select test" id="genre"  >
+               {{-- <select hidden  value="{{$formateur->genre}}" name="genre" class="form-select test" id="genre"  >
                           <option value="{{$formateur->genre}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
-                        </select>
+                        </select> --}}
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
  
                        

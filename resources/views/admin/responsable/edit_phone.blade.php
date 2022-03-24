@@ -63,12 +63,13 @@
 
                         <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
 
-                        <select hidden value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
+                        {{-- <select hidden value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
-                        </select>
+                        </select> --}}
 
+                        <input type="hidden" class="form-control test input" name="genre" value="{{ $responsable->genre_id}}">
                         <input type="hidden" class="form-control test input" name="date_naissance" value="{{ $responsable->date_naissance_resp}}">
 
 

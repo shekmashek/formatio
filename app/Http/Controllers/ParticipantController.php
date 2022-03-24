@@ -817,8 +817,13 @@ class ParticipantController extends Controller
             }
             $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
 
-
-            return view('admin.participant.profile', compact('entreprise', 'stagiaire', 'service', 'departement', 'branche'));
+            if($stagiaire->genre_stagiaire == 1){
+                $genre = 'Femme';
+            }
+            if($stagiaire->genre_stagiaire == 2){
+                $genre = 'Homme';
+            }
+            return view('admin.participant.profile', compact('entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
             // $stagiaires = db::select('select * from stagiaires where matricule = ?',[$matricule]);
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
 

@@ -68,13 +68,14 @@
                 </div>
 
 
-                        <select hidden value="{{$responsable->sexe_resp}}" name="genre" class="form-select test" id="genre"  >
+                        {{-- <select hidden value="{{$responsable->sexe_resp}}" name="genre" class="form-select test" id="genre"  >
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
-                        </select>
+                        </select> --}}
 
-
+                        <input type="hidden" class="form-control test" name="genre" value="{{ $responsable->genre_id}}">
+                        <input type="hidden" class="form-control test" name="date_naissance" value="{{ $responsable->date_naissance_resp}}">
 
                         <input type="hidden" class="form-control test" name="date_naissance" value="{{ $responsable->date_naissance_resp}}">
 

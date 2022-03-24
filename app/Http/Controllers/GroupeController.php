@@ -127,6 +127,9 @@ class GroupeController extends Controller
             if($request->payement == null){
                 throw new Exception("Vous devez choisir une entreprise pour la formation.");
             }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            }
             DB::beginTransaction();
             $projet = new projet();
             $nom_projet = $projet->generateNomProjet();
@@ -172,10 +175,13 @@ class GroupeController extends Controller
 
         try{
             if($request->date_debut >= $request->date_fin){
-                throw new Exception("Date de début doit être inférieur date de fin.");
+                throw new Exception("Date de début doit être inférieur à la date de fin.");
             }
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
+            }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être au participant maximal.");
             }
             DB::beginTransaction();
             $projet = new projet();
