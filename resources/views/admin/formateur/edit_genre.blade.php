@@ -78,8 +78,8 @@
                   <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                <select   value="{{$formateur->genre}}" name="genre" class="form-select test input" id="genre"  >
-                          <option value="{{$formateur->genre}}"  >Homme</option>
-                          <option value="Femme">Femme</option>
+                          <option value="2"  >Homme</option>
+                          <option value="1">Femme</option>
 
                         </select>
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
