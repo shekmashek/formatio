@@ -165,8 +165,8 @@
                                             <label for="exampleFormControlInput1" class="form-label" align="left">Sexe</label>
                                             <select class="form-select" aria-label="Default select example" name="sexe_resp" required id="sexe_resp">
                                                 <option value="null" disabled selected hidden>Veuillez Sélectionner</option>
-                                                <option value="Homme">Homme</option>
-                                                <option value="Femme">Femme</option>
+                                                <option value="2">Homme</option>
+                                                <option value="1">Femme</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">

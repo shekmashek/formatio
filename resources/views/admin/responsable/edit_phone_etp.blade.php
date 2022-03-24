@@ -61,13 +61,14 @@
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>
 
 
-                        <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
+                        {{-- <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
-                        </select>
+                        </select> --}}
                    
                 
+                        <input type="hidden" class="form-control test" name="genre" value="{{ $responsable->genre_id}}">
                         <input type="hidden" class="form-control test" name="date" value="{{ $responsable->date_naissance_resp}}">
        
                           <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="cin" >
