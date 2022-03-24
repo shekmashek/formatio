@@ -8,40 +8,46 @@
                 <div id="result">
                     <div class="row details_content g-0">
                         <div class="col-3 logo_content">
-                            <a href="#" class="text-center mb-2"><img src="{{asset("images/CFP/".$cfp[0]->logo_cfp)}}" alt="logo" class="img-fliud logo_img"></a>
-                            <p class="text-center m-0 horloge"><i class="bx bx-alarm"></i>
-                                Ouvert le
-                                @php
-                                    foreach ($cfp as $cfp_h) {
-                                        setlocale(LC_TIME, "fr_FR");
-                                        $jours1 = $cfp_h->jours;
-                                        $ouverture = $cfp_h->h_entree;
-                                        $fermeture = $cfp_h->h_sortie;
-                                        $jours_today = strftime("%A", strtotime($jours1));
+                            <a href="#" class="text-center mb-2"><img src="{{asset("images/CFP/".$cfp->logo)}}" alt="logo" class="img-fliud logo_img"></a>
+
+                          @if (count($horaire)>0)
+                          <p class="text-center m-0 horloge"><i class="bx bx-alarm"></i>
+                            Ouvert le
+                            @php
+                                foreach ($horaire as $cfp_h) {
+                                    setlocale(LC_TIME, "fr_FR");
+                                    $jours1 = $cfp_h->jours;
+                                    $ouverture = $cfp_h->h_entree;
+                                    $fermeture = $cfp_h->h_sortie;
+                                    $jours_today = strftime("%A", strtotime($jours1));
+                                }
+                                if ($jours1 = $jours_today) {
+                                        echo (strftime("%A", strtotime($jours1))."<br/>");
+                                        echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
                                     }
-                                    if ($jours1 = $jours_today) {
-                                            echo (strftime("%A", strtotime($jours1))."<br/>");
-                                            echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
-                                        }
-                                @endphp
-                            </p>
+                            @endphp
+                        </p>
+                          @else
+                              <p> Aucun horaire</p>
+                          @endif
+
                         </div>
                         <div class="col-9">
                             <div class="row ps-5">
-                                <h4><a href="#">{{$cfp[0]->nom_cfp}}</a></h4>
-                                <p>{{$cfp[0]->slogan}}</p>
+                                <h4><a href="#">{{$cfp->nom}}</a></h4>
+                                <p>{{$cfp->slogan}}</p>
                                 <p class="mt-1"><i
-                                        class="bx bx-map me-2"></i>{{$cfp[0]->adresse_lot_cfp}}&nbsp;{{$cfp[0]->adresse_quartier_cfp}}&sbquo;&nbsp;{{$cfp[0]->adresse_ville_cfp}}&nbsp;{{$cfp[0]->adresse_code_postal_cfp}}&sbquo;&nbsp;{{$cfp[0]->adresse_region_cfp}}
+                                        class="bx bx-map me-2"></i>{{$cfp->adresse_lot}}&nbsp;{{$cfp->adresse_quartier}}&sbquo;&nbsp;{{$cfp->adresse_ville}}&nbsp;{{$cfp->adresse_code_postal}}&sbquo;&nbsp;{{$cfp->adresse_region}}
                                 </p>
                                 <div class="col-6 mb-3">
                                     <span class="text-muted"><i class="bx bx-phone"></i> Téléphone</span>
-                                    <p class="m-0">{{$cfp[0]->tel_cfp}}</p>
+                                    <p class="m-0">{{$cfp->telephone}}</p>
                                 </div>
                             </div>
                             <div class="col d-flex flex-row mb-2 ps-5">
                                 <span class="btn_actions" role="button"><a href="#"><i
                                             class="bx bx-mail-send"></i>Email</a></span>
-                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp[0]->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
+                                <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
                                         Web</a></span>
                             </div>
 
@@ -158,7 +164,9 @@
                 <div class="row avis mt-3">
                     <div class="col-12">
                         <h5>Horaires d'ouvertures</h5>
-                        @foreach ($cfp as $cfp)
+
+                        @if (count($horaire)>0)
+                        @foreach ($horaire as $cfp)
                         <div class="row">
                             <div class="col-6">
                                 <p class="m-0 text-capitalize">{{$cfp->jours}}</p>
@@ -168,6 +176,10 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                            Aucun horaire
+                        @endif
+
                     </div>
                 </div>
                 <div class="row avis mt-3">
@@ -216,7 +228,7 @@
                     @foreach ($formation as $frm)
                     <div class="row">
                         <div class="col-4 p-2">
-                            <p class="text-capitalize my-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$cfp->cfp_id])}}" class="formations">{{$frm->nom_formation}}</a></p>
+                            <p class="text-capitalize my-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$cfp->id])}}" class="formations">{{$frm->nom_formation}}</a></p>
                         </div>
                     </div>
                     @endforeach
@@ -244,7 +256,7 @@
                         {{-- <p>{{ $avis->commentaire }}</p> --}}
                     </div>
 
-                    {{-- @endforeach --}}
+                    {{-- @endforeach --}}  insert into horaires(jours,h_entree,h_sortie,cfp_id) values (5,7,17,2);
                 </div>
             </div>
         </div>

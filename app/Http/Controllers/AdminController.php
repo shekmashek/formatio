@@ -115,14 +115,15 @@ class AdminController extends Controller
         $fonct = new FonctionGenerique();
 
         if (Gate::allows('isReferent')) {
-            $user = responsable::where('user_id', $id_user)->value('photos');
+            // $user = responsable::where('user_id', $id_user)->value('photos');
+            $user = $fonct->findWhereMulitOne(("responsables"),["user_id"],[$id_user])->photos;
             $photo ='';
             if($user == null){
                 $user = DB::select('select SUBSTRING(nom_resp, 1, 1) AS nm,  SUBSTRING(prenom_resp, 1, 1) AS pr from responsables where user_id = ?', [$id_user]);
                 $photo = 'non';
                 // $user = 'users/users.png';
             } else{
-                $user = 'images/responsables/' . $user;
+                 $user = 'images/responsables/' . $user;
                 $photo = 'oui';
             }
             // $user = 'responsables/' . $user;
@@ -131,7 +132,7 @@ class AdminController extends Controller
 
         if (Gate::allows('isFormateur')) {
 
-            $user = Formateur::where('user_id', $id_user)->value('photos');
+            $user = $fonct->findWhereMulitOne(("formateurs"),["user_id"],[$id_user])->photos;
             $photo ='';
             if($user == null){
                 $user = DB::select('select SUBSTRING(nom_formateur, 1, 1) AS nm,  SUBSTRING(prenom_formateur, 1, 1) AS pr from formateurs where user_id = ?', [$id_user]);
@@ -142,10 +143,10 @@ class AdminController extends Controller
                 $photo = 'oui';
             }
             // google drive image storage $user = 'formateurs/' . $user;
-            return response()->json($user);
+            return response()->json(['user'=>$user,'photo'=>$photo]);
         }
         if (Gate::allows('isManager')) {
-            $user = ChefDepartement::where('user_id', $id_user)->value('photos');
+            $user = $fonct->findWhereMulitOne(("chef_departements"),["user_id"],[$id_user])->photos;
             $photo ='';
             if($user == null){
                 $user = DB::select('select SUBSTRING(nom_chef, 1, 1) AS nm,  SUBSTRING(prenom_chef, 1, 1) AS pr from chef_departements where user_id = ?', [$id_user]);
@@ -157,7 +158,7 @@ class AdminController extends Controller
             }
 
             // $user = 'chefDepartement/' . $user;
-            return response()->json($user);
+            return response()->json(['user'=>$user,'photo'=>$photo]);
         }
 
         if (Gate::allows('isCFP')) {
@@ -172,10 +173,10 @@ class AdminController extends Controller
                 $photo = 'oui';
             }
             // $user = 'CFP/' . $user;
-            return response()->json($user);
+            return response()->json(['user'=>$user,'photo'=>$photo]);
         }
         if (Gate::allows('isStagiaire')) {
-            $user = stagiaire::where('user_id', $id_user)->value('photos');
+            $user = $fonct->findWhereMulitOne(("stagiaires"),["user_id"],[$id_user])->photos;
             $photo ='';
             if($user == null){
                 $user = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where user_id = ?', [$id_user]);
@@ -186,7 +187,7 @@ class AdminController extends Controller
                 $photo = 'oui';
             }
             // $user = 'stagiaires/' . $user;
-            return response()->json($user);
+            return response()->json(['user'=>$user,'photo'=>$photo]);
         }
     }
     public function logo()

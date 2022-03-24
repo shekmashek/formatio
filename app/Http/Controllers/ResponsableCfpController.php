@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
 use App\ResponsableCfpModel;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 
 class ResponsableCfpController extends Controller
 {
@@ -276,23 +277,31 @@ class ResponsableCfpController extends Controller
     }
     public function update_photo_responsable($id,Request $request){
         $image = $request->file('image');
-        if($image != null){
-            $user_id =  $users = Auth::user()->id;
-            $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-            $image_ancien = $responsable->photos_resp_cfp;
-            //supprimer l'ancienne image
-            File::delete(public_path("images/responsables/".$image_ancien));
-            //enregiistrer la nouvelle photo
-
-            $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-            $destinationPath = 'images/responsables';
-            $image->move($destinationPath, $nom_image);
-            DB::update('update responsables_cfp set photos_resp_cfp = ? where user_id = ?', [$nom_image, Auth::id()]);
-
+        if($image->getSize() > 60000){
+            return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
         }
         else{
-            return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+            if($image != null){
+                $user_id =  $users = Auth::user()->id;
+                $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+                $image_ancien = $responsable->photos_resp_cfp;
+                //supprimer l'ancienne image
+                File::delete(public_path("images/responsables/".$image_ancien));
+                //enregiistrer la nouvelle photo
+
+                $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                $destinationPath = 'images/responsables';
+                $image->move($destinationPath, $nom_image);
+                $url_photo = URL::to('/')."/images/responsables/".$nom_image;
+
+                DB::update('update responsables_cfp set photos_resp_cfp = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+                return redirect()->route('profil_du_responsable');
+            }
+            else{
+                return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+            }
         }
-        return redirect()->route('profil_du_responsable');
+
+
     }
 }

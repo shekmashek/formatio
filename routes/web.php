@@ -224,7 +224,7 @@ Route::get('/destroy_responsable','ResponsableController@destroy')->name('destro
 Route::post('/update_responsable/{id?}','ResponsableController@update')->name('update_responsable');
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
-Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
+Route::get('/profil_referent/{id?}', 'ResponsableController@affReferent')->name('profil_referent');
 
 
 // editer profil responsable

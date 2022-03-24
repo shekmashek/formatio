@@ -296,10 +296,11 @@ class FormationController extends Controller
 
     public function detail_cfp($id){
         $fonct = new FonctionGenerique();
-        $cfp = DB::select('select * from v_horaire_cfp where cfp_id = ? ',[$id]);
+        $cfp = $fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        $horaire = DB::select('select * from v_horaire_cfp where cfp_id = ? ',[$id]);
         $reseau_sociaux = $fonct->findWhere("v_reseaux_sociaux_cfp",["cfp_id"],[$id]);
         $formation = DB::select('select nom_formation,id from v_formation where cfp_id = ?',[$id]);
-        return view('referent.catalogue.detail_cfp',compact('cfp','formation','reseau_sociaux'));
+        return view('referent.catalogue.detail_cfp',compact('cfp','formation','reseau_sociaux','horaire'));
     }
 
     public function affichageParFormationParcfp($id_formation,$id_cfp)

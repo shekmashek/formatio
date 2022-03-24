@@ -59,6 +59,9 @@
             display: none;
         }
 </style>
+<div class="col" style="margin-left: 25px">
+    <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+</div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
  @if (\Session::has('error'))
@@ -68,9 +71,17 @@
      </ul>
  </div>
 @endif
+{{-- si l'utiliisateur a choisi un fichier > 60Ko--}}
+@if (\Session::has('error_logo'))
+<div class="alert alert-danger col-md-4">
+    <ul>
+        <li>{!! \Session::get('error_logo') !!}</li>
+    </ul>
+</div>
+@endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Modifier la fonction</p>
+            <p style="text-align: left">Modifier la photo de profil <strong>(60Ko max)</strong></p>
             <form   class="btn-submit" action="{{route('enregistrer_modification_photo',$responsable->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" value="   {{ $responsable->nom_resp_cfp }}" class="form-control test input"  name="nom">

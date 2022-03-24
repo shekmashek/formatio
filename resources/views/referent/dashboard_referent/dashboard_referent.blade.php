@@ -35,15 +35,15 @@
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #801D68; height:129px;"><b> <i class="fal fa-building"></i> &nbsp; Profil de l'organisation ({{ $etp }}) </b>
                     @if ($referent->adresse_quartier==null or $referent->adresse_code_postal==null and $referent->adresse_lot==null and $referent->adresse_ville==null and $referent->adresse_region==null)
-                        <a class="overr" href="{{route('affResponsable')}}"> <p class="p-0 m-1 system_ pb-1">Adresse<span class="system_numeroAlert">Incomplet</span></p></a>
+                        <a class="overr" href="{{route('profil_referent')}}"> <p class="p-0 m-1 system_ pb-1">Adresse<span class="system_numeroAlert">Incomplet</span></p></a>
                     @else
-                        <a class="overr" href="{{route('affResponsable')}}"> <p class="m-1 system_ pb-1">Adresse<span class="system_numeroSuccess">Complet</span></p></a>
+                        <a class="overr" href="{{route('profil_referent')}}"> <p class="m-1 system_ pb-1">Adresse<span class="system_numeroSuccess">Complet</span></p></a>
                     @endif
 
                     @if ($refs->nif==null or $refs->stat==null or $refs->rcs==null)
-                        <a class="overr" href="{{route('affResponsable')}}"><p class="p-0 m-1 system_ pb-1">Informations légales<span class="system_numeroAlert">Incomplet</span></p></a>
+                        <a class="overr" href="{{route('profil_referent')}}"><p class="p-0 m-1 system_ pb-1">Informations légales<span class="system_numeroAlert">Incomplet</span></p></a>
                     @else
-                        <a class="overr" href="{{route('affResponsable')}}"><p class="m-1 system_ pb-1">Informations légales<span class="system_numeroSuccess">Complet</span></p></a>
+                        <a class="overr" href="{{route('profil_referent')}}"><p class="m-1 system_ pb-1">Informations légales<span class="system_numeroSuccess">Complet</span></p></a>
                     @endif
                     {{-- <p class="m-1 system_ pb-1">Information légale<span class="system_numeroSuccess">complet</span></p> --}}
                     <a class="overr" href=""><p class="m-1 system_ pb-1">Type d'abonnement<span class="system_numero">

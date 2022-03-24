@@ -47,11 +47,14 @@
 
 }
 </style>
+<div class="col" style="margin-left: 25px">
+  <a href="{{route('profil_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+</div>
 <center>
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Adresse</p>
+        <p style="text-align: left">Adresse(Lot,Quartier,Code Postal,Ville,Région)</p>
         <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
@@ -60,8 +63,6 @@
 
 
                         <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>
-
 
                         <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
@@ -92,7 +93,6 @@
                             <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test input" id="lot" name="lot" placeholder="Lot" value="   {{ $responsable->adresse_lot}}">
 
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Lot</label>
 
                     </div>
                 </div>
@@ -100,21 +100,18 @@
                     <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test input" id="quartier" name="quartier" placeholder="Quartier" value="   {{ $responsable->adresse_quartier}}">
 
-                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Quartier</label>
 
                         </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test input" id="code_postal" name="code_postal" placeholder="Code Postale" value="   {{ $responsable->adresse_code_postal}}">
-                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Code Postal</label>
 
                         </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test input" id="ville" name="ville" placeholder="Ville" value="   {{ $responsable->adresse_ville}}">
-                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Ville</label>
 
                         </div>
                 </div>
@@ -122,7 +119,6 @@
                     <div class="form-group mt-1 mb-1">
                           <input type="text" class="form-control test input" id="region" name="region" placeholder="Region" value="   {{ $responsable->adresse_region}}">
 
-                          <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Région</label>
 
                         </div>
                 </div>

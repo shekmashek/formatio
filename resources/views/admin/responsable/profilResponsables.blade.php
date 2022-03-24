@@ -176,13 +176,7 @@
             <div class="form-control">
                 <p class="text-center">Informations professionnelles</p>
 
-                <div style="border-bottom: solid 1px #d399c2;" class="">
-                    <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 10px;">Poste responsable<span style="float: right;">{{$refs->poste_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
-                        </p>
-                    </a>
-                </div>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
@@ -193,13 +187,13 @@
 
                 </div>
 
-                <div style="border-bottom: solid 1px #d399c2;" class="">
+                {{-- <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
                         <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
-                </div>
+                </div> --}}
 
                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
             </div>

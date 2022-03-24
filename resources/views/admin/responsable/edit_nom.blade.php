@@ -1,9 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <style>
-   .input{
-        width: 170px;
-    }
+
 .test {
     padding: 2px;
     border-radius: 5px;
@@ -47,6 +45,9 @@
 
 }
 </style>
+<div class="col" style="margin-left: 25px">
+  <a href="{{route('profil_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+</div>
 <center>
 
 <div class="col-lg-4">
@@ -57,13 +58,11 @@
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                     <input type="text" value="   {{ $responsable->nom_resp }}" class="form-control test input"  name="nom">
-                    <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label>
-                    </div>
+                     </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>
 
                         </div>
                 </div>

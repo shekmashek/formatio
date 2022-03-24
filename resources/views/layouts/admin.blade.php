@@ -681,7 +681,7 @@
                                             <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isReferentPrincipale')
-                                            <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-2 mb-3">Gérer votre compte</button></a><br>
+                                            <a href="{{route('profil_referent')}}"><button class="btn btn-primary btn-sm profil_btn mt-2 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isCFPPrincipale')
                                             <a href="{{route('profil_du_responsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
@@ -710,7 +710,7 @@
                                         <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                         @can('isReferent')
-                                        <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        <a href="{{route('profil_referent')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                     </div> --}}
                                 </div>
@@ -805,10 +805,15 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
+
                     if(userData['photo'] == 'oui'){
+                        // alert(userData['user']);
+
                         var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 37px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
-                        html = html.replace(":?", userData);
+                        html = html.replace(":?", userData['user']);
+                        console.log( userData['user'])
                         // alert(JSON.stringify(userData));
+
                         $('.photo_users').append(html);
                     }
                     if(userData['photo'] == 'non'){

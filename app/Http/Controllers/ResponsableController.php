@@ -21,6 +21,7 @@ use App\Models\FonctionGenerique;
 /* ====================== Exportation Excel ============= */
 use App\Exports\ResponsableExport;
 use Excel;
+use Illuminate\Support\Facades\URL;
 
 class ResponsableController extends Controller
 {
@@ -480,20 +481,35 @@ class ResponsableController extends Controller
                 $request->stat, $request->rcs, $request->email_etp, $request->site, $request->phone_etp, $resp_etp->entreprise_id
             ]);
 
-            //return redirect()->route('affResponsable');
+            //return redirect()->route('profil_referent');
         }
     }
     //modification photos
     public function update_photos_resp(Request $request)
     {
-        //  stocker la photo dans google drive
-        $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-        $dossier = 'responsable';
-        $stock_stg = new getImageModel();
-        // $nom_image = $request->image->getClientOriginalName();
-        $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
-        DB::update('update responsables set photos = ? where user_id = ?', [$nom_image, Auth::id()]);
-        return redirect()->route('affResponsable');
+        $image = $request->file('image');
+        if($image->getSize() > 60000){
+            return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+        }
+        else{
+            if($image != null){
+                $user_id =  $users = Auth::user()->id;
+                $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
+                $image_ancien = $responsable->photos;
+                //supprimer l'ancienne image
+                File::delete(public_path("images/responsables/".$image_ancien));
+                //enregiistrer la nouvelle photo
+                $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                $destinationPath = 'images/responsables';
+                $image->move($destinationPath, $nom_image);
+                $url_photo = URL::to('/')."/images/responsables/".$nom_image;
+                DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+                return redirect()->route('profil_referent');
+            }
+            else{
+                return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+            }
+        }
     }
     //update password
     public function update_responsable_mdp(Request $request)
@@ -504,7 +520,7 @@ class ResponsableController extends Controller
         $new_password = Hash::make($request->new_password);
         if (Hash::check($request->get('ancien_password'), $pwd)) {
             DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-            return redirect()->route('affResponsable');
+            return redirect()->route('profil_referent');
         } else {
             return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
         }
@@ -514,7 +530,7 @@ class ResponsableController extends Controller
     {
         DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
         DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
-        return redirect()->route('affResponsable');
+        return redirect()->route('profil_referent');
     }
     public function update(Request $request, $id)
     {
@@ -581,6 +597,7 @@ class ResponsableController extends Controller
                         'poste_resp' => $poste,
                         'photos' => $input
                     ]);
+
             } else {
                 responsable::where('id', $id)
                     ->update([
@@ -602,7 +619,11 @@ class ResponsableController extends Controller
                     ]);
             }
 
-            return redirect()->route('affResponsable');
+            DB::update('update users set name = ? where id = ?', [$nom.' '.$prenom,Auth::user()->id]);
+            DB::update('update users set telephone = ? where id = ?', [$phone,Auth::user()->id]);
+            // DB::update('update users set cin = ? where id = ?', [$cin,Auth::user()->id]);
+
+            return redirect()->route('profil_referent');
         }
 
 
@@ -642,6 +663,7 @@ class ResponsableController extends Controller
                         'adresse_quartier' => $request->quartier,
                         'adresse_code_postal' => $request->code_postal
                     ]);
+
             } else {
                 responsable::where('id', $id)
                     ->update([
