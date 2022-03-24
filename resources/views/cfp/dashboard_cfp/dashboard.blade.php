@@ -2,12 +2,12 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 {{-- <link rel="stylesheet" href="ttps://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"> --}}
-
+{{--
 <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">
         <a href="{{ route('home') }}" type="button" class="btn a active" style="font-size: 12px;"> <i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB système</a>
         <a href="{{ route('hometdbf')}}" type="button" class="btn bb me-2 ms-2" style="font-size: 12px;"><i class="fas fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB financier</a>
         <a href="{{ route('hometdbq')}}" type="button" class="btn bb" style="font-size: 12px;"> <i class="fas fa-chart-line" style="font-size: 10px;"></i>&nbsp;TDB qualité</a>
-</div>
+</div> --}}
 
 
 <div class="p-1 m-0">

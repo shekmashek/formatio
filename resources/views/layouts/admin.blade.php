@@ -450,13 +450,12 @@
 
             @endcan
 
-            <li>
-                {{-- <a href="{{route('recherche_admin')}}" class="d-flex nav_linke"> --}}
-                    <i class='bx bxs-notepad'></i>
+            {{-- <li>
+                 <i class='bx bxs-notepad'></i>
                     <span class="links_name">Reporting</span>
                 </a>
                 <span class="tooltip">Reporting</span>
-            </li>
+            </li> --}}
             @can('isCFP')
             {{-- <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
@@ -811,7 +810,6 @@
 
                         var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 37px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
                         html = html.replace(":?", userData['user']);
-                        console.log( userData['user'])
                         // alert(JSON.stringify(userData));
 
                         $('.photo_users').append(html);

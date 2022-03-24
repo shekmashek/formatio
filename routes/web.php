@@ -1007,6 +1007,8 @@ Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('m
 Route::get('/modification_adresse_organisme/{id}','CfpController@edit_adresse')->name('modification_adresse_organisme');
 Route::get('/modification_slogan/{id}','CfpController@edit_slogan')->name('modification_slogan');
 Route::get('/modification_site_web/{id}','CfpController@edit_site')->name('modification_site_web');
+Route::get('/modification_horaire/{id}','CfpController@edit_horaire')->name('modification_horaire');
+Route::post('/remplir_horaire/{id}','CfpController@ajout_horaire')->name('remplir_horaire');
 
 
 Route::post('/enregistrer_modification_logo_cfp/{id}','CfpController@modifier_logo')->name('enregistrer_modification_logo_cfp');

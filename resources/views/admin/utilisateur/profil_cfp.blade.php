@@ -111,33 +111,21 @@
 
                                     <div class="col-lg-6">
                                         <br><br>
-                                        <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Jour ouvrable</p>
+                                        <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Horaire d'ouverture</p>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="{{route('modification_slogan',$cfp->id)}}">
+                                            <a href="{{route('modification_horaire',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($horaire==NULL)
                                                         <strong style="color: red">incomplète</strong>
                                                     @else
                                                         @for ($i = 0;$i < count($horaire);$i++)
-                                                            {{ $horaire[$i]->jours}}
-                                                            @if($i < count($horaire) -1)  - @endif
+                                                            {{ $horaire[$i]->jours}} : @php echo (date('H:i', strtotime($horaire[$i]->h_entree))." - ".date('H:i', strtotime($horaire[$i]->h_sortie))) @endphp <br>
                                                         @endfor
                                                     @endif
                                                 </h6>
                                             </a>
                                         </div>
-                                        <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Heure d'ouverture</p>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                            <a href="{{route('modification_slogan',$cfp->id)}}">
-                                                <h6 class="text-muted f-w-400">
-                                                    @if ($horaire==NULL)
-                                                        <strong style="color: red">incomplète</strong>
-                                                    @else
-                                                       @php  strtotime($horaire[0]->h_entree) - strtotime($horaire[0]->h_sortie) @endphp
-                                                    @endif
-                                                </h6>
-                                            </a>
-                                        </div>
+
                                         <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Slogan</p>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                             <a href="{{route('modification_slogan',$cfp->id)}}">
@@ -161,6 +149,29 @@
                                                     @endif
                                                 </h6>
                                             </a>
+                                        </div>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+
+                                                <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Réseaux sociaux</p>
+                                                <a href="{{route('modification_site_web',$cfp->id)}}">
+                                                    <h6 class="text-muted f-w-400">
+                                                        @if ($reseaux_sociaux==NULL)
+                                                            Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
+                                                            Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
+                                                            Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
+                                                            Linnkdin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
+
+                                                        @else
+                                                            @for ($i=0;$i<count($reseaux_sociaux);$i++)
+                                                                Facebook : {{$reseaux_sociaux[$i]->lien_facebook}}
+                                                                Twitter : {{$reseaux_sociaux[$i]->lien_twitter}}
+                                                                Instagram : {{$reseaux_sociaux[$i]->lien_instagram}}
+                                                                Linnkdin : {{$reseaux_sociaux[$i]->lien_linkdin}}
+                                                            @endfor
+                                                        @endif
+                                                    </h6>
+                                                </a>
+
                                         </div>
                                     </div>
 

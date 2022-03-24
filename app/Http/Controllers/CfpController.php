@@ -76,9 +76,13 @@ class CfpController extends Controller
     }
     public function edit_site($id,Request $request){
         $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
-        return view('cfp.modification_profil.edit_site', compact('cfp'));
+        return view('cfp.modification_profil.edit_site', compact('cfp','id'));
     }
 
+    public function edit_horaire($id){
+        $cfp = $this->fonct->findWhere(" v_horaire_cfp",["cfp_id"],[$id]);
+        return view('cfp.modification_profil.edit_horaire', compact('cfp','id'));
+    }
 
     public function modifier_logo($id,Request $request){
         $image = $request->file('image');
@@ -146,6 +150,14 @@ class CfpController extends Controller
             DB::update('update cfps set site_web = ? where id = ?', [$request->site, $id]);
             return redirect()->route('profil_of',[$id]);
         }
+    }
+    //ajout horaire d'ouverture
+    public function ajout_horaire(Request $request,$id){
+        $input = $request->all();
+        for ($i=0; $i < count($input['jour']); $i++) {
+            DB::insert('insert into horaires (jours, h_entree,h_sortie,cfp_id) values (?, ?,?,?)', [$input['jour'][$i], $input['ouverture'][$i], $input['fermeture'][$i] ,$id]);
+        }
+        return redirect()->route('profil_of',[$id]);
     }
 
 }

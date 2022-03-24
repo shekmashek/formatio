@@ -340,7 +340,7 @@ class UtilisateurControlleur extends Controller
         // $liste_cfps = cfp::findOrFail($id)->get();
         $fonct = new FonctionGenerique();
         $liste_cfps = DB::select('select * from cfps where id = ' . $id);
-        $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$id]);
+         $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$id]);
         $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$id]);
         return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux'));
     }
