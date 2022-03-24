@@ -11,13 +11,7 @@
             </div>
         </div>
     </div>
-    @if (Session::has('error'))
-    <div class="alert alert-danger">
-        <ul>
-            <li>{{Session::get('error') }}</li>
-        </ul>
-    </div>
-    @endif
+
     <!-- /.row -->
 
 
@@ -25,7 +19,20 @@
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
                 <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2>
-
+                @if (Session::has('success'))
+                <div class="alert alert-success">
+                    <ul>
+                        <li>{{Session::get('success') }}</li>
+                    </ul>
+                </div>
+                @endif
+                @if (Session::has('error'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{{Session::get('error') }}</li>
+                    </ul>
+                </div>
+                @endif
                 {{-- <form action="{{route('create_compte_employeur')}}" method="POST" enctype="multipart/form-data"> --}}
                 <form action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -209,11 +216,11 @@
     $(document).on('change', '#phone', function() {
         var result = $(this).val();
 
-        if ($(this).val().length > 13 || $(this).val().length < 12) {
+        if ($(this).val().length > 13 || $(this).val().length < 10) {
             document.getElementById("phone_err").innerHTML = "le numéro du télephone n'est pas correct";
         } else {
             document.getElementById("phone_err").innerHTML = '';
-            $.ajax({
+          /*  $.ajax({
                 url: '{{route("verify_tel_user")}}'
                 , type: 'get'
                 , data: {
@@ -231,7 +238,7 @@
                 , error: function(error) {
                     console.log(error);
                 }
-            });
+            }); */
         }
 
 
