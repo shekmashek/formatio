@@ -21,10 +21,12 @@
                                     $fermeture = $cfp_h->h_sortie;
                                     $jours_today = strftime("%A", strtotime($jours1));
                                 }
-                                if ($jours1 = $jours_today) {
-                                        echo (strftime("%A", strtotime($jours1))."<br/>");
-                                        echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
-                                    }
+                                echo $jours1.'<br>';
+                                echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
+                                // if ($jours1 = $jours_today) {
+                                //         echo (strftime("%A", strtotime($jours1))."<br/>");
+                                //         echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
+                                //     }
                             @endphp
                         </p>
                           @else

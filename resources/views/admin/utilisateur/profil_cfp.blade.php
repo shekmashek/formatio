@@ -111,6 +111,33 @@
 
                                     <div class="col-lg-6">
                                         <br><br>
+                                        <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Jour ouvrable</p>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="{{route('modification_slogan',$cfp->id)}}">
+                                                <h6 class="text-muted f-w-400">
+                                                    @if ($horaire==NULL)
+                                                        <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                        @for ($i = 0;$i < count($horaire);$i++)
+                                                            {{ $horaire[$i]->jours}}
+                                                            @if($i < count($horaire) -1)  - @endif
+                                                        @endfor
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
+                                        <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Heure d'ouverture</p>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <a href="{{route('modification_slogan',$cfp->id)}}">
+                                                <h6 class="text-muted f-w-400">
+                                                    @if ($horaire==NULL)
+                                                        <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                       @php  strtotime($horaire[0]->h_entree) - strtotime($horaire[0]->h_sortie) @endphp
+                                                    @endif
+                                                </h6>
+                                            </a>
+                                        </div>
                                         <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Slogan</p>
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                             <a href="{{route('modification_slogan',$cfp->id)}}">
