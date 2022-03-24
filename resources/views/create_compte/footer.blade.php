@@ -57,25 +57,32 @@
     /*-----------------------------------------------*/
     $(document).on('change', '#cin_resp_cfp', function() {
         var result = $(this).val();
-        $.ajax({
-            url: '{{route("verify_cin_user")}}'
-            , type: 'get'
-            , data: {
-                valiny: result
-            }
-            , success: function(response) {
-                var userData = response;
+        document.getElementById("cin_resp_cfp_err").innerHTML = "";
 
-                if (userData.length > 0) {
-                    document.getElementById("cin_resp_cfp_err").innerHTML = "CIN appartient déjà par un autre utilisateur";
-                } else {
-                    document.getElementById("cin_resp_cfp_err").innerHTML = "";
+        if ($(this).val().length > 12 || $(this).val().length < 12) {
+            document.getElementById("cin_resp_cfp_err").innerHTML = "Le CIN est invalide";
+        } else {
+            $.ajax({
+                url: '{{route("verify_cin_user")}}'
+                , type: 'get'
+                , data: {
+                    valiny: result
                 }
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
+                , success: function(response) {
+                    var userData = response;
+
+                    if (userData.length > 0) {
+                        document.getElementById("cin_resp_cfp_err").innerHTML = "CIN appartient déjà par un autre utilisateur";
+                    } else {
+                        document.getElementById("cin_resp_cfp_err").innerHTML = "";
+                    }
+                }
+                , error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
     });
 
     $(document).on('change', '#email_resp_cfp', function() {
@@ -106,8 +113,8 @@
 
         document.getElementById("error_logo_cfp").innerHTML = '';
 
-        if (""+test == "jpg" || ""+test == "jpeg" || ""+test == "png") {
-            if (this.files[0].size > 60) {
+        if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
+            if (this.files[0].size > 60000) {
                 document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
             } else {
                 document.getElementById("error_logo_cfp").innerHTML = '';
@@ -116,19 +123,10 @@
             document.getElementById("error_logo_cfp").innerHTML = "les extension de type *.jpg, *.png et *.jpeg seulement sont autorisé";
         }
 
-        /*      var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            document.getElementById("error_logo_cfp").innerHTML = "les extension de type *.jpg, *.png et *.jpeg seulement sont autorisé";
-
-        }else {
-            document.getElementById("error_logo_cfp").innerHTML = '';
-        }
-*/
-
     });
 
     $(document).on('change', '#tel_resp_cfp', function() {
-        if ($(this).val().length > 13) {
+        if ($(this).val().length > 13 || $(this).val().length < 10) {
             document.getElementById("tel_resp_cfp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
         } else {
             document.getElementById("tel_resp_cfp_err").innerHTML = '';
@@ -166,9 +164,10 @@
 
     $(document).on('change', '#logo_etp', function() {
         var test = $(this).val().split('.').pop();
+        document.getElementById("error_logo_etp").innerHTML = '';
 
-        if (""+test == "jpg" || ""+test == "jpeg" || ""+test == "png") {
-            if (this.files[0].size > 60) {
+        if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
+            if (this.files[0].size > 60000) {
                 document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
             } else {
                 document.getElementById("error_logo_etp").innerHTML = '';
@@ -179,7 +178,7 @@
     });
 
     $(document).on('change', '#tel_resp_etp', function() {
-        if ($(this).val().length > 13) {
+        if ($(this).val().length > 13 || $(this).val().length < 10) {
             document.getElementById("tel_resp_etp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
         } else {
             document.getElementById("tel_resp_etp_err").innerHTML = '';
@@ -189,7 +188,12 @@
 
     $(document).on('change', '#cin_resp_etp', function() {
         var result = $(this).val();
-        $.ajax({
+        document.getElementById("cin_resp_etp_err").innerHTML = "";
+
+        if ($(this).val().length > 12 || $(this).val().length < 12) {
+            document.getElementById("cin_resp_etp_err").innerHTML = "Le CIN est invalide";
+        } else {
+            $.ajax({
             url: '{{route("verify_cin_user")}}'
             , type: 'get'
             , data: {
@@ -207,6 +211,8 @@
                 console.log(error);
             }
         });
+        }
+
     });
 
     $(document).on('change', '#email_resp_etp', function() {
@@ -276,6 +282,7 @@
             }
         });
     });
+
     $(document).on('change', '#name_entreprise', function() {
         var id = $(this).val();
         // document.getElementById('name_entreprise_desc').value = id;

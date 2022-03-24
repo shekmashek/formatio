@@ -7,17 +7,11 @@
     <div class="container-fluid">
         <div class="panel-heading d-flex mb-5">
             <div class="mx-2">
-                <li class="btn_enregistrer text-center" ><a href="{{route('employes')}}">Précedent</a></li>&nbsp;
+                <li class="btn_enregistrer text-center"><a href="{{route('employes')}}">Précedent</a></li>&nbsp;
             </div>
         </div>
     </div>
-    @if (Session::has('error'))
-    <div class="alert alert-danger">
-        <ul>
-            <li>{{Session::get('error') }}</li>
-        </ul>
-    </div>
-    @endif
+
     <!-- /.row -->
 
 
@@ -25,7 +19,20 @@
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
                 <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2>
-
+                @if (Session::has('success'))
+                <div class="alert alert-success">
+                    <ul>
+                        <li>{{Session::get('success') }}</li>
+                    </ul>
+                </div>
+                @endif
+                @if (Session::has('error'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{{Session::get('error') }}</li>
+                    </ul>
+                </div>
+                @endif
                 {{-- <form action="{{route('create_compte_employeur')}}" method="POST" enctype="multipart/form-data"> --}}
                 <form action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -92,15 +99,18 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <input type="text" autocomplete="off" required name="fonction" class="form-control input" id="fonction" required />
-                                <label for="fonction" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                                @error('fonction')
+                                <input type="text" max=10 required name="phone" class="form-control input" id="phone" required />
+                                <label for="phone" class="form-control-placeholder" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>
+                                <span style="color:#ff0000;" id="phone_err"></span>
+                                @error('phone')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000;"> {{$message}} </span>
                                 </div>
                                 @enderror
                             </div>
                         </div>
+
+
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -117,10 +127,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" max=10 required name="phone" class="form-control input" id="phone" required />
-                                <label for="phone" class="form-control-placeholder" align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>
-                                <span style="color:#ff0000;" id="phone_err"></span>
-                                @error('phone')
+                                <input type="text" autocomplete="off" required name="fonction" class="form-control input" id="fonction" required />
+                                <label for="fonction" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
+                                @error('fonction')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000;"> {{$message}} </span>
                                 </div>
@@ -139,27 +148,46 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
-    $(document).on('change', '#cin', function() {
-        var result = $(this).val();
-        $.ajax({
-            url: '{{route("verify_cin_user")}}'
-            , type: 'get'
-            , data: {
-                valiny: result
-            }
-            , success: function(response) {
-                var userData = response;
 
-                if (userData.length > 0) {
-                    document.getElementById("cin_err").innerHTML = "CIN appartient déjà par un autre utilisateur";
-                } else {
-                    document.getElementById("cin_err").innerHTML = "";
+   /* function getMail(var tab=[]){
+        for (let index = 0; index < tab.length; index++) {
+            if(tab[index]== '@'){
+                return true;
+            }
+
+        }
+        return false;
+    }
+    */
+    $(document).on('change', '#cin', function() {
+        document.getElementById("cin_err").innerHTML = "";
+
+        var result = $(this).val();
+       if ($(this).val().length > 12 || $(this).val().length < 12) {
+            document.getElementById("cin_err").innerHTML = "Le CIN est invalid";
+
+        } else {
+            document.getElementById("cin_err").innerHTML = "";
+            $.ajax({
+                url: '{{route("verify_cin_user")}}'
+                , type: 'get'
+                , data: {
+                    valiny: result
                 }
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
+                , success: function(response) {
+                    var userData = response;
+
+                    if (userData.length > 0) {
+                        document.getElementById("cin_err").innerHTML = "CIN appartient déjà par un autre utilisateur";
+                    } else {
+                        document.getElementById("cin_err").innerHTML = "";
+                    }
+                }
+                , error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
     });
 
     $(document).on('change', '#mail', function() {
@@ -187,25 +215,33 @@
 
     $(document).on('change', '#phone', function() {
         var result = $(this).val();
-        $.ajax({
-            url: '{{route("verify_tel_user")}}'
-            , type: 'get'
-            , data: {
-                valiny: result
-            }
-            , success: function(response) {
-                var userData = response;
 
-                if (userData.length > 0) {
-                    document.getElementById("phone_err").innerHTML = "Télephone existes déjà";
-                } else {
-                    document.getElementById("phone_err").innerHTML = "";
+        if ($(this).val().length > 13 || $(this).val().length < 10) {
+            document.getElementById("phone_err").innerHTML = "le numéro du télephone n'est pas correct";
+        } else {
+            document.getElementById("phone_err").innerHTML = '';
+          /*  $.ajax({
+                url: '{{route("verify_tel_user")}}'
+                , type: 'get'
+                , data: {
+                    valiny: result
                 }
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
+                , success: function(response) {
+                    var userData = response;
+
+                    if (userData.length > 0) {
+                        document.getElementById("phone_err").innerHTML = "le numéro du télephone existe déjà";
+                    } else {
+                        document.getElementById("phone_err").innerHTML = "";
+                    }
+                }
+                , error: function(error) {
+                    console.log(error);
+                }
+            }); */
+        }
+
+
     });
 
     /*---------------------------------------------------------*/
