@@ -79,7 +79,6 @@
                           <option value="Femme">Femme</option>
 
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
  
                        
                       
@@ -131,7 +130,7 @@
     
       // $(document).ready(function(){
       //   alert("Bien venu");
-      // });
+     
       $('#file-input').change( function(event) {
         $("img.icon").attr('src',URL.createObjectURL(event.target.files[0]));
         $("img.icon").parents('.upload-icon').addClass('has-img');

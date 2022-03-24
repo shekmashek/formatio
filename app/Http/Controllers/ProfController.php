@@ -387,7 +387,17 @@ class ProfController extends Controller
     }
     public function profile_formateur($id = null)
     {
-        $formateur = formateur::findOrFail($id);
+        // $user_id =  $users = Auth::user()->id;
+         if (Gate::allows('isFormateur')){
+            $id = formateur::where('user_id', Auth::user()->id)->value('id');
+     
+            $formateur = formateur::findOrFail($id);
+         }
+         else{
+            $formateur = formateur::findOrFail($id);
+
+         }
+        
 
         return view('admin.formateur.profile_formateur', compact('formateur'));
     }
@@ -396,7 +406,6 @@ class ProfController extends Controller
     public function set_profile_formateur()
     {
         $user = Auth::user()->id;
-
         $formateur = formateur::where('user_id', $user)->get();
         return view('admin.formateur.profile_formateurs', compact('formateur'));
     }
