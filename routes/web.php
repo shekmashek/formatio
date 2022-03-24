@@ -906,8 +906,11 @@ Route::post('recherche_intervale_date_appel_offre','AppelOffreController@recherc
 
 
 // ================== Role User
-Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->name('add_role_user');
-Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
+// Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->name('add_role_user');
+Route::get('add_role_user','RoleController@add_role_user')->name('add_role_user');
+
+// Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
+Route::get('delete_role_use','RoleController@delete_role_user')->name('delete_role_user');
 
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
 //Route impression detail_calendrier

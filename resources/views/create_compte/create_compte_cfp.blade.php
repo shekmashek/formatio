@@ -83,8 +83,9 @@
                     {{-- <li id="confirm"></li> --}}
                 </ul>
 
-                <fieldset class="shadow mt-0 p-3 bg-body rounded">
+                <fieldset class="shadow mt-0 p-3 bg-body rounded  field">
                     <h6 align="left" class="mb-2">Veuillez entrer le profil professionnel de votre organisation</strong></h4>
+
                         <div class="form-group">
                             <input type="text" name="name_cfp" class="form-control input_inscription" id="name_cfp" required />
                             <label for="name_cfp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
@@ -94,10 +95,6 @@
                             </div>
                             @enderror
                             <span style="color:#ff0000;" id="name_cfp_err"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
-                            <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
                         </div>
                         <div class="form-group">
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_cfp" />
@@ -125,13 +122,19 @@
                             <p id="error_logo_cfp" style="color:#ff0000;"></p>
 
                         </div>
-                        <input type="button" name="next" class="next action-button" value="Suivant" />
+                        <div class="form-group">
+                            <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
+                            <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
+                        </div>
+
+
+                        <input type="button" name="next" class="next action-button  suivant_of_1 "  value="Suivant" />
                 </fieldset>
 
 
                 {{-- --}}
 
-                <fieldset class="shadow p-3 bg-body rounded">
+                <fieldset class="shadow p-3 bg-body rounded field2">
                     <h6 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
                         <div class="form-group">
@@ -142,6 +145,8 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
+                            <span style="color:#ff0000;" id="nom_resp_cfp_err"></span>
+
                         </div>
                         <div class="form-group">
                             <input type="text" name="prenom_resp_cfp" class="form-control input_inscription" id="prenom_resp_cfp" />
@@ -170,6 +175,8 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
+                            <span style="color:#ff0000;" id="fonction_resp_cfp_err"></span>
+
                         </div>
                         <div class="form-group">
                             <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
@@ -224,7 +231,7 @@
                         </div>
 
                         <input type="button" name="previous" class="previous action-button" value="Précedent" />
-                        <button type="submit" class=" action-button">Confirmer</button>
+                        <button type="submit" class=" action-button suivant_of_confirmer">Confirmer</button>
 
                         {{-- <input type="button" name="make_payment" class="next action-button" value="Suivant" /> --}}
                 </fieldset>
