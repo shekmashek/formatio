@@ -822,7 +822,7 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 30px; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
                     $('.logo_etp_user').append(html);
                 }
