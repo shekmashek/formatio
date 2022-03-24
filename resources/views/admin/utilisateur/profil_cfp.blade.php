@@ -159,14 +159,14 @@
                                                             Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
                                                             Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
                                                             Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-                                                            Linnkdin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
+                                                            Linkedin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
 
                                                         @else
                                                             @for ($i=0;$i<count($reseaux_sociaux);$i++)
-                                                                Facebook : {{$reseaux_sociaux[$i]->lien_facebook}}
-                                                                Twitter : {{$reseaux_sociaux[$i]->lien_twitter}}
-                                                                Instagram : {{$reseaux_sociaux[$i]->lien_instagram}}
-                                                                Linnkdin : {{$reseaux_sociaux[$i]->lien_linkdin}}
+                                                                Facebook : {{$reseaux_sociaux[$i]->lien_facebook}}<br>
+                                                                Twitter : {{$reseaux_sociaux[$i]->lien_twitter}}<br>
+                                                                Instagram : {{$reseaux_sociaux[$i]->lien_instagram}}<br>
+                                                                Linnkdin : {{$reseaux_sociaux[$i]->lien_linkedin}}<br>
                                                             @endfor
                                                         @endif
                                                     </h6>
