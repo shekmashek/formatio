@@ -181,7 +181,10 @@ class HomeController extends Controller
     {
         if (Gate::allows('isFormateurPrincipale')) {
             return redirect()->route('calendrier');
-        }  
+        } 
+         if (Gate::allows('isManagerPrincipale')) {
+            return redirect()->route('calendrier');
+        }   
         if (Gate::allows('isStagiairePrincipale')) {
            //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
@@ -507,7 +510,7 @@ class HomeController extends Controller
             //on récupère l'entreprise id de la personne connecté
 
             $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            $data = $fonct->findWhere("v_projetentreprise", ["entreprise_id"], [$entreprise_id]);
+            $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         }

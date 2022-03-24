@@ -687,9 +687,7 @@
                                             <a href="{{route('profil_du_responsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             <hr style="color:lightgrey">
-
                                             <div class="text_resp" style="margin-top: -10px;margin-left:65px">
-
                                                 <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();" class="deconnexion_text">
                                                     </a></p>
@@ -698,7 +696,6 @@
                                                 <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
                                                     @csrf
                                                 </form>
-
                                             </div>
                                         </div>
                                         {{-- logout --}}
