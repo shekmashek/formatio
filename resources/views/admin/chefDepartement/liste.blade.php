@@ -110,7 +110,7 @@
                                                         count($roles_not_actif_referent[$i]["role_inactif"]); $ii++)
                                                         @if($referent[$i]->user_id ==
                                                         $roles_not_actif_referent[$i]["user_id"])
-                                                        {{-- <span style="color:blueviolet">attribué role pour
+                                                        <span style="color:blueviolet">attribué role pour
                                                             {{$roles_not_actif_referent[$i]["role_inactif"][$ii]->role_name}}
                                                             <button class="btn modifier pt-0"><a
                                                                     href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$i]["
@@ -118,12 +118,7 @@
                                                                         class='bx bx-edit background_grey'
                                                                         style="color: #0052D4 !important;font-size: 15px"
                                                                         title="modifier les informations"></i></a></button>
-                                                        </span> <br> --}}
-
-                                                        <label class="switch">
-                                                            <input id="on" type="checkbox">
-                                                            <div class="slider round"></div>
-                                                        </label>
+                                                        </span> <br>
                                                         <p id="info"></p @endif @endfor </div>
                                             </td>
                                             <td>

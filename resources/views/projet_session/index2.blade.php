@@ -51,7 +51,7 @@
                                     <select name="annee" id="annee" class="filtre_projet">
                                         <option value="null" selected>Années</option>
                                     </select>
-                                    <button class="btn btn_competence mt-3 mb-3" type="submit">Appliquer</button>
+                                    <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
                             </div>
 
                         </form>
@@ -108,7 +108,7 @@
                                         @endif
                                         @endforeach
                                     </div>
-                                    
+
                                     <div class="col-1 text-end p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
@@ -179,7 +179,7 @@
                                                             <a style="background: none" href="{{ route('nouveauRapportFinale',[$pj->groupe_id]) }}"><button class="btn rapport_finale">Rapport</button></a>
                                                         </td>
                                                     @endif
-                                                    
+
                                                     {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
                                 data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
 

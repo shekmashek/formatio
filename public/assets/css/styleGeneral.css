@@ -324,6 +324,7 @@ ul li a {
     height: 100%;
     width: calc(100% - 78px);
     left: 78px;
+    right: 250px;
     transition: all 0.5s ease;
 }
 
@@ -343,6 +344,12 @@ ul li a {
     width: calc(100% - 240px);
     left: 240px;
 }
+
+.apprendre.afficher ~ .home_content {
+    width: calc(100% - 250px);
+    right: 0px;
+}
+
 /*---------------------
     Header
 -----------------------*/
@@ -488,13 +495,13 @@ ul li a {
     font-size: 11px;
 }
 
-.header-right .message-box {
+/* .header-right .message-box {
     position: relative;
     z-index: 99;
     width: 50px;
     height: 50px;
     text-align: center;
-}
+} */
 
 .header-right .message-box:hover {
     color: red;
@@ -629,11 +636,20 @@ ul li a {
 
 /* bulle  profile */
 .header-right .header_img {
-    width: auto;
+    width: 25%;
     overflow: hidden;
     cursor: pointer;
     height: auto;
+    text-align: center;
+    position: relative;
+    bottom: .5rem;
+    margin: 0 auto;
 }
+
+.header-right .header_img .bx {
+    color: #637381 !important;
+}
+
 
 .header-right .header_img p {
     margin-top: 20px;
@@ -650,7 +666,7 @@ ul li a {
     opacity: 0;
     position: absolute;
     top: 40px;
-    right: 15px;
+    right: 100px;
     border-radius: 5px 0px 5px 5px;
     background-color: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -706,101 +722,6 @@ ul li a {
     text-decoration: underline;
 }
 
-.header-right .header_img {
-    width: auto;
-    overflow: hidden;
-    cursor: pointer;
-    height: auto;
-    position: relative;
-    bottom: 0.5rem;
-}
-
-.header-right .header_img .bx {
-    color: #637381 !important;
-}
-
-.header-right .header_img .header_img_name {
-    color: #542356;
-    font-size: 0.85rem;
-    margin-top: 0;
-    position: relative;
-    top: 1.3rem;
-}
-
-.header-right .header_img p:hover {
-    color: red;
-}
-
-.header-right .pdp_profil {
-    display: none;
-    height: 0px;
-    width: 250px;
-    opacity: 0;
-    position: absolute;
-    top: 40px;
-    left: 69%;
-    border-radius: 5px 0px 5px 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.header-right .pdp_profil .container {
-    padding: 0;
-}
-
-.header-right .pdp_profil_card .card {
-    width: auto;
-    border: none;
-    border-radius: 15px;
-    padding: 8px;
-    background-color: #fff;
-    position: relative;
-    margin: 0;
-    height: auto;
-}
-
-.header-right .pdp_profil_card .card h6 {
-    font-size: 14px;
-}
-
-.header-right .pdp_profil_card .card .card-body {
-    font-size: 12px;
-}
-
-.header-right .pdp_profil_card .card .user {
-    position: relative;
-}
-
-.header-right .pdp_profil_card .card .user .profile {
-    position: absolute;
-    top: -50px;
-    left: 35%;
-    height: 90px;
-    width: 90px;
-    border: 3px solid #fff;
-    border-radius: 50%;
-}
-
-.header-right .pdp_profil_card .card .user .profile img {
-    height: 80px;
-    width: 80px;
-    margin-top: 2px;
-}
-
-.header-right .pdp_profil_card .card .profil_btn {
-    width: auto;
-    border-radius: 25px;
-    height: 35px;
-    background-color: blue;
-}
-
-.header-right .pdp_profil_card .card .profil_btn:hover {
-    color: blue;
-    background-color: white;
-}
-
-.header-right .pdp_profil_card .card .deconnexion_text:hover {
-    text-decoration: underline;
-}
 
 /* entreprise cfp */
 .header-right .pdp_etp_cfp {
@@ -917,7 +838,7 @@ input:-webkit-autofill:active {
 .btn_enregistrer {
     padding: 5px;
     margin-top: 1rem;
-    background-color: rgba(197, 197, 197, 0.192);
+    background-color: #7635dc;
     border-radius: 5px;
     border-width: 0;
     cursor: pointer;
@@ -925,16 +846,17 @@ input:-webkit-autofill:active {
     font-family: Arial, sans-serif;
     font-size: 1em;
     transition: all 200ms;
-    color: #7635dc;
+    color: white;
     width: 13rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .btn_enregistrer:hover {
     /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: #7635dc;
+    background-color: #7535dc21;
     transform: scale(1.05);
-    color: White;
+    color: #7635dc;
+    text-decoration-line: underline;
 }
 
 .btn_enregistrer a{
@@ -982,6 +904,110 @@ input:-webkit-autofill:active {
     color: white;
 }
 
+.btn_racourcis {
+    background: #7535dc38;
+   padding: 5px 10px;
+   text-align: center;
+   transition: all 0.5s ease;
+   background-size: 200% auto;
+   color: #7635dc;
+   box-shadow: 0 0 20px #eee;
+   border-radius: 10px;
+   display: block;
+   position: relative;
+   bottom: .6rem;
+   margin-left: 20px;
+ }
+
+ .btn_racourcis:hover {
+   color: white;
+   text-decoration: none;
+   transform: scale(1.1);
+   background: #7635dc;
+ }
+
+
+@keyframes completer_programme{
+    0%{
+        opacity: 0;
+    }
+    25%{
+        transition: all .5s ease;
+        transform: scale(1.1);
+    }
+    50%{
+        transition: all .5s ease;
+        transform: scale(1.2);
+    }
+    75%{
+        opacity: 1;
+    }
+}
+
+@keyframes completer_competence{
+    0%{
+        opacity: 0;
+    }
+    25%{
+        transition: all .5s ease;
+        transform: scale(1.1);
+    }
+    50%{
+        transition: all .5s ease;
+        transform: scale(1.2);
+    }
+    75%{
+        opacity: 1;
+    }
+}
+
+.btn_completer{
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    background-color: #7635dc;
+    border-radius: 5px;
+    border: none;
+    font-size: 0.900rem;
+    transition: all 200ms ease;
+    margin-right: 1rem;
+    animation-name: completer_programme;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-iteration-count: 10;
+}
+
+.btn_completer:hover{
+    color: #7635dc;
+    transform: scale(1.1);
+    text-decoration-line: underline;
+    background-color: #7535dc25;
+}
+
+.btn_competence {
+    color: #7635dc;
+    border: none;
+    padding: 5px 8px;
+    background-color: #7535dc25;
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms ease;
+    margin-right: 1rem;
+    animation-name: completer_competence;
+    animation-duration: 3s;
+    animation-delay: 2s;
+    animation-iteration-count: 5;
+}
+
+.btn_competence:hover {
+    background-color: #7635dc;
+    color: white;
+    transform: scale(1.1);
+    text-decoration-line: underline;
+}
+
 .btn_next {
     color: #7635dc;
     border: none;
@@ -991,7 +1017,7 @@ input:-webkit-autofill:active {
     border-width: 0;
     cursor: pointer;
     font-size: 0.900rem;
-    transition: all 200ms;
+    transition: all 200ms ease;
     margin-right: 1rem;
 }
 
@@ -1186,6 +1212,38 @@ font-size: 0.850rem;
     height: 30px;
     font-size: 10px;
 }
+
+/* apprendre */
+.apprendre{
+    position: fixed;
+    top: 0;
+    right: -50px;
+    height: 100%;
+    width: 0px;
+    background: white;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    align-items: center;
+    color: var(--font-sidebar-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border: 1px solid grey;
+}
+
+.apprendre.afficher {
+    width: 400px;
+    overflow-y: auto;
+    right: 0px;
+}
+
+.apprendre span .bx{
+    font-size: 3rem;
+}
+
+.apprendre_btn{
+    position: relative;
+    bottom: 1rem;
+}
+
 /* } */
 /*---------------------
     fin footer

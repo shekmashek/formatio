@@ -129,7 +129,7 @@
 
             @canany(['isCFP','isFormateur'])
             <li>
-                <a href="{{route('accueil_projet')}}" class="d-flex nav_linke">
+                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
@@ -151,7 +151,7 @@
             @endcanany
             @canany(['isReferent'])
             <li>
-                <a href="{{route('accueil_projet')}}" class="d-flex nav_linke">
+                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
@@ -515,11 +515,33 @@
                         </form>
                     </div>
                     @endcanany
+                    @canany('isCFP')
+                    <div class="d-flex flex-row">
+                        <a href="{{route('liste_module')}}" class="btn_racourcis" role="button">Modules</a>
+                        <a href="{{route('liste_projet')}}" class="btn_racourcis" role="button">Projets</a>
+                        <a href="{{route('calendrier')}}" class="btn_racourcis" role="button">Agenda</a>
+                    </div>
+                    @endcanany
+                    @canany('isStagiaire')
+                    <div class="d-flex flex-row">
+                        <a href="{{route('liste_projet')}}" class="btn_racourcis" role="button">Projets</a>
+                        <a href="{{route('calendrier')}}" class="btn_racourcis" role="button">Agenda</a>
+                    </div>
+                    @endcanany
+                    @canany('isFormateur')
+                    <div class="d-flex flex-row">
+                        <a href="{{route('liste_projet')}}" class="btn_racourcis" role="button">Projets</a>
+                        <a href="{{route('calendrier')}}" class="btn_racourcis" role="button">Agenda</a>
+                    </div>
+                    @endcanany
                 </div>
 
                 <div class="col-7 header-right align-items-center d-flex flex-row">
-                    <div class="col mt-3 d-flex flex-row">
-                        <div class="notification-box">
+                    <div class="col-9 d-flex flex-row justify-content-end mt-4">
+                        <div class="apprendre_btn mb-2">
+                            <button class="btn_completer" type="button" onclick="afficherTuto();">Apprendre</button>
+                        </div>
+                        {{-- <div class="notification-box">
                             <span class="count-notif">6</span>
                             <div class="notification-bell">
                                 <i class="bx bxs-bell bell_move" id="bell" style="color: #637381;"></i>
@@ -533,9 +555,9 @@
                                     <p>Veut Collaborrer avec votre entreprise</p>
                                 </div>
                             </a>
-                        </div>
+                        </div> --}}
 
-                        <div class="message-box">
+                        {{-- <div class="message-box">
                             <span class="count-message">
                                 @isset($totale_invitation)
                                 @if($totale_invitation>0)
@@ -553,7 +575,6 @@
                             <h2>Messages - <span>5</span></h2>
                             <a href="{{route('collaboration')}}">
                                 <div class="notifications-item2">
-                                    {{-- <h4>Nicole Raharifetra,&nbsp;il y a 1h</h4> --}}
                                     <h4>Collaboration <strong style="color:red">
                                             @isset($totale_invitation)
                                             @if($totale_invitation>0)
@@ -566,42 +587,18 @@
                                     <p>voir mes invitations,demandes</p>
                                 </div>
                             </a>
-                        </div>
+                        </div>--}}
                     </div>
 
                     {{-- entreprise --}}
-                    <div class="col d-flex flex-row" style="align-items: left; text-align:center">
-                        {{-- <div class="header_etp_cfp d-flex flex-row" style="">
-                            <p class="ms-2"><i class='bx bx-building-house' style="color: #801D68;"></i>
-                            </p>
-                            <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;
-                            </p>&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;
-                            <div class="d-flex pro_plan">
-                                <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
-                                <p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="pdp_etp_cfp" id="box_etp_cfp">
-                            <div class="container pdp_etp_cfp_card ">
-                                <div class="card">
-                                    <div class="card-title">
-                                        <h6 class="mb-0 text-center">Numerika</h6>
-                                        <hr class="m-0">
-                                    </div>
-                                    <div class="card-body">
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                    </div>
+
                     {{-- user --}}
-                    <div class="col">
-                        <div class="header_img ms-5 mb-2 text-center d-flex flex-row" style="text-align: center">
+                    <div class="col-3 d-flex">
+                        <div class="header_img">
 
                             {{-- <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p> --}}
                             <p>
-                                <div class="mt-2"><span><i class="fas fa-user"></i></span>  <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
+                                <div class=""><span><i class="fas fa-user"></i></span>  <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
                                 {{-- <div class='photo_user'> </div> --}}
                             </p>
                             {{-- <p style="text-transform: capitalize;color:#801D68" class="header_img_name">
@@ -722,6 +719,12 @@
             {{-- content --}}
             <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
+                <div class="apprendre pt-5">
+                    <div class="row">
+                        <p>Apprendre<i class="bx bx-x " role="button" onclick="afficherTuto();"></i></p>
+                    </div>
+
+                </div>
             </div>
             {{-- content --}}
             {{-- footer --}}
