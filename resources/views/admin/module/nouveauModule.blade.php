@@ -1,8 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-
+<script src='https://cdn.tiny.cloud/1/2livar4kpgh2o2es5elw12jtdnyrnv2ll23hiq3rlplmtj8r/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
 <div id="page-wrapper">
     <div class="container-fluid bg-light">
         <nav class="navbar navbar-expand-lg w-100">
@@ -61,7 +60,7 @@
                                                     {{-- <div class="row px-3 mt-4">
                                                         <div class="form-group mt-1 mb-1"> <input type="text" id="email" class="form-control test" required> <label class="ml-3 form-control-placeholder" for="email">Email</label> </div>
                                                     </div> --}}
-                                                    <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required>
+                                                    <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required placeholder="Nom du module">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Nom du module</label>
                                                     @error('nom_module')
                                                     <div class="col-sm-6">
@@ -77,7 +76,7 @@
                                         <div class="acf-field acf-field-text acf-field-categorie is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 50px;">
+                                                    <select class="form-control select_formulaire input mt-3" id="acf-domaine" name="domaine" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez la
                                                             domaine de formation ...</option>
                                                         @foreach($domaine as $do)
@@ -114,7 +113,7 @@
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap mt-2">
-                                                    <input type="text" class="form-control descript descript input" id="acf-description" name="description" required>
+                                                    <input type="text" class="form-control descript descript input" id="acf-description" name="description" required placeholder="Déscription">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Déscription</label>
                                                     @error('description')
                                                     <div class="col-sm-6">
@@ -133,7 +132,7 @@
                                                 <div class="acf-field acf-field-text acf-field-jour is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control jour jour input" id="acf-jour" name="jour" min="1" max="365" onfocus="(this.type='number')" title="entrer une durée en jours" required>
+                                                            <input type="text" class="form-control jour jour input mt-4" id="acf-jour" name="jour" min="1" max="365" onfocus="(this.type='number')" title="entrer une durée en jours" required  placeholder="Durée en Jours (J)">
                                                             <label for="acf-nom_module" class="form-control-placeholder">Durée en Jours (J)</label>
                                                         </div>
                                                     </div>
@@ -145,7 +144,7 @@
                                                 <div class="acf-field acf-field-text acf-field-heur is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control heur heur input" id="acf-heur" name="heure" min="1" max="8760" onfocus="(this.type='number')" title="entrer une durée en heure" required>
+                                                            <input type="text" class="form-control heur heur input mt-4" id="acf-heur" name="heure" min="1" max="8760" onfocus="(this.type='number')" title="entrer une durée en heure" required placeholder="Durée en Heure (H)">
                                                             <label for="acf-nom_module" class="form-control-placeholder">Durée en Heure (H)</label>
                                                         </div>
                                                     </div>
@@ -159,7 +158,7 @@
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire modalite modalite input" id="acf-modalite" name="modalite" style="height: 50px;">
+                                                    <select class="form-control select_formulaire modalite modalite input mt-4" id="acf-modalite" name="modalite" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez la
                                                             modalite de formation ...</option>
                                                         <option value="En ligne">En ligne</option>
@@ -192,17 +191,14 @@
 
                                     <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i class="bx bxs-edit close" onclick="myFunction()"></i>
                                         <br>
-                                        <p class="text-center mt-3"><a href="#preview_haut2" class="new_list_nouvelle btn_next" onclick="suivant_objectif();" role="button">Suivant</a></p>
+                                        <p class="text-center mt-3"><a href="#preview_haut2" class="new_list_nouvelle btn_next" onclick="suivant_objectif();" type="button">Suivant</a></p>
                                     </span>
-
-
-
                                     <div class="form-group apres_preview" id="second_vue">
                                         <div class="acf-field acf-field-text acf-field-objectif is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control objectif objectif text_area" id="acf-objectif" name="objectif" required></textarea>
-                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Objectif du Module</label>
+                                                    <textarea class="form-control objectif objectif text_area" id="acf-objectif" name="objectif" required placeholder="Objectifs"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Objectifs</label>
                                                     @error('objectif')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -214,7 +210,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_module();"><a href="#preview_haut">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_cible();"><a href="#preview_objectif">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#preview_objectif" class="new_list_nouvelle px-5 btn_next" onclick="suivant_cible();" type="button">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -222,7 +218,7 @@
                                         <div class="acf-field acf-field-text acf-field-cible is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control cible cible text_area" id="acf-cible" name="cible" required></textarea>
+                                                    <textarea class="form-control cible cible text_area" id="acf-cible" name="cible" required placeholder="Public cible"></textarea>
                                                     <label for="acf-nom_module" class="form-control-placeholder-text_area">Public Cible</label>
                                                     @error('cible')
                                                     <div class="col-sm-6">
@@ -238,7 +234,7 @@
                                         <div class="acf-field acf-field-text acf-field-prerequis is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prerequis prerequis text_area" id="acf-prerequis" name="prerequis" required></textarea>
+                                                    <textarea class="form-control prerequis prerequis text_area mt-4" id="acf-prerequis" name="prerequis" required placeholder="Prérequis"></textarea>
                                                     <label for="acf-nom_module" class="form-control-placeholder-text_area">Prérequis</label>
                                                     @error('prerequis')
                                                     <div class="col-sm-6">
@@ -251,7 +247,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_objectif();"><a href="#preview_haut2">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_reference();"><a href="#preview_reference">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#preview_reference" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_reference();">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -259,7 +255,7 @@
                                         <div class="acf-field acf-field-text acf-field-reference is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control reference reference input" id="acf-reference" name="reference" required>
+                                                    <input type="text" class="form-control reference reference input" id="acf-reference" name="reference" required placeholder="Reference">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Reference</label>
                                                     @error('reference')
                                                     <div class="col-sm-6">
@@ -275,7 +271,7 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix prix input" id="acf-prix" name="prix" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required>
+                                                    <input type="text" class="form-control prix prix input mt-4" id="acf-prix" name="prix" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required placeholder="Prix en AR">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Prix en AR</label>
                                                     @error('prix')
                                                     <div class="col-sm-6">
@@ -288,7 +284,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_cible();"><a href="#preview_objectif">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_equipement();"><a href="#changer_equipement">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#changer_equipement" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_equipement();">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -296,8 +292,8 @@
                                         <div class="acf-field acf-field-text acf-field-materiel is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control materiel materiel input" id="acf-materiel" name="materiel" required>
-                                                    <label for="acf-nom_module" class="form-control-placeholder">Equipement necessaire</label>
+                                                    <textarea class="form-control materiel materiel text_area" id="acf-materiel" name="materiel" required placeholder="Equipement necessaire"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Equipement necessaire</label>
                                                     @error('materiel')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -312,8 +308,8 @@
                                         <div class="acf-field acf-field-text acf-field-bon_a_savoir is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control bon_a_savoir bon_a_savoir text_area" id="acf-bon_a_savoir" name="bon_a_savoir" required></textarea>
-                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Bon a savoir</label>
+                                                    <textarea class="form-control bon_a_savoir bon_a_savoir text_area mt-4" id="acf-bon_a_savoir" name="bon_a_savoir" required placeholder="Bon à savoir"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Bon à savoir</label>
                                                     @error('bon_a_savoir')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -325,7 +321,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_reference();"><a href="#changer_reference">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_prestation();"><a href="#changer_prestation">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#changer_prestation" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_prestation();">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -333,8 +329,8 @@
                                         <div class="acf-field acf-field-text acf-field-prestation is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prestation prestation text_area" id="acf-prestation" name="prestation" onkeyup='estComplet();' required></textarea>
-                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Prestations pedagogiques</label>
+                                                    <textarea class="form-control prestation prestation text_area" id="acf-prestation" name="prestation" onkeyup='estComplet();' required placeholder="Prestations pédagogiques"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Prestations pédagogiques</label>
                                                     @error('prestation')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -353,7 +349,7 @@
                                                     <div class="acf-field acf-field-text acf-field-min is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control min min input" id="acf-min" name="min_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne minimale" required>
+                                                                <input type="text" class="form-control min min input mt-4" id="acf-min" name="min_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne minimale" required placeholder="Nombre personne min">
                                                                 <label for="acf-nom_module" class="form-control-placeholder">Nombre personne min</label>
                                                             </div>
                                                         </div>
@@ -365,7 +361,7 @@
                                                     <div class="acf-field acf-field-text acf-field-max is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control max max input" id="acf-max" name="max_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne maximale" required>
+                                                                <input type="text" class="form-control max max input mt-4" id="acf-max" name="max_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne maximale" required placeholder="Nombre personne max">
                                                                 <label for="acf-nom_module" class="form-control-placeholder">Nombre personne max</label>
                                                             </div>
                                                         </div>
@@ -374,7 +370,7 @@
                                             </div>
                                         </div>
                                         <div class="col text-center">
-                                            <p class="mt-3" style="font-size: 16px;"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="retour_equipement();"><a href="#changer_equipement">Retour</a></button></p>
+                                            <p class="mt-3" style="font-size: 16px;"><a href="#changer_equipement" type="button" class="new_list_nouvelle px-5 btn_next" onclick="retour_equipement();">Retour</a></p>
                                         </div>
                                     </div>
 
@@ -525,6 +521,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="col-lg-4 detail__formation__item__right" id="border_reference">
@@ -654,15 +651,7 @@
         </div>
     </div>
 </div>
-</div>
-</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-
 <script>
 $("#acf-domaine").change(function() {
     var id = $(this).val();
@@ -702,12 +691,6 @@ $("#acf-domaine").change(function() {
             console.log(error);
         },
     });
-});
-
-$('#acf-objectif').summernote({
-        // placeholder: "objectif de la formation"
-        // , tabsize: 2
-         height: 100
 });
 
 $(".module").keyup(function() {

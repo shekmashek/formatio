@@ -307,8 +307,19 @@
     display: none;
 }
 
-.apres_preview .btn {
-    background-color: var(--color-child);
+.tox .tox-statusbar__text-container,
+.tox .tox-statusbar{
+    display: none !important;
+}
+
+.tox-toolbar__primary,
+.tox .tox-menubar{
+    background: #7535dc27 !important;
+    color: #7635dc !important;
+}
+
+.tox-tinymce{
+    border-radius: 5px;
 }
 
 .actions_buttons .btn-success {
