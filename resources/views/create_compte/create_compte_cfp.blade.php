@@ -199,6 +199,15 @@
                             @enderror
                             <span style="color:#ff0000;" id="tel_resp_cfp_err"></span>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
+                                <label class="form-check-label m-0" for="flexCheckDefault" align="left">
+                                    <a href="{{route('condition_generale_de_vente')}}" target="_blank" class="nav-item" style="font-size: 14px">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
+                                </label>
+                            </div>
+                        </div>
+
                             <div class="row justify-content-center">
                             <h6 align="left"><strong style="font-size: 15px">Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
                             <div class="col-sm-3"></div>
@@ -223,14 +232,7 @@
                             <div class="col-sm-3"></div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
-                                <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                    <a href="{{route('condition_generale_de_vente')}}" target="_blank" class="nav-item" style="font-size: 14px">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
-                                </label>
-                            </div>
-                        </div>
+
 
                                 <input type="button" name="previous" class="previous action-button" value="Précedent" />
                                 <button type="submit" class=" action-button suivant_of_confirmer">Confirmer</button>

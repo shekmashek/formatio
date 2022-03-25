@@ -68,7 +68,7 @@
                 $('#email_resp_etp').val().length > 5 &&
                 $('#val_robot').val().length > 0 &&
                 $('#tel_resp_etp').val().length > 9) {
-                    $('.suivant_etp_confirmer').css('display', 'block');
+          /*          $('.suivant_etp_confirmer').css('display', 'block'); */
 
                 if (document.getElementById("nom_resp_etp_err").innerHTML == '' &&
                     document.getElementById("cin_resp_etp_err").innerHTML == '' &&
@@ -88,29 +88,6 @@
 
 
     $(document).ready(function() {
-
-        $('#name_entreprise_search').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                    , type: 'GET'
-                    , url: "{{route('search_entreprise_referent')}}"
-                    , data: {
-                        search: request.term
-                    }
-                    , success: function(data) {
-                        response(data);
-                    }
-                });
-            }
-            , minlength: 1
-            , autoFocus: true
-            , select: function(e, ui) {
-                $('#name_entreprise_search').val(ui.item.nom_resp);
-            }
-        });
 
         /*============ boutton CFP ================================*/
 
@@ -242,9 +219,8 @@
     $(document).on('change', '#logo_cfp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_cfp").innerHTML = '';
-
         if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
-            if (this.files[0].size > 6000) {
+            if (this.files[0].size > 60000) {
                 document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
             } else {
                 document.getElementById("error_logo_cfp").innerHTML = '';
@@ -381,7 +357,7 @@
         document.getElementById("error_logo_etp").innerHTML = '';
 
         if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
-            if (this.files[0].size > 6000) {
+            if (this.files[0].size > 60000) {
                 document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
             } else {
                 document.getElementById("error_logo_etp").innerHTML = '';
