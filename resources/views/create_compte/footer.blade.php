@@ -28,8 +28,9 @@
     });
 
 
+
     $(document).ready(function() {
-        /*============ boutton Entreprise ================================*/
+        // ============ boutton Entreprise ================================
 
         $('.suivant_etp_1').css('display', 'none');
         document.getElementById("nif_etp_err").innerHTML = "NIF incomplète!";
@@ -39,9 +40,10 @@
         $('.suivant_etp_confirmer').css('display', 'none');
 
 
-        /* ========= field N°1 et N°2 pour entreprise inscription =================================*/
+        // ========= field N°1 et N°2 pour entreprise inscription =================================
 
-        $('.field-etp input').keyup(function() {
+        $('.field-etp input').change(function() {
+      /*      $('.field-etp input').keyup(function() { */
 
             if ($('#name_etp').val().length > 2 &&
                 $('#nif_etp').val().length > 5 &&
@@ -58,7 +60,7 @@
         });
 
 
-        $('.field2-etp input').keyup(function() {
+        $('.field2-etp input').change(function() {
             if ($('#nom_resp_etp').val().length > 1 &&
                 $('#cin_resp_etp').val().length > 11 &&
                 $('#matricule_resp_etp').val().length > 1 &&
@@ -66,6 +68,7 @@
                 $('#email_resp_etp').val().length > 5 &&
                 $('#val_robot').val().length > 0 &&
                 $('#tel_resp_etp').val().length > 9) {
+                    $('.suivant_etp_confirmer').css('display', 'block');
 
                 if (document.getElementById("nom_resp_etp_err").innerHTML == '' &&
                     document.getElementById("cin_resp_etp_err").innerHTML == '' &&
@@ -119,7 +122,7 @@
 
         /* ========= field N°1 et N°2 pour cfp inscription =================================*/
 
-        $('.field-cfp input').keyup(function() {
+        $('.field-cfp input').change(function() {
 
             if ($('#name_cfp').val().length > 2 &&
                 $('#nif_cfp').val().length > 5 &&
@@ -136,7 +139,7 @@
         });
 
 
-        $('.field2-cfp input').keyup(function() {
+        $('.field2-cfp input').change(function() {
             if ($('#nom_resp_cfp').val().length > 1 &&
                 $('#cin_resp_cfp').val().length > 11 &&
                 $('#fonction_resp_cfp').val().length > 0 &&
