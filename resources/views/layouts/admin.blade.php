@@ -721,7 +721,13 @@
                 @yield('content')
                 <div class="apprendre pt-5">
                     <div class="row">
-                        <p>Apprendre<i class="bx bx-x " role="button" onclick="afficherTuto();"></i></p>
+                        <div class="col">
+                            <p class="m-0">Apprendre</p>
+                        </div>
+                        <div class="col text-end">
+                            <i class="bx bx-x " role="button" onclick="afficherTuto();"></i>
+                        </div>
+                        <hr>
                     </div>
 
                 </div>

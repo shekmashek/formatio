@@ -1235,7 +1235,10 @@ font-size: 0.850rem;
     right: 0px;
 }
 
-.apprendre span .bx{
+.apprendre p{
+    font-size: 1.8rem;
+}
+.apprendre .bx{
     font-size: 3rem;
 }
 
