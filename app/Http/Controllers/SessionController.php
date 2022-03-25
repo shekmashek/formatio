@@ -154,7 +154,7 @@ class SessionController extends Controller
                 $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
             }
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
-            $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id","groupe_id"], [$etp_id,$id]);
+            $datas = $fonct->findWhere("v_detail_session", ["groupe_id"], [$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);

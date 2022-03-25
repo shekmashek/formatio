@@ -6,7 +6,7 @@
             <h3 class="mt-5 mb-3 text-center">Listes des Projets Intra et Inter</h3>
             @canany(['isReferent', 'isCFP'])
             <div class="col-2 pe-3">
-                
+
                     <div class="row mb-3 p-2 filtre_date">
                         <h6 class="text-center mt-2">Filtrer vos Projets</h6>
                         <form action="{{ route('liste_projet') }}" method="GET">
@@ -57,11 +57,15 @@
 
                         </form>
                     </div>
-                
+
             </div>
             @endcanany
-
-            <div class="col-10 ps-5">
+            @canany(['isReferent', 'isCFP'])
+                <div class="col-10 ps-5">
+            @endcanany
+            @canany(['isFormateur','isStagiaire'])
+                <div class="col-12 ps-5">
+            @endcanany
                 <div class="row">
                 @canany(['isCFP'])
                     <div class="m" id="corps">
@@ -109,7 +113,7 @@
                                         @endif
                                         @endforeach
                                     </div>
-                                    
+
                                     <div class="col-1 text-end p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
@@ -180,7 +184,7 @@
                                                             <a style="background: none" href="{{ route('nouveauRapportFinale',[$pj->groupe_id]) }}"><button class="btn rapport_finale">Rapport</button></a>
                                                         </td>
                                                     @endif
-                                                    
+
                                                     {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
                                 data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
 
@@ -380,7 +384,7 @@
                                             @endif
                                         </td>
                                         <td> <a
-                                                href="{{ route('detail_session', [$pj->groupe_id,$pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
+                                            href="{{ route('detail_session', [$pj->groupe_id,$pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
@@ -467,8 +471,13 @@
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
                                         <td>
-                                            <a class="btn btn_filtre filtre_appliquer"
+                                            @if ($pj->statut_eval == 0)
+                                                <a class="btn btn_filtre filtre_appliquer"
                                                 href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}">Evaluation</a>
+                                            @elseif ($pj->statut_eval == 1)
+                                                <p style="color: green">Evaluation terminé</p>
+                                            @endif
+
                                         </td>
                                     </tr>
                                 @endforeach

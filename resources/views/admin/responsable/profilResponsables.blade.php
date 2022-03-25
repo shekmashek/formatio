@@ -86,9 +86,9 @@
                     <a href="{{route('edit_photos_resp',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos==null)
-                        <img src="{{asset('images/users/user.png')}}" class="image-ronde">
+                            <img src="{{asset('images/users/user.png')}}" class="image-ronde">
                         @else
-                        <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
+                            <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                         @endif
 
 

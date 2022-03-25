@@ -251,9 +251,10 @@
                                             @for($ii = 0; $ii < count($roles_not_actif_stg[$i]["role_inactif"]); $ii++)
                                             @if($stagiaires[$i]->user_id == $roles_not_actif_stg[$i]["user_id"])
 
+                                            {{-- {{dd($roles_not_actif_stg[$i])}} --}}
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span>{{$roles_not_actif_stg[$i]["role_inactif"][$ii]->role_name}}</span></label>
-                                                    <input class="form-check-input" type="checkbox" value="{{$roles_not_actif_stg[$i]["role_id"]}}" id="userId_{{$stagiaires[$i]->id}}_roleID_{{$roles_not_actif_stg[$i]["role_id"]}}" checked>
+                                                    <input class="form-check-input" type="checkbox" value="{{$roles_not_actif_stg[$i]["role_inactif"][$ii]->id}}}" id="userId_{{$stagiaires[$i]->id}}_roleID_{{$roles_not_actif_stg[$i]["role_inactif"][$ii]->id}}" checked>
                                                 </div>
                                                 @endif
                                                 @endfor

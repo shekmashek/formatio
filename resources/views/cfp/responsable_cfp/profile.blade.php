@@ -31,9 +31,9 @@
                     <a href="{{route('modification_photo',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos_resp_cfp==null)
-                        <img src="{{asset('images/users/user.png')}}" class="image-ronde">
+                            <img src="{{asset('images/users/user.png')}}" class="image-ronde">
                         @else
-                        <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
+                            <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
                         @endif
 
 

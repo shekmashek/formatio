@@ -53,7 +53,13 @@
 
     <h5 class="text-center mt-1">Evaluation</h5>
 
-
+    @if (Session::has('error_evaluation'))
+        <div class="alert alert-danger ms-2 me-2">
+            <ul>
+                <li>{!! Session::get('error_evaluation') !!}</li>
+            </ul>
+        </div>
+    @endif
     <div class="row">
         <form method="POST" action="{{ route('createEvaluationChaud', [$data->groupe_id]) }}">
             @csrf
