@@ -498,6 +498,7 @@ class HomeController extends Controller
             // dd($data);
             // $infos = DB::select('select * from where entreprise_id = ?', [$entreprise_id]);
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
+            // dd($type_formation_id);
             return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id'));
         }
         if (Gate::allows('isManager')) {

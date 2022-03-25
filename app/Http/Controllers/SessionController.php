@@ -110,6 +110,7 @@ class SessionController extends Controller
         $user_id = Auth::user()->id;
         $id = request()->id_session;
         $type_formation_id = request()->type_formation;
+        // dd($type_formation_id);
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details')[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
@@ -154,7 +155,7 @@ class SessionController extends Controller
                 $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
             }
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
-            $datas = $fonct->findWhere("v_detail_session", ["entreprise_id","groupe_id"], [$etp_id,$id]);
+            $datas = $fonct->findWhere("v_detail_session", ["groupe_id"], [$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);

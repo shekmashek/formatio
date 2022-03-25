@@ -384,7 +384,7 @@
                                             @endif
                                         </td>
                                         <td> <a
-                                                href="{{ route('detail_session', $pj->groupe_id) }}">{{ $pj->nom_groupe }}</a>
+                                                href="{{ route('detail_session', [$pj->groupe_id,$pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
