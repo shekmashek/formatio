@@ -112,7 +112,8 @@ CREATE TABLE `factures` (
   `other_message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprise_id(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

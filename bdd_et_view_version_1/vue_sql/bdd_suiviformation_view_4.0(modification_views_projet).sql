@@ -769,22 +769,17 @@ create or replace view v_montant_session as
     left join participant_groupe pg
     on pg.groupe_id = g.id
     join moduleformation mf
-<<<<<<< HEAD
     on mf.module_id = g.module_id
     group by g.id;
-=======
-    on mf.module_id = g.module_id 
-    group by g.id;
 
 
 
-create or replace view v_projet_formateur as 
-    select 
+create or replace view v_projet_formateur as
+    select
         gpm.*,
         fp.formateur_id
-    from 
-        v_formateur_projet fp 
-    join 
+    from
+        v_formateur_projet fp
+    join
         v_groupe_projet_module gpm
     on gpm.groupe_id = fp.groupe_id;
->>>>>>> interface_formateur
