@@ -236,19 +236,7 @@
                         {{-- <input type="button" name="make_payment" class="next action-button" value="Suivant" /> --}}
                 </fieldset>
 
-                {{-- --}}
-                {{--
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
-                    <div class="form-group">
-                        <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
-            </div>
-            <input type="button" name="previous" class="previous action-button" value="Précedent" />
-            <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
-            </fieldset> --}}
 
-
-            {{-- --}}
     </div>
 
 

@@ -31,15 +31,17 @@
     $(document).ready(function() {
 
         $('.suivant_of_1').css('display', 'none');
-        document.getElementById("nif_cfp_err").innerHTML = "NIF incomplète!";
-    /*    $('.suivant_of_confirmer').css('display', 'none'); */
-   /*     */
+       document.getElementById("nif_cfp_err").innerHTML = "NIF incomplète!";
+     //  document.getElementById("email_resp_cfp_err").innerHTML = "email incomplète!";
+     //   document.getElementById("tel_resp_cfp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
 
-    /*   document.getElementById("nif_etp_err").innerHTML = "NIF incomplète!";
-      document.getElementById("fonction_resp_cfp_err").innerHTML = "fonction incomplète!"; */
-        document.getElementById("email_resp_cfp_err").innerHTML = "email incomplète!";
-        document.getElementById("tel_resp_cfp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
 
+
+        $('.suivant_of_confirmer').css('display', 'none');
+
+   /*     document.getElementById("nif_etp_err").innerHTML = "NIF incomplète!";
+        document.getElementById("fonction_resp_cfp_err").innerHTML = "fonction incomplète!";
+*/
 
         $('.field input').keyup(function() {
 
@@ -58,8 +60,10 @@
             }
         });
 
-     /*   $('.field2 input').keyup(function() {
-            if ($('#nom_resp_cfp').val().length > 0 &&
+        $('.field2 input').keyup(function() {
+
+        alert("nom: "+$('#nom_resp_cfp').val().length+" cin: "+$('#cin_resp_cfp').val().length + " fonction: "+$('#fonction_resp_cfp').val().length+ " email: "+$('#email_resp_cfp').val().length+" tel: "+$('#tel_resp_cfp').val().length);
+   /*          if ($('#nom_resp_cfp').val().length > 0 &&
                 $('#cin_resp_cfp').val().length > 0 &&
                 $('#fonction_resp_cfp').val().length > 0 &&
                 $('#email_resp_cfp').val().length > 0 &&
@@ -74,9 +78,9 @@
                 } else {
                     $('.suivant_of_confirmer').css('display', 'none');
                 }
-            }
+            } */
         });
-*/
+
 
     });
 
