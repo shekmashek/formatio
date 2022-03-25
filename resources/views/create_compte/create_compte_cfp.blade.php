@@ -83,7 +83,7 @@
                     {{-- <li id="confirm"></li> --}}
                 </ul>
 
-                <fieldset class="shadow mt-0 p-3 bg-body rounded  field">
+                <fieldset class="shadow mt-0 p-3 bg-body rounded  field-cfp">
                     <h6 align="left" class="mb-2">Veuillez entrer le profil professionnel de votre organisation</strong></h4>
 
                         <div class="form-group">
@@ -126,15 +126,17 @@
                             <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
                             <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
                         </div>
+                        <div class="row" align="center">
+                            <input type="button" name="next" class="next action-button  suivant_of_1 " value="Suivant" />
 
+                        </div>
 
-                        <input type="button" name="next" class="next action-button  suivant_of_1 "  value="Suivant" />
                 </fieldset>
 
 
                 {{-- --}}
 
-                <fieldset class="shadow p-3 bg-body rounded field2">
+                <fieldset class="shadow p-3 bg-body rounded field2-cfp">
                     <h6 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
                         <div class="form-group">
@@ -230,19 +232,26 @@
                             <div class="col-sm-3"></div>
                         </div>
 
-                        <input type="button" name="previous" class="previous action-button" value="Précedent" />
-                        <button type="submit" class=" action-button suivant_of_confirmer">Confirmer</button>
+                        <div class="row" align="center">
+                            <div class="col">
+                                <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                            </div>
+                            <div class="col">
+                                <button type="submit" class=" action-button suivant_of_confirmer">Confirmer</button>
+                            </div>
+
+                        </div>
 
                         {{-- <input type="button" name="make_payment" class="next action-button" value="Suivant" /> --}}
                 </fieldset>
 
 
+            </div>
+
+
+        </form>
+
     </div>
-
-
-    </form>
-
-</div>
 </div>
 
 @endsection
