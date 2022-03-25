@@ -29,6 +29,30 @@
 
 
     $(document).ready(function() {
+
+        $('#name_entreprise_search').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                    , type: 'GET'
+                    , url: "{{route('search_entreprise_referent')}}"
+                    , data: {
+                        search: request.term
+                    }
+                    , success: function(data) {
+                        response(data);
+                    }
+                });
+            }
+            , minlength: 1
+            , autoFocus: true
+            , select: function(e, ui) {
+                $('#name_entreprise_search').val(ui.item.nom_resp);
+            }
+        });
+
         /*============ boutton Entreprise ================================*/
 
         $('.suivant_etp_1').css('display', 'none');
@@ -85,29 +109,6 @@
 
 
     $(document).ready(function() {
-
-        $('#name_entreprise_search').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                    , type: 'GET'
-                    , url: "{{route('search_entreprise_referent')}}"
-                    , data: {
-                        search: request.term
-                    }
-                    , success: function(data) {
-                        response(data);
-                    }
-                });
-            }
-            , minlength: 1
-            , autoFocus: true
-            , select: function(e, ui) {
-                $('#name_entreprise_search').val(ui.item.nom_resp);
-            }
-        });
 
         /*============ boutton CFP ================================*/
 
@@ -239,9 +240,8 @@
     $(document).on('change', '#logo_cfp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_cfp").innerHTML = '';
-
         if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
-            if (this.files[0].size > 6000) {
+            if (this.files[0].size > 60000) {
                 document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
             } else {
                 document.getElementById("error_logo_cfp").innerHTML = '';
@@ -378,7 +378,7 @@
         document.getElementById("error_logo_etp").innerHTML = '';
 
         if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
-            if (this.files[0].size > 6000) {
+            if (this.files[0].size > 60000) {
                 document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
             } else {
                 document.getElementById("error_logo_etp").innerHTML = '';
