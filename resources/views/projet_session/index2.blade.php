@@ -4,8 +4,9 @@
     <div class="container-fluid mb-5">
         <div class="row">
             <h3 class="mt-5 mb-3 text-center">Listes des Projets Intra et Inter</h3>
+            @canany(['isReferent', 'isCFP'])
             <div class="col-2 pe-3">
-                @canany(['isReferent', 'isCFP'])
+                
                     <div class="row mb-3 p-2 filtre_date">
                         <h6 class="text-center mt-2">Filtrer vos Projets</h6>
                         <form action="{{ route('liste_projet') }}" method="GET">
@@ -56,11 +57,15 @@
 
                         </form>
                     </div>
-                @endcanany
+                
             </div>
-
-
-            <div class="col-10 ps-5">
+            @endcanany
+            @canany(['isReferent', 'isCFP'])
+                <div class="col-10 ps-5">
+            @endcanany
+            @canany(['isFormateur','isStagiaire'])
+                <div class="col-12 ps-5">
+            @endcanany
                 <div class="row">
                 @canany(['isCFP', 'isFormateur'])
                     <div class="m" id="corps">
@@ -420,8 +425,13 @@
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
                                         <td>
-                                            <a class="btn btn_filtre filtre_appliquer"
+                                            @if ($pj->statut_eval == 0)
+                                                <a class="btn btn_filtre filtre_appliquer"
                                                 href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}">Evaluation</a>
+                                            @elseif ($pj->statut_eval == 1)
+                                                <p style="color: green">Evaluation terminé</p>
+                                            @endif
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

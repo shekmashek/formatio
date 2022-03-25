@@ -338,7 +338,7 @@ class HomeController extends Controller
 
             //get the column with null value
 
-            $testNull = DB::select('select * from responsables where user_id  = ? ', [Auth::user()->id]);
+            $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
 
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
             $departement = DB::select('select * from departement_entreprises where id  = ? ', [$testNull[0]->departement_entreprises_id]);
@@ -561,7 +561,7 @@ class HomeController extends Controller
             $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
             $stg_id = stagiaire::where('user_id', $user_id)->value('id');
             // $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
-            $data = DB::select('select * from v_stagiaire_groupe where stagiaire_id = ? and groupe_id not in(select groupe_id from reponse_evaluationchaud) order by date_debut desc', [$stg_id]);
+            $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc', [$stg_id]);
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id'));
         }
     }

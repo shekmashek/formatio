@@ -69,7 +69,7 @@ class EvaluationChaudController extends Controller
             // return back()->with('avis','avis pour la formation');
         }catch(Exception $e){
             DB::rollback();
-            return redirect()->back()->with('error','insertion échoué');
+            return redirect()->back()->with('error_evaluation',$message);
         }
     }
 
