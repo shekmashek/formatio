@@ -28,19 +28,19 @@
                 <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
                     <p class="p-1 m-0" style="font-size: 10px;">PHOTO
                     </p>
-                    <a href="{{route('edit_photos_resp',$refs->id)}}">
+                    <a href="{{route('modification_photo',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos_resp_cfp==null)
-                        <img src="{{asset('images/users/user.png')}}" class="image-ronde">
+                            <img src="{{asset('images/users/user.png')}}" class="image-ronde">
                         @else
-                        <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
+                            <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
                         @endif
 
 
                     </a>
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_nom_resp',$refs->id)}} ">
+                    <a href="{{route('modification_nom',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$refs->nom_resp_cfp}} {{$refs->prenom_resp_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
@@ -48,7 +48,7 @@
 
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_naissance_resp',$refs->id)}} ">
+                    <a href="{{route('modification_date_de_naissance',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE
                         @if ($refs->date_naissance_resp_cfp==null)
                         <span style="float: right; color:red">incomplète&nbsp;
@@ -61,21 +61,21 @@
 
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_genre_resp',$refs->id)}} ">
+                    <a href="{{route('modification_genre',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">GENRE
                             <span style="float: right;">
                             @if ($refs->sexe_resp_cfp==null)
                             <strong  style="color:red">
                             incomplète</strong>&nbsp;
                             @else
-                           {{$refs->sexe_resp_cfp}}&nbsp;
+                           {{$refs->genre}}&nbsp;
                             @endif
                             <i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                    <a href="{{route('edit_pwd_resp',$refs->id)}} ">
+                    <a href="{{route('modification_mdp',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
@@ -91,14 +91,14 @@
                 <p class="text-center">Coordonnées</p>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_mail_resp',$refs->id)}} ">
+                    <a href="{{route('modification_email',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_phone_resp',$refs->id)}} ">
+                    <a href="{{route('modification_telephone',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                         </p>
@@ -106,13 +106,13 @@
                 </div>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_cin_resp',$refs->id)}} ">
+                    <a href="{{route('modification_cin',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$refs->cin_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_adresse_resp',$refs->id)}} ">
+                    <a href="{{route('modificationn_adresse',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE <span style="float: right;">
                             <span style="float: right">
                             @if ($refs->adresse_lot==null)
@@ -140,9 +140,9 @@
                             @endif
 
                             @if($refs->adresse_code_postal==null)
-                            Postal: <strong style="color: red">incomplète</strong>&nbsp;
+                            CP: <strong style="color: red">incomplète</strong>&nbsp;
                             @else
-                            Postal: {{$refs->adresse_code_postal}} &nbsp;
+                            CP: {{$refs->adresse_code_postal}} &nbsp;
                             @endif
 
                             <i class="fas fa-angle-right"></i></span>
@@ -152,7 +152,7 @@
                 </div>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_fonction_resp',$refs->id)}} ">
+                    <a href="{{route('modification_fonction',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$refs->fonction_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
@@ -176,7 +176,7 @@
                 </div> --}}
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
-                    <a href="{{route('profil_cfp',$refs->cfp_id)}}">
+                    <a href="{{route('profil_of',$refs->cfp_id)}}">
                         <p class="p-1 m-0" style="font-size: 10px;">ORGANISME DE FORMATION<span style="float: right;">{{$refs->nom_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>

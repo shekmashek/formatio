@@ -442,7 +442,7 @@
                                         session = session.replace(":!",userData[$i].type_formation_id);
                                         $('#session').append(session);
 
-                                        cfp+='<a href = "{{url("profil_cfp/:?")}}" target = "_blank">'+userData[$i].nom_cfp+'</a>'
+                                        cfp+='<a href = "{{url("detail_cfp/:?")}}" target = "_blank">'+userData[$i].nom_cfp+'</a>'
                                         cfp = cfp.replace(":?",userData[$i].cfp_id);
                                         $('#cfp').append(cfp);
 

@@ -89,6 +89,7 @@ CREATE TABLE employers (
   poste_emp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   service_id bigint(20) UNSIGNED,
   branche_id bigint(20) UNSIGNED ,
+  genre_id bigint(20) unsigned default 1 REFERENCES genre(id),
   departement_entreprises_id bigint(20) UNSIGNED,
   adresse_quartier varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',

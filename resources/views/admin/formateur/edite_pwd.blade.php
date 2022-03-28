@@ -1,66 +1,39 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style>
-  .input{
-        width: 175px;
-    }
-.test {
-    padding: 2px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: #9E9E9E;
-    border: 1px solid #BDBDBD;
-    font-size: 16px;
-    letter-spacing: 1px;
-    height: 50px !important
-}
+<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
-.test:focus{
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 2px solid #E53935 !important;
-    outline-width: 0 !important;
-}
-
-.form-control-placeholder {
-  position: absolute;
-  top: 1rem;
-  padding: 12px 2px 0 2px;
-  padding: 0;
-  padding-top: 2px;
-  padding-bottom: 5px;
-  transition: all 300ms;
-  opacity: 0.5;
-  left: 2rem;
-}
-
-.test:focus+.form-control-placeholder,
-.test:valid+.form-control-placeholder {
-  font-size: 95%;
-  font-weight: bolder;
-  top: 1.5rem;
-  transform: translate3d(0, -100%, 0);
-  opacity: 1;
-  background-color: white;
-  margin-left: 105px;
-}
-</style>
 <center>                
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Nom</p>
+   
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
+          
+            <div class="row px-3 mt-4">
+              <div class="form-group mt-1 mb-1">
+
+          <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="" required>
+          <label class="ml-3 form-control-placeholder" style="">Ancien mot de passe</label>
+          {{-- si l'ancien mot de passe est incorrect --}}
+          @if (\Session::has('error'))
+            <div class="alert alert-danger">
+                <ul>
+                    <li>{!! \Session::get('error') !!}</li>
+                </ul>
+            </div>
+          @endif
+              {{-- nouveau mot de passe --}}
             <div class="row px-3 mt-4">
                 <div class="form-group mt-1 mb-1">
-                <input type="password" value="   " class="form-control test input"  name="password">
-                <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Mot de passe</label>
-                    
-                  </div>
-                </div>
+
+            <input type="password" class="form-control test input" value=""  name="new_password" placeholder="" required>
+            <label class="ml-3 form-control-placeholder" ">Nouveau mot de passe</label>
+
+
+        </div>
+    </div>
                 <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
               
@@ -84,15 +57,16 @@
                      <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
                   </div> --}}
             
-               <select hidden  value="{{$formateur->genre}}" name="genre" class="form-select test" id="genre"  >
+               {{-- <select hidden  value="{{$formateur->genre}}" name="genre" class="form-select test" id="genre"  >
                           <option value="{{$formateur->genre}}"  >Homme</option>
                           <option value="Femme">Femme</option>
-
+ --}}
                         </select>
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
  
                        
                       
+                        <input type="hidden" class="form-control test" name="genre" value="{{ $formateur->genre_id }}">
                         <input type="hidden" class="form-control test" name="dateNais" value="{{ $formateur->date_naissance }}">
                         
                           <input type="hidden" value="{{ $formateur->cin}}" class="form-control test"  name="cin" >

@@ -41,21 +41,7 @@ class DepartementController extends Controller
         return view('admin.entreprise.departement', compact('liste_entreprise', 'liste_departement'));
     }
 
-    /* public function index()
-    {
-        $liste_entreprise = $this->liste_entreprise;
-        $entreprise_id = entreprise::orderBy('nom_etp')->get();
-        $liste_departement = $this->liste_departement;
-        return view('admin.entreprise.departement', compact('liste_entreprise', 'liste_departement'));
-    } */
 
-    /*  public function liste()
-    {
-        $user_id = Auth::user()->id;
-        $chef = ChefDepartement::where('user_id', $user_id)->get();
-
-        return view('admin.chefDepartement.liste', compact('chef'));
-    } */
     //ajout nouveau role
     public function role_manager(Request $request)
     {
@@ -76,9 +62,7 @@ class DepartementController extends Controller
         //on va récupérer la liste des employes
         $user_id = Auth::user()->id;
         $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-        $referent = DB::select('select id,sexe_resp,photos,matricule,nom_resp,prenom_resp,fonction_resp,email_resp,telephone_resp,cin_resp,entreprise_id,prioriter,user_id,url_photo, SUBSTRING(prenom_resp, 1, 1) AS pr, SUBSTRING(nom_resp, 1, 1) AS nm from responsables where entreprise_id = ? and prioriter=false', [$etp_id]);
-        // $referent = DB::select(' where entreprise_id = ? and prioriter=false', [$etp_id]);
-        // $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
+        $referent = DB::select('select id,genre_id,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp,photos,matricule,nom_resp,prenom_resp,fonction_resp,email_resp,telephone_resp,cin_resp,entreprise_id,prioriter,user_id,url_photo, SUBSTRING(prenom_resp, 1, 1) AS pr, SUBSTRING(nom_resp, 1, 1) AS nm from responsables where entreprise_id = ? and prioriter=false', [$etp_id]);
         $chef =  $fonct->findWhere('chef_departements',['entreprise_id'],[$etp_id]);
         $nom_chef = [];
         $prenom_chef = [];
@@ -87,8 +71,7 @@ class DepartementController extends Controller
             $prenom_chef[$i] = substr($chef[$i]->prenom_chef,0,1);
         }
 
-        $stagiaires = DB::select('select id,matricule,nom_stagiaire,prenom_stagiaire,photos,genre_stagiaire,fonction_stagiaire,mail_stagiaire,telephone_stagiaire,entreprise_id,user_id,service_id,cin,url_photo, SUBSTRING(prenom_stagiaire, 1, 1) AS prenom, SUBSTRING(nom_stagiaire, 1, 1) AS nom from stagiaires where entreprise_id = ?', [$etp_id]);
-        // $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
+        $stagiaires = DB::select('select id,matricule,nom_stagiaire,prenom_stagiaire,photos,case when genre_stagiaire = 1 then "Femme" when genre_stagiaire = 2 then "Homme" end genre_stagiaire,fonction_stagiaire,mail_stagiaire,telephone_stagiaire,entreprise_id,user_id,service_id,cin,url_photo, SUBSTRING(prenom_stagiaire, 1, 1) AS prenom, SUBSTRING(nom_stagiaire, 1, 1) AS nom from stagiaires where entreprise_id = ? and user_id!=?', [$etp_id,$user_id]);
 
         $user_role = DB::select('select * from v_user_role');
         $roles = $fonct->findAll("v_role_etp");
@@ -102,30 +85,9 @@ class DepartementController extends Controller
         $roles_not_actif_stg = $role->getNotRoleUser("v_role_user_etp_stg", $stagiaires, $etp_id);
         $roles_not_actif_referent = $role->getNotRoleUser("v_role_user_etp_referent", $referent, $etp_id);
         $roles_not_actif_manager = $role->getNotRoleUser("v_role_user_etp_manager", $chef, $etp_id);
-
-
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
-    /*   public function liste()
-    {
-        $fonct = new FonctionGenerique();
-        $roles = $fonct->findWhereOr("roles",["role_name","role_name","role_name"],["referent","formateur","manager"]);
-
-        //on va récupérer la liste des employes
-        $user_id = Auth::user()->id;
-        $etp_id = responsable::where('user_id',[$user_id])->value('entreprise_id');
-
-        $referent = DB::select('select * from responsables where entreprise_id = ?', [$etp_id]);
-        $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
-        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
-
-        $user_role = DB::select('select * from v_user_role');
-        $roles = DB::select('select * from roles');
-        // dd($user_role);
-        return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
-    }
-*/
     public function create()
     {
         $fonct = new FonctionGenerique();
@@ -137,28 +99,11 @@ class DepartementController extends Controller
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
-            // $liste_departement = $fonct->findAll("departement_entreprises");
             $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?', [$entreprise_id]);
 
             return view('admin.chefDepartement.chef', compact('liste_departement'));
         }
     }
-
-    /* public function create()
-    {
-        if (Gate::allows('isSuperAdmin')) {
-            $liste_entreprise = $this->liste_entreprise;
-            $liste_departement = $this->liste_departement;
-            return view('admin.chefDepartement.chef', compact('liste_entreprise', 'liste_departement'));
-        }
-        if (Gate::allows('isReferent')) {
-            $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
-            $liste_departement = DepartementEntreprise::with('departement')->where('entreprise_id', $entreprise_id)->get();
-            return view('admin.chefDepartement.chef', compact('liste_departement'));
-        }
-    } */
-
-
 
     public function affProfilChefDepart()
     {

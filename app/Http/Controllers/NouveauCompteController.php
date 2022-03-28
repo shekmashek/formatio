@@ -173,7 +173,7 @@ class NouveauCompteController extends Controller
                     return back()->with('error', 'Organisation de Formation existe déjà!');
                 }
             } else {
-                return back()->with('error', 'vous ne pouvez pas crée un compte sans accepter notre règle confidentiel, merci :-) !');
+                return back()->with('error', 'vous ne pouvez pas créer un compte sans accepter notre règle confidentiel, merci :-) !');
             }
         } else {
             return back()->with('error', 'désolé, les robots ne sont pas autorisé sur ce plateforme :-) !');

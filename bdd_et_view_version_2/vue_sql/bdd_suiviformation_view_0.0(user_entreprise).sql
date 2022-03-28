@@ -5,8 +5,10 @@ SELECT
     (employers.matricule_emp) matricule,
     (employers.nom_emp) nom_stagiaire,
     (employers.prenom) prenom_stagiaire,
-    (employers.sexe_emp) genre_stagiaire,
+    employers.genre_id,
+    (genre.genre) genre_stagiaire,
     (employers.fonction_emp) fonction_stagiaire,
+    employers.poste_emp,
     (employers.email_emp) mail_stagiaire,
     (employers.telephone_emp) telephone_stagiaire,
     employers.user_id,
@@ -26,9 +28,9 @@ SELECT
     (employers.adresse_lot) lot,
     role_users.role_id
 FROM
-employers, role_users
+employers, role_users, genre
 WHERE
-    employers.user_id = role_users.user_id and role_users.role_id=3;
+    employers.user_id = role_users.user_id and employers.genre_id = genre.id and role_users.role_id=3;
 
 CREATE OR REPLACE view responsables as
 SELECT
@@ -37,8 +39,10 @@ SELECT
     (employers.matricule_emp) matricule,
     (employers.nom_emp) nom_resp,
     (employers.prenom) prenom_resp,
-    (employers.sexe_emp) sexe_resp,
+    employers.genre_id,
+    (genre.genre) sexe_resp,
     (employers.fonction_emp) fonction_resp,
+    employers.poste_emp,
     (employers.email_emp) email_resp,
     (employers.telephone_emp) telephone_resp,
     employers.user_id,
@@ -58,9 +62,9 @@ SELECT
     employers.adresse_lot,
     role_users.role_id
 FROM
-employers, role_users
+employers, role_users , genre
 WHERE
-    employers.user_id = role_users.user_id  and role_users.role_id=2;
+    employers.user_id = role_users.user_id and employers.genre_id = genre.id  and role_users.role_id=2;
 
 
 CREATE OR REPLACE view chef_departements as
@@ -70,8 +74,10 @@ SELECT
     (employers.matricule_emp) matricule,
     (employers.nom_emp) nom_chef,
     (employers.prenom) prenom_chef,
-    (employers.sexe_emp) genre_chef,
+    employers.genre_id,
+    (genre.genre) genre_chef,
     (employers.fonction_emp) fonction_chef,
+    employers.poste_emp,
     (employers.email_emp) mail_chef,
     (employers.telephone_emp) telephone_chef,
     employers.user_id,
@@ -90,6 +96,6 @@ SELECT
     employers.adresse_lot,
     role_users.role_id
 FROM
-employers, role_users
+employers, role_users, genre
 WHERE
-    employers.user_id = role_users.user_id and role_users.role_id=5;
+    employers.user_id = role_users.user_id and employers.genre_id =genre.id and role_users.role_id=5;

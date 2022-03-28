@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\FonctionGenerique;
+use Exception;
 
 class EvaluationChaud extends Model
 {
@@ -79,7 +80,7 @@ class EvaluationChaud extends Model
             [$point,$reponse,$id_desc_champ,$id_stag]);
             DB::commit();
             $message['success']="Votre évaluation à chaud est terminée avec succès.";
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             $message['error']="Désolé, votre évaluation a échoué, veuillez recommencer merci.";
             throw $e;

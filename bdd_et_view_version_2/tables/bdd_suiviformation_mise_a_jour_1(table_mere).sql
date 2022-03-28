@@ -1,3 +1,14 @@
+CREATE TABLE genre (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  genre varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT  current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO genre (id,genre, created_at, updated_at) VALUES
+(1,'Femme', '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
+(2,'Homme', '2021-10-26 05:45:24', '2021-10-26 05:45:24');
+
 CREATE TABLE roles (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   role_name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

@@ -54,7 +54,7 @@
         <p style="text-align: left">Adresse E-mail</p>
         <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
-
+                    <input type="hidden" value="email" name="modifier_mail">
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
 
 
@@ -127,7 +127,7 @@
 
                     <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
 
-                    <input type="hidden" value="{{ $branche->nom_branche }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
+                    <input type="hidden" value="{{ $branche->id }}"  class="form-control"  name="lieu_travail" placeholder="Matricule" readonly>
 
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>

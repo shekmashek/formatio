@@ -21,7 +21,7 @@ CREATE OR REPLACE VIEW v_role_user_etp_stg AS SELECT
 FROM
     role_users,stagiaires,roles
 WHERE
-    role_users.role_id = roles.id AND role_users.user_id = stagiaires.user_id ;
+    role_users.role_id = roles.id AND role_users.user_id = stagiaires.user_id and stagiaires.prioriter=false;
 
 CREATE OR REPLACE VIEW v_role_user_etp_referent AS SELECT
     roles.role_name,roles.role_description,role_users.role_id,role_users.user_id,responsables.entreprise_id
@@ -35,4 +35,4 @@ CREATE OR REPLACE VIEW v_role_user_etp_manager AS SELECT
 FROM
     role_users,chef_departements,roles
 WHERE
-    role_users.role_id = roles.id AND role_users.user_id = chef_departements.user_id ;
+    role_users.role_id = roles.id AND role_users.user_id = chef_departements.user_id  and chef_departements.prioriter=false;

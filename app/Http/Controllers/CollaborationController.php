@@ -119,14 +119,12 @@ class CollaborationController extends Controller
     public function create_cfp_formateur(Request $req)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id =  $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
 
         $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
 
         if ($formateur != null) {
-            $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp_id, $formateur->id]);
-            $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id, $cfp_id]);
-            $verify = $verify1->id + $verify2->id;
+            $verify = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp_id, $formateur->id])->id;
             if ($verify <= 0) {
                 return $this->collaboration->verify_collaboration_cfp_formateur($cfp_id, $formateur->id, $req->nom_format);
             } else {

@@ -2,7 +2,7 @@
 @section('content')
 <style>
    .input{
-        width: 170px;
+        width: 200px;
     }
 .test {
     padding: 2px;
@@ -47,6 +47,9 @@
 
 }
 </style>
+<div class="col" style="margin-left: 25px">
+  <a href="{{route('profil_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+</div>
 <center>
 
 <div class="col-lg-4">
@@ -60,16 +63,16 @@
 
 
                         <input type="hidden" class="form-control test input" value="   {{ $responsable->prenom_resp }}"  name="prenom">
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label>
 
 
-                        <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
+                        {{-- <select hidden  value="{{$responsable->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
                           <option value="{{$responsable->sexe_resp}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
-                        </select>
+                        </select> --}}
 
 
+                        <input type="hidden" class="form-control test" name="genre" value="{{ $responsable->genre_id}}">
                         <input type="hidden" class="form-control test" name="date_naissance" value="{{ $responsable->date_naissance_resp}}">
 
                           <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="cin" >
@@ -81,8 +84,7 @@
                         <div class="row px-3 mt-4">
                           <div class="form-group mt-1 mb-1">
 
-                      <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="">
-                      <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Ancien mot de passe</label>
+                      <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="Ancien mot de passe">
                       {{-- si l'ancien mot de passe est incorrect --}}
                       @if (\Session::has('error'))
                         <div class="alert alert-danger">
@@ -95,8 +97,7 @@
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
 
-                        <input type="password" class="form-control test input" value=""  name="new_password" placeholder="">
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nouveau mot de passe</label>
+                        <input type="password" class="form-control test input" value=""  name="new_password" placeholder="Nouveau mot de passe">
 
 
                     </div>

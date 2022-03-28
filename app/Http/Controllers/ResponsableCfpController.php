@@ -11,6 +11,8 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
 use App\ResponsableCfpModel;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 
 class ResponsableCfpController extends Controller
 {
@@ -22,6 +24,7 @@ class ResponsableCfpController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
 
 
@@ -36,7 +39,6 @@ class ResponsableCfpController extends Controller
             }
             else{
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
-
             }
             return view('cfp.responsable_cfp.profile', compact('refs'));
 
@@ -161,5 +163,143 @@ class ResponsableCfpController extends Controller
         $resp = new ResponsableCfpModel();
         $result = $resp->delete_resp_CFP($req->id);
         return $result;
+    }
+    //modification
+    public function edit_photo($id, Request $request)
+    {
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_photo', compact('responsable'));
+    }
+    public function edit_nom($id){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_nom', compact('responsable'));
+    }
+    public function edit_naissance($id){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_dtn', compact('responsable'));
+    }
+    public function edit_genre($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_genre', compact('responsable'));
+    }
+    public function edit_mdp($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_mdp', compact('responsable'));
+    }
+    public function edit_mail($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_email', compact('responsable'));
+    }
+    public function edit_phone($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_phone', compact('responsable'));
+    }
+    public function edit_cin($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_cin', compact('responsable'));
+    }
+    public function edit_adresse($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_adresse', compact('responsable'));
+    }
+    public function edit_fonction($id,Request $request){
+        $user_id =  $users = Auth::user()->id;
+        $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        return view('cfp.responsable_cfp.modification_profil.edit_fonction', compact('responsable'));
+    }
+
+
+    //update responsable cfp
+    public function update_nom_responsable($id,Request $request){
+        DB::update('update users set name = ? where id = ?', [$request->nom.' '.$request->prenom, Auth::id()]);
+        DB::update('update responsables_cfp set nom_resp_cfp = ?,prenom_resp_cfp = ? where user_id = ?', [$request->nom,$request->prenom, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_dtn_responsable($id,Request $request){
+         DB::update('update responsables_cfp set date_naissance_resp_cfp = ? where user_id = ?', [$request->date_naissance, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_genre_responsable($id,Request $request){
+
+        if($request->genre == "Homme") $genre = 2;
+        if($request->genre == "Femme") $genre = 1;
+
+        DB::update('update responsables_cfp set sexe_resp_cfp = ? where user_id = ?', [$genre, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_mdp_responsable($id,Request $request){
+        $users =  db::select('select * from users where id = ?', [Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->new_password);
+        if (Hash::check($request->get('ancien_password'), $pwd)) {
+            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+            return redirect()->route('profil_du_responsable');
+        } else {
+            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        }
+    }
+    public function update_email_responsable($id,Request $request){
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
+        DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
+        DB::update('update responsables_cfp set email_resp_cfp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+        DB::update('update cfps set email = ? where id = ?', [$request->mail_resp, $cfp_id]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_telephone_responsable($id,Request $request){
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
+        DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::id()]);
+        DB::update('update responsables_cfp set telephone_resp_cfp = ? where user_id = ?', [$request->phone, Auth::id()]);
+        DB::update('update cfps set telephone = ? where id = ?', [$request->phone, $cfp_id]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_cin_responsable($id,Request $request){
+        DB::update('update users set cin = ? where id = ?', [$request->cin, Auth::id()]);
+        DB::update('update responsables_cfp set cin_resp_cfp = ? where user_id = ?', [$request->cin, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_adresse_responsable($id,Request $request){
+        DB::update('update responsables_cfp set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_fonction_responsable($id,Request $request){
+        DB::update('update responsables_cfp set fonction_resp_cfp = ? where user_id = ?', [$request->fonction, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    public function update_photo_responsable($id,Request $request){
+        $image = $request->file('image');
+		 if($image != null){
+			if($image->getSize() > 60000){
+				return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+			}
+			else{
+
+					$user_id =  $users = Auth::user()->id;
+					$responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+					$image_ancien = $responsable->photos_resp_cfp;
+					//supprimer l'ancienne image
+					File::delete(public_path("images/responsables/".$image_ancien));
+					//enregiistrer la nouvelle photo
+
+					$nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+					$destinationPath = 'images/responsables';
+					$image->move($destinationPath, $nom_image);
+					$url_photo = URL::to('/')."/images/responsables/".$nom_image;
+
+					DB::update('update responsables_cfp set photos_resp_cfp = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+					return redirect()->route('profil_du_responsable');
+			}
+		}
+		else{
+			return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+		}
     }
 }

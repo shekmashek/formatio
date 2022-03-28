@@ -64,7 +64,7 @@
 
 
 
-            @canany(['isCFP','isFormateur'])
+            @canany(['isCFP'])
             <li>
                 <a href="{{route('liste_module')}}" class="d-flex nav_linke">
                     <i class="bx bx-customize"></i>
@@ -434,14 +434,23 @@
             </li>
 
             @endcan
-
+            @can('isFormateur')
             <li>
                 <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>
+                    <span class="links_name">Mon CV</span>
+                </a>
+                <span class="tooltip">Mon CV</span>
+            </li>
+
+            @endcan
+
+            {{-- <li>
+                 <i class='bx bxs-notepad'></i>
                     <span class="links_name">Reporting</span>
                 </a>
                 <span class="tooltip">Reporting</span>
-            </li>
+            </li> --}}
             @can('isCFP')
             {{-- <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
@@ -664,15 +673,13 @@
                                             <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isReferentPrincipale')
-                                            <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-2 mb-3">Gérer votre compte</button></a><br>
+                                            <a href="{{route('profil_referent')}}"><button class="btn btn-primary btn-sm profil_btn mt-2 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             @can('isCFPPrincipale')
-                                            <a href="{{route('affResponsableCfp')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
+                                            <a href="{{route('profil_du_responsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
                                             @endcan
                                             <hr style="color:lightgrey">
-
                                             <div class="text_resp" style="margin-top: -10px;margin-left:65px">
-
                                                 <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();" class="deconnexion_text">
                                                     </a></p>
@@ -681,7 +688,6 @@
                                                 <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
                                                     @csrf
                                                 </form>
-
                                             </div>
                                         </div>
                                         {{-- logout --}}
@@ -693,7 +699,7 @@
                                         <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                         @can('isReferent')
-                                        <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        <a href="{{route('profil_referent')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                     </div> --}}
                                 </div>
@@ -788,9 +794,13 @@
                 , success: function(response) {
                     var userData = response;
 
-                    if (userData['photo'] == 'oui') {
+                    if(userData['photo'] == 'oui'){
+                        // alert(userData['user']);
+
                         var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 37px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
                         html = html.replace(":?", userData['user']);
+                        // alert(JSON.stringify(userData));
+
                         $('.photo_users').append(html);
                     }
                     if (userData['photo'] == 'non') {
@@ -814,7 +824,7 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 30px; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
                     $('.logo_etp_user').append(html);
                 }

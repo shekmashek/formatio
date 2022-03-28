@@ -77,13 +77,13 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn-group dropstart">
+                                        <div class="btn-group dropleft">
                                             <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{ route('profil_cfp',$centre->cfp_id) }}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
-                                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_{{$centre->cfp_id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                                <a class="dropdown-item" href="{{ route('detail_cfp',$centre->cfp_id) }}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
+                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
                                             </div>
                                         </div>
                                     </td>
@@ -102,7 +102,7 @@
                                                 <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Non </button>
                                                 <form action="{{route('mettre_fin_cfp_etp')}}" method="post">
                                                     @csrf
                                                     <button type="submit" class="btn btn-secondary"> Oui </button>
@@ -247,24 +247,6 @@
                                             </strong>
                                         </td>
                                     </tr>
-<<<<<<< HEAD
-=======
-
-                                    {{-- <tr>
-                                                <td>
-                                                    <div align="left">
-                                                        <strong>{{$refus->nom}}</strong>
-                                    <p style="color: rgb(238, 150, 18)">{{$refus->mail_cfp}}</p>
-                                    <h6>{{$refus->slogan}}</h6>
-                    </div>
-                    </td>
-                    <td>
-                        <strong>
-                            <h5><i class="bx bxs-x-circle"></i> en attente</h5>
-                        </strong>
-                    </td>
-                    </tr> --}}
->>>>>>> debug_inscription_nicole
                     @endforeach
                     @endif
                     </tbody>

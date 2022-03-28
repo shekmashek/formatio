@@ -9,19 +9,15 @@
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
                                     @foreach ($vars  as $var)
-
                                     <div class="m-b-25"> <img src="/stagiaire-image/{{$var->photos}}" width="25%" height="25%" class="img-radius">
-
                                     </div>
                                     <h6 class="f-w-600">{{$var->nom_chef}} {{$var->prenom_chef}}</h6>
                                     <p>{{$var->fonction_chef}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     @can('isManager')
                                         <a href="{{route('edit_manager',$var->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
                                     @endcan
-
                                 </div>
                             </div>
-
                             <div class="col-sm-8">
                                 <div class="card-block">
                                     <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Informations personnelles</h6>

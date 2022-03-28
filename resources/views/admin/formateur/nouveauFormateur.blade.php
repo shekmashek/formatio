@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <br>
-                <h3>Nouveau Formation</h3>
+                <h3>Nouveau Formateur</h3>
             </div>
 
 
@@ -17,7 +17,7 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                             <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('utilisateur_formateur') || Route::currentRouteNamed('utilisateur_formateur') ? 'active' : '' }}" href="{{route('utilisateur_formateur')}}">
+                                <a class="nav-link  {{ Route::currentRouteNamed('liste_formateur') || Route::currentRouteNamed('liste_formateur') ? 'active' : '' }}" href="{{route('liste_formateur')}}">
                                     <button class="btn btn_enregistrer">Formateurs</button></a>
                             </li>
 

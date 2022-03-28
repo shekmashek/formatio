@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\URL;
 
 class ProfController extends Controller
 {
@@ -75,8 +76,7 @@ class ProfController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
-            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur'));
+            return view('admin.formateur.formateur', compact('formateur'));
             if (count($formateur) <= 0) {
                 return view('admin.formateur.guide');
             } else {
@@ -124,8 +124,7 @@ class ProfController extends Controller
         $frm->prenom_formateur = $request->prenom;
         $frm->mail_formateur = $request->mail;
         $frm->numero_formateur = $request->phone;
-        //dd($request->input());
-        $frm->genre = $request->sexe;
+        $frm->genre_id = $request->sexe;
         $frm->date_naissance = $request->date_naissance;
         $frm->adresse = $request->adresse;
         $frm->CIN = $request->cin;
@@ -136,13 +135,12 @@ class ProfController extends Controller
         $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
         $str = 'images/formateurs';
 
-        //stocker logo dans google drive
-        $dossier = 'formateur';
-        $stock_formateur = new getImageModel();
-        // $stock_formateur->store_image($dossier,$nom_image,$request->file('image')->getContent());
-        // $request->image->move(public_path($str), $nom_image);
+        $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
+
+        $request->image->move(public_path($str), $nom_image);
 
         $frm->photos = $nom_image;
+        $frm->url_photo = $url_photo;
 
         $user = new User();
         $user->name = $request->nom . " " . $request->prenom;
@@ -218,77 +216,77 @@ class ProfController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur =DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_photos', compact('formateur'));
     }
     public function editer_nom($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_nom', compact('formateur'));
     }
     public function editer_genre($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_genre', compact('formateur'));
     }
     public function editer_naissance($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.editer_naissance', compact('formateur'));
     }
     public function editer_mail($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_mail', compact('formateur'));
     }
     public function editer_phone($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_phone', compact('formateur'));
     }
     public function editer_cin($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_cin', compact('formateur'));
     }
     public function editer_adresse($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_adresse', compact('formateur'));
     }
     public function editer_etp($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_etp', compact('formateur'));
     }
     public function editer_niveau($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_niveau', compact('formateur'));
     }
     public function editer_pwd($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = formateur::findOrFail($id);
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edite_pwd', compact('formateur'));
     }
 
@@ -367,9 +365,29 @@ class ProfController extends Controller
         $experience = experienceFormateur::where('formateur_id', $id)->get();
         return view('admin.formateur.profil', compact('formateur', 'competence', 'experience'));
     }
+
+    public function cvProf(Request $request,$id)
+    {
+
+        $id = formateur::where('user_id', $id)->value('id');
+        $formateur = formateur::where('id', $id)->get();
+        $competence = competenceFormateur::where('formateur_id', $id)->get();
+        $experience = experienceFormateur::where('formateur_id', $id)->get();
+        return view('admin.formateur.CV', compact('formateur', 'competence', 'experience'));
+    }
     public function profile_formateur($id = null)
     {
-        $formateur = formateur::findOrFail($id);
+        // $user_id =  $users = Auth::user()->id;
+         if (Gate::allows('isFormateur')){
+            $id = formateur::where('user_id', Auth::user()->id)->value('id');
+
+            $formateur = formateur::findOrFail($id);
+         }
+         else{
+            $formateur = formateur::findOrFail($id);
+
+         }
+
 
         return view('admin.formateur.profile_formateur', compact('formateur'));
     }
@@ -378,7 +396,6 @@ class ProfController extends Controller
     public function set_profile_formateur()
     {
         $user = Auth::user()->id;
-
         $formateur = formateur::where('user_id', $user)->get();
         return view('admin.formateur.profile_formateurs', compact('formateur'));
     }
@@ -421,7 +438,7 @@ class ProfController extends Controller
                     'numero_formateur' => $phone,
                     'mail_formateur' => $mail,
                     'cin' => $cin,
-                    'genre' =>  $request->genre,
+                    'genre_id' =>  $request->genre,
                     'date_naissance' => $datenais,
                     'adresse' => $request->adresse,
                     'specialite' => $splt,
@@ -436,7 +453,7 @@ class ProfController extends Controller
                     'numero_formateur' => $phone,
                     'mail_formateur' => $mail,
                     'cin' => $cin,
-                    'genre' => $request->genre,
+                    'genre_id' => $request->genre,
                     'date_naissance' => $datenais,
                     'adresse' => $request->adresse,
                     'specialite' => $splt,
@@ -457,7 +474,7 @@ class ProfController extends Controller
     public function affichageFormateur($id)
     {
         $user = Auth::user()->id;
-        $formateur = formateur::where('user_id', $user)->get();
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where user_id = ?',[$user]);
 
         return view('admin.formateur.profile_formateurs', compact('formateur'));
     }

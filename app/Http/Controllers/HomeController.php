@@ -138,7 +138,8 @@ class HomeController extends Controller
             DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_resp'), $id_resp]);
         }
         if ($request->input('genre') != null) {
-            DB::update('update employers set sexe_emp = ? where id = ?', [$request->input('genre'), $id_resp]);
+            if($request->input('genre')=="Homme") $genre = 2; else $genre = 1;
+            DB::update('update responsables set genre_id = ? where id = ?', [$genre, $id_resp]);
         }
         if ($request->input('tel_resp') != null) {
             DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_resp'), $id_resp]);
@@ -170,6 +171,12 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
+        if (Gate::allows('isFormateurPrincipale')) {
+            return redirect()->route('calendrier');
+        }
+         if (Gate::allows('isManagerPrincipale')) {
+            return redirect()->route('calendrier');
+        }
         if (Gate::allows('isStagiairePrincipale')) {
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
@@ -323,7 +330,7 @@ class HomeController extends Controller
 
             //get the column with null value
 
-            $testNull = DB::select('select * from responsables where user_id  = ? ', [Auth::user()->id]);
+            $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
             $departement = DB::select('select * from departement_entreprises where id  = ? ', [$testNull[0]->departement_entreprises_id]);
 
@@ -483,7 +490,7 @@ class HomeController extends Controller
             //on récupère l'entreprise id de la personne connecté
 
             $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
+            $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         }
@@ -510,8 +517,8 @@ class HomeController extends Controller
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?", [$user_id])[0]->cfp_id;
-            $projet = $fonct->findWhere("v_projet_session", ["cfp_id", "type_formation_id"], [$cfp_id, $type_formation_id]);
-            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id", "type_formation_id"], [$cfp_id, $type_formation_id]);
+            $projet = $fonct->findWhere("v_projet_session", ["cfp_id"], [$cfp_id]);
+            $data = $fonct->findWhere("v_projet_formateur", ["cfp_id","formateur_id"], [$cfp_id,$formateur_id]);
 
 
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
@@ -519,10 +526,11 @@ class HomeController extends Controller
 
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
-            $formation = $fonct->findWhere("formations", ["cfp_id"], [$cfp_id]);
+            $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
-
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'status'));
+            $type_formation = DB::select('select * from type_formations');
+            $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'status','type_formation_id','projet_formation'));
         }
         if (Gate::allows('isStagiaire')) {
             $evaluation = new EvaluationChaud();

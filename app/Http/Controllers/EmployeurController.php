@@ -118,7 +118,7 @@ class EmployeurController extends Controller
                     echo $e->getMessage();
                 }
             Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
-            return back();
+            return back()->with('success',"Terminé !");
         }
 
     }

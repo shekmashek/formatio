@@ -49,6 +49,9 @@
     }
 
 </style>
+<div class="col" style="margin-left: 25px">
+  <a href="{{route('profil_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+</div>
 <center>
 
     <div class="col-lg-4">

@@ -81,7 +81,7 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
         $module = $fonct->findWhere("modules", ["formation_id","cfp_id"], [$rq->id,$cfp_id]);
 
         return response()->json($module);
@@ -126,6 +126,9 @@ class GroupeController extends Controller
             if($request->payement == null){
                 throw new Exception("Vous devez choisir une entreprise pour la formation.");
             }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            }
             DB::beginTransaction();
             $projet = new projet();
             $nom_projet = $projet->generateNomProjet();
@@ -152,7 +155,8 @@ class GroupeController extends Controller
     public function storeInter(Request $request)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $type_formation = $request->type_formation;
         //condition de validation de formulaire
         $request->validate(
@@ -170,10 +174,13 @@ class GroupeController extends Controller
 
         try{
             if($request->date_debut >= $request->date_fin){
-                throw new Exception("Date de début doit être inférieur date de fin.");
+                throw new Exception("Date de début doit être inférieur à la date de fin.");
             }
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
+            }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être au participant maximal.");
             }
             DB::beginTransaction();
             $projet = new projet();

@@ -92,7 +92,7 @@ class FonctionGenerique extends Model
     }
 
 
-
+//select from where value = ...
     public function findWhereMulitOne($nomTab,$para=[],$val=[]){
         $fonction = new FonctionGenerique();
         $data =  DB::select($fonction->queryWhere($nomTab,$para,$val), $val);

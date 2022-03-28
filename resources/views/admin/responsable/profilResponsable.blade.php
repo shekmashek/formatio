@@ -91,7 +91,7 @@
                         @else
                         <div style="display: grid; place-content: center">
                             <div class='randomColor photo_users' style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center">
-                               TESTE
+                                TESTE
                             </div>
                         </div>
                         @endif

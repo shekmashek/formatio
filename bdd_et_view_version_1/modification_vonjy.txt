@@ -18,6 +18,7 @@ creation table status(Modification_bdd(projet))
 ALTER TABLE groupe_entreprises
 ADD CONSTRAINT incription UNIQUE (groupe_id,entreprise_id);
 
+
 --------Mars 14
 modification vue  v_formateur_projet (bdd_suiviformation_view_4.0(modification_views_projet))
 modification vue  v_groupe_projet_module (bdd_suiviformation_view_4.0(modification_views_projet))
@@ -29,4 +30,42 @@ modification vue v_trie_detail_date (bdd_suiviformationrapport-finale)
 ------ Mars 18
 modification table reponse_evaluationchaud (bdd_suiviformation_mise_a_jour_5(projet_et_evaluation))
         ALTER table reponse_evaluationchaud add column points int default 0;
+
+--------mars 22
+creation de vue v_montant_session => bdd_suiviformation_view_4.0(modification_views_projet)
+
+ALTER TABLE participant_groupe
+ADD CONSTRAINT incription_session UNIQUE (groupe_id,stagiaire_id);
+
+--------mars 23
+
+-creation view v_detail_session => bdd_suiviformation_view_4.0(modification_views_projet)
+
+-recréer view v_stagiaire_groupe => bdd_suiviformation_view_4.0(modification_views_projet)
+
+ALTER TABLE stagiaires
+    modify genre_stagiaire bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_stagiaire) REFERENCES genre(id);
+- Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
+
+--------mars 24
+ALTER TABLE responsables
+DROP COLUMN sexe_resp;
+ALTER TABLE responsables
+    add column genre_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
+
+ALTER TABLE formateurs
+DROP COLUMN genre;
+ALTER TABLE formateurs
+    add column genre_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
+
+ALTER TABLE chef_departements
+DROP COLUMN genre_chef;
+ALTER TABLE chef_departements
+    add column genre_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
+
+- Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
 

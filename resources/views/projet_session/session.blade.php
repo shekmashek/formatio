@@ -14,7 +14,9 @@
             </div>
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>7 000 000 Ar</strong>  </p>
+                <p class="numero_session text-dark mt-3"> <strong>@php
+                    echo number_format($prix->montant_session,2,"."," ");
+                @endphp Ar</strong>  </p>
                 <p class="m-0">&nbsp;; apprenants inscrits : &nbsp;</p>
                 <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
             </div>
@@ -29,8 +31,20 @@
                 @if ($type_formation_id == 1)
                     <div class="chiffre_d_affaire">
                         <p class="p-0 m-0 text-center"> Referent entreprise </p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                        <div class="d-flex">
+                            <div>
+                                <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" width="50px" height="50px" class="img-fluid">
+                            </div>
+                            <div>
+                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                            </div>
+                            {{-- <div class="chiffre_d_affaire">
+                                <p class="p-0 m-0 text-center"> Referent entreprise </p>
+                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                            </div> --}}
+                        </div>
                     </div>
                 @endif
                 <div class="chiffre_d_affaire">
@@ -157,30 +171,32 @@
                                     </button>
                                 </div>
                             @endcanany
-                            <div>
-                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'emargement')" style="width: 100%">
-                                    <p class="m-0 p-0">EMARGEMENT</p>
-                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                                </button>
-                            </div>
-                            <div>
-                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
-                                    <p class="m-0 p-0">PRE EVALUATION</p>
-                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                                </button>
-                            </div>
-                            <div>
-                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                                    <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
-                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                                </button>
-                            </div>
-                            <div>
+                            @can('isFormateur')
+                                <div>
+                                    <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'emargement')" style="width: 100%">
+                                        <p class="m-0 p-0">EMARGEMENT</p>
+                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
+                                        <p class="m-0 p-0">PRE EVALUATION</p>
+                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
+                                        <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
+                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    </button>
+                                </div>
+                            @endcan
+                            {{-- <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'rapport')" style="width: 100%">
                                     <p class="m-0 p-0">RAPPORT</p>
                                     <i class="fal fa-dot-circle me-2" style="color: grey"></i>
                                 </button>
-                            </div>
+                            </div> --}}
                         @endif
                 </div>
             </div>

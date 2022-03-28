@@ -78,9 +78,9 @@
             </center> --}}
             <div class="row px-3 mt-4">
               <div class="form-group mt-1 mb-1">
-                        <select  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test input" id="genre"  >
-                          <option value="{{$stagiaire->genre_stagiaire}}"  >Homme</option>
-                          <option value="Femme">Femme</option>
+                        <select name="genre" class="form-select test input" id="genre">
+                          <option value="2">Homme</option>
+                          <option value="1">Femme</option>
 
                         </select>
                         <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
@@ -128,7 +128,7 @@
 
                     <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
 
-                    <input type="hidden" value="{{ $branche->nom_branche }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
+                    <input type="hidden" value="{{ $branche->id }}"  class="form-control"  name="lieu_travail" placeholder="Matricule" readonly>
 
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>

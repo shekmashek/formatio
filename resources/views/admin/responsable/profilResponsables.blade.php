@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         @else
-                        <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
+                            <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                         @endif
                     </a>
                 </div>
@@ -186,8 +186,9 @@
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_fonction_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$refs->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                    <a href="{{route('edit_fonction_resp',$refs->id)}} " data-bs-toggle="modal" data-bs-target="#modal_fonction">
+                        <p class="p-1 m-0" style="font-size: 10px;">FONCTION  <i class="bx bx-edit" style="color: blue"></i>
+                            <span style="float: right;">{{$refs->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
@@ -205,9 +206,6 @@
                     <a hrefs="#">
                         <p class="p-1 m-0" style="font-size: 10px;">Poste responsable<span style="float: right;">{{$refs->poste_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
-                        </p>
-                    </a>
-                </div>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
@@ -218,13 +216,13 @@
 
                 </div>
 
-                <div style="border-bottom: solid 1px #d399c2;" class="">
+                {{-- <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
                         <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
-                </div>
+                </div> --}}
 
                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
             </div>
@@ -588,6 +586,39 @@
             </div>
         </div>
     </div>
+
+ {{-- modification de Fonction  --}}
+
+ <div id="modal_fonction" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-md">
+                    <h6>Modification de votre fonction</h6>
+                    <h5><strong></strong></h5>
+                </div>
+                <button type="button" class="btn-close btn" style="color:red; background-color:rgb(255, 0, 225)" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <form class="btn-submit" id="formDte" action="{{route('update_responsable.dte_naissance',$refs->id)}}" method="post" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="inputbox inputboxP mt-3">
+                        <span><i class="bx bx-envelope"></i>&nbsp;Fonction<strong style="color:#ff0000;">*</strong></span>
+                        <input autocomplete="off" type="text" name="fonction" class="form-control formDte" required="required" value="">
+                    </div>
+                     <div class="mt-4 mb-4">
+                        <div class="mt-4 mb-4 d-flex justify-content-between">
+                            <span><button style="color:red" type="button" class="btn btn_enregistrer annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>
+                            <button type="submit" form="formDte" class="btn btn_enregistrer">Changer</button> </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
     {{-- <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

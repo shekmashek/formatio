@@ -125,7 +125,7 @@
 
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
 
-                    <input type="hidden" value="   {{ $branche->nom_branche }}"  class="form-control test"  name="lieu" placeholder="Matricule" >
+                    <input type="hidden" value="   {{ $branche->id }}"  class="form-control test"  name="lieu_travail" placeholder="Matricule" >
 
 
                   </div>

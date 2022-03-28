@@ -17,7 +17,7 @@
             <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
             <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
             <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
-            <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span>
+            {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
             <span class="span_ajout" id="boutton_add">
                 <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
              </span>
@@ -182,13 +182,16 @@ td{
 
     $(".rechercher").on('click',function(e){
         var id = $("#matricule_search").val();
+        var etp_id = @php echo $entreprise_id; @endphp;
         $.ajax({
             type: "GET",
             url: "{{route('one_stagiaire')}}",
-            data:{Id:id},
+            data:{
+                Id:id,
+                etp:etp_id
+            },
             dataType: "html",
             success:function(response){
-
                 // alert(JSON.stringify(response));
                 var userData=JSON.parse(response);
                 $("#matricule").val(userData[0].matricule);
@@ -216,6 +219,7 @@ td{
             },
             dataType: "html",
             success:function(response){
+                alert(JSON.stringify(response));
                 var userData=JSON.parse(response);
                 $("#matricule").val('');
                 $("#nom").val('');
@@ -322,29 +326,29 @@ td{
 	// });
 
 
-    $(".rechercher").on('click',function(e){
-        var id = $("#matricule_search").val();
-        $.ajax({
-            type: "GET",
-            url: "{{route('one_stagiaire')}}",
-            data:{Id:id},
-            dataType: "html",
-            success:function(response){
-                var userData=JSON.parse(response);
-                $("#matricule").val(userData[0].matricule);
-                $("#nom").val(userData[0].nom_stagiaire);
-                $("#prenom").val(userData[0].prenom_stagiaire);
-                $("#departement").val(userData[0].nom_departement);
-                // var html = '<i class="boutton fa fa-plus-circle" id="ajouter_participant"></i>';
-                // $('#boutton_add').append(html);
-                // id_detail = userData[$i].id;
-                // $('#action1').val('Modifier');
-           },
-           error:function(error){
-              console.log(error)
-           }
-        });
-	});
+    // $(".rechercher").on('click',function(e){
+    //     var id = $("#matricule_search").val();
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "{{route('one_stagiaire')}}",
+    //         data:{Id:id},
+    //         dataType: "html",
+    //         success:function(response){
+    //             var userData=JSON.parse(response);
+    //             $("#matricule").val(userData[0].matricule);
+    //             $("#nom").val(userData[0].nom_stagiaire);
+    //             $("#prenom").val(userData[0].prenom_stagiaire);
+    //             $("#departement").val(userData[0].nom_departement);
+    //             // var html = '<i class="boutton fa fa-plus-circle" id="ajouter_participant"></i>';
+    //             // $('#boutton_add').append(html);
+    //             // id_detail = userData[$i].id;
+    //             // $('#action1').val('Modifier');
+    //        },
+    //        error:function(error){
+    //           console.log(error)
+    //        }
+    //     });
+	// });
 
     $(".supprimer_stg").on('click', function(e) {
         var id = e.target.id;

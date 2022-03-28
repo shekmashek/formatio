@@ -82,10 +82,11 @@
                           <option value="Femme">Femme</option>
 
                         </select>
-                        {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
+                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
  
                        
                       
+                        <input type="hidden" class="form-control test" name="genre" value="{{ $formateur->genre_id }}">
                         <input type="hidden" class="form-control test" name="dateNais" value="{{ $formateur->date_naissance }}">
                         
                           <input type="hidden" value="{{ $formateur->cin}}" class="form-control test"  name="cin" >
