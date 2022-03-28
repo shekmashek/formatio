@@ -616,7 +616,6 @@ create or replace view v_participant_groupe_detail as
         d.h_debut,
         d.h_fin,
         d.formateur_id,
-        d.cfp_id
     from v_stagiaire_groupe sg
     join details d on sg.groupe_id = d.groupe_id;
 
