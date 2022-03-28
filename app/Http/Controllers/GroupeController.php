@@ -82,7 +82,7 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $module = $fonct->findWhere("modules", ["formation_id","cfp_id"], [$rq->id,$cfp_id]);
 
         return response()->json($module);

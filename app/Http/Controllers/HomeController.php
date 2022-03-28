@@ -570,6 +570,7 @@ class HomeController extends Controller
             $stg_id = stagiaire::where('user_id', $user_id)->value('id');
             // $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
             $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+            
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id'));
         }
     }

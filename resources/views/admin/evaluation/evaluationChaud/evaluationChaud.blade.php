@@ -94,8 +94,8 @@
                                         @elseif ($qst_filles->desc_champ == 'TEXT')
                                             @foreach ($champ_reponse as $champ_reponses)
                                                 @if ($champ_reponses->id_qst_fille == $qst_filles->id)
-                                                    <span class="input-group-text"
-                                                        id="basic-addon1">{{ $champ_reponses->descr_champs }}</span>
+                                                    {{-- <span class="input-group-text"
+                                                        id="basic-addon1">{{ $champ_reponses->descr_champs }}</span> --}}
                                                     <textarea required class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Reponse"
                                                         name="txt_qst_fille_{{ $qst_filles->id }}"></textarea>
                                                     <input type="text" hidden value="{{ $champ_reponses->id }}"
@@ -115,19 +115,13 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        @php
-                                                            $val = 1;
-                                                        @endphp
                                                         @foreach ($champ_reponse as $champ_reponses)
                                                             @if ($champ_reponses->id_qst_fille == $qst_filles->id)
                                                                 <th scope="row">
                                                                     <input required class="form-check-input" type="radio"
                                                                         name="case_qst_fille_{{ $qst_filles->id }}"
-                                                                        value="{{ $champ_reponses->descr_champs . 'concat' . $champ_reponses->id.'concat'.$val }}">
+                                                                        value="{{ $champ_reponses->descr_champs . 'concat' . $champ_reponses->id.'concat'.$champ_reponses->point_champ }}">
                                                                 </th>
-                                                                @php
-                                                                    $val = $val + 1;
-                                                                @endphp
                                                             @endif
                                                         @endforeach
                                                     </tr>

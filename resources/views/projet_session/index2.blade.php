@@ -3,7 +3,16 @@
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
         <div class="row">
-            <h3 class="mt-5 mb-3 text-center">Listes des Projets Intra et Inter</h3>
+            <div class="col-2"></div>
+            <div class="col-3"><h5 class="mt-3 mb-2 text-center">Listes des projets</h5></div>
+            @can('isCFP')
+                <div class="col-7 text-end">
+                    <a href="{{route('nouveau_groupe',[1])}}"><button class="btn btn_competence mt-1 mb-2">Nouveau projet intra</button></a>&nbsp;
+                    <a href="{{route('nouveau_groupe_inter',[2])}}"><button class="btn btn_competence mt-1 mb-2">Nouveau projet inter</button></a>
+                </div>
+            @endcan
+        </div>
+        <div class="row">
             @canany(['isReferent', 'isCFP'])
             <div class="col-2 pe-3">
 
@@ -273,6 +282,18 @@
                                                                                             <div class="form-group mt-1 mb-1">
                                                                                                 <input type="text" id="min"
                                                                                                     class="form-control input"
+                                                                                                    name="date_debut" required
+                                                                                                    onfocus="(this.type='date')">
+                                                                                                <label
+                                                                                                    class="form-control-placeholder"
+                                                                                                    for="min">Date debut<strong
+                                                                                                    class="text-danger">*</strong></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row px-3 mt-2">
+                                                                                            <div class="form-group mt-1 mb-1">
+                                                                                                <input type="text" id="min"
+                                                                                                    class="form-control input"
                                                                                                     min="1" max="50"
                                                                                                     name="min_part" required
                                                                                                     onfocus="(this.type='number')">
@@ -282,23 +303,25 @@
                                                                                                     minimal</label>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="row px-3 mt-2">
-                                                                                            <div class="form-group mt-1 mb-1">
-                                                                                                <input type="text" id="min"
-                                                                                                    class="form-control input"
-                                                                                                    name="date_debut" required
-                                                                                                    onfocus="(this.type='date')">
-                                                                                                <label
-                                                                                                    class="form-control-placeholder"
-                                                                                                    for="min">Date debut</label>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                        
                                                                                         <div class="text-center px-3"><button
                                                                                                 type="submit"
                                                                                                 class="btn btn_enregistrer">Valider</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col">
+                                                                                        <div class="row px-3 mt-2">
+                                                                                            <div class="form-group mt-1 mb-1">
+                                                                                                <input type="text" id="min"
+                                                                                                    class="form-control input"
+                                                                                                    name="date_fin" required
+                                                                                                    onfocus="(this.type='date')">
+                                                                                                <label
+                                                                                                    class=" form-control-placeholder"
+                                                                                                    for="min">Date fin<strong
+                                                                                                    class="text-danger">*</strong></label>
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <div class="row px-3 mt-2">
                                                                                             <div class="form-group mt-1 mb-1">
                                                                                                 <input type="text" id="min"
@@ -312,17 +335,7 @@
                                                                                                     maximal</label>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="row px-3 mt-2">
-                                                                                            <div class="form-group mt-1 mb-1">
-                                                                                                <input type="text" id="min"
-                                                                                                    class="form-control input"
-                                                                                                    name="date_fin" required
-                                                                                                    onfocus="(this.type='date')">
-                                                                                                <label
-                                                                                                    class=" form-control-placeholder"
-                                                                                                    for="min">Date fin</label>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                        
 
                                                                                         <div class="text-center px-3"><button
                                                                                                 type="button"

@@ -98,7 +98,8 @@ class ProjetControlleur extends Controller
     }
 
     public function accueilProjet(){
-        return view('projet_session.projetAccueil');
+        // return view('projet_session.projetAccueil');
+        return redirect()->route('liste_projet',[1]);
     }
 
     public function module_formation_intra(Request $rq)
