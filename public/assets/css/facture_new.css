@@ -54,6 +54,7 @@
     text-transform: capitalize;
     align-items: end;
     margin-bottom: 5px;
+    float: right;
 }
 
 .debut{

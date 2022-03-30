@@ -30,9 +30,9 @@
                                 {{-- <img src="{{asset('img/logo_numerika/logonmrk.png')}}" alt="logo_cfp" class="img-fluid"> --}}
                                 <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
                             </div>
-                            <div class="col-8 tex-end" align="rigth">
+                            <div class="col-8 text-end" align="rigth">
                                 {{-- <input type="text" name="" id="" class="text-end titre_facture" placeholder="titre facture" required> --}}
-                                <select class="text-end titre_facture form-select  mb-2" id="type_facture" name="type_facture" aria-label="Default select example" required>
+                                <select class="text-end titre_facture form-select  mb-2 m-0" id="type_facture" name="type_facture" aria-label="Default select example" required>
                                     <option onselected hidden> Type de Facture...</option>
                                     @foreach ($type_facture as $tp_fact)
                                     <option value="{{$tp_fact->id}}">{{$tp_fact->description}}</option>
@@ -115,44 +115,54 @@
             <div class="row services_factures">
                 <div class="col-12 pb-4 element">
                     <div class="row titres_services">
-                        <div class="col-3">
+                        <div class="col-2">
                             <h6 class="m-0">Projets</h6>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <h6 class="m-0">Session</h6>
+                        </div>
+                        <div class="col-3">
+                            <h6 class="m-0">Module</h6>
+                        </div>
+                        <div class="col-1">
+                            <h6 class="m-0">Réf</h6>
                         </div>
                         <div class="col-1 text-end">
                             <h6 class="m-0">Quantité</h6>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <h6 class="m-0">Prix Unitaire</h6>
                         </div>
-                        <div class="col-3 text-end">
+                        <div class="col-2 text-end">
                             <h6 class="m-0">Montant</h6>
                         </div>
                     </div>
                     <div class="row my-3">
-                        <div class="col-3">
+                        <div class="col-2">
                             <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
                             </select>
                             <span style="color:#ff0000;" id="projet_id_err">Aucun projet a été
                                 détecter</span>
-
-
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <select class="form-select selectP input_section4 mb-2" id="session_id" name="session_id" aria-label="Default select example" required>
                             </select>
                             <span style="color:#ff0000;" id="session_id_err">Aucun session a été
                                 détecter</span>
                         </div>
+                        <div class="col-3">
+                            <input type="text" name="qte" id="qte" min="1" value="1" class="form-control input_quantite" required>
+                        </div>
+                        <div class="col-1">
+                            <input type="text" name="qte" id="qte" min="1" value="1" class="form-control input_quantite" required>
+                        </div>
                         <div class="col-1">
                             <input type="number" name="qte" id="qte" min="1" value="1" class="form-control input_quantite" required>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <input type="number" name="facture" min="0" value="0" id="facture" class="form-control input_quantite2" required>
                         </div>
-                        <div class="col-3 text-end pt-2">
+                        <div class="col-2 text-end pt-2">
                             <p class="m-0"><span>500 000</span>&nbsp;MGA</p>
                         </div>
                     </div>
@@ -164,7 +174,7 @@
                     <div class="row mb-2">
                         <div class="col-9 d-flex flex-row justify-content-end">
                             <p class="m-0 pt-3 text-end me-3">Taxe</p>
-                            <select class="form-select selectP input_section4" aria-label="Default select example" name="tax_id" id="tax_id">
+                            <select class="form-select selectP input_tax" aria-label="Default select example" name="tax_id" id="tax_id">
                                 @foreach ($taxe as $t)
                                 <option value="{{$t->id}}">{{$t->description}}</option>
                                 @endforeach
@@ -200,7 +210,7 @@
                 <div class="row nouveau_service g-0">
                     <div class="col-12 py-2 text-center">
 
-                        <span><i class='bx bx-plus-circle me-2'></i><a href="#" id="addRowMontant">Ajouter un élément</a></span>
+                        <span><i class='bx bx-plus-circle me-2'></i><a href="#" id="addRowMontant">Ajouter une autre session</a></span>
                     </div>
                 </div>
                 <div class="col-12 pb-4 element">
@@ -229,7 +239,7 @@
                 </div>
                 <div class="row nouveau_service g-0">
                     <div class="col-12 py-2 text-center">
-                        <span> <a href="#" id="addRow"><i class='bx bx-plus-circle me-2'></i>Ajouter un frais</a> </span>
+                        <span> <a href="#" id="addRow"><i class='bx bx-plus-circle me-2'></i>Ajouter un ou des frais annexes(s)</a> </span>
                     </div>
                 </div>
                 <div class="row mb-2 g-0 p-2">
@@ -263,7 +273,7 @@
                 <div class="row mb-2 g-0">
                     <div class="col-12 ">
                         <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>
-                        <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'votre commentaire ou description'"></textarea>
+                        <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'Vos commentaires ou descriptions'"></textarea>
                     </div>
                 </div>
             </div>
@@ -501,7 +511,7 @@
 
                 html += '<div class="col-3 text-end pt-2">';
                 html += '<p class="m-0"><span>500 000</span>&nbsp;MGA<span>';
-                html += '<button id="removeRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></span></p>';
+                html += '<button id="removeRow" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span></p>';
                 html += '</div>';
                 html += '</div><br>';
 
@@ -563,7 +573,7 @@
 
                 html += '<div class="col-3 text-end pt-2">';
                 html += '<p class="m-0"><span>500 000</span>&nbsp;MGA<span>';
-                html += '<button id="removeRowMontant" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></span></p>';
+                html += '<button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span></p>';
                 html += '</div>';
                 html += '</div><br>';
 
