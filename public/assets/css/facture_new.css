@@ -52,7 +52,13 @@
     padding-right: 10px;
     font-size: 1.5rem;
     text-transform: capitalize;
+    align-items: end;
     margin-bottom: 5px;
+}
+
+.debut{
+    display: grid;
+    place-content: end;
 }
 
 .description_facture{

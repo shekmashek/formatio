@@ -42,13 +42,14 @@ class FactureController extends Controller
 
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+            $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
             $typePayement = $this->typePaye->findAll();
             $entreprise = $this->fonct->findAll("entreprises");
             $project = $this->fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
             $taxe = $this->fonct->findAll("taxes");
             $type_facture = $this->fonct->findAll("type_facture");
             $mode_payement = $this->fonct->findAll("mode_financements");
-            return view('admin.facture.nouveau_facture', compact('project', 'entreprise', 'typePayement', 'taxe', 'mode_payement', 'type_facture'));
+            return view('admin.facture.nouveau_facture', compact('cfp','project', 'entreprise', 'typePayement', 'taxe', 'mode_payement', 'type_facture'));
 
             // return view('admin.facture.maquette_entrer_facture', compact('totale_invitation', 'project', 'entreprise', 'typePayement', 'message', 'taxe', 'mode_payement', 'type_facture'));
         }
@@ -536,7 +537,10 @@ $status = null;
     public function projetFacturer(Request $req)
     {
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-        return response()->json($this->fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]));
+        $data["entreprise"] = $this->fonct->findWhereMulitOne("entreprises",["id"],[$req->id]);
+        $data["projet"] = $this->fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
+
+        return response()->json($data);
     }
 
     public function verifyFacture(Request $req)
