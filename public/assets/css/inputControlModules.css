@@ -33,6 +33,7 @@ textarea:focus::placeholder{
     font-size: 0.850rem;
     letter-spacing: 1px;
     height: 200px;
+    max-height: 200px;
 }
 
 .text_area:focus,

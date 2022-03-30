@@ -88,7 +88,7 @@
                                                     <input type="text"
                                                         class="form-control module module input"
                                                         id="acf-nom_module" name="nom_module" required
-                                                        value="{{$mod->nom_module}}"> <label for="acf-nom_module"
+                                                        value="{{$mod->nom_module}}" placeholder="Nom module"> <label for="acf-nom_module"
                                                         class="form-control-placeholder">Nom module</label>
                                                     @error('nom_module')
                                                     <div class="col-sm-6">
@@ -105,10 +105,10 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <input type="text"
-                                                        class="form-control descript descript input"
+                                                        class="form-control descript descript input mt-3"
                                                         id="acf-description" name="description" required
-                                                        value="{{$mod->description}}"><label for="acf-description"
-                                                        class="form-control-placeholder">Description</label>
+                                                        value="{{$mod->description}}" placeholder="Déscription"><label for="acf-description"
+                                                        class="form-control-placeholder">Déscription</label>
                                                     @error('description')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -127,11 +127,12 @@
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
                                                             <input type="text"
-                                                                class="form-control jour jour input"
+                                                                class="form-control jour jour input mt-3"
                                                                 id="acf-jour" name="jour" min="1" max="365"
                                                                 onfocus="(this.type='number')"
                                                                 title="entrer une durée en jours"
-                                                                value="{{$mod->duree_jour}}"><label for="acf-jour"
+                                                                value="{{$mod->duree_jour}}" placeholder="Durée en Jours
+                                                                (J)" required><label for="acf-jour"
                                                                 class="form-control-placeholder">Durée en Jours
                                                                 (J)</label>
                                                         </div>
@@ -145,11 +146,12 @@
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
                                                             <input type="text"
-                                                                class="form-control heur heur input"
+                                                                class="form-control heur heur input mt-3"
                                                                 id="acf-heur" name="heure" min="1" max="8760"
                                                                 onfocus="(this.type='number')"
                                                                 title="entrer une durée en heure"
-                                                                value="{{$mod->duree}}"><label for="acf-heur"
+                                                                value="{{$mod->duree}}" placeholder="Durée en Heure
+                                                                (H)" required><label for="acf-heur"
                                                                 class="form-control-placeholder">Durée en Heure
                                                                 (H)</label>
                                                         </div>
@@ -166,7 +168,7 @@
                                                 <div class="acf-input-wrap">
                                                     @if($mod->modalite_formation == 'En ligne')
                                                     <select
-                                                        class="form-control select_formulaire modalite modalite input mt-2"
+                                                        class="form-control select_formulaire modalite modalite input mt-3"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
                                                         <option value="{{$mod->modalite_formation}}" selected>
                                                             {{$mod->modalite_formation}}</option>
@@ -181,7 +183,7 @@
                                                     @endif
                                                     @if($mod->modalite_formation == 'Presentiel')
                                                     <select
-                                                        class="form-control select_formulaire modalite modalite input mt-2"
+                                                        class="form-control select_formulaire modalite modalite input mt-3"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
                                                         <option value="En ligne"> En ligne </option>
                                                         <option value="{{$mod->modalite_formation}}" selected>
@@ -196,7 +198,7 @@
                                                     @endif
                                                     @if($mod->modalite_formation == 'Presentiel - En ligne')
                                                     <select
-                                                        class="form-control select_formulaire modalite modalite input mt-2"
+                                                        class="form-control select_formulaire modalite modalite input mt-3"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
                                                         <option value="En ligne"> En ligne </option>
                                                         <option value="Presentiel"> Présentiel </option>
@@ -217,7 +219,7 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <select
-                                                        class="form-control select_formulaire niveau niveau input"
+                                                        class="form-control select_formulaire niveau niveau input mt-3"
                                                         id="acf-niveau" name="niveau" style="height: 50px;">
                                                         <option value="{{$mod->niveau_id}}" selected>
                                                             {{$mod->niveau}} </option>
@@ -237,9 +239,9 @@
                                     <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i
                                     btn_previous         class="bx bxs-edit close" onclick="myFunction()"></i>
                                         <br>
-                                        <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                class="new_list_nouvelle px-5 btn_next" onclick="suivant_objectif();"><a
-                                                    href="#preview_haut2">Suivant</a></button></p>
+                                        <p class="text-center mt-3" style="font-size: 16px"><a type="button"
+                                            class="new_list_nouvelle px-5 btn_next" onclick="suivant_objectif();"
+                                                    href="#preview_haut2">Suivant</a></p>
                                     </span>
 
 
@@ -249,7 +251,7 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control objectif objectif text_area"
-                                                        id="acf-objectif" name="objectif"
+                                                        id="acf-objectif" name="objectif" placeholder="Objectifs"
                                                         required>{{$mod->objectif}}</textarea><label for="acf-objectif"
                                                         class="form-control-placeholder-text_area">Objectifs</label>
                                                     @error('objectif')
@@ -265,9 +267,9 @@
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5 btn_previous" onclick="retour_module();"><a
                                                         href="#preview_haut">Précedent</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5 btn_next" onclick="suivant_cible();"><a
-                                                        href="#preview_objectif">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a type="button"
+                                                class="new_list_nouvelle px-5 btn_next" onclick="suivant_cible();"
+                                                        href="#preview_objectif">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -293,8 +295,8 @@
                                         <div class="acf-field acf-field-text acf-field-prerequis is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prerequis prerequis text_area"
-                                                        id="acf-prerequis" name="prerequis">{{$mod->prerequis}}</textarea><label
+                                                    <textarea class="form-control prerequis prerequis text_area mt-3"
+                                                        id="acf-prerequis" name="prerequis" placeholder="Prérequis" required>{{$mod->prerequis}}</textarea><label
                                                         for="acf-prerequis"
                                                         class="form-control-placeholder-text_area">Prérequis</label>
                                                     @error('prerequis')
@@ -310,9 +312,9 @@
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5 btn_previous" onclick="retour_objectif();"><a
                                                         href="#preview_haut2">Précedent</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5 btn_next" onclick="suivant_reference();"><a
-                                                        href="#preview_reference">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a
+                                                        href="#preview_reference" type="button"
+                                                        class="new_list_nouvelle px-5 btn_next" onclick="suivant_reference();">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -323,8 +325,8 @@
                                                     <input type="text"
                                                         class="form-control reference reference input"
                                                         id="acf-reference" name="reference"
-                                                        value="{{$mod->reference}}"><label for="acf-reference"
-                                                        class="form-control-placeholder">Reference</label>
+                                                        value="{{$mod->reference}}" placeholder="Reference" required><label for="acf-reference"
+                                                        class="form-control-placeholder" >Reference</label>
                                                     @error('reference')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -339,11 +341,9 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix prix input"
+                                                    <input type="text" class="form-control prix prix input  mt-3"
                                                         id="acf-prix" name="prix" pattern="[0-9]{1,7}"
-                                                        value="{{$mod->prix}}" onfocus="(this.type='number')"><label
-                                                        for="acf-prix" class="form-control-placeholder">Prix en
-                                                        AR</label>
+                                                        value="{{$mod->prix}}" onfocus="(this.type='number')" placeholder="Prix en AR" required><label for="acf-prix" class="form-control-placeholder">Prix en AR</label>
                                                     @error('prix')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -357,9 +357,9 @@
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5 btn_previous" onclick="retour_cible();"><a
                                                         href="#preview_objectif">Précedent</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5 btn_next" onclick="suivant_equipement();"><a
-                                                        href="#changer_equipement">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a
+                                                        href="#changer_equipement" type="button"
+                                                        class="new_list_nouvelle px-5 btn_next" onclick="suivant_equipement();">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -370,8 +370,8 @@
                                                     <input type="text"
                                                         class="form-control materiel materiel input"
                                                         id="acf-materiel" name="materiel"
-                                                        value="{{$mod->materiel_necessaire}}"><label for="acf-materiel"
-                                                        class="form-control-placeholder">Equipement Necessaire</label>
+                                                        value="{{$mod->materiel_necessaire}}" placeholder="Equipement Nécessaire" required><label for="acf-materiel"
+                                                        class="form-control-placeholder">Equipement Nécessaire</label>
                                                     @error('materiel')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -387,10 +387,9 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea
-                                                        class="form-control bon_a_savoir bon_a_savoir text_area"
-                                                        id="acf-bon_a_savoir" name="bon_a_savoir">{{$mod->bon_a_savoir}}</textarea><label
-                                                        for="acf-bon_a_savoir" class="form-control-placeholder-text_area">Bon a
-                                                        Savoir</label>
+                                                        class="form-control bon_a_savoir bon_a_savoir text_area mt-3"
+                                                        id="acf-bon_a_savoir" name="bon_a_savoir" placeholder="Bon à Savoir" required>{{$mod->bon_a_savoir}}</textarea><label
+                                                        for="acf-bon_a_savoir" class="form-control-placeholder-text_area">Bon à Savoir</label>
                                                     @error('bon_a_savoir')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -404,9 +403,9 @@
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button"
                                                     class="new_list_nouvelle px-5 btn_previous" onclick="retour_reference();"><a
                                                         href="#changer_reference">Précedent</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button"
-                                                    class="new_list_nouvelle px-5 btn_next" onclick="suivant_prestation();"><a
-                                                        href="#changer_prestation">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a
+                                                        href="#changer_prestation" type="button"
+                                                        class="new_list_nouvelle px-5 btn_next" onclick="suivant_prestation();">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -417,7 +416,7 @@
                                                     <textarea
                                                         class="form-control prestation prestation text_area"
                                                         id="acf-prestation" name="prestation"
-                                                        onkeyup='estComplet();'>{{$mod->prestation}}</textarea><label
+                                                        onkeyup='estComplet();' placeholder="Préstation Pédagogiques" required>{{$mod->prestation}}</textarea><label
                                                         for="acf-bon_a_savoir"
                                                         class="form-control-placeholder-text_area">Préstation Pédagogiques</label>
                                                     @error('prestation')
@@ -439,14 +438,14 @@
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
                                                                 <input type="text"
-                                                                    class="form-control min min input"
+                                                                    class="form-control min min input mt-3"
                                                                     id="acf-min" name="min_pers" min="1" max="100"
                                                                     value="{{$mod->min_pers}}"
                                                                     onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale"><label
+                                                                    title="entrer le nombre de personne maximale" placeholder="Nombre personne
+                                                                    min" required><label
                                                                     for="acf-min"
-                                                                    class="form-control-placeholder">Nombre personne
-                                                                    min</label>
+                                                                    class="form-control-placeholder">Nombre personne min</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -458,14 +457,12 @@
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
                                                                 <input type="text"
-                                                                    class="form-control max max input"
+                                                                    class="form-control max max input mt-3"
                                                                     id="acf-max" name="max_pers" min="1" max="100"
                                                                     value="{{$mod->max_pers}}"
                                                                     onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale"><label
-                                                                    for="acf-max"
-                                                                    class="form-control-placeholder">Nombre personne
-                                                                    max</label>
+                                                                    title="entrer le nombre de personne maximale" placeholder="Nombre personne
+                                                                    max"><label for="acf-max" class="form-control-placeholder">Nombre personne max</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -473,9 +470,9 @@
                                             </div>
                                         </div>
                                         <div class="col text-center">
-                                            <p class="mt-3" style="font-size: 16px;"><button type="button"
-                                                    class="new_list_nouvelle px-5" onclick="retour_prestation();"><a
-                                                        href="#changer_prestation">Precedent</a></button></p>
+                                            <p class="mt-3" style="font-size: 16px;"><a
+                                                        href="#changer_prestation" type="button"
+                                                        class="new_list_nouvelle btn_next px-5" onclick="retour_prestation();">Precedent</a></p>
                                         </div>
                                     </div>
 
@@ -1348,7 +1345,7 @@
     }
 
     function retour_prestation(){
-        changer_prestation();
+        changer_equipement();
     }
 
 </script>

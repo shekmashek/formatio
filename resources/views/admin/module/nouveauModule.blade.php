@@ -102,8 +102,8 @@
                                                         {{$li->nom_formation}}</option>
                                                         @endforeach --}}
                                                     </select>
-                                                    <label for="acf-categorie" class="form-control-placeholder">Thématique par Domaine</label>
-                                                    <span style="" id="domaine_id_err">choisir le type de domaine valide pour avoir ses formations</span>
+                                                    <label for="acf-categorie" class="form-control-placeholder">Thématique par Domaine</label><br>
+                                                    <span style="" id="domaine_id_err">Choisir le domaine de formation valide</span>
                                                 </div>
                                             </div>
                                         </div>

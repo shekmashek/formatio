@@ -64,8 +64,7 @@
                     <div class="col-lg-12">
                         <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
-                        <button class="btn_enregistrer"><a href="#programme__formation">Consulter votre programme de
-                                formation</a></button>
+                        <a href="#programme__formation" class="btn_next py-2">Consulter&nbsp;votre&nbsp;programme&nbsp;de&nbsp;formation</a>
                     </div>
                 </div>
                 {{-- section 1 --}}

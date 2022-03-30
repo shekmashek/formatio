@@ -272,7 +272,7 @@
 
 .postion_fixe_form {
     position: sticky;
-    top: 3rem;
+    top: 3.5rem;
     height: 17rem;
 }
 
@@ -551,8 +551,9 @@ font-size: 0.850rem;
 
 .acf-input-wrap span{
     font-size: 0.850rem;
-    text-align: center;
     color:#c77cce;
+    position: relative;
+    bottom: 1.5rem;
 }
 
 #premier_vue8{
