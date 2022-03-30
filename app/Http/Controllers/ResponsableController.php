@@ -275,11 +275,13 @@ class ResponsableController extends Controller
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
             }
-            return view('admin.responsable.profilResponsables', compact('refs'));
+            $entreprise = DB::select("select * from entreprises where id=?",[$refs->entreprise_id])[0];
+            return view('admin.responsable.profilResponsables', compact('refs','entreprise'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-            return view('admin.responsable.profilResponsable', compact('refs'));
+            $entreprise = DB::select("select * from entreprises where id=?",[$refs->entreprise_id])[0];
+            return view('admin.responsable.profilResponsable', compact('refs','entreprise'));
         }
     }
 
