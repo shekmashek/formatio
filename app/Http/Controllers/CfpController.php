@@ -159,5 +159,101 @@ class CfpController extends Controller
         }
         return redirect()->route('profil_of',[$id]);
     }
-
+    //modifier l'horaire
+    public function modification_horaire(Request $request,$id){
+        DB::delete('delete from horaires where cfp_id = ?', [$id]);
+        $input = $request->all();
+        for ($i=0; $i < count($input['jour']); $i++) {
+            DB::insert('insert into horaires (jours, h_entree,h_sortie,cfp_id) values (?, ?,?,?)', [$input['jour'][$i], $input['ouverture'][$i], $input['fermeture'][$i] ,$id]);
+        }
+        return redirect()->route('profil_of',[$id]);
+    }
+    public function lien_facebook($id){
+        $lien = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        return view('cfp.modification_profil.edit_facebook',compact('id','lien'));
+    }
+    public function lien_twitter($id){
+        $lien = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        return view('cfp.modification_profil.edit_twitter',compact('id','lien'));
+    }
+    public function lien_instagram($id){
+        $lien = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        return view('cfp.modification_profil.edit_instagram',compact('id','lien'));
+    }
+    public function lien_linkedin($id){
+        $lien = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        return view('cfp.modification_profil.edit_linkedin',compact('id','lien'));
+    }
+    //ajout lien facebook
+    public function ajout_facebook(Request $request,$id){
+        $fb = $request->facebook;
+        $test = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        if($fb!=null){
+            if ($test==null) {
+                DB::insert('insert into reseaux_sociaux (lien_facebook,cfp_id) values (?,?)', [$fb,$id]);
+                return redirect()->route('profil_of',[$id]);
+            }
+            else{
+                DB::update('update reseaux_sociaux set lien_facebook = ? where cfp_id = ?', [$fb,$id]);
+                return redirect()->route('profil_of',[$id]);
+            }
+        }
+        else{
+            return redirect()->back()->with('erreur_reseau', 'Ajouter votre lien facebook avant de cliquer sur Enregistrer');
+        }
+    }
+     //ajout lien twitter
+     public function ajout_twitter(Request $request,$id){
+        $twitter = $request->twitter;
+        $test = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        if($twitter!=null){
+            if ($test==null) {
+            DB::insert('insert into reseaux_sociaux ( lien_twitter,cfp_id) values (?, ?)', [$twitter,$id]);
+            return redirect()->route('profil_of',[$id]);
+            }
+            else{
+                DB::update('update reseaux_sociaux set lien_twitter= ? where cfp_id = ?', [$twitter,$id]);
+                return redirect()->route('profil_of',[$id]);
+            }
+        }
+        else{
+            return redirect()->back()->with('erreur_reseau', 'Ajouter votre lien twitter avant de cliquer sur Enregistrer');
+        }
+    }
+     //ajout lien instagram
+     public function ajout_instagram(Request $request,$id){
+        $instagram = $request->instagram;
+        $test = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        if($instagram!=null){
+            if ($test==null) {
+            DB::insert('insert into reseaux_sociaux (lien_instagram,cfp_id) values (?, ?) ', [$instagram,$id]);
+            return redirect()->route('profil_of',[$id]);
+            }
+            else{
+                DB::update('update reseaux_sociaux set lien_instagram= ? where cfp_id = ?', [$instagram,$id]);
+                return redirect()->route('profil_of',[$id]);
+            }
+        }
+        else{
+            return redirect()->back()->with('erreur_reseau', 'Ajouter votre lien instagram avant de cliquer sur Enregistrer');
+        }
+    }
+     //ajout lien linkedin
+     public function ajout_linkedin(Request $request,$id){
+        $linkedin = $request->linkedin;
+        $test = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);
+        if($linkedin!=null){
+            if ($test==null) {
+            DB::insert('insert into reseaux_sociaux (lien_linkedin,cfp_id) values (?, ?) where cfp_id = ?', [$linkedin,$id]);
+            return redirect()->route('profil_of',[$id]);
+            }
+            else{
+                DB::update('update reseaux_sociaux set lien_linkedin =? where cfp_id = ?', [$linkedin,$id]);
+                return redirect()->route('profil_of',[$id]);
+            }
+        }
+        else{
+            return redirect()->back()->with('erreur_reseau', 'Ajouter votre lien likedinn avant de cliquer sur Enregistrer');
+        }
+    }
 }

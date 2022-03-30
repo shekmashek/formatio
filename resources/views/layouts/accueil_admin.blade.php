@@ -7,7 +7,10 @@
         <div class="col-lg-6">
             <div class="card text-white mb-3 mt-3" id="bc">
                 <div class="" style="height:45px; ">
-                    <img id="example2" src="@foreach($phone_tmp as $item) {{$item->photos}}  @endforeach" alt="image stagiaire">
+                    @foreach($phone_tmp as $item)
+                        <img id="example2" src="{{asset('images/stagiaires/'.$item->photos)}}" alt="image stagiaire">
+                    @endforeach
+
                     <img id="exemple1" class="ms-3" src="{{asset('images/stagiaires/ilaina.png')}}" alt="Image">
                 </div>
                 <div class="card-body text-dark mt-3" id="cl">

@@ -153,24 +153,30 @@
                                         <div class="hover" style="border-bottom: solid 1px #d399c2;">
 
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Réseaux sociaux</p>
-                                                <a href="{{route('modification_site_web',$cfp->id)}}">
-                                                    <h6 class="text-muted f-w-400">
-                                                        @if ($reseaux_sociaux==NULL)
-                                                            Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-                                                            Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-                                                            Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-                                                            Linkedin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-
+                                                 <h6 class="text-muted f-w-400">
+                                                        @if ($reseaux_sociaux[0]->lien_facebook==null)
+                                                            <a href="{{route('lien_facebook',$cfp->id)}}">Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
                                                         @else
-                                                            @for ($i=0;$i<count($reseaux_sociaux);$i++)
-                                                                Facebook : {{$reseaux_sociaux[$i]->lien_facebook}}<br>
-                                                                Twitter : {{$reseaux_sociaux[$i]->lien_twitter}}<br>
-                                                                Instagram : {{$reseaux_sociaux[$i]->lien_instagram}}<br>
-                                                                Linnkdin : {{$reseaux_sociaux[$i]->lien_linkedin}}<br>
-                                                            @endfor
+                                                            <a href="{{route('lien_facebook',$cfp->id)}}">Facebook : {{$reseaux_sociaux[0]->lien_facebook}}<br></a>
                                                         @endif
+                                                        @if ($reseaux_sociaux[0]->lien_twitter==null)
+                                                        <a href="{{route('lien_twitter',$cfp->id)}}">Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                        @else
+                                                            <a>Twitter : {{$reseaux_sociaux[0]->lien_twitter}}<br></a>
+                                                        @endif
+                                                        @if ($reseaux_sociaux[0]->lien_instagram==null)
+                                                        <a href="{{route('lien_instagram',$cfp->id)}}">  Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                        @else
+                                                            <a>Instagram : {{$reseaux_sociaux[0]->lien_instagram}}<br></a>
+                                                        @endif
+                                                        @if ($reseaux_sociaux[0]->lien_linkedin==null)
+                                                        <a href="{{route('lien_linkedin',$cfp->id)}}">  Linkedin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                        @else
+                                                            <a>Linnkdin : {{$reseaux_sociaux[0]->lien_linkedin}}<br></a>
+                                                        @endif
+
                                                     </h6>
-                                                </a>
+
 
                                         </div>
                                     </div>

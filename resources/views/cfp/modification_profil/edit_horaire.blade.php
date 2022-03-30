@@ -59,7 +59,7 @@
         <div class="p-3 form-control">
             <p style="text-align: left">Modifier l'horaire d'ouverture(Jour - heure d'ouverture - heure de fermeture)</p>
             @if($cfp!=null)
-                <form   class="btn-submit" action="" method="post" enctype="multipart/form-data">
+                <form   class="btn-submit" action="{{route('modification_horaire',$id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row px-3 mt-4">
 
@@ -72,10 +72,10 @@
 
                         @endfor
                         <div class="text-end mt-1">
-                            <button title="Ajouter une nouvelle horaire" type="button" class="btn btn-success btn-lg" id="addRow"><i class='bx bxs-plus-circle'></i></button>
+                            <button title="Ajouter une nouvelle horaire" type="button" class="btn btn-success btn-lg" id="addRow2"><i class='bx bxs-plus-circle'></i></button>
                         </div>
                     </div>
-
+                    <div id="add_column2"></div>
                     <button style=" background-color: #801D68;color:white;float: right;" class=" mt-2 btn modification "> Enregister</button>
                 </form>
             @else
@@ -127,6 +127,28 @@
     // remove row1
     $(document).on('click', '#removeRow1', function() {
         $(this).closest('#inputFormRow1').remove();
+    });
+
+    $(document).on('click', '#addRow2', function() {
+        var html = '';
+
+        html += '<div class="row" id = "inputFormRow2">';
+        html += '<div class="col-4" style="display: flex">';
+        html += '<input type="text" class="form-control" id="inlineFormInput3" name="jour[]" placeholder="Jour" required />';
+        html += '</div>';
+        html += '<div class="col-4" style="display: flex">';
+        html += '<input type="time" class="form-control" id="inlineFormInput3" name="ouverture[]" placeholder="Jour" required />';
+        html += '</div>';
+        html += '<div class="col-4" style="display: flex">';
+        html += '<input type="time" class="form-control" id="inlineFormInput3" name="fermeture[]" placeholder="Jour" required />';
+        html += '<button id="removeRow2" type="button" class="btn btn-danger mt-2"><i class="bx bx-x" style="font-size: 15px;"></i></button>&nbsp;';
+        html += '</div>';
+        $('#add_column2').append(html);
+    });
+
+    // remove row1
+    $(document).on('click', '#removeRow2', function() {
+        $(this).closest('#inputFormRow2').remove();
     });
 </script>
 

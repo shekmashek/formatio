@@ -282,6 +282,7 @@ Route::get('/edit_pwd/{id}','ParticipantController@edit_pwd')->name('edit_pwd');
 Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('destroy_participant');
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
+Route::post('/update_photo_stagiaire/{id}','ParticipantController@update_photo_stagiaire')->name('update_photo_stagiaire');
 // profile_stagiaire
 // Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
@@ -297,7 +298,7 @@ Route::get('/searchCIN','ParticipantController@getStagiairesCIN')->name('searchC
 
 Route::post('update_mail_stagiaire','HomeController@update_email' )->name('update_mail_stagiaire');
 Route::get('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
-//ajout d'un stagiaire existant dans une nouvelle entreprise
+//lien d'un stagiaire existant dans une nouvelle entreprise
 Route::post('enregistrer_nouveau_etp_stagiaire','ParticipantController@nouvelle_entreprise_stagiaire')->name('enregistrer_nouveau_etp_stagiaire');
 //route formation
 Route::resource('formation','FormationController')->except([
@@ -1012,7 +1013,17 @@ Route::get('/modification_slogan/{id}','CfpController@edit_slogan')->name('modif
 Route::get('/modification_site_web/{id}','CfpController@edit_site')->name('modification_site_web');
 Route::get('/modification_horaire/{id}','CfpController@edit_horaire')->name('modification_horaire');
 Route::post('/remplir_horaire/{id}','CfpController@ajout_horaire')->name('remplir_horaire');
+Route::post('/modification_horaire/{id}','CfpController@modification_horaire')->name('modification_horaire');
 
+Route::get('lien_facebook/{id}','CfpController@lien_facebook')->name('lien_facebook');
+Route::get('lien_twitter/{id}','CfpController@lien_twitter')->name('lien_twitter');
+Route::get('/lien_instagram/{id}','CfpController@lien_instagram')->name('lien_instagram');
+Route::get('/lien_linkedin/{id}','CfpController@lien_linkedin')->name('lien_linkedin');
+
+Route::post('/ajout_facebook/{id}','CfpController@ajout_facebook')->name('ajout_facebook');
+Route::post('/ajout_twitter/{id}','CfpController@ajout_twitter')->name('ajout_twitter');
+Route::post('/ajout_instagram/{id}','CfpController@ajout_instagram')->name('ajout_instagram');
+Route::post('/ajout_linkedin/{id}','CfpController@ajout_linkedin')->name('ajout_linkedin');
 
 Route::post('/enregistrer_modification_logo_cfp/{id}','CfpController@modifier_logo')->name('enregistrer_modification_logo_cfp');
 Route::post('/enregistrer_modification_nom_cfp/{id}','CfpController@modifier_nom')->name('enregistrer_modification_nom_cfp');

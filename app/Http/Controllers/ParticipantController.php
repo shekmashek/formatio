@@ -27,6 +27,7 @@ use App\Exports\ParticipantExport;
 use Excel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
 
 class ParticipantController extends Controller
@@ -837,7 +838,13 @@ class ParticipantController extends Controller
 
             $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
             $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
-            return view('admin.participant.profile', compact('entreprise', 'stagiaire', 'service', 'departement', 'branche'));
+            if($stagiaire->genre_stagiaire == 1){
+                $genre = 'Femme';
+            }
+            if($stagiaire->genre_stagiaire == 2){
+                $genre = 'Homme';
+            }
+            return view('admin.participant.profile', compact('entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
         }
         // $stagiaire=stagiaire::findOrFail($id);
         // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
@@ -939,6 +946,33 @@ class ParticipantController extends Controller
         // //     'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
         // // ]);
         return redirect()->route('profile_stagiaire', $id);
+    }
+    public function update_photo_stagiaire($id,Request $request){
+        $image = $request->file('image');
+        if($image != null){
+           if($image->getSize() > 60000){
+               return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+           }
+           else{
+
+                   $stagiaire = $this->fonct->findWhereMulitOne("stagiaires",["id"],[$id]);
+                   $image_ancien = $stagiaire->photos;
+                   //supprimer l'ancienne image
+                   File::delete(public_path("images/stagiaires/".$image_ancien));
+                   //enregiistrer la nouvelle photo
+
+                   $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                   $destinationPath = 'images/stagiaires';
+                   $image->move($destinationPath, $nom_image);
+                   $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
+
+                   DB::update('update stagiaires set photos= ?,url_photo = ? where id = ?', [$nom_image,$url_photo, $id]);
+                   return redirect()->route('profile_stagiaire');
+           }
+       }
+       else{
+           return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+       }
     }
     public function last_record()
     {

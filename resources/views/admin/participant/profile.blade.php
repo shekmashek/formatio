@@ -272,7 +272,7 @@
                                 </p>
                             </a>
                         @endcanany
-                        
+
                     </div>
                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
                         @can('isStagiaire')
