@@ -43,7 +43,7 @@ ADD CONSTRAINT incription_session UNIQUE (groupe_id,stagiaire_id);
 
 -recréer view v_stagiaire_groupe => bdd_suiviformation_view_4.0(modification_views_projet)
 
-ALTER TABLE stagiaires  
+ALTER TABLE stagiaires
     modify genre_stagiaire bigint(20) unsigned,
     ADD CONSTRAINT FOREIGN KEY(genre_stagiaire) REFERENCES genre(id);
 - Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
@@ -51,19 +51,19 @@ ALTER TABLE stagiaires
 --------mars 24
 ALTER TABLE responsables
 DROP COLUMN sexe_resp;
-ALTER TABLE responsables  
+ALTER TABLE responsables
     add column genre_id bigint(20) unsigned,
     ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
 
 ALTER TABLE formateurs
 DROP COLUMN genre;
-ALTER TABLE formateurs  
+ALTER TABLE formateurs
     add column genre_id bigint(20) unsigned,
     ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
 
 ALTER TABLE chef_departements
 DROP COLUMN genre_chef;
-ALTER TABLE chef_departements  
+ALTER TABLE chef_departements
     add column genre_id bigint(20) unsigned,
     ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
 
