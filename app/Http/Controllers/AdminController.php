@@ -28,7 +28,9 @@ class AdminController extends Controller
     public function admin()
     {
         $id_user = Auth::user()->id;
-        $id_cfp = cfp::where('user_id', $id_user)->value('id');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$id_user]);
+        $id_cfp = $resp->cfp_id;
 
         $cfp_etp = DB::select('select COUNT(*) as cfp_etp FROM `demmande_cfp_etp` where demmandeur_cfp_id = ? and activiter = ?', [$id_cfp, 1])[0]->cfp_etp;
         $etp_cfp = DB::select('select COUNT(*) as etp_cfp FROM `demmande_etp_cfp` where inviter_cfp_id = ? and activiter = ?', [$id_cfp, 1])[0]->etp_cfp;

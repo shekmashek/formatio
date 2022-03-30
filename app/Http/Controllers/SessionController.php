@@ -162,6 +162,7 @@ class SessionController extends Controller
             $entreprise_id = $etp_id;
         }
         if(Gate::allows('isFormateur')){
+            $drive = new getImageModel();
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
             if($type_formation_id  == 1){
@@ -177,6 +178,8 @@ class SessionController extends Controller
             // $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             // $entreprise_id = $projet[0]->entreprise_id;
+            $cfp_nom = cfp::where('id',$cfp_id)->value('nom');
+            $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
         // if(Gate::allows('isStagiaire')){
         //     $evaluation = new EvaluationChaud();

@@ -32,6 +32,8 @@ use App\Collaboration;
 use App\EvaluationChaud;
 use App\Models\getImageModel;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+
 use function Ramsey\Uuid\v1;
 
 class HomeController extends Controller
@@ -523,8 +525,11 @@ class HomeController extends Controller
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
-            $projet = DB::select($sql);
-            // dd($projet);
+            $projet = DB::select(DB::raw($sql));
+            // $projet = new Paginator($projet,3);
+            // $projet->setPath("/liste_projet/1");
+            // $projet->onEachSide(count($projet));
+            // dd(request()->page);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
             // $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
             // if($type_formation_id == 1){

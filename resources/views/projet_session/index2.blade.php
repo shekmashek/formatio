@@ -152,6 +152,9 @@
                                     <th> Date du projet</th>
 
                                     <th> Statut </th>
+                                    @can('isCFP')
+                                        <th></th>
+                                    @endcan
                                     @if ($prj->type_formation_id == 1)
                                         <th></th>
                                     @endif
@@ -188,6 +191,11 @@
                                                     <td>
                                                         <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
                                                     </td>
+                                                    @can('isCFP')
+                                                    <td><a href="" aria-current="page" data-bs-toggle="modal"
+                                                        style="background:none; color:rgb(130,33,100);" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}"><i
+                                                        class="fa fa-edit ms-2"></i></a></td>
+                                                    @endcan
                                                     @if ($prj->type_formation_id == 1)
                                                         <td>
                                                             <a style="background: none" href="{{ route('nouveauRapportFinale',[$pj->groupe_id]) }}"><button class="btn rapport_finale">Rapport</button></a>
@@ -196,7 +204,91 @@
 
                                                     {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
                                 data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
+                                                    {{-- Debut modal edit session --}}
+                                                    <div class="modal fade"
+                                                        id="modal_modifier_session_{{ $pj->groupe_id }}">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content p-3">
+                                                                <div class="modal-title pt-3"
+                                                                    style="height: 50px; align-items: center;">
+                                                                    <h5 class="text-center my-auto">Modifier session <strong>{{ $pj->nom_groupe }}</strong></h5>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group">
+                                                                        <div class="form-row d-flex">
+                                                                            <div class="col">
+                                                                                <div class="row px-3 mt-2">
+                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                        <input type="text" id="min"
+                                                                                            class="form-control input"
+                                                                                            name="date_debut" required
+                                                                                            onfocus="(this.type='date')">
+                                                                                        <label
+                                                                                            class="form-control-placeholder"
+                                                                                            for="min">Date debut<strong
+                                                                                            class="text-danger">*</strong></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row px-3 mt-2">
+                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                        <input type="text" id="min"
+                                                                                            class="form-control input"
+                                                                                            min="1" max="50"
+                                                                                            name="min_part" required
+                                                                                            onfocus="(this.type='number')">
+                                                                                        <label
+                                                                                            class="form-control-placeholder"
+                                                                                            for="min">Participant
+                                                                                            minimal</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                                <div class="text-center px-3"><button
+                                                                                        type="submit"
+                                                                                        class="btn btn_enregistrer">Valider</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="row px-3 mt-2">
+                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                        <input type="text" id="min"
+                                                                                            class="form-control input"
+                                                                                            name="date_fin" required
+                                                                                            onfocus="(this.type='date')">
+                                                                                        <label
+                                                                                            class=" form-control-placeholder"
+                                                                                            for="min">Date fin<strong
+                                                                                            class="text-danger">*</strong></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row px-3 mt-2">
+                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                        <input type="text" id="min"
+                                                                                            class="form-control input"
+                                                                                            min="1" max="50"
+                                                                                            name="max_part" required
+                                                                                            onfocus="(this.type='number')">
+                                                                                        <label
+                                                                                            class="form-control-placeholder"
+                                                                                            for="min">Participant
+                                                                                            maximal</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                
 
+                                                                                <div class="text-center px-3"><button
+                                                                                        type="button"
+                                                                                        class="btn btn_annuler"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close">Annuler</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- Fin modal edit session --}}
                                                     {{-- debut modal edit projet --}}
                                                     <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade modal_projets"
                                                         data-backdrop="true">
@@ -498,6 +590,10 @@
                         </table>
                     @endif
                     @endcan
+
+                    <div>
+                        {{-- {!! $projet->links() !!} --}}
+                    </div>
                 </div>
             </div>
         </div>

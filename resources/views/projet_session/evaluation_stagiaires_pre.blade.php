@@ -33,10 +33,13 @@
     </style>
 
     <nav class="d-flex justify-content-around">
-        <button id="btn_note" class="btn btn_note_radar" style="background-color: #fff; border: 1px solid grey" onclick="modifier_note()">Notes des stagiaires</button>
+        @canany(['isFormateur'])
+            <button id="btn_note" class="btn btn_note_radar" style="background-color: #fff; border: 1px solid grey" onclick="modifier_note()">Notes des stagiaires</button>
+        @endcanany
         <button id="btn_radar" class="btn btn_note_radar" onclick="voir_radar()">Résultats</button>
         {{-- <button id="btn_formateur" class="btn btn_note_radar" onclick="evaluation_formateur()">Evaluation des formateurs</button> --}}
     </nav>
+    @canany(['isFormateur'])
     <div id="modifier_note" style="display: block">
         <div class="row d-flex text-center mt-2">
             <form action="{{ route('insert_evaluation_stagiaire_apres') }}" method="POST">
@@ -75,8 +78,13 @@
             </form>
         </div>
     </div>
-
-    <div id="voir_radar" style="display: none">
+    @endcanany
+    @canany(['isFormateur'])
+        <div id="voir_radar" style="display: none">
+    @endcanany
+    @canany(['isCFP','isReferent'])
+        <div id="voir_radar">
+    @endcanany
         <div class="row mt-2">
             <div class="col-md-4">
                 Choisissez votre stagiaire pour voir le résultat<br>
