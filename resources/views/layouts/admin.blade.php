@@ -29,7 +29,7 @@
                 <span><img src="{{asset('img/images/logo_fmg54Ko.png')}}" alt="" class="img-fluid"></span>
                 <div class="logo_name"><a href="{{ route('home') }}">Formation.mg</a></div>
             </div>
-            <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
+
         </div>
         <ul class="nav_list mb-5" onclick="activer(event);" id="menu">
 
@@ -494,13 +494,14 @@
     <div class="home_content">
         <div class="container-fluid p-0 height-100 bg-light" id="content">
             <header class="header row align-items-center g-0" id="header">
-                <div class="col-5 align-items-center justify-content-center">
+                <div class="col-8 align-items-center justify-content-start d-flex flex-row">
+                    <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
                     @canany('isReferent','isStagiaire','isManager')
                     <div class="row">
                         <form method="GET" action="{{route('result_formation')}}">
                             @csrf
                             <div class="form-row">
-                                <div class="searchBoxMod">
+                                <div class="searchBoxMod d-flex flex-row">
                                     <input class="searchInputMod mb-2 recherche_formation" type="text" name="nom_formation"
                                         placeholder="Rechercher par formations...">
                                     <button class="searchButtonMod recherche_formation" href="#">
@@ -536,7 +537,7 @@
                     @endcanany
                 </div>
 
-                <div class="col-7 header-right align-items-center d-flex flex-row">
+                <div class="col-4 header-right align-items-center d-flex flex-row">
                     <div class="col-9 d-flex flex-row justify-content-end mt-4">
                         <div class="apprendre_btn mb-2">
                             <button class="btn_completer" type="button" onclick="afficherTuto();">Apprendre</button>
@@ -595,14 +596,9 @@
                     {{-- user --}}
                     <div class="col-3 d-flex">
                         <div class="header_img">
-
-                            {{-- <p><i class='bx bx-user-circle' style="color: #801D68; font-size: 24px"></i></p> --}}
                             <p>
                                 <div class=""><span><i class="fas fa-user"></i></span>  <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
-                                {{-- <div class='photo_user'> </div> --}}
                             </p>
-                            {{-- <p style="text-transform: capitalize;color:#801D68" class="header_img_name">
-                                &nbsp;{{Auth::user()->name}}</p> --}}
                         </div>
                         <div class="pdp_profil" id="box_profil">
                             <div class="container pdp_profil_card ">
@@ -633,7 +629,7 @@
                                                     <a href="{{route('affResponsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
                                                     @endcan
                                                     @can('isCFPPrincipale')
-                                                    <a href="{{route('affResponsableCfp')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    <a href="{{route('profil_du_responsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
                                                     @endcan
                                                 </div>
                                                 <hr>

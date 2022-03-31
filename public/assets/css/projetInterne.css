@@ -3,15 +3,24 @@
     place-content: center;
     padding-top: 3rem;
     padding-bottom: 2rem;
-    border: none;
+    border: 1px solid grey;
     border-radius: 5px;
+}
+
+.projet_interne:hover{
+    background-color: rgba(197, 197, 197, 0.241);
+    color: #333;
+}
+
+.projet_interne:hover a{
+    color: #333;
 }
 
 h3{
     color: #333;
 }
 
-.p1{
+/* .p1{
     background-image: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 
     transition: all .5s ease;
@@ -37,7 +46,6 @@ h3{
 }
 
 .p2:hover{
-    /* background-image: linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%); */
     background-image: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
     transform: scale(1.1);
 }
@@ -45,11 +53,11 @@ h3{
 .p3:hover{
     background-image: linear-gradient( 135deg, #FAB2FF 10%, #1904E5 100%);
     transform: scale(1.1);
-}
+} */
 
 
 .projet_interne a{
-    color: white;
+    color: grey;
 }
 
 .projet_interne a:focus{

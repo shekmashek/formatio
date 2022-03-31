@@ -73,10 +73,10 @@ ul li a {
 
 .sidebar {
     position: fixed;
-    top: 0;
+    top: 0rem;
     left: 0;
-    height: 100%;
-    width: 78px;
+    height: calc(100% - 3rem);
+    width: 240px;
     background: var(--first-color);
     padding: 6px 14px;
     transition: all 0.5s ease;
@@ -87,7 +87,7 @@ ul li a {
 }
 
 .sidebar.active {
-    width: 240px;
+    width: 78px;
     overflow-y: auto;
 }
 
@@ -97,13 +97,13 @@ ul li a {
     height: 50px;
     width: 100%;
     align-items: center;
-    opacity: 0;
+    opacity: 1;
     pointer-events: none;
     margin-top: 1rem;
 }
 
 .sidebar.active .logo_content .logo {
-    opacity: 1;
+    opacity: 0;
     pointer-events: none;
 }
 
@@ -123,25 +123,24 @@ ul li a {
     color: #7635dc;
 }
 
-.sidebar #btn_menu {
+#btn_menu {
     color: var(--body-font-color);
-    position: absolute;
-    left: 50%;
-    top: 1.3rem;
-    font-size: 20px;
+    /* position: relative; */
+    font-size: 2rem;
     height: 50px;
     width: 50px;
+    bottom: 1rem;
     text-align: center;
     line-height: 50px;
-    transform: translateX(-50%);
     transition: 0;
-    margin-left: 0.3rem;
+    /* margin-left: 0.3rem; */
+    /* display: inline-block; */
 }
 
-.sidebar.active #btn_menu {
+/* #btn_menu {
     left: 90%;
     transition: all 0.5s ease;
-}
+} */
 
 .sidebar ul {
     margin-top: 20px;
@@ -322,8 +321,8 @@ ul li a {
 .home_content {
     position: absolute;
     height: 100%;
-    width: calc(100% - 78px);
-    left: 78px;
+    width: calc(100% - 240px);
+    left: 240px;
     right: 250px;
     transition: all 0.5s ease;
 }
@@ -336,14 +335,14 @@ ul li a {
 }
 
 .sidebar.active ~ .home_content {
-    width: calc(100% - 240px);
-    left: 240px;
+    width: calc(100% - 78px);
+    left: 78px;
 }
 
-.sidebar.active ~ .home_content .header {
+/* .sidebar.active ~ .home_content .header {
     width: calc(100% - 240px);
     left: 240px;
-}
+} */
 
 .apprendre.afficher ~ .home_content {
     width: calc(100% - 250px);
@@ -358,7 +357,7 @@ ul li a {
     height: var(--header-height);
     position: fixed;
     top: 0;
-    left: 78px;
+    left: 0;
     display: flex;
     background-color: var(--first-color);
     z-index: 1000;
@@ -741,8 +740,6 @@ ul li a {
 }
 
 
-<<<<<<< HEAD
-=======
 .header-right .header_img {
     width: auto;
     overflow: hidden;
@@ -750,6 +747,7 @@ ul li a {
     height: auto;
     position: relative;
     bottom: 0.5rem;
+    right: 2rem;
 }
 
 .header-right .header_img .bx {
@@ -769,7 +767,6 @@ ul li a {
 }
 
 
->>>>>>> indexAccueil
 
 /* entreprise cfp */
 
