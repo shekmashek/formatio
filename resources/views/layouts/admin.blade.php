@@ -127,7 +127,7 @@
             @endcan
             {{-- projet de formation --}}
 
-            @canany(['isCFP','isFormateur'])
+            @canany(['isCFP','isFormateur','isManager'])
             <li>
                 <a href="{{route('accueil_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
