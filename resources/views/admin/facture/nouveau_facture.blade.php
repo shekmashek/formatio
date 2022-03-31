@@ -27,11 +27,9 @@
                     <div class="col-12 collapse" id="titre">
                         <div class="row p-2">
                             <div class="col-4">
-                                {{-- <img src="{{asset('img/logo_numerika/logonmrk.png')}}" alt="logo_cfp" class="img-fluid"> --}}
                                 <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
                             </div>
                             <div class="col-8 text-end" align="rigth">
-                                {{-- <input type="text" name="" id="" class="text-end titre_facture" placeholder="titre facture" required> --}}
                                 <select class="text-end titre_facture form-select  mb-2 m-0" id="type_facture" name="type_facture" aria-label="Default select example" required>
                                     <option onselected hidden> Type de Facture...</option>
                                     @foreach ($type_facture as $tp_fact)
@@ -104,19 +102,16 @@
                     <div class="col-12 pb-4 element">
                         <div class="row titres_services">
                             <div class="col-2">
-                                <h6 class="m-0">Projets</h6>
+                                <h6 class="m-0">Choisit le projet</h6>
                             </div>
                             <div class="col-5">
-                                <h6 class="m-0">Thématique/ Module/ Réf/ Session</h6>
+                                <h6 class="m-0">Choisir votre session</h6>
                             </div>
-                            {{-- <div class="col-3">
-                            <h6 class="m-0">Thématique/Module/Réf</h6>
-                        </div> --}}
                             <div class="col-1 text-end">
-                                <h6 class="m-0">Quantité</h6>
+                                <h6 class="m-0">Entrer le quantité</h6>
                             </div>
                             <div class="col-2">
-                                <h6 class="m-0">Prix Unitaire</h6>
+                                <h6 class="m-0">Entrer prix unitaire</h6>
                             </div>
                             <div class="col-2 text-end">
                                 <h6 class="m-0">Montant</h6>
@@ -130,7 +125,7 @@
                                     détecter</span>
                             </div>
                             <div class="col-5">
-                                <select class="form-select selectP input_section4 mb-2" id="session_id" name="session_id" aria-label="Default select example" required>
+                                <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
                                 </select>
                                 <span style="color:#ff0000;" id="session_id_err">Aucun session a été
                                     détecter</span>
@@ -139,20 +134,22 @@
                             <p id="module_id_ref"></p>
                         </div> --}}
                             <div class="col-1">
-                                <input type="number" name="qte" id="qte" min="1" value="1" class="form-control input_quantite" required>
+                                <input type="number" name="qte[]" id="qte[]" min="1" value="1" class="form-control qte input_quantite" required>
                             </div>
                             <div class="col-2">
-                                <input type="number" name="facture" min="0" value="0" id="facture" class=" somme_totale_montant form-control input_quantite2 montant_session_facture" required>
+                                <input type="number" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
                             </div>
                             <div class="col-2 text-end pt-2">
-                                <p class="m-0"><span>500 000</span>&nbsp;MGA</p>
+                                <p class="m-0"><span id="montant_plus_qte">0</span>&nbsp;MGA</p>
                             </div>
                         </div>
 
 
 
                         <div class="row">
+
                             <div id="newRowMontant"></div>
+
                             <div class="row mb-2">
                                 <div class="col-9 d-flex flex-row justify-content-end">
                                     <p class="m-0 pt-3 text-end me-3">Taxe</p>
@@ -209,6 +206,7 @@
                         </div>
 
                         <div class="row my-1">
+
                             <div id="newRow"></div>
 
                             <div class="row mb-2 g-0 p-2">
@@ -240,9 +238,12 @@
                     </div>
                     <div class="row mb-2 g-0 p-2">
                         <div class="col-9 d-flex flex-row justify-content-end">
-                            <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" min="1" value="0" class="form-control input_tax" name="remise" id="remise"><select class="form-select selectP input_select text-end ms-2" id="" name="" aria-label="Default select example" required>
-                                <option value="MGA" selected>MGA</option>
-                                <option value="%">%</option>
+                            <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
+                            <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label="Default select example">
+                                @foreach ($type_remise as $re)
+                                <option value="{{$re->id}}" selected>{{$re->description}}</option>
+                                @endforeach
+
                             </select>
                         </div>
                         <div class="col-3 text-end">
@@ -268,13 +269,13 @@
             </section>
             <section class="section5 mb-4">
                 <div class="row header_facture">
-                    <h6 class="mb-0 changer_carret d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
+                    <h6 class="mb-0 changer_carret2 d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
                         Informations légales
                         <i class="bx bx-caret-down carret-icon text-end"></i>
                     </h6>
                     <div class="col-12 collapse" id="titre">
-                        <div class="row p-2">
-
+                        <div class="row p-2 justify-content-center text-center">
+                            <p>NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
                         </div>
                     </div>
                 </div>
@@ -291,6 +292,24 @@
     /*=========================================================*/
     $(document).ready(function() {
         $(".changer_carret").on("click", function() {
+            if (
+                $(this)
+                .find(".carret-icon")
+                .hasClass("bx-caret-down")
+            ) {
+                $(this)
+                    .find(".carret-icon")
+                    .removeClass("bx-caret-down")
+                    .addClass("bx-caret-up");
+            } else {
+                $(this)
+                    .find(".carret-icon")
+                    .removeClass("bx-caret-up")
+                    .addClass("bx-caret-down");
+            }
+        });
+
+        $(".changer_carret2").on("click", function() {
             if (
                 $(this)
                 .find(".carret-icon")
@@ -365,7 +384,7 @@
     // ======== show entreprise
     $(document).on('change', '#entreprise_id', function() {
         $("#projet_id").empty();
-        $("#session_id").empty();
+        $(".session_id").empty();
 
         var id = $(this).val();
         var prj_id = 0;
@@ -413,7 +432,7 @@
                                     }
                                     if (userData2.length > 0) {
                                         for (var $i = 0; $i < userData2.length; $i++) {
-                                            $("#session_id").append('<option value="' + userData2[$i].groupe_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                                            $(".session_id").append('<option value="' + userData2[$i].groupe_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
                                         }
                                         document.getElementById("session_id_err").innerHTML = "";
                                     } else {
@@ -534,29 +553,52 @@
 
     });
 
-/*
-    $(document).on("keyup change", ".montant_session_facture", function() {
-        var montant_session = 0;
-        var pourcent = 0;
-        montant_session = document.getElementById("total_montant_session").innerHTML;
+    /*
+        $(document).on("keyup change", ".montant_session_facture", function() {
+            var montant_session = 0;
+            var pourcent = 0;
+            montant_session = document.getElementById("total_montant_session").innerHTML;
 
-        //  $(".calcule_pour_tax option").each(function() {
-            pourcent = $("#test_"+$(".calcule_pour_tax").val()).data("id");
-        //  });
+            //  $(".calcule_pour_tax option").each(function() {
+                pourcent = $("#test_"+$(".calcule_pour_tax").val()).data("id");
+            //  });
 
-        alert(JSON.stringify(pourcent));
-        var result =0;
-        result= ((montant_session * 100) / pourcent);
-        document.getElementById("montant_tax").innerHTML = pourcent;
+            alert(JSON.stringify(pourcent));
+            var result =0;
+            result= ((montant_session * 100) / pourcent);
+            document.getElementById("montant_tax").innerHTML = pourcent;
 
-    }); */
-    $(document).on("keyup change", ".somme_totale_montant", function() {
+        }); */
+    /*  $(document).on("keyup change", ".fa", function() {
         var sum = 0;
         $(".somme_totale_montant").each(function() {
             sum += +$(this).val();
         });
         document.getElementById("total_montant_frais_annexe").innerHTML = sum;
     });
+*/
+
+    $(document).on("keyup change", ".qte", function() {
+        var montant = 0;
+        var qte = 0;
+        var sum = 0;
+        montant = $(".facture").val();
+        qte = $(this).val();
+        sum = montant * qte;
+        document.getElementById("montant_plus_qte").innerHTML = sum;
+
+    });
+    $(document).on("keyup change", ".facture", function() {
+        var montant = 0;
+        var qte = 0;
+        var sum = 0;
+        montant = $(this).val();
+        qte = $(".qte").val();
+        sum = montant * qte;
+        document.getElementById("montant_plus_qte").innerHTML = sum;
+
+    });
+
 
     $(document).on("keyup change", ".montant_session_facture", function() {
         var sum = 0;
@@ -564,13 +606,13 @@
         $(".montant_session_facture").each(function() {
             sum += +$(this).val();
         });
-        pourcent = $("#test_"+$(".calcule_pour_tax").val()).data("id");
+        pourcent = $("#test_" + $(".calcule_pour_tax").val()).data("id");
         document.getElementById("total_montant_session").innerHTML = sum;
-        var result =0;
-        if(pourcent!=0){
-            result= (sum/ pourcent);
+        var result = 0;
+        if (pourcent != 0) {
+            result = (sum / pourcent);
         } else {
-            result= 0;
+            result = 0;
         }
         document.getElementById("montant_tax").innerHTML = result;
     });
@@ -582,6 +624,7 @@
             sum += +$(this).val();
         });
         document.getElementById("total_frais_annexe").innerHTML = sum;
+        //    document.getElementById("total_montant_frais_annexe").innerHTML=totale;
 
     });
 

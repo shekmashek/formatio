@@ -223,18 +223,18 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     }
 
 
-    public function insert($cfp_id, $idProject,$entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $reference_bc, $remise, $type_facture_id)
+    public function insert($cfp_id, $idProject,$entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
     {
         $ttc = $this->TTC(($tabData['facture'] * $tabData['qte']), $taux);
         $ht = $tabData['facture'] * $tabData['qte'];
         $data = [
-            $path['path_bc'], $path['path_fa'], $ht, $idProject,
+            $ht, $idProject,
             $tabDataTypeFinance['id_type_payement'], $tabDataDate['invoice_date'],
             $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'], $tabDataDesc['description'], $tabDataDesc['other_message'],
             $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id,$entrerpsie_id
         ];
 
-        DB::insert('insert into factures (bon_de_commande,devise,hors_taxe,projet_id,type_payement_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_entreprise_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id,entreprise_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?)', $data);
+        DB::insert('insert into factures (hors_taxe,projet_id,type_payement_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_entreprise_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id,entreprise_id) values (?,?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?)', $data);
 
         DB::commit();
     }
@@ -272,16 +272,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     public function validation_form($imput)
     {
         $rules = [
-            'down_bc.required' => 'la fiche Bon de Commande ne doit pas etre null',
-            'down_bc.min' => 'le fichier Bon de Commande est corrompu ou pas de donner! veuillez choisir une autre',
-            'down_bc.max' => 'le fichier Bon de Commande est invalid car trop lourd!',
-            'down_bc.mimes' => 'Seul le fichier type "PDF" est autorisé pour le Bon de Commande',
-            'down_bc.pdf' => 'Seul le fichier type "PDF" est autorisé pour le Bon de Commande',
-            'down_fa.required' => 'la fiche Facture ne doit pas etre null ',
-            'down_fa.min' => 'la fiche Facture  est corrompu ou pas de donner! veuillez choisir une autre',
-            'down_fa.max' => 'la fiche Facture est invalid car trop lourd!',
-            'down_fa.mimes' => 'Seul le fichier type "PDF" est autorisé pour la Facture',
-            'down_fa.pdf' => 'Seul le fichier type "PDF" est autorisé pour la Facture',
             'facture.required' => 'le montant du facture ne doit pas etre null ou inferieur 100 AR ',
             'facture.regex' => 'le montant ne doit pas contenir des lettres',
             'facture.min' => 'le montant doit etre superieur 100 AR',
@@ -294,7 +284,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             'reference_bc.required' => 'le reference de bon de commande ne peut pas etre null',
             'remise.number' => 'le remise est de type nombre'
         ];
-        $critereForm = [
+     /*   $critereForm = [
             'down_bc' => 'required|min:3|max:10000|file|mimes:pdf',
             'down_fa' => 'required|min:3|max:10000|file|mimes:pdf',
             'invoice_date' => 'required|date',
@@ -302,6 +292,13 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             'due_date' => 'required|date',
             'reference_bc' => 'required'
         ];
+*/
+$critereForm = [
+    'invoice_date' => 'required|date',
+    'num_facture' => 'required',
+    'due_date' => 'required|date',
+    'reference_bc' => 'required'
+];
 
         // 'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         $imput->validate($critereForm, $rules);
@@ -362,7 +359,8 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $imput->down_fa->move(public_path($path['str']), $path['name_fa']);
     }
 
-    public function verifyCreationFacture($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path)
+
+    public function verifyCreationFacture($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture)
     {
         $this->validation_form($imput);
         $fonction = new FonctionGenerique();
@@ -370,7 +368,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
         if ($verify == 0) {
 
-            $this->insert($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $imput["reference_bc"], $imput["remise"], $imput["type_facture"]);
+            $this->insert($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $imput["remise"], $imput["type_facture"]);
 
             return back()->with('success', 'creation de la facture du project est effectué');
         } else {

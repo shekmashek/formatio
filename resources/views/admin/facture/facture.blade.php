@@ -213,8 +213,11 @@
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
-                                <td> <strong>{{$actif->nom_etp}}</strong></td>
-                                <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td>
+                                <td>Nom ETP Static</td>
+                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td> --}}
+                                <td>Nom PRJ/ Nom GRP/ formation Static</td>
+
+                                {{-- <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td> --}}
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
                                 @if ($actif->jour_restant>=1)
@@ -306,8 +309,14 @@
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
-                                <td> <strong>{{$actif->nom_etp}}</strong></td>
-                                <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td>
+
+                                <td>Nom ETP Static</td>
+                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td> --}}
+                                <td>Nom PRJ/ Nom GRP/ formation Static</td>
+
+
+                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td>
+                                <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td> --}}
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
                                 @if ($actif->jour_restant>=1)
@@ -422,8 +431,12 @@
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
-                                <td> <strong>{{$actif->nom_etp}}</strong></td>
-                                <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td>
+                                <td>Nom ETP Static</td>
+                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td> --}}
+                                <td>Nom PRJ/ Nom GRP/ formation Static</td>
+
+                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td>
+                                <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td> --}}
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
                                 @if ($actif->jour_restant>=1)
