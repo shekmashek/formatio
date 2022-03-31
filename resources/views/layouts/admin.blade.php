@@ -300,7 +300,7 @@
             {{-- @endcanany --}}
             {{-- action de formations --}}
 
-            @canany(['isFormateur'])
+            {{-- @canany(['isFormateur'])
             <li>
                 <a href="{{route('presence.index')}}" class="d-flex nav_linke">
                     <i class='bx bx-list-check'></i>
@@ -308,7 +308,7 @@
                 </a>
                 <span class="tooltip">Emargement</span>
             </li>
-            @endcanany
+            @endcanany --}}
 
             {{-- calendrire de formations --}}
             <li>

@@ -175,12 +175,14 @@ create or replace view v_groupe_projet_module as
         mf.nom,
         mf.email,
         mf.telephone,
-        mf.pourcentage
+        mf.pourcentage,
+        tp.type
     from groupes g
     join moduleformation mf on mf.module_id = g.module_id
     join projets p on p.id = g.projet_id
     join type_formations tf on p.type_formation_id = tf.id
-    join cfps on cfps.id = p.cfp_id;
+    join cfps on cfps.id = p.cfp_id
+    join type_payement tp on tp.id = g.type_payement_id;
 
 
 create or replace view v_groupe_projet_entreprise_module as
@@ -244,8 +246,10 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         f.prenom_formateur,
         f.mail_formateur,
         f.numero_formateur,
+        f.photos,
         p.nom_projet,
         (c.nom) nom_cfp,
+        c.logo as logo_cfp,
         p.type_formation_id,
         tf.type_formation
     FROM
@@ -295,8 +299,10 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     f.prenom_formateur,
     f.mail_formateur,
     f.numero_formateur,
+    f.photos,
     p.nom_projet,
     c.nom,
+    c.logo,
     p.type_formation_id,
     tf.type_formation
     ;

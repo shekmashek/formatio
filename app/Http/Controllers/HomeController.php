@@ -32,6 +32,8 @@ use App\Collaboration;
 use App\EvaluationChaud;
 use App\Models\getImageModel;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+
 use function Ramsey\Uuid\v1;
 
 class HomeController extends Controller
@@ -523,8 +525,11 @@ class HomeController extends Controller
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request);
-            $projet = DB::select($sql);
-            // dd($projet);
+            $projet = DB::select(DB::raw($sql));
+            // $projet = new Paginator($projet,3);
+            // $projet->setPath("/liste_projet/1");
+            // $projet->onEachSide(count($projet));
+            // dd(request()->page);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
             // $projet = $fonct->findWhere("v_projet_session", ["cfp_id","type_formation_id"], [$cfp_id,$type_formation_id]);
             // if($type_formation_id == 1){
@@ -539,11 +544,16 @@ class HomeController extends Controller
 
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
-            $formation = $fonct->findAll("formations");
-            $module = $fonct->findAll("modules");
+            // $formation = $fonct->findAll("formations");
+            // $module = $fonct->findAll("modules");
 
             $type_formation = DB::select('select * from type_formations');
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation'));
+
+            $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+            $module = $fonct->findWhere("v_module",['cfp_id','status'],[$cfp_id,2]);
+            $payement = $fonct->findAll("type_payement");
+            $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
@@ -570,6 +580,7 @@ class HomeController extends Controller
             $stg_id = stagiaire::where('user_id', $user_id)->value('id');
             // $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
             $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+            
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id'));
         }
     }

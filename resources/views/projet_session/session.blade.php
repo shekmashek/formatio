@@ -102,7 +102,7 @@
                         </button>
                     </div>
                     @if ($type_formation_id == 1)
-                        @canany(['isCFP'])
+                        @canany(['isCFP','isReferent','isFormateur'])
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
                                     <p class="m-0 p-0">APPRENANTS</p>
@@ -157,7 +157,7 @@
 
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
-                                    <p class="m-0 p-0">DOCUMENT</p>
+                                    <p class="m-0 p-0">DOCUMENTS</p>
                                     {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
                                     <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                                 </button>
@@ -191,6 +191,14 @@
                                     </button>
                                 </div>
                             @endcan
+                            @canany(['isCFP','isReferent'])
+                            <div>
+                                <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
+                                    <p class="m-0 p-0">EVALUATION DES STAGIAIRES</p>
+                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                </button>
+                            </div>
+                            @endcanany
                             {{-- <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'rapport')" style="width: 100%">
                                     <p class="m-0 p-0">RAPPORT</p>
@@ -226,7 +234,7 @@
                       </div>
                       {{-- @if ($type_formation_id == 1) --}}
                       @if ($type_formation_id == 1)
-                        @canany(['isCFP'])
+                        @canany(['isCFP','isReferent','isFormateur'])
                             <div id="apprenant" class="tabcontent">
                                 @include('admin.stagiaire.ajout_stagiaire')
                             </div>
