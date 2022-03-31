@@ -609,58 +609,61 @@
                         </div>
                         <div class="pdp_profil" id="box_profil">
                             <div class="container pdp_profil_card ">
-                                <div class="card" style="width: 400px;height:400px">
+                                <div class="card">
                                     <div class="card-title">
-                                        <p style="text-transform: capitalize; text-align: center;color: #801D68" id="nom_etp">&nbsp;</p>&nbsp;&nbsp;&nbsp;
-                                        <hr class="ms-0" style="color:lightgrey">
                                         <div class="row">
-                                            <div class="col-md-4 ">
+                                            <div class="col-12 pt-3">
                                                 <span>
-                                                        <div style="display: grid; place-content: center">
-                                                            <div class='randomColor photo_users' style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center">
-                                                            </div>
+                                                    <div style="display: grid; place-content: center">
+                                                        <div class='randomColor photo_users' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:65px; width:65px ; display: grid; place-content: center">
+                                                        </div>
                                                     </div>
                                                 </span>
-                                            </div>
-
-                                            <div class="col-md-8">
+                                                <p id="nom_etp"></p>
                                                 <h6 class="mb-0 text-center">{{Auth::user()->name}}</h6>
-                                                <h6 class="mb-0 text-center">{{Auth::user()->email}}</h6>
-
+                                                <h6 class="mb-0 text-center text-muted">{{Auth::user()->email}}</h6>
+                                                <div class="text-center">
+                                                    @can('isManagerPrincipale')
+                                                    <a href="{{route('affProfilChefDepartement')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    @endcan
+                                                    @can('isFormateurPrincipale')
+                                                    <a href="{{route('profile_formateur')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    @endcan
+                                                    @can('isStagiairePrincipale')
+                                                    <a href="{{route('profile_stagiaire')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    @endcan
+                                                    @can('isReferentPrincipale')
+                                                    <a href="{{route('affResponsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    @endcan
+                                                    @can('isCFPPrincipale')
+                                                    <a href="{{route('profil_du_responsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    @endcan
+                                                </div>
+                                                <hr>
+                                                <div class="text-center">
+                                                    <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
+                                                    <p id="liste_role" class="text-muted">Connécter en tant que : </p>
+                                                </div>
+                                                <hr>
+                                                <div class="text-center">
+                                                    <div>
+                                                        <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                                            </a></p>
+                                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();" class="deconnexion_text btn text-center">Se Déconnecter</a>
+                                                        <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
+                                                            @csrf
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <hr style="color:lightgrey">
+
                                     </div>
                                     <div class="card-body">
-                                        <div class="text-center">
-                                            <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                            <ul id="liste_role" style="float: right">
-                                                Accès:
-                                            </ul>
-                                            {{-- @if(Auth::user()->role_id == 1)
-                                            <span class="text-muted d-block mb-2">Admin</span>
-                                            @endif
-                                            @if(Auth::user()->role_id == 2)
-                                            <span class="text-muted d-block mb-2">Référent</span>
-                                            @endif
-                                            @if(Auth::user()->role_id == 3)
-                                            <span class="text-muted d-block mb-2">Stagiaire</span>
-                                            @endif
-                                            @if(Auth::user()->role_id == 4)
-                                            <span class="text-muted d-block mb-2">Formateur</span>
-                                            @endif
-                                            @if(Auth::user()->role_id == 5)
-                                            <span class="text-muted d-block mb-2">Manager</span>
-                                            @endif
-                                            @if(Auth::user()->role_id == 6)
-                                            <span class="text-muted d-block mb-2">Super Admin</span>
-                                            @endif
-                                            @if(Auth::user()->role_id == 7)
-                                            <span class="text-muted d-block mb-2">Centre de Formation</span>
-                                            @endif --}}
 
-                                        </div>
-                                        <div class="d-flex pro_plan" style="margin-top: -25px">
+                                        {{-- <div class="d-flex pro_plan" style="margin-top: -25px">
 
 
                                             <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i></p>
@@ -668,35 +671,8 @@
                                                 <div class='logo_etp_user'> </div>
                                             </span>
                                             <p class="" style="text-transform: capitalize; margin-top: 0.1rem">&nbsp;&nbsp;rubi</p>
-                                        </div>
-                                        <div class="text-center">
-                                            @can('isManagerPrincipale')
-                                            <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3" style="">Gérer votre compte</button></a><br>
-                                            @endcan
-                                            @can('isFormateurPrincipale')
-                                            <a href="{{route('profile_formateur')}}"><button class="btn btn-primary btn-sm profil_btn mt-3 mb-3">Gérer votre compte</button></a><br>
-                                            @endcan
-                                            @can('isStagiairePrincipale')
-                                            <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
-                                            @endcan
-                                            @can('isReferentPrincipale')
-                                            <a href="{{route('profil_referent')}}"><button class="btn btn-primary btn-sm profil_btn mt-2 mb-3">Gérer votre compte</button></a><br>
-                                            @endcan
-                                            @can('isCFPPrincipale')
-                                            <a href="{{route('profil_du_responsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-4 mb-3">Gérer votre compte</button></a><br>
-                                            @endcan
-                                            <hr style="color:lightgrey">
-                                            <div class="text_resp" style="margin-top: -10px;margin-left:65px">
-                                                <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();" class="deconnexion_text">
-                                                    </a></p>
-                                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();" class="deconnexion_text btn btn-secondary text-center  mt-4 mb-3" style="text-decoration:none;">&nbsp;&nbsp;<span>Se Déconnecter</span></a>
-                                                <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
-                                                    @csrf
-                                                </form>
-                                            </div>
-                                        </div>
+                                        </div> --}}
+
                                         {{-- logout --}}
                                         {{-- <div class="text-center">
                                             @can('isManager')
@@ -789,7 +765,7 @@
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
         //On change la couleur de fond au hasard
-        $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16));
+        $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         })
     </script>
     <script>
@@ -803,12 +779,9 @@
                     var userData = response;
 
                     if(userData['photo'] == 'oui'){
-                        // alert(userData['user']);
-
-                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 37px; height : 37px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
+                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
                         html = html.replace(":?", userData['user']);
                         // alert(JSON.stringify(userData));
-
                         $('.photo_users').append(html);
                     }
                     if(userData['photo'] == 'non'){
@@ -834,6 +807,7 @@
                     var userData = response;
                     var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
+
                     $('.logo_etp_user').append(html);
                 }
                 , error: function(error) {

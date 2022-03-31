@@ -570,16 +570,21 @@ ul li a {
     bottom: 0.5rem;
 }
 .deconnexion_text {
-    color: #542356;
+    color: #333;
+    background-color: white;
+    border: 1px solid rgba(202, 202, 202, 0.618);
+    margin-top: 15px;
 }
 
+.deconnexion_text:hover {
+    color: red;
+    border: 1px solid rgba(242, 7, 7, 0.618);
+}
 .text_resp a:hover {
     color: red;
 }
 
-/* .deconnexion_text:hover {
-    color: red;
-} */
+
 
 .pro_plan {
     padding: 0;
@@ -651,27 +656,43 @@ ul li a {
     position: absolute;
     top: 40px;
     right: 15px;
-    border-radius: 5px 0px 5px 5px;
+    /* border-radius: 5px 0px 5px 5px; */
     background-color: #fff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .header-right .pdp_profil .container {
     padding: 0;
 }
 
 .header-right .pdp_profil_card .card {
-    width: auto;
+    width: 400px !important;
     border: none;
-    border-radius: 15px;
+    border-radius: 8px;
     padding: 8px;
-    background-color: #fff;
+    background-color: white;
     position: relative;
     margin: 0;
+    right: 20%;
     height: auto;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
 }
 
 .header-right .pdp_profil_card .card .user {
     position: relative;
+}
+
+#nom_etp{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.4rem;
+}
+
+#liste_role li{
+    display: inline-block;
+    text-decoration: none;
+    list-style: none;
+    text-transform: capitalize;
+    color: #7635dc;
 }
 
 .header-right .pdp_profil_card .card .user .profile {
@@ -691,20 +712,18 @@ ul li a {
 }
 
 .header-right .pdp_profil_card .card .profil_btn {
-    width: auto;
+    width: 50%;
     border-radius: 25px;
     height: 35px;
-    background-color: blue;
+    background-color: white;
+    border: 1px solid rgb(157, 157, 157);
+    color: #333;
 }
 
 .header-right .pdp_profil_card .card .profil_btn:hover {
-    color: blue;
-    background-color: white;
+    background-color: rgba(202, 202, 202, 0.371);
 }
 
-.header-right .pdp_profil_card .card .deconnexion_text:hover {
-    text-decoration: underline;
-}
 
 .header-right .header_img {
     width: auto;
@@ -731,178 +750,10 @@ ul li a {
     color: red;
 }
 
-.header-right .pdp_profil {
-    display: none;
-    height: 0px;
-    width: 250px;
-    opacity: 0;
-    position: absolute;
-    top: 40px;
-    left: 69%;
-    border-radius: 5px 0px 5px 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.header-right .pdp_profil .container {
-    padding: 0;
-}
 
-.header-right .pdp_profil_card .card {
-    width: auto;
-    border: none;
-    border-radius: 15px;
-    padding: 8px;
-    background-color: #fff;
-    position: relative;
-    margin: 0;
-    height: auto;
-}
-
-.header-right .pdp_profil_card .card h6 {
-    font-size: 14px;
-}
-
-.header-right .pdp_profil_card .card .card-body {
-    font-size: 12px;
-}
-
-.header-right .pdp_profil_card .card .user {
-    position: relative;
-}
-
-.header-right .pdp_profil_card .card .user .profile {
-    position: absolute;
-    top: -50px;
-    left: 35%;
-    height: 90px;
-    width: 90px;
-    border: 3px solid #fff;
-    border-radius: 50%;
-}
-
-.header-right .pdp_profil_card .card .user .profile img {
-    height: 80px;
-    width: 80px;
-    margin-top: 2px;
-}
-
-.header-right .pdp_profil_card .card .profil_btn {
-    width: auto;
-    border-radius: 25px;
-    height: 35px;
-    background-color: blue;
-}
-
-.header-right .pdp_profil_card .card .profil_btn:hover {
-    color: blue;
-    background-color: white;
-}
-
-.header-right .pdp_profil_card .card .deconnexion_text:hover {
-    text-decoration: underline;
-}
 
 /* entreprise cfp */
-.header-right .pdp_etp_cfp {
-    display: none;
-    height: 0px;
-    width: 250px;
-    opacity: 0;
-    position: absolute;
-    top: 40px;
-    left: 52%;
-    border-radius: 5px 0px 5px 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.header-right .pdp_etp_cfp .container {
-    padding: 0;
-}
 
-.header-right .pdp_etp_cfp_card .card {
-    width: auto;
-    border: none;
-    border-radius: 15px;
-    padding: 8px;
-    background-color: #fff;
-    position: relative;
-    margin: 0;
-    height: auto;
-}
-
-.header-right .pdp_etp_cfp_card .card h6 {
-    font-size: 14px;
-}
-
-.header-right .pdp_etp_cfp_card .card .user {
-    position: relative;
-}
-
-.header-right .pdp_etp_cfp_card .card .user .profile {
-    position: absolute;
-    top: -50px;
-    left: 35%;
-    height: 90px;
-    width: 90px;
-    border: 3px solid #fff;
-    border-radius: 50%;
-}
-
-.header-right .pdp_etp_cfp_card .card .user .profile img {
-    height: 80px;
-    width: 80px;
-    margin-top: 2px;
-}
-
-.header-right .pdp_etp_cfp_card .card .profil_btn {
-    width: auto;
-    border-radius: 25px;
-    height: 35px;
-    background-color: blue;
-}
-
-.header-right .pdp_etp_cfp_card .card .profil_btn:hover {
-    color: blue;
-    background-color: white;
-}
-
-.header-right .pdp_etp_cfp_card .card .deconnexion_text:hover {
-    text-decoration: underline;
-}
-.header-right .header_etp_cfp p:hover {
-    color: red;
-}
-
-.header_etp_cfp {
-    position: relative;
-    bottom: 0.2rem;
-}
-
-.header-right .header_etp_cfp p {
-    font-size: 0.85rem;
-    cursor: pointer;
-}
-.header_etp_cfp .bx-building-house {
-    color: #637381 !important;
-    font-size: 20px !important;
-}
-
-.text_resp {
-    position: relative;
-    bottom: 0.3rem;
-    right: 2.5rem;
-}
-
-.text_resp .bx {
-    font-size: 20px !important;
-    color: #637381 !important;
-}
-
-.text_resp p span {
-    font-size: 14px !important;
-    position: relative;
-    bottom: 0.2rem;
-}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
