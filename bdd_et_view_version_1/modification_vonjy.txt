@@ -72,3 +72,7 @@ ALTER TABLE chef_departements
 ----------mars 28
 ALTER TABLE description_champ_reponse
 add column point_champ int(5) default 0;
+
+----------mars 31
+recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
+recréer vu v_responsable_entreprise => bdd_suiviformation_view_29(budgetisation)

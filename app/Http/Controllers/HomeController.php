@@ -544,11 +544,16 @@ class HomeController extends Controller
 
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
-            $formation = $fonct->findAll("formations");
-            $module = $fonct->findAll("modules");
+            // $formation = $fonct->findAll("formations");
+            // $module = $fonct->findAll("modules");
 
             $type_formation = DB::select('select * from type_formations');
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation'));
+
+            $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+            $module = $fonct->findWhere("v_module",['cfp_id','status'],[$cfp_id,2]);
+            $payement = $fonct->findAll("type_payement");
+            $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');

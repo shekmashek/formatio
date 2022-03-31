@@ -102,7 +102,7 @@
                         </button>
                     </div>
                     @if ($type_formation_id == 1)
-                        @canany(['isCFP'])
+                        @canany(['isCFP','isReferent','isFormateur'])
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
                                     <p class="m-0 p-0">APPRENANTS</p>
@@ -234,7 +234,7 @@
                       </div>
                       {{-- @if ($type_formation_id == 1) --}}
                       @if ($type_formation_id == 1)
-                        @canany(['isCFP'])
+                        @canany(['isCFP','isReferent','isFormateur'])
                             <div id="apprenant" class="tabcontent">
                                 @include('admin.stagiaire.ajout_stagiaire')
                             </div>

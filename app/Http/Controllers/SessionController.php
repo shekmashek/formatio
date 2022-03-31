@@ -322,7 +322,7 @@ class SessionController extends Controller
 
     public function insert_frais_annexe(Request $request){
         $id_user = Auth::user()->id;
-        $etp_id = DB::select('select entreprise_id from v_responsable_entreprise where user_id = ?',[$id_user])[0]->entreprise_id;
+        $etp_id = DB::select('select entreprise_id from responsables where user_id = ?',[$id_user])[0]->entreprise_id;
         $description = $request->description;
         $montant = $request->montant;
         $groupe_id = $request->groupe;

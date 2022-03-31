@@ -3,27 +3,56 @@
 
     {{-- nouveau desgin apprenant --}}
 <div class="conteneur">
-    {{-- Nouveau apreanant --}}
-    <section class="section_recherche m-0 p-2">
-        <div class="d-flex py-1 align-items-center align-content-center">
-            <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
-            <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control w-10">
-            <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
-            <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-        <div class="d-flex mb-3">
-            <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
-            <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
-            <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
-            {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
-            <span class="span_ajout" id="boutton_add">
-                <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
-             </span>
-        </div>
-    </section><br><hr><br>
-    {{-- fin nouveau apprenant --}}
+    @if ($type_formation_id == 1)
+        @can('isCFP')
+            {{-- Nouveau apreanant --}}
+            <section class="section_recherche m-0 p-2">
+                <div class="d-flex py-1 align-items-center align-content-center">
+                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
+                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control w-10">
+                    <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
+                    <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                <div class="d-flex mb-3">
+                    <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
+                    {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
+                    <span class="span_ajout" id="boutton_add">
+                        <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
+                    </span>
+                </div>
+            </section><br><hr><br>
+            {{-- fin nouveau apprenant --}}
+        @endcan
+    @endif
+    @if ($type_formation_id == 2)
+        @can('isReferent')
+            {{-- Nouveau apreanant --}}
+            <section class="section_recherche m-0 p-2">
+                <div class="d-flex py-1 align-items-center align-content-center">
+                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
+                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control w-10">
+                    <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
+                    <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                <div class="d-flex mb-3">
+                    <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
+                    {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
+                    <span class="span_ajout" id="boutton_add">
+                        <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
+                    </span>
+                </div>
+            </section><br><hr><br>
+            {{-- fin nouveau apprenant --}}
+        @endcan
+    @endif
     <div class="d-flex justify-content-between">
         <h5>Liste des apprenants inscrits(es) au projet</h5>
         <div class="d-flex">
@@ -43,7 +72,9 @@
                 <th>Fonction</th>
                 <th>Département</th>
                 <th>Service</th>
-                <th></th>
+                @can('isCFP')
+                     <th></th>
+                @endcan
             </thead>
             <tbody id="participant_groupe">
                 @foreach ($stagiaire as  $stg)
@@ -57,7 +88,9 @@
                     <td>{{ $stg->fonction_stagiaire }}</td>
                     <td>{{ $stg->nom_departement }}</td>
                     <td>{{ $stg->nom_service }}</td>
-                    <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
+                    @can('isCFP')
+                        <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
+                    @endcan
                 </tr>
                 <div class="modal fade" id="delete_stg_{{$stg->stagiaire_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
