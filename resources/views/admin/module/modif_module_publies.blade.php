@@ -10,7 +10,7 @@
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
                             <div class="col titre_page">
-                                <h3 class="mt-2">Modification Modules non Publiées</h3>
+                                <h3 class="mt-2">Modification Modules Publiées</h3>
                             </div>
 
                             <div class="col" align="right">

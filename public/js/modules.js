@@ -62,32 +62,26 @@ $('#fermer', '.close').on('change', function(e) {
 $(".suppression").on('click', function(e) {
     let id = e.target.id;
     $.ajax({
-        type: "GET"
-        , url: "/destroy_module'"
+        type: "get"
+        , url: 'destroy_module'
+        ,dataType: "json"
         , data: {
             Id: id
         }
         , success: function(response) {
+
             if (response.success) {
                 window.location.reload();
             } else {
-                alert("Error")
+                alert("Error");
             }
         }
         , error: function(error) {
-            console.log(error)
+            console.log(JSON.parse(error));
         }
     });
 });
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
-    // CSRF Token
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function() {
     $("#reference_search").autocomplete({
         source: function(request, response) {
@@ -118,8 +112,6 @@ $(document).ready(function() {
         }
     });
 });
-    // CSRF Token
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function() {
     $("#categorie_search").autocomplete({
         source: function(request, response) {

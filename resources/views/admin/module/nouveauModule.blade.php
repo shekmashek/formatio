@@ -162,8 +162,8 @@
                                                         <option value="null" disable selected hidden>Choisissez la
                                                             modalite de formation ...</option>
                                                         <option value="En ligne">En ligne</option>
-                                                        <option value="Présentiel">Présentiel</option>
-                                                        <option value="En ligne/Présentiel">En ligne/Présentiel</option>
+                                                        <option value="Presentiel">Présentiel</option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
                                                     </select>
                                                     <label for="acf-nom_module" class="form-control-placeholder">Modalité de Formation</label>
                                                 </div>
