@@ -524,7 +524,7 @@ $status = null;
 
     public function getGroupe_projet(Request $req)
     {
-        $data = $this->fonct->findWhere("v_groupe_projet_entreprise", ["projet_id", "entreprise_id"], [$req->id, $req->entreprise_id]);
+        $data = $this->fonct->findWhere("v_groupe_projet_entreprise_module", ["projet_id", "entreprise_id"], [$req->id, $req->entreprise_id]);
 
         return response()->json($data);
     }

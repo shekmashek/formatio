@@ -116,7 +116,7 @@
                 </div>
             </div>
     @endif
-    
+
 </div>
 
 <style>
@@ -225,9 +225,9 @@
                 html += '<div class="col-md-3"></div>';
                 html += '<div class="col-md-9">';
                 html += '<span>Total : </span>';
-                html += '<label>'+$(".total").val()+' Ariary</label>';        
+                html += '<label>'+$(".total").val()+' Ariary</label>';
                 html += '</div>';
-                html += '</div>';   
+                html += '</div>';
                 $('#form_frais_annexe').hide();
                 $('#resultat_frais').append(html);
             },
