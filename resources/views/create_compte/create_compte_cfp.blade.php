@@ -88,7 +88,7 @@
 
                         <div class="form-group">
                             <input type="text" name="name_cfp" class="form-control input_inscription" id="name_cfp" required />
-                            <label for="name_cfp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
+                            <label for="name_cfp" class="form-control-placeholder">Raison Sociale(Nom de votre organisme)<strong style="color:#ff0000;">*</strong></label>
                             @error('name_cfp')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000;"> {{$message}} </span>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_cfp" />
-                            <label for="name_entreprise" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
+                            <label for="name_entreprise" class="form-control-placeholder">NIF(13 chiffres)<strong style="color:#ff0000;">*</strong></label>
                             @error('nif')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000;"> {{$message}} </span>
@@ -124,7 +124,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
-                            <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
+                            <label class="ml-3 form-control-placeholder" for="web_cfp">Site Web</label>
                         </div>
                             <input type="button" name="next" class="next action-button  suivant_of_1 " value="Suivant" />
                             {{-- <input type="button" name="next" class="next action-button " value="Suivant" /> --}}

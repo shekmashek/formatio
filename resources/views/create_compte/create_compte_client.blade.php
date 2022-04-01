@@ -89,7 +89,7 @@
                     <h6 align="center" class="mb-2">Votre Société</strong></h4>
                         <div class="form-group">
                             <input type="text" name="name_etp" class="form-control input_inscription" id="name_etp" required />
-                            <label for="name_etp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
+                            <label for="name_etp" class="form-control-placeholder">Raison Sociale(Nom de votre entreprise)<strong style="color:#ff0000;">*</strong></label>
                             @error('name_etp')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000;"> {{$message}} </span>
@@ -101,7 +101,7 @@
 
                         <div class="form-group">
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
-                            <label for="nif_etp" class="form-control-placeholder">NIF<strong style="color:#ff0000;">*</strong></label>
+                            <label for="nif_etp" class="form-control-placeholder">NIF (13 chiffres)<strong style="color:#ff0000;">*</strong></label>
                             @error('nif')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000;"> {{$message}} </span>
@@ -125,7 +125,7 @@
 
                         <div class="form-group">
                             <input type="text" name="web_etp" class="form-control input_inscription" id="web_etp" />
-                            <label class="ml-3 form-control-placeholder" for="web_etp">Web</label>
+                            <label class="ml-3 form-control-placeholder" for="web_etp">Site Web</label>
                         </div>
 
                         <div class="row">
