@@ -154,25 +154,32 @@
 
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Réseaux sociaux</p>
                                                  <h6 class="text-muted f-w-400">
-                                                        @if ($reseaux_sociaux[0]->lien_facebook==null)
+                                                        @if($reseaux_sociaux == null)
                                                             <a href="{{route('lien_facebook',$cfp->id)}}">Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            <a href="{{route('lien_twitter',$cfp->id)}}">Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            <a href="{{route('lien_instagram',$cfp->id)}}">  Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            <a href="{{route('lien_linkedin',$cfp->id)}}"> Linkedin : <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
                                                         @else
-                                                            <a href="{{route('lien_facebook',$cfp->id)}}">Facebook : {{$reseaux_sociaux[0]->lien_facebook}}<br></a>
-                                                        @endif
-                                                        @if ($reseaux_sociaux[0]->lien_twitter==null)
-                                                        <a href="{{route('lien_twitter',$cfp->id)}}">Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
-                                                        @else
-                                                            <a>Twitter : {{$reseaux_sociaux[0]->lien_twitter}}<br></a>
-                                                        @endif
-                                                        @if ($reseaux_sociaux[0]->lien_instagram==null)
-                                                        <a href="{{route('lien_instagram',$cfp->id)}}">  Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
-                                                        @else
-                                                            <a>Instagram : {{$reseaux_sociaux[0]->lien_instagram}}<br></a>
-                                                        @endif
-                                                        @if ($reseaux_sociaux[0]->lien_linkedin==null)
-                                                        <a href="{{route('lien_linkedin',$cfp->id)}}">  Linkedin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
-                                                        @else
-                                                            <a>Linnkdin : {{$reseaux_sociaux[0]->lien_linkedin}}<br></a>
+                                                            @if ($reseaux_sociaux[0]->lien_facebook==null)
+                                                                <a href="{{route('lien_facebook',$cfp->id)}}">Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_facebook',$cfp->id)}}">Facebook : {{$reseaux_sociaux[0]->lien_facebook}}<br></a>
+                                                            @endif
+                                                            @if ($reseaux_sociaux[0]->lien_twitter==null)
+                                                                <a href="{{route('lien_twitter',$cfp->id)}}">Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_twitter',$cfp->id)}}">Twitter : {{$reseaux_sociaux[0]->lien_twitter}}<br></a>
+                                                            @endif
+                                                            @if ($reseaux_sociaux[0]->lien_instagram==null)
+                                                                <a href="{{route('lien_instagram',$cfp->id)}}">  Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_instagram',$cfp->id)}}">Instagram : {{$reseaux_sociaux[0]->lien_instagram}}<br></a>
+                                                            @endif
+                                                            @if ($reseaux_sociaux[0]->lien_linkedin==null)
+                                                                <a href="{{route('lien_linkedin',$cfp->id)}}">  Linkedin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_linkedin',$cfp->id)}}"> Linkedin : {{$reseaux_sociaux[0]->lien_linkedin}}<br></a>
+                                                            @endif
                                                         @endif
 
                                                     </h6>

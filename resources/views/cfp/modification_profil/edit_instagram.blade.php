@@ -50,10 +50,10 @@
 </div>
 
 <center>
-    @if (\Session::has('error_nom'))
+    @if (\Session::has('erreur_reseau'))
         <div class="alert alert-danger col-md-4">
             <ul>
-                <li>{!! \Session::get('error_nom') !!}</li>
+                <li>{!! \Session::get('erreur_reseau') !!}</li>
             </ul>
         </div>
     @endif
@@ -65,8 +65,11 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value=" " class="form-control test input"  name="instagram">
-
+                        @if($lien == null)
+                            <input type="text" value="" class="form-control test input"  name="instagram">
+                        @else
+                            <input type="text" value="{{$lien[0]->lien_instagram}}" class="form-control test input"  name="instagram">
+                        @endif
                     </div>
                 </div>
 

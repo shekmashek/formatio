@@ -642,7 +642,7 @@
                                                 <hr>
                                                 <div class="text-center">
                                                     <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                                    <p id="liste_role" class="text-muted">Connécter en tant que : </p>
+                                                    <p id="liste_role" class="text-muted">Connécté en tant que : </p>
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
