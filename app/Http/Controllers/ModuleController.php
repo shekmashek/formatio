@@ -18,6 +18,7 @@ use App\Imports\FormationImport;
 use App\Models\FonctionGenerique;
 
 use Excel;
+use FontLib\Exception\FontNotFoundException;
 use Illuminate\Support\Facades\DB;
 
 class ModuleController extends Controller
@@ -224,9 +225,12 @@ class ModuleController extends Controller
     public function modifier_mod(Request $request)
     {
         $id = $request->id;
+        $fonct = new FonctionGenerique();
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
-            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+            $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+
+            // $cfp_id = cfp::where('user_id', $id_user)->value('id');
 
             $niveau = Niveau::all();
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
