@@ -49,7 +49,24 @@
     </style>
 
     <div class="row w-100 bg-none mt-5 font_text">
-        <a href="{{route('nouveau_formateur')}}">Nouveau Formateur</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+
+                            <a class="nav-link  {{ Route::currentRouteNamed('nouveau_formateur') ? 'active' : '' }}" aria-current="page" href="{{route('nouveau_formateur')}}">
+                                <button class="btn btn_enregistrer">Nouveau Formateur</button></a>
+
+                        </li>
+
+                    </ul>
+{{-- q --}}
+
+                </div>
+            </div>
+        </nav>
         <div class="col-md-5">
             <div class="shadow p-3 mb-5 bg-body rounded ">
 
