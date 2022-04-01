@@ -20,7 +20,7 @@
 
 
                             <div class="col text-end">
-                                <a href="{{route('nouveau_module')}}" class="btn_enregistrer text-center">Nouvelle
+                                <a href="{{route('nouveau_module')}}" class="btn_enregistrer text-center">Nouveau
                                     Module</a>
                             </div>
                             @endcan

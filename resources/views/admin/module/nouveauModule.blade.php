@@ -10,7 +10,7 @@
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
                             <div class="col titre_page">
-                                <h3 class="mt-3">Nouvelle Module</h3>
+                                <h3 class="mt-3">Nouveau Module</h3>
                             </div>
 
                             <div class="col" align="right">
@@ -51,6 +51,23 @@
                             </div>
                             <div class="col-lg-4 pe-5 postion_fixe_form" style="align-items: center">
                                 <div class="form-row">
+                                    <div class="form-group" id="premier_vue9">
+                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap">
+                                                    <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 50px;">
+                                                        <option value="null" disable selected hidden>Choisissez la
+                                                            domaine de formation ...</option>
+                                                        @foreach($domaine as $do)
+                                                        <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
+                                                            {{$do->nom_domaine}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="acf-domaine" class="form-control-placeholder">Formation</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group" id="premier_vue">
                                         <div class="acf-field acf-field-text acf-field-nom_module is-required">
                                             <div class="acf-input">
@@ -70,25 +87,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="form-group" id="premier_vue9">
-                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 50px;">
-                                                        <option value="null" disable selected hidden>Choisissez la
-                                                            domaine de formation ...</option>
-                                                        @foreach($domaine as $do)
-                                                        <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
-                                                            {{$do->nom_domaine}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <label for="acf-domaine" class="form-control-placeholder">Formation</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="form-group" id="premier_vue2">
                                         <div class="acf-field acf-field-text acf-field-categorie is-required">
                                             <div class="acf-input">
@@ -629,7 +627,7 @@
                                         @csrf
                                         <table class="table">
                                             <thead>
-                                                <th>Nouvelle niveau : </th>
+                                                <th>Nouveau niveau : </th>
                                             </thead>
                                             <tbody>
                                                 <tr>
