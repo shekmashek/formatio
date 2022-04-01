@@ -45,6 +45,14 @@
                     {{Session::get('success')}}
                 </div>
                 @endif
+                 {{-- si l'utiliisateur a  choisir un fichier > 60Ko--}}
+                @if (\Session::has('erreur_photo'))
+                <div class="alert alert-danger col-md-4">
+                    <ul>
+                        <li>{!! \Session::get('erreur_photo') !!}</li>
+                    </ul>
+                </div>
+                @endif
                 @endcanany
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -56,8 +64,8 @@
                                     <h1>Profil Formateur</h1>
 
                                     <div class="form-control-file mt-2">
-                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required>
-                                    </div>
+                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required><strong>Taille du fichier: 60Ko max</strong>
+                                    </div><br>
                                     @error('image')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -129,7 +137,7 @@
                                         <div class="col">
 
                                             <div class="form-group">
-                                                <input type="mail" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse mail*" required>
+                                                <input type="mail" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse e-mail*" required>
                                                 <span style="color:#ff0000;" id="mail_err"></span>
                                             </div>
                                             @error('mail')
