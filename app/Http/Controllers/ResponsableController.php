@@ -277,9 +277,10 @@ class ResponsableController extends Controller
             } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+                $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
             }
             // dd($refs);
-            return view('admin.responsable.profilResponsables', compact('refs'));
+            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];

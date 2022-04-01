@@ -633,7 +633,7 @@
                                                     <a href="{{route('profile_stagiaire')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
                                                     @endcan
                                                     @can('isReferentPrincipale')
-                                                    <a href="{{route('affResponsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    <a href="{{route('profil_referent')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
                                                     @endcan
                                                     @can('isCFPPrincipale')
                                                     <a href="{{route('profil_du_responsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>

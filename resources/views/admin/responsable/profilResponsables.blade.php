@@ -180,7 +180,7 @@
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{optional(optional($refs)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;"><a href="{{route('profile_entreprise',$refs->entreprise_id)}}">ENTREPRISE</a><span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
