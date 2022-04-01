@@ -516,7 +516,7 @@
                     </div>
                     @endcanany
                 </div>
-
+               
                 <div class="col-7 header-right align-items-center d-flex flex-row">
                     <div class="col mt-3 d-flex flex-row">
                         <div class="notification-box">
@@ -596,6 +596,57 @@
                         </div> --}}
                     </div>
                     {{-- user --}}
+                  
+                    @can('isManager')
+                    <div class="p-1 mt-0 dropdown">
+
+                       <a class="shadow-sm mb-4 bg-body btn btn-light btn-sm dropdown-toggle creer" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none">
+                           <i class="fas fa-plus icon_plus fa-lg"></i>&nbsp;&nbsp; <span class="textc">Créer</span>
+                        </a>
+                     
+                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                         
+                         <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande stagiaire</a></li>
+                         <li><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de formation</a></li>
+                         <li><a class="dropdown-item" href="{{route('budget')}}"><i class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
+
+                       </ul>
+                     </div>
+                   @endcan
+                    @can('isReferent')
+                     <div class="p-1 mt-0 dropdown">
+
+                        <a class="shadow-sm mb-4 bg-body btn btn-light btn-sm dropdown-toggle creer" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none">
+                            <i class="fas fa-plus icon_plus fa-lg"></i>&nbsp;&nbsp; <span class="textc">Créer</span>
+                         </a>
+                      
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <li><a class="dropdown-item" href="{{route('departement.create')}}"><i class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a></li>
+                          <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i class="fas fa-envelope-open-text icon_plus"></i>&nbsp;   Appel d'offre</a></li>
+                          <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande stagiaire</a></li>
+                          <li><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de formation</a></li>
+                          <li><a class="dropdown-item" href="{{route('budget')}}"><i class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
+
+                        </ul>
+                      </div>
+                    @endcan
+                    @can('isCFP')
+                    <div class="p-1 mt-0 dropdown">
+
+                       <a class="shadow-sm mb-4 bg-body btn btn-light btn-sm dropdown-toggle creer" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none">
+                           <i class="fas fa-plus icon_plus fa-lg"></i>&nbsp;&nbsp; <span class="textc">Créer</span>
+                        </a>
+                     
+                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                         <li><a class="dropdown-item" href="{{route('nouveau_module')}}"><i class="bx bx-customize icon_plus "></i>&nbsp; Nouvelle Module</a></li>
+                         <li><a class="dropdown-item" href="{{route('nouveau_formateur')}}"><i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur</a></li>
+                         <li><a class="dropdown-item" href="{{route('nouveau_groupe',['type_formation'=>1])}}"> <i class="bx bx-library icon_plus"></i>&nbsp;   Projet Intra</a></li>
+                         <li><a class="dropdown-item" href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}"> <i class='bx bx-library icon_plus'></i>&nbsp;Projet Inter</a></li>
+                         <li><a class="dropdown-item" href="{{route('facture')}}"> <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouveau Facture</a></li>
+
+                       </ul>
+                     </div>
+                   @endcan
                     <div class="col">
                         <div class="header_img ms-5 mb-2 text-center d-flex flex-row" style="text-align: center">
 
