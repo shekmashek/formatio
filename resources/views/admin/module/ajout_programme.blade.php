@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/ajoutProgramme.css')}}">
 <div class="row">
+
+
     <div class="col-lg-3">
     </div>
     <div class="col-lg-9">
@@ -166,6 +168,14 @@
                 @endforeach
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
+                @if (\Session::has('success'))
+                    <div class="alert alert-success col-md-12">
+                        <ul>
+                            <li>{!! \Session::get('success') !!}</li>
+                        </ul>
+                        <a href="{{route('liste_module')}}">Cliquez ici pour voir le module</a>
+                    </div>
+                @endif
                 <div class="row detail__formation__item__left">
                     <h3 class="pt-3 pb-3">Programme de la formation</h3>
                     <div></div>

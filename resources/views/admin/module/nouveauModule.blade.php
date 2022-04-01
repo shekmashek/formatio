@@ -68,6 +68,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group" id="premier_vue2">
+                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap">
+                                                    <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 50px;">
+                                                        {{-- <option value="null" disable selected hidden>Choisissez la
+                                                            catégorie de formation ...</option>
+                                                        @foreach($liste as $li)
+                                                        <option value="{{$li->id}}" data-value="{{$li->nom_formation}}">
+                                                        {{$li->nom_formation}}</option>
+                                                        @endforeach --}}
+                                                    </select>
+                                                    <label for="acf-categorie" class="form-control-placeholder">Modules</label>
+                                                    <span style="" id="domaine_id_err">choisir le type de domaine valide pour avoir ses formations</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group" id="premier_vue">
                                         <div class="acf-field acf-field-text acf-field-nom_module is-required">
                                             <div class="acf-input">
@@ -87,24 +105,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group" id="premier_vue2">
-                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 50px;">
-                                                        {{-- <option value="null" disable selected hidden>Choisissez la
-                                                            catégorie de formation ...</option>
-                                                        @foreach($liste as $li)
-                                                        <option value="{{$li->id}}" data-value="{{$li->nom_formation}}">
-                                                        {{$li->nom_formation}}</option>
-                                                        @endforeach --}}
-                                                    </select>
-                                                    <label for="acf-categorie" class="form-control-placeholder">Modules</label>
-                                                    <span style="" id="domaine_id_err">choisir le type de domaine valide pour avoir ses formations</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
 
                                     <div class="form-group" id="premier_vue3">
                                         <div class="acf-field acf-field-text acf-field-description is-required">

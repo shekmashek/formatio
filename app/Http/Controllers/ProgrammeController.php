@@ -73,7 +73,7 @@ class ProgrammeController extends Controller
                 }
             }
         }
-        return back();
+        return back()->with('success', 'Cours ajouté avec succès, vous pouvez voir votre module dans la section "non publiées"');
         // return redirect()->route('liste_module');
     }
 
