@@ -384,9 +384,12 @@ class ProfController extends Controller
     {
         $id = $request->id_formateur;
         $formateur = formateur::where('id', $id)->get();
+        if ($formateur[0]->genre_id == 1) $genre = "Femme";
+        if ($formateur[0]->genre_id == 2) $genre = "Homme";
+        if ($formateur[0]->genre_id == null) $genre = " ";
         $competence = competenceFormateur::where('formateur_id', $id)->get();
         $experience = experienceFormateur::where('formateur_id', $id)->get();
-        return view('admin.formateur.profil', compact('formateur', 'competence', 'experience'));
+        return view('admin.formateur.profil', compact('formateur', 'competence', 'experience','genre'));
     }
 
     public function cvProf(Request $request,$id)
@@ -405,14 +408,20 @@ class ProfController extends Controller
             $id = formateur::where('user_id', Auth::user()->id)->value('id');
 
             $formateur = formateur::findOrFail($id);
+            if($formateur->genre_id == 1) $genre = "Femme";
+            if($formateur->genre_id == 2) $genre = "Homme";
+            if($formateur->genre_id == null) $genre = " ";
          }
          else{
             $formateur = formateur::findOrFail($id);
+            if($formateur->genre_id == 1) $genre = "Femme";
+            if($formateur->genre_id == 2) $genre = "Homme";
+            if($formateur->genre_id == null) $genre = " ";
 
          }
 
 
-        return view('admin.formateur.profile_formateur', compact('formateur'));
+        return view('admin.formateur.profile_formateur', compact('formateur','genre'));
     }
 
     //modification  profil
