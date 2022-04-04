@@ -227,6 +227,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (factures.id) facture_id,
     (factures.projet_id) as projet_id,
     nom_projet,
+    groupes.entreprise_id,
     factures.type_payement_id,
     (type_payement.type) description_type_payement,
     bon_de_commande,
@@ -242,9 +243,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     qte,
     num_facture,
     factures.activiter,
-    factures.groupe_entreprise_id,
-    groupes.groupe_id,
-    groupes.entreprise_id,
+    factures.groupe_id,
     groupes.nom_groupe,
     pu,
     type_financement_id,
@@ -280,7 +279,7 @@ WHERE
     factures.type_payement_id = type_payement.id AND entreprises.secteur_id = secteurs.id AND
     type_financement_id = mode_financements.id AND
     factures.tax_id = taxes.id AND factures.cfp_id = projets.cfp_id  AND factures.projet_id = projets.id AND
-    factures.groupe_entreprise_id = groupes.groupe_entreprise_id AND groupes.entreprise_id = entreprises.id AND type_facture_id = type_facture.id;
+    factures.groupe_id = groupes.groupe_id AND groupes.entreprise_id = entreprises.id AND type_facture_id = type_facture.id;
 
 
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT

@@ -70,6 +70,7 @@ class FactureController extends Controller
     public function listeFacture()
     {
 
+
         $user_id = Auth::user()->id;
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
@@ -81,11 +82,14 @@ class FactureController extends Controller
         $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0, 10);
         $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0, 10);
 */
+       // $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], 0, 10);
+       $facture_inactif = $this->fact->getSessionInFacture("v_facture_inactif", ["cfp_id"], [$cfp_id], 0, 10);
+       $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["cfp_id"], [$cfp_id], 0, 10);
 
-        $facture_actif = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
-        $facture_inactif = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
-        $facture_payer = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0, 10);
-        $facture_encour = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0, 10);
+        $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], 0, 10);
+        $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], 0, 10);
+
+         dd($facture_inactif);
 
         $facture_actif_guide = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);

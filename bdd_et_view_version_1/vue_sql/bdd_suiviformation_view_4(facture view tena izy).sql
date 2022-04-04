@@ -2,10 +2,13 @@ CREATE OR REPLACE VIEW v_montant_pedagogique_facture AS SELECT
     cfp_id,
     projet_id,
     entreprise_id,
+    type_facture_id,
     num_facture,
     SUM(qte) AS qte_totale,
     SUM(hors_taxe) AS hors_taxe,
     due_date,
+    other_message,
+    activiter,
     invoice_date
 FROM
     factures
@@ -13,8 +16,11 @@ GROUP BY
     cfp_id,
     num_facture,
     projet_id,
+    type_facture_id,
     entreprise_id,
     due_date,
+    activiter,
+    other_message,
     invoice_date;
 
 
@@ -39,7 +45,10 @@ CREATE OR REPLACE VIEW v_montant_brut_facture AS SELECT
     mpf.cfp_id,
     mpf.projet_id,
     mpf.entreprise_id,
+    mpf.type_facture_id,
     mpf.num_facture,
+    mpf.activiter,
+    mpf.other_message,
     (
         mpf.hors_taxe + IFNULL(mfa.hors_taxe, 0)
     ) AS montant_brut_ht,
@@ -50,17 +59,24 @@ FROM
 RIGHT JOIN v_montant_pedagogique_facture mpf ON
     mpf.num_facture = mfa.num_facture  AND mpf.cfp_id = mfa.cfp_id AND mpf.entreprise_id = mfa.entreprise_id AND  mpf.projet_id = mfa.projet_id;
 
+
 CREATE OR REPLACE VIEW v_remise_facture AS SELECT
 	cfp_id,
     projet_id,
     entreprise_id,
+    type_facture_id,
     num_facture,
+    other_message,
+    activiter,
     SUM(remise) / COUNT(num_facture) AS remise
 FROM
     factures
 GROUP BY
     num_facture,
     projet_id,
+    type_facture_id,
+    activiter,
+    other_message,
     entreprise_id,
     cfp_id;
 
@@ -68,7 +84,10 @@ GROUP BY
 CREATE OR REPLACE VIEW v_taxe_facture AS SELECT
 	cfp_id,
     projet_id,
+    entreprise_id,
     num_facture,
+    other_message,
+    activiter,
     pourcent
 FROM
     factures f
@@ -78,6 +97,9 @@ GROUP BY
 	cfp_id,
     num_facture,
     projet_id,
+    other_message,
+    activiter,
+    entreprise_id,
     pourcent;
 
 
@@ -85,8 +107,10 @@ create or replace view v_montant_facture as
 SELECT
     mbr.cfp_id,
     mbr.projet_id,
+    mbr.entreprise_id,
     mbr.num_facture,
     mbr.montant_brut_ht,
+    mbr.activiter,
     rf.remise,
     (mbr.montant_brut_ht - rf.remise) AS net_commercial,
     (mbr.montant_brut_ht - rf.remise) AS net_ht,
@@ -102,32 +126,36 @@ SELECT
             ) / 100
         ) +(mbr.montant_brut_ht - rf.remise)
     ) AS net_ttc,
-    fact.type_facture_id,
+    mbr.type_facture_id,
     (typ_fact.description) description_type_facture,
     (typ_fact.reference) reference_type_facture,
     mbr.due_date,
-    mbr.invoice_date
+    mbr.invoice_date,
+    mbr.other_message
 FROM
     v_montant_brut_facture mbr,
     v_remise_facture rf,
     v_taxe_facture tf,
-    factures fact,
     type_facture typ_fact
 WHERE
-    mbr.num_facture = rf.num_facture AND tf.num_facture = mbr.num_facture AND fact.type_facture_id = typ_fact.id AND mbr.num_facture = fact.num_facture
-    AND mbr.cfp_id = rf.cfp_id AND tf.cfp_id = mbr.cfp_id AND mbr.cfp_id = fact.cfp_id
+    mbr.num_facture = rf.num_facture AND tf.num_facture = mbr.num_facture AND mbr.type_facture_id = typ_fact.id
+    AND mbr.cfp_id = rf.cfp_id AND tf.cfp_id = mbr.cfp_id  AND tf.cfp_id = rf.cfp_id
+    AND mbr.entreprise_id = rf.entreprise_id AND mbr.entreprise_id = tf.entreprise_id
 GROUP BY
     mbr.cfp_id,
     mbr.projet_id,
+     mbr.activiter,
+    mbr.entreprise_id,
     mbr.num_facture,
     mbr.montant_brut_ht,
     rf.remise,
-    fact.type_facture_id,
+    mbr.type_facture_id,
     typ_fact.description,
     typ_fact.reference,
     mbr.due_date,
     mbr.invoice_date,
-    tf.pourcent;
+    tf.pourcent,
+     mbr.other_message;
 
 
 CREATE OR REPLACE VIEW v_acompte_facture AS SELECT
@@ -141,11 +169,14 @@ WHERE
 CREATE OR REPLACE VIEW v_sum_acompte_facture AS SELECT
     cfp_id,
     projet_id,
+    entreprise_id,
+    other_message,
     (SUM(net_ttc)) sum_acompte
 FROM
     v_acompte_facture
 GROUP BY
     cfp_id,
+    entreprise_id,other_message,
     projet_id;
 
 
@@ -182,9 +213,11 @@ GROUP BY
 
 CREATE OR REPLACE VIEW v_avant_dernier_encaissement AS SELECT
     v_facture.cfp_id,
+    v_facture.entreprise_id,
     v_facture.num_facture,
     v_facture.net_ttc,
     v_facture.rest_payer,
+    v_facture.other_message,
     (IFNULL(payement, 0)) payement
 FROM
     v_facture
@@ -193,9 +226,11 @@ LEFT JOIN v_sum_encaissement ON v_facture.cfp_id = v_sum_encaissement.cfp_id AND
 
 CREATE OR REPLACE VIEW v_dernier_encaissement AS SELECT
     v_facture.cfp_id,
+    v_facture.entreprise_id,
     v_facture.num_facture,
     v_facture.net_ttc,
     v_facture.rest_payer,
+    v_facture.other_message,
     (
         CASE WHEN v_facture.num_facture = v_avant_dernier_encaissement.num_facture AND v_facture.rest_payer > 0 THEN v_facture.rest_payer ELSE v_facture.net_ttc
     END
@@ -205,7 +240,8 @@ v_facture.due_date,
 v_facture.invoice_date
 FROM
     v_facture
-JOIN v_avant_dernier_encaissement ON v_avant_dernier_encaissement.cfp_id = v_facture.cfp_id AND v_avant_dernier_encaissement.num_facture = v_facture.num_facture;
+JOIN v_avant_dernier_encaissement ON v_avant_dernier_encaissement.cfp_id = v_facture.cfp_id AND
+v_avant_dernier_encaissement.num_facture = v_facture.num_facture AND v_facture.entreprise_id = v_avant_dernier_encaissement.entreprise_id;
 
 
 CREATE OR REPLACE VIEW v_temp_facture AS SELECT
@@ -279,6 +315,7 @@ FROM
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     factures.cfp_id,
     (factures.projet_id) as projet_id,
+    factures.entreprise_id,
     bon_de_commande,
     (factures.devise) facture,
     factures.hors_taxe,
@@ -292,7 +329,8 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     qte,
     num_facture,
     factures.activiter,
-     pu,
+    (type_facture.reference) reference_facture,
+    pu,
     entreprises.nom_etp,
     (entreprises.adresse_rue) adresse,
     entreprises.logo,
@@ -316,14 +354,15 @@ FROM
 WHERE
    factures.entreprise_id = entreprises.id AND entreprises.secteur_id = secteurs.id AND
     factures.tax_id = taxes.id
-
 GROUP BY
-factures.cfp_id,
+    factures.cfp_id,
     factures.projet_id,
+    factures.entreprise_id,
     bon_de_commande,
     factures.devise,
     factures.hors_taxe,
     invoice_date,
+    type_facture.reference,
     due_date,
     tax_id,
     taxes.description,
@@ -333,7 +372,7 @@ factures.cfp_id,
     qte,
     num_facture,
     factures.activiter,
-     pu,
+    pu,
     entreprises.nom_etp,
     entreprises.adresse_rue,
     entreprises.logo,
@@ -347,8 +386,7 @@ factures.cfp_id,
     secteurs.nom_secteur,
     entreprises.site_etp,
     entreprises.email_etp,
-    entreprises.telephone_etp
-;
+    entreprises.telephone_etp;
 
 
 -- CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
@@ -384,30 +422,27 @@ CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
     (v_temp_facture.payement) payement_totale,
     (v_temp_facture.montant_ouvert) dernier_montant_ouvert,
     (v_temp_facture.due_date) date_facture,
-    factures.entreprise_id,
      (
         CASE WHEN(payement - montant_ouvert) < 0 AND payement <= 0 THEN 'valider' WHEN(payement - montant_ouvert) < 0 AND payement > 0 THEN 'en_cour' WHEN(payement - montant_ouvert) >= 0 THEN 'terminer'
     END
 ) facture_encour
 FROM
-    v_facture,factures,
+    v_facture,
     v_temp_facture
 WHERE
     v_facture.cfp_id = v_temp_facture.cfp_id AND  v_facture.num_facture = v_temp_facture.num_facture
-    AND v_facture.cfp_id=factures.cfp_id AND v_facture.num_facture = factures.num_facture
-    AND v_temp_facture.cfp_id=factures.cfp_id AND v_temp_facture.num_facture = factures.num_facture
-;
+    AND v_facture.entreprise_id = v_temp_facture.entreprise_id ;
+
 
 CREATE OR REPLACE VIEW v_facture_existant AS SELECT
     v_facture_existant_tmp.*
 FROM
    v_facture_existant_tmp
 GROUP BY
-    cfp_id,projet_id,num_facture,montant_brut_ht,remise,net_commercial,net_commercial,net_ht,
+    cfp_id,entreprise_id,projet_id,num_facture,montant_brut_ht,remise,net_commercial,net_commercial,net_ht,
     tva,net_ttc,type_facture_id,description_type_facture,reference_type_facture,due_date,invoice_date,
     sum_acompte,rest_payer,montant_total,payement_totale,dernier_montant_ouvert,date_facture,entreprise_id,
-    facture_encour
-    ;
+    other_message,facture_encour,activiter;
 
 
 
@@ -550,12 +585,12 @@ GROUP BY
 
 
 CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
-    factures.cfp_id,
+    v_facture_existant.cfp_id,
+    v_facture_existant.activiter,
     (cfps.nom) nom_cfp,
-    factures.entreprise_id,
-    (factures.id) facture_id,
-    factures.num_facture,
-    other_message,
+    v_facture_existant.entreprise_id,
+    v_facture_existant.num_facture,
+    v_facture_existant.other_message,
     (
         DATEDIFF(
             v_facture_existant.due_date,
@@ -576,17 +611,16 @@ CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
     FROM
-        v_facture_existant,cfps,
-        factures
+        v_facture_existant,cfps
     WHERE
-        v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND  v_facture_existant.num_facture = factures.num_facture AND factures.activiter = TRUE AND factures.cfp_id = cfps.id AND  v_facture_existant.cfp_id = cfps.id
+      v_facture_existant.activiter = TRUE AND  v_facture_existant.cfp_id = cfps.id
     GROUP BY
-        factures.id,
         cfps.nom,
-        factures.cfp_id,
-        factures.entreprise_id,
-      factures.num_facture,
-        factures.other_message,
+        v_facture_existant.activiter,
+        v_facture_existant.cfp_id,
+        v_facture_existant.entreprise_id,
+        v_facture_existant.num_facture,
+        v_facture_existant.other_message,
         facture_encour,
         v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
@@ -596,13 +630,13 @@ CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
 
 
 CREATE OR REPLACE VIEW v_facture_inactif_tmp AS SELECT
-    (factures.id) facture_id,
-    factures.cfp_id,
+    v_facture_existant.cfp_id,
+    v_facture_existant.activiter,
     (cfps.nom) nom_cfp,
-    factures.num_facture,
-    factures.entreprise_id,
-    other_message,
-    (
+    v_facture_existant.entreprise_id,
+    v_facture_existant.num_facture,
+    v_facture_existant.other_message,
+     (
         DATEDIFF(
             v_facture_existant.due_date,
             v_facture_existant.invoice_date
@@ -622,17 +656,16 @@ CREATE OR REPLACE VIEW v_facture_inactif_tmp AS SELECT
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
     FROM
-        v_facture_existant,cfps,
-        factures
+        v_facture_existant,cfps
     WHERE
-       v_facture_existant.cfp_id = factures.cfp_id AND  v_facture_existant.projet_id = factures.projet_id  AND   v_facture_existant.num_facture = factures.num_facture AND factures.activiter = FALSE  AND factures.cfp_id = cfps.id AND  v_facture_existant.cfp_id = cfps.id
+        v_facture_existant.activiter = FALSE  AND  v_facture_existant.cfp_id = cfps.id
     GROUP BY
-        factures.id,
-        factures.cfp_id,
+        v_facture_existant.cfp_id,
+        v_facture_existant.activiter,
         cfps.nom,
-        factures.num_facture,
-        factures.entreprise_id,
-        factures.other_message,
+        v_facture_existant.entreprise_id,
+        v_facture_existant.num_facture,
+        v_facture_existant.other_message,
         facture_encour,
         v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
@@ -644,6 +677,7 @@ CREATE OR REPLACE VIEW v_facture_inactif_tmp AS SELECT
 create or replace view v_facture_actif as
 select
     cfp_id,
+    activiter,
     nom_cfp,
     num_facture,
     entreprise_id,
@@ -658,6 +692,7 @@ select
 from v_facture_actif_tmp
 group by
     cfp_id,
+    activiter,
     nom_cfp,
     num_facture,
     entreprise_id,
@@ -675,6 +710,7 @@ create or replace view v_facture_inactif as
 select
     cfp_id,
     nom_cfp,
+    activiter,
     num_facture,
     entreprise_id,
     other_message,
@@ -689,6 +725,7 @@ from v_facture_inactif_tmp
 group by
     cfp_id,
     nom_cfp,
+    activiter,
     num_facture,
     entreprise_id,
     other_message,
