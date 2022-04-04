@@ -302,6 +302,12 @@ class HomeController extends Controller
             $session_intra_en_cours = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 3 and cfp_id = ' . $cfp_id . ' ');
             $session_intra_avenir = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 2 and cfp_id = ' . $cfp_id . ' ');
 
+            $session_inter_terminer = DB::select('select * from v_groupe_projet_module where item_status_groupe = "terminer" and cfp_id = ' . $cfp_id . ' ');
+            $session_inter_encours = DB::select('select * from v_groupe_projet_module where item_status_groupe = "en_cours" and cfp_id = ' . $cfp_id . ' ');
+            $session_inter_previsionnel = DB::select('select * from v_groupe_projet_module where item_status_groupe = "previsionnel" and cfp_id = ' . $cfp_id . ' ');
+            $session_inter_avenir = DB::select('select * from v_groupe_projet_module where item_status_groupe = "avenir" and cfp_id = ' . $cfp_id . ' ');
+            $session_inter_annuler = DB::select('select * from v_groupe_projet_module where item_status_groupe = "annuler" and cfp_id = ' . $cfp_id . ' ');
+
             $nom_profil_organisation = cfp::where('id', $cfp_id)->value('nom');
 
 
@@ -318,7 +324,7 @@ class HomeController extends Controller
                 $ref = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             }
 
-            return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir'));
+            return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
         }
         if(Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
@@ -388,6 +394,8 @@ class HomeController extends Controller
                 $refs = $refs_tmp[0];
 
                 $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
+                // $formateurs =  DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ?', [$ref]);
+                // $formateur_referent = $formateurs[0];
 
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
                 $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
@@ -401,6 +409,12 @@ class HomeController extends Controller
                 $session_intra_previ = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 1 and entreprise_id = ' . $ref . ' ');
                 $session_intra_en_cours = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 3 and entreprise_id = ' . $ref . ' ');
                 $session_intra_avenir = DB::select('select * from v_groupe_projet_entreprise where status_groupe = 2 and entreprise_id = ' . $ref . ' ');
+
+                $session_inter_terminer = DB::select('select * from v_groupe_projet_entreprise where item_status_groupe = "terminer" and entreprise_id = ' . $ref . ' ');
+                $session_inter_encours = DB::select('select * from v_groupe_projet_entreprise where item_status_groupe = "en_cours" and entreprise_id = ' . $ref . ' ');
+                $session_inter_previsionnel = DB::select('select * from v_groupe_projet_entreprise where item_status_groupe = "previsionnel" and entreprise_id = ' . $ref . ' ');
+                $session_inter_avenir = DB::select('select * from v_groupe_projet_entreprise where item_status_groupe = "avenir" and entreprise_id = ' . $ref . ' ');
+                $session_inter_annuler = DB::select('select * from v_groupe_projet_entreprise where item_status_groupe = "annuler" and entreprise_id = ' . $ref . ' ');
 
                 $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
                 $nb_stagiaire = count($stagiaires);
@@ -425,7 +439,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name'));
+                return view('referent.dashboard_referent.dashboard_referent', compact('etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
             }
         }
 
