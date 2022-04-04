@@ -26,29 +26,62 @@
 
                             <div class="col-sm-8">
                                 <div class="card-block">
-                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information personnelle</h6>
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-envelope"></i>&nbsp;E-mail</p>
-                                            <h6 class="text-muted f-w-400">{{$entreprise->email_etp}}</h6>
+                                            <a href="{{route('modification_email_entreprise',$entreprise->id)}}">
+                                                <h6 class="text-muted f-w-400">
+                                                    @if($entreprise->email_etp==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{$entreprise->email_etp}}
+                                                    @endif
+
+                                                </h6>
+                                            </a>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;NIF</p>
-                                            <h6 class="text-muted f-w-400">{{$entreprise->nif}}</h6>
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                            <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;Numéro d'Identification Fiscal (NIF)</p>
+                                            <a href="{{route('modification_nif_entreprise',$entreprise->id)}}">
+                                                <h6 class="text-muted f-w-400">
+                                                    @if($entreprise->nif==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{$entreprise->nif}}
+                                                    @endif
+
+                                                </h6>
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
-                                            <h6 class="text-muted f-w-400">{{$entreprise->telephone_etp}}</h6>
+                                            <a href="{{route('modification_telephone_entreprise',$entreprise->id)}}">
+                                                <h6 class="text-muted f-w-400">
+                                                    @if($entreprise->telephone_etp==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{$entreprise->telephone_etp}}
+                                                    @endif
+                                                </h6>
+                                            </a>
                                         </div>
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;STAT</p>
-                                            <h6 class="text-muted f-w-400">{{$entreprise->stat}}</h6>
+                                            <a href="{{route('modification_stat_entreprise',$entreprise->id)}}">
+                                                <h6 class="text-muted f-w-400">
+                                                    @if($entreprise->stat==NULL)
+                                                    <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                    {{$entreprise->stat}}
+                                                    @endif
+                                                </h6>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-home"></i>&nbsp;Adresse</p>
                                             <h6 class="text-muted f-w-400">{{$entreprise->adresse_rue}} {{$entreprise->adresse_quartier}} {{$entreprise->adresse_code_postal}} {{$entreprise->adresse_ville}} {{$entreprise->adresse_region}}</h6>
                                         </div>

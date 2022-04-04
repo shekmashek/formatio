@@ -1030,3 +1030,13 @@ Route::post('/enregistrer_modification_nom_cfp/{id}','CfpController@modifier_nom
 Route::post('/enregistrer_modification_adresse_cfp/{id}','CfpController@modifier_adresse')->name('enregistrer_modification_adresse_cfp');
 Route::post('/enregistrer_modification_slogan_cfp/{id}','CfpController@modifier_slogan')->name('enregistrer_modification_slogan_cfp');
 Route::post('/enregistrer_modification_site_cfp/{id}','CfpController@modifier_site')->name('enregistrer_modification_site_cfp');
+
+//route modification entreprise
+Route::get('modification_email_entreprise/{id}','EntrepriseController@modification_email_entreprise')->name('modification_email_entreprise');
+Route::post('enregistrer_email_entreprise/{id}','EntrepriseController@enregistrer_email_entreprise')->name('enregistrer_email_entreprise');
+Route::get('modification_nif_entreprise/{id}','EntrepriseController@modification_nif_entreprise')->name('modification_nif_entreprise');
+Route::post('enregistrer_nif_entreprise/{id}','EntrepriseController@enregistrer_nif_entreprise')->name('enregistrer_nif_entreprise');
+Route::get('modification_telephone_entreprise/{id}','EntrepriseController@modification_telephone_entreprise')->name('modification_telephone_entreprise');
+Route::post('enregistrer_telephone_entreprise/{id}','EntrepriseController@enregistrer_telephone_entreprise')->name('enregistrer_telephone_entreprise');
+Route::get('modification_stat_entreprise/{id}','EntrepriseController@modification_stat_entreprise')->name('modification_stat_entreprise');
+Route::post('enregistrer_stat_entreprise/{id}','EntrepriseController@enregistrer_stat_entreprise')->name('enregistrer_stat_entreprise');

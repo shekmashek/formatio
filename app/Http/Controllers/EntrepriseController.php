@@ -257,5 +257,61 @@ class EntrepriseController extends Controller
         $datas1 = $fonct->findWhere("v_departement", ["entreprise_id"], [$req->id]);
         return response()->json($datas1);
     }
-
+    //modification profil entreprise
+    public function modification_email_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_email', compact('etp'));
+    }
+    public function enregistrer_email_entreprise(Request $request,$id){
+        if($request->email == null){
+            return redirect()->back()->with('error_email', 'Entrez l\'e-mail de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set email_etp = ? where id = ?', [$request->email,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
+    public function modification_nif_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_nif', compact('etp'));
+    }
+    public function enregistrer_nif_entreprise(Request $request,$id){
+        if($request->nif == null){
+            return redirect()->back()->with('erreur_nif', 'Entrez le NIF de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set nif = ? where id = ?', [$request->nif,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
+    public function modification_telephone_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_telephone', compact('etp'));
+    }
+    public function enregistrer_telephone_entreprise(Request $request,$id){
+        if($request->telephone == null){
+            return redirect()->back()->with('erreur_telephone', 'Entrez le numéro téléphone de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set telephone_etp = ? where id = ?', [$request->telephone,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
+    public function modification_stat_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_stat', compact('etp'));
+    }
+    public function enregistrer_stat_entreprise(Request $request,$id){
+        if($request->stat == null){
+            return redirect()->back()->with('erreur_stat', 'Entrez le stat de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set stat = ? where id = ?', [$request->stat,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
 }
