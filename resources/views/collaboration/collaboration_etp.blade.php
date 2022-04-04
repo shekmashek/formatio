@@ -50,8 +50,8 @@
                                             <img src="{{asset('images/CFP/'.$c->logo)}}" alt="photo" class="logo">
                                             <div id="cfp_pdp_{{$c->id}}" class="collapse">
                                                 <hr>
-                                                Domaine d'activiter: "{{$c->domaine_de_formation}}" <br>
-                                                Activités: {{$c->domaine_de_formation}} <br>
+                                                {{-- Domaine d'activiter: {{$c->domaine_de_formation}} <br> --}}
+                                                {{-- Activités: {{$c->domaine_de_formation}} <br> --}}
                                                 Téléphone: {{$c->telephone}} <br>
                                                 Email: {{$c->email}} <br>
                                                 <a href="#" type="button" data-toggle="collapse" data-target="#cfp_pdp_{{$c->id}}"><button type="submit" class="btn btn-primary" id="demande">fermer</button></a><br>
@@ -90,7 +90,7 @@
                                             <div class="modal-body">
                                                 <div>
                                                     <h5 class="text-uppercase">{{$c->nom}}</h5>
-                                                    <h4 class="mt-5 text-primary mb-5">{{$c->domaine_de_formation}}</h4> <span class="theme-color">Informations</span>
+                                                    {{-- <h4 class="mt-5 text-primary mb-5">{{$c->domaine_de_formation}}</h4> <span class="theme-color">Informations</span> --}}
                                                     <div class="mb-3">
                                                         <hr class="new1">
                                                     </div>
