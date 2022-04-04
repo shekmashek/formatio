@@ -17,26 +17,27 @@
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp;  Veuillez collaborer au moins avec une entreprise ! </span> &nbsp;
                 <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('liste_entreprise')}}">Collaborez-vous maintenant</a>
             </div>
-        @else
 
         @endif
 
-        @if($ref->adresse_lot==null or $ref->adresse_quartier==null and $ref->adresse_code_postal==null and $ref->adresse_ville==null and $ref->adresse_region==null)
+        @if($ref->adresse_lot==null or $ref->adresse_quartier==null or $ref->adresse_code_postal==null or $ref->adresse_ville==null or $ref->adresse_region==null)
+            <div id="in1" class="p-2 mt-1 alert alert-danger text-center" role="alert">
+                <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez vous complétez vos informations  ! </span> &nbsp;
+                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('profil_du_responsable')}}">Modifier vos infos </a>
+            </div>
+
+        @endif
+        @if ($ref->nif==null or $ref->stat==null or $ref->rcs==null)
             <div id="in1" class="p-2 mt-1 alert alert-danger text-center" role="alert">
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez vous complétez vos informations professionnel ! </span> &nbsp;
-                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('profil_du_responsable')}}">Modifier vos infos légales</a>
+                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('profil_of',$ref->id)}}">Modifier vos infos légales</a>
             </div>
-        @else
-
         @endif
-
         @if(count($formateur) == null or count($formateur) =='')
             <div id="in2" class="p-2 mt-1 alert alert-danger text-center" role="alert">
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez collaborer au moins avec un formateur ! </span> &nbsp;
                 <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('collaboration')}}">Collaborez-vous maintenant</a>
             </div>
-        @else
-
         @endif
 
         <div class="hide1 p-2 mt-0 alert alert-primary alert-dismissible alert-sm fade show " role="alert">
@@ -99,7 +100,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #8d8d8d;height:151px"><b> <i class="fas fa-building"></i> &nbsp; Profil de l'organisation ({{$nom_profil_organisation }}) </b>
-                    @if ($ref->adresse_lot==null or $ref->adresse_quartier==null and $ref->adresse_code_postal==null and $ref->adresse_ville==null and $ref->adresse_region==null)
+                    @if ($ref->adresse_lot==null or $ref->adresse_quartier==null or $ref->adresse_code_postal==null or $ref->adresse_ville==null or $ref->adresse_region==null)
                         <a class="overr" href="{{route('profil_du_responsable')}}"> <p class="p-0 m-1 system_ pb-1">Adresse<span class="system_numeroAlert">Incomplet</span></p></a>
                     @else
                         <a class="overr" href="{{route('profil_du_responsable')}}"><p class="m-1 system_ pb-1">Adresse<span class="system_numeroSuccess">Complet</span></p></a>
