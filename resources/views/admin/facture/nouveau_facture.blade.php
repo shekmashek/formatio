@@ -33,7 +33,7 @@
                                 <select class="text-end titre_facture form-select  mb-2 m-0" id="type_facture" name="type_facture" aria-label="Default select example" required>
                                     <option onselected hidden> Type de Facture...</option>
                                     @foreach ($type_facture as $tp_fact)
-                                    <option value="{{$tp_fact->id}}">{{$tp_fact->description}}</option>
+                                    <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
                                     @endforeach
                                 </select>
 
@@ -73,15 +73,18 @@
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
                                 <p class="m-0 pt-3 text-end me-3">Numéro de facture</p> <input type="text" class="form-control input_simple" name="num_facture" required placeholder="reference du facture">
+                                @error('num_facture')
+                               <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                @enderror
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
                                 <p class="m-0 pt-3 text-end me-3">Reference de bon de commande</p> <input type="text" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
                                 @error('reference_bc')
-                                <span style="color:#ff0000;"> {{$message}} </span>
+                            <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror
-                                <span style="color:#ff0000;" id="reference_bc_err"></span>
+                                <p>  <span style="color:#ff0000;" id="reference_bc_err"></span></p>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -398,7 +401,6 @@
                 var userData = response.projet;
                 var etp = response.entreprise;
 
-                // alert(JSON.stringify(userData));
                 if (etp != null) {
                     document.getElementById("nom_etp_detail").innerHTML = "" + etp.nom_etp;
                     document.getElementById("adresse_etp").innerHTML = "" + etp.adresse_rue + "&nbsp;" + etp.adresse_quartier + " <br> " + etp.adresse_ville + "&nbsp;" + etp.adresse_code_postal + " <br> " + etp.adresse_region;
@@ -410,10 +412,11 @@
                         document.getElementById("projet_id_err").innerHTML = "Aucun projet a été détecter";
                     } else {
                         document.getElementById("projet_id_err").innerHTML = "";
-                        for (var $i = 0; $i < userData.length; $i++) {
+                        for (var $i = 0; $i < (userData.length); $i++) {
                             $("#projet_id").append('<option value="' + userData[$i].projet_id + '">' + userData[$i].nom_projet + '</option>');
                         }
                         prj_id = $("#projet_id").val();
+
                         if (id != null && prj_id != null) {
                             $.ajax({
                                 url: "{{route('groupe_projet')}}"
@@ -480,6 +483,43 @@
         });
 
     });
+
+
+
+    // ======== show session
+    $(document).on('change', '#projet_id', function() {
+        $(".session_id").empty();
+
+        var prj_id = $(this).val();
+        var entreprise_id  = $("#entreprise_id").val();
+        $.ajax({
+            url: "{{route('groupe_projet')}}"
+            , type: 'get'
+            , data: {
+                id: prj_id
+                , entreprise_id: entreprise_id
+            }
+            , success: function(response2) {
+                var userData2 = response2;
+                $("#addRowMontant").val(userData2.length);
+                if ($("#addRowMontant").val() > 1) {
+                    $("#addRowMontant").css("display", "inline-block");
+                } else {
+                    $("#addRowMontant").css("display", "none");
+                }
+                if (userData2.length > 0) {
+                    for (var $i = 0; $i < userData2.length; $i++) {
+                        $(".session_id").append('<option value="' + userData2[$i].groupe_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                    }
+                    document.getElementById("session_id_err").innerHTML = "";
+                } else {
+                    document.getElementById("session_id_err").innerHTML = "Aucun session a été détecter";
+                }
+            }
+        });
+
+    });
+
 
     // add row
     $(document).on('click', '#addRow', function() {

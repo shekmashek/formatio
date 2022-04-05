@@ -66,7 +66,7 @@
                                 <div class="col-8 text-end" align="rigth">
 
                                     <div class="info_cfp">
-                                        <h2 class="mb-2">{{$facture[0]->description_type_facture}}</h2>
+                                        <h2 class="mb-2">{{$facture[0]->reference_facture}}</h2>
 
                                         <h4 class="m-0 nom_cfp">{{$cfp->nom}}</h4>
                                         <p class="m-0 adresse_cfp">{{$cfp->email}}</p>
@@ -106,7 +106,7 @@
 
                                 <div class="col-md-3"></div>
                                 <div class="col-md-5">
-                                    <div align="left">
+                                    <div align="right" class="me-1">
                                         <h5>Numéro de facture: {{$facture[0]->num_facture}}</h5>
                                         <h6>Reference de bon de commande: {{$facture[0]->reference_bc}}</h6>
                                         <h6>Date de facturation: {{$facture[0]->invoice_date}}</h6>
@@ -140,12 +140,12 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="mb-1">
                                         @foreach ($facture as $montant_facture)
                                         <tr>
                                             <td>{{$montant_facture->reference}}</td>
                                             <td>{{$montant_facture->nom_module}}</td>
-                                            <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe." du ".$montant_facture->date_projet}}</td>
+                                            <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe." du ".$montant_facture->date_debut_session}}</td>
                                             <td>{{$montant_facture->nom_groupe}}</td>
                                             <td>{{$montant_facture->qte}}</td>
                                             <td>
@@ -159,62 +159,90 @@
                                                 </div>
                                             </th>
                                         </tr>
-
                                         @endforeach
+                                    </tbody>
 
-                                        @if($frais_annexes != null)
-                                        @foreach ($frais_annexes as $frais_annexe)
+                                    @if($facture_acompte != null && strtoupper($facture[0]->reference_facture) == strtoupper("Facture"))
 
+                                    <thead class=" mt-1 table-warning">
                                         <tr>
-                                            <td>- - - - - - -</td>
-                                            <td>- - - - - - -</td>
-                                            <td>{{$frais_annexe->description}}</td>
-                                            <td>{{$frais_annexe->frais_annexe_description}}</td>
-                                           <td><strong>{{$frais_annexe->qte}}</strong></td>
-                                           <td>
-                                            <div align="left">
-                                                <strong>{{number_format($frais_annexe->pu,0,","," ")}}</strong>
-                                            </div>
-                                        </td>
+                                            <td scope="col">Numéro facture acompte</td>
+                                            <td></td>
+                                            <td>Designation</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td>
                                                 <div align="right">
-                                                    <strong>{{number_format($frais_annexe->hors_taxe,0,","," ")}}</strong>
+                                                    Totale montant
                                                 </div>
                                             </td>
                                         </tr>
-
-                                        @endforeach
-                                        @endif
-
-                                        @if($facture_acompte != null && strtoupper($facture[0]->reference_facture) == strtoupper("Facture"))
+                                    </thead>
+                                    <tbody class="mb-1">
                                         @foreach ($facture_acompte as $fa)
-
                                         <tr>
-                                            <td>{{$fa->reference}}</td>
-                                            <td>{{$fa->nom_module}}</td>
-                                            <td>{{$fa->nom_projet." de la ".$fa->nom_groupe." du ".$fa->date_projet}}</td>
-                                            <td>{{$fa->nom_groupe}}</td>
-                                            <td>{{$fa->qte}}</td>
-                                            <td>
-                                                <div align="left">
-                                                    Ar {{number_format($fa->pu,0,","," ")}}
-                                                </div>
-                                            </td>
+                                            <td>{{$fa->num_facture}}</td>
+                                            <td></td>
+                                            <td>{{$fa->other_message}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <th>
                                                 <div align="right">
-                                                    Ar {{number_format($fa->hors_taxe,0,","," ")}}
+                                                    Ar -{{number_format($fa->dernier_montant_ouvert,0,","," ")}}
                                                 </div>
                                             </th>
                                         </tr>
-
                                         @endforeach
-                                        @endif
-
                                     </tbody>
+
+                                    @endif
+
+                                    @if($frais_annexes != null)
+
+                                    <thead class=" mt-1 table-secondary">
+                                        <tr>
+                                            <td scope="col">Frais annexe</td>
+                                            <td></td>
+                                            <td>Designation</td>
+                                            <td></td>
+                                            <td>Qte</td>
+                                            <td>PU HT</td>
+                                            <td>
+                                                <div align="right">
+                                                    Montant
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($frais_annexes as $frais_annexe)
+                                        <tr>
+                                            <td>{{$frais_annexe->frais_annexe_description}}</td>
+                                            <td></td>
+                                            <td>{{$frais_annexe->description}}</td>
+                                            <td></td>
+                                            <td>{{$frais_annexe->qte}}</td>
+                                            <td>
+                                                <div align="left">
+                                                    Ar {{number_format($frais_annexe->pu,0,","," ")}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="right">
+                                                    <strong>Ar {{number_format($frais_annexe->hors_taxe,0,","," ")}}</strong>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                    @endif
+
                                 </table>
 
-                                <div class="container-fluid my-2">
 
+                                <div class="container-fluid my-2">
                                     <div class="row">
                                         <div class="col"></div>
                                         <div class="col"></div>
@@ -234,7 +262,7 @@
                                                     <tr>
                                                         <td>Remise</td>
                                                         <td>
-                                                            <div align="right">
+                                                            <div align="right" style="background-color: rgb(255, 204, 0)">
                                                                 Ar -{{number_format($montant_totale->remise,0,","," ")}}
                                                             </div>
                                                         </td>
@@ -260,7 +288,7 @@
                                                     <tr>
                                                         <td>Facture d'acompte</td>
                                                         <td>
-                                                            <div align="right">
+                                                            <div align="right"  style="background-color: rgb(255, 204, 0)">
                                                                 Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
                                                             </div>
                                                         </td>
@@ -278,7 +306,7 @@
                                                         <td>Reste à payer</td>
                                                         <td>
                                                             <div align="right">
-                                                               <strong> Ar {{number_format( $montant_totale->dernier_montant_ouvert,0,","," ")}}</strong>
+                                                                <strong> Ar {{number_format( $montant_totale->dernier_montant_ouvert,0,","," ")}}</strong>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -287,11 +315,8 @@
                                             </table>
                                         </div>
                                     </div>
-
-
                                     <hr>
                                 </div>
-
 
                             </div>
 
@@ -301,44 +326,27 @@
                     <p>Arretée la présente facture à la somme de: <strong>{{$lettre_montant}} Ariary</strong></p>
                     <p>Autre Message</p>
                     <p style="max-width: 40%">{{$facture[0]->other_message}}</p>
-
                     <div class="container-fluid mb-5">
-                        <div class="row">
+                        <div class="row text-muted">
                             <div class="col">
                                 <p>Info légale: NIF: {{$cfp->nif}}</p>
                             </div>
                             <div class="col">
                                 <p>STAT: {{$cfp->stat}}</p>
-
                             </div>
                             <div class="col">
                                 <p>RCS: {{$cfp->rcs}}</p>
-
                             </div>
                             <div class="col">
                                 <p>CIF: {{$cfp->cif}}</p>
-
                             </div>
                         </div>
-
-                            {{-- <div class="row">
-                            <div class="col-md-12">
-                                <p>Arretée la présente facture à la somme de:</p>
-                                <td>Ariary {{$lettre_montant}}</td>
-                                <hr class="mt-5">
-                                <p>Autre Message</p>
-                                <td>
-                                    {{$facture[0]->other_message}}
-                                </td>
-                            </div>
-                        </div> --}}
-
-                    </div>
-
-                </div>
             </div>
+
         </div>
     </div>
+</div>
+</div>
 </div>
 
 

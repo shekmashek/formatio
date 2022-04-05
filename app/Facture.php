@@ -368,7 +368,7 @@ $critereForm = [
 
         if ($verify == 0) {
 
-            $this->insert($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $imput["remise"], $imput["type_facture"]);
+            $this->insert($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $tabDataDesc["remise"], $imput["type_facture"]);
 
             return back()->with('success', 'creation de la facture du project est effectué');
         } else {

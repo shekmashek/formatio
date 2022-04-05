@@ -168,7 +168,7 @@ class FactureController extends Controller
     public function detail_facture($numero_fact)
     {
         if (Gate::allows('isCFP')) {
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id","prioriter"], [Auth::user()->id,true])->cfp_id;
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
             $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -178,10 +178,17 @@ class FactureController extends Controller
                 [$montant_totale->projet_id, "AVOIR", $cfp_id]
             );
             $facture_acompte = $this->fonct->findWhere(
-                "v_liste_facture",
-                ["projet_id", "UPPER(reference_facture)", "cfp_id"],
+                "v_facture_inactif",
+                ["projet_id", "UPPER(reference_type_facture)", "cfp_id"],
                 [$montant_totale->projet_id, "ACOMPTE", $cfp_id]
             );
+            if(count($facture_acompte)<=0){
+                $facture_acompte = $this->fonct->findWhere(
+                    "v_facture_actif",
+                    ["projet_id", "UPPER(reference_type_facture)", "cfp_id"],
+                    [$montant_totale->projet_id, "ACOMPTE", $cfp_id]
+                );
+            }
             $frais_annexes = $this->fonct->findWhere("v_frais_annexe", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
             if ($montant_totale->rest_payer > 0) {
                 $lettre_montant = $this->fact->int2str($montant_totale->dernier_montant_ouvert);
@@ -190,7 +197,7 @@ class FactureController extends Controller
             }
         }
 
-      /*  if (Gate::allows('isReferent')) {
+        /*  if (Gate::allows('isReferent')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -429,15 +436,14 @@ class FactureController extends Controller
 
                         if ($request->remise > 0) {
 
-                            if ($remise->reference == "AR") {
+                            if ($remise->description == "MGA") {
                                 $montant_remise = $request->remise;
                             }
-                            if ($remise->reference == "POURCENT") {
+                            if ($remise->description == "%") {
                                 $montant_remise = ($request["facture"][$i] / $request->remise);
                             }
                         }
-
-
+                        // dd($montant_remise);
                         $tabData['facture'] = $request["facture"][$i];
                         $tabData['qte'] = $request["qte"][$i];
 
@@ -450,6 +456,7 @@ class FactureController extends Controller
 
                         $tabDataDesc['description'] = $request['description_facture'];
                         $tabDataDesc['other_message'] = $request['other_message'];
+                        $tabDataDesc['remise'] =$montant_remise ;
                         $status = $this->fact->verifyCreationFacture(
                             $cfp_id,
                             $result->projet_id,
@@ -555,9 +562,8 @@ class FactureController extends Controller
     {
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $data["entreprise"] = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$req->id]);
-        $data["projet"] = $this->fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
-
-        return response()->json($data);
+        $data["projet"] = $this->fonct->findWhere("v_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
+         return response()->json($data);
     }
 
     public function verifyFacture(Request $req)

@@ -150,7 +150,7 @@
                             <a href="#" class="active" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="true">
                                 Facture Brouillon
                                 @if (count($facture_inactif) > 0)
-                                <strong style="color: red">({{count($facture_inactif)}})</strong>
+                                {{count($facture_inactif)}}
                                 @endif
                             </a>
                         </li>
@@ -158,7 +158,7 @@
                             <a href="#" class="" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
                                 Facture Valider
                                 @if (count($facture_actif) > 0)
-                                <strong style="color: red">({{count($facture_actif)}})</strong>
+                                {{count($facture_actif)}}
                                 @endif
                             </a>
                         </li>
@@ -166,7 +166,7 @@
                             <a href="#" class="" id="nav-encour-tab" data-bs-toggle="tab" data-bs-target="#nav-encour" type="button" role="tab" aria-controls="nav-encour" aria-selected="false">
                                 Facture En Cour
                                 @if (count($facture_encour) > 0)
-                                <strong style="color: red">({{count($facture_encour)}})</strong>
+                                {{count($facture_encour)}}
                                 @endif
                             </a>
                         </li>
@@ -174,7 +174,7 @@
                             <a href="#" class="" id="nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
                                 Facture Payer
                                 @if (count($facture_payer) > 0)
-                                <strong style="color: red">({{count($facture_payer)}})</strong>
+                                {{count($facture_payer)}}
                                 @endif
                             </a>
                         </li>
@@ -191,12 +191,13 @@
                     <table class="table table-striped ">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet / Session / type de formation</th>
-                                <th scope="col">Invoice Date</th>
-                                <th scope="col">Due Date</th>
+                                <th scope="col">Réference module</th>
+                                <th scope="col">Module de formation</th>
+                                <th scope="col">Projet session</th>
+                                <th scope="col">Date de facturation</th>
+                                <th scope="col">Payement du</th>
                                 <th scope="col">Activité</th>
                                 @canany(['isCFP'])
                                 <th scope="col" colspan="2">Action</th>
@@ -207,17 +208,30 @@
                             @if (count($facture_inactif) > 0)
                             @foreach ($facture_inactif as $actif)
                             <tr>
-                                <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
                                 <th>
                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
-                                <td>Nom ETP Static</td>
-                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td> --}}
-                                <td>Nom PRJ/ Nom GRP/ formation Static</td>
+                                <td>{{$actif->nom_etp}}</td>
 
-                                {{-- <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td> --}}
+                                <td>
+                                    @php
+                                        echo html_entity_decode($actif->ref_session)
+                                    @endphp
+                                </td>
+                                <td>
+                                    @php
+                                        echo html_entity_decode($actif->session_facture)
+                                    @endphp
+                                </td>
+
+                                <td>{{$actif->nom_projet.": "}}
+                                    @php
+                                        echo html_entity_decode($actif->module_session)
+                                    @endphp
+                                </td>
+
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
                                 @if ($actif->jour_restant>=1)
@@ -280,9 +294,6 @@
                 {{-- --}}
 
                 <div class="tab-pane fade" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
-                    {{-- <div class="container-fluid">
-                        <div class="row">
-                            <div class="col"> --}}
                     <h6 style="color: #AA076B">Facture Validé</h6>
                     <table class="table table-striped ">
                         <thead>

@@ -295,6 +295,7 @@ create or replace view v_projet_cfp as
 
     create or replace view v_projet_entreprise as
         select
+            gp.cfp_id,
             gp.projet_id,
             nom_projet,
             entreprise_id,
@@ -304,11 +305,13 @@ create or replace view v_projet_cfp as
         from v_groupe_projet_entreprise gp
         join v_totale_session ts on ts.projet_id = gp.projet_id
         group by
-            projet_id,
+            gp.cfp_id,
+            gp.projet_id,
             nom_projet,
             entreprise_id,
             type_formation_id,
-            date_projet;
+            date_projet,
+            totale_session;
 
 create or replace view v_projet_formation as
     select
