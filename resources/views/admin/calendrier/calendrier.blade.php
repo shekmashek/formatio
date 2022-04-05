@@ -450,8 +450,14 @@
                                         etp = etp.replace(":?",userData[$i].entreprise_id);
                                         $('#etp').append(etp);
 
-                                        logo_formateur+='<img src = "{{asset('images/formateurs/:?')}}" class ="rounded-circle"  style="width:50px">';
-                                        logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
+                                        if(userData[$i].photos==null){
+                                            logo_formateur +="   <div class='randomColor photo_users' style='color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center'  >";
+                                        }
+                                        else{
+                                            logo_formateur+='<img src = "{{asset('images/formateurs/:?')}}" class ="rounded-circle"  style="width:80px">';
+                                            logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
+                                        }
+
                                         $('#logo_formateur').append(logo_formateur);
 
                                         logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:80px">';
