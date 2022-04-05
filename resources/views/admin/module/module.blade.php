@@ -5,19 +5,9 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
     <div class="container-fluid pb-3">
-        {{-- <nav class="navbar navbar-expand-lg w-100">
-            <div class="row w-100 g-0 m-0">
-                <div class="col-lg-12">
-                    <div class="row g-0 m-0 mt-4">
-                        @can('isCFP')
-                        <div class="col-12 ">
-                            <a href="{{route('nouveau_module')}}" class="btn_creer text-center"><i class='bx bx-plus-medical icon_creer'></i>Créer un Nouveau Module</a>
-                        @endcan
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav> --}}
+        <nav class="navbar navbar-expand-lg w-100 justify-content-end filter">
+            <a href="#" class="btn_creer text-center"><i class='bx bx-candles icon_creer'></i>Filtrer les modules</a>
+        </nav>
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">
@@ -43,38 +33,6 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-2 filtre_cours ps-3">
-                                <h5 class="mt-3">Filtrer les modules</h5>
-                                <div class="row">
-                                    <form action="">
-                                        <div class="form-row">
-                                            <div class="searchBoxMod">
-                                                <input class="searchInputMod mb-2" type="text" name=""
-                                                    placeholder="Rechercher">
-                                                <button class="searchButtonMod" href="#">
-                                                    <i class="bx bx-search">
-                                                    </i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <p class="mt-2">En cours</p>
-                                <div class="container p-0">
-                                    <ul class="ps-2">
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Excel</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Power BI</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Bureautique</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Management</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Comptabilite</label></li>
-                                    </ul>
-                                </div>
-                            </div>
                             <div class="col-10 ps-3">
                                 <div class="row pading_bas">
 
@@ -217,38 +175,6 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-2 filtre_cours ps-3">
-                                <h5 class="mt-3">Filtrer les modules</h5>
-                                <div class="row">
-                                    <form action="">
-                                        <div class="form-row">
-                                            <div class="searchBoxMod">
-                                                <input class="searchInputMod mb-2" type="text" name=""
-                                                    placeholder="Rechercher">
-                                                <button class="searchButtonMod" href="#">
-                                                    <i class="bx bx-search">
-                                                    </i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <p class="mt-2">Non Publiés</p>
-                                <div class="container p-0">
-                                    <ul class="ps-2">
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Excel</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Power BI</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Bureautique</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Management</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Comptabilite</label></li>
-                                    </ul>
-                                </div>
-                            </div>
                             <div class="col-10 ps-3">
                                 <div class="row pading_bas d-flex flex-wrap">
                                     @foreach($mod_non_publies as $mod)
@@ -467,39 +393,6 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-2 filtre_cours ps-3">
-                                <h5 class="mt-3">Filtrer les modules</h5>
-                                <div class="row">
-                                    <form action="">
-                                        <div class="form-row">
-                                            <div class="searchBoxMod">
-                                                <input class="searchInputMod mb-2" type="text" name=""
-                                                    placeholder="Rechercher">
-                                                <button class="searchButtonMod" href="#">
-                                                    <i class="bx bx-search">
-                                                    </i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <p class="mt-2">Publiés</p>
-
-                                <div class="container p-0">
-                                    <ul class="ps-2">
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Excel</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Power BI</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Bureautique</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Management</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Comptabilite</label></li>
-                                    </ul>
-                                </div>
-                            </div>
                             <div class="col-10 ps-3">
                                 <div class="row pading_bas d-flex flex-wrap">
                                     @foreach($mod_publies as $mod)
