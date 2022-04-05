@@ -287,15 +287,16 @@
                     <table class="table table-striped ">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet / Session / type de formation</th>
-                                <th scope="col">Invoice Date</th>
-                                <th scope="col">Due Date</th>
-                                <th scope="col">Activité</th>
+                                <th scope="col">Réference module</th>
+                                <th scope="col">Module de formation</th>
+                                <th scope="col">Projet session</th>
+                                <th scope="col">Date de facturation</th>
+                                <th scope="col">Payement du</th>
+                                {{-- <th scope="col">Activité</th> --}}
                                 @canany(['isCFP'])
-                                <th scope="col" colspan="2">Action</th>
+                                <th scope="col" colspan="2">Status</th>
                                 @endcanany
                             </tr>
                         </thead>
@@ -303,29 +304,39 @@
                             @if (count($facture_actif) > 0)
                             @foreach ($facture_actif as $actif)
                             <tr>
-                                <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
                                 <th>
                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
+                                <td>{{$actif->nom_etp}}</td>
 
-                                <td>Nom ETP Static</td>
-                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td> --}}
-                                <td>Nom PRJ/ Nom GRP/ formation Static</td>
+                                <td>
+                                    @php
+                                        echo html_entity_decode($actif->ref_session)
+                                    @endphp
+                                </td>
+                                <td>
+                                    @php
+                                        echo html_entity_decode($actif->session_facture)
+                                    @endphp
+                                </td>
 
+                                <td>{{$actif->nom_projet.": "}}
+                                    @php
+                                        echo html_entity_decode($actif->module_session)
+                                    @endphp
+                                </td>
 
-                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td>
-                                <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td> --}}
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
-                                @if ($actif->jour_restant>=1)
+                                {{-- @if ($actif->jour_restant>=1)
                                 <td style="color:red;">{{$actif->jour_restant.' jour(s) restant(s)'}}</td>
                                 @else
                                 <td style="color:red;">temps de payement a éxpirer!</td>
-                                @endif
+                                @endif --}}
                                     @if ($actif->facture_encour == "valider")
-                                    <td style="color:red;"><i class="fa fa-bolt"></i>{{$actif->facture_encour}}</td>
+                                    <td style="color:red;">{{$actif->facture_encour}}</td>
                                     @canany(['isCFP'])
                                     <td>
                                         <div class="dropdown">
@@ -348,7 +359,7 @@
                                     </td>
                                     @endcanany
                                     @elseif ($actif->facture_encour == "en_cour")
-                                    <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
+                                    <td style="color:rgb(198, 201, 25);">{{$actif->facture_encour}}</td>
                                     @canany(['isCFP'])
                                     <td>
 
@@ -372,7 +383,7 @@
                                     </td>
                                     @endcanany
                                     @else
-                                    <td style="color:rgb(15, 221, 67);"><i class="fa fa-check-circle"></i><i class="fa fa-check-circle"></i> {{$actif->facture_encour}}</td>
+                                    <td style="color:rgb(15, 221, 67);">{{$actif->facture_encour}}</td>
                                     @canany(['isCFP'])
                                     <td>
 

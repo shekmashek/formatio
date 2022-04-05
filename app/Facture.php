@@ -490,31 +490,48 @@ $critereForm = [
     public function listSessionInFacture($num_fact,$cfp_id,$projet_id){
         $fonction = new FonctionGenerique();
 
-        $concat="";
+        $data=array();
+        $concatRefModule="";
+        $concatSession="";
+        $concatModule="";
         $facture = $fonction->findWhere("factures",["num_facture","cfp_id","projet_id"],
                 [$num_fact,$cfp_id,$projet_id]);
 
         for($i=0; $i<count($facture); $i+=1){
-            $tabSession = $fonction->findWhereMulitOne("v_groupe_entreprise",
+            $tabSession = $fonction->findWhereMulitOne("v_groupe_projet_entreprise_module",
             ["groupe_entreprise_id","entreprise_id","projet_id"],
             [$facture[$i]->groupe_entreprise_id ,$facture[$i]->entreprise_id, $facture[$i]->projet_id]);
-            $concat.="".$tabSession->nom_groupe;
+
+            $concatModule.="".$tabSession->nom_formation."->".$tabSession->nom_module;
+            $concatSession.="".$tabSession->nom_groupe;
+            $concatRefModule.="".$tabSession->reference;
             if($i+1< count($facture)){
-                $concat.="/ ";
+                $concatModule.="/<br>";
+                $concatSession.="/<br>";
+                $concatRefModule.="/<br>";
             }
         }
-        return $concat;
+        $concatSession="<p>".$concatSession."</p>";
+        $concatModule="<p>".$concatModule."</p>";
+        $concatRefModule="<p>".$concatRefModule."</p>";
+        $data["getSession"]=$concatSession;
+        $data["getModule"]=$concatModule;
+        $data["getRefModule"]=$concatRefModule;
+        return $data;
     }
 
-    public function getSessionInFacture($nomTab,$para=[],$val=[],$nbDebutPagination,$nbPage){
+    public function getListDataFacture($nomTab,$para=[],$val=[],$nbDebutPagination,$nbPage){
         $fonction = new FonctionGenerique();
         $data=array();
         $facture = $fonction->findWherePagination($nomTab, $para, $val,$nbDebutPagination,$nbPage);
 
         for($i=0; $i<count($facture);$i+=1){
         $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture,$facture[$i]->cfp_id,$facture[$i]->projet_id);
+
         $data[$i]= $facture[$i];
-        $data[$i]->session_facture = $sessionConactener;
+        $data[$i]->session_facture = $sessionConactener["getSession"];
+        $data[$i]->module_session = $sessionConactener["getModule"];
+        $data[$i]->ref_session = $sessionConactener["getRefModule"];
         }
             return $data;
     }

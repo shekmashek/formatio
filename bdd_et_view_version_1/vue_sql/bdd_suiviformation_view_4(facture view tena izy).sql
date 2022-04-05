@@ -317,8 +317,20 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (factures.projet_id) as projet_id,
     factures.entreprise_id,
     bon_de_commande,
+    factures.type_facture_id,
+    (type_facture.description) description_type_facture,
+    (type_facture.reference) reference_facture,
     (factures.devise) facture,
     factures.hors_taxe,
+    factures.groupe_entreprise_id,
+    v_groupe_projet_entreprise_module.nom_projet,
+    v_groupe_projet_entreprise_module.groupe_id,
+    v_groupe_projet_entreprise_module.nom_groupe,
+    v_groupe_projet_entreprise_module.date_projet,
+    v_groupe_projet_entreprise_module.reference,
+    v_groupe_projet_entreprise_module.nom_module,
+    v_groupe_projet_entreprise_module.modalite_formation,
+    v_groupe_projet_entreprise_module.duree_jour,
     invoice_date,
     due_date,
     tax_id,
@@ -329,10 +341,13 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     qte,
     num_facture,
     factures.activiter,
-    (type_facture.reference) reference_facture,
     pu,
     entreprises.nom_etp,
-    (entreprises.adresse_rue) adresse,
+    entreprises.adresse_rue,
+    entreprises.adresse_quartier,
+    entreprises.adresse_code_postal,
+    entreprises.adresse_ville,
+    entreprises.adresse_region,
     entreprises.logo,
     reference_bc,
     remise,
@@ -347,22 +362,38 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     entreprises.telephone_etp
 FROM
     factures,
+    v_groupe_projet_entreprise_module,type_facture,
     taxes,
     entreprises,
-    secteurs,
-    type_facture
+    secteurs
 WHERE
-   factures.entreprise_id = entreprises.id AND entreprises.secteur_id = secteurs.id AND
-    factures.tax_id = taxes.id
+    factures.entreprise_id = entreprises.id AND entreprises.secteur_id = secteurs.id AND
+    factures.tax_id = taxes.id AND factures.groupe_entreprise_id = v_groupe_projet_entreprise_module.groupe_entreprise_id  AND type_facture_id = type_facture.id
 GROUP BY
+    entreprises.adresse_rue,
+    entreprises.adresse_quartier,
+    entreprises.adresse_code_postal,
+    entreprises.adresse_ville,
+    entreprises.adresse_region,
     factures.cfp_id,
     factures.projet_id,
     factures.entreprise_id,
+    factures.type_facture_id,
+    type_facture.description,
+    type_facture.reference,
+    factures.groupe_entreprise_id,
+    v_groupe_projet_entreprise_module.nom_projet,
+    v_groupe_projet_entreprise_module.groupe_id,
+    v_groupe_projet_entreprise_module.nom_groupe,
+    v_groupe_projet_entreprise_module.date_projet,
+    v_groupe_projet_entreprise_module.reference,
+    v_groupe_projet_entreprise_module.nom_module,
+    v_groupe_projet_entreprise_module.modalite_formation,
+    v_groupe_projet_entreprise_module.duree_jour,
     bon_de_commande,
     factures.devise,
     factures.hors_taxe,
     invoice_date,
-    type_facture.reference,
     due_date,
     tax_id,
     taxes.description,
@@ -588,6 +619,8 @@ CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
     v_facture_existant.cfp_id,
     v_facture_existant.activiter,
     (cfps.nom) nom_cfp,
+    entreprises.nom_etp,
+    projets.nom_projet,
     v_facture_existant.entreprise_id,
     v_facture_existant.num_facture,
     v_facture_existant.other_message,
@@ -611,11 +644,13 @@ CREATE OR REPLACE VIEW v_facture_actif_tmp AS SELECT
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
     FROM
-        v_facture_existant,cfps
+        v_facture_existant,cfps,entreprises,projets
     WHERE
-      v_facture_existant.activiter = TRUE AND  v_facture_existant.cfp_id = cfps.id
+      v_facture_existant.activiter = TRUE AND  v_facture_existant.cfp_id = cfps.id AND v_facture_existant.entreprise_id = entreprises.id AND v_facture_existant.projet_id = projets.id
     GROUP BY
         cfps.nom,
+        entreprises.nom_etp,
+        projets.nom_projet,
         v_facture_existant.activiter,
         v_facture_existant.cfp_id,
         v_facture_existant.entreprise_id,
@@ -633,10 +668,12 @@ CREATE OR REPLACE VIEW v_facture_inactif_tmp AS SELECT
     v_facture_existant.cfp_id,
     v_facture_existant.activiter,
     (cfps.nom) nom_cfp,
+    entreprises.nom_etp,
+    projets.nom_projet,
     v_facture_existant.entreprise_id,
     v_facture_existant.num_facture,
     v_facture_existant.other_message,
-     (
+    (
         DATEDIFF(
             v_facture_existant.due_date,
             v_facture_existant.invoice_date
@@ -656,13 +693,15 @@ CREATE OR REPLACE VIEW v_facture_inactif_tmp AS SELECT
         v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
         v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
     FROM
-        v_facture_existant,cfps
+        v_facture_existant,cfps,entreprises,projets
     WHERE
-        v_facture_existant.activiter = FALSE  AND  v_facture_existant.cfp_id = cfps.id
+        v_facture_existant.activiter = FALSE  AND  v_facture_existant.cfp_id = cfps.id AND v_facture_existant.entreprise_id = entreprises.id AND v_facture_existant.projet_id = projets.id
     GROUP BY
         v_facture_existant.cfp_id,
         v_facture_existant.activiter,
         cfps.nom,
+        projets.nom_projet,
+        entreprises.nom_etp,
         v_facture_existant.entreprise_id,
         v_facture_existant.num_facture,
         v_facture_existant.other_message,
@@ -679,6 +718,8 @@ select
     cfp_id,
     activiter,
     nom_cfp,
+    nom_etp,
+    nom_projet,
     num_facture,
     entreprise_id,
     other_message,
@@ -694,6 +735,8 @@ group by
     cfp_id,
     activiter,
     nom_cfp,
+    nom_etp,
+    nom_projet,
     num_facture,
     entreprise_id,
     other_message,
@@ -710,6 +753,8 @@ create or replace view v_facture_inactif as
 select
     cfp_id,
     nom_cfp,
+    nom_etp,
+    nom_projet,
     activiter,
     num_facture,
     entreprise_id,
@@ -725,6 +770,8 @@ from v_facture_inactif_tmp
 group by
     cfp_id,
     nom_cfp,
+    nom_etp,
+    nom_projet,
     activiter,
     num_facture,
     entreprise_id,
