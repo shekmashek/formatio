@@ -24,13 +24,13 @@
 <body>
 
     <div class="sidebar">
-        <div class="logo_content">
+        {{-- <div class="logo_content">
             <div class="logo">
                 <span><img src="{{asset('img/images/logo_fmg54Ko.png')}}" alt="" class="img-fluid"></span>
                 <div class="logo_name"><a href="{{ route('home') }}">Formation.mg</a></div>
             </div>
 
-        </div>
+        </div> --}}
         <ul class="nav_list mb-5" onclick="activer(event);" id="menu">
 
             <li>
@@ -38,7 +38,7 @@
                     <i class="bx bxs-dashboard"></i>
                     <span class="links_name">Tableau de bord</span>
                 </a>
-                <span class="tooltip">Tableau de bord</span>
+                {{-- <span class="tooltip">Tableau de bord</span> --}}
             </li>
 
 
@@ -56,7 +56,7 @@
                         <span class="links_name">BI</span>
                     </a>
                     <span class="tooltip">BI</span>
-                 @endcanany
+                @endcanany
                 @canany(['isSuperAdmin'])
                     <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
                         <i class='bx bxs-pie-chart-alt-2'></i>
@@ -494,8 +494,14 @@
     <div class="home_content">
         <div class="container-fluid p-0 height-100 bg-light" id="content">
             <header class="header row align-items-center g-0" id="header">
-                <div class="col-8 align-items-center justify-content-start d-flex flex-row">
+                <div class="col-1 menu_hamburger">
                     <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
+                </div>
+                <div class="col-2 d-flex flex-row">
+                    <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt="" class="img-fluid menu_logo me-3"></span>@yield('title')
+                </div>
+                <div class="col-7 align-items-center justify-content-start d-flex flex-row">
+
                     @canany('isReferent','isStagiaire','isManager')
                     <div class="row">
                         <form method="GET" action="{{route('result_formation')}}">
@@ -507,7 +513,6 @@
                                     <button class="searchButtonMod recherche_formation" href="#">
                                         <i class="bx bx-search"></i>
                                     </button>
-
                                     <a href="{{route('liste_formation')}}" class="btn_next ms-2" role="button" onclick="afficher_catalogue()">Catalogue</a>
                                     <a href="{{route('annuaire')}}" class="btn_next" role="button" onclick="afficher_annuaire()">Annuaire</a>
                                     <a href="{{route('calendrier')}}" class="btn_next" role="button">Agenda</a>
@@ -518,83 +523,32 @@
                     @endcanany
                     @canany('isCFP')
                     <div class="d-flex flex-row">
-                        <a href="{{route('liste_module')}}" class="btn_racourcis" role="button">Modules</a>
-                        <a href="{{route('liste_projet')}}" class="btn_racourcis" role="button">Projets</a>
-                        <a href="{{route('calendrier')}}" class="btn_racourcis" role="button">Agenda</a>
+                        <a href="{{route('liste_module')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-customize'></i><span class="text_racourcis">Modules</span></span></a>
+                        <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bx-library'></i><span class="text_racourcis">Projets</span></span></a>
+                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span class="text_racourcis">Agenda</span></span></a>
                     </div>
                     @endcanany
                     @canany('isStagiaire')
                     <div class="d-flex flex-row">
-                        <a href="{{route('liste_projet')}}" class="btn_racourcis" role="button">Projets</a>
-                        <a href="{{route('calendrier')}}" class="btn_racourcis" role="button">Agenda</a>
+                        <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bx-library'></i><span class="text_racourcis">Projets</span></span></a>
+                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span class="text_racourcis">Agenda</span></span></a>
                     </div>
                     @endcanany
                     @canany('isFormateur')
                     <div class="d-flex flex-row">
-                        <a href="{{route('liste_projet')}}" class="btn_racourcis" role="button">Projets</a>
-                        <a href="{{route('calendrier')}}" class="btn_racourcis" role="button">Agenda</a>
+                        <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bx-library'></i><span class="text_racourcis">Projets</span></span></a>
+                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span class="text_racourcis">Agenda</span></span></a>
                     </div>
                     @endcanany
                 </div>
 
-                <div class="col-4 header-right align-items-center d-flex flex-row">
-                    <div class="col-9 d-flex flex-row justify-content-end mt-4">
+                <div class="col-2 header-right align-items-center d-flex flex-row">
+                    <div class="col-10 d-flex flex-row mt-4">
                         <div class="apprendre_btn mb-2">
-                            <button class="btn_completer" type="button" onclick="afficherTuto();">Apprendre</button>
+                            <button class="" type="button" onclick="afficherTuto();">Apprendre</button>
                         </div>
-                        {{-- <div class="notification-box">
-                            <span class="count-notif">6</span>
-                            <div class="notification-bell">
-                                <i class="bx bxs-bell bell_move" id="bell" style="color: #637381;"></i>
-                            </div>
-                        </div>
-                        <div class="notifications" id="box_notif">
-                            <h2>Notifications - <span>6</span></h2>
-                            <a href="{{route('listes_notifs')}}">
-                                <div class="notifications-item">
-                                    <h4>Vonjy Nomenjanahary,&nbsp;il y a 1h</h4>
-                                    <p>Veut Collaborrer avec votre entreprise</p>
-                                </div>
-                            </a>
-                        </div> --}}
-
-                        {{-- <div class="message-box">
-                            <span class="count-message">
-                                @isset($totale_invitation)
-                                @if($totale_invitation>0)
-                                {{$totale_invitation}}
-                                @else
-                                0
-                                @endif
-                                @endisset
-                            </span>
-                            <div class="notification-bell">
-                                <i class='bx bxs-envelope ms-5 bell_move' id="envelope" style="color: #637381;"></i>
-                            </div>
-                        </div>
-                        <div class="messages" id="box_message">
-                            <h2>Messages - <span>5</span></h2>
-                            <a href="{{route('collaboration')}}">
-                                <div class="notifications-item2">
-                                    <h4>Collaboration <strong style="color:red">
-                                            @isset($totale_invitation)
-                                            @if($totale_invitation>0)
-                                            ({{$totale_invitation}})
-                                            @else
-                                            0
-                                            @endif
-                                            @endisset
-                                        </strong></h4>
-                                    <p>voir mes invitations,demandes</p>
-                                </div>
-                            </a>
-                        </div>--}}
                     </div>
-
-                    {{-- entreprise --}}
-
-                    {{-- user --}}
-                    <div class="col-3 d-flex">
+                    <div class="col-2 d-flex">
                         <div class="header_img">
                             <p>
                                 <div class=""><span><i class="fas fa-user"></i></span>  <span><i style="" class="ms-1 fas fa-angle-down"></i></span></div>
@@ -688,7 +642,7 @@
             {{-- content --}}
             <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
-                <div class="apprendre pt-5">
+                <div class="apprendre pt-5 mt-3">
                     <div class="row">
                         <div class="col">
                             <p class="m-0">Apprendre</p>
@@ -703,7 +657,7 @@
             </div>
             {{-- content --}}
             {{-- footer --}}
-            <div class="footer mt-5">
+            {{-- <div class="footer mt-5">
                 <div class="container-fluid footer_all">
                     <div class="row w-100">
                         <div class="col-12">
@@ -753,7 +707,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         {{-- footer --}}
     </div>

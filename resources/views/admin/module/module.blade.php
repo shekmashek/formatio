@@ -1,35 +1,23 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text-white ms-5" style="font-size: 20px;">Votre module de formation</p>
+<p class="text_header m-0 mt-1">Modules</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
     <div class="container-fluid pb-3">
-        <nav class="navbar navbar-expand-lg w-100">
+        {{-- <nav class="navbar navbar-expand-lg w-100">
             <div class="row w-100 g-0 m-0">
                 <div class="col-lg-12">
-                    <div class="row g-0 m-0" style="align-items: center">
+                    <div class="row g-0 m-0 mt-4">
                         @can('isCFP')
-                        <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            <div class="col d-flex">
-                                <h5 class="mt-3 me-5">Modules</h5>
-                                {{-- <a
-                                    class="btn_enregistrer text-center {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-                                    href="{{route('liste_formation')}}">Precedent</a> --}}
-                            </div>
-
-
-                            <div class="col text-end">
-                                <a href="{{route('nouveau_module')}}" class="btn_enregistrer text-center">Nouvelle
-                                    Module</a>
-                            </div>
-                            @endcan
+                        <div class="col-12 ">
+                            <a href="{{route('nouveau_module')}}" class="btn_creer text-center"><i class='bx bx-plus-medical icon_creer'></i>Créer un Nouveau Module</a>
+                        @endcan
                         </div>
                     </div>
                 </div>
             </div>
-        </nav>
-        <hr>
+        </nav> --}}
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">

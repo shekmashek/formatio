@@ -160,7 +160,7 @@ let menu = document.querySelector(".bx-menu");
 
 function clickSidebar() {
     sidebar.classList.toggle("active");
-    menu.classList.toggle("bx-menu-alt-right");
+    // menu.classList.toggle("bx-menu-alt-right");
 }
 
 function afficherTuto() {
