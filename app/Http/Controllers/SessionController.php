@@ -506,4 +506,5 @@ class SessionController extends Controller
             return back()->with('error','Insription échouée!');
         }
     }
+
 }

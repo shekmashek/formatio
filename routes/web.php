@@ -1040,3 +1040,8 @@ Route::get('modification_telephone_entreprise/{id}','EntrepriseController@modifi
 Route::post('enregistrer_telephone_entreprise/{id}','EntrepriseController@enregistrer_telephone_entreprise')->name('enregistrer_telephone_entreprise');
 Route::get('modification_stat_entreprise/{id}','EntrepriseController@modification_stat_entreprise')->name('modification_stat_entreprise');
 Route::post('enregistrer_stat_entreprise/{id}','EntrepriseController@enregistrer_stat_entreprise')->name('enregistrer_stat_entreprise');
+
+
+
+// modification session
+Route::post('modifier_session_inter','GroupeController@modifier_session_inter')->name('modifier_session_inter');

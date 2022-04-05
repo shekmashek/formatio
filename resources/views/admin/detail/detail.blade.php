@@ -116,7 +116,7 @@
                     @endif
                 </div>
                 <div class="col-md-8">
-                    <p><i class="fa fa-map-marker-alt"></i>&nbsp;Lieu </p>
+                    <p><i class="fa fa-map-marker-alt"></i>&nbsp;Lieu de formation</p>
                 </div>
             </div>
         </div>
@@ -203,10 +203,10 @@
                                 @endif
                                 <div class="col-md-7 px-0 pe-2">
                                     <div class="input-group">
-                                        <input type="text" name="lieu[]" class="form-control my-1" id="lieu" required
+                                        <input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" id="lieu" required
                                             onblur="ville_Lieu();">
                                         <button id="removeRow" type="button"><i
-                                                class="bx bx-minus-circle mx-1 my-3"></i></button>
+                                                class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button>
                                         <input type="hidden" name="ville_lieu" id="ville_lieu">
                                     </div>
                                 </div>
@@ -222,10 +222,10 @@
             <div id="newRow"></div>
             <div class="text-end ms-4">
                 @if ($type_formation_id == 1)
-                    <button id="addRow" type="button"><i class="bx bx-plus-circle"></i></button>
+                    <button id="addRow" type="button"><i class="bx bx-plus-circle" style="font-size: 1.75rem"></i></button>
                 @endif
                 @if ($type_formation_id == 2)
-                    <button id="addRow2" type="button"><i class="bx bx-plus-circle"></i></button>
+                    <button id="addRow2" type="button"><i class="bx bx-plus-circle" style="font-size: 1.75rem"></i></button>
                 @endif
             </div>
 
@@ -779,7 +779,7 @@
                 html += '</div>';
                 html += '<div class="col-md-7 px-0 pe-2">';
                 html += '<div class="input-group">';
-                html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
+                html += '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
                 html +=
                     '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';
@@ -845,9 +845,9 @@
                 html += '</div>';
                 html += '<div class="col-md-7 px-0 pe-2">';
                 html += '<div class="input-group">';
-                html += '<input type="text" name="lieu[]" class="form-control my-1" required>';
+                html += '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
                 html +=
-                    '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
+                    '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';
                 html += '</div>';
                 html += '</div>';

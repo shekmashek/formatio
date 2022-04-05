@@ -1,5 +1,67 @@
 @extends('./layouts/admin')
 @section('content')
+<style>
+    .status_grise{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: rgb(150, 144, 144);
+    color: white;
+}
+.status_annule{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: rgb(184, 3, 3);
+    color: white;
+}
+.status_termine{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: green;
+    color: white;
+}
+.status_confirme{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: #801D68;
+    color: white;
+}
+.status_archive{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: orangered;
+    color: white;
+}
+.statut_active{
+    margin: 0 2px;
+    font-size: 10px;
+    height: 50%;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 1rem;
+    background-color: rgb(15,126,145);
+    color: whitesmoke;
+}
+</style>
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
         <div class="row">
@@ -189,7 +251,7 @@
                         @endcan --}}
                                                     <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                                     <td>
-                                                        <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
+                                                        <div class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}</div>
                                                     </td>
                                                     @can('isCFP')
                                                     <td><a href="" aria-current="page" data-bs-toggle="modal"
@@ -215,9 +277,9 @@
                                                                 </div>
                                                                 @if ($prj->type_formation_id == 1)
                                                                     <div class="row">
-                                                                        <form action="" id="formPayement" method="POST">
+                                                                        <form action="{{ route('modifier_session_inter') }}" id="formPayement" method="POST">
                                                                             @csrf
-                                                                            {{-- <input type="hidden" name="type_formation" value="{{ $type_formation }}"> --}}
+                                                                            <input type="hidden" name="id" value="{{ $pj->groupe_id }}">
                                                                             <div class="row">
                                                                                 <div class="form-group">
                                                                                     <div class="form-row d-flex">
@@ -286,8 +348,6 @@
                                                                                                     </select>
                                                                                                     <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
                                                                                                         class="text-danger">*</strong></label>
-                                                                                                    {{-- <span style="color:#ff0000;" id="module_id_err">Aucun module détecté! veuillez
-                                                                                                        choisir la formation</span> --}}
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="row px-3 mb-5 mt-2">
@@ -300,15 +360,7 @@
                                                                                             </div>
                                                                                             <div class="row px-3">
                                                                                                 <div class="form-group mt-2">
-                                                                                                    {{-- <select class="form-select selectP input" id="module_id" name="module_id"
-                                                                                                        aria-label="Default select example">
-                                                                                                        <option {{ $pj->module_id }}>{{ $pj->nom_module }}</option>
-                                                                                                        @foreach ($module as $mod)
-                                                                                                        <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
-                                                                                                        class="text-danger">*</strong></label> --}}
+                                                                                                   
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="text-center mt-5"><button type="button" class="btn  btn_annuler" data-bs-dismiss="modal">Annuler</button></div>
