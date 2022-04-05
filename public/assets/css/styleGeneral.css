@@ -84,10 +84,11 @@ ul li a {
     align-items: center;
     color: var(--font-sidebar-color);
     z-index: 999;
+    overflow-y: auto;
 }
 
 .sidebar.active {
-    width: 78px;
+    width: 100px;
     overflow-y: auto;
 }
 
@@ -241,9 +242,17 @@ ul li a {
     background: rgba(192, 192, 192, 0.171);
 }
 
+.sidebar.active ul li{
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
 .sidebar.active ul li a{
     display: flex;
     flex-direction: column;
+    text-align: center;
+    padding-right: 1rem;
+    padding-left: 1rem;
 }
 
 .sidebar ul li a i {
@@ -267,9 +276,10 @@ ul li a {
 .sidebar.active .links_name {
     opacity: 1;
     pointer-events: auto;
-    font-size: .5rem;
+    font-size: .6rem;
     position: relative;
     bottom: 1rem;
+    height: 25px;
 }
 
 .sidebar .profile_content {
@@ -366,8 +376,8 @@ ul li a {
 }
 
 .sidebar.active ~ .home_content {
-    width: calc(100% - 78px);
-    left: 78px;
+    width: calc(100% - 100px);
+    left: 100px;
 }
 
 /* .sidebar.active ~ .home_content .header {
@@ -441,12 +451,12 @@ ul li a {
     color: grey;
 }
 
-.header-right {
+/* .header-right {
     display: flex;
     flex-direction: row;
     justify-content: end;
     align-items: center;
-}
+} */
 
 /* icon notifications */
 .header-right .notification-box {
@@ -718,7 +728,7 @@ ul li a {
     background-color: white;
     position: relative;
     margin: 0;
-    right: 20%;
+    right: 1%;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 
@@ -915,9 +925,15 @@ input:-webkit-autofill:active {
     background-color: white;
     border: none;
     border-radius: 30px;
-    padding: 1rem 1.5rem;
+    padding: .2rem 1rem;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.btn_creer a{
+    font-size: .8rem;
+    position: relative;
+    bottom: .2rem;
 }
 
 .btn_creer:hover{
@@ -937,10 +953,28 @@ input:-webkit-autofill:active {
     color: transparent;
     font-size: 1.5rem;
     position: relative;
-    top: .2em;
+    top: .4rem;
     margin-right: .3rem;
 }
 
+.apprendCreer{
+    position: relative;
+    bottom: .5rem;
+}
+
+.icon_plus{
+    color: #7635dc;
+}
+
+.text_apprendre{
+    position: relative;
+    top: .2rem;
+    font-size: .8rem;
+    animation-name: completer_programme;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-iteration-count: 10;
+}
 @keyframes completer_programme{
     0%{
         opacity: 0;
@@ -1241,6 +1275,7 @@ font-size: 0.850rem;
     color: var(--font-sidebar-color);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border: 1px solid grey;
+    z-index: 1;
 }
 
 .apprendre.afficher {
@@ -1312,14 +1347,4 @@ font-size: 0.850rem;
     background: #7535dc28;
 }
 /*btn admin créer*/
-.creer{
-   border-radius: 35px;
-   width: 125px;
-  
 
-}
-.textc{font-size: 18px;}
-.icon_plus{
-color: #7635dc !important;
-
-}
