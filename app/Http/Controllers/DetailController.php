@@ -124,13 +124,32 @@ class DetailController extends Controller
 
     public function informationModule(Request $request)
     {
+        $fonct = new FonctionGenerique();
         $id = $request->Id;
         $detail = DB::select('select * from v_detailmodule where detail_id = ' . $id);
-
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
+        $initial_stg = array();
+        //on récupère l'initial
+        for ($i=0; $i < count($stg); $i++) {
+            array_push($initial_stg,DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from v_participant_groupe_detail where stagiaire_id =  ?', [$stg[$i]->stagiaire_id ]));
+        }
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
-        return response()->json(['detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe]);
+
+        //on teste d'abord si le formateur a une photo ou non
+        $test_photo_formateur = $fonct->findWhereMulitOne(("v_detailmodule"),["groupe_id"],[$id_groupe])->photos;
+        //recuperation de l'initial
+        $photo_form ='';
+        if($test_photo_formateur == null){
+            $test_photo_formateur = DB::select('select SUBSTRING(nom_formateur, 1, 1) AS nm,  SUBSTRING(prenom_formateur, 1, 1) AS pr from v_detailmodule where groupe_id =  ?', [$id_groupe]);
+            $photo_form = 'non';
+            // $user = 'users/users.png';
+        } else{
+            $test_photo_formateur = 'images/formateurs/' . $test_photo_formateur;
+            $photo_form = 'oui';
+        }
+
+        return response()->json(['detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
     }
     //impression
     public function detail_printpdf($id)

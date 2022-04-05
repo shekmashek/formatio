@@ -256,7 +256,7 @@
                         <label class="gauche" for="">Statut:</label>&nbsp;<label id="statut"></label><br>
                         <label class="gauche">Formation:</label>&nbsp;<label class="contenu" id="formation"> </label><br>
                         <label class="gauche">Module:</label>&nbsp;<label class="contenu" id="module"></label><br>
-                        <label class="gauche">Formateur:</label><br><label for="logo" id="logo_formateur"></label>&nbsp;<label id="formateur" class="contenu"></label><br>
+                        <label class="gauche">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
                         <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
                         <label class="gauche" for="">Date - Heure:</label><br>
                         <ul id="date_formation"></ul>
@@ -415,6 +415,10 @@
 
                                     var stg = userDataDetail['stagiaire'];
                                     var date_groupe = userDataDetail['date_groupe'];
+                                    var test_photo = userDataDetail['photo_form'];
+                                    var photo_formateur = userDataDetail['initial'];
+                                    var initial_stg = userDataDetail['initial_stg'];
+
                                     var images = '';
                                     var html = '';
                                     var formation = '';
@@ -450,12 +454,14 @@
                                         etp = etp.replace(":?",userData[$i].entreprise_id);
                                         $('#etp').append(etp);
 
-                                        if(userData[$i].photos==null){
-                                            logo_formateur +="   <div class='randomColor photo_users' style='color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center'  >";
+                                        if(test_photo=='oui'){
+                                            logo_formateur+='<img src = "{{asset("images/formateurs/:?")}}" class ="rounded-circle"  style="width:50px">';
+                                            logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
+                                            $('#logo_formateur').removeClass('randomColor photo_users');
                                         }
                                         else{
-                                            logo_formateur+='<img src = "{{asset('images/formateurs/:?')}}" class ="rounded-circle"  style="width:80px">';
-                                            logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
+                                            logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
+                                            // $('.photo_users').append(html);
                                         }
 
                                         $('#logo_formateur').append(logo_formateur);
@@ -490,15 +496,19 @@
                                     $('#date_formation').append(html);
 
                                     var html = '';
-                                    // for (var $a = 0; $a < stg.length; $a++) {
-                                    //     html += '+stg[$a].matricule+' - '+stg[$a].nom_stagiaire+'  '+stg[$a].prenom_stagiaire+' - '+stg[$a].fonction_stagiaire+' - '+stg[$a].mail_stagiaire+' - '+stg[$a].telephone_stagiaire+'</a>'
-                                    //     html = html.replace(":?",stg[$a].stagiaire_id);
-                                    //     html = html.replace(":!",stg[$a].photos);
-                                    // }
+
                                     for (var $a = 0; $a < stg.length; $a++) {
-                                        html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
-                                        html = html.replace(":?",stg[$a].stagiaire_id);
-                                        html = html.replace(":!",stg[$a].photos);
+                                        if(stg[$a].photos == null) {
+                                           html += '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</span>';
+                                           html += '<a href="{{url("profile_stagiaire/:?")}}" target = "_blank"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                        }
+                                        else{
+                                            html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                            html = html.replace(":?",stg[$a].stagiaire_id);
+                                            html = html.replace(":!",stg[$a].photos);
+
+                                        }
+
                                     }
                                     $('#liste_app').append(html);
                                 }
