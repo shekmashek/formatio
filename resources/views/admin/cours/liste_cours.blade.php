@@ -3,10 +3,10 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
             	<br>
                 <h3>Cours</h3>
-            </div>
+            </div> --}}
             <form class="navbar-form navbar-left" role="search">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

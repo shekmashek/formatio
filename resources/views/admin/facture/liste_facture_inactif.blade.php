@@ -72,10 +72,10 @@
 
 
 
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 <br>
                 <h3> <strong>Liste Facture</strong></h3>
-            </div>
+            </div> --}}
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">

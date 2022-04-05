@@ -198,7 +198,6 @@ class AbonnementController extends Controller
             $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
             $abn = type_abonnement::all();
-
             if ($test_abonne) {
                 $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
                 return view('superadmin.listeAbonnement', compact('abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));

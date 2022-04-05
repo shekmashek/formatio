@@ -28,13 +28,13 @@
 
         @endif
         @if ($ref->nif==null or $ref->stat==null or $ref->rcs==null)
-            <div id="in1" class="p-2 mt-1 alert alert-danger text-center" role="alert">
+            <div id="in2" class="p-2 mt-1 alert alert-danger text-center" role="alert">
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez vous complétez vos informations professionnel ! </span> &nbsp;
                 <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('profil_of',$ref->id)}}">Modifier vos infos légales</a>
             </div>
         @endif
         @if(count($formateur) == null or count($formateur) =='')
-            <div id="in2" class="p-2 mt-1 alert alert-danger text-center" role="alert">
+            <div id="in3" class="p-2 mt-1 alert alert-danger text-center" role="alert">
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez collaborer au moins avec un formateur ! </span> &nbsp;
                 <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('collaboration')}}">Collaborez-vous maintenant</a>
             </div>

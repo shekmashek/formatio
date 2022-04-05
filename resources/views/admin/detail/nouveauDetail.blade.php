@@ -8,7 +8,7 @@
                         <ul class="nav nav-pills">
                             {{-- <li class ="{{ Route::currentRouteNamed('liste_session') ? 'active' : '' }}"><a href="{{route('liste_session')}}"><span class="glyphicon glyphicon-calendar"></span> Session</a></li> --}}
                             <li class="{{ Route::currentRouteNamed('liste_detail') ? 'active' : '' }}"><a href="{{route('liste_detail')}}"><span class="glyphicon glyphicon-th-list"></span> Liste des détails</a></li>
-                            <li class="{{ Route::currentRouteNamed('nouveau_detail') ? 'active' : '' }}"><a href="{{route('nouveau_detail')}}"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau</a></li>
+                            {{-- <li class="{{ Route::currentRouteNamed('nouveau_detail') ? 'active' : '' }}"><a href="{{route('nouveau_detail')}}"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau</a></li> --}}
 
                         </ul>
                     </div>

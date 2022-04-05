@@ -3,7 +3,7 @@
 
 <div id="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
                 <br>
                 <h3>Nouveau Formateur</h3>
@@ -29,13 +29,12 @@
                             </li>
 
                         </ul>
-{{-- q --}}
 
                     </div>
                 </div>
             </nav>
 
-        </div>
+        </div> --}}
 
         <div class="row">
             <div class="col-lg-12">

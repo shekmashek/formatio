@@ -62,13 +62,13 @@
     @endif
 
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12">
                 <h1>Appel d'offre</h1>
             </div>
-        </div>
+        </div> --}}
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        {{-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -79,7 +79,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
 
         {{--

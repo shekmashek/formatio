@@ -48,12 +48,12 @@
 
     </style>
 
-    <div class="row w-100 bg-none mt-5 font_text">
+    <div class="row w-100 bg-none mt-2 font_text">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {{-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
 
                             <a class="nav-link  {{ Route::currentRouteNamed('nouveau_formateur') ? 'active' : '' }}" aria-current="page" href="{{route('nouveau_formateur')}}">
@@ -61,7 +61,7 @@
 
                         </li>
 
-                    </ul>
+                    </ul> --}}
 {{-- q --}}
 
                 </div>

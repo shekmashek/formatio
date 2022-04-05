@@ -2,12 +2,12 @@
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
             	<br>
                 <h3>EVALUATION</h3>
             </div>
-        </div>
+        </div> --}}
         <form action="{{route('evaluation.store')}}" method = "post">
             @csrf
 
