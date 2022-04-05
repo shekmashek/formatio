@@ -824,6 +824,9 @@ class ParticipantController extends Controller
             if($stagiaire->genre_stagiaire == 2){
                 $genre = 'Homme';
             }
+            if($stagiaire->genre_stagiaire == null){
+                $genre = '';
+            }
             return view('admin.participant.profile', compact('entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
             // $stagiaires = db::select('select * from stagiaires where matricule = ?',[$matricule]);
             // $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();

@@ -49,6 +49,12 @@ ALTER TABLE stagiaires
 - Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
 
 --------mars 24
+ALTER TABLE stagiaires
+DROP COLUMN genre_stagiaire;
+ALTER TABLE stagiaires
+    add column genre_stagiaire bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_stagiaire) REFERENCES genre(id);
+
 ALTER TABLE responsables
 DROP COLUMN sexe_resp;
 ALTER TABLE responsables
