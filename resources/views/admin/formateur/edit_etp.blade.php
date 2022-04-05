@@ -1,56 +1,12 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style>
-  .input{
-        width: 205px;
-    }
-.test {
-    padding: 2px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: #9E9E9E;
-    border: 1px solid #BDBDBD;
-    font-size: 16px;
-    letter-spacing: 1px;
-    height: 50px !important
-}
+<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
-.test:focus{
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 2px solid #E53935 !important;
-    outline-width: 0 !important;
-}
-
-.form-control-placeholder {
-  position: absolute;
-  top: 1rem;
-  padding: 12px 2px 0 2px;
-  padding: 0;
-  padding-top: 2px;
-  padding-bottom: 5px;
-  transition: all 300ms;
-  opacity: 0.5;
-  left: 2rem;
-}
-
-.test:focus+.form-control-placeholder,
-.test:valid+.form-control-placeholder {
-  font-size: 95%;
-  font-weight: bolder;
-  top: 1.5rem;
-  transform: translate3d(0, -100%, 0);
-  opacity: 1;
-  background-color: white;
-  margin-left: 90px;
-}
-</style>
 <center>                
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Poste</p>
+        
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
         
@@ -102,7 +58,7 @@
                       
                   <input type="text" class="form-control test input"  name="specialite" value="   {{ $formateur->specialite }}">
                
-                  <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Poste</label>
+                  <label class="ml-3 form-control-placeholder" >Poste</label>
                          
                 </div>
             </div>

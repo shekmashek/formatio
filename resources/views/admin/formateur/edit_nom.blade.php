@@ -6,7 +6,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Nom</p>
+        
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row px-3 mt-4">

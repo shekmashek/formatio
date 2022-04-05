@@ -2,18 +2,14 @@
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
-
 <center>                
-
 <div class="col-lg-4">
     <div class="p-3 form-control">
    
-        <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_mdp_formateur',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
-          
             <div class="row px-3 mt-4">
               <div class="form-group mt-1 mb-1">
-
           <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="" required>
           <label class="ml-3 form-control-placeholder" style="">Ancien mot de passe</label>
           {{-- si l'ancien mot de passe est incorrect --}}
