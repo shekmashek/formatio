@@ -130,7 +130,7 @@
                     <div class="hover" style="border-bottom: solid 1px #d399c2;">
                         <a href="{{ route('edit_genre', $stagiaire->id) }} ">
                             <p class="p-1 m-0" style="font-size: 10px;">GENRE<span
-                                    style="float: right;">{{ $stagiaire->genre_stagiaire }}&nbsp;<i
+                                    style="float: right;">{{ $genre }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
                             </p>
                         </a>
@@ -272,7 +272,7 @@
                                 </p>
                             </a>
                         @endcanany
-                        
+
                     </div>
                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
                         @can('isStagiaire')

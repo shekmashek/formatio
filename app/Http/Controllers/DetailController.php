@@ -279,6 +279,9 @@ class DetailController extends Controller
                 if($request['debut'][$i]== null || $request['fin'][$i] == null){
                     throw new Exception("Vous devez completer l'heure de la scéance.");
                 }
+                if($request['debut'][$i] >= $request['fin'][$i] ){
+                    throw new Exception("L'heure de debut doit être inférieur à l'heure de fin.");
+                }
                 DB::insert('insert into details(lieu,h_debut,h_fin,date_detail,formateur_id,groupe_id,projet_id,cfp_id) values(?,?,?,?,?,?,?,?)', [$request['lieu'][$i], $request['debut'][$i], $request['fin'][$i], $request['date'][$i], $request['formateur'][$i], $request->groupe, $request->projet, $cfp_id]);
             }
             DB::update('update groupes set status = 1 where id = ?', [$request->groupe]);
@@ -293,7 +296,9 @@ class DetailController extends Controller
     public function storeInter(Request $request)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id]);
+        $cfp_id = $resp->cfp_id;
         //condition de validation de formulaire
         $request->validate(
             [

@@ -230,7 +230,6 @@ class getImageModel extends Model
                 $root = $value['path'];
        }
        $dir = '/'.$root;
-
        $recursive = true; // Get subdirectories also?
        $sub_directory = collect(Storage::cloud()->listContents($dir, $recursive));
        foreach ($sub_directory as $key => $value) {

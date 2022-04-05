@@ -62,9 +62,8 @@
                                             <th>Fonction</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
-                                            <th>Role asigné</th>
-                                            <th>Role non asigné</th>
-                                            <th>Netoyé</th>
+                                            <th>Role</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -257,6 +256,9 @@
                                 </table>
                             </div>
                         </div>
+                        @endfor
+                        </tbody>
+                        </table>
                     </div>
                     {{-- employé --}}
                     <div class="tab-pane fade show" id="tab-referent" role="tabpanel" aria-labelledby="employé">
@@ -597,6 +599,9 @@
                             </div>
                         </div>
                     </div>
+                    @endfor
+                    </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -608,9 +613,10 @@
 <script type="text/javascript">
     //Pour chaque div de classe randomColor
     $(".randomColor").each(function() {
-      //On change la couleur de fond au hasard
-      $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16));
+        //On change la couleur de fond au hasard
+        $(this).css("background-color", '#' + (Math.random() * 0xFFFFFF << 0).toString(16));
     })
+
 </script>
 <script>
     $.ajaxSetup({
@@ -619,20 +625,139 @@
         }
     });
 
-    $(".supprimer").on('click', function(e) {
-        var id = e.target.id;
-        // alert(JSON.stringify(id));
+    /*============ Referent =================*/
+    $(".retirer_referent").on('click', function(e) {
+        var user_id = $(this).data("user-id");
+        var role_id = $(this).data("role-id");
         $.ajax({
             type: "GET"
-            , url: "{{route('destroy_chefDepartement')}}"
+            , url: "{{route('delete_role_user')}}"
             , data: {
-                Id: id
+                user_id: user_id
+                , role_id: role_id
             }
             , success: function(response) {
                 if (response.success) {
                     window.location.reload();
                 } else {
-                    alert("Error")
+                    alert("Error");
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+
+    $(".ajouter_referent").on('change', function(e) {
+        var user_id = $(this).data("user-id");
+        var role_id = $(this).data("role-id");
+        $.ajax({
+            type: "GET"
+            , url: "{{route('add_role_user')}}"
+            , data: {
+                user_id: user_id
+                , role_id: role_id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert("Error");
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+
+    /*============ stg =================*/
+    $(".retirer_stg").on('click', function(e) {
+        var user_id = $(this).data("user-id");
+        var role_id = $(this).data("role-id");
+        $.ajax({
+            type: "GET"
+            , url: "{{route('delete_role_user')}}"
+            , data: {
+                user_id: user_id
+                , role_id: role_id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert("Error");
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+
+    $(".ajouter_stg").on('change', function(e) {
+        var user_id = $(this).data("user-id");
+        var role_id = $(this).data("role-id");
+        $.ajax({
+            type: "GET"
+            , url: "{{route('add_role_user')}}"
+            , data: {
+                user_id: user_id
+                , role_id: role_id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert("Error");
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+
+    /*============ stg =================*/
+    $(".retirer_manager").on('click', function(e) {
+        var user_id = $(this).data("user-id");
+        var role_id = $(this).data("role-id");
+        $.ajax({
+            type: "GET"
+            , url: "{{route('delete_role_user')}}"
+            , data: {
+                user_id: user_id
+                , role_id: role_id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert("Error");
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+
+    $(".ajouter_manager").on('change', function(e) {
+        var user_id = $(this).data("user-id");
+        var role_id = $(this).data("role-id");
+        $.ajax({
+            type: "GET"
+            , url: "{{route('add_role_user')}}"
+            , data: {
+                user_id: user_id
+                , role_id: role_id
+            }
+            , success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert("Error");
                 }
             }
             , error: function(error) {

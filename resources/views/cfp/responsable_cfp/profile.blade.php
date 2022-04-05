@@ -31,9 +31,9 @@
                     <a href="{{route('modification_photo',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos_resp_cfp==null)
-                        <img src="{{asset('images/users/user.png')}}" class="image-ronde">
+                            <img src="{{asset('images/users/user.png')}}" class="image-ronde">
                         @else
-                        <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
+                            <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
                         @endif
 
 
@@ -68,7 +68,7 @@
                             <strong  style="color:red">
                             incomplète</strong>&nbsp;
                             @else
-                           {{$refs->sexe_resp_cfp}}&nbsp;
+                           {{$refs->genre}}&nbsp;
                             @endif
                             <i class="fas fa-angle-right"></i></span>
                         </p>
@@ -98,7 +98,7 @@
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('modificationn_telephone',$refs->id)}} ">
+                    <a href="{{route('modification_telephone',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                         </p>
@@ -176,7 +176,7 @@
                 </div> --}}
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
-                    <a href="{{route('profil_cfp',$refs->cfp_id)}}">
+                    <a href="{{route('profil_of',$refs->cfp_id)}}">
                         <p class="p-1 m-0" style="font-size: 10px;">ORGANISME DE FORMATION<span style="float: right;">{{$refs->nom_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>

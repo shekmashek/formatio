@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\FonctionGenerique;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class RoleUser extends Model
@@ -14,12 +15,12 @@ class RoleUser extends Model
 
     public function queryWhereRole_etp($val = [])
     {
-        $query = "SELECT * FROM v_role_etp WHERE ";
+        $query = "select * FROM v_role_etp WHERE 1=1";
         for ($i = 0; $i < count($val); $i++) {
-            $query .= "id!=" . $val[$i]->role_id;
-            if ($i + 1 < count($val)) {
-                $query .= " AND ";
-            }
+            $query .= " and id != " . $val[$i]->role_id;
+            // if ($i + 1 < count($val)) {
+            //     $query .= " and ";
+            // }
         }
         return $query;
     }
@@ -68,9 +69,9 @@ class RoleUser extends Model
         $tab_role_user = DB::select('select * from role_users where user_id=? and role_id!=?',[$user_id,$role_id]);
         DB::beginTransaction();
         try {
-            $query = DB::update("UPDATE role_users SET activiter=true WHERE user_id=? AND role_id=?", [$user_id, $role_id]);
+            $query = DB::update("update role_users SET activiter=true WHERE user_id=? AND role_id=?", [$user_id, $role_id]);
             for ($i = 0; $i < count($tab_role_user); $i += 1) {
-                DB::update("UPDATE role_users SET activiter=false WHERE user_id=? AND role_id=?", [$user_id, $tab_role_user[$i]->role_id]);
+                DB::update("update role_users SET activiter=false WHERE user_id=? AND role_id=?", [$user_id, $tab_role_user[$i]->role_id]);
             }
             DB::commit();
         } catch (Exception $e) {

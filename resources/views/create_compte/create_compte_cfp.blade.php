@@ -83,8 +83,9 @@
                     {{-- <li id="confirm"></li> --}}
                 </ul>
 
-                <fieldset class="shadow mt-0 p-3 bg-body rounded">
+                <fieldset class="shadow mt-0 p-3 bg-body rounded  field-cfp">
                     <h6 align="left" class="mb-2">Veuillez entrer le profil professionnel de votre organisation</strong></h4>
+
                         <div class="form-group">
                             <input type="text" name="name_cfp" class="form-control input_inscription" id="name_cfp" required />
                             <label for="name_cfp" class="form-control-placeholder">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
@@ -94,10 +95,6 @@
                             </div>
                             @enderror
                             <span style="color:#ff0000;" id="name_cfp_err"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
-                            <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
                         </div>
                         <div class="form-group">
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_cfp" />
@@ -117,14 +114,28 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
+                            @if ($errors->has('logo_cfp'))
+                            <div class="error">
+                                {{ $errors->first('logo_cfp') }}
+                            </div>
+                            @endif
+                            <p id="error_logo_cfp" style="color:#ff0000;"></p>
+
                         </div>
-                        <input type="button" name="next" class="next action-button" value="Suivant" />
+                        <div class="form-group">
+                            <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
+                            <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
+                        </div>
+                            <input type="button" name="next" class="next action-button  suivant_of_1 " value="Suivant" />
+                            {{-- <input type="button" name="next" class="next action-button " value="Suivant" /> --}}
+
+
                 </fieldset>
 
 
                 {{-- --}}
 
-                <fieldset class="shadow p-3 bg-body rounded">
+                <fieldset class="shadow p-3 bg-body rounded field2-cfp">
                     <h6 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
 
                         <div class="form-group">
@@ -135,6 +146,8 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
+                            <span style="color:#ff0000;" id="nom_resp_cfp_err"></span>
+
                         </div>
                         <div class="form-group">
                             <input type="text" name="prenom_resp_cfp" class="form-control input_inscription" id="prenom_resp_cfp" />
@@ -163,6 +176,8 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
+                            <span style="color:#ff0000;" id="fonction_resp_cfp_err"></span>
+
                         </div>
                         <div class="form-group">
                             <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
@@ -188,11 +203,12 @@
                             <div class="col-sm-12">
                                 <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
                                 <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                    <a href="{{route('condition_generale_de_vente')}}" class="nav-item" style="font-size: 14px">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong>  du plateforme</a>
+                                    <a href="{{route('condition_generale_de_vente')}}" target="_blank" class="nav-item" style="font-size: 14px">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
                                 </label>
                             </div>
                         </div>
-                        <div class="row justify-content-center" >
+
+                            <div class="row justify-content-center">
                             <h6 align="left"><strong style="font-size: 15px">Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
                             <div class="col-sm-3"></div>
                             <div class="col-sm-1" style="display: grid; place-content: center;">
@@ -203,7 +219,7 @@
                             </div>
                             <div class="col-sm-1" style="display: grid; place-content: center;">
                                 <div class="form-group">
-                                    <input required type="number" name="val_robot" class="form-control input"  placeholder="?" id="val_robot" style="width: 60px; border: none; outline: none; position:relative; top:0.5rem;" />
+                                    <input required type="number" name="val_robot" class="form-control input" placeholder="?" id="val_robot" style="width: 60px; border: none; outline: none; position:relative; top:0.5rem;" />
                                 </div>
                             </div>
                             <div class="col-sm-1" style="display: grid; place-content: center;">
@@ -216,25 +232,17 @@
                             <div class="col-sm-3"></div>
                         </div>
 
-                        <input type="button" name="previous" class="previous action-button" value="Précedent" />
-                        <button type="submit" class=" action-button">Confirmer</button>
+
+
+                                <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                                <button type="submit" class=" action-button suivant_of_confirmer">Confirmer</button>
+                                {{-- <button type="submit" class=" action-button">Confirmer</button> --}}
+
 
                         {{-- <input type="button" name="make_payment" class="next action-button" value="Suivant" /> --}}
                 </fieldset>
 
-                {{-- --}}
-                {{--
-                <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
-                    <div class="form-group">
-                        <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
-                    </div>
-                    <input type="button" name="previous" class="previous action-button" value="Précedent" />
-                    <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
-                </fieldset> --}}
 
-
-                {{-- --}}
             </div>
 
 

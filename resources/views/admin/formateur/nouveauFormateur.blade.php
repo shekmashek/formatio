@@ -92,8 +92,8 @@
                                             <div class="select-group">
                                                 <select name="sexe" id="sexe" class="form-control">
                                                     <option value="null" disabled selected hidden>Sexe</option>
-                                                    <option value="homme">Homme</option>
-                                                    <option value="femme">Femme</option>
+                                                    <option value="1">Homme</option>
+                                                    <option value="2">Femme</option>
                                                 </select>
                                             </div>
                                             @error('sexe')
@@ -194,12 +194,12 @@
                                     <div class="row mt-2">
                                         <div class="col-lg-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="domaine[]" id="domaine" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Domaine" class="domaine" required>
+                                                <input type="text" class="form-control" name="domaine[]" id="domaine" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="competences" class="domaine" required>
+                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 mt-3" align="center">
@@ -356,12 +356,12 @@ $(document).on('change', '#cin', function() {
         html += '<div class="row" id="inputFormRow1">';
         html += '<div class="col-lg-5">';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control" name="domaine[]" id="domaine" title="5 à 50 caractères" placeholder="Domaine" class="domaine" required>';
+        html += '<input type="text" class="form-control" name="domaine[]" id="domaine" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>';
         html += '</div>';
         html += '</div>';
         html += '<div class="col-lg-5">';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control" name="competences[]" id="competences" title="5 à 255 caractères" placeholder="competences" class="domaine" required>';
+        html += '<input type="text" class="form-control" name="competences[]" id="competences" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>';
         html += '</div>';
         html += '</div>';
         html += '<div class="col-lg-2 mt-3" align="center">';

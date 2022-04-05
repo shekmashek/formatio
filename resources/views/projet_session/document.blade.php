@@ -1,5 +1,5 @@
 <div class="row">
-    @can('isCFP')
+    @canany(['isCFP','isFormateur'])
         <h6>Choisissez le(s) fichier(s) pour cette session</h6>
         <div class="col-12 d-flex flex-wrap">
             <form action="{{ route('save_documents') }}" method="post">
@@ -20,10 +20,13 @@
                         </div>
                     @endforeach
                 </div>
+                @if (count($documents) > 0)
                 <button type="submit" class="btn inserer_emargement">Enregistrer</button>
+                @endif
+                
             </form>
         </div>
-    @endcan
+    @endcanany
     @can('isReferent')
         <h6>Le(s) fichier(s) pour cette session</h6>
         <div class="col-12 d-flex flex-wrap">

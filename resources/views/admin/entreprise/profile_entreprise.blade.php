@@ -8,13 +8,22 @@
                         <div class="row m-l-2 m-r-2">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="/dynamic-image/{{$entreprise->logo}}" width="25%" height="25%" class="img-radius">
-
+                                    <div class="m-b-25">
+                                        <div class="hover">
+                                            <a>
+                                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="25%" height="25%" class="img-radius">
+                                            </a>
+                                        </div>
                                     </div>
-                                    <h6 class="f-w-600">{{$entreprise->nom_etp}}</h6>
                                     {{-- <p>{{$var->fonction_chef}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i> --}}
                                 </div>
+                                <div class="hover" >
+                                    <a href="">
+                                     <h4 class="f-w-600 mt-5" style="margin-left: 50px">{{$entreprise->nom_etp }}</h4>
+                                    </a>
+                                </div>
                             </div>
+
                             <div class="col-sm-8">
                                 <div class="card-block">
                                     <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information personnelle</h6>

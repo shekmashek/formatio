@@ -44,11 +44,26 @@
 }
 </style>
 <center>
-
+ {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
+ @if (\Session::has('error'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!! \Session::get('error') !!}</li>
+     </ul>
+ </div>
+ @endif
+ {{-- si l'utiliisateur a  choisir un fichier > 60Ko--}}
+ @if (\Session::has('error_logo'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!! \Session::get('error_logo') !!}</li>
+     </ul>
+ </div>
+ @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photos de profile</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
+        <p style="text-align: left">Photos de profil <strong>(60Ko max)</strong></p>
+        <form   class="btn-submit" action="{{route('update_photo_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -77,7 +92,7 @@
                           <option value="Femme">Femme</option>
 
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
+
 
                         <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
                             <option value="Mr">Mr</option>
@@ -88,7 +103,7 @@
                             <option value="Dir">Dir</option>
                             <option value="PDG">PDG</option>
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label>
+
 
 
                         <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
@@ -125,7 +140,7 @@
 
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
 
-                    <input type="hidden" value="   {{ $branche->nom_branche }}"  class="form-control test"  name="lieu" placeholder="Matricule" >
+                    <input type="hidden" value="   {{ $branche->id }}"  class="form-control test"  name="lieu_travail" placeholder="Matricule" >
 
 
                   </div>

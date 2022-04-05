@@ -39,8 +39,7 @@ class EvaluationChaudController extends Controller
         $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
         $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
         $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-        $data = $fonct->findWhereMulitOne('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);; // return les information du project avec detail et information du stagiaire
-        
+        $data = $fonct->findWhereMulitOne('v_stagiaire_groupe',['stagiaire_id','groupe_id'],[$stg_id,request()->groupe]);; // return les information du project avec detail et information du stagiaire
         // $stagiaire = $data['stagiaire'];
         // $detail = $data['detail'];
 
@@ -69,7 +68,7 @@ class EvaluationChaudController extends Controller
             // return back()->with('avis','avis pour la formation');
         }catch(Exception $e){
             DB::rollback();
-            return redirect()->back()->with('error','insertion échoué');
+            return redirect()->back()->with('error_evaluation',$message);
         }
     }
 

@@ -36,3 +36,43 @@ creation de vue v_montant_session => bdd_suiviformation_view_4.0(modification_vi
 
 ALTER TABLE participant_groupe
 ADD CONSTRAINT incription_session UNIQUE (groupe_id,stagiaire_id);
+
+--------mars 23
+
+-creation view v_detail_session => bdd_suiviformation_view_4.0(modification_views_projet)
+
+-recréer view v_stagiaire_groupe => bdd_suiviformation_view_4.0(modification_views_projet)
+
+ALTER TABLE stagiaires
+    modify genre_stagiaire bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_stagiaire) REFERENCES genre(id);
+- Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
+
+--------mars 24
+ALTER TABLE responsables
+DROP COLUMN sexe_resp;
+ALTER TABLE responsables
+    add column genre_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
+
+ALTER TABLE formateurs
+DROP COLUMN genre;
+ALTER TABLE formateurs
+    add column genre_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
+
+ALTER TABLE chef_departements
+DROP COLUMN genre_chef;
+ALTER TABLE chef_departements
+    add column genre_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(genre_id) REFERENCES genre(id);
+
+- Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
+
+----------mars 28
+ALTER TABLE description_champ_reponse
+add column point_champ int(5) default 0;
+
+----------mars 31
+recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
+recréer vu v_responsable_entreprise => bdd_suiviformation_view_29(budgetisation)

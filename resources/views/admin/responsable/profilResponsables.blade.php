@@ -86,9 +86,9 @@
                     <a href="{{route('edit_photos_resp',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos==null)
-                        <img src="{{asset('images/users/user.png')}}" class="image-ronde">
+                            <img src="{{asset('images/users/user.png')}}" class="image-ronde">
                         @else
-                        <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
+                            <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                         @endif
 
 
@@ -176,30 +176,24 @@
             <div class="form-control">
                 <p class="text-center">Informations professionnelles</p>
 
-                <div style="border-bottom: solid 1px #d399c2;" class="">
-                    <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 10px;">Poste responsable<span style="float: right;">{{$refs->poste_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
-                        </p>
-                    </a>
-                </div>
 
                 <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{optional(optional($refs)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 10px;"><a href="{{route('profile_entreprise',$refs->entreprise_id)}}">ENTREPRISE</a><span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
 
                 </div>
 
-                <div style="border-bottom: solid 1px #d399c2;" class="">
+                {{-- <div style="border-bottom: solid 1px #d399c2;" class="">
                     <a hrefs="#">
                         <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
-                </div>
+                </div> --}}
 
                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
             </div>

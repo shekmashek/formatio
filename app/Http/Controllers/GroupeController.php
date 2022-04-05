@@ -82,8 +82,8 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
-        $module = $fonct->findWhere("modules", ["formation_id","cfp_id"], [$rq->id,$cfp_id]);
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
+        $module = $fonct->findWhere("modules", ["formation_id","cfp_id",'status'], [$rq->id,$cfp_id,2]);
 
         return response()->json($module);
     }
@@ -126,6 +126,9 @@ class GroupeController extends Controller
             }
             if($request->payement == null){
                 throw new Exception("Vous devez choisir une entreprise pour la formation.");
+            }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
             }
             DB::beginTransaction();
             $projet = new projet();
@@ -172,10 +175,13 @@ class GroupeController extends Controller
 
         try{
             if($request->date_debut >= $request->date_fin){
-                throw new Exception("Date de début doit être inférieur date de fin.");
+                throw new Exception("Date de début doit être inférieur à la date de fin.");
             }
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
+            }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être au participant maximal.");
             }
             DB::beginTransaction();
             $projet = new projet();

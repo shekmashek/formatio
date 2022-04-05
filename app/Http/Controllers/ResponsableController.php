@@ -21,6 +21,8 @@ use App\Models\FonctionGenerique;
 /* ====================== Exportation Excel ============= */
 use App\Exports\ResponsableExport;
 use Excel;
+use Illuminate\Support\Facades\URL;
+use Exception;
 
 class ResponsableController extends Controller
 {
@@ -105,8 +107,8 @@ class ResponsableController extends Controller
 
                             DB::beginTransaction();
                             try {
-                                $fonct->insert_role_user($use_id_inserer, "2"); // referent etp
-                                $fonct->insert_role_user($use_id_inserer, "3"); // stagiaire
+                                $fonct->insert_role_user($use_id_inserer, "2",1); // referent etp
+                                $fonct->insert_role_user($use_id_inserer, "3",1); // stagiaire
                                 DB::commit();
                             } catch (Exception $e) {
                                 DB::rollback();
@@ -206,7 +208,7 @@ class ResponsableController extends Controller
         $resp->adresse_ville = $request->ville;
         $resp->adresse_quartier = $request->quartier;
         $resp->adresse_code_postal = $request->code_postal;
-        $resp->sexe_resp = $request->sexe_resp;
+        $resp->genre_id = $request->sexe_resp;
         $resp->poste_resp = $request->poste;
         $resp->date_naissance_resp = $request->dte_resp;
         //insertion image
@@ -271,16 +273,17 @@ class ResponsableController extends Controller
     {
         if (Gate::allows('isReferent')) {
             if ($id != null) {
-                $refs = responsable::findOrFail($id);
+                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
             } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
-                $refs = responsable::findOrFail($id);
+                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+                $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
             }
-
-            return view('admin.responsable.profilResponsables', compact('refs'));
+            // dd($refs);
+            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
-            $refs = responsable::findOrFail($id);
+            $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
             return view('admin.responsable.profilResponsable', compact('refs'));
         }
     }
@@ -310,91 +313,91 @@ class ResponsableController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_nom', compact('responsable'));
     }
     public function edit_naissance($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_naissance', compact('responsable'));
     }
     public function edit_genre($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_genre', compact('responsable'));
     }
     public function edit_mail($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_mail', compact('responsable'));
     }
     public function edit_phone($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_phone', compact('responsable'));
     }
     public function edit_adresse_etp($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_adresse_etp', compact('responsable'));
     }
     public function edit_logo($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_logo', compact('responsable'));
     }
     public function edit_site($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_site', compact('responsable'));
     }
     public function edit_email_etp($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_email_etp', compact('responsable'));
     }
     public function edit_phone_etp($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_phone_etp', compact('responsable'));
     }
     public function edit_cin($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_cin', compact('responsable'));
     }
     public function edit_adresse($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_adresse', compact('responsable'));
     }
     public function edit_fonction($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_fonction', compact('responsable'));
     }
 
@@ -402,14 +405,14 @@ class ResponsableController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_entreprise', compact('responsable'));
     }
     public function edit_nif($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_nif', compact('responsable'));
     }
     // public function edit_departement($id, Request $request){
@@ -423,42 +426,42 @@ class ResponsableController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_stat', compact('responsable'));
     }
     public function edit_rcs($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_rcs', compact('responsable'));
     }
     public function edit_cif($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_cif', compact('responsable'));
     }
     public function edit_photos($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_photos', compact('responsable'));
     }
     public function edit_pwd($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_pwd', compact('responsable'));
     }
     public function edit_poste($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
-        $responsable = responsable::findOrFail($id);
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_poste', compact('responsable'));
     }
     public function update_etp(Request $request, $id)
@@ -480,20 +483,36 @@ class ResponsableController extends Controller
                 $request->stat, $request->rcs, $request->email_etp, $request->site, $request->phone_etp, $resp_etp->entreprise_id
             ]);
 
-            //return redirect()->route('affResponsable');
+            //return redirect()->route('profil_referent');
         }
     }
     //modification photos
     public function update_photos_resp(Request $request)
     {
-        //  stocker la photo dans google drive
-        $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-        $dossier = 'responsable';
-        $stock_stg = new getImageModel();
-        // $nom_image = $request->image->getClientOriginalName();
-        $stock_stg->store_image($dossier, $nom_image, $request->file('image')->getContent());
-        DB::update('update responsables set photos = ? where user_id = ?', [$nom_image, Auth::id()]);
-        return redirect()->route('affResponsable');
+        $image = $request->file('image');
+        if($image != null){
+            if($image->getSize() > 60000){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            }
+            else{
+                $user_id =  $users = Auth::user()->id;
+                    $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
+                    $image_ancien = $responsable->photos;
+                    //supprimer l'ancienne image
+                    File::delete(public_path("images/responsables/".$image_ancien));
+                    //enregiistrer la nouvelle photo
+                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                    $destinationPath = 'images/responsables';
+                    $image->move($destinationPath, $nom_image);
+                    $url_photo = URL::to('/')."/images/responsables/".$nom_image;
+                    DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+                    return redirect()->route('profil_referent');
+            }
+        }
+        else{
+            return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
+        }
+
     }
     //update password
     public function update_responsable_mdp(Request $request)
@@ -504,7 +523,7 @@ class ResponsableController extends Controller
         $new_password = Hash::make($request->new_password);
         if (Hash::check($request->get('ancien_password'), $pwd)) {
             DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-            return redirect()->route('affResponsable');
+            return redirect()->route('profil_referent');
         } else {
             return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
         }
@@ -514,7 +533,7 @@ class ResponsableController extends Controller
     {
         DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
         DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
-        return redirect()->route('affResponsable');
+        return redirect()->route('profil_referent');
     }
     public function update(Request $request, $id)
     {
@@ -571,7 +590,7 @@ class ResponsableController extends Controller
                         'email_resp' => $mail,
                         'telephone_resp' => $phone,
                         'date_naissance_resp' => $date_naiss,
-                        'sexe_resp' => $genre,
+                        'genre_id' => $genre,
                         'cin_resp' => $cin,
                         'adresse_lot' => $lot,
                         'adresse_code_postal' => $code_postal,
@@ -581,6 +600,7 @@ class ResponsableController extends Controller
                         'poste_resp' => $poste,
                         'photos' => $input
                     ]);
+
             } else {
                 responsable::where('id', $id)
                     ->update([
@@ -590,7 +610,7 @@ class ResponsableController extends Controller
                         'email_resp' => $mail,
                         'telephone_resp' => $phone,
                         'date_naissance_resp' => $date_naiss,
-                        'sexe_resp' => $genre,
+                        'genre_id' => $genre,
                         'cin_resp' => $cin,
                         'adresse_lot' => $lot,
                         'adresse_code_postal' => $code_postal,
@@ -602,7 +622,11 @@ class ResponsableController extends Controller
                     ]);
             }
 
-            return redirect()->route('affResponsable');
+            DB::update('update users set name = ? where id = ?', [$nom.' '.$prenom,Auth::user()->id]);
+            DB::update('update users set telephone = ? where id = ?', [$phone,Auth::user()->id]);
+            // DB::update('update users set cin = ? where id = ?', [$cin,Auth::user()->id]);
+
+            return redirect()->route('profil_referent');
         }
 
 
@@ -642,6 +666,7 @@ class ResponsableController extends Controller
                         'adresse_quartier' => $request->quartier,
                         'adresse_code_postal' => $request->code_postal
                     ]);
+
             } else {
                 responsable::where('id', $id)
                     ->update([
@@ -742,7 +767,7 @@ class ResponsableController extends Controller
     public function edit_profil()
     {
         $id = responsable::where('user_id', Auth::user()->id)->value('id');
-        $ref = responsable::findOrFail($id);
+        $ref = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.updateResponsable', compact('ref'));
     }
     //fonction récupération photos depuis google drive

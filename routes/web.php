@@ -5,6 +5,8 @@ use App\Http\Controllers\NiveauController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use phpseclib3\Crypt\RC2;
+
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -109,8 +111,8 @@ Route::resource('groupe','GroupeController')->except([
 Route::get('liste_groupe','GroupeController@index')->name('liste_groupe');
 // Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
 // Route::get('nouveau_groupe/{idProjet}','GroupeController@create')->name('nouveau_groupe');
-Route::get('nouveau_groupe','GroupeController@create')->name('nouveau_groupe');
-Route::get('nouveau_groupe_inter','GroupeController@createInter')->name('nouveau_groupe_inter');
+Route::get('nouveau_groupe/{type_formation}','GroupeController@create')->name('nouveau_groupe');
+Route::get('nouveau_groupe_inter/{type_formation}','GroupeController@createInter')->name('nouveau_groupe_inter');
 Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
 Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
 Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
@@ -162,7 +164,7 @@ Route::get('/utilisateur_entreprise_delete/{id}','UtilisateurControlleur@delete_
 Route::get('/utilisateur_new_cfp','UtilisateurControlleur@new_cfp')->name('utilisateur_new_cfp');
 Route::get('/utilisateur_new_etp','UtilisateurControlleur@new_entreprise')->name('utilisateur_new_etp');
 
-Route::get('/profil_cfp/{id}','UtilisateurControlleur@profil_cfp')->name('profil_cfp');
+
 Route::post('/utilisateur_register_cfp','UtilisateurControlleur@register_cfp')->name('utilisateur_register_cfp');
 Route::post('/utilisateur_update_cfp/{id}','UtilisateurControlleur@update_cfp')->name('utilisateur_update_cfp');
 Route::post('/utilisateur_update_etp/{id}','UtilisateurControlleur@update_entreprise')->name('utilisateur_update_etp');
@@ -175,6 +177,13 @@ Route::resource('formateur','ProfController')->except([
     'index','edit'
 ]);
 Route::post('/update_prof/{id?}','ProfController@misajourFormateur')->name('update_prof');
+Route::post('/update_experience/{id?}','ProfController@update_experience')->name('update_experience');
+Route::post('/update_domaine/{id?}','ProfController@update_domaine')->name('update_domaine');
+Route::post('/update_mdp_formateur/{id?}','ProfController@update_mdp_formateur')->name('update_mdp_formateur');
+Route::post('/update_email_formateur/{id}','ProfController@update_email_formateur')->name('update_email_formateur');
+
+
+
 //collabforfateur
 Route::get('/collabformateur','ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -195,6 +204,16 @@ Route::get('/editer_pwd/{id}','ProfController@editer_pwd')->name('editer_pwd');
 Route::get('/editer_adresse/{id}','ProfController@editer_adresse')->name('editer_adresse');
 Route::get('/editer_etp/{id}','ProfController@editer_etp')->name('editer_etp');
 Route::get('/editer_niveau/{id}','ProfController@editer_niveau')->name('editer_niveau');
+Route::get('/editer_comp/{id}','ProfController@editer_competence')->name('editer_comp');
+Route::get('/editer_domaine/{id}','ProfController@editer_domaine')->name('editer_domaine');
+Route::get('/editer_poste/{id}','ProfController@editer_poste')->name('editer_poste');
+Route::get('/editer_nom_etp/{id}','ProfController@editer_nom_etp')->name('editer_nom_etp');
+Route::get('/editer_fonction/{id}','ProfController@editer_fonction')->name('editer_fonction');
+
+
+
+
+
 
 
 // Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
@@ -211,6 +230,7 @@ Route::get('/destroy_formateur','ProfController@destroy')->name('destroy_formate
 Route::post('desactivation_formateur','ProfController@desactivation_formateur')->name('desactivation_formateur');
 //profil
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
+Route::get('profilProf/{id_formateur}','ProfController@cvProf')->name('profilProf');
 
 //route responsable
 Route::resource('responsable','ResponsableController')->except([
@@ -226,7 +246,7 @@ Route::get('/destroy_responsable','ResponsableController@destroy')->name('destro
 Route::post('/update_responsable/{id?}','ResponsableController@update')->name('update_responsable');
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
-Route::get('/affResponsable/{id?}', 'ResponsableController@affReferent')->name('affResponsable');
+Route::get('/profil_referent/{id?}', 'ResponsableController@affReferent')->name('profil_referent');
 
 
 // editer profil responsable
@@ -284,6 +304,7 @@ Route::get('/edit_pwd/{id}','ParticipantController@edit_pwd')->name('edit_pwd');
 Route::get('/destroy_participant/{id}','ParticipantController@destroy')->name('destroy_participant');
 Route::post('/update_participant','ParticipantController@update')->name('update_participant');
 Route::post('/update_stagiaire/{id}','ParticipantController@update_stagiaire')->name('update_stagiaire');
+Route::post('/update_photo_stagiaire/{id}','ParticipantController@update_photo_stagiaire')->name('update_photo_stagiaire');
 // profile_stagiaire
 // Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
@@ -299,7 +320,7 @@ Route::get('/searchCIN','ParticipantController@getStagiairesCIN')->name('searchC
 
 Route::post('update_mail_stagiaire','HomeController@update_email' )->name('update_mail_stagiaire');
 Route::get('rechercheCIN','ParticipantController@rechercheCIN')->name('rechercheCIN');
-//ajout d'un stagiaire existant dans une nouvelle entreprise
+//lien d'un stagiaire existant dans une nouvelle entreprise
 Route::post('enregistrer_nouveau_etp_stagiaire','ParticipantController@nouvelle_entreprise_stagiaire')->name('enregistrer_nouveau_etp_stagiaire');
 //route formation
 Route::resource('formation','FormationController')->except([
@@ -742,6 +763,8 @@ Route::get('verify_cin_user','NouveauCompteController@verify_cin_user')->name('v
 Route::get('verify_name_cfp','NouveauCompteController@verify_name_cfp')->name('verify_name_cfp');
 Route::get('verify_name_etp','NouveauCompteController@verify_name_etp')->name('verify_name_etp');
 
+Route::get('verify_tail_photo','NouveauCompteController@verify_tail_photo')->name('verify_tail_photo');
+
 
 
 Route::post('create_compte_cfp','NouveauCompteController@create_compte_cfp')->name('create_compte_cfp');
@@ -906,8 +929,11 @@ Route::post('recherche_intervale_date_appel_offre','AppelOffreController@recherc
 
 
 // ================== Role User
-Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->name('add_role_user');
-Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
+// Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->name('add_role_user');
+Route::get('add_role_user','RoleController@add_role_user')->name('add_role_user');
+
+// Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
+Route::get('delete_role_use','RoleController@delete_role_user')->name('delete_role_user');
 
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
 //Route impression detail_calendrier
@@ -962,7 +988,6 @@ Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
 Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
 Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');
 
-
 Route::get('afficher_iframe_entreprise','HomeController@iframe_etp')->name('afficher_iframe_entreprise');
 Route::get('afficher_iframe_cfp','HomeController@iframe_cfp')->name('afficher_iframe_cfp');
 
@@ -976,13 +1001,13 @@ Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name(
 //affichage profil
 Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent')->name('profil_du_responsable');
 //Route pour modifier chaque champs pour responsable
-Route::get('/modification_photo{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
+Route::get('/modification_photo/{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
 Route::get('/modification_nom/{id}','ResponsableCfpController@edit_nom')->name('modification_nom');
 Route::get('/modification_date_de_naissance/{id}','ResponsableCfpController@edit_naissance')->name('modification_date_de_naissance');
 Route::get('/modification_genre/{id}','ResponsableCfpController@edit_genre')->name('modification_genre');
 Route::get('/modification_mdp/{id}','ResponsableCfpController@edit_mdp')->name('modification_mdp');
 Route::get('/modification_email/{id}','ResponsableCfpController@edit_mail')->name('modification_email');
-Route::get('/modificationn_telephone/{id}','ResponsableCfpController@edit_phone')->name('modificationn_telephone');
+Route::get('/modification_telephone/{id}','ResponsableCfpController@edit_phone')->name('modification_telephone');
 Route::get('/modification_cin/{id}','ResponsableCfpController@edit_cin')->name('modification_cin');
 Route::get('/modificationn_adresse/{id}','ResponsableCfpController@edit_adresse')->name('modificationn_adresse');
 Route::get('/modification_fonction/{id}','ResponsableCfpController@edit_fonction')->name('modification_fonction');
@@ -1001,4 +1026,29 @@ Route::post('/enregistrer_modification_adresse/{id}','ResponsableCfpController@u
 Route::post('/enregistrer_modification_fonction/{id}','ResponsableCfpController@update_fonction_responsable')->name('enregistrer_modification_fonction');
 
 //------------------------MODIFIER PROFIL OF---------------------------------//
-Route::get('/modification_logo{id}','CfpController@edit_logo')->name('modification_logo');
+Route::get('/profil_of/{id}','UtilisateurControlleur@profil_cfp')->name('profil_of');
+Route::get('/modification_logo/{id}','CfpController@edit_logo')->name('modification_logo');
+Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
+Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
+Route::get('/modification_adresse_organisme/{id}','CfpController@edit_adresse')->name('modification_adresse_organisme');
+Route::get('/modification_slogan/{id}','CfpController@edit_slogan')->name('modification_slogan');
+Route::get('/modification_site_web/{id}','CfpController@edit_site')->name('modification_site_web');
+Route::get('/modification_horaire/{id}','CfpController@edit_horaire')->name('modification_horaire');
+Route::post('/remplir_horaire/{id}','CfpController@ajout_horaire')->name('remplir_horaire');
+Route::post('/modification_horaire/{id}','CfpController@modification_horaire')->name('modification_horaire');
+
+Route::get('lien_facebook/{id}','CfpController@lien_facebook')->name('lien_facebook');
+Route::get('lien_twitter/{id}','CfpController@lien_twitter')->name('lien_twitter');
+Route::get('/lien_instagram/{id}','CfpController@lien_instagram')->name('lien_instagram');
+Route::get('/lien_linkedin/{id}','CfpController@lien_linkedin')->name('lien_linkedin');
+
+Route::post('/ajout_facebook/{id}','CfpController@ajout_facebook')->name('ajout_facebook');
+Route::post('/ajout_twitter/{id}','CfpController@ajout_twitter')->name('ajout_twitter');
+Route::post('/ajout_instagram/{id}','CfpController@ajout_instagram')->name('ajout_instagram');
+Route::post('/ajout_linkedin/{id}','CfpController@ajout_linkedin')->name('ajout_linkedin');
+
+Route::post('/enregistrer_modification_logo_cfp/{id}','CfpController@modifier_logo')->name('enregistrer_modification_logo_cfp');
+Route::post('/enregistrer_modification_nom_cfp/{id}','CfpController@modifier_nom')->name('enregistrer_modification_nom_cfp');
+Route::post('/enregistrer_modification_adresse_cfp/{id}','CfpController@modifier_adresse')->name('enregistrer_modification_adresse_cfp');
+Route::post('/enregistrer_modification_slogan_cfp/{id}','CfpController@modifier_slogan')->name('enregistrer_modification_slogan_cfp');
+Route::post('/enregistrer_modification_site_cfp/{id}','CfpController@modifier_site')->name('enregistrer_modification_site_cfp');

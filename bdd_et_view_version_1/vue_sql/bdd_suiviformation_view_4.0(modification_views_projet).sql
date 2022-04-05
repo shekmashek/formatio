@@ -175,12 +175,14 @@ create or replace view v_groupe_projet_module as
         mf.nom,
         mf.email,
         mf.telephone,
-        mf.pourcentage
+        mf.pourcentage,
+        tp.type
     from groupes g
     join moduleformation mf on mf.module_id = g.module_id
     join projets p on p.id = g.projet_id
     join type_formations tf on p.type_formation_id = tf.id
-    join cfps on cfps.id = p.cfp_id;
+    join cfps on cfps.id = p.cfp_id
+    join type_payement tp on tp.id = g.type_payement_id;
 
 
 create or replace view v_groupe_projet_entreprise_module as
@@ -244,8 +246,10 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         f.prenom_formateur,
         f.mail_formateur,
         f.numero_formateur,
+        f.photos,
         p.nom_projet,
         (c.nom) nom_cfp,
+        c.logo as logo_cfp,
         p.type_formation_id,
         tf.type_formation
     FROM
@@ -295,12 +299,97 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     f.prenom_formateur,
     f.mail_formateur,
     f.numero_formateur,
+    f.photos,
+    p.nom_projet,
+    c.nom,
+    c.logo,
+    p.type_formation_id,
+    tf.type_formation
+    ;
+
+
+create or replace view v_detail_session as
+    select
+        d.id AS detail_id,
+        d.lieu,
+        d.h_debut,
+        d.h_fin,
+        d.date_detail,
+        d.formateur_id,
+        d.projet_id,
+        d.groupe_id,
+        d.cfp_id,
+        g.max_participant,
+        g.min_participant,
+        g.nom_groupe,
+        g.module_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        g.activiter as activiter_groupe,
+        mf.reference,
+        mf.nom_module,
+        mf.formation_id,
+        dom.id as id_domaine,
+        dom.nom_domaine,
+        mf.nom_formation,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.numero_formateur,
+        p.nom_projet,
+        (c.nom) nom_cfp,
+        p.type_formation_id,
+        tf.type_formation
+    FROM
+        details d
+    JOIN groupes g ON
+        d.groupe_id = g.id
+    JOIN moduleformation mf ON
+        mf.module_id = g.module_id
+    JOIN formateurs f ON
+        f.id = d.formateur_id
+    JOIN projets p ON
+        d.projet_id = p.id
+    JOIN cfps c ON
+        p.cfp_id = c.id
+    JOIN domaines dom ON
+        mf.domaine_id = dom.id
+    join type_formations tf
+        on tf.id = p.type_formation_id
+    GROUP BY
+    d.id,
+    d.lieu,
+    d.h_debut,
+    d.h_fin,
+    d.date_detail,
+    d.formateur_id,
+    d.projet_id,
+    d.groupe_id,
+    d.cfp_id,
+    g.max_participant,
+    g.min_participant,
+    g.nom_groupe,
+    g.module_id,
+    g.date_debut,
+    g.date_fin,
+    g.status,
+    g.activiter,
+    mf.reference,
+    mf.nom_module,
+    mf.formation_id,
+    dom.id,
+    dom.nom_domaine,
+    mf.nom_formation,
+    f.nom_formateur,
+    f.prenom_formateur,
+    f.mail_formateur,
+    f.numero_formateur,
     p.nom_projet,
     c.nom,
     p.type_formation_id,
     tf.type_formation
     ;
-
 
 CREATE OR REPLACE VIEW v_participant_groupe AS
     SELECT
@@ -401,8 +490,8 @@ select
         s.niveau_etude,
         s.activiter as activiter_stagiaire,
         s.branche_id,
-        d.nom_departement,
-        d.nom_service,
+        ifnull(d.nom_departement,' ') as nom_departement,
+         ifnull(d.nom_service,' ') as nom_service,
         mf.reference,
         mf.nom_module,
         mf.nom_formation,
@@ -416,7 +505,7 @@ select
     join
         stagiaires s
         on s.id = p.stagiaire_id
-    join v_departement_service_entreprise d
+    left join v_departement_service_entreprise d
         on s.service_id = d.service_id
     join moduleformation mf
         on mf.module_id = g.module_id;
@@ -448,7 +537,7 @@ create or replace view v_detail_presence as
 
 
 
-CREATE OR REPLACE VIEW v_stagiaire_entreprise AS 
+CREATE OR REPLACE VIEW v_stagiaire_entreprise AS
 SELECT
     stg.id AS stagiaire_id,
     stg.matricule,
@@ -533,7 +622,6 @@ create or replace view v_participant_groupe_detail as
         d.h_debut,
         d.h_fin,
         d.formateur_id,
-        d.cfp_id
     from v_stagiaire_groupe sg
     join details d on sg.groupe_id = d.groupe_id;
 
@@ -678,13 +766,25 @@ where
 
 
 create or replace view v_montant_session as
-    select 
+    select
         g.id as groupe_id,
         ifnull(count(pg.stagiaire_id),0) as nombre_stg,
         ifnull((mf.prix * count(pg.stagiaire_id)),0) as montant_session
-    from groupes g  
+    from groupes g
     left join participant_groupe pg
     on pg.groupe_id = g.id
     join moduleformation mf
-    on mf.module_id = g.module_id 
+    on mf.module_id = g.module_id
     group by g.id;
+
+
+
+create or replace view v_projet_formateur as
+    select
+        gpm.*,
+        fp.formateur_id
+    from
+        v_formateur_projet fp
+    join
+        v_groupe_projet_module gpm
+    on gpm.groupe_id = fp.groupe_id;

@@ -66,10 +66,10 @@ class ModuleController extends Controller
             // $categorie = formation::where('cfp_id', $cfp_id)->get();
             $categorie = formation::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
-                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id)');
+                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ?',[$cfp_id]);
             $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
-                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1');
-            $mod_publies = DB::select('select * from moduleformation where status = 2');
+                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ?',[$cfp_id]);
+            $mod_publies = DB::select('select * from moduleformation where status = 2 and cfp_id = ?',[$cfp_id]);
             // $mod_pub_intra = DB::select('select nom_projet,module_id,date_debut,date_fin,nom_groupe,status_groupe from v_projet_session_inter where type_formation_id = ?',[1]);
 
             if (count($infos) <= 0) {

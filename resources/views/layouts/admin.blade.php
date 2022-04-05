@@ -68,7 +68,7 @@
 
 
 
-            @canany(['isCFP','isFormateur'])
+            @canany(['isCFP'])
             <li>
                 <a href="{{route('liste_module')}}" class="d-flex nav_linke">
                     <i class="bx bx-customize"></i>
@@ -309,7 +309,7 @@
             {{-- @endcanany --}}
             {{-- action de formations --}}
 
-            @canany(['isFormateur'])
+            {{-- @canany(['isFormateur'])
             <li>
                 <a href="{{route('presence.index')}}" class="d-flex nav_linke">
                     <i class='bx bx-list-check'></i>
@@ -317,7 +317,7 @@
                 </a>
                 <span class="tooltip">Emargement</span>
             </li>
-            @endcanany
+            @endcanany --}}
 
             {{-- calendrire de formations --}}
             <li>
@@ -448,14 +448,23 @@
             </li>
 
             @endcan
-
+            @can('isFormateur')
             <li>
-                <a href="{{route('recherche_admin')}}" class="d-flex nav_linke">
+                <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex nav_linke">
                     <i class='bx bxs-notepad'></i>
+                    <span class="links_name">Mon CV</span>
+                </a>
+                <span class="tooltip">Mon CV</span>
+            </li>
+
+            @endcan
+
+            {{-- <li>
+                 <i class='bx bxs-notepad'></i>
                     <span class="links_name">Reporting</span>
                 </a>
                 <span class="tooltip">Reporting</span>
-            </li>
+            </li> --}}
             @can('isCFP')
             {{-- <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
@@ -580,7 +589,7 @@
                                                     <a href="{{route('profile_stagiaire')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
                                                     @endcan
                                                     @can('isReferentPrincipale')
-                                                    <a href="{{route('affResponsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
+                                                    <a href="{{route('profil_referent')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
                                                     @endcan
                                                     @can('isCFPPrincipale')
                                                     <a href="{{route('profil_du_responsable')}}"><button class="btn profil_btn mt-4 mb-2">Gérer votre compte</button></a><br>
@@ -589,7 +598,7 @@
                                                 <hr>
                                                 <div class="text-center">
                                                     <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                                    <p id="liste_role" class="text-muted">Connécter en tant que : </p>
+                                                    <p id="liste_role" class="text-muted">Connécté en tant que : </p>
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
@@ -629,7 +638,7 @@
                                         <a href="{{route('profile_stagiaire')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                         @can('isReferent')
-                                        <a href="{{route('affResponsable')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
+                                        <a href="{{route('profil_referent')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
                                     </div> --}}
                                 </div>
@@ -735,9 +744,10 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
+
                     if(userData['photo'] == 'oui'){
-                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer;">';
-                        html = html.replace(":?", userData);
+                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
+                        html = html.replace(":?", userData['user']);
                         // alert(JSON.stringify(userData));
                         $('.photo_users').append(html);
                     }
@@ -762,8 +772,9 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 30px; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
+
                     $('.logo_etp_user').append(html);
                 }
                 , error: function(error) {

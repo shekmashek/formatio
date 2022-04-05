@@ -119,6 +119,7 @@ CREATE TABLE responsables (
   departement_entreprises_id bigint(20) UNSIGNED,
   service_id bigint(20) UNSIGNED,
   branche_id bigint(20) UNSIGNED,
+  genre_id bigint(20) unsigned REFERENCES genre(id);,
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
