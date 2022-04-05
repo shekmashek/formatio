@@ -518,6 +518,7 @@
                 </div>
 
                 <div class="col-7 header-right align-items-center d-flex flex-row">
+
                     <div class="col mt-3 d-flex flex-row">
                         <div class="notification-box">
                             <span class="count-notif">6</span>

@@ -11,8 +11,8 @@
                         @if($item->photos == null)
                             <span>
                                 <div style="display: grid; place-content: center">
-                                    <div class='randomColor photo_users' style="color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center"  >
-                                        <img src="" alt="" id = "photo_stg" class="image-ronde" style="display: none">
+                                    <div id="example2" class='randomColor photo_users' style="color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center"  >
+
                                     </div>
                                 </div>
                             </span>
