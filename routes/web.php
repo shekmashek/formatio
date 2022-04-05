@@ -957,7 +957,7 @@ Route::get('/fonctionnalitea', function () {
     return view('/fonctionnalitea');
 });
 //Route budgetisation
-Route::get('budget','PlanFormationController@budgetisation')->name('budget');
+Route::get('budget','PlanFormationController@budfgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
 

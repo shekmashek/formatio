@@ -949,26 +949,31 @@ class ParticipantController extends Controller
     }
     public function update_photo_stagiaire($id,Request $request){
         $image = $request->file('image');
+        //tableau contenant les types d'extension d'images
+        $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
         if($image != null){
-           if($image->getSize() > 60000){
-               return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-           }
-           else{
+            if($image->getSize() > 60000){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            }
+            elseif(in_array($request->image->extension(),$extension_type)){
 
-                   $stagiaire = $this->fonct->findWhereMulitOne("stagiaires",["id"],[$id]);
-                   $image_ancien = $stagiaire->photos;
-                   //supprimer l'ancienne image
-                   File::delete(public_path("images/stagiaires/".$image_ancien));
-                   //enregiistrer la nouvelle photo
+                    $stagiaire = $this->fonct->findWhereMulitOne("stagiaires",["id"],[$id]);
+                    $image_ancien = $stagiaire->photos;
+                    //supprimer l'ancienne image
+                    File::delete(public_path("images/stagiaires/".$image_ancien));
+                    //enregiistrer la nouvelle photo
 
-                   $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-                   $destinationPath = 'images/stagiaires';
-                   $image->move($destinationPath, $nom_image);
-                   $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
+                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                    $destinationPath = 'images/stagiaires';
+                    $image->move($destinationPath, $nom_image);
+                    $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
 
-                   DB::update('update stagiaires set photos= ?,url_photo = ? where id = ?', [$nom_image,$url_photo, $id]);
-                   return redirect()->route('profile_stagiaire');
-           }
+                    DB::update('update stagiaires set photos= ?,url_photo = ? where id = ?', [$nom_image,$url_photo, $id]);
+                    return redirect()->route('profile_stagiaire');
+            }
+            else{
+                return redirect()->back()->with('error_format', 'Le format de votre fichier n\'est pas acceptable,choisissez entre : .jpeg,.jpg,.png,.gif,.psd,.ai,.svg');
+            }
        }
        else{
            return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');

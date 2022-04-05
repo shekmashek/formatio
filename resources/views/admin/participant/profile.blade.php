@@ -105,7 +105,17 @@
 
                         </p>
                         <a href="{{ route('edit_photos', $stagiaire->id) }} ">
-                            <img src="{{ asset('images/stagiaires/' . $stagiaire->photos) }}" class="image-ronde"></a>
+                            @if($stagiaire->photos==null)
+                            <span>
+                                <div style="display: grid; place-content: center">
+                                    <div class='randomColor photo_users' style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center">
+                                    </div>
+                                </div>
+                            </span>
+                            @else
+                                <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" class="image-ronde">
+                            @endif
+                        </a>
                     </div>
                     <div class="hover" style="border-bottom: solid 1px #d399c2;">
                         <a href="{{ route('edit_nom', $stagiaire->id) }} ">

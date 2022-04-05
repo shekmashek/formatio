@@ -490,23 +490,28 @@ class ResponsableController extends Controller
     public function update_photos_resp(Request $request)
     {
         $image = $request->file('image');
+        //tableau contenant les types d'extension d'images
+        $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
         if($image != null){
             if($image->getSize() > 60000){
                 return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
             }
-            else{
+            elseif(in_array($request->image->extension(),$extension_type)){
                 $user_id =  $users = Auth::user()->id;
-                    $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
-                    $image_ancien = $responsable->photos;
-                    //supprimer l'ancienne image
-                    File::delete(public_path("images/responsables/".$image_ancien));
-                    //enregiistrer la nouvelle photo
-                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-                    $destinationPath = 'images/responsables';
-                    $image->move($destinationPath, $nom_image);
-                    $url_photo = URL::to('/')."/images/responsables/".$nom_image;
-                    DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
-                    return redirect()->route('profil_referent');
+                $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
+                $image_ancien = $responsable->photos;
+                //supprimer l'ancienne image
+                File::delete(public_path("images/responsables/".$image_ancien));
+                //enregiistrer la nouvelle photo
+                $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                $destinationPath = 'images/responsables';
+                $image->move($destinationPath, $nom_image);
+                $url_photo = URL::to('/')."/images/responsables/".$nom_image;
+                DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+                return redirect()->route('profil_referent');
+            }
+            else{
+                return redirect()->back()->with('error_format', 'Le format de votre fichier n\'est pas acceptable,choisissez entre : .jpeg,.jpg,.png,.gif,.psd,.ai,.svg');
             }
         }
         else{

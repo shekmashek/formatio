@@ -60,9 +60,17 @@
      </ul>
  </div>
  @endif
+  {{-- si l'utiliisateur a  choisir un  format incompatible --}}
+  @if (\Session::has('error_format'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_format') !!}</li>
+      </ul>
+  </div>
+  @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photos de profil <strong>(60Ko max)</strong></p>
+        <p style="text-align: left">Photos de profil <strong>(60Ko max)</strong></p><br>
         <form   class="btn-submit" action="{{route('update_photo_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
@@ -74,16 +82,28 @@
 
             <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
-            <center>
+              <center>
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                        <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde">
+                        @if($stagiaire->photos==null)
+                            <span>
+                                <div style="display: grid; place-content: center">
+                                    <div class='randomColor photo_users' style="color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center"  >
+                                        <img src="" alt="" id = "photo_stg" class="image-ronde" style="display: none">
+                                    </div>
+                                </div>
+                            </span>
+                        @else
+                            <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde">
+                        @endif
                       {{-- <input type="text" id = 'vartemp'> --}}
-              </div>
-                  </label>
-                     <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
-                  </div>
+                    </div>
+                </div>
+                </label>
+                    <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
+                    <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
+                </div>
             </center>
         </div>
     </div>
@@ -147,7 +167,6 @@
               </div>
                     <input type="hidden" class="form-control test"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" >
 
-<button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>
@@ -191,6 +210,7 @@
 
                 reader.onload = function (e) {
                     //alert(e.target.result);
+                    $('#photo_stg').css('display','block');
                     $('#photo_stg').attr('src', e.target.result);
                 }
 
