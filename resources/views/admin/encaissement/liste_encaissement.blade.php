@@ -16,12 +16,12 @@
 
 </style>
         <div class="container-fluid">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-12">
                     <br>
                     <h3>EXTRAIT DE COMPTE CLIENT</h3>
                 </div>
-            </div>
+            </div> --}}
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">

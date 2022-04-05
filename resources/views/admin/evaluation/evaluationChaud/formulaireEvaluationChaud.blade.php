@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
             	<br>
-                <h4>Formulaire</h4> <br>
+                {{-- <h4>Formulaire</h4> <br> --}}
                 <div class="panel-heading">
                         <ul class="nav nav-pills">
                             {{-- <li  class ="" ><a href=""><span class="fa fa-plus-sign"></span> Nouveau formulaire</a></li> --}}

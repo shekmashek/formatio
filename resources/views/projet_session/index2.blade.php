@@ -2,7 +2,7 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-2"></div>
             <div class="col-3"><h5 class="mt-3 mb-2 text-center">Listes des projets</h5></div>
             @can('isCFP')
@@ -11,7 +11,7 @@
                     <a href="{{route('nouveau_groupe_inter',[2])}}"><button class="btn btn_competence mt-1 mb-2"><i class="bx bx-plus-circle"></i>&nbsp;Créer projet inter</button></a>
                 </div>
             @endcan
-        </div>
+        </div> --}}
         <div class="row">
             @canany(['isReferent', 'isCFP'])
             <div class="col-2 pe-3">
@@ -348,7 +348,7 @@
                                                                                                 minimal</label>
                                                                                         </div>
                                                                                     </div>
-                                                                                    
+
                                                                                     <div class="text-center px-3"><button
                                                                                             type="submit"
                                                                                             class="btn btn_enregistrer">Valider</button>
@@ -380,7 +380,7 @@
                                                                                                 maximal</label>
                                                                                         </div>
                                                                                     </div>
-                                                                                    
+
 
                                                                                     <div class="text-center px-3"><button
                                                                                             type="button"
@@ -393,7 +393,7 @@
                                                                         </div>
                                                                     </div>
                                                                 @endif
-                                                            </div>    
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     {{-- Fin modal edit session --}}
@@ -503,7 +503,7 @@
                                                                                                     minimal</label>
                                                                                             </div>
                                                                                         </div>
-                                                                                        
+
                                                                                         <div class="text-center px-3"><button
                                                                                                 type="submit"
                                                                                                 class="btn btn_enregistrer">Valider</button>
@@ -535,7 +535,7 @@
                                                                                                     maximal</label>
                                                                                             </div>
                                                                                         </div>
-                                                                                        
+
 
                                                                                         <div class="text-center px-3"><button
                                                                                                 type="button"
@@ -742,6 +742,6 @@
                     },
                 });
             });
-        
+
         </script>
     @endsection

@@ -70,7 +70,7 @@
         <div class="col-md-5">
 
             <div class="shadow p-3 mb-5 bg-body rounded ">
-                <h4>Liste(s) de(s) responsable(s)</h4>
+                {{-- <h4>Liste(s) de(s) responsable(s)</h4> --}}
 
                 <table class="table  table-borderless table-lg">
                     <tbody id="data_collaboration">

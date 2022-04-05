@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
-                <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2>
+                {{-- <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2> --}}
                 @if (Session::has('success'))
                 <div class="alert alert-success">
                     <ul>

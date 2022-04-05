@@ -5,17 +5,17 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
     <div class="container-fluid pb-3">
-        <nav class="navbar navbar-expand-lg w-100">
+        {{-- <nav class="navbar navbar-expand-lg w-100">
             <div class="row w-100 g-0 m-0">
                 <div class="col-lg-12">
                     <div class="row g-0 m-0" style="align-items: center">
-                        @can('isCFP')
+                        {{-- @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
                             <div class="col d-flex">
                                 <h5 class="mt-3 me-5">Modules</h5>
                                 {{-- <a
                                     class="btn_enregistrer text-center {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-                                    href="{{route('liste_formation')}}">Precedent</a> --}}
+                                    href="{{route('liste_formation')}}">Precedent</a>
                             </div>
 
 
@@ -28,8 +28,8 @@
                     </div>
                 </div>
             </div>
-        </nav>
-        <hr>
+        </nav> --}}
+        {{-- <hr> --}}
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">

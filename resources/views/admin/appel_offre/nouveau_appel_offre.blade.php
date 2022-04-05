@@ -31,12 +31,12 @@
     @endif
 
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12">
                 <h1> Nouveau appel d'offre</h1>
             </div>
-        </div>
-        <div class="row mt-2">
+        </div> --}}
+        {{-- <div class="row mt-2">
             <div class="col-md-12">
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -57,7 +57,7 @@
                 </nav>
 
             </div>
-        </div>
+        </div> --}}
 
     </div>
 

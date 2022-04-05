@@ -78,9 +78,9 @@
 
 
 <div class="container-fluid">
-    <div class="row">
+    {{-- <div class="row">
         <h3> <strong>Liste Facture</strong></h3>
-    </div>
+    </div> --}}
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
