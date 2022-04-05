@@ -245,14 +245,14 @@
                                                                                             </div>
                                                                                             <div class="row px-3 mt-2">
                                                                                                 <div class="form-group mt-1 mb-1">
-                                                                                                    <select class="form-select selectP input" id="etp_id" name="entreprise"
+                                                                                                    <select class="form-select selectP input" id="payement_id" name="payement"
                                                                                                         aria-label="Default select example">
-                                                                                                        <option value="null" selected hidden>Choisir l'entreprise souhaité...</option>
-                                                                                                        @foreach ($entreprise as $etp)
-                                                                                                        <option value="{{ $etp->entreprise_id }}">{{ $etp->nom_etp }}</option>
+                                                                                                        <option value="{{ $pj->type_payement_id }}" hidden>{{ $pj->type }}</option>
+                                                                                                        @foreach ($payement as $paye)
+                                                                                                        <option value="{{ $paye->id }}">{{ $paye->type }}</option>
                                                                                                         @endforeach
                                                                                                     </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="etp_id">Entreprises<strong
+                                                                                                    <label class="ml-3 form-control-placeholder" for="payement_id">Mode de Payement<strong
                                                                                                         class="text-danger">*</strong></label>
                                                                                                 </div>
                                                                                             </div>
@@ -290,20 +290,7 @@
                                                                                                         choisir la formation</span> --}}
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="row px-3 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <select class="form-select selectP input" id="payement_id" name="payement"
-                                                                                                        aria-label="Default select example">
-                                                                                                        <option value="{{ $pj->type_payement_id }}" hidden>{{ $pj->type }}</option>
-                                                                                                        @foreach ($payement as $paye)
-                                                                                                        <option value="{{ $paye->id }}">{{ $paye->type }}</option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="payement_id">Mode de Payement<strong
-                                                                                                        class="text-danger">*</strong></label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row px-3 mt-2">
+                                                                                            <div class="row px-3 mb-5 mt-2">
                                                                                                 <div class="form-group mt-1 mb-1">
                                                                                                     <input type="text" id="min" class="form-control input" min="1" max="50" name="max_part"
                                                                                                         required onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
@@ -311,7 +298,20 @@
                                                                                                         maximal</label>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="text-center "><button type="button" class="btn  btn_annuler" data-bs-dismiss="modal">Annuler</button></div>
+                                                                                            <div class="row px-3">
+                                                                                                <div class="form-group mt-2">
+                                                                                                    {{-- <select class="form-select selectP input" id="module_id" name="module_id"
+                                                                                                        aria-label="Default select example">
+                                                                                                        <option {{ $pj->module_id }}>{{ $pj->nom_module }}</option>
+                                                                                                        @foreach ($module as $mod)
+                                                                                                        <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
+                                                                                                        @endforeach
+                                                                                                    </select>
+                                                                                                    <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
+                                                                                                        class="text-danger">*</strong></label> --}}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="text-center mt-5"><button type="button" class="btn  btn_annuler" data-bs-dismiss="modal">Annuler</button></div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>

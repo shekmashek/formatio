@@ -57,20 +57,22 @@ create or replace view v_groupe_entreprise as
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
-        case g.status
-            when 0 then 'Créer'
-            when 1 then 'Prévisionnel'
-            when 2 then 'A venir'
-            when 3 then 'En cours'
-            when 4 then 'Terminé'
-        end item_status_groupe,
-        case g.status
-            when 0 then 'Créer'
-            when 1 then 'status_grise'
-            when 2 then 'status_confirme'
-            when 3 then 'statut_active'
-            when 4 then 'status_termine'
-        end class_status_groupe,
+        case
+            when g.status = 2 then 
+                case 
+                    when (g.date_fin - curdate()) < 0 then 'Terminé' 
+                    when (g.date_debut - curdate()) < 0 then 'En cours' 
+                    else 'A venir' end
+            when g.status = 1 then 'Prévisionnel'
+            when g.status = 0 then 'Créer'end item_status_groupe,
+        case
+            when g.status = 2 then 
+                case 
+                    when (g.date_fin - curdate()) < 0 then 'status_termine' 
+                    when (g.date_debut - curdate()) < 0 then 'statut_active' 
+                    else 'status_confirme' end
+            when g.status = 1 then 'status_grise'
+            when g.status = 0 then 'Créer'end class_status_groupe,
         g.activiter as activiter_groupe,
         g.type_payement_id,
         tp.type as type_payement
@@ -140,20 +142,22 @@ create or replace view v_groupe_projet_module as
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
-        case g.status
-            when 0 then 'Créer'
-            when 1 then 'Prévisionnel'
-            when 2 then 'A venir'
-            when 3 then 'En cours'
-            when 4 then 'Terminé'
-        end item_status_groupe,
-        case g.status
-            when 0 then 'Créer'
-            when 1 then 'status_grise'
-            when 2 then 'status_confirme'
-            when 3 then 'statut_active'
-            when 4 then 'status_termine'
-        end class_status_groupe,
+        case
+            when g.status = 2 then 
+                case 
+                    when (g.date_fin - curdate()) < 0 then 'Terminé' 
+                    when (g.date_debut - curdate()) < 0 then 'En cours' 
+                    else 'A venir' end
+            when g.status = 1 then 'Prévisionnel'
+            when g.status = 0 then 'Créer'end item_status_groupe,
+        case
+            when g.status = 2 then 
+                case 
+                    when (g.date_fin - curdate()) < 0 then 'status_termine' 
+                    when (g.date_debut - curdate()) < 0 then 'statut_active' 
+                    else 'status_confirme' end
+            when g.status = 1 then 'status_grise'
+            when g.status = 0 then 'Créer'end class_status_groupe,
         g.activiter as activiter_groupe,
         g.type_payement_id,
         mf.reference,
@@ -660,20 +664,22 @@ create or replace view v_projet_session_inter as
         g.date_fin,
         g.status as status_groupe,
         g.activiter as activiter_groupe,
-        case g.status
-            when 0 then 'Créer'
-            when 1 then 'Prévisionnel'
-            when 2 then 'A venir'
-            when 3 then 'En cours'
-            when 4 then 'Terminé'
-        end item_status_groupe,
-        case g.status
-            when 0 then 'Créer'
-            when 1 then 'status_grise'
-            when 2 then 'status_confirme'
-            when 3 then 'statut_active'
-            when 4 then 'status_termine'
-        end class_status_groupe,
+        case
+            when g.status = 2 then 
+                case 
+                    when (g.date_fin - curdate()) < 0 then 'Terminé' 
+                    when (g.date_debut - curdate()) < 0 then 'En cours' 
+                    else 'A venir' end
+            when g.status = 1 then 'Prévisionnel'
+            when g.status = 0 then 'Créer'end item_status_groupe,
+        case
+            when g.status = 2 then 
+                case 
+                    when (g.date_fin - curdate()) < 0 then 'status_termine' 
+                    when (g.date_debut - curdate()) < 0 then 'statut_active' 
+                    else 'status_confirme' end
+            when g.status = 1 then 'status_grise'
+            when g.status = 0 then 'Créer'end class_status_groupe,
         (cfps.nom) nom_cfp,
         (cfps.adresse_lot) adresse_lot_cfp,
         (cfps.adresse_ville) adresse_ville_cfp,
