@@ -454,9 +454,9 @@ FROM
     stagiaires as stg
     join entreprises e
     on stg.entreprise_id = e.id
-    join v_departement_service_entreprise ds
+    left join v_departement_service_entreprise ds
     on ds.service_id = stg.service_id
-    join branches b
+    left join branches b
     on b.id = stg.branche_id;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT

@@ -22,7 +22,7 @@
 
                     @endforeach
 
-                    <img id="exemple1" class="ms-3" src="{{asset('images/stagiaires/ilaina.png')}}" alt="Image">
+                    <img id="exemple1" class="ms-3" src="{{asset('images/stagiaires/ilaina.png')}}">
                 </div>
                 <div class="card-body text-dark mt-3" id="cl">
                     <div class="mt-4">
