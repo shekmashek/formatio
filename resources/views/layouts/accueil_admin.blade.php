@@ -8,7 +8,18 @@
             <div class="card text-white mb-3 mt-3" id="bc">
                 <div class="" style="height:45px; ">
                     @foreach($phone_tmp as $item)
-                        <img id="example2" src="{{asset('images/stagiaires/'.$item->photos)}}" alt="image stagiaire">
+                        @if($item->photos == null)
+                            <span>
+                                <div style="display: grid; place-content: center">
+                                    <div class='randomColor photo_users' style="color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center"  >
+                                        <img src="" alt="" id = "photo_stg" class="image-ronde" style="display: none">
+                                    </div>
+                                </div>
+                            </span>
+                        @else
+                            <img id="example2" src="{{asset('images/stagiaires/'.$item->photos)}}" alt="image stagiaire">
+                        @endif
+
                     @endforeach
 
                     <img id="exemple1" class="ms-3" src="{{asset('images/stagiaires/ilaina.png')}}" alt="Image">
