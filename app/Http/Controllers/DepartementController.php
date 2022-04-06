@@ -208,6 +208,7 @@ class DepartementController extends Controller
         $var = chefDepartement::findOrFail($id);
         return view('admin.chefDepartement.update', compact('var', 'roles', 'role_id'));
     }
+   
 
     public function update(Request $request)
     {

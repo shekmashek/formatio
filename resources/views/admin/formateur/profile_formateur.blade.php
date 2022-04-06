@@ -88,36 +88,44 @@
                                      <p class="text-center">Informations générales</p>
                              
                                      <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
-                                     <p class="p-1 m-0" style="font-size: 10px;">PHOTO
-                                         
+                                     <p class="p-1 m-0" style="font-size: 12px;">PHOTO
                                      </p>
                                      <a href="{{route('editer_photos',$formateur->id)}}" >
+                                        @if($formateur->photos==null)
+                                        <span>
+                                            <div style="display: grid; place-content: center">
+                                                <div class='randomColor photo_users' style="color:white; font-size: 12px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center">
+                                                </div>
+                                            </div>
+                                        </span>
+                                    @else
                                         <img src="{{asset('images/formateurs/'.$formateur->photos)}}" class="image-ronde">
+                                        @endif
                                     </a>
                                     </div>
                                     <div  style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_nom',$formateur->id)}}" >
-                                     <p class="p-1 m-0" id="nom" style="font-size: 10px;">NOM<span style="float: right;">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;">NOM<span style="float: right;">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p></a>
                                      
                                     </div>
                                     <div id="nom" style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_naissance',$formateur->id)}}" >
-                                     <p class="p-1 m-0" style="font-size: 10px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($formateur->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($formateur->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p></a>
                       
                                     </div>
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_genre',$formateur->id)}}" >
-                                     <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{optional(optional($formateur)->genre)->genre}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;">GENRE<span style="float: right;">{{optional(optional($formateur)->genre)->genre}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                      </p>
                                      </a>
                                     </div>
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
                                         <a href="{{route('editer_pwd',$formateur->id)}}" >
-                                        <p class="p-1 m-0" style="font-size: 10px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        <p class="p-1 m-0" style="font-size: 12px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                         </a>
                                        </div>
@@ -133,14 +141,14 @@
                                  
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_mail',$formateur->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$formateur->mail_formateur}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <p class="p-1 m-0" style="font-size: 12px;">ADRESSE E-MAIL<span style="float: right;">{{$formateur->mail_formateur}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                              
                                          </p>
                                              </a>
                                          </div>
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href=" {{route('editer_phone',$formateur->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$formateur->numero_formateur}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                         <p class="p-1 m-0" style="font-size: 12px;">TELEPHONE<span style="float: right;">{{$formateur->numero_formateur}}&nbsp;<i class="fas fa-angle-right"></i> </span>
                                              
                                          </p>
                                              </a>
@@ -148,13 +156,13 @@
                           
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_cin',$formateur->id)}} " >
-                                         <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$formateur->cin}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <p class="p-1 m-0" style="font-size: 12px;">CIN<span style="float: right;">{{$formateur->cin}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          </p>
                                              </a>
                                          </div>                                                         
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                       <a href="{{route('editer_adresse',$formateur->id)}}  " >
-                                         <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$formateur->adresse}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <p class="p-1 m-0" style="font-size: 12px;">ADRESSE<span style="float: right;">{{$formateur->adresse}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-right"></i></span>
                                              
                                          </p>
                                       </a>
@@ -170,7 +178,7 @@
                              
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                          <a href="{{route('editer_etp',$formateur->id)}} " >
-                                     <p class="p-1 m-0" style="font-size: 10px;">Poste<span style="float: right;">{{$formateur->specialite}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;">Poste<span style="float: right;">{{$formateur->specialite}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
                                          </a>
@@ -178,7 +186,7 @@
                       
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                          <a href="{{route('editer_niveau',$formateur->id)}}  " >
-                                     <p class="p-1 m-0" style="font-size: 10px;">Niveau d'étude<span style="float: right;">{{$formateur->niveau}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;">Niveau d'étude<span style="float: right;">{{$formateur->niveau}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
                                          </a>
@@ -188,13 +196,13 @@
 
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                         <a href="{{route('editer_comp',$formateur->id)}}  " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">Competence<span style="float: right;">{{$comp->competence}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 12px;">Competence<span style="float: right;">{{$comp->competence}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                         
                                     </p>
                                 </div>
                                     <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                         <a href="{{route('editer_domaine',$formateur->id)}}  " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">Domaine<span style="float: right;">{{$comp->domaine}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 12px;">Domaine<span style="float: right;">{{$comp->domaine}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                         
                                     </p>
                                     @endforeach
@@ -204,21 +212,21 @@
                                     @foreach($experience as $exp)
                                     <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                         <a href="{{route('editer_nom_etp',$formateur->id)}}  " >
-                                    <p class="p-1 m-0" style="font-size: 10px;">Entreprise<span style="float: right;">{{$exp->nom_entreprise}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 12px;">Entreprise<span style="float: right;">{{$exp->nom_entreprise}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                         
                                     </p>
                                         </a>
                                         </div>
                                         <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                             <a href="{{route('editer_poste',$formateur->id)}}  " >
-                                        <p class="p-1 m-0" style="font-size: 10px;">Poste occuper<span style="float: right;">{{$exp->poste_occuper}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        <p class="p-1 m-0" style="font-size: 12px;">Poste occuper<span style="float: right;">{{$exp->poste_occuper}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                             
                                         </p>
                                             </a>
                                             </div>
                                             <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                                 <a href="{{route('editer_fonction',$formateur->id)}}  " >
-                                            <p class="p-1 m-0" style="font-size: 10px;">Fonction<span style="float: right;">{{$exp->taches}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                            <p class="p-1 m-0" style="font-size: 12px;">Fonction<span style="float: right;">{{$exp->taches}} &nbsp;<i class="fas fa-angle-right"></i></span>
                                                 
                                             </p>
                                                 </a>
@@ -226,7 +234,7 @@
                                      @endforeach
                                      {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
                                          <a href="#" >
-                                     <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          
                                      </p>
                                          </a>
