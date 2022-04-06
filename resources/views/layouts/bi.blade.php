@@ -17,7 +17,7 @@
     @endcan
     @can('isCFP')
         @if($iframe_cfp->iframe == null)
-        <div class="bi-content"><h1>Business Intelligence to give you the edge</h1><img src="{{asset('images/bi.png')}}" alt=""></div>
+        <div class="bi-content"><h1>Business Intelligence to give you the edge</h1><br><img src="{{asset('images/bi.png')}}" alt=""></div>
         @else
             <iframe src="{{$iframe_cfp->iframe}} " height="1000" width="100%" name="demo">
             </iframe>
