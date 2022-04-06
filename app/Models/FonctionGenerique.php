@@ -25,6 +25,22 @@ class FonctionGenerique extends Model
         }
     }
 
+    public function queryWhereParam($nomTab, $para = [],$opt=[], $val = [])
+    {
+        $query = "SELECT * FROM " . $nomTab . " WHERE ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "".$opt[$i]." ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
     public function queryWhere($nomTab, $para = [], $val = [])
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
@@ -40,6 +56,7 @@ class FonctionGenerique extends Model
             return $query;
         }
     }
+
     public function queryWhereOr($nomTab, $para = [], $val = [])
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
@@ -78,6 +95,14 @@ class FonctionGenerique extends Model
         $fonction = new FonctionGenerique();
         // echo $fonction->queryWhere($nomTab,$para,$val);
         $data =  DB::select($fonction->queryWhere($nomTab, $para, $val), $val);
+        return $data;
+    }
+
+    public function findWhereParam($nomTab, $para = [],$opt=[], $val = [])
+    {
+        $fonction = new FonctionGenerique();
+        // echo $fonction->queryWhere($nomTab,$para,$val);
+        $data =  DB::select($fonction->queryWhereParam($nomTab, $para,$opt, $val), $val);
         return $data;
     }
 

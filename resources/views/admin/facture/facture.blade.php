@@ -114,7 +114,7 @@
             <div class="row mt-0">
                 <p>
                     <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par thématique de formation</a>
-            </p>
+                </p>
                 <div class="collapse multi-collapse" id="detail_par_thematique">
                     <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -184,13 +184,11 @@
             <div class="tab-content" id="nav-tabContent">
 
                 <div class="tab-pane fade show active" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
-                    {{-- <div class="container-fluid">
-                        <div class="row">
-                            <div class="col"> --}}
                     <h6 style="color: #AA076B">Facture En Brouillon</h6>
                     <table class="table table-striped ">
                         <thead>
                             <tr>
+                                <th scope="col">Type facture</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
                                 <th scope="col">Réference module</th>
@@ -198,7 +196,6 @@
                                 <th scope="col">Projet session</th>
                                 <th scope="col">Date de facturation</th>
                                 <th scope="col">Payement du</th>
-                                <th scope="col">Activité</th>
                                 @canany(['isCFP'])
                                 <th scope="col" colspan="2">Action</th>
                                 @endcanany
@@ -208,40 +205,38 @@
                             @if (count($facture_inactif) > 0)
                             @foreach ($facture_inactif as $actif)
                             <tr>
+                                <td>
+                                    <div style="background-color: rgb(226, 230, 238); border-radius: 10px; text-align: center">
+                                        {{$actif->reference_type_facture}}
+                                    </div>
+                                </td>
                                 <th>
                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
-                                <td>{{$actif->nom_etp}}</td>
-
+                                <td>
+                                    <div style="background-color: rgb(164, 187, 233);  border-radius: 10px; text-align: center">{{$actif->nom_etp}}</div>
+                                </td>
                                 <td>
                                     @php
-                                        echo html_entity_decode($actif->ref_session)
+                                    echo html_entity_decode($actif->ref_session)
                                     @endphp
                                 </td>
                                 <td>
                                     @php
-                                        echo html_entity_decode($actif->session_facture)
+                                    echo html_entity_decode($actif->session_facture)
                                     @endphp
                                 </td>
 
                                 <td>{{$actif->nom_projet.": "}}
                                     @php
-                                        echo html_entity_decode($actif->module_session)
+                                    echo html_entity_decode($actif->module_session)
                                     @endphp
                                 </td>
-
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
-                                @if ($actif->jour_restant>=1)
-                                <td style="color:red;">{{$actif->jour_restant.' jour(s) restant(s)'}}</td>
-                                @else
-                                <td style="color:red;">temps de payement a éxpirer!</td>
-                                @endif
-
                                 <td>
-
                                     <div class="dropdown">
                                         <div class="btn-group dropstart">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -269,7 +264,6 @@
                                                 <a class="dropdown-item" href="{{route('facture')}} ">
                                                     <button type="submit" class="btn btn_enregistrer" style="color:green">Creer nouveau facture
                                                     </button></a>
-
                                             </ul>
                                         </div>
                                     </div>
@@ -283,13 +277,6 @@
                             @endif
                         </tbody>
                     </table>
-                    {{--
-                            </div>
-                        </div>
-
-
-                    </div> --}}
-
                 </div>
                 {{-- --}}
 
@@ -298,6 +285,7 @@
                     <table class="table table-striped ">
                         <thead>
                             <tr>
+                                <th scope="col">Type facture</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
                                 <th scope="col">Réference module</th>
@@ -305,120 +293,120 @@
                                 <th scope="col">Projet session</th>
                                 <th scope="col">Date de facturation</th>
                                 <th scope="col">Payement du</th>
-                                {{-- <th scope="col">Activité</th> --}}
-                                @canany(['isCFP'])
-                                <th scope="col" colspan="2">Status</th>
-                                @endcanany
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (count($facture_actif) > 0)
                             @foreach ($facture_actif as $actif)
                             <tr>
+                                <td>
+                                    <div style="background-color: rgb(226, 230, 238); border-radius: 10px; text-align: center">
+                                        {{$actif->reference_type_facture}}
+                                    </div>
+                                </td>
                                 <th>
                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
-                                <td>{{$actif->nom_etp}}</td>
-
+                                <td>
+                                    <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        {{$actif->nom_etp}}
+                                    </div>
+                                </td>
                                 <td>
                                     @php
-                                        echo html_entity_decode($actif->ref_session)
+                                    echo html_entity_decode($actif->ref_session)
                                     @endphp
                                 </td>
                                 <td>
                                     @php
-                                        echo html_entity_decode($actif->session_facture)
+                                    echo html_entity_decode($actif->session_facture)
                                     @endphp
                                 </td>
 
                                 <td>{{$actif->nom_projet.": "}}
                                     @php
-                                        echo html_entity_decode($actif->module_session)
+                                    echo html_entity_decode($actif->module_session)
                                     @endphp
                                 </td>
 
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
-                                {{-- @if ($actif->jour_restant>=1)
-                                <td style="color:red;">{{$actif->jour_restant.' jour(s) restant(s)'}}</td>
+                                @if ($actif->facture_encour == "valider")
+                                <td>
+                                    <div style="background-color: rgb(208, 187, 231); border-radius: 10px; text-align: center">
+                                        {{$actif->facture_encour}}
+                                    </div>
+                                </td>
+                                @canany(['isCFP'])
+                                <td>
+                                    <div class="dropdown">
+                                        <div class="btn-group dropstart">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <a href="#" class="dropdown-item">
+                                                    <button type="button" class=" btn btn_enregistrer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
+                                                </a>
+                                                <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_enregistrer">Liste des encaissements</button></a>
+                                                <hr class="dropdown-divider">
+                                                <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                @endcanany
+                                @elseif ($actif->facture_encour == "en_cour")
+                                <td style="color:rgb(198, 201, 25);">{{$actif->facture_encour}}</td>
+                                @canany(['isCFP'])
+                                <td>
+                                    <div class="dropdown">
+                                        <div class="btn-group dropstart">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <a href="#" class="dropdown-item">
+                                                    <button type="button" class=" btn btn_enregistrer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
+                                                </a>
+                                                <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_enregistrer">Liste des encaissements</button></a>
+                                                <hr class="dropdown-divider">
+                                                <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                @endcanany
                                 @else
-                                <td style="color:red;">temps de payement a éxpirer!</td>
-                                @endif --}}
-                                    @if ($actif->facture_encour == "valider")
-                                    <td style="color:red;">{{$actif->facture_encour}}</td>
-                                    @canany(['isCFP'])
-                                    <td>
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-
-                                                    <a href="#" class="dropdown-item">
-                                                        <button type="button" class=" btn btn_enregistrer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
-                                                    </a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_enregistrer">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
-
-                                                </ul>
-                                            </div>
+                                <td style="color:rgb(15, 221, 67);">{{$actif->facture_encour}}</td>
+                                @canany(['isCFP'])
+                                <td>
+                                    <div class="dropdown">
+                                        <div class="btn-group dropstart">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_enregistrer">PDF</button></a>
+                                                <hr class="dropdown-divider">
+                                                <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
+                                            </ul>
                                         </div>
-                                    </td>
-                                    @endcanany
-                                    @elseif ($actif->facture_encour == "en_cour")
-                                    <td style="color:rgb(198, 201, 25);">{{$actif->facture_encour}}</td>
-                                    @canany(['isCFP'])
-                                    <td>
-
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a href="#" class="dropdown-item">
-                                                        <button type="button" class=" btn btn_enregistrer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
-                                                    </a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_enregistrer">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    @endcanany
-                                    @else
-                                    <td style="color:rgb(15, 221, 67);">{{$actif->facture_encour}}</td>
-                                    @canany(['isCFP'])
-                                    <td>
-
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_enregistrer">PDF</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endcanany
-                                    @endif
+                                    </div>
+                                </td>
+                                @endcanany
+                                @endif
                             </tr>
                             @endforeach
                             @else
                             <tr>
-                                <td colspan="8" class="text-center" style="color:red;">Aucun Résultat</td>
+                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
                             </tr>
                             @endif
                         </tbody>
@@ -431,43 +419,61 @@
                     <table class="table table-striped ">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Type facture</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet / Session / type de formation</th>
-                                <th scope="col">Invoice Date</th>
-                                <th scope="col">Due Date</th>
-                                <th scope="col">Activité</th>
-                                @canany(['isCFP'])
-                                <th scope="col" colspan="2">Action</th>
-                                @endcanany
+                                <th scope="col">Réference module</th>
+                                <th scope="col">Module de formation</th>
+                                <th scope="col">Projet session</th>
+                                <th scope="col">Date de facturation</th>
+                                <th scope="col">Payement du</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (count($facture_encour) > 0)
                             @foreach ($facture_encour as $actif)
                             <tr>
-                                <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
+                                <td>
+                                    <div style="background-color: rgb(226, 230, 238); border-radius: 10px; text-align: center">
+                                        {{$actif->reference_type_facture}}
+                                    </div>
+                                </td>
                                 <th>
                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
                                     </a>
                                 </th>
-                                <td>Nom ETP Static</td>
-                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td> --}}
-                                <td>Nom PRJ/ Nom GRP/ formation Static</td>
+                                <td>
+                                    <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        {{$actif->nom_etp}}
+                                    </div>
+                                </td>
+                                <td>
+                                    @php
+                                    echo html_entity_decode($actif->ref_session)
+                                    @endphp
+                                </td>
+                                <td>
+                                    @php
+                                    echo html_entity_decode($actif->session_facture)
+                                    @endphp
+                                </td>
 
-                                {{-- <td> <strong>{{$actif->nom_etp}}</strong></td>
-                                <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td> --}}
+                                <td>{{$actif->nom_projet.": "}}
+                                    @php
+                                    echo html_entity_decode($actif->module_session)
+                                    @endphp
+                                </td>
                                 <td>{{$actif->invoice_date}}</td>
                                 <td>{{$actif->due_date}}</td>
-                                @if ($actif->jour_restant>=1)
-                                <td style="color:red;">{{$actif->jour_restant.' jour(s) restant(s)'}}</td>
-                                @else
-                                <td style="color:red;">temps de payement a éxpirer!</td>
-                                @endif
                                 @if ($actif->facture_encour == "en_cour")
-                                <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
+                                <td>
+                                    <div style="background-color: rgb(147, 196, 163); border-radius: 10px; text-align: center">
+                                        {{$actif->facture_encour}}
+                                    </div>
+                                </td>
                                 @canany(['isCFP'])
                                 <td>
                                     <div class="dropdown">
@@ -493,7 +499,7 @@
                             @endforeach
                             @else
                             <tr>
-                                <td colspan="8" class="text-center" style="color:red;">Aucun Résultat</td>
+                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
                             </tr>
                             @endif
                         </tbody>
@@ -507,95 +513,82 @@
                     <table class="table table-striped ">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Type facture</th>
                                 <th scope="col">Numéro de facture</th>
                                 <th scope="col">Entreprise</th>
-                                <th scope="col">Projet / Session / type de formation</th>
-                                <th scope="col">Invoice Date</th>
-                                <th scope="col">Due Date</th>
-                                <th scope="col">Activité</th>
-                                @canany(['isCFP'])
-                                <th scope="col" colspan="2">Action</th>
-                                @endcanany
+                                <th scope="col">Réference module</th>
+                                <th scope="col">Module de formation</th>
+                                <th scope="col">Projet session</th>
+                                <th scope="col">Date de facturation</th>
+                                <th scope="col">Payement du</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (count($facture_payer) > 0)
                             @foreach ($facture_payer as $actif)
-                            <td class="text-center" style="color:red;">{{$actif->description_type_facture}}</td>
-                            <th>
-                                <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                    <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
-                                </a>
-                            </th>
-                            <td> <strong>{{$actif->nom_etp}}</strong></td>
-                            <td>{{$actif->nom_projet." / ".$actif->nom_groupe." / ".$actif->type_formation}}</td>
-                            <td>{{$actif->invoice_date}}</td>
-                            <td>{{$actif->due_date}}</td>
-                            @if ($actif->jour_restant>=1)
-                            <td style="color:red;">{{$actif->jour_restant.' jour(s) restant(s)'}}</td>
-                            @else
-                            <td style="color:red;">temps de payement a éxpirer!</td>
-                            @endif
-                            @if ($actif->facture_encour == "valider")
-                            <td style="color:red;"><i class="fa fa-bolt"></i>{{$actif->facture_encour}}</td>
-                            @canany(['isCFP'])
-                            <td>
-                                <div class="btn-group dropleft">
-                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-
-                                        <button class="dropdown-item btn btn-default btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-toggle="modal" data-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
-                                        <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class=" btn btn-default btn-block mb-2"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
-
-                                        <hr class="dropdown-divider">
-                                        <a class="dropdown-item" href="{{route('facture')}} ">creer nouveau facture</a>
+                            <tr>
+                                <td>
+                                    <div style="background-color: rgb(226, 230, 238); border-radius: 10px; text-align: center">
+                                        {{$actif->reference_type_facture}}
                                     </div>
-                                </div>
-                            </td>
-                            @endcanany
-                            @elseif ($actif->facture_encour == "en_cour")
-                            <td style="color:rgb(198, 201, 25);"><i class="fa fa-shopping-bag"></i> {{$actif->facture_encour}}</td>
-                            @canany(['isCFP'])
-                            <td>
-                                <div class="btn-group dropleft">
-                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item btn btn-default btn-block mb-2 payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-toggle="modal" data-target="#modal"><i class="fa fa-money"></i>Faire un encaissement</button>
-                                        <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="submit" class=" btn btn-default btn-block mb-2"><i class="fa fa-eye"></i>Liste des encaissements</button></a>
+                                </td>
+                                <th>
+                                    <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
+                                    </a>
+                                </th>
+                                <td>
+                                    <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        {{$actif->nom_etp}}
                                     </div>
-                                </div>
-                            </td>
-                            @endcanany
-                            @else
-                            <td style="color:rgb(15, 221, 67);"><i class="fa fa-check-circle"></i><i class="fa fa-check-circle"></i> {{$actif->facture_encour}}</td>
-                            @canany(['isCFP'])
-                            <td>
-                                <div class="dropdown">
-                                    <div class="btn-group dropstart">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_enregistrer">PDF</button></a>
-                                            <hr class="dropdown-divider">
-                                            <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
+                                </td>
+                                <td>
+                                    @php
+                                    echo html_entity_decode($actif->ref_session)
+                                    @endphp
+                                </td>
+                                <td>
+                                    @php
+                                    echo html_entity_decode($actif->session_facture)
+                                    @endphp
+                                </td>
 
-                                        </ul>
+                                <td>{{$actif->nom_projet.": "}}
+                                    @php
+                                    echo html_entity_decode($actif->module_session)
+                                    @endphp
+                                </td>
+
+                                <td>{{$actif->invoice_date}}</td>
+                                <td>{{$actif->due_date}}</td>
+                                <td>
+                                    <div style="background-color: rgb(208, 187, 231); border-radius: 10px; text-align: center">
+                                        {{$actif->facture_encour}}
                                     </div>
-                                </div>
-                            </td>
-                            @endcanany
-                            @endif
+                                </td>
+                                @canany(['isCFP'])
+                                <td>
+                                    <div class="dropdown">
+                                        <div class="btn-group dropstart">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_enregistrer">PDF</button></a>
+                                                <hr class="dropdown-divider">
+                                                <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                @endcanany
                             </tr>
                             @endforeach
                             @else
                             <tr>
-                                <td colspan="8" class="text-center" style="color:red;">Aucun Résultat</td>
+                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
                             </tr>
                             @endif
                         </tbody>

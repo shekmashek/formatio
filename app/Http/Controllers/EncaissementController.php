@@ -51,7 +51,6 @@ class EncaissementController extends Controller
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
-
         DB::beginTransaction();
         try {
             encaissement::validation($request);
@@ -71,10 +70,10 @@ class EncaissementController extends Controller
 
         $numero_fact = $request->num_facture;
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        return view('admin.encaissement.liste_encaissement', compact('encaissement','numero_fact'));
+        return view('admin.encaissement.liste_encaissement', compact('encaissement', 'numero_fact'));
     }
 
-    public function generatePDF($numero_fact,Request $request)
+    public function generatePDF($numero_fact, Request $request)
     {
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
@@ -92,7 +91,7 @@ class EncaissementController extends Controller
         ]);
 
 
-        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
+        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement', 'montant_totale'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -103,9 +102,9 @@ class EncaissementController extends Controller
             ])
         );
 
-            return $pdf->download("liste d'encaissment de la facture numero " . $numero_fact.".pdf");
+        return $pdf->download("liste d'encaissment de la facture numero " . $numero_fact . ".pdf");
 
-    //    return view('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
+        //    return view('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
     }
 
     public function supprimer(Request $request)
@@ -167,7 +166,7 @@ class EncaissementController extends Controller
         $user_id = Auth::user()->id;
         // $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();
-        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
         $numero_fact = $request->num_facture;
         $montant_restant = DB::select('select dernier_montant_ouvert from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);

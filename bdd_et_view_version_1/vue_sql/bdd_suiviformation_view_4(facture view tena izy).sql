@@ -184,7 +184,8 @@ CREATE OR REPLACE VIEW v_facture AS SELECT
     v_montant_facture.*,
     v_sum_acompte_facture.sum_acompte,
     (
-        CASE WHEN v_montant_facture.projet_id = v_sum_acompte_facture.projet_id AND UPPER(
+        CASE
+        WHEN v_montant_facture.projet_id = v_sum_acompte_facture.projet_id AND UPPER(
             v_montant_facture.reference_type_facture
         ) = UPPER('facture') THEN(
             v_montant_facture.net_ttc - v_sum_acompte_facture.sum_acompte
@@ -276,12 +277,15 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     tax_id,
     (taxes.description) nom_taxe,
     taxes.pourcent,
+    factures.devise,
     (factures.description) description_facture,
     other_message,
     qte,
     num_facture,
     factures.activiter,
     pu,
+    type_financement_id,
+    (mode_financements.description) description_financement,
     entreprises.nom_etp,
     entreprises.adresse_rue,
     entreprises.adresse_quartier,
@@ -303,12 +307,14 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
 FROM
     factures,
     v_groupe_projet_entreprise_module,type_facture,
-    taxes,
+    taxes,mode_financements,
     entreprises,
     secteurs
 WHERE
     factures.entreprise_id = entreprises.id AND entreprises.secteur_id = secteurs.id AND
-    factures.tax_id = taxes.id AND factures.groupe_entreprise_id = v_groupe_projet_entreprise_module.groupe_entreprise_id  AND type_facture_id = type_facture.id
+    factures.tax_id = taxes.id AND
+    factures.groupe_entreprise_id = v_groupe_projet_entreprise_module.groupe_entreprise_id
+    AND type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id
 GROUP BY
     entreprises.adresse_rue,
     entreprises.adresse_quartier,
@@ -344,6 +350,8 @@ GROUP BY
     num_facture,
     factures.activiter,
     pu,
+    type_financement_id,
+    mode_financements.description,
     entreprises.nom_etp,
     entreprises.adresse_rue,
     entreprises.logo,
@@ -365,11 +373,7 @@ CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
     (v_temp_facture.montant_facture) montant_total,
     (v_temp_facture.payement) payement_totale,
     (v_temp_facture.montant_ouvert) dernier_montant_ouvert,
-    (v_temp_facture.due_date) date_facture,
-     (
-        CASE WHEN(payement - montant_ouvert) < 0 AND payement <= 0 THEN 'valider' WHEN(payement - montant_ouvert) < 0 AND payement > 0 THEN 'en_cour' WHEN(payement - montant_ouvert) >= 0 THEN 'terminer'
-    END
-) facture_encour
+    (v_temp_facture.due_date) date_facture
 FROM
     v_facture,
     v_temp_facture
@@ -380,6 +384,14 @@ WHERE
 
 CREATE OR REPLACE VIEW v_facture_existant AS SELECT
     v_facture_existant_tmp.*
+    ,
+     (
+        CASE
+        WHEN(payement_totale - montant_total) < 0 AND payement_totale <= 0 THEN 'valider'
+        WHEN(payement_totale - montant_total) < 0 AND payement_totale > 0 THEN 'en_cour'
+        WHEN(payement_totale - montant_total) >= 0 THEN 'terminer'
+    END
+) facture_encour
 FROM
    v_facture_existant_tmp
 GROUP BY

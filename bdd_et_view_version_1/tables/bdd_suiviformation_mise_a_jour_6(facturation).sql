@@ -120,6 +120,7 @@ CREATE TABLE `factures` (
   `num_facture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#0000',
   `activiter` boolean not null default false,
   `remise` int(11) DEFAULT 0,
+  `remise_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1 REFERENCES type_remise(id) ON DELETE CASCADE,
   `other_message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -139,7 +140,6 @@ CREATE TABLE `encaissements` (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `num_facture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `facture_id` bigint(20) NOT NULL REFERENCES factures(id) ON DELETE CASCADE,
   `resp_cfp_id` bigint(20) NOT NULL REFERENCES responsables_cfp(id) ON DELETE CASCADE,
   `nom_resp_cfp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mode_financement_id` bigint(20) UNSIGNED NOT NULL REFERENCES mode_financements(id) ON DELETE CASCADE

@@ -116,6 +116,25 @@
                                 </div>
 
                             </div>
+
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <p class="m-0 adresse_cfp">NIF: {{$facture[0]->nif}}</p>
+
+                                </div>
+                                <div class="col">
+                                    <p class="m-0 adresse_cfp">STAT: {{$facture[0]->stat}}</p>
+
+                                </div>
+                                <div class="col">
+                                    <p class="m-0 adresse_cfp">RCS: {{$facture[0]->rcs}}</p>
+
+                                </div>
+                                <div class="col">
+                                    <p class="m-0 adresse_cfp">CIF: {{$facture[0]->cif}}</p>
+
+                                </div>
+                            </div>
                         </div>
 
                         <hr>
@@ -324,6 +343,7 @@
                     </div>
 
                     <p>Arretée la présente facture à la somme de: <strong>{{$lettre_montant}} Ariary</strong></p>
+                    <p>mode de payement: <strong>STATIC mbol ts vita</strong></p>
                     <p>Autre Message</p>
                     <p style="max-width: 40%">{{$facture[0]->other_message}}</p>
                     <div class="container-fluid mb-5">

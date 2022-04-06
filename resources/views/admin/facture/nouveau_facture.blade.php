@@ -36,8 +36,14 @@
                                     <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
                                     @endforeach
                                 </select>
+                                <select class="text-end titre_facture form-select  mb-2 m-0" id="id_mode_financement" name="id_mode_financement" aria-label="Default select example" required>
+                                    <option onselected hidden> Mode de payement...</option>
+                                    @foreach ($mode_payement as $mod)
+                                    <option value="{{$mod->id}}">{{$mod->description}}</option>
+                                    @endforeach
+                                </select>
 
-                                <input type="text" name="" id="" class="text-end description_facture" placeholder="Déscription du facture">
+                                <input type="text" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture">
                                 <div class="info_cfp">
                                     <p class="m-0 nom_cfp">{{$cfp->nom}}</p>
                                     <p class="m-0 adresse_cfp">{{$cfp->adresse_lot." ".$cfp->adresse_quartier}}</p>
@@ -66,6 +72,7 @@
                                 <p class="mt-3 m-0 " id="tel_etp"></p>
                                 <p class="m-0 " id="mail_etp"></p>
                                 <p class="m-0 " id="site_etp"></p>
+                                <p class="m-0 " id="info_légale_etp"></p>
                             </div>
                         </div>
                     </div>
@@ -74,7 +81,7 @@
                             <div class="col-12 d-flex flex-row justify-content-end">
                                 <p class="m-0 pt-3 text-end me-3">Numéro de facture</p> <input type="text" class="form-control input_simple" name="num_facture" required placeholder="reference du facture">
                                 @error('num_facture')
-                               <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror
                             </div>
                         </div>
@@ -82,9 +89,9 @@
                             <div class="col-12 d-flex flex-row justify-content-end">
                                 <p class="m-0 pt-3 text-end me-3">Reference de bon de commande</p> <input type="text" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
                                 @error('reference_bc')
-                            <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror
-                                <p>  <span style="color:#ff0000;" id="reference_bc_err"></span></p>
+                                <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -104,7 +111,7 @@
                 <div class="row services_factures">
                     <div class="col-12 pb-4 element">
                         <div class="row titres_services">
-                            <div class="col-2">
+                            <div class="col-3">
                                 <h6 class="m-0">Choisit le projet</h6>
                             </div>
                             <div class="col-5">
@@ -116,12 +123,12 @@
                             <div class="col-2">
                                 <h6 class="m-0">Entrer prix unitaire</h6>
                             </div>
-                            <div class="col-2 text-end">
-                                <h6 class="m-0">Montant</h6>
+                            <div class="col-1 text-end">
+                                <h6 class="m-0"></h6>
                             </div>
                         </div>
                         <div class="row my-3">
-                            <div class="col-2">
+                            <div class="col-3">
                                 <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
                                 </select>
                                 <span style="color:#ff0000;" id="projet_id_err">Aucun projet a été
@@ -142,8 +149,8 @@
                             <div class="col-2">
                                 <input type="number" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
                             </div>
-                            <div class="col-2 text-end pt-2">
-                                <p class="m-0"><span id="montant_plus_qte">0</span>&nbsp;MGA</p>
+                            <div class="col-1 text-end pt-2">
+                                {{-- <p class="m-0"><span id="montant_plus_qte">0</span>&nbsp;MGA</p> --}}
                             </div>
                         </div>
 
@@ -163,10 +170,10 @@
                                     </select>
                                 </div>
                                 <div class="col-3 text-end">
-                                    <p class="m-0 pt-2"><span id="montant_tax" class="montant_session_facture">0</span>&nbsp;MGA<span><i class='bx bxs-trash ms-4'></i></span></p>
+                                    {{-- <p class="m-0 pt-2"><span id="montant_tax" class="montant_session_facture">0</span>&nbsp;MGA<span><i class='bx bxs-trash ms-4'></i></span></p> --}}
                                 </div>
                             </div>
-                            <div class="row mb-2 g-0 p-2">
+                            {{-- <div class="row mb-2 g-0 p-2">
                                 <div class="col-9 d-flex flex-row justify-content-end">
                                     <p class="m-0 text-end total">Total Montant Session</p>
                                 </div>
@@ -175,7 +182,7 @@
                                         <span id="total_montant_session">0</span>&nbsp;MGA
                                     </p>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
 
@@ -186,7 +193,7 @@
                     <div class="row nouveau_service g-0">
                         <div class="col-12 py-2 text-center">
 
-                            <span><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-circle me-2'></i> Ajouter une autre session</a></span>
+                            <span><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></span>
                         </div>
                     </div>
                     <div class="col-12 pb-4 element">
@@ -194,23 +201,24 @@
                             <div class="col-3">
                                 <h6 class="m-0">Frais annexes</h6>
                             </div>
-                            <div class="col-3">
+                            <div class="col-5">
                                 <h6 class="m-0">Déscriptions</h6>
                             </div>
                             <div class="col-1 text-end">
-                                <h6 class="m-0">Quantité</h6>
+                                <h6 class="m-0">Entrer le quantité</h6>
                             </div>
                             <div class="col-2">
-                                <h6 class="m-0">Prix Unitaire</h6>
+                                <h6 class="m-0">Entrer prix unitaire</h6>
                             </div>
-                            <div class="col-3 text-end">
-                                <h6 class="m-0">Montant</h6>
+                            <div class="col-1 text-end">
+                                <h6 class="m-0"></h6>
                             </div>
                         </div>
 
-                        <div class="row my-1">
+                        <div id="newRow"></div>
 
-                            <div id="newRow"></div>
+                        {{-- <div class="row my-1">
+
 
                             <div class="row mb-2 g-0 p-2">
                                 <div class="col-9 d-flex flex-row justify-content-end">
@@ -223,22 +231,22 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> --}}
 
                     </div>
                     <div class="row nouveau_service g-0">
                         <div class="col-12 py-2 text-center">
-                            <span> <a href="#" id="addRow" value="0"><i class='bx bx-plus-circle me-2'></i>Ajouter un ou des frais annexes(s)</a> </span>
+                            <span> <a href="#" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </span>
                         </div>
                     </div>
-                    <div class="row mb-2 g-0 p-2">
+                    {{-- <div class="row mb-2 g-0 p-2">
                         <div class="col-9 d-flex flex-row justify-content-end">
                             <p class="m-0 text-end pt-1"> Montant total</p>
                         </div>
                         <div class="col-3 text-end">
                             <p><span>0</span>&nbsp;MGA</p>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row mb-2 g-0 p-2">
                         <div class="col-9 d-flex flex-row justify-content-end">
                             <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
@@ -250,17 +258,17 @@
                             </select>
                         </div>
                         <div class="col-3 text-end">
-                            <p><span id="montant_remise">0</span>&nbsp;MGA</p>
+                            {{-- <p><span id="montant_remise">0</span>&nbsp;MGA</p> --}}
                         </div>
                     </div>
-                    <div class="row mb-2 g-0 p-2">
+                    {{-- <div class="row mb-2 g-0 p-2">
                         <div class="col-9 d-flex flex-row justify-content-end">
                             <p class="m-0 text-end total">Total</p>
                         </div>
                         <div class="col-3 text-end">
                             <p class="pt-1 me-3"><span class="total" id="total_montant_frais_annexe">0</span>&nbsp;MGA</p>
                         </div>
-                    </div>
+                    </div> --}}
                     <hr>
                     <div class="row mb-2 g-0">
                         <div class="col-12 ">
@@ -407,6 +415,7 @@
                     document.getElementById("tel_etp").innerHTML = "" + etp.telephone_etp;
                     document.getElementById("mail_etp").innerHTML = "" + etp.email_etp;
                     document.getElementById("site_etp").innerHTML = "" + etp.site_etp;
+                    document.getElementById("info_légale_etp").innerHTML = "NIF: " + etp.nif + " &nbsp; STAT: " + etp.stat + " &nbsp; <br> RCS: " + etp.rcs + " &nbsp; CIF: " + etp.cif;
 
                     if (userData.length <= 0) {
                         document.getElementById("projet_id_err").innerHTML = "Aucun projet a été détecter";
@@ -491,7 +500,7 @@
         $(".session_id").empty();
 
         var prj_id = $(this).val();
-        var entreprise_id  = $("#entreprise_id").val();
+        var entreprise_id = $("#entreprise_id").val();
         $.ajax({
             url: "{{route('groupe_projet')}}"
             , type: 'get'
@@ -524,8 +533,6 @@
     // add row
     $(document).on('click', '#addRow', function() {
         $('#frais').empty();
-        //  var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
-
         $.ajax({
             url: "{{route('frais_annexe')}}"
             , type: 'get'
@@ -533,13 +540,11 @@
                 var userData = response;
                 $("#addRow").val(userData.length);
                 var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
-
                 if ($("#addRow").val() > 1) {
                     $("#addRow").css("display", "inline-block");
                 } else {
                     $("#addRow").css("display", "none");
                 }
-
                 if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
                     $("#addRow").css("display", "inline-block");
                     for (var $i = 0; $i < userData.length; $i++) {
@@ -556,7 +561,7 @@
                     html += '</select>';
                     html += '</div>';
 
-                    html += '<div class="col-3">';
+                    html += '<div class="col-5">';
                     html += '  <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe"></textarea>';
                     html += '</div>';
 
@@ -568,10 +573,9 @@
                     html += '<input type="number" min="0" value="0" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">';
                     html += '</div>';
 
-
-                    html += '<div class="col-3 text-end pt-2">';
-                    html += '<p class="m-0"><span>500 000</span>&nbsp;MGA<span>';
-                    html += '<button id="removeRow" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span></p>';
+                    html += '<div class="col-1 text-end pt-2">';
+                    html += '<p class="m-0"><span>';
+                    html += '<button id="removeRow" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span>';
                     html += '</div>';
                     html += '</div><br>';
 
@@ -664,7 +668,6 @@
             sum += +$(this).val();
         });
         document.getElementById("total_frais_annexe").innerHTML = sum;
-        //    document.getElementById("total_montant_frais_annexe").innerHTML=totale;
 
     });
 
@@ -701,7 +704,7 @@
 
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRowMontant">';
-                    html += '<div class="col-2">';
+                    html += '<div class="col-3">';
                     html += '</div>';
                     html += '<div class="col-5">';
                     html += '<select class="form-select selectP input_section4"  id="session_id[]" name="session_id[]" required>';
@@ -719,8 +722,8 @@
                     html += '<input type="number" min="0" value="0" required name="facture[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture[]" placeholder="0">';
                     html += '</div>';
 
-                    html += '<div class="col-2 text-end pt-2">';
-                    html += '<p class="m-0"><span>500 000</span>&nbsp;MGA<span>';
+                    html += '<div class="col-1 text-end pt-2">';
+                    html += '<p class="m-0"><span>';
                     html += '<button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span></p>';
                     html += '</div>';
                     html += '</div><br>';
