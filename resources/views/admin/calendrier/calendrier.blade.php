@@ -313,7 +313,7 @@
 
     <script>
 
-        document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener("DOMContentLoaded", (event) => {
 
             var nom_module = $('#nom_module').val();
             $.ajax({
