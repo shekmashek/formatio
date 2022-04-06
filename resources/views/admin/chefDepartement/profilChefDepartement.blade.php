@@ -37,7 +37,7 @@
                                             {{-- @foreach ($departement as $dep)
                                             <h6 class="text-muted f-w-400">{{$dep->departement->nom_departement}}</h6>
                                             @endforeach --}}
-{{-- 
+{{--
                                         </div>
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Entreprise</p>
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-    </div> --}} 
+    </div> --}}
     <style>
         .image-ronde{
    width : 30px; height : 30px;
@@ -70,19 +70,19 @@
  </style>
       <div class="row">
     <div class="row mt-2">
-                            
+
                              <div class="col-lg-4">
-                                
+
                                  <div class="form-control">
                                      <p class="text-center">Informations générales</p>
-                             
+
                                      <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
                                      <p class="p-1 m-0" style="font-size: 12px;">PHOTO
-                                         
+
                                      </p>
                                      @foreach ($vars  as $var)
 
-                                    
+
                                      <a href="{{route('editer_photos_manager',$var->id)}}" >
                                         @if($var->photos==null)
                                                 <span>
@@ -93,31 +93,31 @@
                                                 </span>
                                             @else
                                         <img src="{{asset('images/chefDepartement/'.$var->photos)}}" class="image-ronde">
-                                           
+
                                             @endif
                                     </a>
                                     </div>
                                     <div  style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_nom_manager',$var->id)}}" >
                                      <p class="p-1 m-0" id="nom" style="font-size: 12px;">NOM<span style="float: right;">{{$var->nom_chef}} {{$var->prenom_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
-                                         
+
                                      </p></a>
-                                     
+
                                     </div>
-                            
+
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_genre_manager',$var->id)}}" >
                                         <p class="p-1 m-0" style="font-size: 12px;">GENRE
-                                        @if ($var->genre_chef==null)
+                                        @if ($genre ==null)
                                         <span style="float: right; color:red">incomplète&nbsp;
                                       @else
-                                     <span style="float: right;">{{$var->genre_chef}}&nbsp;
+                                     <span style="float: right;">{{$genre}}&nbsp;
                                         @endif
                                         <i class="fas fa-angle-right"></i></span>
-                                     
+
                                     </p>
                                      </a>
-                                   
+
                                     </div>
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
                                         <a href="{{route('editer_pwd_manager',$var->id)}}" >
@@ -128,71 +128,71 @@
                                      <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                  </div>
                              </div>
-                         
- 
+
+
                                  <div class="col-lg-4">
-                                
+
                                      <div class="form-control">
                                          <p class="text-center">Coordonnées</p>
-                                 
+
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_mail_manager',$var->id)}}" >
                                          <p class="p-1 m-0" style="font-size: 12px;">ADRESSE E-MAIL<span style="float: right;">{{$var->mail_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                             
+
                                          </p>
                                              </a>
                                          </div>
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href=" {{route('editer_phone_manager',$var->id)}}" >
                                          <p class="p-1 m-0" style="font-size: 12px;">TELEPHONE<span style="float: right;">{{$var->telephone_chef}}&nbsp;<i class="fas fa-angle-right"></i> </span>
-                                             
+
                                          </p>
                                              </a>
                                          </div>
-                          
+
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_cin_manager',$var->id)}} " >
                                          <p class="p-1 m-0" style="font-size: 12px;">CIN<span style="float: right;">{{$var->cin_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          </p>
                                              </a>
-                                         </div>                                                         
-                                        
-                                         
+                                         </div>
+
+
                                          <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
                                      </div>
                              </div>
                              <div class="col-lg-4">
-                                
+
                                  <div class="form-control">
                                      <p class="text-center">Informations professionnelles</p>
-                             
+
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                          <a href="{{route('editer_matricule_manager',$var->id)}} " >
                                      <p class="p-1 m-0" style="font-size: 12px;">Matricule<span style="float: right;">{{$var->matricule}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                         
+
                                      </p>
                                          </a>
                                      </div>
-                      
+
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                          <a href="{{route('editer_fonction_manager',$var->id)}}  " >
                                      <p class="p-1 m-0" style="font-size: 12px;">Fonction<span style="float: right;">{{$var->fonction_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
-                                         
+
                                      </p>
                                          </a>
-                                     
+
                                      </div>
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                         {{-- <a href="{{route('editer_niveau',$var->id)}}  " > --}}
                                     <p class="p-1 m-0" style="font-size: 12px;">Entreprise<span style="float: right;">{{optional(optional($var)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-                                        
+
                                     </p>
                                         </a>
-                                    
+
                                     </div
-                                     
-                                  
+
+
                          @endforeach
-                            
+
      </div>
 @endsection

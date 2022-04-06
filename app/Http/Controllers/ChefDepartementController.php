@@ -144,7 +144,10 @@ class ChefDepartementController extends Controller
         $user_id =  $users = Auth::user()->id;
         $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
         $chef =DB::select('select *  from chef_departements where id = ?',[$id])[0];
-        return view('admin.chefDepartement.edit_genre', compact('chef'));
+        if($chef->genre_id == 1) $genre = "Femme";
+        if($chef->genre_id == 2) $genre = "Homme";
+        if($chef->genre_id == null) $genre = '';
+        return view('admin.chefDepartement.edit_genre', compact('chef','genre'));
     }
     public function editer_phone($id, Request $request)
     {
@@ -204,7 +207,7 @@ class ChefDepartementController extends Controller
             DB::update('update users set email = ? where id = ?', [$request->mail_chef, Auth::id()]);
             DB::update('update chef_departements set mail_chef = ? where user_id = ?', [$request->mail_chef, Auth::id()]);
             return redirect()->route('affProfilChefDepartement');
-    
+
         }
     public function update(Request $request, $id)
     {
@@ -215,11 +218,13 @@ class ChefDepartementController extends Controller
     //updtae profile manager
     public function update_chef(Request $request, $id)
     {
-       
+        if($request->genre == "Femme") $genre = 1;
+        if($request->genre == "Homme") $genre = 2;
+
         chefDepartement::where('id',$id)
-                    ->update(['nom_chef' => $request->nom_chef, 'prenom_chef' => $request->prenom_chef,'cin_chef' => $request->cin_chef, 'genre_chef' => $request->genre, 'fonction_chef' => $request->fonction_chef, 'mail_chef' => $request->mail_chef, 'telephone_chef' => $request->telephone_chef,'matricule'=>$request->matricule_chef]);
+                    ->update(['nom_chef' => $request->nom_chef, 'prenom_chef' => $request->prenom_chef,'cin_chef' => $request->cin_chef, 'genre_id' => $genre, 'fonction_chef' => $request->fonction_chef, 'mail_chef' => $request->mail_chef, 'telephone_chef' => $request->telephone_chef,'matricule'=>$request->matricule_chef]);
      return redirect()->route('affProfilChefDepartement',$id);
-    }                         
+    }
     public function update_photos_chef(Request $request)
     {
         $image = $request->file('image');
@@ -230,7 +235,7 @@ class ChefDepartementController extends Controller
             }
             else{
                 $user_id =  $users = Auth::user()->id;
-              
+
                    $chef = $fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id]);
                     $image_ancien =$chef->photos;
                     //supprimer l'ancienne image
