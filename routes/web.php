@@ -634,6 +634,29 @@ Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')-
 Route::resource('ajoutChefDepartement','ChefDepartementController');
 Route::get('/destroy_chefDepartement','ChefDepartementController@destroy')->name('destroy_chefDepartement');
 Route::get('/modifDepartement/{id}','ChefDepartementController@update')->name('modifDepartement');
+//rout editer  chefdepartement
+Route::get('/editer_photos_manager/{id}','ChefDepartementController@editer_photos')->name('editer_photos_manager');
+Route::post('update_photos_chef','ChefDepartementController@update_photos_chef')->name('update_photos_chef');
+Route::post('update_mdp_manager','ChefDepartementController@update_mdp_manager')->name('update_mdp_manager');
+Route::post('update_email_manager','ChefDepartementController@update_email_manager')->name('update_email_manager');
+Route::get('/editer_nom_manager/{id}','ChefDepartementController@editer_nom')->name('editer_nom_manager');
+Route::get('/editer_genre_manager/{id}','ChefDepartementController@editer_genre')->name('editer_genre_manager');
+Route::get('/editer_phone_manager/{id}','ChefDepartementController@editer_phone')->name('editer_phone_manager');
+Route::get('/editer_cin_manager/{id}','ChefDepartementController@editer_cin')->name('editer_cin_manager');
+Route::get('/editer_matricule_manager/{id}','ChefDepartementController@editer_matricule')->name('editer_matricule_manager');
+Route::get('/editer_fonction_manager/{id}','ChefDepartementController@editer_fonction')->name('editer_fonction_manager');
+Route::get('/editer_pwd_manager/{id}','ChefDepartementController@editer_pwd')->name('editer_pwd_manager');
+Route::get('/editer_mail_manager/{id}','ChefDepartementController@editer_mail')->name('editer_mail_manager');
+
+
+
+
+
+
+
+//update profile manager
+Route::post('/update_chef/{id}','ChefDepartementController@update_chef')->name('update_chef');
+
 
 
 // =======================  ABONNEMENT

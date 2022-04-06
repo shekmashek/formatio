@@ -177,8 +177,10 @@ class DepartementController extends Controller
             $departement = DepartementEntreprise::with('departement', 'entreprise')->where('id', $depEtpId)->get();
             $vars = chefDepartement::with('entreprise')->where('id', $idChef)->get();
         }
-
-        return view('admin/chefDepartement/profilChefDepartement', compact('vars', 'departement'));
+        if($vars[0]->genre_id == 1) $genre = "Femme";
+        if($vars[0]->genre_id == 2) $genre = "Homme";
+        if($vars[0]->genre_id == null) $genre = '';
+        return view('admin/chefDepartement/profilChefDepartement', compact('genre','vars', 'departement'));
     }
     //enregistrer departement
     public function store(Request $request)
@@ -208,6 +210,7 @@ class DepartementController extends Controller
         $var = chefDepartement::findOrFail($id);
         return view('admin.chefDepartement.update', compact('var', 'roles', 'role_id'));
     }
+
 
     public function update(Request $request)
     {
