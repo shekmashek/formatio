@@ -24,7 +24,7 @@
 
 <body>
 
-    <div class="sidebar">
+    <div class="sidebar active">
         {{-- <div class="logo_content">
             <div class="logo">
                 <span><img src="{{asset('img/images/logo_fmg54Ko.png')}}" alt="" class="img-fluid"></span>
@@ -469,8 +469,6 @@
             </li>
             @endcan
         </ul>
-        <br>
-        <br>
         {{-- <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
@@ -490,10 +488,10 @@
     <div class="home_content">
         <div class="container-fluid p-0 height-100 bg-light" id="content">
             <header class="header row align-items-center g-0" id="header">
-                <div class="col-1 menu_hamburger">
+                {{-- <div class="col-1 menu_hamburger">
                     <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
-                </div>
-                <div class="col-2 d-flex flex-row">
+                </div> --}}
+                <div class="col-3 d-flex flex-row padding_logo">
                     <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt="" class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
                 <div class="col-5 align-items-center justify-content-start d-flex flex-row">
@@ -646,11 +644,10 @@
 
                         </div>
                     </div>
-                    <div class="col-2 d-flex">
+                    <div class="col-2">
                         <div class="header_img">
-                            <p>
-                            <div class=""><span><i class="fas fa-user"></i></span> <span><i style=""
-                                        class="ms-1 fas fa-angle-down"></i></span></div>
+                            <p class="m-0 mt-3">
+                            <i class='bx bxs-user-circle user_icon'></i>
                             </p>
                         </div>
                         <div class="pdp_profil" id="box_profil">
@@ -751,18 +748,7 @@
             {{-- content --}}
             <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
-                <div class="apprendre pt-5 mt-3">
-                    <div class="row">
-                        <div class="col">
-                            <p class="m-0">Apprendre</p>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bx bx-x " role="button" onclick="afficherTuto();"></i>
-                        </div>
-                        <hr>
-                    </div>
 
-                </div>
             </div>
             {{-- content --}}
             {{-- footer --}}
@@ -817,10 +803,23 @@
                     </div>
                 </div>
             </div> --}}
+            <div class="apprendre mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0">Apprendre</p>
+                    </div>
+                    <div class="col text-end">
+                        <i class="bx bx-x " role="button" onclick="afficherTuto();"></i>
+                    </div>
+                    <hr class="mt-2">
+                    apprendre
+                </div>
         </div>
+
+    </div>
         {{-- footer --}}
     </div>
-    </div>
+
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="

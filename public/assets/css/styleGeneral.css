@@ -77,14 +77,17 @@ ul li a {
     left: 0;
     /* height: calc(100% - 8rem); */
     height: 100%;
-    width: 240px;
     background: var(--first-color);
-    padding: 6px 14px;
+    padding: 6px 14px 50px 6px;
     transition: all 0.5s ease;
     align-items: center;
     color: var(--font-sidebar-color);
     z-index: 999;
     overflow-y: auto;
+}
+
+.padding_logo{
+    padding-left: 2rem;
 }
 
 .sidebar.active {
@@ -240,13 +243,31 @@ ul li a {
     height: 25px;
 }
 
+.new_session{
+    display: grid;
+    place-content: center;
+}
+
+.nouvelle_session{
+    transition: all .5s ease;
+}
+
+.nouvelle_session:hover{
+    background-color: #63738156;
+    color: white;
+    padding: .5rem;
+    border: none;
+    border-radius: 15px;
+    transform: scale(1);
+}
 
 .home_content {
     position: absolute;
     height: 100%;
-    width: calc(100% - 240px);
-    left: 240px;
-    right: 250px;
+    width: calc(100% - 100px);
+    /* width: 100%; */
+    left: 100px;
+    right: 400px;
     transition: all 0.5s ease;
 }
 
@@ -257,20 +278,97 @@ ul li a {
     margin: 12px;
 }
 
-.sidebar.active ~ .home_content {
+.user_icon{
+    font-size: 2.5rem;
+    position: relative;
+    bottom: .3rem;
+    transition: all .5s ease;
+}
+.user_icon:hover{
+    transform: scale(1.3);
+}
+
+/* .sidebar.active ~ .home_content {
     width: calc(100% - 100px);
     left: 100px;
-}
+} */
 
 /* .sidebar.active ~ .home_content .header {
     width: calc(100% - 240px);
     left: 240px;
 } */
 
-.apprendre.afficher ~ .home_content {
-    width: calc(100% - 250px);
+/* .apprendre.afficher ~ .home_content {
+    width: calc(100% - 400px);
+    right: 400px;
+} */
+
+/* apprendre */
+.apprendre{
+    position: fixed;
+    top: 3rem;
+    right: -50px;
+    height: 100%;
+    width: 0px;
+    background: white;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    align-items: center;
+    color: var(--font-sidebar-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-left: 1px solid grey;
+    float: right;
+}
+
+.apprendre.afficher {
+    width: 400px;
+    overflow-y: auto;
     right: 0px;
 }
+
+.apprendre p{
+    font-size: 1rem;
+}
+.apprendre .bx{
+    font-size: 1.5rem;
+}
+
+.apprendre_btn button{
+    display: grid;
+}
+.filtrer{
+    position: fixed;
+    top: 3rem;
+    right: -50px;
+    height: 100%;
+    width: 0px;
+    background: white;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    align-items: center;
+    color: var(--font-sidebar-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-left: 1px solid grey;
+    float: right;
+}
+
+.filtrer.afficher {
+    width: 400px;
+    overflow-y: auto;
+    right: 0px;
+}
+
+.filtrer p{
+    font-size: 1rem;
+}
+.filtrer .bx{
+    font-size: 1.5rem;
+}
+
+.filtrer_btn button{
+    display: grid;
+}
+
 
 /*---------------------
     Header
@@ -451,7 +549,8 @@ ul li a {
 
 .filter{
     position: relative;
-    top: 3.5rem;
+    bottom: .5rem;
+    float: right;
 }
 
 .header-right .pdp_profil_card .card .user .profile {
@@ -963,39 +1062,8 @@ font-size: 0.850rem;
     font-size: 10px;
 }
 
-/* apprendre */
-.apprendre{
-    position: fixed;
-    top: 0;
-    right: -50px;
-    height: 100%;
-    width: 0px;
-    background: white;
-    padding: 6px 14px;
-    transition: all 0.5s ease;
-    align-items: center;
-    color: var(--font-sidebar-color);
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    border: 1px solid grey;
-    z-index: 1;
-}
 
-.apprendre.afficher {
-    width: 400px;
-    overflow-y: auto;
-    right: 0px;
-}
 
-.apprendre p{
-    font-size: 1.8rem;
-}
-.apprendre .bx{
-    font-size: 3rem;
-}
-
-.apprendre_btn button{
-    display: grid;
-}
 
 /* } */
 /*---------------------
