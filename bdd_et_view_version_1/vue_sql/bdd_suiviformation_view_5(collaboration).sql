@@ -370,7 +370,7 @@ CREATE OR REPLACE VIEW v_demmande_formateur_cfp AS SELECT
     f.mail_formateur,
     f.numero_formateur,
     f.photos,
-    f.genre,
+    f.genre_id,
     f.date_naissance,
     f.adresse,
     f.cin,
