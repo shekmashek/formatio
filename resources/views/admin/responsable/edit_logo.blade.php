@@ -1,52 +1,6 @@
 @extends('./layouts/admin')
 @section('content')
-<style>
-   .input{
-        width: 170px;
-    }
-.test {
-    padding: 2px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: #9E9E9E;
-    border: 1px solid #BDBDBD;
-    font-size: 16px;
-    letter-spacing: 1px;
-    height: 50px !important
-}
 
-.test:focus{
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 2px solid #E53935 !important;
-    outline-width: 0 !important;
-}
-
-.form-control-placeholder {
-  position: absolute;
-  top: 1rem;
-  padding: 12px 2px 0 2px;
-  padding: 0;
-  padding-top: 2px;
-  padding-bottom: 5px;
-  transition: all 300ms;
-  opacity: 0.5;
-  left: 2rem;
-}
-
-.test:focus+.form-control-placeholder,
-.test:valid+.form-control-placeholder {
-  font-size: 95%;
-  font-weight: bolder;
-  top: 1.5rem;
-  transform: translate3d(0, -100%, 0);
-  opacity: 1;
-  background-color: white;
-  margin-left: 105px;
-
-}
-</style>
 <center>                
 
 <div class="col-lg-4">
