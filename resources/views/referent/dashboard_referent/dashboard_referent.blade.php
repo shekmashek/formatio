@@ -1,5 +1,9 @@
 
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Tableau de bord</p>
+@endsection
+@section('content')
 @section('content')
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 {{-- <div class=" p-0 m-0 nav d-flex flex-row navigation justify-content-end" style="font-size: 10px;">

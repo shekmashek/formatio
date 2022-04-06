@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Appel d'offre</p>
+@endsection
 @section('content')
 
 

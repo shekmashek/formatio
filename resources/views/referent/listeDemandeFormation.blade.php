@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Plan de formation et budgetisation</p>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -10,9 +13,9 @@
                     <div class="shadow p-3 mb-5 bg-body rounded">
                         <div class="row">
                             <div class="col-lg-12">
-                                <br>
+                                {{-- <br>
                 <h3>Plan de formation et budgetisation</h3>
-                <br>
+                <br> --}}
                                 <div class="panel-heading">
                                         <ul class="nav nav-pills">
                                             <button type = "button" class ="btn_next {{ Route::currentRouteNamed('planFormation') ? 'active' : '' }}"><a href="{{route('planFormation.index')}}" ><span class="fa fa-th-list"></span>  Nouvelle demande</a></button>&nbsp;&nbsp;

@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Formateurs</p>
+@endsection
 @section('content')
 <div class="container-fluid justify-content-center pb-3">
 
