@@ -29,7 +29,7 @@ class Projet extends Model
     public function findById($id){  return projet::where('id',$id)->get()[0];    }
 
     //recherche projet
-    public function build_requette($role,$table,$request){
+    public function build_requette($role,$table,$request,$limit,$offset){
         $sql = "select * from ".$table." where 1=1 ";
         if (Gate::allows('isCFP') || Gate::allows('isFormateur')){
             $sql = $sql." and cfp_id = ".$role;
@@ -38,7 +38,7 @@ class Projet extends Model
         }
          
         if(empty($request->annee) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
-            return $sql;
+            return $sql." order by date_projet desc limit ".$limit." offset ".$offset;
         }
         if (!empty($request->annee)) {
             if($request->annee == 'null'){
@@ -72,7 +72,7 @@ class Projet extends Model
                 }
             }
         }
-        $sql = $sql." order by date_projet desc";
+        $sql = $sql." order by date_projet desc limit ".$debut." offset ".$debut;
         return $sql;
     }
 

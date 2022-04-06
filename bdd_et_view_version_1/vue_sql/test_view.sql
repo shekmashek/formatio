@@ -22,3 +22,4 @@
             when g.status = 0 then 'Créer'end class_status_groupe
     from groupes g
 
+select * from v_projet_session  order by date_projet desc limit 0,3

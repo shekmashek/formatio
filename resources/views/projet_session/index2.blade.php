@@ -61,82 +61,86 @@
     background-color: rgb(15,126,145);
     color: whitesmoke;
 }
+
+/* .filter{
+    position: relative;
+    bottom: .5rem;
+    float: right;
+} */
+.btn_creer{
+    background-color: white;
+    border: none;
+    border-radius: 30px;
+    padding: .2rem 1rem;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.btn_creer a{
+    font-size: .8rem;
+    position: relative;
+    bottom: .2rem;
+}
+
+.btn_creer:hover{
+    background: #6373812a;
+    color: blue;
+}
+
+.btn_creer:focus{
+    color: blue;
+    text-decoration: none;
+}
+
+.icon_creer{
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 1.5rem;
+    position: relative;
+    top: .4rem;
+    margin-right: .3rem;
+}
+
+.pagination{
+    background-clip: text;
+    margin-right: .3rem;
+    font-size: 2.5rem; 
+    position: relative; 
+    top: .4rem;
+}
+
+/* .pagination:hover{
+    color: #ffffff;
+    background-color: rgb(214, 212, 212);
+    border-radius: 1.3rem;
+} */
+.nombre_pagination{
+    color: #626262;
+
+}
 </style>
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-3"><h5 class="mt-3 mb-2 text-center">Listes des projets</h5></div>
-            @can('isCFP')
-                <div class="col-7 text-end">
-                    <a href="{{route('nouveau_groupe',[1])}}"><button class="btn btn_competence mt-1 mb-2"><i class="bx bx-plus-circle"></i>&nbsp;Créer projet intra</button></a>&nbsp;
-                    <a href="{{route('nouveau_groupe_inter',[2])}}"><button class="btn btn_competence mt-1 mb-2"><i class="bx bx-plus-circle"></i>&nbsp;Créer projet inter</button></a>
-                </div>
-            @endcan
+        <div class="d-flex flex-row justify-content-end">
+            <span class="nombre_pagination"><span style="position: relative; bottom: .35rem">1-5 sur 23</span>
+                @if ($page == 1)
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                @elseif ($page == $fin_page)
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @else
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                @endif
+            </span>
+            <a href="" class="btn_creer text-center filter mt-2"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         </div>
-        <div class="row">
-            @canany(['isReferent', 'isCFP'])
-            <div class="col-2 pe-3">
-
-                    <div class="row mb-3 p-2 filtre_date">
-                        <h6 class="text-center mt-2">Filtrer vos Projets</h6>
-                        <form action="{{ route('liste_projet') }}" method="GET">
-                            <input type="hidden" name="type_formation" value="{{ $type_formation_id }}">
-                            <div class="row px-3 mt-2">
-                                    <select name="mois" id="mois" class="filtre_projet">
-                                        <option value="null" selected>Mois</option>
-                                        <option style="background-color: red;color: red;" value="1">Janvier</option>
-                                        <option value="2">Février</option>
-                                        <option value="3">Mars</option>
-                                        <option value="4">Avril</option>
-                                        <option value="5">Mai</option>
-                                        <option value="6">Juin</option>
-                                        <option value="7">Juillet</option>
-                                        <option value="8">Août</option>
-                                        <option value="9">Septembre</option>
-                                        <option value="10">Octobre</option>
-                                        <option value="11">Novembre</option>
-                                        <option value="12">Décembre</option>
-                                    </select>
-                                </div>
-                                <div class="row px-3 mt-2">
-                                            <select name="trimestre" id="trimestre" class="filtre_projet">
-                                        <option value="null" selected>Trimestres</option>
-                                        <option value="1">1e Trimestre</option>
-                                        <option value="2">2e Trimestre</option>
-                                        <option value="3">3e Trimestre</option>
-                                        <option value="4">4e Trimestre</option>
-                                    </select>
-
-                                    </div>
-
-                                    <div class="row px-3 mt-2">
-                                    <select name="semestre" id="semestre" class="filtre_projet">
-                                        <option value="null" selected>Semestres</option>
-                                        <option value="1">1e Semestre</option>
-                                        <option value="2">2e Semestre</option>
-                                    </select>
-
-                            </div>
-
-                            <div class="row px-3 mt-2">
-                                    <select name="annee" id="annee" class="filtre_projet">
-                                        <option value="null" selected>Années</option>
-                                    </select>
-                                    <button class="btn btn_competence mt-3 mb-3" type="submit">Appliquer</button>
-                            </div>
-
-                        </form>
-                    </div>
-
-            </div>
-            @endcanany
-            @canany(['isReferent', 'isCFP'])
-                <div class="col-10 ps-5">
-            @endcanany
-            @canany(['isFormateur','isStagiaire'])
-                <div class="col-12 ps-5">
-            @endcanany
+        
+        <div class="row w-100">
+            <div class="col-12 ps-5">
                 <div class="row">
                 @canany(['isCFP'])
                     <div class="m" id="corps">
@@ -153,9 +157,9 @@
                                         href="#collapseprojet_{{ $prj->projet_id }}" role="button" aria-expanded="false"
                                         aria-controls="collapseprojet"><i class="bx bx-caret-down carret-icon"></i>&nbsp;
                                         @php if ($prj->totale_session == 1) {
-                                                    echo $prj->nom_projet . '(' . $prj->totale_session . ' session)';
+                                                    echo $prj->nom_projet . ' ' . $prj->totale_session . ' session';
                                                 } elseif ($prj->totale_session > 1) {
-                                                    echo $prj->nom_projet . '(' . $prj->totale_session . ' sessions)';
+                                                    echo $prj->nom_projet . ' ' . $prj->totale_session . ' sessions';
                                             }
                                         @endphp
                                         &nbsp;&nbsp;&#10148;&nbsp;@php
@@ -175,7 +179,7 @@
                                                     class="type_inter mt-1 m-0">{{ $prj->type_formation }}</button></h6>&nbsp;&nbsp;
                                         @endif
                                     </div>
-                                    <div class="col-4 p-0">
+                                    <div class="col-3 p-0">
                                         @foreach ($projet_formation as $pf)
                                         @if ($pf->projet_id == $prj->projet_id)
                                             <h6 class="m-0"><label
@@ -185,13 +189,13 @@
                                         @endforeach
                                     </div>
 
-                                    <div class="col-2 text-end p-0">
+                                    <div class="col-3 text-end p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
                                                 <span type="button" class=" m-0 nouvelle_session text-end" data-bs-toggle="modal"
                                                     data-bs-target="#modal_{{ $prj->projet_id }}"><i class="bx bx-plus-circle btn_plus"
                                                         data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Nouvelle session"></i></span>
+                                                        title="Nouvelle session">Ajouter une session</i></span>
                                             @endif
                                         @endcan
                                     </div>
@@ -623,7 +627,7 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0">
+                        <table class="table table-stroped m-0 p-0 mt-2">
                             <thead class="thead_projet">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
@@ -669,14 +673,14 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0">
+                        <table class="table table-stroped m-0 p-0 mt-2">
                             <thead class="thead_projet">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
-                                <th> Date du projet</th>
+                                {{-- <th> Date du projet</th> --}}
 
                                 <th> Statut </th>
                             </thead>
@@ -699,7 +703,7 @@
                                         </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
-                                        <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
+                                        {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         <td>
                                             <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
                                         </td>
