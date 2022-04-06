@@ -30,14 +30,16 @@ class DetailController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
     public function calendrier(){
-        $domaines = DB::select('select * from domaines');
-        $rqt = DB::select('select * from responsables_cfp where user_id = ?',[Auth::user()->id]);
-        $statut = DB::select('select * from status');
+
+        $domaines = $this->fonct->findAll('domaines');
+        $rqt = $this->fonct->findWhereMulitOne('responsables_cfp',['user_id'],[Auth::user()->id]);
+        $statut = $this->fonct->findAll('status');
         if (Gate::allows('isCFP')) {
-            $cfp_id = $rqt[0]->cfp_id;
-            $formations = DB::select('select * from v_formation where cfp_id = ?',[$cfp_id]);
+            $cfp_id = $rqt->cfp_id;
+            $formations = $this->fonct->findWhereMulitOne('v_formation',['cfp_id'],[$cfp_id]);
         }
         else{
             $formations = DB::select('select * from formations ');
