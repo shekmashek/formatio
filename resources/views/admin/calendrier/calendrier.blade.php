@@ -825,6 +825,7 @@
                             }
                             , dataType: "html"
                             , success: function(response) {
+                                console.log(response);
                                 var projet = document.getElementById('projet');
                                 projet.innerHTML = '';
                                 var session = document.getElementById('session');
