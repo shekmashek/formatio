@@ -406,8 +406,7 @@ td{
         });
     });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script type="text/javascript">
+<script>
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var etp_id = $("#id_entreprise").val();

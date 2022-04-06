@@ -4,9 +4,149 @@
 @endsection
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    <div class="container-fluid mb-5 pt-4">
-        <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+
+<style>
+    .status_grise{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: rgb(150, 144, 144);
+    color: white;
+}
+.status_annule{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: rgb(184, 3, 3);
+    color: white;
+}
+.status_termine{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: green;
+    color: white;
+}
+.status_confirme{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: #801D68;
+    color: white;
+}
+.status_archive{
+    margin: 0 2px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    height: 50%;
+    border-radius: 1rem;
+    background-color: orangered;
+    color: white;
+}
+.statut_active{
+    margin: 0 2px;
+    font-size: 10px;
+    height: 50%;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 1rem;
+    background-color: rgb(15,126,145);
+    color: whitesmoke;
+}
+
+/* .filter{
+    position: relative;
+    bottom: .5rem;
+    float: right;
+} */
+.btn_creer{
+    background-color: white;
+    border: none;
+    border-radius: 30px;
+    padding: .2rem 1rem;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.btn_creer a{
+    font-size: .8rem;
+    position: relative;
+    bottom: .2rem;
+}
+
+.btn_creer:hover{
+    background: #6373812a;
+    color: blue;
+}
+
+.btn_creer:focus{
+    color: blue;
+    text-decoration: none;
+}
+
+.icon_creer{
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 1.5rem;
+    position: relative;
+    top: .4rem;
+    margin-right: .3rem;
+}
+
+.pagination{
+    background-clip: text;
+    margin-right: .3rem;
+    font-size: 2.5rem;
+    position: relative;
+    top: .4rem;
+}
+
+/* .pagination:hover{
+    color: #ffffff;
+    background-color: rgb(214, 212, 212);
+    border-radius: 1.3rem;
+} */
+.nombre_pagination{
+    color: #626262;
+
+}
+</style>
+    <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
+    <div class="container-fluid mb-5">
+        <div class="d-flex flex-row justify-content-end mt-3">
+            <span class="nombre_pagination"><span style="position: relative; bottom: .35rem">{{ $debut."-".$fin }} sur {{ $nb_projet }}</span>
+                @if ($page == 1)
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                @elseif ($page == $fin_page)
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @else
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                @endif
+            </span>
+                <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+
+        </div>
+
         <div class="row w-100">
+            <div class="col-12 ps-5">
                 <div class="row">
                 @canany(['isCFP'])
                     <div class="m" id="corps">
@@ -23,9 +163,9 @@
                                         href="#collapseprojet_{{ $prj->projet_id }}" role="button" aria-expanded="false"
                                         aria-controls="collapseprojet"><i class="bx bx-caret-down carret-icon"></i>&nbsp;
                                         @php if ($prj->totale_session == 1) {
-                                                    echo $prj->nom_projet . '(' . $prj->totale_session . ' session)';
+                                                    echo $prj->nom_projet . ' ' . $prj->totale_session . ' session';
                                                 } elseif ($prj->totale_session > 1) {
-                                                    echo $prj->nom_projet . '(' . $prj->totale_session . ' sessions)';
+                                                    echo $prj->nom_projet . ' ' . $prj->totale_session . ' sessions';
                                             }
                                         @endphp
                                         &nbsp;&nbsp;&#10148;&nbsp;@php
@@ -45,7 +185,7 @@
                                                     class="type_inter mt-1 m-0">{{ $prj->type_formation }}</button></h6>&nbsp;&nbsp;
                                         @endif
                                     </div>
-                                    <div class="col-4 p-0">
+                                    <div class="col-3 p-0">
                                         @foreach ($projet_formation as $pf)
                                         @if ($pf->projet_id == $prj->projet_id)
                                             <h6 class="m-0"><label
@@ -121,7 +261,7 @@
                         @endcan --}}
                                                     <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                                     <td>
-                                                        <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
+                                                        <div class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}</div>
                                                     </td>
                                                     @can('isCFP')
                                                     <td><a href="" aria-current="page" data-bs-toggle="modal"
@@ -147,9 +287,9 @@
                                                                 </div>
                                                                 @if ($prj->type_formation_id == 1)
                                                                     <div class="row">
-                                                                        <form action="" id="formPayement" method="POST">
+                                                                        <form action="{{ route('modifier_session_inter') }}" id="formPayement" method="POST">
                                                                             @csrf
-                                                                            {{-- <input type="hidden" name="type_formation" value="{{ $type_formation }}"> --}}
+                                                                            <input type="hidden" name="id" value="{{ $pj->groupe_id }}">
                                                                             <div class="row">
                                                                                 <div class="form-group">
                                                                                     <div class="form-row d-flex">
@@ -177,14 +317,14 @@
                                                                                             </div>
                                                                                             <div class="row px-3 mt-2">
                                                                                                 <div class="form-group mt-1 mb-1">
-                                                                                                    <select class="form-select selectP input" id="etp_id" name="entreprise"
+                                                                                                    <select class="form-select selectP input" id="payement_id" name="payement"
                                                                                                         aria-label="Default select example">
-                                                                                                        <option value="null" selected hidden>Choisir l'entreprise souhaité...</option>
-                                                                                                        @foreach ($entreprise as $etp)
-                                                                                                        <option value="{{ $etp->entreprise_id }}">{{ $etp->nom_etp }}</option>
+                                                                                                        <option value="{{ $pj->type_payement_id }}" hidden>{{ $pj->type }}</option>
+                                                                                                        @foreach ($payement as $paye)
+                                                                                                        <option value="{{ $paye->id }}">{{ $paye->type }}</option>
                                                                                                         @endforeach
                                                                                                     </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="etp_id">Entreprises<strong
+                                                                                                    <label class="ml-3 form-control-placeholder" for="payement_id">Mode de Payement<strong
                                                                                                         class="text-danger">*</strong></label>
                                                                                                 </div>
                                                                                             </div>
@@ -218,24 +358,9 @@
                                                                                                     </select>
                                                                                                     <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
                                                                                                         class="text-danger">*</strong></label>
-                                                                                                    {{-- <span style="color:#ff0000;" id="module_id_err">Aucun module détecté! veuillez
-                                                                                                        choisir la formation</span> --}}
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="row px-3 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <select class="form-select selectP input" id="payement_id" name="payement"
-                                                                                                        aria-label="Default select example">
-                                                                                                        <option value="{{ $pj->type_payement_id }}" hidden>{{ $pj->type }}</option>
-                                                                                                        @foreach ($payement as $paye)
-                                                                                                        <option value="{{ $paye->id }}">{{ $paye->type }}</option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="payement_id">Mode de Payement<strong
-                                                                                                        class="text-danger">*</strong></label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row px-3 mt-2">
+                                                                                            <div class="row px-3 mb-5 mt-2">
                                                                                                 <div class="form-group mt-1 mb-1">
                                                                                                     <input type="text" id="min" class="form-control input" min="1" max="50" name="max_part"
                                                                                                         required onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
@@ -243,7 +368,12 @@
                                                                                                         maximal</label>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="text-center "><button type="button" class="btn  btn_annuler" data-bs-dismiss="modal">Annuler</button></div>
+                                                                                            <div class="row px-3">
+                                                                                                <div class="form-group mt-2">
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="text-center mt-5"><button type="button" class="btn  btn_annuler" data-bs-dismiss="modal">Annuler</button></div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -503,7 +633,7 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0">
+                        <table class="table table-stroped m-0 p-0 mt-2">
                             <thead class="thead_projet">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
@@ -549,14 +679,14 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0">
+                        <table class="table table-stroped m-0 p-0 mt-2">
                             <thead class="thead_projet">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
-                                <th> Date du projet</th>
+                                {{-- <th> Date du projet</th> --}}
 
                                 <th> Statut </th>
                             </thead>
@@ -579,7 +709,7 @@
                                         </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
-                                        <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
+                                        {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         <td>
                                             <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
                                         </td>

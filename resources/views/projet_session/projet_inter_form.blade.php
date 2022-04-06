@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->id)}}">Session Inter</a></button>
+                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->id)}}">Créer une session inter</a></button>
                         </div>
                     </div>
                     @endif

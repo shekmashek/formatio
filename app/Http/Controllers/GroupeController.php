@@ -153,6 +153,35 @@ class GroupeController extends Controller
         }
     }
 
+    public function modifier_session_inter(Request $request){
+        // try{
+            if($request->date_debut >= $request->date_fin){
+                throw new Exception("Date de début doit être inférieur date de fin.");
+            }
+            if($request->date_debut == null || $request->date_fin == null){
+                throw new Exception("Date de début ou date de fin est vide.");
+            }
+            if($request->module_id == null){
+                throw new Exception("Vous devez choisir un module de formation.");
+            }
+            if($request->payement == null){
+                throw new Exception("Vous devez choisir une entreprise pour la formation.");
+            }
+            dd($request->min_part ,$request->max_part);
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            }
+            // DB::beginTransaction();
+            DB::update('update groupes set max_participant = ? and min_participant = ? and module_id = ? and type_payement_id = ? and date_debut = ? and date_fin = ? where id = ?',
+            [$request->min_part,$request->max_part,$request->module_id,$request->payement,$request->date_debut,$request->date_fin,$request->id]);
+            // DB::commit();
+            return back();
+        // }catch(Exception $e){
+        //     DB::rollback();
+        //     return back()->with('groupe_error',"insertion de la session échouée!");
+        // }
+    }
+
     public function storeInter(Request $request)
     {
         $user_id = Auth::user()->id;

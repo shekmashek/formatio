@@ -61,7 +61,7 @@ Route::get('/homertdbq/{id?}','HomeControllerRTDBQ@index')->name('homertdbq');
 //Tableau de bord budget previsionnel
 Route::get('budget_previsionnel','HomeController@budget_previsionnel')->name('budget_previsionnel');
 
-Route::get('/liste_projet/{id?}', 'HomeController@liste_projet')->name('liste_projet');
+Route::get('/liste_projet/{id?}/{page?}', 'HomeController@liste_projet')->name('liste_projet');
 Route::get('/liste','HomeController@liste')->name('liste');
 Route::get('/compte','HomeController@compte')->name('compte');
 Route::get('/detail_projet/{id}','HomeController@detail')->name('detail_projet');
@@ -1085,3 +1085,8 @@ Route::get('modification_telephone_entreprise/{id}','EntrepriseController@modifi
 Route::post('enregistrer_telephone_entreprise/{id}','EntrepriseController@enregistrer_telephone_entreprise')->name('enregistrer_telephone_entreprise');
 Route::get('modification_stat_entreprise/{id}','EntrepriseController@modification_stat_entreprise')->name('modification_stat_entreprise');
 Route::post('enregistrer_stat_entreprise/{id}','EntrepriseController@enregistrer_stat_entreprise')->name('enregistrer_stat_entreprise');
+
+
+
+// modification session
+Route::post('modifier_session_inter','GroupeController@modifier_session_inter')->name('modifier_session_inter');
