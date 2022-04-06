@@ -124,7 +124,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end">
-            <span class="nombre_pagination"><span style="position: relative; bottom: .35rem">1-5 sur 23</span>
+            <span class="nombre_pagination"><span style="position: relative; bottom: .35rem">{{ $debut."-".$fin }} sur {{ $nb_projet }}</span>
                 @if ($page == 1)
                     <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
                     <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>

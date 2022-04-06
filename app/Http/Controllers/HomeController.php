@@ -521,7 +521,7 @@ class HomeController extends Controller
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
-            return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id','page','fin_page'));
+            return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id','page','fin_page','nb_projet'));
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
@@ -534,12 +534,22 @@ class HomeController extends Controller
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?',[$cfp_id])[0]->nb_projet;
+            $fin_page = ceil($nb_projet/$nb_par_page);
             if($page == 1){
                 $offset = 0;
-            }else{
-                $offset = ($page - 1) * $nb_par_page;
+                $debut = 1;
+                $fin = $nb_par_page;
             }
-            $fin_page = ceil($nb_projet/$nb_par_page);
+            elseif($page == $fin_page){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $nb_projet;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $page * $nb_par_page;
+            }
             // fin pagination
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
             $projet = DB::select($sql);
@@ -556,7 +566,7 @@ class HomeController extends Controller
             $module = $fonct->findWhere("v_module",['cfp_id','status'],[$cfp_id,2]);
             $payement = $fonct->findAll("type_payement");
             $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise','page','fin_page'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise','page','fin_page','nb_projet','debut','fin'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
