@@ -96,6 +96,11 @@ Route::get('accueil_projet','ProjetControlleur@accueilProjet')->name('accueil_pr
 Route::get('projet_intra','ProjetControlleur@intraFormProjet')->name('projet_intra');
 Route::get('projet_inter','ProjetControlleur@interFormProjet')->name('projet_inter');
 Route::get('module_formation_intra','GroupeController@module_formation_intra')->name('module_formation_intra');
+// route projet interne
+Route::get('projet_interne','ProjetControlleur@projetInterne')->name('projet_interne');
+Route::get('formations','ProjetControlleur@formations')->name('formations');
+Route::get('formateurs','ProjetControlleur@formateurs')->name('formateurs');
+Route::get('projets','ProjetControlleur@projets')->name('projets');
 
 
 
@@ -172,6 +177,13 @@ Route::resource('formateur','ProfController')->except([
     'index','edit'
 ]);
 Route::post('/update_prof/{id?}','ProfController@misajourFormateur')->name('update_prof');
+Route::post('/update_experience/{id?}','ProfController@update_experience')->name('update_experience');
+Route::post('/update_domaine/{id?}','ProfController@update_domaine')->name('update_domaine');
+Route::post('/update_mdp_formateur/{id?}','ProfController@update_mdp_formateur')->name('update_mdp_formateur');
+Route::post('/update_email_formateur/{id}','ProfController@update_email_formateur')->name('update_email_formateur');
+
+
+
 //collabforfateur
 Route::get('/collabformateur','ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -192,6 +204,16 @@ Route::get('/editer_pwd/{id}','ProfController@editer_pwd')->name('editer_pwd');
 Route::get('/editer_adresse/{id}','ProfController@editer_adresse')->name('editer_adresse');
 Route::get('/editer_etp/{id}','ProfController@editer_etp')->name('editer_etp');
 Route::get('/editer_niveau/{id}','ProfController@editer_niveau')->name('editer_niveau');
+Route::get('/editer_comp/{id}','ProfController@editer_competence')->name('editer_comp');
+Route::get('/editer_domaine/{id}','ProfController@editer_domaine')->name('editer_domaine');
+Route::get('/editer_poste/{id}','ProfController@editer_poste')->name('editer_poste');
+Route::get('/editer_nom_etp/{id}','ProfController@editer_nom_etp')->name('editer_nom_etp');
+Route::get('/editer_fonction/{id}','ProfController@editer_fonction')->name('editer_fonction');
+
+
+
+
+
 
 
 // Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
@@ -335,12 +357,12 @@ Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp
 Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
 ]);
-Route::get('/afficher_module','ModuleController@affichage')->name('afficher_module');
+Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
 Route::get('/liste_module/{id?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
 Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
-Route::get('/destroy_module','ModuleController@destroy')->name('destroy_module');
+Route::get('destroy_module','ModuleController@destroy')->name('destroy_module');
 Route::post('update_module/{id}','ModuleController@update')->name('update_module');
 Route::post('publier_module','ModuleController@module_publier')->name('publier_module');
 Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifier_module');

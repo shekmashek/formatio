@@ -39,15 +39,15 @@
                 <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="{{asset('img/formation/rendue1.png')}}" alt="image"
+                            <img src="{{asset('img/formation/rendue1.webp')}}" alt="image"
                                 class="d-block w-100 img-fluid">
                         </div>
                         <div class="carousel-item">
-                            <img src="{{asset('img/formation/rendue5.png')}}" alt="image"
+                            <img src="{{asset('img/formation/rendue5.webp')}}" alt="image"
                                 class="d-block w-100 img-fluid">
                         </div>
                         <div class="carousel-item">
-                            <img src="{{asset('img/formation/rendue2.png')}}" alt="image"
+                            <img src="{{asset('img/formation/rendue2.webp')}}" alt="image"
                                 class="d-block w-100 img-fluid">
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                 <a href="{{route('select_par_module',$mod->module_id)}}">
                 <div class="card_formation">
                     <div class="imageLogo text-center mb-2">
-                         <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"title="organisme de formation">        
+                         <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"title="organisme de formation">
                     </div>
                     <div class="titre_module">
                         <p class="text-capitalize text-">{{$mod->nom_module}}</p>
@@ -83,13 +83,13 @@
                         </div>
                     </div>
                    </a>
-                   
+
                 </div>
                 @endforeach
             </div>
         </div>
-    </div> 
-</section> 
+    </div>
+</section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">

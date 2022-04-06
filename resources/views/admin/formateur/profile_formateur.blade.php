@@ -64,10 +64,20 @@
    -webkit-border-radius : 75px;
    border-radius : 75px;
  }
- .hover:hover{
-     background-color: rgb(233, 220, 220);
+ /* .hover:hover{
+     font-size: 25px;
      cursor: pointer;
+     background-color: #f0ececfa;
+     border: 25px;
  }
+ #nom:hover{
+     font-size: 25px;
+     cursor: pointer;
+     background-color: #f0ececfa;
+     border: 25px;
+ }
+  */
+
      </style>
       <div class="row">
     <div class="row mt-2">
@@ -77,7 +87,7 @@
                                  <div class="form-control">
                                      <p class="text-center">Informations générales</p>
 
-                                     <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
+                                     <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
                                      <p class="p-1 m-0" style="font-size: 10px;">PHOTO
 
                                      </p>
@@ -85,21 +95,21 @@
                                         <img src="{{asset('images/formateurs/'.$formateur->photos)}}" class="image-ronde">
                                     </a>
                                     </div>
-                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <div  style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_nom',$formateur->id)}}" >
-                                     <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" id="nom" style="font-size: 10px;">NOM<span style="float: right;">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p></a>
 
                                     </div>
-                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <div id="nom" style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_naissance',$formateur->id)}}" >
                                      <p class="p-1 m-0" style="font-size: 10px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($formateur->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p></a>
 
                                     </div>
-                                    <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                    <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_genre',$formateur->id)}}" >
                                      <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$genre}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                      </p>
@@ -130,7 +140,7 @@
                                          </p>
                                              </a>
                                          </div>
-                                         <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                         <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href=" {{route('editer_phone',$formateur->id)}}" >
                                          <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$formateur->numero_formateur}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 

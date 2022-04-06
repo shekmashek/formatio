@@ -1,6 +1,5 @@
 @import url("inputControl.css");
 :root {
-    --header-height: 3rem;
     --nav-width: 80px;
     --first-color: white;
     --first-color-light: rgba(238, 238, 238, 0.863);

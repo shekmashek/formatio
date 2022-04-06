@@ -272,8 +272,8 @@
 
 .postion_fixe_form {
     position: sticky;
-    top: 5rem;
-    height: 15rem;
+    top: 3.5rem;
+    height: 17rem;
 }
 
 .postion_fixe {
@@ -307,8 +307,19 @@
     display: none;
 }
 
-.apres_preview .btn {
-    background-color: var(--color-child);
+.tox .tox-statusbar__text-container,
+.tox .tox-statusbar{
+    display: none !important;
+}
+
+.tox-toolbar__primary,
+.tox .tox-menubar{
+    background: #7535dc27 !important;
+    color: #7635dc !important;
+}
+
+.tox-tinymce{
+    border-radius: 5px;
 }
 
 .actions_buttons .btn-success {
@@ -384,8 +395,8 @@
 }
 
 .nav-tabs .nav-link.active {
-    background-color: rgba(172, 172, 172, 0.397);
-    color: #7635dc;
+    background-color: #4222c3;
+    color: white;
     border-radius: 5px;
 }
 
@@ -393,6 +404,7 @@
     background-color: rgba(245, 243, 243, 0.418);
     transform: scale(1.1);
     border: rgba(128, 128, 128, 0.692) 1px solid;
+    color: #4222c3;
 }
 .nav-tabs .nav-item a{
     text-decoration: none;
@@ -539,8 +551,9 @@ font-size: 0.850rem;
 
 .acf-input-wrap span{
     font-size: 0.850rem;
-    text-align: center;
     color:#c77cce;
+    position: relative;
+    bottom: 1.5rem;
 }
 
 #premier_vue8{
@@ -597,4 +610,17 @@ font-size: 0.850rem;
 .btn_enregistrer a:hover{
     color: white;
     text-decoration: none;
+}
+
+/* mises à jours */
+
+.instruction{
+    background: rgba(128, 128, 128, 0.193);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: .8rem 1rem;
+    font-size: 0.850rem;
+    width: 50%;
+    margin-left: 2px;
 }

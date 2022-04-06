@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Aptitudes</p>
+@endsection
 @section('content')
 <div class="page-wrapper">
     <div class="container bg-light">

@@ -305,6 +305,47 @@ class ProfController extends Controller
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         return view('admin.formateur.edit_niveau', compact('formateur'));
     }
+    public function editer_competence($id, Request $request)
+    {
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $formateur = competenceFormateur::findOrFail($id);
+        //dd($formateur);
+        return view('admin.formateur.edit_comp', compact('formateur'));
+    }
+    public function editer_domaine($id, Request $request)
+    {
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $formateur = competenceFormateur::findOrFail($id);
+        //dd($formateur);
+        return view('admin.formateur.edit_domaine', compact('formateur'));
+    }
+    public function editer_poste($id, Request $request)
+    {
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $formateur = experienceFormateur::findOrFail($id);
+        //dd($formateur);
+        return view('admin.formateur.edit_poste', compact('formateur'));
+    }
+    public function editer_nom_etp($id, Request $request)
+    {
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $formateur = experienceFormateur::findOrFail($id);
+        //dd($formateur);
+        return view('admin.formateur.edit_nom_etp', compact('formateur'));
+    }
+    public function editer_fonction($id, Request $request)
+    {
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $formateur = experienceFormateur::findOrFail($id);
+        //dd($formateur);
+        return view('admin.formateur.edit_fonct', compact('formateur'));
+    }
+
     public function editer_pwd($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
@@ -329,6 +370,24 @@ class ProfController extends Controller
         return response()->json($formateur);
     }
 
+    public function update_mdp_formateur($id,Request $request){
+        $users =  db::select('select * from users where id = ?', [Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->new_password);
+        if (Hash::check($request->get('ancien_password'), $pwd)) {
+            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+                   return redirect()->route('profile_formateur', $id);
+
+        } else {
+            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        }
+    }
+    public function update_email_formateur($id,Request $request){
+        DB::update('update users set email = ? where id = ?', [$request->mail, Auth::id()]);
+        DB::update('update formateurs set mail_formateur = ? where user_id = ?', [$request->mail, Auth::id()]);
+        return redirect()->route('profile_formateur', $id);
+
+    }
     public function update(Request $request)
     {
         $id = $request->id_get;
@@ -406,7 +465,9 @@ class ProfController extends Controller
         // $user_id =  $users = Auth::user()->id;
          if (Gate::allows('isFormateur')){
             $id = formateur::where('user_id', Auth::user()->id)->value('id');
+            $competence = competenceFormateur::where('formateur_id', $id)->get();
 
+            $experience = experienceFormateur::where('formateur_id', $id)->get();
             $formateur = formateur::findOrFail($id);
             if($formateur->genre_id == 1) $genre = "Femme";
             if($formateur->genre_id == 2) $genre = "Homme";
@@ -440,6 +501,28 @@ class ProfController extends Controller
         $formateur = formateur::FindOrFail($request->id);
         return view('admin.formateur.modification_profil_formateur', compact('formateur'));
     }
+    public function update_experience(Request $request, $id)
+
+    {
+        experienceFormateur::where('id',$id)
+        ->update([
+            'nom_entreprise'=>$request->nom_etp,
+            'poste_occuper'=>$request->poste,
+            'taches'=>$request->tache
+        ]);
+        return redirect()->route('profile_formateur', $id);
+
+    }
+    public function update_domaine(Request $request, $id)
+    {
+
+        competenceFormateur::where('id',  $id)
+                ->update([
+                    'competence'=>$request->competence,
+                    'domaine'=>$request->domaine]);
+        return redirect()->route('profile_formateur', $id);
+    }
+
     public function misajourFormateur(Request $request, $id)
     {
 

@@ -1,6 +1,7 @@
 ALTER TABLE chef_departements ADD url_photo VARCHAR(155) ;
 ALTER TABLE stagiaires ADD url_photo VARCHAR(155) ;
 ALTER TABLE entreprises ADD url_logo VARCHAR(155) ;
+ALTER TABLE cfps ADD url_logo VARCHAR(155) ;
 ALTER TABLE responsables ADD url_photo VARCHAR(155) ;
 ALTER TABLE responsables_cfp ADD url_photo VARCHAR(155) ;
 ALTER TABLE formateurs ADD url_photo VARCHAR(155) ;

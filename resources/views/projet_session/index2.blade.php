@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Projets</p>
+@endsection
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
@@ -61,7 +64,7 @@
                                     <select name="annee" id="annee" class="filtre_projet">
                                         <option value="null" selected>Années</option>
                                     </select>
-                                    <button class="btn btn_competence mt-3 mb-3" type="submit">Appliquer</button>
+                                    <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
                             </div>
 
                         </form>

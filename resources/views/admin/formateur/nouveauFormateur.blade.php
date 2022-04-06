@@ -99,8 +99,8 @@
                                             <div class="select-group">
                                                 <select name="sexe" id="sexe" class="form-control">
                                                     <option value="null" disabled selected hidden>Sexe</option>
-                                                    <option value="homme">Homme</option>
-                                                    <option value="femme">Femme</option>
+                                                    <option value="1">Homme</option>
+                                                    <option value="2">Femme</option>
                                                 </select>
                                             </div>
                                             @error('sexe')

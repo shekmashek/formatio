@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Librairies</p>
+@endsection
 <style>
     .liste{
         padding-top: 10px;
