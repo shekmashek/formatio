@@ -9,7 +9,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Téléphone</p>
+        
         <form   class="btn-submit" action="{{route('enregistrer_modification_telephone',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
