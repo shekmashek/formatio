@@ -135,7 +135,7 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $(".ui-helper-hidden-accessible").hide();
+    // $(".ui-helper-hidden-accessible").hide();
 
     function afficherTuto() {
         affichertuto.classList.toggle("afficher");
@@ -156,6 +156,7 @@ var Tawk_API = Tawk_API || {},
 
 let sidebar = document.querySelector(".sidebar");
 let affichertuto = document.querySelector(".apprendre");
+let afficherfiltre = document.querySelector(".filtrer");
 let menu = document.querySelector(".bx-menu");
 
 function clickSidebar() {
@@ -165,6 +166,10 @@ function clickSidebar() {
 
 function afficherTuto() {
     affichertuto.classList.toggle("afficher");
+}
+
+function afficherFiltre() {
+    afficherfiltre.classList.toggle("afficher");
 }
 
 $(document).ready(function() {

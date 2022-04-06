@@ -24,7 +24,7 @@
 
 <body>
 
-    <div class="sidebar">
+    <div class="sidebar active">
         {{-- <div class="logo_content">
             <div class="logo">
                 <span><img src="{{asset('img/images/logo_fmg54Ko.png')}}" alt="" class="img-fluid"></span>
@@ -469,9 +469,7 @@
             </li>
             @endcan
         </ul>
-        <br>
-        <br>
-        <div class="profile_content">
+        {{-- <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
                     <div class='photo_users'> </div>
@@ -483,17 +481,17 @@
                 document.getElementById('logout-form').submit();">
                     <i class="bx bx-log-out" id="log_out"></i></a>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 
     <div class="home_content">
         <div class="container-fluid p-0 height-100 bg-light" id="content">
             <header class="header row align-items-center g-0" id="header">
-                <div class="col-1 menu_hamburger">
+                {{-- <div class="col-1 menu_hamburger">
                     <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
-                </div>
-                <div class="col-2 d-flex flex-row">
+                </div> --}}
+                <div class="col-3 d-flex flex-row padding_logo">
                     <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt="" class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
                 <div class="col-5 align-items-center justify-content-start d-flex flex-row">
@@ -617,7 +615,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="ya">
                                     <li>
                                         <a class="dropdown-item" href="{{route('nouveau_module')}}">
-                                            <i class="bx bx-customize icon_plus "></i>&nbsp; Nouvelle Module
+                                            <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                         </a>
                                     </li>
                                     <li>
@@ -646,11 +644,10 @@
 
                         </div>
                     </div>
-                    <div class="col-2 d-flex">
+                    <div class="col-2">
                         <div class="header_img">
-                            <p>
-                            <div class=""><span><i class="fas fa-user"></i></span> <span><i style=""
-                                        class="ms-1 fas fa-angle-down"></i></span></div>
+                            <p class="m-0 mt-3">
+                            <i class='bx bxs-user-circle user_icon'></i>
                             </p>
                         </div>
                         <div class="pdp_profil" id="box_profil">
@@ -716,39 +713,31 @@
                                                         </form>
                                                     </div>
                                                 </div>
+                                                <hr>
+
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="card-body">
-
-                                        {{-- <div class="d-flex pro_plan" style="margin-top: -25px">
-
-
-                                            <p class=""><i class='bx bxl-sketch m-0 p-0' style=" font-size: 24px"></i>
-                                            </p>
-                                            <span>
-                                                <div class='logo_etp_user'> </div>
-                                            </span>
-                                            <p class="" style="text-transform: capitalize; margin-top: 0.1rem">
-                                                &nbsp;&nbsp;rubi</p>
-                                        </div> --}}
-
-                                        {{-- logout --}}
-                                        {{-- <div class="text-center">
-                                            @can('isManager')
-                                            <a href="{{route('affProfilChefDepartement')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                                            @endcan
-                                            @can('isStagiaire')
-                                            <a href="{{route('profile_stagiaire')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                                            @endcan
-                                            @can('isReferent')
-                                            <a href="{{route('profil_referent')}}"><button
-                                                    class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
-                                            @endcan
-                                        </div> --}}
+                                    <div class="card-body py-0">
+                                        <div class="d-flex flex-row py-0 card_body_text">
+                                            <a href="{{url('politique_confidentialite')}}" target="_blank">
+                                                <p class="m-0">Politique de confidentialité</p>
+                                            </a>
+                                            &nbsp;-&nbsp;
+                                            <a href="{{route('condition_generale_de_vente')}}" target="_blank">
+                                                <p class="m-0">Conditions d'utilisation</p>
+                                            </a>
+                                        </div>
+                                        <div class="d-flex flex-row py-0 card_body_text">
+                                            <a href="{{url('contacts')}}" target="_blank">
+                                                <p class="m-0">Contactez-nous</p>
+                                            </a>
+                                            &nbsp;-&nbsp;
+                                            <a href="#" target="_blank">
+                                                <p class="m-0">Informations légales</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -759,18 +748,7 @@
             {{-- content --}}
             <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
                 @yield('content')
-                <div class="apprendre pt-5 mt-3">
-                    <div class="row">
-                        <div class="col">
-                            <p class="m-0">Apprendre</p>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bx bx-x " role="button" onclick="afficherTuto();"></i>
-                        </div>
-                        <hr>
-                    </div>
 
-                </div>
             </div>
             {{-- content --}}
             {{-- footer --}}
@@ -825,10 +803,23 @@
                     </div>
                 </div>
             </div> --}}
+            <div class="apprendre mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0">Apprendre</p>
+                    </div>
+                    <div class="col text-end">
+                        <i class="bx bx-x " role="button" onclick="afficherTuto();"></i>
+                    </div>
+                    <hr class="mt-2">
+                    apprendre
+                </div>
         </div>
+
+    </div>
         {{-- footer --}}
     </div>
-    </div>
+
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="

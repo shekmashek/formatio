@@ -194,47 +194,10 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row" style="margin-top:20px;">
-            <div class="col-sm-2">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <button id="tout" class="btn btn-primary">Tout</button><br><br>
-                        <h5 >Filtre par module</h5><br>
-                        <div class="searchBoxMod">
-                            <input class="searchInputMod w-75" type="text" id="nom_module"
-                                placeholder="Nom du module...">
-                            <button class="searchButtonMod" id="recherche_module">
-                                <i class="bx bx-search">
-                                </i>
-                            </button>
-                        </div><br>
-                        <h5>Type de formation</h5>
-                        <select name="" id="type_formation" class="form-control w-75">
-                            <option value="Intra entreprise">Intra entreprise</option>
-                            <option value="Inter entreprise">Inter entreprise</option>
-                        </select><br>
-                        <h5>Statut</h5>
-                        <select name="" id="liste_statut" class="form-control w-75">
-                            @for ($i = 0;$i<count($statut);$i++)
-                                <option value = "{{$statut[$i]->id}}">{{$statut[$i]->status}}</option>
-                            @endfor
-                        </select><br>
-                        <h5>Domaine</h5>
-                        <select name="" id="domaines" class="form-control w-75">
-                            @for ($i = 0;$i<count($domaines);$i++)
-                                <option value = "{{$domaines[$i]->id}}">{{$domaines[$i]->nom_domaine}}</option>
-                            @endfor
-                        </select><br>
-                        <h5>Thématique</h5>
-                        <select name="" id="formations" class="form-control w-75">
-                            @for ($i = 0;$i<count($formations);$i++)
-                                <option value = "{{$formations[$i]->id}}">{{$formations[$i]->nom_formation}}</option>
-                            @endfor
-                        </select><br>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
+        <a href="#" class="btn_creer text-center filter mt-4" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+        <div class="row w-100 mt-3">
+
+            <div class="col-sm-6">
                 <div id='calendar' style="width:100%;"></div>
             </div>
             <div class="col-sm-6" id="detail" style="display: none">
@@ -286,6 +249,58 @@
                 </div>
             </div>
         </div>
+        <div class="filtrer mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0">Filter votre Agenda</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
+                </div>
+                <hr class="mt-2">
+                <div class="col-12">
+                    <div class="">
+                        <div class="card-body">
+                            <button id="tout" class="btn btn-primary">Tout</button><br><br>
+                            <h5 >Filtre par module</h5><br>
+                            <div class="searchBoxMod">
+                                <input class="searchInputMod" type="text" id="nom_module"
+                                    placeholder="Nom du module...">
+                                <button class="searchButtonMod" id="recherche_module">
+                                    <i class="bx bx-search">
+                                    </i>
+                                </button>
+                            </div><br>
+                            <h5>Type de formation</h5>
+                            <select name="" id="type_formation" class="form-control">
+                                <option value="Intra entreprise">Intra entreprise</option>
+                                <option value="Inter entreprise">Inter entreprise</option>
+                            </select><br>
+                            <h5>Statut</h5>
+                            <select name="" id="liste_statut" class="form-control">
+                                @for ($i = 0;$i<count($statut);$i++)
+                                    <option value = "{{$statut[$i]->id}}">{{$statut[$i]->status}}</option>
+                                @endfor
+                            </select><br>
+                            <h5>Domaine</h5>
+                            <select name="" id="domaines" class="form-control">
+                                @for ($i = 0;$i<count($domaines);$i++)
+                                    <option value = "{{$domaines[$i]->id}}">{{$domaines[$i]->nom_domaine}}</option>
+                                @endfor
+                            </select><br>
+                            <h5>Thématique</h5>
+                            <select name="" id="formations" class="form-control">
+                                @for ($i = 0;$i<count($formations);$i++)
+                                    <option value = "{{$formations[$i]->id}}">{{$formations[$i]->nom_formation}}</option>
+                                @endfor
+                            </select><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </body>
 

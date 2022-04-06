@@ -4,80 +4,9 @@
 @endsection
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    <div class="container-fluid mb-5">
-        {{-- <div class="row">
-            <div class="col-2"></div>
-            <div class="col-3"><h5 class="mt-3 mb-2 text-center">Listes des projets</h5></div>
-            @can('isCFP')
-                <div class="col-7 text-end">
-                    <a href="{{route('nouveau_groupe',[1])}}"><button class="btn btn_competence mt-1 mb-2"><i class="bx bx-plus-circle"></i>&nbsp;Créer projet intra</button></a>&nbsp;
-                    <a href="{{route('nouveau_groupe_inter',[2])}}"><button class="btn btn_competence mt-1 mb-2"><i class="bx bx-plus-circle"></i>&nbsp;Créer projet inter</button></a>
-                </div>
-            @endcan
-        </div> --}}
-        <div class="row">
-            @canany(['isReferent', 'isCFP'])
-            <div class="col-2 pe-3">
-
-                    <div class="row mb-3 p-2 filtre_date">
-                        <h6 class="text-center mt-2">Filtrer vos Projets</h6>
-                        <form action="{{ route('liste_projet') }}" method="GET">
-                            <input type="hidden" name="type_formation" value="{{ $type_formation_id }}">
-                            <div class="row px-3 mt-2">
-                                    <select name="mois" id="mois" class="filtre_projet">
-                                        <option value="null" selected>Mois</option>
-                                        <option style="background-color: red;color: red;" value="1">Janvier</option>
-                                        <option value="2">Février</option>
-                                        <option value="3">Mars</option>
-                                        <option value="4">Avril</option>
-                                        <option value="5">Mai</option>
-                                        <option value="6">Juin</option>
-                                        <option value="7">Juillet</option>
-                                        <option value="8">Août</option>
-                                        <option value="9">Septembre</option>
-                                        <option value="10">Octobre</option>
-                                        <option value="11">Novembre</option>
-                                        <option value="12">Décembre</option>
-                                    </select>
-                                </div>
-                                <div class="row px-3 mt-2">
-                                            <select name="trimestre" id="trimestre" class="filtre_projet">
-                                        <option value="null" selected>Trimestres</option>
-                                        <option value="1">1e Trimestre</option>
-                                        <option value="2">2e Trimestre</option>
-                                        <option value="3">3e Trimestre</option>
-                                        <option value="4">4e Trimestre</option>
-                                    </select>
-
-                                    </div>
-
-                                    <div class="row px-3 mt-2">
-                                    <select name="semestre" id="semestre" class="filtre_projet">
-                                        <option value="null" selected>Semestres</option>
-                                        <option value="1">1e Semestre</option>
-                                        <option value="2">2e Semestre</option>
-                                    </select>
-
-                            </div>
-
-                            <div class="row px-3 mt-2">
-                                    <select name="annee" id="annee" class="filtre_projet">
-                                        <option value="null" selected>Années</option>
-                                    </select>
-                                    <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-                            </div>
-
-                        </form>
-                    </div>
-
-            </div>
-            @endcanany
-            @canany(['isReferent', 'isCFP'])
-                <div class="col-10 ps-5">
-            @endcanany
-            @canany(['isFormateur','isStagiaire'])
-                <div class="col-12 ps-5">
-            @endcanany
+    <div class="container-fluid mb-5 pt-4">
+        <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+        <div class="row w-100">
                 <div class="row">
                 @canany(['isCFP'])
                     <div class="m" id="corps">
@@ -126,13 +55,13 @@
                                         @endforeach
                                     </div>
 
-                                    <div class="col-2 text-end p-0">
+                                    <div class="col-3 new_session p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
-                                                <span type="button" class=" m-0 nouvelle_session text-end" data-bs-toggle="modal"
-                                                    data-bs-target="#modal_{{ $prj->projet_id }}"><i class="bx bx-plus-circle btn_plus"
+                                                <span type="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
+                                                    data-bs-target="#modal_{{ $prj->projet_id }}"><i class="bx bx-plus-medical me-3"
                                                         data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Nouvelle session"></i></span>
+                                                        title="Nouvelle session"></i>Ajouter une session</span>
                                             @endif
                                         @endcan
                                     </div>
@@ -706,6 +635,77 @@
                         {{-- {!! $projet->links() !!} --}}
                     </div>
                 </div>
+            </div>
+            <div class="filtrer mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0">Filter vos projets</p>
+                    </div>
+                    <div class="col text-end">
+                        <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                    </div>
+                    <hr class="mt-2">
+                    @canany(['isReferent', 'isCFP'])
+                    <div class="col-12 pe-3">
+                            <div class="row mb-3 p-2 pt-0">
+                                <form action="{{ route('liste_projet') }}" method="GET">
+                                    <input type="hidden" name="type_formation" value="{{ $type_formation_id }}">
+                                    <div class="row px-3 mt-2">
+                                            <select name="mois" id="mois" class="filtre_projet">
+                                                <option value="null" selected>Mois</option>
+                                                <option style="background-color: red;color: red;" value="1">Janvier</option>
+                                                <option value="2">Février</option>
+                                                <option value="3">Mars</option>
+                                                <option value="4">Avril</option>
+                                                <option value="5">Mai</option>
+                                                <option value="6">Juin</option>
+                                                <option value="7">Juillet</option>
+                                                <option value="8">Août</option>
+                                                <option value="9">Septembre</option>
+                                                <option value="10">Octobre</option>
+                                                <option value="11">Novembre</option>
+                                                <option value="12">Décembre</option>
+                                            </select>
+                                        </div>
+                                        <div class="row px-3 mt-2">
+                                                    <select name="trimestre" id="trimestre" class="filtre_projet">
+                                                <option value="null" selected>Trimestres</option>
+                                                <option value="1">1e Trimestre</option>
+                                                <option value="2">2e Trimestre</option>
+                                                <option value="3">3e Trimestre</option>
+                                                <option value="4">4e Trimestre</option>
+                                            </select>
+
+                                            </div>
+
+                                            <div class="row px-3 mt-2">
+                                            <select name="semestre" id="semestre" class="filtre_projet">
+                                                <option value="null" selected>Semestres</option>
+                                                <option value="1">1e Semestre</option>
+                                                <option value="2">2e Semestre</option>
+                                            </select>
+
+                                    </div>
+
+                                    <div class="row px-3 mt-2">
+                                            <select name="annee" id="annee" class="filtre_projet">
+                                                <option value="null" selected>Années</option>
+                                            </select>
+                                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                    </div>
+                    @endcanany
+                </div>
+                @canany(['isReferent', 'isCFP'])
+                <div class="col-12 ps-5">
+                @endcanany
+                @canany(['isFormateur','isStagiaire'])
+                    <div class="col-12 ps-5">
+                @endcanany
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

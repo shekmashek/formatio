@@ -5,31 +5,17 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
     <div class="container-fluid pb-3">
-        {{-- <nav class="navbar navbar-expand-lg w-100">
-            <div class="row w-100 g-0 m-0">
-                <div class="col-lg-12">
-                    <div class="row g-0 m-0 mt-4">
-                        @can('isCFP')
-                        <div class="col-12 ">
-                            <a href="{{route('nouveau_module')}}" class="btn_creer text-center"><i class='bx bx-plus-medical icon_creer'></i>Créer un Nouveau Module</a>
-                        @endcan
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav> --}}
+        <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">
-                    <a href="#enCours" class="nav-link active" data-bs-toggle="tab">En cours de
-                        creation&nbsp;({{count($mod_en_cours)}})</a>
+                    <a href="#enCours" class="nav-link active" data-bs-toggle="tab">Programme à Compléter&nbsp;{{count($mod_en_cours)}}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#nonPublies" class="nav-link" data-bs-toggle="tab">Non
-                        publiés&nbsp;({{count($mod_non_publies)}})</a>
+                    <a href="#nonPublies" class="nav-link" data-bs-toggle="tab">Compétence à compléter&nbsp;{{count($mod_non_publies)}}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#publies" class="nav-link" data-bs-toggle="tab">Publiés&nbsp;({{count($mod_publies)}})</a>
+                    <a href="#publies" class="nav-link" data-bs-toggle="tab">Votre Catalogue&nbsp;{{count($mod_publies)}}</a>
                 </li>
             </ul>
 
@@ -43,55 +29,21 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-2 filtre_cours ps-3">
-                                <h5 class="mt-3">Filtrer les modules</h5>
-                                <div class="row">
-                                    <form action="">
-                                        <div class="form-row">
-                                            <div class="searchBoxMod">
-                                                <input class="searchInputMod mb-2" type="text" name=""
-                                                    placeholder="Rechercher">
-                                                <button class="searchButtonMod" href="#">
-                                                    <i class="bx bx-search">
-                                                    </i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <p class="mt-2">En cours</p>
-                                <div class="container p-0">
-                                    <ul class="ps-2">
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Excel</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Power BI</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Bureautique</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Management</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Comptabilite</label></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-10 ps-3">
+                            <div class="col-12 ps-3">
                                 <div class="row pading_bas">
 
                                     @foreach($mod_en_cours as $mod)
-                                    <div class="col-6 list_module">
+                                    <div class="col-4 list_module">
                                         <div class="row detail__formation__result new_card_module bg-light mb-3"
                                             id="border_premier">
                                             <div class=" detail__formation__result__content">
                                                 <div class="detail__formation__result__item ">
-                                                    <h4 class="mt-3"><span id="preview_categ"><span
-                                                                class=" acf-categorie">{{$mod->nom_formation}}</span></span><span>&nbsp;-&nbsp;</span>
-                                                        <span></span>
+                                                    <h4 class="mt-3">
                                                         <span id="preview_module"><span
                                                                 class="acf-nom_module">{{$mod->nom_module}}</span></span>
                                                     </h4>
-                                                    <p id="preview_descript"><span class="acf-description"
-                                                            style="font-size: 0.850rem">{{$mod->description}}</span></p>
+                                                    <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
+                                                    <p id="preview_descript"><span class="acf-description" style="font-size: 0.850rem">{{$mod->description}}</span></p>
                                                     <div class="d-flex ">
                                                         <div class="col-6 detail__formation__result__avis">
                                                             <div style="--note: 4.5;">
@@ -217,52 +169,19 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-2 filtre_cours ps-3">
-                                <h5 class="mt-3">Filtrer les modules</h5>
-                                <div class="row">
-                                    <form action="">
-                                        <div class="form-row">
-                                            <div class="searchBoxMod">
-                                                <input class="searchInputMod mb-2" type="text" name=""
-                                                    placeholder="Rechercher">
-                                                <button class="searchButtonMod" href="#">
-                                                    <i class="bx bx-search">
-                                                    </i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <p class="mt-2">Non Publiés</p>
-                                <div class="container p-0">
-                                    <ul class="ps-2">
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Excel</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Power BI</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Bureautique</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Management</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Comptabilite</label></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-10 ps-3">
+                            <div class="col-12 ps-3">
                                 <div class="row pading_bas d-flex flex-wrap">
                                     @foreach($mod_non_publies as $mod)
-                                    <div class="col-6 list_module">
+                                    <div class="col-4 list_module">
                                         <div class="row detail__formation__result new_card_module bg-light mb-3"
                                             id="border_premier">
                                             <div class=" detail__formation__result__content">
                                                 <div class="detail__formation__result__item ">
-                                                    <h4 class="mt-3"><span id="preview_categ"><span
-                                                                class=" acf-categorie">{{$mod->nom_formation}}</span></span><span>&nbsp;-&nbsp;</span>
-                                                        <span></span>
+                                                    <h4 class="mt-3">
                                                         <span id="preview_module"><span
                                                                 class="acf-nom_module">{{$mod->nom_module}}</span></span>
                                                     </h4>
+                                                    <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
                                                     <p id="preview_descript"><span class="acf-description"
                                                             style="font-size: 0.850rem">{{$mod->description}}</span></p>
                                                     <div class="d-flex ">
@@ -467,55 +386,20 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-2 filtre_cours ps-3">
-                                <h5 class="mt-3">Filtrer les modules</h5>
-                                <div class="row">
-                                    <form action="">
-                                        <div class="form-row">
-                                            <div class="searchBoxMod">
-                                                <input class="searchInputMod mb-2" type="text" name=""
-                                                    placeholder="Rechercher">
-                                                <button class="searchButtonMod" href="#">
-                                                    <i class="bx bx-search">
-                                                    </i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <p class="mt-2">Publiés</p>
-
-                                <div class="container p-0">
-                                    <ul class="ps-2">
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Excel</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Power BI</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Bureautique</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Management</label></li>
-                                        <li><input type="checkbox" id="checkboxOne" value=""><label for="checkboxOne"
-                                                class="ms-2">Comptabilite</label></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-10 ps-3">
+                            <div class="col-12 ps-3">
                                 <div class="row pading_bas d-flex flex-wrap">
                                     @foreach($mod_publies as $mod)
-                                    <div class="col-6 list_module">
+                                    <div class="col-4 list_module">
                                         <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
                                             id="border_premier">
                                             <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                                 <div class="detail__formation__result__item ">
-                                                    <h4 class="mt-2"><span id="preview_categ"><span
-                                                                class="py-4 acf-categorie">{{$mod->nom_formation}}</span></span><span
-                                                            style="color: #801d68">&nbsp;-&nbsp;</span>
-                                                        <span></span>
+                                                    <h4 class="mt-2">
                                                         <span id="preview_module"><span
                                                                 class="acf-nom_module">{{$mod->nom_module}}</span></span>
 
                                                     </h4>
+                                                    <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
                                                     <p id="preview_descript"><span
                                                             class="acf-description">{{$mod->description}}</span></p>
                                                 </div>
@@ -870,6 +754,17 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="filtrer mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0">Filter les modules</p>
+                    </div>
+                    <div class="col text-end">
+                        <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
+                    </div>
+                    <hr class="mt-2">
                 </div>
             </div>
         </div>
