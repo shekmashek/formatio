@@ -215,15 +215,9 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         Facture::where('projet_id', $idProject)->update($update);
     }
 
-    // fonction update frais annexe
-    public function update_frais_annexe($id, $montant)
-    {
-        DB::update("update montant_frais_annexes set montant=?, updated_at=NOW()  where id=?", [$montant, $id]);
-        DB::commit();
-    }
 
 
-    public function insert($cfp_id, $idProject,$entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
+    public function insert($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
     {
         $ttc = $this->TTC(($tabData['facture'] * $tabData['qte']), $taux);
         $ht = $tabData['facture'] * $tabData['qte'];
@@ -231,7 +225,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $ht, $idProject,
             $tabDataTypeFinance['id_type_payement'], $tabDataDate['invoice_date'],
             $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'], $tabDataDesc['description'], $tabDataDesc['other_message'],
-            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id,$entrerpsie_id,$tabDataDesc['remise_id']
+            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id, $entrerpsie_id, $tabDataDesc['remise_id']
         ];
 
         DB::insert('insert into factures (hors_taxe,projet_id,type_payement_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_entreprise_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id,entreprise_id,remise_id) values (?,?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?,?)', $data);
@@ -239,30 +233,40 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         DB::commit();
     }
 
-    public function update_facture($cfp_id, $idProject,$entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
+    public function update_facture($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
     {
         $ttc = $this->TTC(($tabData['facture'] * $tabData['qte']), $taux);
         $ht = $tabData['facture'] * $tabData['qte'];
         $data = [
-            $ht, $idProject,
-            $tabDataTypeFinance['id_type_payement'], $tabDataDate['invoice_date'],
-            $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'], $tabDataDesc['description'], $tabDataDesc['other_message'],
-            $tabData['qte'], $tabDataTypeFinance['id_mode_financement'], $tabData['facture'], $reference_bc, $remise, $type_facture_id, $num_facture, $idGroupe_etp,$entrerpsie_id,$cfp_id
+            $ht, $idProject, $tabDataDate['invoice_date'], $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'],
+            $tabDataDesc['description'], $tabDataDesc['other_message'], $tabData['qte'], $tabDataTypeFinance['id_mode_financement'], $tabData['facture'],
+            $reference_bc, $remise, $type_facture_id, $num_facture, $idGroupe_etp, $entrerpsie_id, $cfp_id
         ];
-        DB::update('update factures set hors_taxe=?,projet_id=?,type_payement_id=?,invoice_date=?,due_date=?,tax_id=?,description=?,other_message=?,
-        qte=?,type_financement_id=?,pu=?,reference_bc=?,remise=?,type_facture_id=? where num_facture=? and groupe_entreprise_id=? and entreprise_id=? and cfp_id=?', $data);
-
+        DB::update('update factures set hors_taxe=?, projet_id=?, invoice_date=?, due_date=?, tax_id=?, description=?, other_message=?,
+        qte=?, type_financement_id=?, pu=?, reference_bc=?, remise=?, type_facture_id=? where num_facture=? and groupe_entreprise_id=? and entreprise_id=? and cfp_id=?', $data);
         DB::commit();
     }
 
     // fonction insert nouveau frais annexe par project
-    public function insert_frais_annexe($cfp_id,$projet_id,$entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
+    public function insert_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
     {
         $ttc = $this->TTC(($montant * $qte), $taux);
         $ht = $montant * $qte;
-        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id,$projet_id,$entreprise_id];
+        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id];
 
         DB::insert('insert into montant_frais_annexes (frais_annexe_id,num_facture,montant,hors_taxe,description,qte, created_at, updated_at,pu,date_frais_annexe,cfp_id,projet_id,entreprise_id) values (?,?,?,?,?,?, NOW(), NOW(),?, NOW(),?,?,?)', $data);
+        DB::commit();
+    }
+
+    // fonction update frais annexe
+    public function update_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
+    {
+        $ttc = $this->TTC(($montant * $qte), $taux);
+        $ht = $montant * $qte;
+        $data = [$ttc, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id, $idFrais, $num_facture];
+
+        DB::update("update montant_frais_annexes set montant=?, hors_taxe=?, description=?,
+            qte=?,pu=?,cfp_id=?,projet_id=?,entreprise_id=? where frais_annexe_id=?,num_facture=?", [$data]);
         DB::commit();
     }
 
@@ -300,7 +304,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             'reference_bc.required' => 'le reference de bon de commande ne peut pas etre null',
             'remise.number' => 'le remise est de type nombre'
         ];
-     /*   $critereForm = [
+        /*   $critereForm = [
             'down_bc' => 'required|min:3|max:10000|file|mimes:pdf',
             'down_fa' => 'required|min:3|max:10000|file|mimes:pdf',
             'invoice_date' => 'required|date',
@@ -309,12 +313,12 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             'reference_bc' => 'required'
         ];
 */
-$critereForm = [
-    'invoice_date' => 'required|date',
-    'num_facture' => 'required',
-    'due_date' => 'required|date',
-    'reference_bc' => 'required'
-];
+        $critereForm = [
+            'invoice_date' => 'required|date',
+            'num_facture' => 'required',
+            'due_date' => 'required|date',
+            'reference_bc' => 'required'
+        ];
 
         // 'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         $imput->validate($critereForm, $rules);
@@ -376,7 +380,7 @@ $critereForm = [
     }
 
 
-    public function verifyCreationFacture($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture)
+    public function verifyCreationFacture($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture)
     {
         $this->validation_form($imput);
         $fonction = new FonctionGenerique();
@@ -384,7 +388,7 @@ $critereForm = [
 
         if ($verify == 0) {
 
-            $this->insert($cfp_id, $idProject,$entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $tabDataDesc["remise"], $imput["type_facture"]);
+            $this->insert($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $tabDataDesc["remise"], $imput["type_facture"]);
 
             return back()->with('success', 'creation de la facture du project est effectué');
         } else {
@@ -437,39 +441,39 @@ $critereForm = [
 
     // ================= recherche par multi critère
 
-    public function search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    public function search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
     {
-        if($factue_id<=0){
-            $factue_id=1;
+        if ($factue_id <= 0) {
+            $factue_id = 1;
         }
-        $data = DB::select("select * from v_facture_actif where invoice_date>='".$invoice_dte."' and invoice_date<='".$due_dte."' and cfp_id=? and facture_encour='en_cour' and facture_id>=? limit ".$nbPage, [ $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_actif where invoice_date>='" . $invoice_dte . "' and invoice_date<='" . $due_dte . "' and cfp_id=? and facture_encour='en_cour' and facture_id>=? limit " . $nbPage, [$cfp_id, $factue_id]);
         return $data;
     }
 
-    public function search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    public function search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
     {
-        if($factue_id<=0){
-            $factue_id=1;
+        if ($factue_id <= 0) {
+            $factue_id = 1;
         }
-        $data = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
         return $data;
     }
 
-    public function search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    public function search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
     {
-        if($factue_id<=0){
-            $factue_id=1;
+        if ($factue_id <= 0) {
+            $factue_id = 1;
         }
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
         return $data;
     }
 
-    public function search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id,$factue_id,$nbPage)
+    public function search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
     {
-        if($factue_id<=0){
-            $factue_id=1;
+        if ($factue_id <= 0) {
+            $factue_id = 1;
         }
-        $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit ".$nbPage, [$invoice_dte, $due_dte, $cfp_id,$factue_id]);
+        $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
         return $data;
     }
 
@@ -486,7 +490,7 @@ $critereForm = [
         $data = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?", [$cfp_id]);
         return $data;
     }
-    public function search_num_fact_actif_cfp($nomTab, $num_fact,$satut_fact, $cfp_id)
+    public function search_num_fact_actif_cfp($nomTab, $num_fact, $satut_fact, $cfp_id)
     {
         $data = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and cfp_id=?", [$satut_fact, $cfp_id]);
         return $data;
@@ -497,59 +501,65 @@ $critereForm = [
     public function pagination($cfp_id)
     {
         $fonction = new FonctionGenerique();
-        $tmp = $fonction->findWhereMulitOne("v_pagination_facture",["cfp_id"],[$cfp_id]);
-        $data["pagination"] =$tmp;
-        $data["totale"]=10;
+        $tmp = $fonction->findWhereMulitOne("v_pagination_facture", ["cfp_id"], [$cfp_id]);
+        $data["pagination"] = $tmp;
+        $data["totale"] = 10;
         return $data;
     }
 
-    public function listSessionInFacture($num_fact,$cfp_id,$projet_id){
+    public function listSessionInFacture($num_fact, $cfp_id, $projet_id)
+    {
         $fonction = new FonctionGenerique();
 
-        $data=array();
-        $concatRefModule="";
-        $concatSession="";
-        $concatModule="";
-        $facture = $fonction->findWhere("factures",["num_facture","cfp_id","projet_id"],
-                [$num_fact,$cfp_id,$projet_id]);
+        $data = array();
+        $concatRefModule = "";
+        $concatSession = "";
+        $concatModule = "";
+        $facture = $fonction->findWhere(
+            "factures",
+            ["num_facture", "cfp_id", "projet_id"],
+            [$num_fact, $cfp_id, $projet_id]
+        );
 
-        for($i=0; $i<count($facture); $i+=1){
-            $tabSession = $fonction->findWhereMulitOne("v_groupe_projet_entreprise_module",
-            ["groupe_entreprise_id","entreprise_id","projet_id"],
-            [$facture[$i]->groupe_entreprise_id ,$facture[$i]->entreprise_id, $facture[$i]->projet_id]);
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $tabSession = $fonction->findWhereMulitOne(
+                "v_groupe_projet_entreprise_module",
+                ["groupe_entreprise_id", "entreprise_id", "projet_id"],
+                [$facture[$i]->groupe_entreprise_id, $facture[$i]->entreprise_id, $facture[$i]->projet_id]
+            );
 
-            $concatModule.="".$tabSession->nom_formation."->".$tabSession->nom_module;
-            $concatSession.="".$tabSession->nom_groupe;
-            $concatRefModule.="".$tabSession->reference;
-            if($i+1< count($facture)){
-                $concatModule.="/<br>";
-                $concatSession.="/<br>";
-                $concatRefModule.="/<br>";
+            $concatModule .= "" . $tabSession->nom_formation . "->" . $tabSession->nom_module;
+            $concatSession .= "" . $tabSession->nom_groupe;
+            $concatRefModule .= "" . $tabSession->reference;
+            if ($i + 1 < count($facture)) {
+                $concatModule .= "/<br>";
+                $concatSession .= "/<br>";
+                $concatRefModule .= "/<br>";
             }
         }
-        $concatSession="<p>".$concatSession."</p>";
-        $concatModule="<p>".$concatModule."</p>";
-        $concatRefModule="<p>".$concatRefModule."</p>";
-        $data["getSession"]=$concatSession;
-        $data["getModule"]=$concatModule;
-        $data["getRefModule"]=$concatRefModule;
+        $concatSession = "<p>" . $concatSession . "</p>";
+        $concatModule = "<p>" . $concatModule . "</p>";
+        $concatRefModule = "<p>" . $concatRefModule . "</p>";
+        $data["getSession"] = $concatSession;
+        $data["getModule"] = $concatModule;
+        $data["getRefModule"] = $concatRefModule;
         return $data;
     }
 
-    public function getListDataFacture($nomTab,$para=[],$val=[],$nbDebutPagination,$nbPage){
+    public function getListDataFacture($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage)
+    {
         $fonction = new FonctionGenerique();
-        $data=array();
-        $facture = $fonction->findWherePagination($nomTab, $para, $val,$nbDebutPagination,$nbPage);
+        $data = array();
+        $facture = $fonction->findWherePagination($nomTab, $para, $val, $nbDebutPagination, $nbPage);
 
-        for($i=0; $i<count($facture);$i+=1){
-        $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture,$facture[$i]->cfp_id,$facture[$i]->projet_id);
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, $facture[$i]->cfp_id, $facture[$i]->projet_id);
 
-        $data[$i]= $facture[$i];
-        $data[$i]->session_facture = $sessionConactener["getSession"];
-        $data[$i]->module_session = $sessionConactener["getModule"];
-        $data[$i]->ref_session = $sessionConactener["getRefModule"];
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
         }
-            return $data;
+        return $data;
     }
-
 }

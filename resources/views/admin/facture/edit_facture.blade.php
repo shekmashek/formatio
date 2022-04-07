@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlFactures.css')}}">
 <div class="container mb-5 mt-5">
-    <form action="{{route('modifier_facture',$montant_totale->num_facture)}}" id="msform_facture" method="POST" enctype="multipart/form-data">
+    <form action="{{route('modifier_facture',[$montant_totale->num_facture,$montant_totale->entreprise_id])}}" id="msform_facture" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="container">
             <section class="section1 mb-4">
@@ -146,7 +146,7 @@
                             </div>
                             <div class="col-1 text-end pt-2">
                                 <p class="m-0">
-                                    <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
+                                    <a href="{{route('delete_session_facture',[$cfp->id,$session[0]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
                                 </p>
                             </div>
                         </div>
@@ -168,6 +168,9 @@
                                 <input type="number" value="{{$session[$i]->pu}}" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
                             </div>
                             <div class="col-2 text-end pt-2">
+                                <p class="m-0">
+                                    <a href="{{route('delete_session_facture',[$cfp->id,$session[$i]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
+                                </p>
                             </div>
                     </div>
                     @endfor
@@ -175,8 +178,11 @@
 
                     <div id="newRowMontant"></div>
 
-                    <div class="row mb-2">
-                        <div class="col-9 d-flex flex-row justify-content-end">
+                    <div class="row mb-1">
+                        {{-- <div class="col-1 text-end"></div> --}}
+                        <div class="col2 text-end"></div>
+
+                        <div class="col-8 d-flex flex-row justify-content-end">
                             <p class="m-0 pt-3 text-end me-3">Taxe</p>
                             <select class="form-select selectP input_tax calcule_pour_tax" aria-label="Default select example" name="tax_id" id="tax_id">
                                 <option id="test_{{$session[0]->tax_id}}" value="{{$session[0]->tax_id}}" data-id="0">{{$session[0]->nom_taxe}}</option>
@@ -186,9 +192,9 @@
                             </select>
                         </div>
                         <div class="col-3 text-end">
-                            <p class="m-0 pt-2"><span id="montant_tax" class="montant_session_facture">
+                            {{-- <p class="m-0 pt-2"><span id="montant_tax" class="montant_session_facture">
                                     {{number_format($montant_totale->tva,0,","," ")}}
-                                </span>&nbsp;MGA</p>
+                                </span>&nbsp;MGA</p> --}}
                         </div>
                     </div>
                 </div>
@@ -261,14 +267,11 @@
 
         <div class="row mb-2 g-0 p-2">
             <div class="col-9 d-flex flex-row justify-content-end">
-                <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" min="0" value="
-                        @if($montant_totale->remise>0)
-                        {{$montant_totale->remise}}
-                        @else {{0}}
-                        @endif" class="form-control input_tax" name="remise" id="remise">
-                <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label="Default select example">
+                <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" min="0" value="{{$montant_totale->valeur_remise}}" class="form-control input_tax" name="remise" id="remise">
+                <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label=" select example">
+                    <option value="{{$montant_totale->remise_id}}" selected>{{$montant_totale->description_remise}}</option>
                     @foreach ($type_remise as $re)
-                    <option value="{{$re->id}}" selected>{{$re->description}}</option>
+                    <option value="{{$re->id}}">{{$re->description}}</option>
                     @endforeach
 
                 </select>
@@ -276,16 +279,15 @@
             <div class="col-3 text-end">
             </div>
         </div>
-
-<hr>
-<div class="row mb-2 g-0">
-    <div class="col-12 ">
-        <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>
-        <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'Vos commentaires ou descriptions'">
-        {{$montant_totale->other_message}}
-        </textarea>
-    </div>
-</div>
+        <hr>
+        <div class="row mb-2 g-0">
+            <div class="col-12 ">
+                <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>
+                <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'Vos commentaires ou descriptions'">
+                {{$montant_totale->other_message}}
+                </textarea>
+            </div>
+        </div>
 </div>
 </section>
 <section class="section5 mb-4">
@@ -473,7 +475,7 @@
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRow">';
                     html += '<div class="col-3">';
-                    html += '<select class="form-select selectP input_section4"  id="frais_annexe_id[]" name="frais_annexe_id[]" required>';
+                    html += '<select class="form-select selectP input_section4"  id="frais_annexe_id_new[]" name="frais_annexe_id_new[]" required>';
 
                     for (var $i = 0; $i < userData.length; $i++) {
                         html += '<option value="' + userData[$i].id + '">' + userData[$i].description + '</option>';
@@ -482,15 +484,15 @@
                     html += '</div>';
 
                     html += '<div class="col-5">';
-                    html += '  <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe"></textarea>';
+                    html += '  <textarea name="description_annexe_new[]" id="description_annexe_new[]" class="text_description form-control" placeholder="déscription du frais annexe"></textarea>';
                     html += '</div>';
 
                     html += '<div class="col-1">';
-                    html += '<input type="number" min="1" value="1" required class="form-control input_quantite annexe_qte" name="qte_annexe[]" id="qte_annexe[]">';
+                    html += '<input type="number" min="1" value="1" required class="form-control input_quantite annexe_qte" name="qte_annexe_new[]" id="qte_annexe_new[]">';
                     html += '</div>';
 
                     html += '<div class="col-2">';
-                    html += '<input type="number" min="0" value="0" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">';
+                    html += '<input type="number" min="0" value="0" required name="montant_frais_annexe_new[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe_new[]" placeholder="0">';
                     html += '</div>';
 
                     html += '<div class="col-1 text-end pt-2">';
@@ -604,7 +606,7 @@
                     html += '<div class="col-3">';
                     html += '</div>';
                     html += '<div class="col-5">';
-                    html += '<select class="form-select selectP input_section4"  id="session_id[]" name="session_id[]" required>';
+                    html += '<select class="form-select selectP input_section4"  id="session_id_new[]" name="session_id_new[]" required>';
 
                     for (var $i = 0; $i < userData.length; $i++) {
                         html += '<option value="' + userData[$i].groupe_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
@@ -612,15 +614,15 @@
                     html += '</select>';
                     html += '</div>';
                     html += '<div class="col-1">';
-                    html += '<input type="number" min="1" value="1" required class="form-control input_quantite" name="qte[]" id="qte[]">';
+                    html += '<input type="number" min="1" value="1" required class="form-control input_quantite" name="qte_new[]" id="qte_new[]">';
                     html += '</div>';
 
                     html += '<div class="col-2">';
-                    html += '<input type="number" min="0" value="0" required name="facture[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture[]" placeholder="0">';
+                    html += '<input type="number" min="0" value="0" required name="facture_new[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture_new[]" placeholder="0">';
                     html += '</div>';
 
                     html += '<div class="col-1 text-end pt-2">';
-                    html += '<p class="m-0"><span>500 000</span>&nbsp;MGA<span>';
+                    html += '<p class="m-0">';
                     html += '<button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span></p>';
                     html += '</div>';
                     html += '</div><br>';

@@ -101,6 +101,10 @@
                                         @if ($facture[0]->site_etp!=null)
                                         <p class="m-0 adresse_cfp">{{$facture[0]->site_etp}}</p>
                                         @endif
+                                        <p class="m-0 adresse_cfp">NIF: {{$facture[0]->nif}}</p>
+                                        <p class="m-0 adresse_cfp">STAT: {{$facture[0]->stat}}</p>
+                                        <p class="m-0 adresse_cfp">RCS: {{$facture[0]->rcs}}</p>
+                                        <p class="m-0 adresse_cfp">CIF: {{$facture[0]->cif}}</p>
                                     </div>
                                 </div>
 
@@ -116,25 +120,6 @@
                                 </div>
 
                             </div>
-
-                            <div class="row mt-2">
-                                <div class="col">
-                                    <p class="m-0 adresse_cfp">NIF: {{$facture[0]->nif}}</p>
-
-                                </div>
-                                <div class="col">
-                                    <p class="m-0 adresse_cfp">STAT: {{$facture[0]->stat}}</p>
-
-                                </div>
-                                <div class="col">
-                                    <p class="m-0 adresse_cfp">RCS: {{$facture[0]->rcs}}</p>
-
-                                </div>
-                                <div class="col">
-                                    <p class="m-0 adresse_cfp">CIF: {{$facture[0]->cif}}</p>
-
-                                </div>
-                            </div>
                         </div>
 
                         <hr>
@@ -149,7 +134,7 @@
                                             <th scope="col">Réf</th>
                                             <th>Module</th>
                                             <th>Designation</th>
-                                            <th>Session</th>
+                                            <th></th>
                                             <th>Qte</th>
                                             <th>PU HT</th>
                                             <th>
@@ -185,25 +170,26 @@
 
                                     <thead class=" mt-1 table-warning">
                                         <tr>
-                                            <td scope="col">Numéro facture acompte</td>
+                                            <td scope="col"></td>
                                             <td></td>
-                                            <td>Designation</td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                             <td>
-                                                <div align="right">
-                                                    Totale montant
-                                                </div>
                                             </td>
                                         </tr>
                                     </thead>
                                     <tbody class="mb-1">
                                         @foreach ($facture_acompte as $fa)
                                         <tr>
-                                            <td>{{$fa->num_facture}}</td>
+                                            <td>
+                                                <a href="{{route('detail_facture',$fa->num_facture)}}">
+                                                    {{$fa->num_facture}}
+                                                </a>
+                                            </td>
                                             <td></td>
-                                            <td>{{$fa->other_message}}</td>
+                                            <td>{{$fa->reference_type_facture}}</td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -222,17 +208,13 @@
 
                                     <thead class=" mt-1 table-secondary">
                                         <tr>
-                                            <td scope="col">Frais annexe</td>
+                                            <td scope="col"></td>
                                             <td></td>
-                                            <td>Designation</td>
                                             <td></td>
-                                            <td>Qte</td>
-                                            <td>PU HT</td>
-                                            <td>
-                                                <div align="right">
-                                                    Montant
-                                                </div>
-                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -307,7 +289,7 @@
                                                     <tr>
                                                         <td>Facture d'acompte</td>
                                                         <td>
-                                                            <div align="right"  style="background-color: rgb(255, 204, 0)">
+                                                            <div align="right" style="background-color: rgb(255, 204, 0)">
                                                                 Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
                                                             </div>
                                                         </td>
@@ -343,7 +325,7 @@
                     </div>
 
                     <p>Arretée la présente facture à la somme de: <strong>{{$lettre_montant}} Ariary</strong></p>
-                    <p>mode de payement: <strong>STATIC mbol ts vita</strong></p>
+                    <p>mode de payement: <strong>{{$montant_totale->description_financement}}</strong></p>
                     <p>Autre Message</p>
                     <p style="max-width: 40%">{{$facture[0]->other_message}}</p>
                     <div class="container-fluid mb-5">
@@ -361,12 +343,12 @@
                                 <p>CIF: {{$cfp->cif}}</p>
                             </div>
                         </div>
-            </div>
+                    </div>
 
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 
 

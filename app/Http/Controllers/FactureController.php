@@ -76,7 +76,7 @@ class FactureController extends Controller
         $mode_payement = DB::select('select * from mode_financements');
 
         $facture_inactif = $this->fact->getListDataFacture("v_facture_inactif", ["cfp_id"], [$cfp_id], 0, 10);
-        $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour","cfp_id"], ["valider",$cfp_id], 0, 10);
+        $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["valider", $cfp_id], 0, 10);
         $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], 0, 10);
         $facture_encour = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], 0, 10);
 
@@ -172,7 +172,7 @@ class FactureController extends Controller
                 ["projet_id", "UPPER(reference_type_facture)", "cfp_id"],
                 [$montant_totale->projet_id, "ACOMPTE", $cfp_id]
             );
-            if(count($facture_acompte)<=0){
+            if (count($facture_acompte) <= 0) {
                 $facture_acompte = $this->fonct->findWhere(
                     "v_facture_actif",
                     ["projet_id", "UPPER(reference_type_facture)", "cfp_id"],
@@ -421,7 +421,7 @@ class FactureController extends Controller
                         $val = [$request["session_id"][$i], $request->entreprise_id];
                         $result = $this->fonct->findWhereMulitOne("v_groupe_projet_entreprise", $para, $val);
                         // $montant_remise = 0;
-/*
+                        /*
                         if ($request->remise > 0) {
 
                             if ($remise->description == "MGA") {
@@ -445,8 +445,8 @@ class FactureController extends Controller
 
                         $tabDataDesc['description'] = $request['description_facture'];
                         $tabDataDesc['other_message'] = $request['other_message'];
-                        $tabDataDesc['remise'] =$request->remise;
-                        $tabDataDesc['remise_id'] =$request->type_remise_id;
+                        $tabDataDesc['remise'] = $request->remise;
+                        $tabDataDesc['remise_id'] = $request->type_remise_id;
 
                         $status = $this->fact->verifyCreationFacture(
                             $cfp_id,
@@ -554,7 +554,7 @@ class FactureController extends Controller
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $data["entreprise"] = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$req->id]);
         $data["projet"] = $this->fonct->findWhere("v_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
-         return response()->json($data);
+        return response()->json($data);
     }
 
     public function verifyFacture(Request $req)
@@ -579,22 +579,24 @@ class FactureController extends Controller
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-            $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$montant_totale->entreprise_id]);
-            $projet = $this->fonct->findWhereMulitOne("projets",["id"],[$montant_totale->projet_id]);
+            $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$montant_totale->entreprise_id]);
+            $projet = $this->fonct->findWhereMulitOne("projets", ["id"], [$montant_totale->projet_id]);
             $session = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
             $frais_annexes = $this->fonct->findWhere("v_frais_annexe", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
 
-            $taxe = $this->fonct->findWhereParam("taxes",["id"],["!="],[$session[0]->tax_id]);
-            $type_facture = $this->fonct->findWhereParam("type_facture",["id"],["!="],[$session[0]->type_facture_id]);
-            $mode_payement = $this->fonct->findWhereParam("mode_financements",["id"],["!="],[$session[0]->type_facture_id]);
-            $type_remise = $this->fonct->findAll("type_remise");
-            return view('admin.facture.edit_facture',compact('mode_payement','type_remise','taxe','projet','entreprise','type_facture','cfp','montant_totale','session','frais_annexes'));
+            $taxe = $this->fonct->findWhereParam("taxes", ["id"], ["!="], [$session[0]->tax_id]);
+            $type_facture = $this->fonct->findWhereParam("type_facture", ["id"], ["!="], [$session[0]->type_facture_id]);
+            $mode_payement = $this->fonct->findWhereParam("mode_financements", ["id"], ["!="], [$session[0]->type_facture_id]);
+            $type_remise = $this->fonct->findWhereParam("type_remise", ["id"], ["!="], [$montant_totale->remise_id]);
+            return view('admin.facture.edit_facture', compact('mode_payement', 'type_remise', 'taxe', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
         }
     }
 
-    public function modifier_facture($num_facture,Request $request){
 
-        dd($request->input());
+    public function modifier_facture($num_facture, $entreprise_id, Request $request)
+    {
+
+        // dd($request->input());
         $remise = $this->fonct->findWhereMulitOne("type_remise", ["id"], [$request->type_remise_id]);
 
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
@@ -609,19 +611,7 @@ class FactureController extends Controller
                 for ($i = 0; $i < count($request["session_id"]); $i++) {
                     if ($request["facture"][$i] > 0) {
                         $val = [$request["session_id"][$i], $request->entreprise_id];
-                        $result = $this->fonct->findWhereMulitOne("v_groupe_projet_entreprise", $para, $val);
-                        $montant_remise = 0;
 
-                     /*   if ($request->remise > 0) {
-
-                            if ($remise->description == "MGA") {
-                                $montant_remise = $request->remise;
-                            }
-                            if ($remise->description == "%") {
-                                $montant_remise = ($request["facture"][$i] * $request->remise)/100;
-                            }
-                        } */
-                        // dd($montant_remise);
                         $tabData['facture'] = $request["facture"][$i];
                         $tabData['qte'] = $request["qte"][$i];
 
@@ -634,15 +624,14 @@ class FactureController extends Controller
 
                         $tabDataDesc['description'] = $request['description_facture'];
                         $tabDataDesc['other_message'] = $request['other_message'];
-                        $tabDataDesc['remise'] =$request->remise;
-                        $tabDataDesc['remise_id'] =$request->type_remise_id;
-
+                        $tabDataDesc['remise'] = $request->remise;
+                        $tabDataDesc['remise_id'] = $request->type_remise_id;
 
                         $this->fact->update_facture(
                             $cfp_id,
-                            $result->projet_id,
-                            $result->entreprise_id,
-                            $result->groupe_entreprise_id,
+                            $request['projet_id'],
+                            $entreprise_id,
+                            $request["session_id"][$i],
                             $tabData,
                             $tax->pourcent,
                             $tabDataDate,
@@ -653,11 +642,10 @@ class FactureController extends Controller
                             $tabDataDesc["remise"],
                             $request["type_facture"]
                         );
-
                     }
                 }
 
-                /*if ($request["frais_annexe_id"]) {
+                if ($request["frais_annexe_id"]) {
                     for ($i = 0; $i < count($request["frais_annexe_id"]); $i += 1) {
                         $id_frais = $request["frais_annexe_id"][$i];
                         $montant = $request["montant_frais_annexe"][$i];
@@ -665,10 +653,10 @@ class FactureController extends Controller
                         $desc = $request["description_annexe"][$i];
 
                         if ($montant > 0) {
-                            $this->fact->insert_frais_annexe(
+                            $this->fact->update_frais_annexe(
                                 $cfp_id,
-                                $request->projet_id,
-                                $request->entreprise_id,
+                                $request['projet_id'],
+                                $entreprise_id,
                                 $request['num_facture'],
                                 $qte,
                                 $id_frais,
@@ -678,30 +666,67 @@ class FactureController extends Controller
                             );
                         }
                     }
+                }
+
+            /*    if ($request["frais_annexe_id_new"]) {
+                    for ($i = 0; $i < count($request["frais_annexe_id_new"]); $i += 1) {
+                        $id_frais_new = $request["frais_annexe_id_new"][$i];
+                        $montant_new = $request["montant_frais_annexe_new"][$i];
+                        $qte_new = $request["qte_annexe_new"][$i];
+                        $desc_new = $request["description_annexe_new"][$i];
+
+                        if ($montant > 0) {
+                            $this->fact->update_frais_annexe(
+                                $cfp_id,
+                                $request['projet_id'],
+                                $entreprise_id,
+                                $request['num_facture'],
+                                $qte_new,
+                                $id_frais_new,
+                                $montant_new,
+                                $desc_new,
+                                $tax->pourcent
+                            );
+                        }
+                    }
                 } */
 
-                //            $this->fact->SaveBCetFA($path, $request);
             } catch (Exception $e) {
                 DB::rollback();
                 echo $e->getMessage();
             }
-
-            //return $status;
             return redirect()->route('liste_facture');
         } else {
             return back()->with("error_facture", "désoler,on ne peut creer une facture sans le montant totale! merci");
         }
 
-            // return redirect()->route('liste_facture');
+        // return redirect()->route('liste_facture');
     }
 
-    public function delete_session_facture($num_facture,$groupe_entreprise_id){
+    public function delete_session_facture($num_facture, $groupe_entreprise_id)
+    {
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+        $session_fact = $this->fonct->findWhere("factures", ["num_facture", "cfp_id"], [$num_facture, $cfp_id]);
         DB::beginTransaction();
-        try {
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
+
+        if (count($session_fact) > 1) {
+            try {
+                DB::delete('delete factures where num_facture = ? and cfp=? and groupe_entreprise_id=?', [$num_facture, $groupe_entreprise_id, $cfp_id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+            return back();
+        } else {
+            try {
+                DB::delete('delete factures where num_facture = ? and cfp=?', [$num_facture, $cfp_id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+            return redirect()->route("liste_facture");
         }
-        return back();
     }
 }
