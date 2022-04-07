@@ -601,6 +601,21 @@
                                             formation</a></li>
                                     <li><a class="dropdown-item" href="{{route('budget')}}"><i
                                                 class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('formations')}}">
+                                            <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module Interne
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('formateurs')}}">
+                                            <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur Interne
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('projets')}}">
+                                            <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
+                                        </a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -746,7 +761,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
+            <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 4.5rem;">
                 @yield('content')
 
             </div>

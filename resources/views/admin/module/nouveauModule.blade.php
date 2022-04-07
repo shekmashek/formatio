@@ -1,17 +1,19 @@
 @extends('./layouts/admin')
+@section('title')
+<p class="text_header m-0 mt-1">Nouveau Module</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<script src='https://cdn.tiny.cloud/1/2livar4kpgh2o2es5elw12jtdnyrnv2ll23hiq3rlplmtj8r/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
-<div id="page-wrapper">
+
     <div class="container-fluid bg-light">
-        <nav class="navbar navbar-expand-lg w-100">
+        {{-- <nav class="navbar navbar-expand-lg w-100">
             <div class="row w-100 g-0 m-0">
                 <div class="col-lg-12">
                     <div class="row g-0 m-0" style="align-items: center">
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
                             <div class="col titre_page">
-                                <h3 class="mt-3">Nouveau Module</h3>
+                                <h3 class="mt-3"></h3>
                             </div>
 
                             <div class="col" align="right">
@@ -25,7 +27,7 @@
                 </div>
             </div>
         </nav>
-        <hr>
+        <hr> --}}
         <div class="panel-body">
             <div class="row">
                 <form action="{{route('module.store')}}" method="POST" id="frm_new_module">
@@ -52,25 +54,7 @@
                             </div>
                             <div class="col-lg-4 pe-5 postion_fixe_form" style="align-items: center">
                                 <div class="form-row">
-                                    <div class="form-group" id="premier_vue">
-                                        <div class="acf-field acf-field-text acf-field-nom_module is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    {{-- test input top --}}
-                                                    {{-- <div class="row px-3 mt-4">
-                                                        <div class="form-group mt-1 mb-1"> <input type="text" id="email" class="form-control test" required> <label class="ml-3 form-control-placeholder" for="email">Email</label> </div>
-                                                    </div> --}}
-                                                    <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required placeholder="Nom du module">
-                                                    <label for="acf-nom_module" class="form-control-placeholder">Nom du module</label>
-                                                    @error('nom_module')
-                                                    <div class="col-sm-6">
-                                                        <span style="color:#ff0000;"> {{$message}} </span>
-                                                    </div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
 
                                     <div class="form-group" id="premier_vue9">
                                         <div class="acf-field acf-field-text acf-field-categorie is-required">
@@ -111,11 +95,7 @@
                                         <div class="acf-field acf-field-text acf-field-nom_module is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    {{-- test input top --}}
-                                                    {{-- <div class="row px-3 mt-4">
-                                                        <div class="form-group mt-1 mb-1"> <input type="text" id="email" class="form-control test" required> <label class="ml-3 form-control-placeholder" for="email">Email</label> </div>
-                                                    </div> --}}
-                                                    <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required>
+                                                    <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required placeholder="Nom du module">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Nom du module</label>
                                                     @error('nom_module')
                                                     <div class="col-sm-6">
@@ -132,8 +112,8 @@
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap mt-2">
-                                                    <input type="text" class="form-control descript descript input" id="acf-description" name="description" required placeholder="Déscription">
-                                                    <label for="acf-nom_module" class="form-control-placeholder">Déscription</label>
+                                                    <input type="text" class="form-control descript descript input mt-4" id="acf-description" name="description" required placeholder="Déscription courte" maxlength="70" title="Limiter à 70 caractères">
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Déscription courte</label>
                                                     @error('description')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -413,12 +393,14 @@
                         <div class="row bg-light justify-content-space-between py-3 px-5" id="border_premier">
                             <div class="col-lg-6 col-md-6  new_back">
                                 <div class=" ">
-                                    <h4><span id="preview_categ"><span class="py-4 acf-categorie">Ms
-                                                Excel</span></span><span style="color: black !important;">&nbsp;-&nbsp;</span>
-                                        <span></span>
+                                    <h4>
                                         <span id="preview_module"><span class="acf-nom_module">Excel
                                                 avancee</span></span>
                                     </h4>
+                                    <span id="preview_categ">
+                                        <span class="py-4 acf-categorie">Ms Excel</span>
+                                    </span>
+
                                     <p id="preview_descript"><span class="acf-description">Optimiser et
                                             automatiser vos tableaux sans programmer</span></p>
                                     <div class="detail__formation__result__avis" >
@@ -554,7 +536,7 @@
                                 <div class="row detail__formation__item__main">
                                     <div class="detail__prix__main__presentiel pt-3">
                                         <div>
-                                            <p class="text-uppercase text-center" id="preview_modalite"><span class="acf-modalite text_mod">Presentiel et a
+                                            <p class="text-uppercase text-center" id="preview_modalite"><span class="acf-modalite text_mod font_size">Presentiel et a
                                                     distance</span></p>
                                         </div>
                                     </div>
@@ -562,12 +544,12 @@
                                 <div class="row detail__formation__item__main">
                                     <div class="col-lg-5 detail__prix__main__ref pt-2">
                                         <div>
-                                            <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
+                                            <p class="font_size"><i class="bx bx-clipboard "></i>&nbsp;Ref :</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-7 detail__prix__main__ref2 pt-2">
                                         <div id="preview_reference">
-                                            <p class="acf-reference">10MG2022-01</p>
+                                            <p class="acf-reference font_size">10MG2022-01</p>
                                         </div>
                                     </div>
                                 </div>
@@ -575,13 +557,13 @@
                                 <div class="row detail__formation__item__main">
                                     <div class="col-lg-6 detail__prix__main__dure">
                                         <div>
-                                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span>
+                                            <p class="font_size"><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span>
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 detail__prix__main__dure2">
                                         <div>
-                                            <p>
+                                            <p class="font_size">
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         4
                                                     </span>j</span>
@@ -596,12 +578,12 @@
                                 <div class="row detail__formation__item__rmain">
                                     <div class="col-lg-5 detail__prix__main__prix">
                                         <div>
-                                            <p><i class='bx bx-euro'></i>&nbsp;Prix :</p>
+                                            <p class="font_size"><i class='bx bx-euro'></i>&nbsp;Prix :</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-7 detail__prix__main__prix2">
                                         <div>
-                                            <p id="preview_prix"><span class="acf-prix">450000</span>&nbsp;AR&nbsp;HT
+                                            <p id="preview_prix" class="font_size"><span class="acf-prix">450000</span>&nbsp;AR&nbsp;HT
                                             </p>
                                         </div>
                                     </div>
@@ -669,7 +651,7 @@
             </div>
         </div>
     </div>
-</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
 $("#acf-domaine").change(function() {
@@ -1345,14 +1327,6 @@ function estComplet() {
     } else {
         btn.disabled = true;
     }
-}
-
-let sidebar = document.querySelector(".sidebar");
-let menu = document.querySelector(".bx-menu");
-
-function clickSidebar() {
-    sidebar.classList.toggle("active");
-    menu.classList.toggle("bx-menu-alt-right");
 }
 
 

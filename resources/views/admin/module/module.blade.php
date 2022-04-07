@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-    <div class="container-fluid pb-3">
+    <div class="container-fluid pb-1">
         <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
