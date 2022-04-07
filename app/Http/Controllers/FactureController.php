@@ -661,22 +661,23 @@ class FactureController extends Controller
                                 $qte,
                                 $id_frais,
                                 $montant,
-                                $desc,
-                                $tax->pourcent
+                                $desc
                             );
                         }
                     }
                 }
 
-            /*    if ($request["frais_annexe_id_new"]) {
+                if ($request["frais_annexe_id_new"]) {
+
+
                     for ($i = 0; $i < count($request["frais_annexe_id_new"]); $i += 1) {
                         $id_frais_new = $request["frais_annexe_id_new"][$i];
                         $montant_new = $request["montant_frais_annexe_new"][$i];
                         $qte_new = $request["qte_annexe_new"][$i];
                         $desc_new = $request["description_annexe_new"][$i];
-
-                        if ($montant > 0) {
-                            $this->fact->update_frais_annexe(
+                        // dd( $request["montant_frais_annexe_new"][$i]);
+                        if ($montant_new > 0) {
+                            $this->fact->insert_frais_annexe(
                                 $cfp_id,
                                 $request['projet_id'],
                                 $entreprise_id,
@@ -684,13 +685,11 @@ class FactureController extends Controller
                                 $qte_new,
                                 $id_frais_new,
                                 $montant_new,
-                                $desc_new,
-                                $tax->pourcent
+                                $desc_new
                             );
                         }
                     }
-                } */
-
+                }
             } catch (Exception $e) {
                 DB::rollback();
                 echo $e->getMessage();
@@ -711,7 +710,7 @@ class FactureController extends Controller
 
         if (count($session_fact) > 1) {
             try {
-                DB::delete('delete factures where num_facture = ? and cfp=? and groupe_entreprise_id=?', [$num_facture, $groupe_entreprise_id, $cfp_id]);
+                DB::delete('delete factures where num_facture = ? and cfp_id=? and groupe_entreprise_id=?', [$num_facture, $cfp_id, $groupe_entreprise_id]);
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollback();
@@ -720,7 +719,7 @@ class FactureController extends Controller
             return back();
         } else {
             try {
-                DB::delete('delete factures where num_facture = ? and cfp=?', [$num_facture, $cfp_id]);
+                DB::delete('delete from factures where num_facture = ? and cfp_id=?', [$num_facture, $cfp_id]);
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollback();
@@ -728,5 +727,13 @@ class FactureController extends Controller
             }
             return redirect()->route("liste_facture");
         }
+    }
+
+    public function delete_frais_annexe_facture($num_facture, $frais_annexe_id)
+    {
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+        DB::delete('delete from montant_frais_annexes where num_facture = ? and cfp_id=? and frais_annexe_id=?', [$num_facture, $cfp_id, $frais_annexe_id]);
+
+        return back();
     }
 }

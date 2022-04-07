@@ -248,25 +248,25 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     }
 
     // fonction insert nouveau frais annexe par project
-    public function insert_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
+    public function insert_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc)
     {
-        $ttc = $this->TTC(($montant * $qte), $taux);
         $ht = $montant * $qte;
-        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id];
+        $data = [$idFrais, $num_facture, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id];
 
-        DB::insert('insert into montant_frais_annexes (frais_annexe_id,num_facture,montant,hors_taxe,description,qte, created_at, updated_at,pu,date_frais_annexe,cfp_id,projet_id,entreprise_id) values (?,?,?,?,?,?, NOW(), NOW(),?, NOW(),?,?,?)', $data);
+        DB::insert('insert into montant_frais_annexes (frais_annexe_id,num_facture,hors_taxe,description,qte, created_at, updated_at,pu,date_frais_annexe,cfp_id,projet_id,entreprise_id) values (?,?,?,?,?, NOW(), NOW(),?, NOW(),?,?,?)', $data);
         DB::commit();
     }
 
     // fonction update frais annexe
-    public function update_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
+    public function update_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc)
     {
-        $ttc = $this->TTC(($montant * $qte), $taux);
         $ht = $montant * $qte;
-        $data = [$ttc, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id, $idFrais, $num_facture];
+        $data = [$ht, $desc, $qte, $montant, $num_facture, $idFrais, $cfp_id, $projet_id, $entreprise_id];
 
-        DB::update("update montant_frais_annexes set montant=?, hors_taxe=?, description=?,
-            qte=?,pu=?,cfp_id=?,projet_id=?,entreprise_id=? where frais_annexe_id=?,num_facture=?", [$data]);
+        // dd($data);
+
+        DB::update("update montant_frais_annexes set hors_taxe=?, description=?,
+            qte=?,pu=? where num_facture=?  and frais_annexe_id=? and cfp_id=? and projet_id=? and entreprise_id=?", $data);
         DB::commit();
     }
 

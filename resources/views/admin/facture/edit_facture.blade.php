@@ -14,7 +14,7 @@
                         <h2>Nouvelle facture</h2>
                     </div>
                     <div class="col-6 text-end">
-                        <input type="submit" class="btn btn_submit" value="Enregistrer et continuer">
+                        <input type="submit" class="btn btn_submit" value="Modifier et continuer">
                     </div>
                 </div>
             </section>
@@ -146,7 +146,7 @@
                             </div>
                             <div class="col-1 text-end pt-2">
                                 <p class="m-0">
-                                    <a href="{{route('delete_session_facture',[$cfp->id,$session[0]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
+                                    <a href="{{route('delete_session_facture',[$montant_totale->num_facture,$session[0]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
                                 </p>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                             </div>
                             <div class="col-2 text-end pt-2">
                                 <p class="m-0">
-                                    <a href="{{route('delete_session_facture',[$cfp->id,$session[$i]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
+                                    <a href="{{route('delete_session_facture',[$montant_totale->num_facture,$session[$i]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
                                 </p>
                             </div>
                     </div>
@@ -227,7 +227,7 @@
 
                 @if (count($frais_annexes)>0)
 
-                <div class="row my-1" id="inputFormRow">
+                <div class="row my-1">
                     <div class="col-3">
                         <select class="form-select selectP input_section4" id="frais_annexe_id[]" name="frais_annexe_id[]" required>
                             @foreach ($frais_annexes as $frais)
@@ -237,7 +237,7 @@
                         </select>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-5">
                         <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe">{{$frais->frais_annexe_description}}</textarea>
                     </div>
 
@@ -250,9 +250,9 @@
                     </div>
 
 
-                    <div class="col-3 text-end pt-2">
+                    <div class="col-1 text-end pt-2">
                         <p class="m-0">
-                            <button type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span>
+                         <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais->frais_annexe_id])}}">   <button type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></a></span>
                         </p>
                     </div>
                 </div><br>
@@ -468,6 +468,7 @@
                     $("#addRow").css("display", "none");
                 }
                 if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
+
                     $("#addRow").css("display", "inline-block");
                     for (var $i = 0; $i < userData.length; $i++) {
                         $("#frais").append('<option value="' + userData[$i].id + '">' + JSON.stringify(userData[$i].description) + '</option>');

@@ -493,6 +493,8 @@ Route::get('liste_facture','FactureController@redirection_facture')->name('liste
 Route::get('edit_facture/{id}','FactureController@edit_facture')->name('edit_facture');
 Route::post('modifier_facture/{num_facture}/{entreprise_id}','FactureController@modifier_facture')->name('modifier_facture');
 Route::get('delete_session_facture/{num_fact}/{grp_etp_id}','FactureController@delete_session_facture')->name('delete_session_facture');
+Route::get('delete_frais_annexe_facture/{num_fact}/{frais_annexe_id}','FactureController@delete_frais_annexe_facture')->name('delete_frais_annexe_facture');
+
 
 Route::post('valid_facture','FactureController@valid_facture')->name('valid_facture');
 Route::get('detail_facture/{num_facture}','FactureController@detail_facture')->name('detail_facture');
