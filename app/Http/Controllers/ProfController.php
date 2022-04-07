@@ -467,6 +467,7 @@ class ProfController extends Controller
             $id = formateur::where('user_id', Auth::user()->id)->value('id');
             $competence = competenceFormateur::where('formateur_id', $id)->get();
 
+
             $experience = experienceFormateur::where('formateur_id', $id)->get();
             $formateur = formateur::findOrFail($id);
             if($formateur->genre_id == 1) $genre = "Femme";
@@ -475,6 +476,8 @@ class ProfController extends Controller
          }
          else{
             $formateur = formateur::findOrFail($id);
+            $competence = competenceFormateur::where('formateur_id', $id)->get();
+            $experience = experienceFormateur::where('formateur_id', $id)->get();
             if($formateur->genre_id == 1) $genre = "Femme";
             if($formateur->genre_id == 2) $genre = "Homme";
             if($formateur->genre_id == null) $genre = " ";
@@ -482,7 +485,7 @@ class ProfController extends Controller
          }
 
 
-        return view('admin.formateur.profile_formateur', compact('formateur','genre'));
+        return view('admin.formateur.profile_formateur', compact('formateur','genre','competence','experience'));
     }
 
     //modification  profil

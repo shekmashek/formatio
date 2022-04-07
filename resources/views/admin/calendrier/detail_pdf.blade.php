@@ -40,12 +40,16 @@
                     <label for=""><strong>Organisme de formation:</strong>&nbsp;<img src = "{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px">&nbsp; {{$detail[$i]->nom_cfp}}</label><br><br>
                     <label for=""><strong>Nom du projet:</strong>&nbsp; {{$detail[$i]->nom_projet}}</label><br><br>
                     <label for=""><strong>Session:</strong>&nbsp; {{$detail[$i]->nom_groupe}}</label><br><br>
-                    <label for=""><strong>Statut:</strong>&nbsp; {{$detail[$i]->status_groupe}}</label><br><br>
+                    <label for=""><strong>Statut:</strong>&nbsp; {{$detail[$i]->statut}}</label><br><br>
                     <label for=""><strong>Formation:</strong>&nbsp; {{$detail[$i]->nom_formation}}</label><br><br>
                     <label for=""><strong>Module:</strong>&nbsp; {{$detail[$i]->nom_module}}</label><br><br>
                     <label for=""><strong>Formateur:</strong><br>
                     <ul>
-                        <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" width="50px" class="photo">&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$detail[$i]->numero_formateur}}</li>
+                        @if($detail[$i]->photos != null)
+                            <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" width="50px" class="photo">&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$detail[$i]->numero_formateur}}</li>
+                        @else
+                            <li>{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$detail[$i]->numero_formateur}}</li>
+                        @endif
                     </ul>
                     <label for=""><strong>Lieu:</strong>&nbsp; {{$detail[$i]->lieu}}</label><br><br>
                     <label for=""><strong>Date - Heure:</strong><br><br>
@@ -66,8 +70,12 @@
 
                             @for ($k = 0;$k< count($stg);$k++)
                                 <tr>
-                                    <td> <img src= "{{ public_path('images/stagiaires/'.$stg[$k]->photos)}}" width="50px" class="photo" alt=""></td>
-                                    <td> {{$stg[$k]->matricule}}</td>
+                                    @if($stg[$k]->photos != null)
+                                        <td> <img src= "{{ public_path('images/stagiaires/'.$stg[$k]->photos)}}" width="50px" class="photo" alt=""></td>
+                                    @else
+                                        <td></td>
+                                    @endif
+                                   <td> {{$stg[$k]->matricule}}</td>
                                     <td>{{$stg[$k]->nom_stagiaire}} {{$stg[$k]->prenom_stagiaire}}</td>
                                     <td>{{$stg[$k]->fonction_stagiaire}} </td>
                                     <td>{{$stg[$k]->mail_stagiaire}}</td>

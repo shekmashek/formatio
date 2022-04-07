@@ -192,7 +192,7 @@
                                          </a>
 
                                      </div>
-
+                                     @foreach($competence as $comp)
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                         <a href="{{route('editer_comp',$formateur->id)}}  " >
                                     <p class="p-1 m-0" style="font-size: 12px;">Competence<span style="float: right;">{{$comp->competence}} &nbsp;<i class="fas fa-angle-right"></i></span>
