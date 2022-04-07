@@ -23,7 +23,6 @@
 </head>
 
 <body>
-
     <div class="sidebar active">
         {{-- <div class="logo_content">
             <div class="logo">
