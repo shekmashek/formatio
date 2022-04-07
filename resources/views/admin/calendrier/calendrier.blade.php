@@ -593,9 +593,7 @@
 
                     var calendarEl = document.getElementById('calendar');
 
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
-                        , timeZone: 'UTC'
+                    var calendar = new FullCalendar.Calendar(calendarEl, { timeZone: 'UTC'
                         , initialView: 'dayGridMonth'
                         , headerToolbar: {
                             left: 'prev,next'
