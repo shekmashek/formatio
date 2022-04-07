@@ -35,11 +35,11 @@ class DetailController extends Controller
     public function calendrier(){
 
         $domaines = $this->fonct->findAll('domaines');
-        $rqt = $this->fonct->findWhereMulitOne('responsables_cfp',['user_id'],[Auth::user()->id]);
+        $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
         $statut = $this->fonct->findAll('status');
         if (Gate::allows('isCFP')) {
-            $cfp_id = $rqt->cfp_id;
-            $formations = $this->fonct->findWhereMulitOne('v_formation',['cfp_id'],[$cfp_id]);
+            $cfp_id = $rqt[0]->cfp_id;
+            $formations = $this->fonct->findWhere('v_formation',['cfp_id'],[$cfp_id]);
         }
         else{
             $formations = DB::select('select * from formations ');
@@ -56,69 +56,70 @@ class DetailController extends Controller
         $domaines = $request->domaines;
         $formations = $request->formations;
         if (Gate::allows('isSuperAdmin')) {
-            $detail = DB::select('select * from v_detailmodule');
+            $detail = $this->fonct->findAll('v_detailmodule');
         }
         if (Gate::allows('isCFP')) {
 
 
             $fonct = new FonctionGenerique();
-            $rqt = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[$id_user]);
-            $cfp_id = $rqt->cfp_id;
+            $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
+
+            $cfp_id = $rqt[0]->cfp_id;
             if ($module!=null) {
-                $detail = DB::select('select * from v_detailmodule where nom_module = "' . $module.'" and cfp_id = '.$cfp_id);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['nom_module','cfp_id'],[$module,$cfp_id]);
             }
 
             if ($type_formation!=null) {
-                $detail = DB::select('select * from v_detailmodule where type_formation = "' . $type_formation.'" and cfp_id = '.$cfp_id);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['type_formation','cfp_id'],[$type_formation,$cfp_id]);
             }
 
             if ($statut_projet!=null) {
-                $detail = DB::select('select * from v_detailmodule where status_groupe = ? and cfp_id = ?',[$statut_projet,$cfp_id]);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['status_groupe','cfp_id'],[$statut_projet,$cfp_id]);
             }
             if ($domaines!=null) {
-                $detail = DB::select('select * from v_detailmodule where domaines_id = ? and cfp_id = ?' ,[$domaines,$cfp_id]);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['domaines_id','cfp_id'],[$domaines,$cfp_id]);
             }
             if ($formations!=null) {
-                $detail = DB::select('select * from v_detailmodule where formation_id = ? and cfp_id = ?' , [$formations,$cfp_id]);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['formation_id','cfp_id'],[$formations,$cfp_id]);
             }
             if($request->all() == null)
-            $detail = DB::select('select * from v_detailmodule where cfp_id = ?', [$cfp_id]);
+            $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
 
 
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $id_user)->value('id');
-            $detail = DB::select('select * from v_detailmodule where formateur_id = ?', [$formateur_id]);
+            $detail =  $this->fonct->findWhere('v_detailmodule',['formateur_id'],[$formateur_id]);
         }
         if (Gate::allows('isStagiaire')) {
             $stagiaire_id = stagiaire::where('user_id', $id_user)->value('id');
-            $detail = DB::select('select * from v_participant_groupe where stagiaire_id = ?', [$stagiaire_id]);
+            $detail =  $this->fonct->findWhere('v_detailmodule',['stagiaire_id'],[$stagiaire_id]);
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
             if ($module!=null) {
-                $detail = DB::select('select * from v_detailmodule where nom_module = "' . $module.'" and entreprise_id = '.$entreprise_id);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['nom_module','entreprise_id'],[$module,$entreprise_id]);
             }
 
             if ($type_formation!=null) {
-                $detail = DB::select('select * from v_detailmodule where type_formation = "' . $type_formation.'" and entreprise_id = '.$entreprise_id);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['type_formation','entreprise_id'],[$module,$entreprise_id]);
             }
 
             if ($statut_projet!=null) {
-                $detail = DB::select('select * from v_detailmodule where status_groupe = ? and entreprise_id = ?',[$statut_projet,$entreprise_id]);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['status_groupe','entreprise_id'],[$statut_projet,$entreprise_id]);
             }
             if ($domaines!=null) {
-                $detail = DB::select('select * from v_detailmodule where domaines_id = ? and entreprise_id = ?' ,[$domaines,$entreprise_id]);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['domaines_id','entreprise_id'],[$domaines,$entreprise_id]);
             }
             if ($formations!=null) {
-                $detail = DB::select('select * from v_detailmodule where formation_id = ? and entreprise_id = ?' , [$formations,$entreprise_id]);
+                $detail =  $this->fonct->findWhere('v_detailmodule',['formation_id','entreprise_id'],[$formations,$entreprise_id]);
             }
             if($request->all() == null)
-            $detail = DB::select('select * from v_detailmodule where entreprise_id = ?', [$entreprise_id]);
+            $detail =  $this->fonct->findWhere('v_detailmodule',['entreprise_id'],[$entreprise_id]);
         }
         if (Gate::allows('isManager')) {
             $entreprise_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
-            $detail = DB::select('select * from v_detailmodule where entreprise_id = ?', [$entreprise_id]);
+            $detail =  $this->fonct->findWhere('v_detailmodule',['entreprise_id'],[$entreprise_id]);
         }
         return response()->json($detail);
     }

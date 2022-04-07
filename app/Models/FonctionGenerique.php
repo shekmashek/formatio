@@ -76,14 +76,14 @@ class FonctionGenerique extends Model
             }
     }
 
-    //fonction generique
+   //select colonne/* from table where value =  ... => tableau
     public function findWhere($nomTab,$para=[],$val=[]){
         $fonction = new FonctionGenerique();
         // echo $fonction->queryWhere($nomTab,$para,$val);
         $data =  DB::select($fonction->queryWhere($nomTab,$para,$val), $val);
         return $data;
     }
-
+     //select colonne/* from table where value =  ... or  => tableau
     public function findWhereOr($nomTab,$para=[],$val=[]){
         $fonction = new FonctionGenerique();
         // echo $fonction->queryWhere($nomTab,$para,$val);
@@ -92,7 +92,7 @@ class FonctionGenerique extends Model
     }
 
 
-//select from where value = ...
+     //select colonne/* from table where value =  ... => une seule données
     public function findWhereMulitOne($nomTab,$para=[],$val=[]){
         $fonction = new FonctionGenerique();
         $data =  DB::select($fonction->queryWhere($nomTab,$para,$val), $val);
@@ -110,6 +110,7 @@ class FonctionGenerique extends Model
             return $data[0];
     }
 
+    //select * from
 
     public function findAll($nomTab){
         $query = "SELECT * FROM ".$nomTab;
