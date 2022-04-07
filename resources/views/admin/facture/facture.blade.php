@@ -118,12 +118,12 @@
                 <div class="collapse multi-collapse" id="detail_par_thematique">
                     <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <label for="dte_debut" class="form-label" align="left"> date entre <strong style="color:#ff0000;">*</strong></label>
+                        <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
                         <input required type="date" name="dte_debut" class="form-control" />
                         <br>
-                        <label for="dte_fin" class="form-label" align="left">à date <strong style="color:#ff0000;">*</strong></label>
+                        <label for="dte_fin" class="form-label" align="left">Payement du <strong style="color:#ff0000;">*</strong></label>
                         <input required type="date" name="dte_fin" class="form-control" />
-                        <button type="submit" class="btn_enregistrer">recherche</button>
+                        <button type="submit" class="btn_enregistrer">Recherche</button>
                     </form>
                 </div>
 
@@ -135,11 +135,10 @@
                         @csrf
                         <label for="num_fact" class="form-control-placeholder">Numéro de facture<strong style="color:#ff0000;">*</strong></label>
                         <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
-                        <input type="submit" class="btn_enregistrer" id="exampleFormControlInput1" placeholder="Invoice Date" value="recherce" />
+                        <input type="submit" class="btn_enregistrer" id="exampleFormControlInput1"  value="Recherce" />
                     </form>
                 </div>
             </div>
-
         </div>
         <div class="col-10">
 
@@ -606,7 +605,7 @@
                             <div class="btn-group me-2" role="group" aria-label="First group">
                                 @if ($data["pagination"] != null && $data["pagination"]->totale_pagination>0)
                                 @for ($i=1;$i<=$data["pagination"]->totale_pagination;$i+=1)
-                                    <a href="{{$data['totale']}}" class="nav-item"> <button type="button" class="btn btn-secondary">{{$i}}</button></a>
+                                    <a href="{{route('liste_facture',$data['totale'])}}" class="nav-item"> <button type="button" class="btn btn-secondary">{{$i}}</button></a>
                                     @endfor
                                     @endif
                             </div>

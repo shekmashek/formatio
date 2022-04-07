@@ -604,8 +604,6 @@
                 }
                 , success: function(response) {
                     var userData = response;
-
-                    alert(JSON.stringify(userData));
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRowMontant">';
                     html += '<div class="col-3">';
@@ -614,7 +612,7 @@
                     html += '<select class="form-select selectP input_section4"  id="session_id_new[]" name="session_id_new[]" required>';
 
                     for (var $i = 0; $i < userData.length; $i++) {
-                        html += '<option value="' + userData[$i].groupe_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
+                        html += '<option value="' + userData[$i].groupe_entreprise_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
                     }
                     html += '</select>';
                     html += '</div>';

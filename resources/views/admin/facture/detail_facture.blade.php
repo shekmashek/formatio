@@ -164,23 +164,8 @@
                                             </th>
                                         </tr>
                                         @endforeach
-                                    </tbody>
 
-                                    @if($facture_acompte != null && strtoupper($facture[0]->reference_facture) == strtoupper("Facture"))
-
-                                    <thead class=" mt-1 table-warning">
-                                        <tr>
-                                            <td scope="col"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="mb-1">
+                                        @if($facture_acompte != null && strtoupper($facture[0]->reference_facture) == strtoupper("Facture"))
                                         @foreach ($facture_acompte as $fa)
                                         <tr>
                                             <td>
@@ -200,24 +185,8 @@
                                             </th>
                                         </tr>
                                         @endforeach
-                                    </tbody>
-
-                                    @endif
-
-                                    @if($frais_annexes != null)
-
-                                    <thead class=" mt-1 table-secondary">
-                                        <tr>
-                                            <td scope="col"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                        @endif
+                                        @if($frais_annexes != null)
                                         @foreach ($frais_annexes as $frais_annexe)
                                         <tr>
                                             <td>{{$frais_annexe->frais_annexe_description}}</td>
@@ -237,87 +206,85 @@
                                             </td>
                                         </tr>
                                         @endforeach
+                                        @endif
                                     </tbody>
-                                    @endif
-
                                 </table>
 
+                                    <div class="container-fluid my-2">
+                                        <div class="row">
+                                            <div class="col"></div>
+                                            <div class="col"></div>
+                                            <div class="col">
+                                                <table class="table table-bordered border-dark">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Montant Brut HT</td>
+                                                            <td>
+                                                                <div align="right">
+                                                                    Ar {{number_format($montant_totale->montant_brut_ht,0,","," ")}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @if($montant_totale->remise>0)
 
-                                <div class="container-fluid my-2">
-                                    <div class="row">
-                                        <div class="col"></div>
-                                        <div class="col"></div>
-                                        <div class="col">
-                                            <table class="table table-bordered border-dark">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Montant Brut HT</td>
-                                                        <td>
-                                                            <div align="right">
-                                                                Ar {{number_format($montant_totale->montant_brut_ht,0,","," ")}}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @if($montant_totale->remise>0)
+                                                        <tr>
+                                                            <td>Remise</td>
+                                                            <td>
+                                                                <div align="right" style="background-color: rgb(255, 204, 0)">
+                                                                    Ar -{{number_format($montant_totale->remise,0,","," ")}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+                                                        <tr>
+                                                            <td>Net Commercial HT</td>
+                                                            <td>
+                                                                <div align="right">
+                                                                    Ar {{number_format($montant_totale->net_commercial,0,","," ")}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>TVA({{$facture[0]->pourcent}} %)</td>
+                                                            <td>
+                                                                <div align="right">
+                                                                    Ar {{number_format($montant_totale->tva,0,","," ")}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
+                                                        <tr>
+                                                            <td>Facture d'acompte</td>
+                                                            <td>
+                                                                <div align="right" style="background-color: rgb(255, 204, 0)">
+                                                                    Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+                                                        <tr>
+                                                            <td>Net à payer TTC</td>
+                                                            <td>
+                                                                <div align="right">
+                                                                    Ar {{number_format($montant_totale->montant_total,0,","," ")}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Reste à payer</td>
+                                                            <td>
+                                                                <div align="right">
+                                                                    <strong> Ar {{number_format( $montant_totale->dernier_montant_ouvert,0,","," ")}}</strong>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
 
-                                                    <tr>
-                                                        <td>Remise</td>
-                                                        <td>
-                                                            <div align="right" style="background-color: rgb(255, 204, 0)">
-                                                                Ar -{{number_format($montant_totale->remise,0,","," ")}}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-                                                    <tr>
-                                                        <td>Net Commercial HT</td>
-                                                        <td>
-                                                            <div align="right">
-                                                                Ar {{number_format($montant_totale->net_commercial,0,","," ")}}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>TVA({{$facture[0]->pourcent}} %)</td>
-                                                        <td>
-                                                            <div align="right">
-                                                                Ar {{number_format($montant_totale->tva,0,","," ")}}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
-                                                    <tr>
-                                                        <td>Facture d'acompte</td>
-                                                        <td>
-                                                            <div align="right" style="background-color: rgb(255, 204, 0)">
-                                                                Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-                                                    <tr>
-                                                        <td>Net à payer TTC</td>
-                                                        <td>
-                                                            <div align="right">
-                                                                Ar {{number_format($montant_totale->montant_total,0,","," ")}}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Reste à payer</td>
-                                                        <td>
-                                                            <div align="right">
-                                                                <strong> Ar {{number_format( $montant_totale->dernier_montant_ouvert,0,","," ")}}</strong>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
+                                        <hr>
                                     </div>
-                                    <hr>
-                                </div>
 
                             </div>
 

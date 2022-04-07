@@ -455,7 +455,14 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if ($factue_id <= 0) {
             $factue_id = 1;
         }
-        $data = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
+        $facture = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
         return $data;
     }
 
@@ -464,7 +471,14 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if ($factue_id <= 0) {
             $factue_id = 1;
         }
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
+        $facture = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
         return $data;
     }
 
@@ -473,7 +487,15 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if ($factue_id <= 0) {
             $factue_id = 1;
         }
-        $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
+        $facture = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
         return $data;
     }
 
@@ -487,12 +509,29 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     public function search_num_fact_inactif_cfp($num_fact, $cfp_id)
     {
-        $data = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?", [$cfp_id]);
+        $facture = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?", [$cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, $facture[$i]->cfp_id, $facture[$i]->projet_id);
+
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
         return $data;
     }
     public function search_num_fact_actif_cfp($nomTab, $num_fact, $satut_fact, $cfp_id)
     {
-        $data = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and cfp_id=?", [$satut_fact, $cfp_id]);
+        $facture = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and cfp_id=?", [$satut_fact, $cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
         return $data;
     }
 
@@ -527,7 +566,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                 ["groupe_entreprise_id", "entreprise_id", "projet_id"],
                 [$facture[$i]->groupe_entreprise_id, $facture[$i]->entreprise_id, $facture[$i]->projet_id]
             );
-
             $concatModule .= "" . $tabSession->nom_formation . "->" . $tabSession->nom_module;
             $concatSession .= "" . $tabSession->nom_groupe;
             $concatRefModule .= "" . $tabSession->reference;

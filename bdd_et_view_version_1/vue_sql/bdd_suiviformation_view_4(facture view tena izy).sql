@@ -559,6 +559,17 @@ FROM
 WHERE
     frais_annexe_id = frais_annexes.id;
 
+
+CREATE OR REPLACE VIEW v_pagination_facture AS SELECT
+    cfp_id,
+    (
+        ROUND(COUNT(num_facture)/10)
+) totale_pagination
+FROM
+    v_montant_facture
+GROUP BY
+    cfp_id;
+
 -- create or replace view v_compte_facture_actif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_actif group by entreprise_id,cfp_id;
 -- create or replace view v_compte_facture_inactif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_inactif group by entreprise_id,cfp_id;
 -- create or replace view v_compte_facture_en_cour as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_existant where facture_encour='en_cour' group by entreprise_id,cfp_id;

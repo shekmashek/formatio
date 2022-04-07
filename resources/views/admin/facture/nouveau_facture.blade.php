@@ -710,7 +710,7 @@
                     html += '<select class="form-select selectP input_section4"  id="session_id[]" name="session_id[]" required>';
 
                     for (var $i = 0; $i < userData.length; $i++) {
-                        html += '<option value="' + userData[$i].groupe_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
+                        html += '<option value="' + userData[$i].groupe_entreprise_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
                     }
                     html += '</select>';
                     html += '</div>';
