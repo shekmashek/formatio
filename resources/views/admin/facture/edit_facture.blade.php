@@ -61,6 +61,7 @@
                         <h6>Facturer à</h6>
                         <div class="form-group">
                             <div class="details">
+                                <input type="number" value="{{$entreprise->id}}" name="entreprise_id" id="entreprise_id" hidden>
                                 <p class="m-0 nom_cfp" id="nom_etp_detail">{{$entreprise->nom_etp}}</p>
                                 <p class="m-0 " id="adresse_etp">
                                     {{$entreprise->adresse_rue}}&nbsp;
@@ -127,7 +128,7 @@
                                 <h6 class="m-0"></h6>
                             </div>
                         </div>
-                        <div class="row my-2">
+                        <div class="row my-2" id="inputFormRowMontant">
                             <div class="col-3">
                                 <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
                                     <option value="{{$projet->id}}">{{$projet->nom_projet}}</option>
@@ -146,15 +147,14 @@
                             </div>
                             <div class="col-1 text-end pt-2">
                                 <p class="m-0">
-                                    <a href="{{route('delete_session_facture',[$montant_totale->num_facture,$session[0]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
+                                    <a href="{{route('delete_session_facture',[$montant_totale->num_facture,$session[0]->groupe_entreprise_id])}}"><button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></a>
                                 </p>
                             </div>
                         </div>
 
-
                         @if((count($session)-1)>0)
-                        @for ($i=1;$i<count($session);$i+=1) <div class="row my-1">
-                            <div class="col-2">
+                        @for ($i=1;$i<count($session);$i+=1) <div class="row my-1" id="inputFormRowMontant">
+                            <div class="col-3">
                             </div>
                             <div class="col-5">
                                 <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
@@ -167,9 +167,9 @@
                             <div class="col-2">
                                 <input type="number" value="{{$session[$i]->pu}}" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
                             </div>
-                            <div class="col-2 text-end pt-2">
+                            <div class="col-1 text-end pt-2">
                                 <p class="m-0">
-                                    <a href="{{route('delete_session_facture',[$montant_totale->num_facture,$session[$i]->groupe_entreprise_id])}}"></a> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button>
+                                    <a href="{{route('delete_session_facture',[$montant_totale->num_facture,$session[$i]->groupe_entreprise_id])}}"> <button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></a>
                                 </p>
                             </div>
                     </div>
@@ -178,8 +178,7 @@
 
                     <div id="newRowMontant"></div>
 
-                    <div class="row mb-1">
-                        {{-- <div class="col-1 text-end"></div> --}}
+                    <div class="row mb-1" >
                         <div class="col2 text-end"></div>
 
                         <div class="col-8 d-flex flex-row justify-content-end">
@@ -227,7 +226,7 @@
 
                 @if (count($frais_annexes)>0)
 
-                <div class="row my-1">
+                <div class="row my-1" id="inputFormRow">
                     <div class="col-3">
                         <select class="form-select selectP input_section4" id="frais_annexe_id[]" name="frais_annexe_id[]" required>
                             @foreach ($frais_annexes as $frais)
@@ -252,7 +251,7 @@
 
                     <div class="col-1 text-end pt-2">
                         <p class="m-0">
-                         <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais->frais_annexe_id])}}">   <button type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></a></span>
+                            <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais->frais_annexe_id])}}">   <button type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></a></span>
                         </p>
                     </div>
                 </div><br>
@@ -462,6 +461,7 @@
                 var userData = response;
                 $("#addRow").val(userData.length);
                 var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+
                 if ($("#addRow").val() > 1) {
                     $("#addRow").css("display", "inline-block");
                 } else {
@@ -589,19 +589,23 @@
         var id = $("#projet_id").val();
         var etp_id = $("#entreprise_id").val();
 
-        $total_session_possible = ($(".row #inputFormRowMontant").length + 1);
-        if ($total_session_possible < ($("#addRowMontant").val())) {
+        var total_session_possible = ($(".row #inputFormRowMontant").length);
+        var  totale_session =   @php echo count($init_session) @endphp ;
+
+        if (total_session_possible < (totale_session)) {
             $("#addRowMontant").css("display", "inline-block");
             $.ajax({
-                url: "{{route('groupe_projet')}}"
+                url: "{{route('groupe_projet_edit')}}"
                 , type: 'get'
                 , data: {
+                    num_facture: "@php echo $montant_totale->num_facture  @endphp",
                     id: id
                     , entreprise_id: etp_id
                 }
                 , success: function(response) {
                     var userData = response;
 
+                    alert(JSON.stringify(userData));
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRowMontant">';
                     html += '<div class="col-3">';
@@ -635,7 +639,7 @@
                 }
             });
 
-            if ($total_session_possible + 1 >= ($("#addRowMontant").val())) {
+            if (total_session_possible + 1 >= (totale_session)) {
                 $("#addRowMontant").css("display", "none");
             }
         } else {
@@ -647,8 +651,10 @@
     // remove row
     $(document).on('click', '#removeRowMontant', function() {
         $(this).closest('#inputFormRowMontant').remove();
-        $total_session_possible = ($(".row #inputFormRowMontant").length + 1);
-        if ($total_session_possible < ($("#addRowMontant").val())) {
+        var total_session_possible = ($(".row #inputFormRowMontant").length);
+        var  totale_session =   @php echo count($init_session) @endphp ;
+
+        if (total_session_possible < totale_session) {
             $("#addRowMontant").css("display", "inline-block");
         } else {
             $("#addRowMontant").css("display", "none");

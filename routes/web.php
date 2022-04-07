@@ -486,6 +486,7 @@ Route::get('update_facture/{id}','FactureController@edit')->name('update_facture
 Route::get('delete_facture/{num_facture}','FactureController@destroy')->name('delete_facture');
 Route::get('frais_annexe','FactureController@getFrais_annexe')->name('frais_annexe');
 Route::get('groupe_projet','FactureController@getGroupe_projet')->name('groupe_projet');
+Route::get('groupe_projet_edit','FactureController@getGroupe_projet_edit')->name('groupe_projet_edit');
 Route::get('taxe','FactureController@getTaxe')->name('taxe');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');

@@ -398,27 +398,27 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     //====================================== modification de facture ===============
 
-    public function verifyUpdateFacture($idProject, $imput)
-    {
-        $this->validation_form_update($imput);
-        $frais_annexes = $this->getFraisAnnexe($idProject);
+    // public function verifyUpdateFacture($idProject, $imput)
+    // {
+    //     $this->validation_form_update($imput);
+    //     $frais_annexes = $this->getFraisAnnexe($idProject);
 
-        DB::beginTransaction();
-        try {
-            foreach ($frais_annexes as $frais) {
-                $data = $imput["montant_frais_annexe_" . $frais->montant_frais_annexe_id];
-                if ($data != null) {
-                    $this->update_frais_annexe($frais->montant_frais_annexe_id, $data);
-                }
-            }
-            $this->edit($idProject, $imput);
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
-        }
+    //     DB::beginTransaction();
+    //     try {
+    //         foreach ($frais_annexes as $frais) {
+    //             $data = $imput["montant_frais_annexe_" . $frais->montant_frais_annexe_id];
+    //             if ($data != null) {
+    //                 $this->update_frais_annexe($frais->montant_frais_annexe_id, $data);
+    //             }
+    //         }
+    //         $this->edit($idProject, $imput);
+    //     } catch (Exception $e) {
+    //         DB::rollback();
+    //         echo $e->getMessage();
+    //     }
 
-        return back()->with('success', 'modification de la facture du project est effectuer');
-    }
+    //     return back()->with('success', 'modification de la facture du project est effectuer');
+    // }
 
     //====================================== modification de facture ===============
 
@@ -562,4 +562,47 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
         return $data;
     }
+
+    public function queryWhereParam($nomTab, $para = [],$opt=[], $val = [])
+    {
+        $query = "SELECT * FROM " . $nomTab . " WHERE ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "".$opt[$i]." '".$val[$i]."'";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function queryWhereParamAndCritere($query_tmp, $para = [], $val = [])
+    {
+        $query = $query_tmp." AND ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "= ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function findWhereParam($nomTab, $paraNot = [],$optNot=[], $valNot = [],$paraCrt = [], $valCrt = [])
+    {
+        $query_tmp = $this->queryWhereParam($nomTab, $paraNot,$optNot, $valNot);
+        $query = $this->queryWhereParamAndCritere($query_tmp, $paraCrt,$valCrt);
+
+        $data =  DB::select($query, $valCrt);
+        return $data;
+    }
+
+
 }
