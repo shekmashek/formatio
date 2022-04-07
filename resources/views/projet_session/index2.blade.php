@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
 
 <style>
-    .status_grise{
+.status_grise{
     margin: 0 2px;
     padding: 4px 6px;
     font-size: 10px;
@@ -111,16 +111,16 @@
 .pagination{
     background-clip: text;
     margin-right: .3rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
     position: relative;
-    top: .4rem;
+    top: .7rem;
 }
 
-/* .pagination:hover{
-    color: #ffffff;
-    background-color: rgb(214, 212, 212);
+ .pagination:hover{
+    color: #a651a5;
+    background-color: rgb(239, 239, 239);
     border-radius: 1.3rem;
-} */
+} 
 .nombre_pagination{
     color: #626262;
 
@@ -129,11 +129,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            <span class="nombre_pagination"><span style="position: relative; bottom: .35rem">{{ $debut."-".$fin }} sur {{ $nb_projet }}</span>
-                @if ($page == 1)
+            <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin }} sur {{ $nb_projet }}</span>
+                @if ($nb_par_page >= $nb_projet)
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @elseif ($page == 1)
                     <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
                     <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == $fin_page)
+                @elseif ($page == $fin_page || $page > $fin_page)
                     <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                     <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                 @else

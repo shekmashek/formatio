@@ -495,7 +495,6 @@ class HomeController extends Controller
         if($page == null){
             $page = 1;
         }
-        
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
             $projet = projet::get()->unique('nom_projet');
             $data = $fonct->findAll("v_projet_session");
@@ -515,17 +514,31 @@ class HomeController extends Controller
             }
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?',[$entreprise_id])[0]->nb_projet;
+            $fin_page = ceil($nb_projet/$nb_par_page);
             if($page == 1){
                 $offset = 0;
-            }else{
-                $offset = ($page - 1) * $nb_par_page;
+                $debut = 1;
+                if($nb_par_page > $nb_projet){
+                    $fin = $nb_projet;
+                }else{
+                    $fin = $nb_par_page;
+                }
             }
-            $fin_page = ceil($nb_projet/$nb_par_page);
+            elseif($page == $fin_page){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $nb_projet;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $page * $nb_par_page;
+            }
             // fin pagination
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
-            return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id','page','fin_page','nb_projet'));
+            return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id','page','fin_page','nb_projet','debut','fin','nb_par_page'));
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
@@ -542,7 +555,11 @@ class HomeController extends Controller
             if($page == 1){
                 $offset = 0;
                 $debut = 1;
-                $fin = $nb_par_page;
+                if($nb_par_page > $nb_projet){
+                    $fin = $nb_projet;
+                }else{
+                    $fin = $nb_par_page;
+                }
             }
             elseif($page == $fin_page){
                 $offset = ($page - 1) * $nb_par_page;
@@ -570,15 +587,38 @@ class HomeController extends Controller
             $module = $fonct->findWhere("v_module",['cfp_id','status'],[$cfp_id,2]);
             $payement = $fonct->findAll("type_payement");
             $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise','page','fin_page','nb_projet','debut','fin'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise','page','fin_page','nb_projet','debut','fin','nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?", [$user_id])[0]->cfp_id;
             $projet = $fonct->findWhere("v_projet_session", ["cfp_id"], [$cfp_id]);
-            $data = $fonct->findWhere("v_projet_formateur", ["cfp_id","formateur_id"], [$cfp_id,$formateur_id]);
+            
+            // pagination
+            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_formateur where cfp_id = ? and formateur_id = ?',[$cfp_id,$formateur_id])[0]->nb_projet;
+            $fin_page = ceil($nb_projet/$nb_par_page);
+            if($page == 1){
+                $offset = 0;
+                $debut = 1;
+                if($nb_par_page > $nb_projet){
+                    $fin = $nb_projet;
+                }else{
+                    $fin = $nb_par_page;
+                }
+            }
+            elseif($page == $fin_page){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin =  $nb_projet;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin =  $page * $nb_par_page;
+            }
+            // fin pagination
 
-
+            $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?',[$cfp_id,$formateur_id,$nb_par_page,$offset]);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -588,7 +628,7 @@ class HomeController extends Controller
             $module = $fonct->findAll("modules");
             $type_formation = DB::select('select * from type_formations');
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'status','type_formation_id','projet_formation'));
+            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'status','type_formation_id','projet_formation','page','fin_page','nb_projet','debut','fin','nb_par_page'));
         }
         if (Gate::allows('isStagiaire')) {
             $evaluation = new EvaluationChaud();
@@ -596,9 +636,34 @@ class HomeController extends Controller
             $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
             $stg_id = stagiaire::where('user_id', $user_id)->value('id');
             // $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
-            $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc', [$stg_id]);
 
-            return view('projet_session.index2', compact('data', 'status', 'type_formation_id'));
+            // pagination
+            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_stagiaire_groupe where stagiaire_id = ?',[$stg_id])[0]->nb_projet;
+            $fin_page = ceil($nb_projet/$nb_par_page);
+            if($page == 1){
+                $offset = 0;
+                $debut = 1;
+                if($nb_par_page > $nb_projet){
+                    $fin = $nb_projet;
+                }else{
+                    $fin = $nb_par_page;
+                }
+            }
+            elseif($page == $fin_page){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin =  $nb_projet;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin =  $page * $nb_par_page;
+            }
+            // fin pagination
+            // dd($fin_page,$page,$stg_id);
+            $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id,$nb_par_page,$offset]);
+
+            return view('projet_session.index2', compact('data', 'status', 'type_formation_id','page','fin_page','nb_projet','debut','fin','nb_par_page'));
         }
     }
 

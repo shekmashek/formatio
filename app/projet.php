@@ -72,7 +72,7 @@ class Projet extends Model
                 }
             }
         }
-        $sql = $sql." order by date_projet desc limit ".$debut." offset ".$debut;
+        $sql = $sql." order by date_projet desc limit ".$limit." offset ".$offset;
         return $sql;
     }
 
