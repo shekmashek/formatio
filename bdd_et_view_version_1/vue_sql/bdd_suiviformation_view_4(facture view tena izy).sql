@@ -1,7 +1,7 @@
 CREATE OR REPLACE VIEW v_montant_pedagogique_facture AS SELECT
     cfp_id,
     projet_id,
-    entreprise_id,
+    factures.entreprise_id,
     type_facture_id,
     num_facture,
     SUM(qte) AS qte_totale,
@@ -21,7 +21,7 @@ GROUP BY
     type_financement_id,
     mode_financements.description,
     type_facture_id,
-    entreprise_id,
+    factures.entreprise_id,
     due_date,
     activiter,
     other_message,

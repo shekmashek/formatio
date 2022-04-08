@@ -339,7 +339,7 @@ class FactureController extends Controller
 
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $this->fact->valider_facture_inactif($req->num_facture, $cfp_id);
-        return redirect()->route('liste_facture', 2);
+        return redirect()->route('liste_facture');
     }
 
 
