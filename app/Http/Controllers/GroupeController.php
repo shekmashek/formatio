@@ -154,7 +154,7 @@ class GroupeController extends Controller
     }
 
     public function modifier_session_inter(Request $request){
-        // try{
+        try{
             if($request->date_debut >= $request->date_fin){
                 throw new Exception("Date de début doit être inférieur date de fin.");
             }
@@ -176,10 +176,10 @@ class GroupeController extends Controller
             [$request->min_part,$request->max_part,$request->module_id,$request->payement,$request->date_debut,$request->date_fin,$request->id]);
             // DB::commit();
             return back();
-        // }catch(Exception $e){
-        //     DB::rollback();
-        //     return back()->with('groupe_error',"insertion de la session échouée!");
-        // }
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->with('groupe_error',"insertion de la session échouée!");
+        }
     }
 
     public function storeInter(Request $request)
