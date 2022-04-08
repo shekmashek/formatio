@@ -49,9 +49,7 @@
 .image-ronde{
       width : 150px; height : 150px;
       border: none;
-      -moz-border-radius : 75px;
-      -webkit-border-radius : 75px;
-      border-radius : 75px;
+     
       cursor: pointer;
     }
         .image-upload > input
@@ -60,7 +58,7 @@
         }
 </style>
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profil_of',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+    <a href="{{route('profil_of',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}

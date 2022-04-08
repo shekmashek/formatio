@@ -2,7 +2,7 @@
 @section('content')
 <div class="page-content page-container" id="page-content">
     <div class="col" style="margin-left: 25px">
-        <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+        <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
     </div>
     @foreach ($liste_cfps as $cfp)
 
@@ -16,7 +16,7 @@
                             <div class="card-block text-center">
                                 <div class="m-b-25 mt-2">
                                     <div class="hover">
-                                        <a href="{{ route('modification_logo',$cfp->id) }}">
+                                        <a href="{{ route('modification_logo_cfp',$cfp->id) }}">
 
                                     {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
                                         <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
@@ -46,7 +46,7 @@
                                         <h6 class="m-b-20  f-w-600">Centre de formaton</h6>
                                         <hr>
                                         <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     lot:
@@ -58,7 +58,7 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     quartier:
@@ -71,7 +71,7 @@
                                             </a>
                                         </div>
 
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     ville:
@@ -83,7 +83,7 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     region:
@@ -95,24 +95,28 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
 
                                                  <p class="m-b-10 m-t-2 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
-                                                <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
-
+                                        <a href="{{ route('modification_email',$cfp->id) }}">
+                                              
+                                                 <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
+                                        </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
 
                                                 <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
-                                                <h6 class="text-muted f-w-400">{{ $cfp->telephone }}</h6>
+                                        <a href="{{ route('modification_telephone',$cfp->id) }}">
 
+                                                <h6 class="text-muted f-w-400">{{ $cfp->telephone }}</h6>
+                                        </a>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <br><br>
                                         <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Horaire d'ouverture</p>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_horaire',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($horaire==NULL)
@@ -127,7 +131,7 @@
                                         </div>
 
                                         <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Slogan</p>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_slogan',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($cfp->slogan==NULL)
@@ -138,7 +142,7 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_site_web',$cfp->id)}}">
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Site web officiel</p>
                                                 <h6 class="text-muted f-w-400">
@@ -150,7 +154,7 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
 
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Réseaux sociaux</p>
                                                  <h6 class="text-muted f-w-400">
