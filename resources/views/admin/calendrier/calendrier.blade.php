@@ -316,31 +316,58 @@
         window.addEventListener("DOMContentLoaded", (event) => {
 
             var nom_module = $('#nom_module').val();
+
             $.ajax({
                 type: "GET"
                 , url: "{{route('allEvent')}}"
-                , dataType: "Json"
+                , dataType: "html"
                 , success: function(data) {
                     var event = Array();
-                    $.each(data, function(i, entry) {
+                    var userDataDetail = JSON.parse(data);
+                    // alert(userData.length);
+                    var details = userDataDetail['detail'];
+                    var modules = userDataDetail['modules'];
+                    var formations = userDataDetail['formations'];
+                    for (var $i = 0; $i < details.length; $i++) {
+
                         event.push({
-                            title: entry.nom_formation
-                            , start: entry.date_detail
+                            title: formations[$i][0].nom_formation
+                            , start: details[$i].date_detail
                             ,backgroundColor:"green"
-                            , nom_projet: entry.nom_projet
-                            , nom_module: entry.nom_module
-                            , nom_formation: entry.nom_formation
-                            , h_debut: entry.h_debut
-                            , h_fin: entry.h_fin
-                            , lieu: entry.lieu
-                            , formateur: entry.nom_formateur + ' ' + entry.prenom_formateur
-                            , detail_id: entry.detail_id
-                            , nom_cfp: entry.nom_cfp
+                            , nom_projet: details[$i].nom_projet
+                            , nom_module: modules[$i][0].nom_module
+                            , h_debut: details[$i].h_debut
+                            , h_fin: details[$i].h_fin
+                            , lieu: details[$i].lieu
+                            , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
+                            , detail_id: details[$i].detail_id
+                            , nom_cfp: details[$i].nom_cfp
                             , customRender: true
 
                         });
+                    }
+                    // $.each(userDataDetail, function(i, entry) {
+                    //     console.log( entry);
+                    //     event.push({
+                    //         title: entry['detail'].nom_formation
+                    //         , start: entry.date_detail
+                    //         ,backgroundColor:"green"
+                    //         , nom_projet: entry.nom_projet
+                    //         , nom_module: entry.nom_module
+                    //         , nom_formation: entry.nom_formation
+                    //         , h_debut: entry.h_debut
+                    //         , h_fin: entry.h_fin
+                    //         , lieu: entry.lieu
+                    //         , formateur: entry.nom_formateur + ' ' + entry.prenom_formateur
+                    //         , detail_id: entry.detail_id
+                    //         , nom_cfp: entry.nom_cfp
+                    //         , customRender: true
 
-                    });
+                    //     });
+
+                    // });
+
+
 
                     var calendarEl = document.getElementById('calendar');
 

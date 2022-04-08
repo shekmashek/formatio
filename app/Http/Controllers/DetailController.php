@@ -73,6 +73,17 @@ class DetailController extends Controller
             WHERE details.cfp_id = ?
             ',[$cfp_id]);
 
+              $modules = array();
+            $formations = array();
+            for ($i=0; $i < count($detail); $i++) {
+                array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[0]->groupe_id]));
+            }
+
+            for ($i=0; $i < count($modules); $i++) {
+                array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
+            }
+
+
             // $groupe_entreprise = DB::select('
             //     SELECT * FROM groupes
             //     INNER JOIN modules ON groupes.module_id = modules.id
@@ -118,7 +129,7 @@ class DetailController extends Controller
             $entreprise_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
             $detail =  $this->fonct->findWhere('v_detailmodule',['entreprise_id'],[$entreprise_id]);
         }
-        return response()->json($detail);
+        return response()->json(['detail'=>$detail,'modules'=>$modules,'formations'=>$formations]);
     }
 
 
