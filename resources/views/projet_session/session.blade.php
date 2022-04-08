@@ -24,9 +24,9 @@
         <div>
             <div class="btn_modifier_statut dropdown">
 
-                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
                     <i class='bx bx-slider icon_creer'></i>Modifier statut
-    
+
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="ya">
                     <li class="mt-1">
