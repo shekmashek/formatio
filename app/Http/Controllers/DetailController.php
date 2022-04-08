@@ -146,15 +146,16 @@ class DetailController extends Controller
 
         $details = array();
         $formations = array();
-        for ($i=0; $i < count($groupe_entreprises); $i++) {
-            array_push($details,DB::select('select * from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
-        }
-        $details = array();
         $groupes = array();
-        $formations = array();
         for ($i=0; $i < count($groupe_entreprises); $i++) {
-            array_push($details,DB::select('select * from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+            array_push($details,DB::select('SELECT details.id as details_id,h_debut,h_fin,date_detail from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
         }
+
+
+
+        // for ($i=0; $i < count($groupe_entreprises); $i++) {
+        //     array_push($details,DB::select('SELECT details.id as details_id,h_debut,h_fin,date_detail from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+        // }
 
         for ($i=0; $i < count($details); $i++) {
             array_push($groupes,DB::select('select * from groupes inner join modules on modules.id = groupes.module_id where groupes.id = ?',[$details[$i][0]->groupe_id]));
@@ -178,11 +179,13 @@ class DetailController extends Controller
             inner join projets on details.projet_id = projets.id
             inner join type_formations on projets.type_formation_id = type_formations.id
             where details.id = ?',[$id]);
+
         $entreprises = DB::select('
             select * from groupe_entreprises
             inner join entreprises on groupe_entreprises.entreprise_id = entreprises.id
             where groupe_entreprises.groupe_id = ?
             ',[$detail[0]->groupe_id]);
+
         $formations = DB::select('
         select * from groupes
         inner join modules on groupes.module_id = modules.id

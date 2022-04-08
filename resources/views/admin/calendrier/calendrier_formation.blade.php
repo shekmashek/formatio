@@ -341,7 +341,7 @@
                             , h_fin: details[$i][0].h_fin
                             , lieu: details[$i][0].lieu
                             , formateur: details[$i][0].nom_formateur + ' ' + details[$i][0].prenom_formateur
-                            , detail_id: details[$i][0].detail_id
+                            , detail_id: details[$i][0].id
                             , nom_cfp: details[$i][0].nom_cfp
                             , customRender: true
 
