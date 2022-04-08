@@ -42,29 +42,33 @@
             </li>
 
 
-            <li>
+            
                 @canany(['isReferent'])
-                <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
-                    <i class='bx bxs-pie-chart-alt-2'></i>
-                    <span class="links_name">BI</span>
-                </a>
+                <li>
+                    <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name">BI</span>
+                    </a>
+                </li>
 
                 @endcanany
                 @canany(['isCFP'])
-                <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
-                    <i class='bx bxs-pie-chart-alt-2'></i>
-                    <span class="links_name">BI</span>
-                </a>
-
+                <li>
+                    <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name">BI</span>
+                    </a>
+                </li>
                 @endcanany
                 @canany(['isSuperAdmin'])
-                <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
-                    <i class='bx bxs-pie-chart-alt-2'></i>
-                    <span class="links_name"> BI </span>
-                </a>
-
+                <li>
+                    <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
+                        <i class='bx bxs-pie-chart-alt-2'></i>
+                        <span class="links_name"> BI </span>
+                    </a>
+                </li>
                 @endcanany
-            </li>
+            
 
 
 

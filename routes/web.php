@@ -1099,3 +1099,5 @@ Route::post('enregistrer_stat_entreprise/{id}','EntrepriseController@enregistrer
 
 // modification session
 Route::post('modifier_session_inter','GroupeController@modifier_session_inter')->name('modifier_session_inter');
+
+Route::get('modifier_statut_session/{id}/{statut}','GroupeController@modifier_statut_session')->name('modifier_statut_session');

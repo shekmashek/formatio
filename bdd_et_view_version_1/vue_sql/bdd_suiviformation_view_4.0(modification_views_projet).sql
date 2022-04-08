@@ -58,6 +58,10 @@ create or replace view v_groupe_entreprise as
         g.date_fin,
         g.status as status_groupe,
         case
+            when g.status = 8 then 'Reprogrammer'
+            when g.status = 7 then 'Annulée'
+            when g.status = 6 then 'Reporté'
+            when g.status = 5 then 'Cloturé'
             when g.status = 2 then 
                 case 
                     when (g.date_fin - curdate()) < 0 then 'Terminé' 
@@ -66,6 +70,10 @@ create or replace view v_groupe_entreprise as
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
         case
+            when g.status = 8 then 'status_reprogrammer'
+            when g.status = 7 then 'status_annulee'
+            when g.status = 6 then 'status_reporter'
+            when g.status = 5 then 'status_cloturer'
             when g.status = 2 then 
                 case 
                     when (g.date_fin - curdate()) < 0 then 'status_termine' 
@@ -143,6 +151,10 @@ create or replace view v_groupe_projet_module as
         g.date_fin,
         g.status as status_groupe,
         case
+            when g.status = 8 then 'Reprogrammer'
+            when g.status = 7 then 'Annulée'
+            when g.status = 6 then 'Reporté'
+            when g.status = 5 then 'Cloturé'
             when g.status = 2 then 
                 case 
                     when (g.date_fin - curdate()) < 0 then 'Terminé' 
@@ -151,6 +163,10 @@ create or replace view v_groupe_projet_module as
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
         case
+            when g.status = 8 then 'status_reprogrammer'
+            when g.status = 7 then 'status_annulee'
+            when g.status = 6 then 'status_reporter'
+            when g.status = 5 then 'status_cloturer'
             when g.status = 2 then 
                 case 
                     when (g.date_fin - curdate()) < 0 then 'status_termine' 
@@ -665,6 +681,10 @@ create or replace view v_projet_session_inter as
         g.status as status_groupe,
         g.activiter as activiter_groupe,
         case
+            when g.status = 8 then 'Reprogrammer'
+            when g.status = 7 then 'Annulée'
+            when g.status = 6 then 'Reporté'
+            when g.status = 5 then 'Cloturé'
             when g.status = 2 then 
                 case 
                     when (g.date_fin - curdate()) < 0 then 'Terminé' 
@@ -673,6 +693,10 @@ create or replace view v_projet_session_inter as
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
         case
+            when g.status = 8 then 'status_reprogrammer'
+            when g.status = 7 then 'status_annulee'
+            when g.status = 6 then 'status_reporter'
+            when g.status = 5 then 'status_cloturer'
             when g.status = 2 then 
                 case 
                     when (g.date_fin - curdate()) < 0 then 'status_termine' 

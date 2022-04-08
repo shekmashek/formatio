@@ -12,6 +12,7 @@ use App\cfp;
 use App\Models\FonctionGenerique;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Excel;
 
 class GroupeController extends Controller
 {
@@ -306,6 +307,27 @@ class GroupeController extends Controller
         } catch (Exception $e) {
             DB::rollback();
             return back()->with('groupe_error', "insertion de la session échouée!");
+        }
+    }
+    
+    public function modifier_statut_session(Request $request){
+        try{
+            DB::beginTransaction();
+            if($request->statut == 8 || $request->statut == 7){
+                DB::delete('delete from details where groupe_id = ?',[$request->id]);
+                DB::delete('delete from participant_groupe where groupe_id = ?',[$request->id]);
+                DB::delete('delete from mes_documents where groupe_id = ?',[$request->id]);
+                DB::delete('delete from ressources where groupe_id = ?',[$request->id]);
+                DB::delete('delete from evaluation_stagiaires where groupe_id = ?',[$request->id]);
+                DB::update('update groupes set status = ? where id = ? ',[$request->statut,$request->id]);
+            }else{
+                DB::update('update groupes set status = ? where id = ? ',[$request->statut,$request->id]);
+            }
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollBack();
+            return back()->with('groupe_error',"Modification du statut de la session échouée!");
         }
     }
 }

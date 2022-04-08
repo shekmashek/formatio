@@ -87,3 +87,9 @@ recréer vu v_responsable_entreprise => bdd_suiviformation_view_29(budgetisation
 recréer vu v_groupe_entreprise => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_projet_session_inter => bdd_suiviformation_view_4.0(modification_views_projet)
+
+
+--------avril 8
+recréer vu v_groupe_entreprise => bdd_suiviformation_view_4.0(modification_views_projet)
+recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
+recréer vu v_projet_session_inter => bdd_suiviformation_view_4.0(modification_views_projet)

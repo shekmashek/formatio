@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
 
 <style>
-    .status_grise{
+.status_grise{
     margin: 0 2px;
     padding: 4px 6px;
     font-size: 10px;
@@ -111,16 +111,16 @@
 .pagination{
     background-clip: text;
     margin-right: .3rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
     position: relative;
-    top: .4rem;
+    top: .7rem;
 }
 
-/* .pagination:hover{
-    color: #ffffff;
-    background-color: rgb(214, 212, 212);
+ .pagination:hover{
+    color: #000000;
+    background-color: rgb(239, 239, 239);
     border-radius: 1.3rem;
-} */
+} 
 .nombre_pagination{
     color: #626262;
 
@@ -129,11 +129,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            <span class="nombre_pagination"><span style="position: relative; bottom: .35rem">{{ $debut."-".$fin }} sur {{ $nb_projet }}</span>
-                @if ($page == 1)
+            <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin }} sur {{ $nb_projet }}</span>
+                @if ($nb_par_page >= $nb_projet)
+                    <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @elseif ($page == 1)
                     <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
                     <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == $fin_page)
+                @elseif ($page == $fin_page || $page > $fin_page)
                     <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                     <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                 @else
@@ -199,12 +202,12 @@
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
                                                 <span type="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
-                                                    data-bs-target="#modal_{{ $prj->projet_id }}"><i class="bx bx-plus-medical me-3"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-target="#modal_nouveau_session_{{ $prj->projet_id }}"><i class="bx bx-plus-medical me-3"
                                                         title="Nouvelle session"></i>Ajouter une session</span>
                                             @endif
                                         @endcan
                                     </div>
+                                    
                             </div>
 
                             <table class="table table-stripped m-0 p-0 collapse" id="collapseprojet_{{ $prj->projet_id }}">
@@ -256,9 +259,9 @@
                                                             <td> {{ $pj->nom_cfp }} </td>
                                                         @endif
                                                     @endcan
-                                                    {{-- @can('isCFP')
-                         @if ($pj->type_formation_id == 1)<td> {{ $pj->nom_etp }} </td>@endif
-                        @endcan --}}
+                                                                                    {{-- @can('isCFP')
+                                                        @if ($pj->type_formation_id == 1)<td> {{ $pj->nom_etp }} </td>@endif
+                                                        @endcan --}}
                                                     <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                                     <td>
                                                         <div class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}</div>
@@ -274,8 +277,8 @@
                                                         </td>
                                                     @endif
 
-                                                    {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
-                                data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
+                                                                            {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
+                                                        data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
                                                     {{-- Debut modal edit session --}}
                                                     <div class="modal fade"
                                                         id="modal_modifier_session_{{ $pj->groupe_id }}">
@@ -459,65 +462,9 @@
                                                         </div>
                                                     </div>
                                                     {{-- Fin modal edit session --}}
-                                                    {{-- debut modal edit projet --}}
-                                                    <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade modal_projets"
-                                                        data-backdrop="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="text-center w-100">Modification de la Status du
-                                                                        Session dans le&nbsp;{{$pj->nom_projet }}
-                                                                    </h5>
-
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form
-                                                                        action="{{ route('update_projet', $pj->projet_id) }}"
-                                                                        id="zsxsq" method="POST">
-                                                                        @csrf
-                                                                        <div class="row px-3 mt-2">
-                                                                            <div class="form-group mt-1 mb-1">
-                                                                                <select class="form-select selectP input"
-                                                                                    id="formation_id" name="formation_id"
-                                                                                    aria-label="Default select example">
-                                                                                    <option onselected hidden>choisir la status
-                                                                                        du session</option>
-                                                                                    @foreach ($status as $stat)
-                                                                                        <option value="{{ $stat->id }}">
-                                                                                            {{ $stat->status }}</option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                                <label class="ml-3 form-control-placeholder"
-                                                                                    for="formation_id">Status</label>
-                                                                            </div>
-                                                                        </div>
-
-
-                                                                        <div class="mt-4 mb-4">
-                                                                            <div
-                                                                                class="mt-4 mb-4 d-flex justify-content-around">
-                                                                                <div class="text-center px-3"><button
-                                                                                        type="submit" form="formPayement"
-                                                                                        class="btn btn_enregistrer">Valider</button>
-                                                                                </div>
-                                                                                <div class="text-center px-3"><button
-                                                                                        type="button" class="btn btn_annuler"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        aria-label="Close">Annuler</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    {{-- fin --}}
+                                                    
                                                     {{-- debut modal nouveau session --}}
-                                                    <div id="modal_{{ $pj->projet_id }}" class="modal fade modal_projets"
+                                                    <div id="modal_nouveau_session_{{ $pj->projet_id }}" class="modal fade modal_projets"
                                                         data-backdrop="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
