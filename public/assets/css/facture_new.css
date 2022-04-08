@@ -1,0 +1,181 @@
+.btn_submit {
+    padding: 5px 20px !important;
+    color: white;
+    border-radius: 30px;
+    background-color: #2811f3;
+    transition: all 0.5s ease;
+}
+.btn_submit:hover {
+    transform: scale(1.1);
+    color: white;
+    text-decoration-line: underline;
+}
+
+.header_facture,
+.entreprise_facturer{
+    border: 1px solid rgba(196, 196, 196, 0.474);
+    border-radius: 6px;
+}
+
+.services_factures{
+    border: 1px solid rgba(196, 196, 196, 0.474);
+    border-radius: 6px;
+}
+
+.entreprise_facturer{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.header_facture h6{
+    background: rgba(211, 211, 211, 0.289);
+    color: #333;
+    border: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 1rem !important;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.header_facture h6.collapsed{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.titre_facture{
+    height: 50px;
+    width: 60%;
+    border-radius: 5px;
+    border: 1px solid rgba(196, 196, 196, 0.946);
+    padding-right: 10px;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    align-items: end;
+    margin-bottom: 5px;
+    float: right;
+}
+
+.debut{
+    display: grid;
+    place-content: end;
+}
+
+.description_facture{
+    height: 50px;
+    width: 60%;
+    border-radius: 5px;
+    border: 1px solid rgba(196, 196, 196, 0.946);
+    padding-right: 10px;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
+.adresse_cfp{
+    color: grey;
+}
+
+.input_entreprise{
+    height: 50px;
+    width: 60%;
+}
+
+.input_section4{
+    height: 50px;
+    width: 100%;
+}
+
+.input_simple{
+    height: 50px;
+    width: 50%;
+}
+
+.input_service,
+.input_quantite{
+    height: 50px;
+}
+
+.input_quantite2{
+    height: 50px;
+}
+
+.input_tax{
+    height: 50px;
+    width: 20.3%;
+}
+
+.input_select{
+    height: 50px;
+    width: 10%;
+}
+
+.bxs-trash{
+    font-size: 1.5rem;
+    position: relative;
+    top: 4px;
+}
+
+.bxs-trash:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.element{
+    background-color: aliceblue;
+}
+
+.titres_services{
+    background: rgba(211, 211, 211, 0.289);
+    color: #333;
+    padding: 1rem !important;
+}
+
+.nouveau_service{
+    border: none;
+    border-top: 1px solid rgba(196, 196, 196, 0.946);
+    border-bottom: 1px solid rgba(196, 196, 196, 0.946);
+}
+
+.nouveau_service span{
+    font-size: 1.3rem;
+    color: #7635dc;
+    cursor: pointer;
+    transition: all .5rem ease;
+}
+
+.nouveau_service span:hover{
+    transform: scale(1.1);
+    color: #333;
+}
+
+.nouveau_service .bx{
+    font-size: 1.5rem;
+    position: relative;
+    top: 3px;
+    color: #7635dc;
+}
+
+.text_description{
+    height: 50px;
+    max-height: 100px;
+    width: 100%;
+}
+
+.total{
+    font-size: 1.5rem;
+}
+
+.note_titre{
+    font-style: italic;
+}
+
+.notes_texte{
+    border: none;
+    width: 100%;
+    padding: 10px;
+    height: 150px;
+    max-height: 150px;
+    min-height: 150px;
+}

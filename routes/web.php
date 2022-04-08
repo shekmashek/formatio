@@ -514,11 +514,15 @@ Route::get('update_facture/{id}','FactureController@edit')->name('update_facture
 Route::get('delete_facture/{num_facture}','FactureController@destroy')->name('delete_facture');
 Route::get('frais_annexe','FactureController@getFrais_annexe')->name('frais_annexe');
 Route::get('groupe_projet','FactureController@getGroupe_projet')->name('groupe_projet');
+Route::get('groupe_projet_edit','FactureController@getGroupe_projet_edit')->name('groupe_projet_edit');
 Route::get('taxe','FactureController@getTaxe')->name('taxe');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');
-Route::get('liste_facture','FactureController@redirection_facture')->name('liste_facture');
+Route::get('liste_facture/{nbPage?}','FactureController@redirection_facture')->name('liste_facture');
 Route::get('edit_facture/{id}','FactureController@edit_facture')->name('edit_facture');
+Route::post('modifier_facture/{num_facture}/{entreprise_id}','FactureController@modifier_facture')->name('modifier_facture');
+Route::get('delete_session_facture/{num_fact}/{grp_etp_id}','FactureController@delete_session_facture')->name('delete_session_facture');
+Route::get('delete_frais_annexe_facture/{num_fact}/{frais_annexe_id}','FactureController@delete_frais_annexe_facture')->name('delete_frais_annexe_facture');
 
 
 Route::post('valid_facture','FactureController@valid_facture')->name('valid_facture');

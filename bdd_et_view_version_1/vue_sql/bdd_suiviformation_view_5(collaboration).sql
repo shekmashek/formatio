@@ -412,7 +412,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     f.numero_formateur,
     f.photos,
     f.genre_id,
-    g.genre,
+    (IFNULL(g.genre,1)) genre,
     f.date_naissance,
     f.adresse,
     f.cin,
@@ -421,15 +421,11 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     f.activiter AS activiter_formateur,
     f.user_id AS user_id_formateur
 FROM
-    demmande_cfp_formateur d
-JOIN cfps c ON
-    c.id = d.demmandeur_cfp_id
-JOIN formateurs f ON
-    f.id = d.inviter_formateur_id
-join genre g on
-    g.id = f.genre_id
+    demmande_cfp_formateur d,cfps c,formateurs f,genre g
 WHERE
-    d.activiter = 1;
+    c.id = d.demmandeur_cfp_id AND
+    f.id = d.inviter_formateur_id AND
+    g.id = IFNULL(f.genre_id,1) AND d.activiter = 1;
 
 
 

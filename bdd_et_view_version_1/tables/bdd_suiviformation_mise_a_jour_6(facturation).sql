@@ -11,6 +11,17 @@ insert into type_facture(description,reference,created_at,updated_at) values
 ("Facture d'Avoir","Avoir",NOW(),NOW()),
 ("Facture d'Acompte","Acompte",NOW(),NOW());
 
+CREATE TABLE `type_remise` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+insert into type_remise(id,description,reference)
+values(1,"MGA","AR"),(2,"%","POURCENT");
 
 CREATE TABLE `frais_annexes` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -90,9 +101,9 @@ insert into frais_annexes(description) values
 
 CREATE TABLE `factures` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `bon_de_commande` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bon_de_commande` varchar(255) COLLATE utf8mb4_unicode_ci,
   `reference_bc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '####',
-  `devise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `devise` varchar(255) COLLATE utf8mb4_unicode_ci,
   `projet_id` bigint(20) UNSIGNED DEFAULT NULL REFERENCES projets(id) ON DELETE CASCADE,
   `groupe_entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupe_entreprises(id) ON DELETE CASCADE,
   `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
@@ -109,6 +120,7 @@ CREATE TABLE `factures` (
   `num_facture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '#0000',
   `activiter` boolean not null default false,
   `remise` int(11) DEFAULT 0,
+  `remise_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1 REFERENCES type_remise(id) ON DELETE CASCADE,
   `other_message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -128,7 +140,6 @@ CREATE TABLE `encaissements` (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `num_facture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `facture_id` bigint(20) NOT NULL REFERENCES factures(id) ON DELETE CASCADE,
   `resp_cfp_id` bigint(20) NOT NULL REFERENCES responsables_cfp(id) ON DELETE CASCADE,
   `nom_resp_cfp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mode_financement_id` bigint(20) UNSIGNED NOT NULL REFERENCES mode_financements(id) ON DELETE CASCADE

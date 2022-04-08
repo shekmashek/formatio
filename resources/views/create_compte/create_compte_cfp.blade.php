@@ -98,7 +98,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_cfp" />
-                            <label for="name_entreprise" class="form-control-placeholder">NIF(13 chiffres)<strong style="color:#ff0000;">*</strong></label>
+                            <label for="name_entreprise" class="form-control-placeholder">Numero d'Identité Fiscale<strong style="color:#ff0000;">*</strong></label>
                             @error('nif')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000;"> {{$message}} </span>
@@ -122,10 +122,10 @@
                             <p id="error_logo_cfp" style="color:#ff0000;"></p>
 
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
-                            <label class="ml-3 form-control-placeholder" for="web_cfp">Site Web</label>
-                        </div>
+                            <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
+                        </div> --}}
                             <input type="button" name="next" class="next action-button  suivant_of_1 " value="Suivant" />
                             {{-- <input type="button" name="next" class="next action-button " value="Suivant" /> --}}
 
@@ -168,7 +168,7 @@
                             @enderror
                             <span style="color:#ff0000;" id="cin_resp_cfp_err"></span>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <input type="text" required name="fonction_resp_cfp" class="form-control input_inscription" id="fonction_resp_cfp" />
                             <label for="fonction_resp_cfp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
                             @error('fonction_resp_cfp')
@@ -178,7 +178,7 @@
                             @enderror
                             <span style="color:#ff0000;" id="fonction_resp_cfp_err"></span>
 
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
                             <label for="email_resp_cfp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
@@ -189,7 +189,7 @@
                             @enderror
                             <span style="color:#ff0000;" id="email_resp_cfp_err"></span>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <input type="text" max=10 required name="tel_resp_cfp" class="form-control input_inscription" id="tel_resp_cfp" />
                             <label for="tel_resp_cfp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
                             @error('tel_resp_cfp')
@@ -198,7 +198,7 @@
                             </div>
                             @enderror
                             <span style="color:#ff0000;" id="tel_resp_cfp_err"></span>
-                        </div>
+                        </div> --}}
                         <div class="row">
                             <div class="col-sm-12">
                                 <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>

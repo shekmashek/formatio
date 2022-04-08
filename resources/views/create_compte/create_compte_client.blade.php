@@ -101,7 +101,7 @@
 
                         <div class="form-group">
                             <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
-                            <label for="nif_etp" class="form-control-placeholder">NIF (13 chiffres)<strong style="color:#ff0000;">*</strong></label>
+                            <label for="nif_etp" class="form-control-placeholder">Numero d'Identité Fiscale<strong style="color:#ff0000;">*</strong></label>
                             @error('nif')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000;"> {{$message}} </span>
@@ -121,13 +121,6 @@
                             <p id="error_logo_etp" style="color:#ff0000;"></p>
 
                         </div>
-
-
-                        <div class="form-group">
-                            <input type="text" name="web_etp" class="form-control input_inscription" id="web_etp" />
-                            <label class="ml-3 form-control-placeholder" for="web_etp">Site Web</label>
-                        </div>
-
                         <div class="row">
                             <div class="col">
                                 <div class="form-group m-0">
@@ -203,17 +196,6 @@
                             @enderror
                             <span style="color:#ff0000;" id="cin_resp_etp_err"></span>
                         </div>
-                        <div class="form-group">
-                            <input type="text" required name="fonction_resp_etp" class="form-control input_inscription" id="fonction_resp_etp" />
-                            <label for="fonction_resp_etp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                            @error('fonction_resp_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <p id="fonction_resp_etp_err" style="color:#ff0000;"></p>
-
-                        </div>
 
                         <div class="form-group">
                             <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
@@ -224,18 +206,6 @@
                             </div>
                             @enderror
                             <span style="color:#ff0000;" id="email_resp_etp_err"></span>
-
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" max=10 required name="tel_resp_etp" class="form-control input_inscription" id="tel_resp_etp" />
-                            <label for="tel_resp_etp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
-                            @error('tel_resp_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="tel_resp_etp_err"></span>
 
                         </div>
 
@@ -283,27 +253,7 @@
                         </div>
                 </fieldset>
 
-                {{-- --}}
 
-                {{-- <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
-                    <div class="form-group">
-                        <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
-            </div>
-            <input type="button" name="previous" class="previous action-button" value="Précedent" />
-            <button type="submit" style="background: #801D68; leight: 10px; padding: 5px 5px 5px 5px; color:white">Confirmer l'inscription</button>
-            </fieldset> --}}
-
-
-            {{-- <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                    <h5 align="left" class="mb-2">Félicitation, pour activer votre, veuillez acepter la validation sur votre mail</strong></h5>
-                    <div class="form-group">
-                        <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image" style="width: 300px; heigth: 300px">
-        </div>
-        <button type="submit" class="action-button">lancer</button>
-        </fieldset> --}}
-
-        {{-- --}}
     </div>
 
 
