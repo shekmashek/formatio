@@ -1,7 +1,7 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-<div class="shadow p-3 mb-5 bg-body rounded ">
+<div class="p-3 mb-5 bg-body rounded ">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
             <h5>Session </h5>
@@ -22,7 +22,35 @@
             </div>
         </div>
         <div>
-            <a href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}"> <i class="bx bx-x mt-4 me-3" href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}">&nbsp;Annuler</i> </a>
+            <div class="btn_modifier_statut dropdown">
+
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                    <i class='bx bx-slider icon_creer'></i>Modifier statut
+    
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="ya">
+                    <li class="mt-1">
+                        <a class="dropdown-item" href="{{ route('modifier_statut_session',[$projet[0]->groupe_id,5]) }}">
+                            <i class='bx bx-check'></i>&nbsp;Cloturé
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('modifier_statut_session',[$projet[0]->groupe_id,6]) }}">
+                            <i class='bx bxs-report'></i>&nbsp;Reporté
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('modifier_statut_session',[$projet[0]->groupe_id,7]) }}">
+                            <i class='bx bx-x'></i>&nbsp;Annulée
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('modifier_statut_session',[$projet[0]->groupe_id,8]) }}">
+                            <i class='bx bx-refresh'></i>&nbsp;Repprogrammer
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <section class="bg-light py-1">
@@ -315,14 +343,14 @@
 }
 
 .body_nav{
-    background-color: #7635dc;
-    color: whitesmoke;
+    background-color: #e8e8e9;
+    color: rgb(3, 0, 0);
     padding: 6px 8px;
     border-radius: 4px 4px 0 0;
     font-family: 'Open Sans';
 }
 .numero_session{
-    background-color: rgb(233, 222, 177);
+    background-color: rgb(255, 255, 255);
     padding: 0 6px;
     border-radius: 4px;
 }
@@ -483,6 +511,42 @@ button{
 /* Style the tab content */
 .tabcontent {
     display: none;
+}
+
+.btn_modifier_statut{
+    /* background-color: white; */
+    /* border: none; */
+    border-radius: 30px;
+    padding: .2rem 1rem;
+    color: black;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+}
+
+.btn_modifier_statut a{
+    font-size: .8rem;
+    position: relative;
+    bottom: .2rem;
+}
+
+.btn_modifier_statut:hover{
+    background: #fffefe;
+    color: rgb(0, 0, 0);
+}
+
+/* .btn_modifier_statut:focus{
+    color: blue;
+    text-decoration: none;
+} */
+
+.icon_creer{
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 1.5rem;
+    position: relative;
+    top: .4rem;
+    margin-right: .3rem;
 }
 </style>
 <script type="text/javascript">

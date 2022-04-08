@@ -74,6 +74,35 @@
         transform: scale(1.1);
     }
 
+
+.btn_ajouter_detail{    
+    padding: .3rem 1rem;
+    padding-bottom: .4rem;
+    color: black;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+}
+
+.btn_ajouter_detail a{
+    font-size: .8rem;
+    position: relative;
+    bottom: .4rem;
+}
+
+.btn_ajouter_detail:hover{
+    background: #efefef;
+    border-radius: 30px;
+    color: rgb(0, 0, 0);
+}
+.icon_ajouter_detail{
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 1.5rem;
+    position: relative;
+    top: .3rem;
+    margin-right: .3rem;
+}
 </style>
 @if (Session::has('detail_error'))
     <div class="alert alert-danger ms-2 me-2">
@@ -242,78 +271,6 @@
 
 @if (count($datas) > 0)
     <div id="existante">
-        {{-- <div class="row">
-            <div class="col-lg-12">
-                <br>
-                <h3>DETAILS DES PROJETS</h3>
-            </div>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::currentRouteNamed('liste_detail') ? 'active' : '' }}"
-                                    aria-current="page" href="{{route('liste_detail')}}">
-                                    <i class="fa fa-list"> Listes des Détails</i></a>
-                            </li>
-                            @canany(['isCFP'])
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::currentRouteNamed('nouveau_detail') ? 'active' : '' }}"
-                                    aria-current="page" href="{{route('nouveau_detail')}}">
-                                    <i class="fa fa-list"> Nouveau détail</i></a>
-                            </li>
-                            @endcanany
-
-
-                            <li class="nav-item ">
-                                <form class="navbar-form navbar-left" role="search">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown">
-                                            Tout <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{route('liste_detail',5)}}">5</a></li>
-                                            <li><a href="{{route('liste_detail',10)}}">10</a></li>
-                                            <li><a href="{{route('liste_detail',25)}}">25</a></li>
-                                            <li><a href="{{route('liste_detail',25)}}">50</a></li>
-                                            <li><a href="{{route('liste_detail',25)}}">100</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="{{route('liste_detail')}}">Tout</a></li>
-                                        </ul>
-                                    </div>
-
-                                </form>
-                            </li>
-
-                            {{-- @canany(['isCFP'])
-                            <li class="nav-item">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    Rechercher par entreprise <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    @foreach ($liste as $etp)
-                                    <li><a
-                                            href="{{route('show_detail_entreprise',$etp->entreprise_id)}}">{{$etp->nom_etp}}</a>
-                                    </li>
-                                    @endforeach
-                                    <li class="divider"></li>
-                                    <li><a href="{{route('liste_detail')}}">Tout</a></li>
-                                </ul>
-                            </li>
-                            @endcanany --}}
-
-        {{-- </ul>
-
-                    </div>
-                </div>
-            </nav> --}}
-
-
-        {{-- </div> --}}
-        <!-- /.row -->
-
         <div class="row">
             @if (count($datas) != 0 && $projet[0]->status_groupe == 1)
                 @can('isReferent')
@@ -332,11 +289,11 @@
 
                     <div class="panel-body">
                         @canany(['isCFP'])
-                            <nav class="d-flex justify-content-end mb-1">
-                                <a class="nouveau_detail btn" aria-current="page" data-bs-toggle="modal"
+                            <nav class="d-flex justify-content-end mb-1 ">
+                                <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
                                     data-bs-target="#modal_nouveau_detail">
-                                    <i class="bx bx-plus p-1"></i>
-                                    <small>Nouveau détail</small></a>
+                                    <i class='bx bx-plus-medical icon_ajouter_detail'></i>
+                                    <small>Ajouter une détail</small></a>
                             </nav>
                         @endcanany
                         <div class="table-responsive">
