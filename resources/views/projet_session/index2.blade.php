@@ -3,68 +3,77 @@
     <p class="text_header m-0 mt-1">Projets</p>
 @endsection
 @section('content')
-    <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
 
 <style>
-    .status_grise{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
+.status_grise{
     border-radius: 1rem;
-    background-color: rgb(150, 144, 144);
+    background-color: #637381;
     color: white;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
 }
-.status_annule{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
+
+.status_reprogrammer{
     border-radius: 1rem;
-    background-color: rgb(184, 3, 3);
+    background-color: #00CDAC;
     color: white;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
+}
+
+.status_cloturer{
+    border-radius: 1rem;
+    background-color: #314755;
+    color: white;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
+}
+
+.status_reporter{
+    border-radius: 1rem;
+    background-color: #26a0da;
+    color: white;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
+}
+
+.status_annulee{
+    border-radius: 1rem;
+    background-color: #b31217;
+    color: white;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
 }
 .status_termine{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: green;
+    background-color: #1E9600;
     color: white;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
 }
 .status_confirme{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: #801D68;
+    background-color: #2B32B2;
     color: white;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
 }
-.status_archive{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
-    border-radius: 1rem;
-    background-color: orangered;
-    color: white;
-}
+
 .statut_active{
-    margin: 0 2px;
-    font-size: 10px;
-    height: 50%;
-    font-weight: bold;
-    padding: 4px 6px;
     border-radius: 1rem;
     background-color: rgb(15,126,145);
     color: whitesmoke;
+    width: 60%;
+    align-items: center
+    margin: 0 auto;
 }
 
 /* .filter{
@@ -126,7 +135,6 @@
 
 }
 </style>
-    <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
             <span class="nombre_pagination"><span style="position: relative; bottom: .35rem">{{ $debut."-".$fin }} sur {{ $nb_projet }}</span>
@@ -157,11 +165,10 @@
                         @endif
                         @foreach ($projet as $prj)
 
-                                <div class="row mt-3 titre_projet p-1 mb-1 w-100">
+                                <div class="row mt-3 titre_projet p-1 mb-1 w-100 g-0">
 
-                                    <div class="col-4 p-0"><h6 class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse"
-                                        href="#collapseprojet_{{ $prj->projet_id }}" role="button" aria-expanded="false"
-                                        aria-controls="collapseprojet"><i class="bx bx-caret-down carret-icon"></i>&nbsp;
+                                    <div class="col-4 p-0">
+                                        <h6><a href="#collapseprojet_{{ $prj->projet_id }}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i>&nbsp;
                                         @php if ($prj->totale_session == 1) {
                                                     echo $prj->nom_projet . ' ' . $prj->totale_session . ' session';
                                                 } elseif ($prj->totale_session > 1) {
@@ -173,7 +180,7 @@
                                         echo strftime('%d %B, %Y', strtotime($prj->date_projet)); @endphp @if ($type_formation_id == 1)
                                             {{-- {{ $data[0]->nom_etp }} --}}
                                         @endif
-                                        &nbsp;&nbsp;</h6>
+                                        &nbsp;&nbsp;</a></h6>
                                     </div>
                                     <div class="col-1 p-0">
                                         @if ($prj->type_formation_id == 1)
@@ -198,16 +205,14 @@
                                     <div class="col-3 new_session p-0">
                                         @can('isCFP')
                                             @if ($prj->type_formation_id == 1)
-                                                <span type="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
-                                                    data-bs-target="#modal_{{ $prj->projet_id }}"><i class="bx bx-plus-medical me-3"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Nouvelle session"></i>Ajouter une session</span>
+                                                <span role="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
+                                                    data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static' title="Nouvelle session"><i class="bx bx-plus-medical me-3"></i>Ajouter une session</span>
                                             @endif
                                         @endcan
                                     </div>
-                            </div>
+                                </div>
 
-                            <table class="table table-stripped m-0 p-0 collapse" id="collapseprojet_{{ $prj->projet_id }}">
+                            <table class="table table-stripped m-0 p-0 collapse" id="collapseprojet_{{ $prj->projet_id }}" aria-labelledby="collapseprojet_{{ $prj->projet_id }}">
                                 <thead class="thead_projet">
                                     <th> Session </th>
                                     <th> Module </th>
@@ -256,17 +261,14 @@
                                                             <td> {{ $pj->nom_cfp }} </td>
                                                         @endif
                                                     @endcan
-                                                    {{-- @can('isCFP')
-                         @if ($pj->type_formation_id == 1)<td> {{ $pj->nom_etp }} </td>@endif
-                        @endcan --}}
+
                                                     <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
-                                                    <td>
-                                                        <div class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}</div>
+                                                    <td align="center">
+                                                        <div class="{{ $pj->class_status_groupe }} m-0">{{ $pj->item_status_groupe }}</div>
                                                     </td>
                                                     @can('isCFP')
-                                                    <td><a href="" aria-current="page" data-bs-toggle="modal"
-                                                        style="background:none; color:rgb(130,33,100);" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}"><i
-                                                        class="fa fa-edit ms-2"></i></a></td>
+                                                    <td class="centrer_edit"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static">
+                                                        Editer</a></td>
                                                     @endcan
                                                     @if ($prj->type_formation_id == 1)
                                                         <td>
@@ -274,48 +276,74 @@
                                                         </td>
                                                     @endif
 
-                                                    {{-- <td><i type="button" class="fa fa-edit" data-bs-toggle="modal"
-                                data-bs-target="#edit_prj_{{ $pj->projet_id }}"></i></td> --}}
+
                                                     {{-- Debut modal edit session --}}
-                                                    <div class="modal fade"
-                                                        id="modal_modifier_session_{{ $pj->groupe_id }}">
-                                                        <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content p-3">
-                                                                <div class="modal-title pt-3"
-                                                                    style="height: 50px; align-items: center;">
-                                                                    <h5 class="text-center my-auto">Modifier session <strong>{{ $pj->nom_groupe }}</strong></h5>
-                                                                </div>
-                                                                @if ($prj->type_formation_id == 1)
-                                                                    <div class="row">
-                                                                        <form action="{{ route('modifier_session_inter') }}" id="formPayement" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="id" value="{{ $pj->groupe_id }}">
-                                                                            <div class="row">
-                                                                                <div class="form-group">
-                                                                                    <div class="form-row d-flex">
-                                                                                        <div class="col">
-                                                                                            <div class="row px-3 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <input type="text" id="min" class="form-control input" name="date_debut"
-                                                                                                        required onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_debut))}}">
-                                                                                                    <label class="ml-3 form-control-placeholder" for="min">Date debut du session<strong
-                                                                                                        class="text-danger">*</strong></label>
+                                                    <div>
+                                                        <div class="modal fade" id="modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static">
+                                                            <div class="modal-dialog modal-lg">
+                                                                <div class="modal-content p-3">
+                                                                    <div class="modal-title pt-3"
+                                                                        style="height: 50px; align-items: center;">
+                                                                        <h5 class="text-center my-auto">Modifier session <strong>{{ $pj->nom_groupe }}</strong></h5>
+                                                                    </div>
+                                                                    @if ($prj->type_formation_id == 1)
+                                                                        <div class="row">
+                                                                            <form action="{{ route('modifier_session_inter') }}" id="formPayement" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="id" value="{{ $pj->groupe_id }}">
+                                                                                <div class="row">
+                                                                                    <div class="form-group">
+                                                                                        <div class="form-row d-flex">
+                                                                                            <div class="col">
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                                        <input type="text" id="min" class="form-control input" name="date_debut"
+                                                                                                            required onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_debut))}}">
+                                                                                                        <label class="ml-3 form-control-placeholder" for="min">Date debut du session<strong
+                                                                                                            class="text-danger">*</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div class="form-group mt-1">
+                                                                                                        <select class="form-select selectP input" id="formation_session_id" name="formation_id"
+                                                                                                            aria-label="Default select example">
+                                                                                                            <option value="{{ $pj->formation_id }}">{{ $pj->nom_formation }}</option>
+                                                                                                            @foreach ($formation as $form)
+                                                                                                            <option value="{{$form->id}}">{{$form->nom_formation}}</option>
+                                                                                                            @endforeach
+                                                                                                        </select>
+                                                                                                        <label class="ml-3 form-control-placeholder" for="formation_id">Formations<strong
+                                                                                                            class="text-danger">*</strong></label>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="row px-3 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <select class="form-select selectP input" id="formation_session_id" name="formation_id"
-                                                                                                        aria-label="Default select example">
-                                                                                                        <option value="{{ $pj->formation_id }}">{{ $pj->nom_formation }}</option>
-                                                                                                        @foreach ($formation as $form)
-                                                                                                        <option value="{{$form->id}}">{{$form->nom_formation}}</option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="formation_id">Formations<strong
-                                                                                                        class="text-danger">*</strong></label>
+                                                                                            <div class="col">
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                                        <input type="text" id="min" class="form-control input" name="date_fin"
+                                                                                                            required onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_fin))}}">
+                                                                                                        <label class="ml-3 form-control-placeholder" for="min">Date fin du session<strong
+                                                                                                            class="text-danger">*</strong></label>
+                                                                                                    </div>
                                                                                                 </div>
+                                                                                                <div class="row ps-3 mt-2">
+                                                                                                    <div class="form-group mt-1 mb-1">
+                                                                                                        <select class="form-select selectP input" id="module_id" name="module_id"
+                                                                                                            aria-label="Default select example">
+                                                                                                            <option {{ $pj->module_id }}>{{ $pj->nom_module }}</option>
+                                                                                                            @foreach ($module as $mod)
+                                                                                                            <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
+                                                                                                            @endforeach
+                                                                                                        </select>
+                                                                                                        <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
+                                                                                                            class="text-danger">*</strong></label>
+                                                                                                    </div>
+                                                                                                </div>
+
                                                                                             </div>
-                                                                                            <div class="row px-3 mt-2">
+                                                                                        </div>
+                                                                                        <div class="form-row">
+                                                                                            <div class="row ps-3 mt-2">
                                                                                                 <div class="form-group mt-1 mb-1">
                                                                                                     <select class="form-select selectP input" id="payement_id" name="payement"
                                                                                                         aria-label="Default select example">
@@ -324,241 +352,63 @@
                                                                                                         <option value="{{ $paye->id }}">{{ $paye->type }}</option>
                                                                                                         @endforeach
                                                                                                     </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="payement_id">Mode de Payement<strong
+                                                                                                    <label class=" form-control-placeholder" for="payement_id">Mode de Payement<strong
                                                                                                         class="text-danger">*</strong></label>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="row px-3 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="min_part"
-                                                                                                        required onfocus="(this.type='number')" value="{{ $pj->min_participant }}">
-                                                                                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                                                                                        minimal</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="text-center "><button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button></div>
                                                                                         </div>
-                                                                                        <div class="col">
-                                                                                            <div class="row px-3 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <input type="text" id="min" class="form-control input" name="date_fin"
-                                                                                                        required onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_fin))}}">
-                                                                                                    <label class="ml-3 form-control-placeholder" for="min">Date fin du session<strong
-                                                                                                        class="text-danger">*</strong></label>
+                                                                                        <div class="form-row d-flex">
+                                                                                            <div class="col">
+                                                                                                <div class="row ps-3">
+                                                                                                    <div class="form-group ">
+                                                                                                        <input type="text" id="min" class="form-control input" min="1" max="50" name="min_part"
+                                                                                                            required onfocus="(this.type='number')" value="{{ $pj->min_participant }}">
+                                                                                                        <label class="ml-3 form-control-placeholder" for="min">Nombre de participant minimal</label>
+                                                                                                    </div>
                                                                                                 </div>
+                                                                                                <div class="text-center mb-1"><button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button></div>
                                                                                             </div>
-                                                                                            <div class="row px-3 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <select class="form-select selectP input" id="module_id" name="module_id"
-                                                                                                        aria-label="Default select example">
-                                                                                                        <option {{ $pj->module_id }}>{{ $pj->nom_module }}</option>
-                                                                                                        @foreach ($module as $mod)
-                                                                                                        <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
-                                                                                                        @endforeach
-                                                                                                    </select>
-                                                                                                    <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
-                                                                                                        class="text-danger">*</strong></label>
+                                                                                            <div class="col">
+                                                                                                <div class="row ps-3">
+                                                                                                    <div class="form-group ">
+                                                                                                        <input type="text" id="min" class="form-control input" min="1" max="50" name="max_part"
+                                                                                                            required onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
+                                                                                                        <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
+                                                                                                            maximal</label>
+                                                                                                    </div>
                                                                                                 </div>
+                                                                                                <div class="text-center mb-1"><button type="button" class="btn  btn_annuler" data-bs-dismiss="modal">Annuler</button></div>
                                                                                             </div>
-                                                                                            <div class="row px-3 mb-5 mt-2">
-                                                                                                <div class="form-group mt-1 mb-1">
-                                                                                                    <input type="text" id="min" class="form-control input" min="1" max="50" name="max_part"
-                                                                                                        required onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
-                                                                                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                                                                                        maximal</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row px-3">
-                                                                                                <div class="form-group mt-2">
 
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="text-center mt-5"><button type="button" class="btn  btn_annuler" data-bs-dismiss="modal">Annuler</button></div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                        </form>
-                                                                    </div>
-                                                                @endif
-                                                                @if ($prj->type_formation_id == 2)
-                                                                    <div class="row">
-                                                                        <div class="form-group">
-                                                                            <div class="form-row d-flex">
-                                                                                <div class="col">
-                                                                                    <div class="row px-3 mt-2">
-                                                                                        <div class="form-group mt-1 mb-1">
-                                                                                            <input type="text" id="min"
-                                                                                                class="form-control input"
-                                                                                                name="date_debut" required
-                                                                                                onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_debut))}}">
-                                                                                            <label
-                                                                                                class="form-control-placeholder"
-                                                                                                for="min">Date debut<strong
-                                                                                                class="text-danger">*</strong></label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row px-3 mt-2">
-                                                                                        <div class="form-group mt-1 mb-1">
-                                                                                            <input type="text" id="min"
-                                                                                                class="form-control input"
-                                                                                                min="1" max="50"
-                                                                                                name="min_part" required
-                                                                                                onfocus="(this.type='number')" value="{{ $pj->min_participant }}">
-                                                                                            <label
-                                                                                                class="form-control-placeholder"
-                                                                                                for="min">Participant
-                                                                                                minimal</label>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div class="text-center px-3"><button
-                                                                                            type="submit"
-                                                                                            class="btn btn_enregistrer">Valider</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col">
-                                                                                    <div class="row px-3 mt-2">
-                                                                                        <div class="form-group mt-1 mb-1">
-                                                                                            <input type="text" id="min"
-                                                                                                class="form-control input"
-                                                                                                name="date_fin" required
-                                                                                                onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_fin)) }}">
-                                                                                            <label
-                                                                                                class=" form-control-placeholder"
-                                                                                                for="min">Date fin<strong
-                                                                                                class="text-danger">*</strong></label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row px-3 mt-2">
-                                                                                        <div class="form-group mt-1 mb-1">
-                                                                                            <input type="text" id="min"
-                                                                                                class="form-control input"
-                                                                                                min="1" max="50"
-                                                                                                name="max_part" required
-                                                                                                onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
-                                                                                            <label
-                                                                                                class="form-control-placeholder"
-                                                                                                for="min">Participant
-                                                                                                maximal</label>
-                                                                                        </div>
-                                                                                    </div>
-
-
-                                                                                    <div class="text-center px-3"><button
-                                                                                            type="button"
-                                                                                            class="btn btn_annuler"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close">Annuler</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                            </form>
                                                                         </div>
-                                                                    </div>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {{-- Fin modal edit session --}}
-                                                    {{-- debut modal edit projet --}}
-                                                    <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade modal_projets"
-                                                        data-backdrop="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="text-center w-100">Modification de la Status du
-                                                                        Session dans le&nbsp;{{$pj->nom_projet }}
-                                                                    </h5>
-
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form
-                                                                        action="{{ route('update_projet', $pj->projet_id) }}"
-                                                                        id="zsxsq" method="POST">
-                                                                        @csrf
-                                                                        <div class="row px-3 mt-2">
-                                                                            <div class="form-group mt-1 mb-1">
-                                                                                <select class="form-select selectP input"
-                                                                                    id="formation_id" name="formation_id"
-                                                                                    aria-label="Default select example">
-                                                                                    <option onselected hidden>choisir la status
-                                                                                        du session</option>
-                                                                                    @foreach ($status as $stat)
-                                                                                        <option value="{{ $stat->id }}">
-                                                                                            {{ $stat->status }}</option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                                <label class="ml-3 form-control-placeholder"
-                                                                                    for="formation_id">Status</label>
-                                                                            </div>
-                                                                        </div>
-
-
-                                                                        <div class="mt-4 mb-4">
-                                                                            <div
-                                                                                class="mt-4 mb-4 d-flex justify-content-around">
-                                                                                <div class="text-center px-3"><button
-                                                                                        type="submit" form="formPayement"
-                                                                                        class="btn btn_enregistrer">Valider</button>
-                                                                                </div>
-                                                                                <div class="text-center px-3"><button
-                                                                                        type="button" class="btn btn_annuler"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        aria-label="Close">Annuler</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    {{-- fin --}}
-                                                    {{-- debut modal nouveau session --}}
-                                                    <div id="modal_{{ $pj->projet_id }}" class="modal fade modal_projets"
-                                                        data-backdrop="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="w-100 text-center">Nouvelle Session pour
-                                                                        le&nbsp;{{$pj->nom_projet }}
-                                                                    </h5>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form action="{{ route('insert_session') }}"
-                                                                         method="POST"
-                                                                        class="justify-content-center me-5">
-                                                                        @csrf
-                                                                        <input type="hidden" name="type_formation" value="1">
-                                                                        <input type="hidden" name="projet"
-                                                                            value="{{ $pj->projet_id }}">
+                                                                    @endif
+                                                                    @if ($prj->type_formation_id == 2)
                                                                         <div class="row">
-                                                                            <h5 class="mb-4 text-center">Ajouter votre nouvelle
-                                                                                Session</h5>
                                                                             <div class="form-group">
                                                                                 <div class="form-row d-flex">
                                                                                     <div class="col">
-                                                                                        <div class="row px-3 mt-2">
+                                                                                        <div class="row ps-3 mt-2">
                                                                                             <div class="form-group mt-1 mb-1">
                                                                                                 <input type="text" id="min"
                                                                                                     class="form-control input"
                                                                                                     name="date_debut" required
-                                                                                                    onfocus="(this.type='date')">
+                                                                                                    onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_debut))}}">
                                                                                                 <label
                                                                                                     class="form-control-placeholder"
                                                                                                     for="min">Date debut<strong
                                                                                                     class="text-danger">*</strong></label>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="row px-3 mt-2">
+                                                                                        <div class="row ps-3 mt-2">
                                                                                             <div class="form-group mt-1 mb-1">
                                                                                                 <input type="text" id="min"
                                                                                                     class="form-control input"
                                                                                                     min="1" max="50"
                                                                                                     name="min_part" required
-                                                                                                    onfocus="(this.type='number')">
+                                                                                                    onfocus="(this.type='number')" value="{{ $pj->min_participant }}">
                                                                                                 <label
                                                                                                     class="form-control-placeholder"
                                                                                                     for="min">Participant
@@ -566,31 +416,31 @@
                                                                                             </div>
                                                                                         </div>
 
-                                                                                        <div class="text-center px-3"><button
+                                                                                        <div class="text-center ps-3"><button
                                                                                                 type="submit"
                                                                                                 class="btn btn_enregistrer">Valider</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col">
-                                                                                        <div class="row px-3 mt-2">
+                                                                                        <div class="row ps-3 mt-2">
                                                                                             <div class="form-group mt-1 mb-1">
                                                                                                 <input type="text" id="min"
                                                                                                     class="form-control input"
                                                                                                     name="date_fin" required
-                                                                                                    onfocus="(this.type='date')">
+                                                                                                    onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_fin)) }}">
                                                                                                 <label
                                                                                                     class=" form-control-placeholder"
                                                                                                     for="min">Date fin<strong
                                                                                                     class="text-danger">*</strong></label>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="row px-3 mt-2">
+                                                                                        <div class="row ps-3 mt-2">
                                                                                             <div class="form-group mt-1 mb-1">
                                                                                                 <input type="text" id="min"
                                                                                                     class="form-control input"
                                                                                                     min="1" max="50"
                                                                                                     name="max_part" required
-                                                                                                    onfocus="(this.type='number')">
+                                                                                                    onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
                                                                                                 <label
                                                                                                     class="form-control-placeholder"
                                                                                                     for="min">Participant
@@ -599,7 +449,7 @@
                                                                                         </div>
 
 
-                                                                                        <div class="text-center px-3"><button
+                                                                                        <div class="text-center ps-3"><button
                                                                                                 type="button"
                                                                                                 class="btn btn_annuler"
                                                                                                 data-bs-dismiss="modal"
@@ -608,7 +458,165 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                    </form>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {{-- Fin modal edit session --}}
+                                                    {{-- debut modal nouveau session --}}
+                                                    <div>
+                                                        <div id="modal_{{ $pj->projet_id }}" class="modal fade modal_projets" >
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="w-100 text-center">Nouvelle Session pour
+                                                                            le&nbsp;{{$pj->nom_projet }}
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form action="{{ route('insert_session') }}"
+                                                                            method="POST"
+                                                                            class="justify-content-center me-5">
+                                                                            @csrf
+                                                                            <input type="hidden" name="type_formation" value="1">
+                                                                            <input type="hidden" name="projet"
+                                                                                value="{{ $pj->projet_id }}">
+                                                                            <div class="row">
+                                                                                <h5 class="mb-4 text-center">Ajouter votre nouvelle
+                                                                                    Session</h5>
+                                                                                <div class="form-group">
+                                                                                    <div class="form-row d-flex">
+                                                                                        <div class="col">
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        name="date_debut" required
+                                                                                                        onfocus="(this.type='date')">
+                                                                                                    <label
+                                                                                                        class="form-control-placeholder"
+                                                                                                        for="min">Date debut<strong
+                                                                                                        class="text-danger">*</strong></label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        min="1" max="50"
+                                                                                                        name="min_part" required
+                                                                                                        onfocus="(this.type='number')">
+                                                                                                    <label
+                                                                                                        class="form-control-placeholder"
+                                                                                                        for="min">Participant
+                                                                                                        minimal</label>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="text-center ps-3"><button
+                                                                                                    type="submit"
+                                                                                                    class="btn btn_enregistrer">Valider</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col">
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        name="date_fin" required
+                                                                                                        onfocus="(this.type='date')">
+                                                                                                    <label
+                                                                                                        class=" form-control-placeholder"
+                                                                                                        for="min">Date fin<strong
+                                                                                                        class="text-danger">*</strong></label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        min="1" max="50"
+                                                                                                        name="max_part" required
+                                                                                                        onfocus="(this.type='number')">
+                                                                                                    <label
+                                                                                                        class="form-control-placeholder"
+                                                                                                        for="min">Participant
+                                                                                                        maximal</label>
+                                                                                                </div>
+                                                                                            </div>
+
+
+                                                                                            <div class="text-center ps-3"><button
+                                                                                                    type="button"
+                                                                                                    class="btn btn_annuler"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    aria-label="Close">Annuler</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                        </form>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- fin --}}
+                                                    {{-- debut modal edit projet --}}
+                                                    <div>
+                                                        <div id="edit_prj_{{ $pj->projet_id }}" class="modal fade modal_projets" >
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="text-center w-100">Modification de la Status du
+                                                                            Session dans le&nbsp;{{$pj->nom_projet }}
+                                                                        </h5>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form
+                                                                            action="{{ route('update_projet', $pj->projet_id) }}"
+                                                                            id="zsxsq" method="POST">
+                                                                            @csrf
+                                                                            <div class="row ps-3 mt-2">
+                                                                                <div class="form-group mt-1 mb-1">
+                                                                                    <select class="form-select selectP input"
+                                                                                        id="formation_id" name="formation_id"
+                                                                                        aria-label="Default select example">
+                                                                                        <option onselected hidden>choisir la status
+                                                                                            du session</option>
+                                                                                        @foreach ($status as $stat)
+                                                                                            <option value="{{ $stat->id }}">
+                                                                                                {{ $stat->status }}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <label class="ml-3 form-control-placeholder"
+                                                                                        for="formation_id">Status</label>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            <div class="mt-4 mb-4">
+                                                                                <div
+                                                                                    class="mt-4 mb-4 d-flex justify-content-around">
+                                                                                    <div class="text-center ps-3"><button
+                                                                                            type="submit" form="formPayement"
+                                                                                            class="btn btn_enregistrer">Valider</button>
+                                                                                    </div>
+                                                                                    <div class="text-center ps-3"><button
+                                                                                            type="button" class="btn btn_annuler"
+                                                                                            data-bs-dismiss="modal"
+                                                                                            aria-label="Close">Annuler</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
                                                                 </div>
 
                                                             </div>
@@ -875,6 +883,10 @@
                     },
                 });
             });
-
+            // $('.changer_carret').on('click',function(){
+            //     if ($('.collapse').hasClass('show')) {
+            //         $('.collapse').remove('show');
+            //     } ;
+            // });
         </script>
     @endsection
