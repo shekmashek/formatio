@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Appel d'offre</p>
+    <p class="text_header m-0 mt-1">Nouveau appel d'offre</p>
 @endsection
 @section('content')
 
@@ -67,7 +67,7 @@
     <div class="row mt-5">
         <div class="col-12">
             <div class="shadow p-3 mb-5 bg-body rounded">
-                <h4>Nouveau Appel d'Offre</h4>
+                {{-- <h4>Nouveau Appel d'Offre</h4> --}}
 
                 <form class="mt-5" action="{{route('appel_offre.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf

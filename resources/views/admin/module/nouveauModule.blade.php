@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau module</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <script src='https://cdn.tiny.cloud/1/2livar4kpgh2o2es5elw12jtdnyrnv2ll23hiq3rlplmtj8r/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>

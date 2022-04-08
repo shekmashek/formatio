@@ -20,7 +20,7 @@
             <a href="{{ route('budget_previsionnel')}}" type="button" class="btn " style="font-size: 12px;"> <i class="fad fa-chart-bar" style="font-size: 10px;"></i>&nbsp;TDB budget previsionnel</a>    </div>
         @endcan --}}
 
-<div class="p-0 m-0 mt-2">
+<div class="p-0 m-0 mt-3">
     <div class="container-fluid" style="font-size: 11.8px;">
         @if(count($cfps) == null or count($cfps) =='')
             <div id="in" class="p-2 mt-1 alert alert-danger text-center" role="alert">
@@ -76,7 +76,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #8d8d8d"><b> <i class="fas fa-address-card"></i>&nbsp; Facture </b>
-                    <a class="overr" href=""><p class=" m-1 system_ pb-1">Payé<span class="system_numero">{{ count($facture_paye) }}</span></p></a>
+                    <a class="overr" href="{{route('liste_facture')}}"><p class=" m-1 system_ pb-1">Payé<span class="system_numero">{{ count($facture_paye) }}</span></p></a>
                     <a class="overr" href=""><p class="m-1 system_ pb-1">Non échu<span class="system_numero">{{ count($facture_non_echu) }}</span></p></a>
                     <a class="overr" href=""><p class="m-1 system_ pb-1">Echu non payé<span class="system_numero">0</span></p></a>
                     <a class="overr" href=""><p class="m-1 system_ pb-1">Payement partiel<span class="system_numero">0</span></p></a>
@@ -112,29 +112,35 @@
         <div class="row mt-2">
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #8d8d8d"><b> <i class="fas fa-tasks"></i>&nbsp; Formation intra entreprise</b>
-                    <a class="overr" href=""><p class="p-0 m-1 system_ pb-1">Complété<span class="system_numero">{{count($session_intra_terminer) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Prévisionnel<span class="system_numero">{{count($session_intra_previ) }}</span></p></a>
+                    <a class="overr" href=""><p class="p-0 m-1 system_ pb-1">Prévisionnel<span class="system_numero">{{count($session_intra_terminer) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">A venir<span class="system_numero">{{count($session_intra_previ) }}</span></p></a>
                     <a class="overr" href=""><p class="m-1 system_ pb-1">En cours<span class="system_numero">{{count($session_intra_en_cours) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">A venir<span class="system_numero">{{count($session_intra_avenir) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Complété<span class="system_numero">{{count($session_intra_avenir) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Cloturé<span class="system_numero">{{count($session_intra_avenir) }}</span></p></a>
                     <a class="overr" href=""><p class="m-1 system_ pb-1">Annuler<span class="system_numero">{{count($session_intra_previ) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Repporté<span class="system_numero">{{count($session_intra_avenir) }}</span></p></a>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #8d8d8d"><b> <i class="fas fa-tasks"></i> &nbsp; Formation inter entreprise</b>
-                    <a class="overr" href=""><p class="p-0 m-1 system_ pb-1">Complété<span class="system_numero">{{count($session_intra_terminer) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">En cours<span class="system_numero">{{count($session_inter_encours) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Prévisionnel<span class="system_numero">{{count($session_inter_previsionnel) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">A venir<span class="system_numero">{{count($session_inter_avenir) }}</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Annuler<span class="system_numero">{{count($session_inter_annuler) }}</span></p></a>
+                    <a class="overr" href=""><p class="p-0 m-1 system_ pb-1">Prévisionnel<span class="system_numero">{{count($session_intra_terminer) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">A venir<span class="system_numero">{{count($session_intra_previ) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">En cours<span class="system_numero">{{count($session_intra_en_cours) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Complété<span class="system_numero">{{count($session_intra_avenir) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Cloturé<span class="system_numero">{{count($session_intra_avenir) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Annuler<span class="system_numero">{{count($session_intra_previ) }}</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Repporté<span class="system_numero">{{count($session_intra_avenir) }}</span></p></a>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="shadow-sm p-2 mb-1 bg-body rounded" style="color: #8d8d8d"><b> <i class="fas fa-tasks"></i> &nbsp; Formation interne entreprise</b>
-                    <a class="overr" href=""><p class="p-0 m-1 system_ pb-1">Complété<span class="system_numero">3</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">En cours<span class="system_numero">7</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">Prévisionnel<span class="system_numero">0</span></p></a>
-                    <a class="overr" href=""><p class="m-1 system_ pb-1">A venir<span class="system_numero">0</span></p></a>
+                    <a class="overr" href=""><p class="p-0 m-1 system_ pb-1">Prévisionnel<span class="system_numero">3</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">A venir<span class="system_numero">1</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">En cours<span class="system_numero">0</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Complété<span class="system_numero">0</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Cloturé<span class="system_numero">0</span></p></a>
                     <a class="overr" href=""><p class="m-1 system_ pb-1">Annuler<span class="system_numero">0</span></p></a>
+                    <a class="overr" href=""><p class="m-1 system_ pb-1">Repporté<span class="system_numero">0</span></p></a>
                 </div>
             </div>
         </div>

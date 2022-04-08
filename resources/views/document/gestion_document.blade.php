@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Librairies</p>
+    <h3 class="text-white ms-5">Librairies </h3>
 @endsection
 <style>
     .liste{

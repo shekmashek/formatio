@@ -1,4 +1,5 @@
 @extends('./layouts/admin')
+Modification
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">

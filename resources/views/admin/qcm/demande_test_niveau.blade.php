@@ -1,13 +1,13 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Aptitudes</p>
+    <p class="text_header m-0 mt-1">Demande test de niveau</p>
 @endsection
 @section('content')
 <div class="page-wrapper">
     <div class="container bg-light">
         <div class="row g-0 align-items-center justify-content-center">
             <div class="col-lg-8">
-                <h4>Demande de Test de niveau</h4>
+                {{-- <h4>Demande de Test de niveau</h4> --}}
                 <form class="form-control" action="{{route('inserer_demande')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="py-2">

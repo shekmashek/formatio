@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Modification date de naissance</h3>
+@endsection
 @section('content')
 <style>
     .input{

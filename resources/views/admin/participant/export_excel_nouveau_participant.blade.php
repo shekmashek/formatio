@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Export Excel nouveau stagiaire</h3>
+@endsection
 @section('content')
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
@@ -53,10 +56,10 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 <br>
                 <h3>EXPORT EXCEL NOUVEAUX STAGIAIRES</h3>
-            </div>
+            </div> --}}
         </div>
 
         <div class="row">

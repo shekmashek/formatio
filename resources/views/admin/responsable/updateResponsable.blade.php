@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Mis à jours résponsable</h3>
+@endsection
 @section('content')
 <br>
 

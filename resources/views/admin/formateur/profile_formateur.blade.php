@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Profil formateur</h3>
+@endsection
 @section('content')
             {{-- <div class="page-content page-container" id="page-content">
         <div class="padding">

@@ -1,6 +1,9 @@
 
 
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Evaluation pour les stagigaires</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
 
@@ -13,7 +16,7 @@
 
                     {{-- <div class="card px-0 pt-4 pb-0 mt-3 mb-3"> --}}
 
-                    <h2><strong>Evaluation pour les stagiaires</strong></h2>
+                    {{-- <h2><strong>Evaluation pour les stagiaires</strong></h2> --}}
                     <div class="row">
                         <div class="col-md-12 mx-0">
                             {{-- <form id="msform"> --}}

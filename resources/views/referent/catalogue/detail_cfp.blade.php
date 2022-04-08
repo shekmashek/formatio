@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Détails centre de formation </h3>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
 <section class="container-fluid">

@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Entreprises</p>
+    <p class="text_header m-0 mt-1">Profil entreprise</p>
 @endsection
 @section('content')
 <div class="container-fluid justify-content-center pb-3">

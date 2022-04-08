@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau employée</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 

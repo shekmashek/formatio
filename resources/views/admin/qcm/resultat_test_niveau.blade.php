@@ -1,6 +1,9 @@
 
 
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Résultat du test de niveau</h3>
+@endsection
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('css/resultatQCM.css') }}">

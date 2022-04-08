@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Modification module</h3>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <div id="page-wrapper">
@@ -9,9 +12,9 @@
                     <div class="row g-0 m-0" style="align-items: center">
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            <div class="col titre_page">
+                            {{-- <div class="col titre_page">
                                 <h3 class="mt-2">Modification Modules</h3>
-                            </div>
+                            </div> --}}
 
                             <div class="col" align="right">
                                 <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"

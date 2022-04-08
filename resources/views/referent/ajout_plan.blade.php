@@ -1,19 +1,22 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau plan de formation</p>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="shadow-sm p-3 mb-5 bg-body rounded">
         <div class="container-fluid">
-        <div class="shadow p-3 mb-5 bg-body rounded">
-            <div class="row">
+        {{-- <div class="shadow p-3 mb-5 bg-body rounded">
+            {{-- <div class="row">
                 <div class="col-lg-12">
                     <br>
                 <h3>Nouveau plan de formation</h3>
             </div>
-            <!-- /.col-lg-12 -->
-        </div>
+            <!-- /.col-lg-12
+        </div> --}}
             <!-- /.row -->
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mt-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <ul class="nav nav-pills">
@@ -36,7 +39,8 @@
                     </div>
 
                 </form>
-
+    </div>
+</div>
 <script>
   document.querySelector("input[type=number]")
   .oninput = e => console.log(new Date(e.target.valueAsNumber, 0, 1))

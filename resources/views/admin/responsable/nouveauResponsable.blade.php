@@ -1,14 +1,17 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau responsable</p>
+@endsection
 @section('content')
 <div id="page-wrapper">
 <div class="shadow-sm p-3 mb-5 bg-body rounded">
     <div class="container-fluid">
         <div class="shadow p-3 mb-5 bg-body rounded">
         <div class="row">
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
             	<br>
                 <h3>RESPONSABLE</h3>
-            </div>
+            </div> --}}
             <div class="panel-heading">
                 <ul class="nav nav-pills">
                     <li class ="{{ Route::currentRouteNamed('liste_responsable') ? 'active' : '' }}"><a href="{{route('liste_responsable')}}" ><span class="glyphicon glyphicon-th-list"></span>  Liste des responsables</a></li>

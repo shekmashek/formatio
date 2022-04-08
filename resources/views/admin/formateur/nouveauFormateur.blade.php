@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau formateur</p>
+@endsection
 @section('content')
 
 <div id="page-wrapper">
@@ -36,7 +39,7 @@
 
         </div> --}}
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-lg-12">
                 @canany(['isCFP'])
                 @if(Session::has('success'))
@@ -60,7 +63,7 @@
                                 <form name="formInsert" id="formInsert" action="{{route('formateur.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();" class="form_insert_formateur">
                                     @csrf
 
-                                    <h1>Profil Formateur</h1>
+                                    <p style="font-size: 15px;">Profil Formateur</p>
 
                                     <div class="form-control-file mt-2">
                                         <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required><strong>Taille du fichier: 60Ko max</strong>
