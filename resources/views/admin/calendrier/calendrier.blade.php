@@ -328,6 +328,7 @@
                     var details = userDataDetail['detail'];
                     var modules = userDataDetail['modules'];
                     var formations = userDataDetail['formations'];
+
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
@@ -340,7 +341,7 @@
                             , h_fin: details[$i].h_fin
                             , lieu: details[$i].lieu
                             , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
-                            , detail_id: details[$i].id
+                            , detail_id: details[$i].details_id
                             , nom_cfp: details[$i].nom_cfp
                             , customRender: true
 
@@ -393,7 +394,7 @@
                                 }
                                 , dataType: "html"
                                 , success: function(response) {
-                                    console.log(response)
+                                    console.log("valiny",response)
                                     var projet = document.getElementById('projet');
                                     projet.innerHTML = '';
                                     var session = document.getElementById('session');
@@ -455,16 +456,18 @@
                                     var liste_app = document.getElementById('liste_app');
                                     liste_app.innerHTML = '';
                                     // alert(JSON.stringify(response));
+
                                     var userDataDetail = JSON.parse(response);
                                     // alert(userData.length);
                                     var userData = userDataDetail['detail'];
-
+                                    var statut_pj = userDataDetail['status'];
                                     var stg = userDataDetail['stagiaire'];
                                     var date_groupe = userDataDetail['date_groupe'];
                                     var test_photo = userDataDetail['photo_form'];
                                     var photo_formateur = userDataDetail['initial'];
                                     var initial_stg = userDataDetail['initial_stg'];
-
+                                    var entreprises = userDataDetail['entreprises'];
+                                    var formations = userDataDetail['formations'];
                                     var images = '';
                                     var html = '';
                                     var formation = '';
@@ -483,7 +486,7 @@
 
 
                                         $("#projet").append(userData[$i].nom_projet);
-                                        $('#statut').append(userData[$i].statut);
+                                        $('#statut').append(statut_pj);
                                         $('#types').append(userData[$i].type_formation);
                                         $('#lieu').append(userData[$i].lieu);
 
@@ -492,12 +495,12 @@
                                         session = session.replace(":!",userData[$i].type_formation_id);
                                         $('#session').append(session);
 
-                                        cfp+='<a href = "{{url("detail_cfp/:?")}}" target = "_blank">'+userData[$i].nom_cfp+'</a>'
+                                        cfp+='<a href = "{{url("detail_cfp/:?")}}" target = "_blank">'+userData[$i].nom+'</a>'
                                         cfp = cfp.replace(":?",userData[$i].cfp_id);
                                         $('#cfp').append(cfp);
 
-                                        etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+userData[$i].nom_etp+'</a>'
-                                        etp = etp.replace(":?",userData[$i].entreprise_id);
+                                        etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+entreprises[$i].nom_etp+'</a>'
+                                        etp = etp.replace(":?",entreprises[$i].entreprise_id);
                                         $('#etp').append(etp);
 
                                         if(test_photo=='oui'){
@@ -513,25 +516,25 @@
                                         $('#logo_formateur').append(logo_formateur);
 
                                         logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:80px">';
-                                        logo_etp = logo_etp.replace(":?",userData[$i].logo_entreprise);
+                                        logo_etp = logo_etp.replace(":?",entreprises[$i].logo);
                                         $('#logo_etp').append(logo_etp);
 
                                         // $('#logo_cfp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
                                         logo_cfp+='<img src = "{{asset('images/CFP/:?')}}"  style="width:80px">';
-                                        logo_cfp = logo_cfp.replace(":?",userData[$i].logo_cfp);
+                                        logo_cfp = logo_cfp.replace(":?",userData[$i].logo);
                                         $('#logo_cfp').append(logo_cfp);
 
                                         html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + '&nbsp&nbsp<i class="fas fa-envelope-square"></i>'+ userData[$i].mail_formateur + '&nbsp&nbsp<i class="fas fa-phone-alt"></i> '+ userData[$i].numero_formateur+'</a>'
                                         html = html.replace(":?",userData[$i].formateur_id);
                                         $('#formateur').append(html);
 
-                                        formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+userData[$i].nom_formation+'</a>'
-                                        formation = formation.replace(":?",userData[$i].formation_id);
+                                        formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+formations[$i].nom_formation+'</a>'
+                                        formation = formation.replace(":?",formations[$i].formation_id);
                                         $('#formation').append(formation);
 
 
-                                        modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+userData[$i].nom_module+'</a>'
-                                        modules = modules.replace(":?",userData[$i].module_id);
+                                        modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+formations[$i].nom_module+'</a>'
+                                        modules = modules.replace(":?",formations[$i].module_id);
                                         $('#module').append(modules);
 
                                     }

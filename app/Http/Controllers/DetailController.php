@@ -73,7 +73,7 @@ class DetailController extends Controller
             $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
             $cfp_id = $rqt[0]->cfp_id;
             // $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
-            $detail = DB::select('SELECT * FROM details
+            $detail = DB::select('SELECT details.id as details_id,h_debut,h_fin,date_detail,groupe_id FROM details
             INNER JOIN projets ON details.projet_id = projets.id
             INNER JOIN groupes ON details.groupe_id = groupes.id
             INNER JOIN formateurs ON details.formateur_id = formateurs.id
@@ -169,7 +169,45 @@ class DetailController extends Controller
     {
         $fonct = new FonctionGenerique();
         $id = $request->Id;
-        $detail = DB::select(' select statut,date_detail,h_debut,h_fin, detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where detail_id = ' . $id);
+        // $detail = DB::select(' select statut,date_detail,h_debut,h_fin, detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where detail_id = ' . $id);
+        $detail = DB::select('
+            SELECT * FROM details
+            inner join formateurs on details.formateur_id = formateurs.id
+            inner join cfps on details.cfp_id = cfps.id
+            inner join groupes on details.groupe_id = groupes.id
+            inner join projets on details.projet_id = projets.id
+            inner join type_formations on projets.type_formation_id = type_formations.id
+            where details.id = ?',[$id]);
+        $entreprises = DB::select('
+            select * from groupe_entreprises
+            inner join entreprises on groupe_entreprises.entreprise_id = entreprises.id
+            where groupe_entreprises.groupe_id = ?
+            ',[$detail[0]->groupe_id]);
+        $formations = DB::select('
+        select * from groupes
+        inner join modules on groupes.module_id = modules.id
+        inner join formations on modules.formation_id = formations.id
+        where groupes.id = ?
+        ',[$detail[0]->groupe_id]);
+
+        $status = DB::select("
+
+                select
+                g.status as status_groupe,
+                g.date_debut,
+                g.date_fin,
+                case
+                    when g.status = 2 then
+                        case
+                            when (g.date_fin - curdate()) < 0 then 'Terminé'
+                            when (g.date_debut - curdate()) < 0 then 'En cours'
+                            else 'A venir' end
+                    when g.status = 1 then 'Prévisionnel'
+                    when g.status = 0 then 'Créer'end item_status_groupe
+            from groupes g
+            where g.id =?
+        ",[$detail[0]->groupe_id]);
+
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $initial_stg = array();
         //on récupère l'initial
@@ -180,7 +218,8 @@ class DetailController extends Controller
         $date_groupe =  DB::select('select statut,date_detail,h_debut,h_fin,detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where groupe_id = ' . $id_groupe);
 
         //on teste d'abord si le formateur a une photo ou non
-        $test_photo_formateur = $fonct->findWhereMulitOne(("v_detailmodule"),["groupe_id"],[$id_groupe])->photos;
+        $test_photo_formateur = $detail[0]->photos;
+
         //recuperation de l'initial
         $photo_form ='';
         if($test_photo_formateur == null){
@@ -192,7 +231,7 @@ class DetailController extends Controller
             $photo_form = 'oui';
         }
 
-        return response()->json(['detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
+        return response()->json(['formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
     }
     //impression
     public function detail_printpdf($id)

@@ -254,7 +254,6 @@ class HomeController extends Controller
         if (Gate::allows('isCFPPrincipale')) {
 
 
-
             $fonct = new FonctionGenerique();
 
             $user_id = Auth::user()->id;
