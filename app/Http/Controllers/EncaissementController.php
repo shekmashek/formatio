@@ -126,9 +126,23 @@ class EncaissementController extends Controller
 
     public function modification(Request $request)
     {
+        $fonct = new FonctionGenerique();
+
         $id_encaissement = $request->encaissement_id;
-        $encaissement = encaissement::where('id', $id_encaissement)->get(['payement', 'libelle', 'num_facture']);
-        return response()->json([intval($encaissement[0]->payement), $encaissement[0]->libelle, $encaissement[0]->num_facture]);
+        $encaissement = encaissement::where('id', $id_encaissement)->get(['payement', 'libelle', 'num_facture', 'date_encaissement', 'mode_financement_id']);
+        $mode_finance = $fonct->findWhereMulitOne("mode_financements", ["id"], [$encaissement[0]->mode_financement_id]);
+        $mode_finance_list = $fonct->findWhereParam("mode_financements", ["id"], ["!="], [$encaissement[0]->mode_financement_id]);
+
+        $data["userData"][0] = intval($encaissement[0]->payement);
+        $data["userData"][1] = $encaissement[0]->libelle;
+        $data["userData"][2] = $encaissement[0]->num_facture;
+        $data["userData"][3] = $encaissement[0]->date_encaissement;
+        $data["mode_finance_edit"] =  $mode_finance;
+        $data["mode_finance_list"] =  $mode_finance_list;
+        // return response()->json([intval($encaissement[0]->payement), $encaissement[0]->libelle, $encaissement[0]->num_facture, $encaissement[0]->date_encaissement]);
+        // return response()->json([$data["userData"], $data["mode_finance_edit"], $data["mode_finance_list"]]);
+        return response()->json([$data]);
+
     }
 
 
@@ -142,7 +156,8 @@ class EncaissementController extends Controller
             $montant = $request->montant;
             $libelle = $request->libelle;
             $numero_fact = $request->num_facture;
-            encaissement::modifierEncaissementNow($id_encaissement, $montant, $libelle);
+            encaissement::modifierEncaissementNow($id_encaissement, $montant, $libelle,
+            $request->mode_payement, $request->date_encaissement);
             encaissement::modifierAutres($id_encaissement);
             DB::commit();
             return redirect()->route('listeEncaissement', [$numero_fact]);

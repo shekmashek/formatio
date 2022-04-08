@@ -254,7 +254,7 @@
                                                         </tr>
                                                         @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
                                                         <tr>
-                                                            <td>Facture d'acompte</td>
+                                                            <td>Acompte</td>
                                                             <td>
                                                                 <div align="right" style="background-color: rgb(255, 204, 0)">
                                                                     Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
@@ -270,14 +270,14 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr>
+                                                        {{-- <tr>
                                                             <td>Reste à payer</td>
                                                             <td>
                                                                 <div align="right">
                                                                     <strong> Ar {{number_format( $montant_totale->dernier_montant_ouvert,0,","," ")}}</strong>
                                                                 </div>
                                                             </td>
-                                                        </tr>
+                                                        </tr> --}}
 
                                                     </tbody>
                                                 </table>

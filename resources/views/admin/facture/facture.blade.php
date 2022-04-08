@@ -576,6 +576,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_enregistrer">PDF</button></a>
+                                                <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_enregistrer">Liste des encaissements</button></a>
                                                 <hr class="dropdown-divider">
                                                 <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_enregistrer">Creer nouveau facture</button></a>
                                             </ul>
@@ -633,7 +634,9 @@
                             @csrf
                             <div class="inputbox inputboxP mt-3">
                                 <span>Description</span>
-                                <input autocomplete="off" type="text" name="libelle" class="form-control formPayement" required="required" placeholder="description d'encaissement">
+                                <textarea  autocomplete="off" name="libelle" id="libelle" class="text_description form-control" placeholder="description d'encaissement"></textarea>
+
+                                {{-- <input autocomplete="off" type="text" name="libelle" class="form-control formPayement" required="required" placeholder="description d'encaissement"> --}}
                             </div>
                             <div class="inputbox inputboxP mt-3">
                                 <span>Montant à facturer</span>
@@ -654,7 +657,7 @@
                             <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                         </form>
                         <div class="mt-4 mb-4">
-                            <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn-danger annuler" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn-success btnP px-3">Valider</button> </div>
+                            <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_enregistrer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_enregistrer btnP px-3">Encaisser</button> </div>
                         </div>
 
                     </div>

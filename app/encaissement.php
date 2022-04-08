@@ -37,11 +37,12 @@ class Encaissement extends Model
     }
 
 
-    public static function modifierEncaissementNow($id, $montant, $libelle)
+    public static function modifierEncaissementNow($id, $montant, $libelle,$mode_paye, $dte_encaissement)
     {
         $encaissement_now = DB::select('select * from encaissements where id = ?', [$id]);
         $montant_ouvert = $encaissement_now[0]->montant_facture - $montant;
-        DB::update('update encaissements set payement = ? , libelle = ? , montant_ouvert = ? where id = ?', [$montant, $libelle, $montant_ouvert, $id]);
+        DB::update('update encaissements set payement = ? , libelle = ? , montant_ouvert = ?, mode_financement_id=?, date_encaissement=?  where id = ?',
+        [$montant, $libelle, $montant_ouvert,$mode_paye, $dte_encaissement, $id]);
     }
 
     public static function modifierAutres($id_modifier)

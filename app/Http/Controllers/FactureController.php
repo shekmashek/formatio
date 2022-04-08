@@ -195,31 +195,6 @@ class FactureController extends Controller
                 $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
             }
         }
-
-        /*  if (Gate::allows('isReferent')) {
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
-            $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-            $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-            $facture_avoir = $this->fonct->findWhere(
-                "v_liste_facture",
-                ["projet_id", "UPPER(reference_facture)", "cfp_id"],
-                [$montant_totale->projet_id, "AVOIR", $cfp_id]
-            );
-            $facture_acompte = $this->fonct->findWhere(
-                "v_liste_facture",
-                ["projet_id", "UPPER(reference_facture)", "cfp_id"],
-                [$montant_totale->projet_id, "ACOMPTE", $cfp_id]
-            );
-            $frais_annexes = $this->fonct->findWhere("v_frais_annexe", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-            if ($montant_totale->rest_payer > 0) {
-                $lettre_montant = $this->fact->int2str($montant_totale->dernier_montant_ouvert);
-            } else {
-                $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
-            }
-        }
-*/
-
         return view("admin.facture.detail_facture", compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }
 
@@ -264,30 +239,33 @@ class FactureController extends Controller
 
     public function generatePDF($numero_fact)
     {
-        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-        $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
-
-        $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-        $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-        $facture_avoir = $this->fonct->findWhere(
-            "v_liste_facture",
-            ["projet_id", "UPPER(reference_facture)", "cfp_id"],
-            [$montant_totale->projet_id, "AVOIR", $cfp_id]
-        );
-
-        $facture_acompte = $this->fonct->findWhere(
-            "v_liste_facture",
-            ["projet_id", "UPPER(reference_facture)", "cfp_id"],
-            [$montant_totale->projet_id, "ACOMPTE", $cfp_id]
-        );
-
-        $frais_annexes = $this->fonct->findWhere("v_frais_annexe", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-
-        if ($montant_totale->rest_payer > 0) {
-            $lettre_montant = $this->fact->int2str($montant_totale->dernier_montant_ouvert);
-        } else {
-            $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
-        }
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
+            $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
+            $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+            $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+            $facture_avoir = $this->fonct->findWhere(
+                "v_liste_facture",
+                ["projet_id", "UPPER(reference_facture)", "cfp_id"],
+                [$montant_totale->projet_id, "AVOIR", $cfp_id]
+            );
+            $facture_acompte = $this->fonct->findWhere(
+                "v_facture_inactif",
+                ["projet_id", "UPPER(reference_type_facture)", "cfp_id"],
+                [$montant_totale->projet_id, "ACOMPTE", $cfp_id]
+            );
+            if (count($facture_acompte) <= 0) {
+                $facture_acompte = $this->fonct->findWhere(
+                    "v_facture_actif",
+                    ["projet_id", "UPPER(reference_type_facture)", "cfp_id"],
+                    [$montant_totale->projet_id, "ACOMPTE", $cfp_id]
+                );
+            }
+            $frais_annexes = $this->fonct->findWhere("v_frais_annexe", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+            if ($montant_totale->rest_payer > 0) {
+                $lettre_montant = $this->fact->int2str($montant_totale->dernier_montant_ouvert);
+            } else {
+                $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
+            }
 
         PDF::setOptions([
             "defaultFont" => "Courier",
@@ -296,6 +274,7 @@ class FactureController extends Controller
         ]);
 
         $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
