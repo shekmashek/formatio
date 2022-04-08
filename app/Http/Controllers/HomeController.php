@@ -262,7 +262,7 @@ class HomeController extends Controller
             $modules = array();
             $formations = array();
             for ($i=0; $i < count($detail); $i++) {
-                array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[0]->groupe_id]));
+                array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
             }
             dd($modules);
             for ($i=0; $i < count($modules); $i++) {
