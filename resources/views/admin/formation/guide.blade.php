@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<p style="color: white; "> &nbsp; Votre catalogue de formation</p>
+    <p class="text_header m-0 mt-1">Guide</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -22,7 +22,7 @@ integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg
                     <style>
                         .btn{ background-color: #801D68 ; color:white;}
                         .btn:hover{color: white;}
-                        
+
                     </style>
                 </div>
             </div>

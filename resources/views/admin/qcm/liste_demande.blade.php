@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Liste des demandes</h3>
+@endsection
 @section('content')
 <div class="page-wrapper">
     <div class="container">

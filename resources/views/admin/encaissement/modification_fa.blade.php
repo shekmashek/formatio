@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Informations</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -13,7 +16,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Informations</h4>
+                        <h5>Informations</h5>
                     </div>
                     <div class="panel-body">
                         <div class="row">

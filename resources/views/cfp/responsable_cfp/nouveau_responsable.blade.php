@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Liste des résponsables</p>
+@endsection
 @section('content')
 <div class="container-fluid justify-content-center pb-3">
 
@@ -191,10 +194,7 @@
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
 
             @if($resp_cfp_connecter->prioriter == 1)
-            <h2>Créer un nouveau responsable dans votre organisation</h2>
-            <p>
-                Pour travailler plus vite pour plus de productivié et gagner du temps.
-            </p>
+            <P style="font-size: 15px">Créer un nouveau responsable dans votre organisation pour travailler plus vite pour plus de productivié et gagner du temps.</P>
 
             <form class="form form_colab" action="{{ route('save+nouveau+responsable+cfp') }}" method="POST">
                 @csrf

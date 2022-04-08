@@ -1,5 +1,8 @@
 
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Détails du projet</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">

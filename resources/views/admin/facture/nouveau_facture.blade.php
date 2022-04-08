@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau facture</p>
+@endsection
 @section('content')
 {{--<link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
 {{-- https://www.youtube.com/watch?v=RBeqKYsw7CQ  link template facture videos youtube --}}

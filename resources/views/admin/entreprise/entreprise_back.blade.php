@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Entreprises</h3>
+@endsection
 @section('content')
 
 <div id="page-wrapper">
@@ -6,8 +9,8 @@
         <div class="row">
 
             <div class="col-lg-12">
-                <br>
-                <h5>Entreprises</h5>
+                {{-- <br>
+                <h5>Entreprises</h5> --}}
                 <a href="{{ route('collaboration')}}">
                 <button class="btn btn-success mb-2 payement"><i class="fa fa-plus"></i> collaborer</button></a>
             </div>

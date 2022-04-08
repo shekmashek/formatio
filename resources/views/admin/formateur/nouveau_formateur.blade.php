@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau formateur</p>
+@endsection
 @section('content')
 
 <div id="page-wrapper">
@@ -52,7 +55,7 @@
                                 <form name="formInsert" id="formInsert" action="{{route('formateur.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();" class="form_insert_formateur">
                                     @csrf
 
-                                    <h1>Profil Formateur</h1>
+                                    <p style="font-size: 15px;">Profil Formateur</p>
 
                                     <div class="form-control-file mt-2">
                                         <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required>
@@ -189,8 +192,8 @@
                                     </div>
 
 
-                                    <h1>Domaine et Competence</h1>
-
+                                    {{-- <p style="font-size: 15px">Domaine et Competence</p> --}}
+                                    <h5>Domaine et compétence</h5>
                                     <div class="row mt-2">
                                         <div class="col-lg-5">
                                             <div class="form-group">
@@ -210,7 +213,7 @@
 
 
                                     <div class="row mt-4">
-                                        <h1 class="text-center">Expériences Professionnelles</h1>
+                                        <h5 class="text-center">Expériences Professionnelles</h5>
                                         <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-lg-4">

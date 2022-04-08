@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Nouveau résponsable</h3>
+@endsection
 @section('content')
 <div class="container-fluid justify-content-center pb-3">
 

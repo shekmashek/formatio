@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Mettre à jours</h3>
+@endsection
 @section('content')
 <br>
 
@@ -41,7 +44,7 @@
                   @endif
               @endfor
             @endfor
-            
+
           <br>
           </form>
 

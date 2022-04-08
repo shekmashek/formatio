@@ -1,12 +1,15 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Liste plan de formation </h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
             	<br>
                 <h3>Listes plan de formation</h3>
-            </div>
+            </div> --}}
             <!-- /.col-lg-12 -->
         </div>
             <!-- /.row -->
@@ -19,7 +22,7 @@
                                 <li class ="{{ Route::currentRouteNamed('liste_demande_stagiaire') ? 'active' : '' }}"><a href="{{route('liste_demande_stagiaire')}}" ><span class="fa fa-th-list"></span>  Liste des demandes</a></li>&nbsp;&nbsp;
                                 <li class ="{{ Route::currentRouteNamed('listePlanFormation') ? 'active' : '' }}"><a href="{{route('listePlanFormation')}}" ><span class="fa fa-th-list"></span>  Liste des Plan de formation</a></li>&nbsp;&nbsp;
                                 <li  class ="{{ Route::currentRouteNamed('ajout_plan') ? 'active' : '' }}" ><a href="{{route('ajout_plan')}}"><span class="fa fa-plus-sign"></span> Nouveau Plan de formation</a></li>
-                            @endcanany    
+                            @endcanany
                         </ul>
                     </div>
                     <div class="panel-body">
