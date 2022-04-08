@@ -33,7 +33,7 @@ CREATE TABLE entreprises (
   email_etp varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   site_etp varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   activiter boolean not null default true,
-  telephone_etp varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  telephone_etp varchar(191) COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -113,8 +113,8 @@ CREATE TABLE responsables (
   date_naissance_resp date current_timestamp(),
   cin_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
   email_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  telephone_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
-  fonction_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone_resp varchar(255) COLLATE utf8mb4_unicode_ci,
+  fonction_resp varchar(255) COLLATE utf8mb4_unicode_ci,
   poste_resp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   departement_entreprises_id bigint(20) UNSIGNED,
   service_id bigint(20) UNSIGNED,

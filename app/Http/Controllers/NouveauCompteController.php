@@ -100,8 +100,8 @@ class NouveauCompteController extends Controller
 
                 $data["nom_cfp"] = $req->name_cfp;
                 $data["email_cfp"] = $req->email_resp_cfp;
-                $data["tel_cfp"] = $req->tel_resp_cfp;
-                $data["web_cfp"] = $req->web_cfp;
+                // $data["tel_cfp"] = $req->tel_resp_cfp;
+                // $data["web_cfp"] = $req->web_cfp;
                 $data["nif"] = $req->nif;
 
                 // ======= responsable
@@ -110,8 +110,8 @@ class NouveauCompteController extends Controller
                 $resp["prenom_resp"] = $req->prenom_resp_cfp;
                 $resp["cin_resp"] = $req->cin_resp_cfp;
                 $resp["email_resp"] = $req->email_resp_cfp;
-                $resp["tel_resp"] = $req->tel_resp_cfp;
-                $resp["fonction_resp"] = $req->fonction_resp_cfp;
+                // $resp["tel_resp"] = $req->tel_resp_cfp;
+                // $resp["fonction_resp"] = $req->fonction_resp_cfp;
 
                 $verify = $this->new_compte->verify_cfp($req->name_cfp, $req->email_resp_cfp);
                 $verify_cfp_nif = $this->fonct->findWhere("cfps", ["nif"], [$req->nif]);
@@ -127,7 +127,7 @@ class NouveauCompteController extends Controller
                                     $this->user->name = $req->nom_resp_cfp . " " . $req->prenom_resp_cfp;
                                     $this->user->email = $req->email_resp_cfp;
                                     $this->user->cin = $req->cin_resp_cfp;
-                                    $this->user->telephone = $req->tel_resp_cfp;
+                                    // $this->user->telephone = $req->tel_resp_cfp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
 
@@ -201,8 +201,8 @@ class NouveauCompteController extends Controller
 
                 $data["nom_etp"] = $req->name_etp;
                 $data["email_etp"] = $req->email_resp_etp;
-                $data["tel_etp"] = $req->tel_resp_etp;
-                $data["web_etp"] = $req->web_etp;
+                // $data["tel_etp"] = $req->tel_resp_etp;
+                // $data["web_etp"] = $req->web_etp;
                 $data["nif"] = $req->nif;
                 $data["secteur_id"] = $req->secteur_id;
 
@@ -212,14 +212,13 @@ class NouveauCompteController extends Controller
                 $resp["prenom_resp"] = $req->prenom_resp_etp;
                 $resp["cin_resp"] = $req->cin_resp_etp;
                 $resp["email_resp"] = $req->email_resp_etp;
-                $resp["tel_resp"] = $req->tel_resp_etp;
-                $resp["fonction_resp"] = $req->fonction_resp_etp;
+                // $resp["tel_resp"] = $req->tel_resp_etp;
+                // $resp["fonction_resp"] = $req->fonction_resp_etp;
 
                 $verify = $this->new_compte->verify_etp($req->name_etp, $req->email_resp_etp);
                 $verify_etp_nif = $this->fonct->findWhere("entreprises", ["nif"], [$req->nif]);
                 $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_etp]);
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_etp]);
-                $verify_resp_tel = $this->fonct->findWhere("users", ["telephone"], [$req->tel_resp_etp]);
 
 
                 if (count($verify) <= 0) { // etp n'existe pas
@@ -233,7 +232,7 @@ class NouveauCompteController extends Controller
                                     $this->user->name = $req->nom_resp_etp . " " . $req->prenom_resp_etp;
                                     $this->user->email = $req->email_resp_etp;
                                     $this->user->cin = $req->cin_resp_etp;
-                                    $this->user->telephone = $req->tel_resp_etp;
+                                    // $this->user->telephone = $req->tel_resp_etp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
                                     $this->user->save();

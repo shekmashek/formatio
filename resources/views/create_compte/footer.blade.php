@@ -43,8 +43,6 @@
         // ========= field N°1 et N°2 pour entreprise inscription =================================
 
         $('.field-etp input').change(function() {
-      /*      $('.field-etp input').keyup(function() { */
-
             if ($('#name_etp').val().length > 2 &&
                 $('#nif_etp').val().length > 5 &&
                 $('#logo_etp').val().length > 3) {
@@ -64,11 +62,28 @@
             if ($('#nom_resp_etp').val().length > 1 &&
                 $('#cin_resp_etp').val().length > 11 &&
                 $('#matricule_resp_etp').val().length > 1 &&
+                $('#email_resp_etp').val().length > 5 &&
+                $('#val_robot').val().length > 0) {
+
+                if (document.getElementById("nom_resp_etp_err").innerHTML == '' &&
+                    document.getElementById("cin_resp_etp_err").innerHTML == '' &&
+                    document.getElementById("matricule_resp_etp_err").innerHTML == '' &&
+                    document.getElementById("email_resp_etp_err").innerHTML == '') {
+                    $('.suivant_etp_confirmer').css('display', 'block');
+                } else {
+                    $('.suivant_etp_confirmer').css('display', 'none');
+                }
+            }
+        });
+
+     /*   $('.field2-etp input').change(function() {
+            if ($('#nom_resp_etp').val().length > 1 &&
+                $('#cin_resp_etp').val().length > 11 &&
+                $('#matricule_resp_etp').val().length > 1 &&
                 $('#fonction_resp_etp').val().length > 0 &&
                 $('#email_resp_etp').val().length > 5 &&
                 $('#val_robot').val().length > 0 &&
                 $('#tel_resp_etp').val().length > 9) {
-          /*          $('.suivant_etp_confirmer').css('display', 'block'); */
 
                 if (document.getElementById("nom_resp_etp_err").innerHTML == '' &&
                     document.getElementById("cin_resp_etp_err").innerHTML == '' &&
@@ -81,7 +96,7 @@
                     $('.suivant_etp_confirmer').css('display', 'none');
                 }
             }
-        });
+        }); */
 
     });
 
@@ -119,6 +134,23 @@
         $('.field2-cfp input').change(function() {
             if ($('#nom_resp_cfp').val().length > 1 &&
                 $('#cin_resp_cfp').val().length > 11 &&
+                $('#email_resp_cfp').val().length > 5 &&
+                $('#val_robot').val().length > 0 ) {
+
+                if (document.getElementById("nom_resp_cfp_err").innerHTML == '' &&
+                    document.getElementById("cin_resp_cfp_err").innerHTML == '' &&
+                    document.getElementById("email_resp_cfp_err").innerHTML == '') {
+                    $('.suivant_of_confirmer').css('display', 'block');
+                } else {
+                    $('.suivant_of_confirmer').css('display', 'none');
+                }
+            }
+        });
+
+
+  /*      $('.field2-cfp input').change(function() {
+            if ($('#nom_resp_cfp').val().length > 1 &&
+                $('#cin_resp_cfp').val().length > 11 &&
                 $('#fonction_resp_cfp').val().length > 0 &&
                 $('#email_resp_cfp').val().length > 5 &&
                 $('#val_robot').val().length > 0 &&
@@ -135,7 +167,7 @@
                 }
             }
         });
-
+*/
 
 
 
@@ -148,9 +180,9 @@
         var result = $(this).val();
         document.getElementById("cin_resp_cfp_err").innerHTML = "";
 
-        if ($(this).val().length > 12 || $(this).val().length < 12) {
+     /*   if ($(this).val().length > 12 || $(this).val().length < 12) {
             document.getElementById("cin_resp_cfp_err").innerHTML = "Le CIN est invalide";
-        } else {
+        } else { */
             $.ajax({
                 url: '{{route("verify_cin_user")}}'
                 , type: 'get'
@@ -170,7 +202,7 @@
                     console.log(error);
                 }
             });
-        }
+    /*    } */
 
     });
 
@@ -205,6 +237,7 @@
 
     });
 
+    /*
     $(document).on('change', '#fonction_resp_cfp', function() {
         var result = $(this).val();
         if (result.length < 2) {
@@ -214,7 +247,7 @@
         }
 
     });
-
+*/
 
     $(document).on('change', '#logo_cfp', function() {
         var test = $(this).val().split('.').pop();
@@ -230,6 +263,7 @@
         }
     });
 
+    /*
     $(document).on('change', '#tel_resp_cfp', function() {
         if ($(this).val().length > 13 || $(this).val().length < 10) {
             document.getElementById("tel_resp_cfp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
@@ -239,7 +273,7 @@
 
     });
 
-
+*/
 
     $(document).on('change', '#nif_cfp', function() {
         var nif = $(this).val();
@@ -276,9 +310,9 @@
         var result = $(this).val();
         document.getElementById("cin_resp_etp_err").innerHTML = "";
 
-        if ($(this).val().length > 12 || $(this).val().length < 12) {
+    /*    if ($(this).val().length > 12 || $(this).val().length < 12) {
             document.getElementById("cin_resp_etp_err").innerHTML = "Le CIN est invalide";
-        } else {
+        } else { */
             $.ajax({
                 url: '{{route("verify_cin_user")}}'
                 , type: 'get'
@@ -297,7 +331,7 @@
                     console.log(error);
                 }
             });
-        }
+      /*  } */
 
     });
 
@@ -330,7 +364,7 @@
     });
 
 
-
+/*
     $(document).on('change', '#fonction_resp_etp', function() {
         var result = $(this).val();
         if (result.length < 2) {
@@ -340,7 +374,7 @@
         }
 
     });
-
+*/
     $(document).on('change', '#matricule_resp_etp', function() {
         var result = $(this).val();
         if (result.length < 2) {
@@ -367,6 +401,7 @@
         }
     });
 
+    /*
     $(document).on('change', '#tel_resp_etp', function() {
         if ($(this).val().length > 13 || $(this).val().length < 10) {
             document.getElementById("tel_resp_etp_err").innerHTML = "le numéro de votre télephone n'est pas correct";
@@ -375,7 +410,7 @@
         }
 
     });
-
+*/
 
 
     $(document).on('change', '#nif_etp', function() {
