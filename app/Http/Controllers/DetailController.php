@@ -259,9 +259,7 @@ class DetailController extends Controller
         $user_id = Auth::user()->id;
         $cfp_id = Cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();
-
         $id = request()->id_session;
-
         $formateur = Formateur::orderBy('nom_formateur')->get();
         $formation = Formation::orderBy('nom_formation')->get();
         $formation_id = Formation::orderBy('nom_formation')->first()->id;

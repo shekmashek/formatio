@@ -93,6 +93,7 @@ ul li a {
 .sidebar.active {
     width: 100px;
     overflow-y: auto;
+
 }
 
 .sidebar .logo_content .logo {
@@ -693,9 +694,12 @@ input:-webkit-autofill:active {
     color: white;
 }
 
+.btn_racourcis{
+    transition: all .5s ease;
+}
+
 .btn_racourcis .bx{
     text-align: center;
-    /* transition: all 0.5s ease; */
     display: block;
     position: relative;
     bottom: .6rem;
@@ -711,8 +715,8 @@ input:-webkit-autofill:active {
 .btn_racourcis:hover {
     color: #637381;
     text-decoration: none;
-    border-bottom: 2px solid black;
-    transform: none;
+    /* border-bottom: 2px solid black; */
+    transform: scale(1.2);
 }
 
 .text_header{
@@ -720,6 +724,7 @@ input:-webkit-autofill:active {
     color: #637381;
     position: relative;
     bottom: .5rem;
+    text-transform: capitalize;
 }
 
 .btn_creer{

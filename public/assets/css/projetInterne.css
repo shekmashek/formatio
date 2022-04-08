@@ -20,41 +20,36 @@ h3{
     color: #333;
 }
 
-/* .p1{
-    background-image: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+/* navigation */
 
-    transition: all .5s ease;
+.navigation_interne .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
 }
 
-.p2{
-    background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
-    transition: all .5s ease;
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
 }
 
-.p3{
-    background-image: linear-gradient( 135deg, #52E5E7 10%, #130CB7 100%);
-    transition: all .5s ease;
-}
-
-.p1:hover{
-    background-image: linear-gradient( 135deg, #FAB2FF 10%, #1904E5 100%);
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
     transform: scale(1.1);
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
 }
 
-.p1:hover span .bx{
-    transform: rotate(360deg);
-}
-
-.p2:hover{
-    background-image: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
-    transform: scale(1.1);
-}
-
-.p3:hover{
-    background-image: linear-gradient( 135deg, #FAB2FF 10%, #1904E5 100%);
-    transform: scale(1.1);
-} */
-
+/* navigation */
 
 .projet_interne a{
     color: grey;
@@ -87,6 +82,7 @@ transform: rotate(45deg);
     text-transform: uppercase;
     font-size: 1.8rem;
 }
+
 
 /* ----------------  formations  ---------------- */
 

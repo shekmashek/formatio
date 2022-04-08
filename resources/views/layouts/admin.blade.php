@@ -579,7 +579,7 @@
                             @can('isManager')
                             <div class="btn_creer dropdown">
 
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false" style="text-decoration: none" aria-haspopup="true">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none" aria-haspopup="true">
                                     <i class='bx bx-plus-medical icon_creer'></i>Créer
                                 </a>
 
@@ -600,7 +600,7 @@
                             @can('isReferent')
                             <div class="btn_creer dropdown">
 
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
                                     <i class='bx bx-plus-medical icon_creer'></i>Créer
 
                                 </a>
@@ -619,6 +619,21 @@
                                             formation</a></li>
                                     <li><a class="dropdown-item" href="{{route('budget')}}"><i
                                                 class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('formations')}}">
+                                            <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module Interne
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('formateurs')}}">
+                                            <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur Interne
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('projets')}}">
+                                            <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
+                                        </a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -626,7 +641,7 @@
                             @can('isCFP')
                             <div class="btn_creer dropdown">
 
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
                                     <i class='bx bx-plus-medical icon_creer'></i>Créer
 
                                 </a>
@@ -764,7 +779,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 3.5rem;">
+            <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 4.5rem;">
                 @yield('content')
 
             </div>
@@ -848,9 +863,10 @@
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
         integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
     </script>
+{{--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
         integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
@@ -904,9 +920,7 @@
                 }
             });
         });
-        $(document).ready(function() {
-            $(".dropdown-toggle").dropdown();
-        });
+
 
     </script>
 </body>

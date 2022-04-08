@@ -272,7 +272,7 @@
 
 .postion_fixe_form {
     position: sticky;
-    top: 2.5rem;
+    top: 3.5rem;
     height: 17rem;
 }
 
@@ -583,10 +583,6 @@ font-size: 0.850rem;
 }
 .text_mod{
     color: #7635dc !important;
-}
-
-.font_size{
-    font-size: 0.7rem;
 }
 
 .detail__prix__main__ref .bx,

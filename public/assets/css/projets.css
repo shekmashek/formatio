@@ -16,6 +16,10 @@
     --font-size-sidebar: 13px;
 }
 
+.changer_carret:focus{
+    text-decoration: none;
+}
+
 .form_session {
     background: white;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
@@ -235,12 +239,14 @@
 }
 
 .tbody_projet a {
-    padding: 0.2rem;
+    padding: 0.3rem;
     background-color: #7535dc2d;
     border-radius: 5px;
     cursor: pointer;
-    transition: all 200ms;
+    transition: all .5ms ease;
     color: #7635dc;
+    position: relative;
+    /* top: 5px; */
 }
 
 .tbody_projet a:hover {
@@ -248,7 +254,14 @@
     color: #7635dc;
     transform: scale(1.05);
 }
-.tbody_projet .fa-edit {
+.centrer_edit{
+    display: grid;
+    place-content: center;
+}
+
+.modal-backdrop {display: block;}
+
+/* .tbody_projet .fa-edit {
     padding: 0.2rem;
     padding-left: 0.4rem;
     font-size: 1.5rem !important;
@@ -263,7 +276,7 @@
     background-color: #63738131;
     color: #7635dc;
     transform: scale(1.05);
-}
+} */
 
 .modal_projets .modal-content {
     width: 43.75rem !important;
