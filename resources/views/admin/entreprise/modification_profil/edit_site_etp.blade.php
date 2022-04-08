@@ -21,7 +21,7 @@
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                     <input type="text" value="   {{ $etp->site_etp}}" class="form-control test input"  name="site_etp">
-<label class="form-control-placeholder ">Site web</label>
+                  <label class="form-control-placeholder ">Site web</label>
                     
                 </div>
                 </div>
