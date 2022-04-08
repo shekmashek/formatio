@@ -424,9 +424,14 @@ Route::resource('ajoutt', 'formulaireEvaluationChaudController');
 Route::post('test_avis','EvaluationChaudController@test_avis')->name('test_avis');
 // Route::get('/ajout_stagiaire','ExecutionController@create')->name('ajout_stagiaire');
 
+//calendriier of et formateurs
 Route::get('/calendrier','DetailController@calendrier')->name('calendrier');
  Route::get('allEvent','DetailController@listEvent')->name('allEvent');
-// Route::get('allEvent','DetailController@listEvent')->name('allEvent');
+
+ //calendrier entreprise
+ Route::get('/calendrier_formation','DetailController@calendrier_formation')->name('calendrier_formation');
+ Route::get('allEventEntreprise','DetailController@listEvent_entreprise')->name('allEventEntreprise');
+
 
 
 // ======= Route Imprimer PDF Catalogue de Formation

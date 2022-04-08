@@ -321,10 +321,19 @@
 
             {{-- calendrire de formations --}}
             <li>
+                @canany(['isReferent','isStagiaire','isManager'])
+                    <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
+                        <i class='bx bxs-calendar'></i>
+                        <span class="links_name">Calendrier</span>
+                    </a>
+                @endcan
+                @canany(['isCFP', 'isFormateur'])
                 <a href="{{route('calendrier')}}" class="d-flex nav_linke">
                     <i class='bx bxs-calendar'></i>
                     <span class="links_name">Calendrier</span>
                 </a>
+                @endcanany
+
 
             </li>
 
@@ -510,7 +519,13 @@
                                         onclick="afficher_catalogue()"><span class="d-flex flex-column"><i class='bx bxs-category-alt'></i><span class="text_racourcis">Catalogue</span></span></a>
                                     <a href="{{route('annuaire')}}" class="btn_racourcis me-4" role="button"
                                         onclick="afficher_annuaire()"><span class="d-flex flex-column"><i class='bx bx-analyse'></i><span class="text_racourcis">Annuaire</span></span></a>
+                                    @canany(['isReferent','isStagiaire','isManager'])
+                                        <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
+                                    @endcan
+                                    @canany(['isCFP','isFormateur'])
                                     <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
+                                    @endcanany
+
                                 </div>
                             </div>
                         </form>
@@ -534,7 +549,7 @@
                         <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
                                 class="d-flex flex-column"><i class='bx bx-library'></i><span
                                     class="text_racourcis">Projets</span></span></a>
-                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
+                        <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span
                                 class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
                                     class="text_racourcis">Agenda</span></span></a>
                     </div>

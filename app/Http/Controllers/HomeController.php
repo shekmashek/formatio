@@ -252,32 +252,8 @@ class HomeController extends Controller
         }
 
         if (Gate::allows('isCFPPrincipale')) {
-            // $detail = DB::select('SELECT * FROM details
-            // INNER JOIN projets ON details.projet_id = projets.id
-            // INNER JOIN groupes ON details.groupe_id = groupes.id
-            // INNER JOIN formateurs ON details.formateur_id = formateurs.id
-            // INNER JOIN cfps ON details.cfp_id = cfps.id
-            // WHERE details.cfp_id = 27');
 
-            // $modules = array();
-            // $formations = array();
-            // for ($i=0; $i < count($detail); $i++) {
-            //     array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
-            // }
 
-            // for ($i=0; $i < count($modules); $i++) {
-            //     array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
-            // }
-            // $modules = array();
-            // $formations = array();
-            // for ($i=0; $i < count($detail); $i++) {
-            //     array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[0]->groupe_id]));
-            // }
-
-            // for ($i=0; $i < count($modules); $i++) {
-            //     array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
-            // }
-            // dd($formations);
 
             $fonct = new FonctionGenerique();
 
@@ -381,8 +357,6 @@ class HomeController extends Controller
         // }
 
         if (Gate::allows('isReferentPrincipale')) {
-
-            //get the column with null value
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
 

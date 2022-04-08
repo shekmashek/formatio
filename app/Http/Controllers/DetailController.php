@@ -47,6 +47,14 @@ class DetailController extends Controller
 
         return view('admin.calendrier.calendrier',compact('domaines','formations','statut'));
     }
+    //calendrier entreprise
+    public function calendrier_formation(){
+        $domaines = $this->fonct->findAll('domaines');
+        $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+        $statut = $this->fonct->findAll('status');
+        $formations = DB::select('select * from formations ');
+        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations'));
+    }
     public function listEvent(Request $request)
     {
         $id_user = Auth::user()->id;
@@ -96,41 +104,66 @@ class DetailController extends Controller
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $id_user)->value('id');
-            $detail =  $this->fonct->findWhere('v_detailmodule',['formateur_id'],[$formateur_id]);
-        }
-        if (Gate::allows('isStagiaire')) {
-            $stagiaire_id = stagiaire::where('user_id', $id_user)->value('id');
-            $detail =  $this->fonct->findWhere('v_detailmodule',['stagiaire_id'],[$stagiaire_id]);
-        }
-        if (Gate::allows('isReferent')) {
-            $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
-            if ($module!=null) {
-                $detail =  $this->fonct->findWhere('v_detailmodule',['nom_module','entreprise_id'],[$module,$entreprise_id]);
+            $detail = DB::select('SELECT * FROM details
+            INNER JOIN projets ON details.projet_id = projets.id
+            INNER JOIN groupes ON details.groupe_id = groupes.id
+            INNER JOIN formateurs ON details.formateur_id = formateurs.id
+            INNER JOIN cfps ON details.cfp_id = cfps.id
+            WHERE details.formateur_id = ?
+            ',[$formateur_id]);
+
+            $modules = array();
+            $formations = array();
+            for ($i=0; $i < count($detail); $i++) {
+                array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
             }
 
-            if ($type_formation!=null) {
-                $detail =  $this->fonct->findWhere('v_detailmodule',['type_formation','entreprise_id'],[$module,$entreprise_id]);
+            for ($i=0; $i < count($modules); $i++) {
+                array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
             }
+            // $detail =  $this->fonct->findWhere('v_detailmodule',['formateur_id'],[$formateur_id]);
+        }
 
-            if ($statut_projet!=null) {
-                $detail =  $this->fonct->findWhere('v_detailmodule',['status_groupe','entreprise_id'],[$statut_projet,$entreprise_id]);
-            }
-            if ($domaines!=null) {
-                $detail =  $this->fonct->findWhere('v_detailmodule',['domaines_id','entreprise_id'],[$domaines,$entreprise_id]);
-            }
-            if ($formations!=null) {
-                $detail =  $this->fonct->findWhere('v_detailmodule',['formation_id','entreprise_id'],[$formations,$entreprise_id]);
-            }
-            if($request->all() == null)
-            $detail =  $this->fonct->findWhere('v_detailmodule',['entreprise_id'],[$entreprise_id]);
-        }
-        if (Gate::allows('isManager')) {
-            $entreprise_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
-            $detail =  $this->fonct->findWhere('v_detailmodule',['entreprise_id'],[$entreprise_id]);
-        }
         return response()->json(['detail'=>$detail,'modules'=>$modules,'formations'=>$formations]);
     }
+    //liste event pour referent
+    public function listEvent_entreprise(Request $request){
+        $id_user = Auth::user()->id;
+        if(Gate::allows('isReferent')) $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+        if(Gate::allows('isStagiaire')) $entreprise_id = stagiaire::where('user_id', $id_user)->value('entreprise_id');
+        if(Gate::allows('isManager')) $entreprise_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
+        $module = $request->module;
+        $type_formation = $request->types_formation;
+        $statut_projet = $request->statut_projet;
+        $domaines = $request->domaines;
+        $formations = $request->formations;
 
+
+        $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
+        INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+        WHERE groupe_entreprises.entreprise_id = ?
+        ',[$entreprise_id]);
+
+        $details = array();
+        $formations = array();
+        for ($i=0; $i < count($groupe_entreprises); $i++) {
+            array_push($details,DB::select('select * from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+        }
+        $details = array();
+        $groupes = array();
+        $formations = array();
+        for ($i=0; $i < count($groupe_entreprises); $i++) {
+            array_push($details,DB::select('select * from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+        }
+
+        for ($i=0; $i < count($details); $i++) {
+            array_push($groupes,DB::select('select * from groupes inner join modules on modules.id = groupes.module_id where groupes.id = ?',[$details[$i][0]->groupe_id]));
+        }
+        for ($i=0; $i < count($groupes); $i++) {
+            array_push($formations,DB::select('select * from formations where id = ?',[$groupes[$i][0]->formation_id]));
+        }
+        return response()->json(['details'=>$details,'groupes'=>$groupes,'formations'=>$formations]);
+    }
 
     public function informationModule(Request $request)
     {
