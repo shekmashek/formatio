@@ -63,27 +63,24 @@ class DetailController extends Controller
 
             $fonct = new FonctionGenerique();
             $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
-
             $cfp_id = $rqt[0]->cfp_id;
-            // if ($module!=null) {
-            //     $detail =  $this->fonct->findWhere('v_detailmodule',['nom_module','cfp_id'],[$module,$cfp_id]);
-            // }
+            // $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
+            $detail = DB::select('SELECT * FROM details
+            INNER JOIN projets ON details.projet_id = projets.id
+            INNER JOIN groupes ON details.groupe_id = groupes.id
+            INNER JOIN formateurs ON details.formateur_id = formateurs.id
+            INNER JOIN cfps ON details.cfp_id = cfps.id
+            WHERE details.cfp_id = ?
+            ',[$cfp_id]);
 
-            // if ($type_formation!=null) {
-            //     $detail =  $this->fonct->findWhere('v_detailmodule',['type_formation','cfp_id'],[$type_formation,$cfp_id]);
-            // }
-
-            // if ($statut_projet!=null) {
-            //     $detail =  $this->fonct->findWhere('v_detailmodule',['status_groupe','cfp_id'],[$statut_projet,$cfp_id]);
-            // }
-            // if ($domaines!=null) {
-            //     $detail =  $this->fonct->findWhere('v_detailmodule',['domaines_id','cfp_id'],[$domaines,$cfp_id]);
-            // }
-            // if ($formations!=null) {
-            //     $detail =  $this->fonct->findWhere('v_detailmodule',['formation_id','cfp_id'],[$formations,$cfp_id]);
-            // }
-            // if($request->all() == null)
-            $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
+            // $groupe_entreprise = DB::select('
+            //     SELECT * FROM groupes
+            //     INNER JOIN modules ON groupes.module_id = modules.id
+            //     INNER JOIN type_payement ON groupes.type_payement_id = type_payement.id
+            //     INNER JOIN status ON groupes.statut_id = status.id
+            //     INNER JOIN groupe_entreprises
+            //     WHERE groupes.id =
+            // ');
 
 
         }

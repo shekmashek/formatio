@@ -253,6 +253,7 @@ class HomeController extends Controller
 
         if (Gate::allows('isCFPPrincipale')) {
 
+
             $fonct = new FonctionGenerique();
 
             $user_id = Auth::user()->id;
@@ -495,7 +496,7 @@ class HomeController extends Controller
         if($page == null){
             $page = 1;
         }
-        
+
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
             $projet = projet::get()->unique('nom_projet');
             $data = $fonct->findAll("v_projet_session");

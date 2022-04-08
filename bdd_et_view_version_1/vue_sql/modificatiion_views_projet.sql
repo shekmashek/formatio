@@ -389,3 +389,12 @@ create or replace view v_horaire_cfp as
     from cfps
     join reseaux_sociaux rs on rs.cfp_id = cfps.id;
 
+
+--script calendrier
+SELECT * FROM details
+INNER JOIN projets ON details.projet_id = projets.id
+INNER JOIN groupes ON details.groupe_id = groupes.id
+INNER JOIN formateurs ON details.formateur_id = formateurs.id
+INNER JOIN cfps ON details.cfp_id = cfps.id
+
+
