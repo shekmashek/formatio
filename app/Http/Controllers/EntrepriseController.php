@@ -314,4 +314,95 @@ class EntrepriseController extends Controller
             return redirect()->route('profile_entreprise',[$id]);
            }
     }
+    public function modification_rcs_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_rcs', compact('etp'));
+    }
+    public function enregistrer_rcs_entreprise(Request $request,$id){
+        if($request->rcs == null){
+            return redirect()->back()->with('erreur_rcs', 'Entrez le rcs de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set rcs = ? where id = ?', [$request->rcs,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
+    public function modification_cif_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_cif', compact('etp'));
+    }
+    public function enregistrer_cif_entreprise(Request $request,$id){
+        if($request->cif == null){
+            return redirect()->back()->with('erreur_cif', 'Entrez le cif de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set cif = ? where id = ?', [$request->cif,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
+    public function modification_adresse_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_adresse', compact('etp'));
+    }
+    public function enregistrer_adresse_entreprise(Request $request,$id){
+       
+            DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ? 
+               where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
+            
+            return redirect()->route('profile_entreprise',[$id]);
+        
+           
+    }
+    public function modification_site_etp_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_site_etp', compact('etp'));
+    }
+    public function enregistrer_site_etp_entreprise(Request $request,$id){
+        if($request->site_etp == null){
+            return redirect()->back()->with('erreur_site_etp', 'Entrez le site web de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set site_etp = ? where id = ?', [$request->site_etp,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
+    public function modification_nom_etp($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_nom_etp', compact('etp'));
+    }
+    public function enregistrer_nom_etp(Request $request,$id){
+        if($request->nom_etp == null){
+            return redirect()->back()->with('erreur_nom entreprise', 'Entrez le site web de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set nom_etp = ? where id = ?', [$request->nom_etp,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
+    public function modification_logo($id){
+        $fonct = new FonctionGenerique();
+        $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.edit_logo', compact('etp'));
+    }
+    public function enregistrer_logo(Request $request,$id){
+        $input = $request->image;
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/entreprises';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input = "$profileImage";
+        }
+        if($input== null){
+            return redirect()->back()->with('erreur_logo', 'Entrez le site web de votre entreprise avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set logo  = ? where id = ?', [$input,$id]);
+            return redirect()->route('profile_entreprise',[$id]);
+           }
+    }
 }

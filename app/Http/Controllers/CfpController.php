@@ -78,6 +78,14 @@ class CfpController extends Controller
         $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
         return view('cfp.modification_profil.edit_site', compact('cfp','id'));
     }
+    public function edit_mail($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_mail', compact('cfp','id'));
+    }
+    public function edit_phone($id,Request $request){
+        $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.edit_phone', compact('cfp','id'));
+    }
 
     public function edit_horaire($id){
         $cfp = $this->fonct->findWhere(" v_horaire_cfp",["cfp_id"],[$id]);
@@ -122,14 +130,31 @@ class CfpController extends Controller
        }
 
     }
-    public function modifier_adresse($id,Request $request){
-        if($request->adresse_lot == null or $request->adresse_quartier == null or $request->adresse_code_postal == null or $request->adresse_ville == null or $request->adresse_region == null){
-            return redirect()->back()->with('error_adresse', 'Entrez l\'adresse complète de votre organisme avant de cliquer sur enregistrer');
+    public function modifier_mail($id,Request $request){
+        if($request->mail == null){
+         return redirect()->back()->with('error_email', 'Entrez email de votre organisme avant de cliquer sur enregistrer');
         }
         else{
+         DB::update('update cfps set email = ? where id = ?', [$request->mail,$id]);
+         return redirect()->route('profil_of',[$id]);
+        }
+ 
+     }
+     public function modifier_phone($id,Request $request){
+        if($request->phone == null){
+         return redirect()->back()->with('error_phone', 'Entrez téléphone de votre organisme avant de cliquer sur enregistrer');
+        }
+        else{
+         DB::update('update cfps set telephone= ? where id = ?', [$request->phone,$id]);
+         return redirect()->route('profil_of',[$id]);
+        }
+ 
+     }
+    public function modifier_adresse($id,Request $request){
+         
             DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, $id]);
             return redirect()->route('profil_of',[$id]);
-        }
+       
 
     }
     public function modifier_slogan($id,Request $request){
