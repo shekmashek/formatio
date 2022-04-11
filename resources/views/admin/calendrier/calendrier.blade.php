@@ -394,7 +394,7 @@
                                 }
                                 , dataType: "html"
                                 , success: function(response) {
-                                    console.log("valiny",response)
+
                                     var projet = document.getElementById('projet');
                                     projet.innerHTML = '';
                                     var session = document.getElementById('session');
@@ -468,6 +468,7 @@
                                     var initial_stg = userDataDetail['initial_stg'];
                                     var entreprises = userDataDetail['entreprises'];
                                     var formations = userDataDetail['formations'];
+                                    var id_detail = userDataDetail['id_detail'];
                                     var images = '';
                                     var html = '';
                                     var formation = '';
@@ -481,7 +482,7 @@
                                     var printpdf = '';
                                     for (var $i = 0; $i < userData.length; $i++) {
                                         printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
-                                        printpdf = printpdf.replace(":?",userData[$i].detail_id);
+                                        printpdf = printpdf.replace(":?",id_detail);
                                         $('#printpdf').append(printpdf);
 
 
