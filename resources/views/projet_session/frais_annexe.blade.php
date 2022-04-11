@@ -1,4 +1,4 @@
-<div class="shadow mb-3 col-12 pb-5 section">
+<div class="mb-3 col-12 pb-5 section">
     @if (count($all_frais_annexe)<=0 || $all_frais_annexe==NULL)
     <div id="form_frais_annexe">
         <div class="row ms-4">

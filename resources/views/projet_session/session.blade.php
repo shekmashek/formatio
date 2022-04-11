@@ -4,7 +4,7 @@
 <div class="p-3 mb-5 bg-body rounded ">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
-            <h5>Session </h5>
+            <h5>Session pour {{ $datas[0]->nom_module }} </h5>
             <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0"> Session  &nbsp; &nbsp; </p>
                 <p class="numero_session text-dark mt-3"> <strong>n°: {{ $projet[0]->nom_groupe }}</strong>  </p>
@@ -403,65 +403,83 @@ p{
     border-right: 2px solid rgb(15,126,145);
 }
 .status_grise{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: rgb(150, 144, 144);
+    background-color: #637381;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
-.status_annule{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
+
+.status_reprogrammer{
     border-radius: 1rem;
-    background-color: rgb(184, 3, 3);
+    background-color: #00CDAC;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
+}
+
+.status_cloturer{
+    border-radius: 1rem;
+    background-color: #314755;
+    color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
+}
+
+.status_reporter{
+    border-radius: 1rem;
+    background-color: #26a0da;
+    color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
+}
+
+.status_annulee{
+    border-radius: 1rem;
+    background-color: #b31217;
+    color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
 .status_termine{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: green;
+    background-color: #1E9600;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
 .status_confirme{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: #801D68;
+    background-color: #2B32B2;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
-.status_archive{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
-    border-radius: 1rem;
-    background-color: orangered;
-    color: white;
-}
+
 .statut_active{
-    margin: 0 2px;
-    font-size: 10px;
-    height: 50%;
-    font-weight: bold;
-    padding: 4px 6px;
     border-radius: 1rem;
     background-color: rgb(15,126,145);
     color: whitesmoke;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
+
 .planning{
     text-align: left;
     padding-left: 6px;

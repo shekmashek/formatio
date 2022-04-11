@@ -18,7 +18,7 @@
 
 {{-- @if (count($stagiaire) != 0) --}}
 
-<div class="shadow mb-3 pe-5 ps-1 col-12 pb-5">
+<div class="mb-3 pe-5 ps-1 col-12 pb-5">
     <div class="row ms-4 mt-0">
         <div class="col-md-5 ">
             <span>

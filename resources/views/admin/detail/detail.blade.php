@@ -103,6 +103,10 @@
     top: .3rem;
     margin-right: .3rem;
 }
+.titre_detail_session{
+    font-size: 1rem;
+    padding-top: .8rem;
+}
 </style>
 @if (Session::has('detail_error'))
     <div class="alert alert-danger ms-2 me-2">
@@ -286,10 +290,10 @@
             @endif
             <div class="col-lg-12">
                 <div class="panel panel-default">
-
                     <div class="panel-body">
                         @canany(['isCFP'])
-                            <nav class="d-flex justify-content-end mb-1 ">
+                            <nav class="d-flex justify-content-between mb-1 ">
+                                <span class="titre_detail_session">Détail(s) de la session</span>
                                 <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
                                     data-bs-target="#modal_nouveau_detail">
                                     <i class='bx bx-plus-medical icon_ajouter_detail'></i>
