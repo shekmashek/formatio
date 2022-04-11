@@ -324,24 +324,24 @@
                 , success: function(data) {
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
-                    // alert(userData.length);
-                    var details = userDataDetail['details'];
 
-                    var groupes = userDataDetail['groupes'];
-                    var formations = userDataDetail['formations'];
+                    var details = userDataDetail['details'];
+                    var groupe_entreprises = userDataDetail['groupe_entreprises'];
+                    var detail_id = userDataDetail['detail_id'];
+
+
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
-                            title: formations[$i][0].nom_formation
+                            title: groupe_entreprises[$i].nom_formation
                             , start: details[$i][0].date_detail
                             ,backgroundColor:"green"
                             , nom_projet: details[$i][0].nom_projet
-
                             , h_debut: details[$i][0].h_debut
                             , h_fin: details[$i][0].h_fin
                             , lieu: details[$i][0].lieu
                             , formateur: details[$i][0].nom_formateur + ' ' + details[$i][0].prenom_formateur
-                            , detail_id: details[$i][0].id
+                            , detail_id: detail_id[$i][0].details_id
                             , nom_cfp: details[$i][0].nom_cfp
                             , customRender: true
 
@@ -372,7 +372,7 @@
                                     }
                                     , dataType: "html"
                                     , success: function(response) {
-                                        console.log("valiny",response)
+
                                         var projet = document.getElementById('projet');
                                         projet.innerHTML = '';
                                         var session = document.getElementById('session');
@@ -446,6 +446,7 @@
                                         var initial_stg = userDataDetail['initial_stg'];
                                         var entreprises = userDataDetail['entreprises'];
                                         var formations = userDataDetail['formations'];
+                                        var id_detail = userDataDetail['id_detail'];
                                         var images = '';
                                         var html = '';
                                         var formation = '';
@@ -459,7 +460,7 @@
                                         var printpdf = '';
                                         for (var $i = 0; $i < userData.length; $i++) {
                                             printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
-                                            printpdf = printpdf.replace(":?",userData[$i].detail_id);
+                                            printpdf = printpdf.replace(":?",id_detail);
                                             $('#printpdf').append(printpdf);
 
 

@@ -81,7 +81,7 @@ class DetailController extends Controller
             WHERE details.cfp_id = ?
             ',[$cfp_id]);
 
-              $modules = array();
+            $modules = array();
             $formations = array();
             for ($i=0; $i < count($detail); $i++) {
                 array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
@@ -140,30 +140,30 @@ class DetailController extends Controller
 
 
         $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
-        INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-        WHERE groupe_entreprises.entreprise_id = ?
-        ',[$entreprise_id]);
+            INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+            INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+            INNER JOIN modules ON groupes.module_id = modules.id
+            INNER JOIN formations ON modules.formation_id = formations.id
+            WHERE groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
 
         $details = array();
-        $formations = array();
-        $groupes = array();
+        $detail_id = array();
         for ($i=0; $i < count($groupe_entreprises); $i++) {
-            array_push($details,DB::select('SELECT details.id as details_id,h_debut,h_fin,date_detail from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+            array_push($details,DB::select('
+            SELECT  *  from details
+            inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
+            inner join formateurs on details.formateur_id = formateurs.id
+            inner join projets on details.projet_id = projets.id
+            inner join type_formations on projets.type_formation_id = type_formations.id
+            inner join cfps on details.cfp_id = cfps.id
+            where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
         }
-
-
-
-        // for ($i=0; $i < count($groupe_entreprises); $i++) {
-        //     array_push($details,DB::select('SELECT details.id as details_id,h_debut,h_fin,date_detail from details inner join groupe_entreprises on groupe_entreprises.groupe_id = details.groupe_id where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
-        // }
-
-        for ($i=0; $i < count($details); $i++) {
-            array_push($groupes,DB::select('select * from groupes inner join modules on modules.id = groupes.module_id where groupes.id = ?',[$details[$i][0]->groupe_id]));
+        for ($i=0; $i < count($groupe_entreprises); $i++) {
+            array_push($detail_id,DB::select('
+                 SELECT  id as details_id  from details
+                 where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
         }
-        for ($i=0; $i < count($groupes); $i++) {
-            array_push($formations,DB::select('select * from formations where id = ?',[$groupes[$i][0]->formation_id]));
-        }
-        return response()->json(['details'=>$details,'groupes'=>$groupes,'formations'=>$formations]);
+        return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
     }
 
     public function informationModule(Request $request)
@@ -234,12 +234,13 @@ class DetailController extends Controller
             $photo_form = 'oui';
         }
 
-        return response()->json(['formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
+        return response()->json(['id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
     }
     //impression
     public function detail_printpdf($id)
     {
         $detail = DB::select('select * from v_detailmodule where detail_id = ' . $id);
+
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
