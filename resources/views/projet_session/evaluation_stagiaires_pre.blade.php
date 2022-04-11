@@ -49,8 +49,8 @@
                 <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
                 <input type="hidden" name="module" value="{{ $projet[0]->module_id }}">
                 <div class="col-md-12 d-flex justify-content-around">
-                    <table class="table" >
-                        <thead>
+                    <table class="table table-borderless" >
+                        <thead style="border-bottom: 1px solid black; line-height: 20px">
                         <tr>
                             <th>Stagiaire(s)</th>
                             @foreach ($competences as $cp)

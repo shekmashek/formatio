@@ -4,7 +4,7 @@
     {{-- nouveau desgin apprenant --}}
 <div class="conteneur">
     <nav class="d-flex justify-content-between mb-1 ">
-        <span class="titre_detail_session"><strong style="font-size: 14px">Ajout des participants pour la session</strong></span>
+        <span class="titre_detail_session"><strong style="font-size: 14px">Liste des apprenants inscrits(es) au projet</strong></span>
     </nav>
     @if ($type_formation_id == 1)
         @can('isCFP')
@@ -27,7 +27,7 @@
                         <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
                     </span>
                 </div>
-            </section><br><hr><br>
+            </section><br>
             {{-- fin nouveau apprenant --}}
         @endcan
     @endif
@@ -52,20 +52,20 @@
                         <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
                     </span>
                 </div>
-            </section><br><hr><br>
+            </section><br>
             {{-- fin nouveau apprenant --}}
         @endcan
     @endif
-    <div class="d-flex justify-content-between">
-        <h5>Liste des apprenants inscrits(es) au projet</h5>
+    {{-- <div class="d-flex justify-content-between">
+        <h6>Liste des apprenants inscrits(es) au projet</h6>
         <div class="d-flex">
-            {{-- <button class="btn btn-secondary mx-1 align-items-center"><i class="far fa-file-pdf"></i>&nbsp; Exporter en PDF</button>
-            <button class="btn btn-secondary"><i class="far fa-file-excel"></i>&nbsp; Exporter en Excel</button> --}}
+            <button class="btn btn-secondary mx-1 align-items-center"><i class="far fa-file-pdf"></i>&nbsp; Exporter en PDF</button>
+            <button class="btn btn-secondary"><i class="far fa-file-excel"></i>&nbsp; Exporter en Excel</button>
         </div>
-    </div>
-    <br>
-        <table class="table table-striped" id="test_table">
-            <thead>
+    </div> --}}
+    {{-- <br> --}}
+        <table class="table table-hover table-borderless" id="test_table">
+            <thead style="border-bottom: 1px solid black; line-height: 20px">
                 <th>Matricule</th>
                 <th>Nom</th>
                 <th>Prénom</th>

@@ -291,18 +291,18 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        @canany(['isCFP'])
-                            <nav class="d-flex justify-content-between mb-1 ">
-                                <span class="titre_detail_session"><strong style="font-size: 14px">Détail(s) de la session</strong></span>
-                                <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
-                                    data-bs-target="#modal_nouveau_detail">
-                                    <i class='bx bx-plus-medical icon_ajouter_detail'></i>
-                                    <small>Ajouter une détail</small></a>
-                            </nav>
-                        @endcanany
+                        <nav class="d-flex justify-content-between mb-1 ">
+                            <span class="titre_detail_session"><strong style="font-size: 14px">Détail(s) de la session</strong></span>
+                            @canany(['isCFP'])
+                            <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
+                                data-bs-target="#modal_nouveau_detail">
+                                <i class='bx bx-plus-medical icon_ajouter_detail'></i>
+                                <small>Ajouter une détail</small></a>
+                                @endcanany
+                        </nav>
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                <thead>
+                            <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
+                                <thead style="border-bottom: 1px solid black; line-height: 20px">
                                     @canany(['isReferent', 'isManager'])
                                         <th>CFP</th>
                                     @endcanany

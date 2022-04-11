@@ -215,8 +215,8 @@
                                     </div>
                                 </div>
 
-                            <table class="table table-stripped m-0 p-0 collapse" id="collapseprojet_{{ $prj->projet_id }}" aria-labelledby="collapseprojet_{{ $prj->projet_id }}">
-                                <thead class="thead_projet">
+                            <table class="table table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{ $prj->projet_id }}" aria-labelledby="collapseprojet_{{ $prj->projet_id }}">
+                                <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                     <th> Session </th>
                                     <th> Module </th>
                                     {{-- @can('isCFP')
@@ -642,8 +642,8 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0 mt-2">
-                            <thead class="thead_projet">
+                        <table class="table table-hover m-0 p-0 mt-2 table-borderless">
+                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
@@ -688,8 +688,8 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0 mt-2">
-                            <thead class="thead_projet">
+                        <table class="table table-hover table-borderless m-0 p-0 mt-2">
+                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
@@ -720,7 +720,7 @@
                                         <td> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         <td>
-                                            <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
+                                            <p class="{{ $pj->class_status_groupe }} m-0 p-0">{{ $pj->item_status_groupe }}</p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -734,8 +734,8 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0">
-                            <thead class="thead_projet">
+                        <table class="table table-hover table-borderless m-0 p-0">
+                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 {{-- <th>Projet</th> --}}
                                 <th> Session </th>
                                 <th> Date du session</th>

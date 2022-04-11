@@ -213,10 +213,10 @@
     color: #7635dc;
 }
 
-.thead_projet {
+/* .thead_projet {
     color: #637381;
     background: #6373812a;
-}
+} */
 
 .thead_projet th {
     font-weight: 300;
@@ -229,14 +229,14 @@
     font-size: 0.875rem;
 }
 
-.tbody_projet tr {
+/* .tbody_projet tr {
     background-color: #f0f0f0;
-}
+} */
 
-.tbody_projet tr:hover {
+/* .tbody_projet tr:hover {
     background-color: #63738117;
     color: #637381;
-}
+} */
 
 .tbody_projet a {
     padding: 0.3rem;
@@ -377,7 +377,7 @@
     padding: 0.2rem;
     padding-left: 0.4rem;
     font-size: 0.85rem;
-    background-color: rgba(255, 255, 255, 0.822);
+    background-color: rgba(222, 222, 222, 0.822);
     border-radius: 5px;
     cursor: pointer;
     transition: all 200ms;

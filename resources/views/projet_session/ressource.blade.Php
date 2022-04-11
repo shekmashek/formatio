@@ -21,7 +21,7 @@
     <span class="titre_detail_session"><strong style="font-size: 14px">Gestion des resources pour la session</strong></span>
 </nav>
 <div class="mb-3 pe-5 ps-1 col-12 pb-5">
-    <div class="row mt-0">
+    <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
         <div class="col-md-5 ">
             <span>
                 <h6>Matériel nécessaire</h6>
@@ -37,7 +37,7 @@
         <div id="affiche_ressource">
             @foreach ($ressource as $r)
                 <div class="d-flex mt-0 " id="ressource_{{ $r->id }}"
-                    style="border-bottom: 1px solid black; line-height: 20px">
+                    >
                     <div class="col-md-5 ">
                         <section>
                             <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
@@ -141,7 +141,7 @@
                     html += '</section>';
                     html += '</div>';
 
-                    html += '<hr class="m-0">';
+                    html += '';
                     html += '</div>';
                 }
                 $('#affiche_ressource').append(html);

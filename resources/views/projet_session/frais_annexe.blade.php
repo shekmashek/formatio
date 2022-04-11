@@ -1,5 +1,5 @@
-<nav class="d-flex justify-content-between mb-1 ">
-    <span class="titre_detail_session"><strong style="font-size: 14px">Frais annexes pour la session</strong></span>
+<nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
+    <span class="titre_detail_session"><strong style="font-size: 14px" >Frais annexes pour la session</strong></span>
 </nav>
 <div class="mb-3 col-12 pb-5 section">
     @if (count($all_frais_annexe)<=0 || $all_frais_annexe==NULL)
@@ -95,7 +95,7 @@
         $somme = 0;
     @endphp
     @if (count($all_frais_annexe)>0)
-        <h6 class="ms-5">Frais annexe pour la formation</h6>
+        {{-- <h6 class="ms-5">Frais annexe pour la formation</h6> --}}
             @foreach($all_frais_annexe as $frais)
                 <div class="row ps-5" id="inputFormRow_frais">
                     <div class="col-md-4">
