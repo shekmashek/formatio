@@ -16,6 +16,7 @@ use App\type_abonne;
 use App\type_abonnement_role;
 use App\User;
 use App\cfp;
+use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -208,18 +209,20 @@ class AbonnementController extends Controller
             }
         }
         if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
+            $fonct = new FonctionGenerique();
+            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $cfp_id = $resp[0]->cfp_id;
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
             $abn =type_abonnement::all();
             $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 1)->get();
             $typeAbonne_id = 2;
+            dd($typeAbonne_id);
             $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->get();
 
             $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->get();
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
             if ($test_abonne) {
                 $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-
                 return view('superadmin.listeAbonnement', compact('abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
             }
             if ($test_abonne == false) {
