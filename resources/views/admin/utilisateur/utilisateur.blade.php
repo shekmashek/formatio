@@ -99,7 +99,7 @@
 
                                     @foreach($datas as $resp)
                                     <tr>
-                                        <td style="width: 10%;"><a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}">
+                                        <td style="width: 10%;"><a class="dropdown-item" href="{{ route('profil_of',$resp->id) }}">
                                                 @if ($resp->photos==null)
                                                 <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/users.png')}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
 

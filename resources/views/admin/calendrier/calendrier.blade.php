@@ -379,11 +379,12 @@
                         , headerToolbar: {
                             left: 'prev,next'
                             , center: 'title'
-                            , right: 'dayGridMonth'
+                            , right: 'dayGridMonth,timeGridWeek'
 
                         }
                         , editable: true
                         , eventClick: function(info) {
+                            // alert('eto');
                             $('#detail').css('display','block');
 
                             $.ajax({
@@ -394,7 +395,7 @@
                                 }
                                 , dataType: "html"
                                 , success: function(response) {
-                                    console.log("valiny",response)
+
                                     var projet = document.getElementById('projet');
                                     projet.innerHTML = '';
                                     var session = document.getElementById('session');
@@ -455,7 +456,7 @@
 
                                     var liste_app = document.getElementById('liste_app');
                                     liste_app.innerHTML = '';
-                                    // alert(JSON.stringify(response));
+                                    // alert(entreprises[0].nom_etp);
 
                                     var userDataDetail = JSON.parse(response);
                                     // alert(userData.length);
@@ -468,6 +469,7 @@
                                     var initial_stg = userDataDetail['initial_stg'];
                                     var entreprises = userDataDetail['entreprises'];
                                     var formations = userDataDetail['formations'];
+                                    var id_detail = userDataDetail['id_detail'];
                                     var images = '';
                                     var html = '';
                                     var formation = '';
@@ -481,7 +483,7 @@
                                     var printpdf = '';
                                     for (var $i = 0; $i < userData.length; $i++) {
                                         printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
-                                        printpdf = printpdf.replace(":?",userData[$i].detail_id);
+                                        printpdf = printpdf.replace(":?",id_detail);
                                         $('#printpdf').append(printpdf);
 
 
@@ -499,6 +501,7 @@
                                         cfp = cfp.replace(":?",userData[$i].cfp_id);
                                         $('#cfp').append(cfp);
 
+                                        // alert(entreprises[$i].nom_etp);
                                         etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+entreprises[$i].nom_etp+'</a>'
                                         etp = etp.replace(":?",entreprises[$i].entreprise_id);
                                         $('#etp').append(etp);
