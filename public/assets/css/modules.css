@@ -300,7 +300,7 @@
 }
 
 #border_premier {
-    color: #939ba0;
+    color: #637381;
 }
 
 .apres_preview {
@@ -340,11 +340,6 @@
 #border_premier{
     background: rgb(194, 194, 194);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
-#border_premier{
-    color: #7635dc;
-    font-weight: 400;
 }
 
 #preview_categ,
@@ -571,7 +566,7 @@ font-size: 0.850rem;
 }
 
 .adresse__text{
-    color: #7635dc;
+    color: #637381;
     font-size: 1rem;
 }
 
@@ -579,7 +574,7 @@ font-size: 0.850rem;
     border: 1px solid rgba(128, 128, 128, 0.336);
     height: 20rem;
     position: sticky;
-    top: 3rem;
+    top: 8.5rem;
 }
 .text_mod{
     color: #7635dc !important;
@@ -625,3 +620,47 @@ font-size: 0.850rem;
     width: 50%;
     margin-left: 2px;
 }
+
+/* navigation */
+
+.navigation_detail{
+    position: sticky;
+    top: 4rem;
+    background-color: white;
+    z-index: 1;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    text-transform: uppercase;
+}
+
+.navigation_detail ul li a{
+    color: #637381;
+    text-decoration: none;
+}
+
+.navigation_detail ul li a:hover{
+    color: black;
+}
+
+.btn_pdf{
+    padding: auto 2rem;
+    margin-right: 2rem;
+    border: none;
+    background: #637381;
+    color: white;
+    border-radius: 5px;
+}
+
+.btn_pdf:hover{
+    color: black;
+    background-color: rgb(224, 223, 223);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.btn_pdf .bx{
+    font-size: 1.3rem;
+    position: relative;
+    top: .2rem;
+}
+
+

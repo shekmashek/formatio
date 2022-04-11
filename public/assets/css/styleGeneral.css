@@ -627,7 +627,7 @@ input:-webkit-autofill:active {
 
 .btn_enregistrer {
     padding: 5px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     background-color: #7635dc;
     border-radius: 5px;
     border-width: 0;
@@ -638,6 +638,7 @@ input:-webkit-autofill:active {
     transition: all 200ms;
     color: white;
     width: 13rem;
+    text-transform: capitalize !important;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 

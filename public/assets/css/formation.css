@@ -241,7 +241,7 @@ a:focus {
     border: none;
     background: white;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border-radius: 25px;
+    border-radius: 5px;
 }
 .module_detail {
     background: white;
@@ -276,10 +276,11 @@ a:focus {
 .module_detail_heure .bx {
     position: relative;
     padding: 0.5rem 0.5rem;
-    color: white;
+    /* color: white; */
+    color: #637381;
     border: none;
     border-radius: 15px;
-    background: black;
+    /* background: #637381; */
 }
 
 .module_detail_content {
@@ -290,13 +291,13 @@ a:focus {
 
 .detail__intra {
     position: sticky;
-    top: 3rem;
+    top: 8.5rem;
     background-color: white;
     border: 1px solid grey;
     /* border-radius: 25px; */
 }
 .detail__prix {
-    background: #7635dc;
+    background: #637381;
     color: white;
     text-align: center;
     /* border-top-left-radius: 25px;
@@ -306,23 +307,22 @@ a:focus {
 .detail__modal {
     text-align: center;
     font-weight: 500;
-    color: #7535dc;
+    color: #637381;
 }
 .detail_ref .bx {
     position: relative;
     padding: 0.5rem 0.5rem;
-    color: #7635dc;
+    color: #637381;
     border: none;
     border-radius: 15px;
-    background: #7535dc23;
 }
 .detail_ref_ref {
     text-align: center;
     margin: 0;
 }
 .detail_ref_ref .prix {
-    color: #7535dc;
-    font-weight: 700;
+    color: black;
+    font-weight: 500;
     font-size: 1.3rem;
 }
 .btn_demander {
@@ -366,11 +366,50 @@ a:focus {
 .module_detail_objet .bx {
     position: relative;
     padding: 0.5rem;
-    color: #7635dc;
+    color: #637381;
     border: none;
     border-radius: 25px;
-    background: #7535dc23;
-margin-right: 0.5rem;
+    /* background: #7535dc23; */
+    margin-right: 0.5rem;
+}
+
+.navigation_detail{
+    position: sticky;
+    top: 4rem;
+    background-color: white;
+    z-index: 1;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    text-transform: uppercase;
+}
+
+.navigation_detail ul li a{
+    color: #637381;
+}
+
+.navigation_detail ul li a:hover{
+    color: black;
+}
+
+.btn_pdf{
+    padding: auto 2rem;
+    margin-right: 2rem;
+    border: none;
+    background: #637381;
+    color: white;
+    border-radius: 5px;
+}
+
+.btn_pdf:hover{
+    color: black;
+    background-color: rgb(224, 223, 223);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.btn_pdf .bx{
+    font-size: 1.3rem;
+    position: relative;
+    top: .2rem;
 }
 
 /* detail module */

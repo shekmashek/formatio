@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Modification module</h3>
+    <h3 class="text_header m-0 mt-1">Modification module</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
@@ -12,9 +12,7 @@
                     <div class="row g-0 m-0" style="align-items: center">
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            {{-- <div class="col titre_page">
-                                <h3 class="mt-2">Modification Modules</h3>
-                            </div> --}}
+                            
 
                             <div class="col" align="right">
                                 <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
@@ -165,7 +163,7 @@
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    @if($mod->modalite_formation == 'En ligne')
+                                                    {{-- @if($mod->modalite_formation == 'En ligne')
                                                     <select
                                                         class="form-control select_formulaire modalite modalite input mt-3"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
@@ -178,8 +176,8 @@
                                                     <label for="acf-modalite"
                                                         class="form-control-placeholder">Choisissez la
                                                         modalite de formation...</label>
-                                                    @endif
-                                                    @if($mod->modalite_formation == 'Presentiel')
+                                                    @endif --}}
+                                                    {{-- @if($mod->modalite_formation == 'Presentiel')
                                                     <select
                                                         class="form-control select_formulaire modalite modalite input mt-3"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
@@ -192,7 +190,7 @@
                                                     <label for="acf-modalite"
                                                         class="form-control-placeholder">Choisissez la
                                                         modalite de formation...</label>
-                                                    @endif
+                                                    @endif --}}
                                                     @if($mod->modalite_formation == 'En ligne/Presentiel')
                                                     <select
                                                         class="form-control select_formulaire modalite modalite input mt-3"

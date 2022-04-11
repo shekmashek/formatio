@@ -42,7 +42,7 @@
             </li>
 
 
-            
+
                 @canany(['isReferent'])
                 <li>
                     <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 @endcanany
-            
+
 
 
 

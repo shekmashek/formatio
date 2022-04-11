@@ -1,16 +1,27 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Modification programme</h3>
+    <h3 class="text_header m-0 mt-1">Modification programme</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
-<div class="row ">
-    <div class="col" align="right">
-        <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
+<div class="row navigation_detail">
+    <div class="ps-5 col justify-content-between d-flex flex-row">
+        <div>
+            <ul class="d-flex flex-row">
+                <li class="me-5"><a href="#objectif">objectif</a></li>
+                <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
+                <li class="me-5"><a href="#programme">programme</a></li>
+                <li class="me-5"><a href="#avis">avis</a></li>
+                <li class="me-5"><a href="#dates">dates</a></li>
+            </ul>
+        </div>
+        <div>
+            <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
             href="{{route('liste_module')}}">
             <span class="btn_enregistrer text-center">Précedent</span>
         </a>
+        </div>
     </div>
 </div>
 <section class="detail__formation">
@@ -19,7 +30,8 @@
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
                     @foreach ($infos as $res)
-                    <h4 class="py-4">{{$res->nom_formation}} - {{$res->nom_module}}</h4>
+                    <h4 class="py-4">{{$res->nom_module}}</h4>
+                    <p class="text_black">{{$res->nom_formation}} </p>
                     <p class="text_black">{{$res->description}}</p>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
@@ -165,7 +177,7 @@
                                     <input type="hidden" value="{{$id}}" name="id_module">
                                     <button type="submit" class="btn btn-primary background_grey6 " id="nouveau_prg"
                                         style="display:none">Enregistrer</button>
-                                    <button type="button" id="addProg" class="background_grey6 btn">Nouveau
+                                    <button type="button" id="addProg" class="btn_creer btn pb-2"> <i class='bx bx-plus-medical icon_creer'></i>Nouveau
                                         Programme</button>
                                 </div>
                             </form>
@@ -176,19 +188,24 @@
                                 <?php $i=0 ?>
                                 @foreach ($programmes as $prgc)
                                 <div class="accordionItem open" id="programme{{$prgc->id}}">
-                                    <h6 class="accordionItemHeading p-0 pb-2 ps-3">{{$i+1}} - {{$prgc->titre}}<i
-                                            class="bx bx-minus mt-3 background_plus suppression_programme"
-                                            style="font-size: 14px; color: #801D68;" role="button"
-                                            title="Supprimer le programme" id="{{$prgc->id}}"></i></h6>
+                                    <h6 class="accordionItemHeading py-2 ps-3 pe-3 justify-content-between d-flex flex-row">
+                                        <div class="pt-2">{{$i+1}} - {{$prgc->titre}}</div>
+                                        <div class="suppression_programme px-2" role="button"
+                                            title="Supprimer le programme" id="{{$prgc->id}}"><i class='bx bx-x me-2'></i>Supprimer</div>
+                                    </h6>
                                     <div class="accordionItemContent">
                                         @foreach ($cours as $c)
                                         @if($c->programme_id == $prgc->id)
-                                        <p id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 p-0 cours_hover"><i
-                                                class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} <span><i
-                                                    class="bx bx-minus mt-3 background_plus suppression"
-                                                    style="font-size: 14px; color: #801D68; " onclick="Suppression();"
+                                        <div id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 pt-2 p-0 cours_hover d-flex flex-row justify-content-between">
+                                            <div class="pt-2"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} </div>
+                                            <div class="me-2">
+                                                <span onclick="Suppression();" class="effacer_cours"
                                                     role="button" title="Supprimer le Cours"
-                                                    id="{{$c->cours_id}}"></i></span></p>
+                                                    id="{{$c->cours_id}}"><i class='bx bx-x me-2'></i>Effacer</>
+                                                </span>
+                                            </div>
+
+                                        </div>
                                         @endif
                                         @endforeach
                                         <button type="button" class="btn background_grey6 mb-2 mt-2"
