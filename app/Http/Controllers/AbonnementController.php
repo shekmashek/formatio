@@ -268,12 +268,14 @@ class AbonnementController extends Controller
     //enregistrer abonnement des utilisateurs;
     public function enregistrer_abonnement(Request $request)
     {
+        $fonct = new FonctionGenerique();
         $abonnement = new abonnement();
         $abonnement_cfp = new abonnement_cfp();
         $dt = Carbon::today()->toDateString();
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $cfp_id = cfp::where('user_id', $user_id)->value('id');
+        $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+        $cfp_id = $resp[0]->cfp_id;
         if ($cfp_id == null) {
             $abonnement->date_demande = $dt;
             $abonnement->status = "En attente";
@@ -289,6 +291,15 @@ class AbonnementController extends Controller
             $abonnement_cfp->cfp_id = $cfp_id;
             $abonnement_cfp->categorie_paiement_id = $request->catg_id;
             $abonnement_cfp->save();
+
+            //générer une facture
+
+            // $abonnement_cfp_id = $fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
+            $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
+            $montant = $fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
+
+            DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$dt,1,$montant[0]->tarif]);
+
         }
 
         return redirect()->back()->with('message', 'Demande d\'abonnement envoyé');
