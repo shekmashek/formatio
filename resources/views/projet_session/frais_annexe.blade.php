@@ -1,3 +1,6 @@
+<nav class="d-flex justify-content-between mb-1 ">
+    <span class="titre_detail_session"><strong style="font-size: 14px">Frais annexes pour la session</strong></span>
+</nav>
 <div class="mb-3 col-12 pb-5 section">
     @if (count($all_frais_annexe)<=0 || $all_frais_annexe==NULL)
     <div id="form_frais_annexe">

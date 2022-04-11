@@ -1,3 +1,6 @@
+<nav class="d-flex justify-content-between mb-1 ">
+    <span class="titre_detail_session"><strong style="font-size: 14px">Gestion des documents pour la session</strong></span>
+</nav>
 <div class="row">
     @canany(['isCFP','isFormateur'])
         <h6>Choisissez le(s) fichier(s) pour cette session</h6>

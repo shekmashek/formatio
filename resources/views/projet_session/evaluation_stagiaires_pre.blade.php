@@ -31,7 +31,9 @@
         box-shadow: none;
     }
     </style>
-
+    <nav class="d-flex justify-content-between mb-1 ">
+        <span class="titre_detail_session"><strong style="font-size: 14px">Note des apprenants de la session</strong></span>
+    </nav>
     <nav class="d-flex justify-content-around">
         @canany(['isFormateur'])
             <button id="btn_note" class="btn btn_note_radar" style="background-color: #fff; border: 1px solid grey" onclick="modifier_note()">Notes des stagiaires</button>

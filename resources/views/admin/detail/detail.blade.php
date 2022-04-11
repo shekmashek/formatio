@@ -293,7 +293,7 @@
                     <div class="panel-body">
                         @canany(['isCFP'])
                             <nav class="d-flex justify-content-between mb-1 ">
-                                <span class="titre_detail_session">Détail(s) de la session</span>
+                                <span class="titre_detail_session"><strong style="font-size: 14px">Détail(s) de la session</strong></span>
                                 <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
                                     data-bs-target="#modal_nouveau_detail">
                                     <i class='bx bx-plus-medical icon_ajouter_detail'></i>
