@@ -499,14 +499,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-
-    // public function search_intervale_dte_generique_cfp($nomTab, $invoice_dte, $due_dte, $cfp_id,$status)
-    // {
-    //     $data = DB::select("select * from " . $nomTab . " where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('".$status."') ", [$invoice_dte, $due_dte, $cfp_id]);
-    //     return $data;
-    // }
-
-
     public function search_num_fact_inactif_cfp($num_fact, $cfp_id)
     {
         $facture = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?", [$cfp_id]);
@@ -601,14 +593,14 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function queryWhereParam($nomTab, $para = [],$opt=[], $val = [])
+    public function queryWhereParam($nomTab, $para = [], $opt = [], $val = [])
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
             return "ERROR: tail des onnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
-                $query .= "" . $para[$i] . "".$opt[$i]." '".$val[$i]."'";
+                $query .= "" . $para[$i] . "" . $opt[$i] . " '" . $val[$i] . "'";
                 if ($i + 1 < count($para)) {
                     $query .= " AND ";
                 }
@@ -619,7 +611,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     public function queryWhereParamAndCritere($query_tmp, $para = [], $val = [])
     {
-        $query = $query_tmp." AND ";
+        $query = $query_tmp . " AND ";
         if (count($para) != count($val)) {
             return "ERROR: tail des onnees parametre et value est different";
         } else {
@@ -633,14 +625,54 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
     }
 
-    public function findWhereParam($nomTab, $paraNot = [],$optNot=[], $valNot = [],$paraCrt = [], $valCrt = [])
+    public function findWhereParam($nomTab, $paraNot = [], $optNot = [], $valNot = [], $paraCrt = [], $valCrt = [])
     {
-        $query_tmp = $this->queryWhereParam($nomTab, $paraNot,$optNot, $valNot);
-        $query = $this->queryWhereParamAndCritere($query_tmp, $paraCrt,$valCrt);
+        $query_tmp = $this->queryWhereParam($nomTab, $paraNot, $optNot, $valNot);
+        $query = $this->queryWhereParamAndCritere($query_tmp, $paraCrt, $valCrt);
 
         $data =  DB::select($query, $valCrt);
         return $data;
     }
 
 
+    public function nb_liste_fact_cfp($nb_debut_pag, $cfp_id)
+    {
+        $nb_limit=10;
+        $query = "SELECT cfp_id,( COUNT(num_facture)) totale_pagination FROM v_montant_facture WHERE cfp_id=? GROUP BY cfp_id";
+        $totale_pagination =  DB::select($query, [$cfp_id])[0]->totale_pagination; // 20
+        $debut_aff = 0;
+        $fin_aff = 1;
+
+        if($totale_pagination==1){
+            $nb_debut_pag = 1;
+            $fin_aff = 1;
+        }
+        if ($nb_debut_pag <= 0 || $nb_debut_pag==null) {
+            $nb_debut_pag = 1;
+        }
+
+        if($nb_debut_pag == 1){
+            $debut_pagination=0;
+            $debut_aff = 1;
+            if($nb_debut_pag >=$totale_pagination  ){
+                $fin_aff = $totale_pagination;
+            } else {
+                $fin_aff = $nb_limit;
+            }
+        }
+        elseif($nb_debut_pag  == $totale_pagination){
+            $debut_pagination = ($nb_debut_pag-1) * $nb_limit;
+            $fin_aff = ($nb_debut_pag-1) * $nb_limit;
+            $debut_aff = $nb_debut_pag;
+        } else {
+            $debut_pagination = ($nb_debut_pag-1) * $nb_limit;
+            $fin_aff = ($nb_debut_pag-1) * $nb_limit;
+            $debut_aff = $nb_debut_pag * $nb_limit;
+        }
+        $data["nb_limit"] = $nb_limit;
+        $data["debut_aff"] = $debut_aff;
+        $data["fin_aff"] = $fin_aff;
+        $data["totale_pagination"] = $totale_pagination;
+        return $data;
+    }
 }

@@ -207,32 +207,31 @@
 
 <div class="container-fluid">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>filtrer</a>
-    <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">1-2 sur 10</span>
-        {{-- @if ($nb_par_page >= $nb_projet) --}}
-        <a href="#" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="#" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-        {{-- @elseif ($page == 1)
-        <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-        @elseif ($page == $fin_page || $page > $fin_page)
-        <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-        @else
-        <a href="{{ route('liste_projet',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('liste_projet',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-        @endif --}}
+    <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
+        @if ($pagination["debut_aff"] <= $pagination["totale_pagination"] || $pagination["fin_aff"] <=$pagination["totale_pagination"]) <a href="#" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="#" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @elseif ($pagination["debut_aff"] == 1)
+            <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+            @elseif ($pagination["debut_aff"] >= $pagination["totale_pagination"])
+            <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @else
+            <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+            @endif
     </span>
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             {{-- <li></li> --}}
             <li class="nav-item">
-                <a href="{{route('liste_facture')}}" class="btn_creer text-center filter mt-3 mx-3">
+                <a href="{{route('liste_facture')}}" class="nav-link">
                     TOUT
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link active" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="true">
-                    Facture brouillon
+                    Brouillon
                     @if (count($facture_inactif) > 0)
                     {{count($facture_inactif)}}
                     @endif
@@ -240,7 +239,7 @@
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
-                    Facture valider
+                    Valider
                     @if (count($facture_actif) > 0)
                     {{count($facture_actif)}}
                     @endif
@@ -248,7 +247,7 @@
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link" id="nav-encour-tab" data-bs-toggle="tab" data-bs-target="#nav-encour" type="button" role="tab" aria-controls="nav-encour" aria-selected="false">
-                    Facture en cour
+                    En cour
                     @if (count($facture_encour) > 0)
                     {{count($facture_encour)}}
                     @endif
@@ -256,7 +255,7 @@
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link"" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
-                    Facture payer
+                    Payer
                     @if (count($facture_payer) > 0)
                     {{count($facture_payer)}}
                     @endif
@@ -299,7 +298,7 @@
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
+                                            {{$actif->num_facture}}
                                         </a>
                                     </th>
                                     <td>
@@ -331,25 +330,25 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li class="dropdown-item">
-                                                        <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn btn_creer" style="color: rgb(211, 108, 23)"> Modifier facture</button>
+                                                        <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier facture</button>
                                                         </a>
                                                     </li>
                                                     <li class="dropdown-item">
                                                         <form action="{{route('valid_facture')}}" method="POST">
                                                             @csrf
                                                             <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                            <button type="submit" class="btn btn_creer"> Valider facture</button>
+                                                            <button type="submit" class="btn ">Valider facture</button>
                                                         </form>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item" href="{{route('delete_facture',$actif->num_facture)}}">
-                                                            <button type="submit" class="btn btn_creer" style="color:red">Supprimer</button>
+                                                            <button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>
                                                         </a>
                                                     </li>
 
                                                     <hr class="dropdown-divider">
                                                     <a class="dropdown-item" href="{{route('facture')}} ">
-                                                        <button type="submit" class="btn btn_creer" style="color:green">Creer nouveau facture
+                                                        <button type="submit" class="btn"> <i class='bx bx-plus-medical'></i> Nouveau facture
                                                         </button></a>
                                                 </ul>
                                             </div>
@@ -395,7 +394,7 @@
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
+                                            {{$actif->num_facture}}
                                         </a>
                                     </th>
                                     <td>
@@ -437,52 +436,12 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <a href="#" class="dropdown-item">
-                                                        <button type="button" class=" btn btn_creer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
+                                                        <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
                                                     </a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_creer">Liste des encaissements</button></a>
+                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
                                                     <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_creer">Creer nouveau facture</button></a>
+                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a>
 
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endcanany
-                                    @elseif ($actif->facture_encour == "en_cour")
-                                    <td style="color:rgb(198, 201, 25);">{{$actif->facture_encour}}</td>
-                                    @canany(['isCFP'])
-                                    <td>
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a href="#" class="dropdown-item">
-                                                        <button type="button" class=" btn btn_creer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
-                                                    </a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_creer">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_creer">Creer nouveau facture</button></a>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endcanany
-                                    @else
-                                    <td style="color:rgb(15, 221, 67);">{{$actif->facture_encour}}</td>
-                                    @canany(['isCFP'])
-                                    <td>
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_creer">PDF</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_creer">Creer nouveau facture</button></a>
                                                 </ul>
                                             </div>
                                         </div>
@@ -529,7 +488,7 @@
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
+                                            {{$actif->num_facture}}
                                         </a>
                                     </th>
                                     <td>
@@ -557,7 +516,7 @@
                                     <td>{{$actif->due_date}}</td>
                                     <td>
                                         {{-- <div style="background-color: green; border-radius: 10px; text-align: center;color:white"> --}}
-                                            {{-- {{$actif->facture_encour}} --}} en cour
+                                        {{-- {{$actif->facture_encour}} --}} en cour
                                         {{-- </div> --}}
                                     </td>
                                     @canany(['isCFP'])
@@ -569,11 +528,11 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <a href="#" class="dropdown-item">
-                                                        <button type="button" class=" btn btn_creer payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
+                                                        <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
                                                     </a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_creer">Liste des encaissements</button></a>
+                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
                                                     <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_creer">Creer nouveau facture</button></a>
+                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a>
 
                                                 </ul>
                                             </div>
@@ -622,7 +581,7 @@
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            <strong> <i class="fa fa-barcode"></i> {{$actif->num_facture}} </strong>
+                                            {{$actif->num_facture}}
                                         </a>
                                     </th>
                                     <td>
@@ -651,7 +610,7 @@
                                     <td>{{$actif->due_date}}</td>
                                     <td>
                                         {{-- <div style="background-color: blue; border-radius: 10px; text-align: center;color:white"> --}}
-                                            {{$actif->facture_encour}}
+                                        {{$actif->facture_encour}}
                                         {{-- </div> --}}
                                     </td>
                                     @canany(['isCFP'])
@@ -662,10 +621,10 @@
                                                     <i class="fa fa-ellipsis-v"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn btn_creer">PDF</button></a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn btn_creer">Liste des encaissements</button></a>
+                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF</button></a>
+                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
                                                     <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn btn_creer">Creer nouveau facture</button></a>
+                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a>
                                                 </ul>
                                             </div>
                                         </div>
