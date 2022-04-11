@@ -3,13 +3,14 @@
 <style>
     .carHead{
     width:auto;
-    background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57));
+    /* background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57)); */
     height:450px;
     border-radius:10px;
     margin: 0 10px;
     margin-top: 10px;
     margin-bottom: 0;
     padding-top: 20px;
+    color: black
 }
 .font{
     font-family: Arial, Helvetica, sans-serif;

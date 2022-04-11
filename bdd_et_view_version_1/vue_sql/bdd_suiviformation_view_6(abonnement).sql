@@ -61,3 +61,13 @@ JOIN tarif_categories tc ON
     ta.type_abonnement_role_id = tc.type_abonnement_role_id AND ta.categorie_paiement_id = tc.categorie_paiement_id
 JOIN type_abonnements t ON
     t.id = ta.type_abonnement_id;
+
+CREATE OR REPLACE VIEW v_abonnement_role as SELECT
+    types.id as types_id,
+    type_ab.id as types_abonnement_id,
+    type_ab.nom_type,
+    abonne.id as abonne_id,
+    abonne.abonne_name
+FROM type_abonnement_roles types
+JOIN type_abonnements type_ab ON type_ab.id = types.type_abonnement_id
+JOIN type_abonnes abonne ON abonne.id = types.type_abonne_id

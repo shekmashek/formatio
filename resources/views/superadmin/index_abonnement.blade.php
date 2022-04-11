@@ -32,6 +32,7 @@
         </div>
     </div> --}}
 
+
     <div class="row mt-5">
         <div class="col-md-5">
             <div class="row align-items-center justify-content-center">
@@ -108,12 +109,6 @@
                                     <label for="">Referent</label>
                                     <input type="text" class="form-control" value = "{{$etp->nom_resp}} {{$etp->prenom_resp}}" readonly><br>
 
-                                    <label for=""><small>Mode de paiement</small></label>
-                                    <select class="form-select" aria-label="Default select example" name = "mode_paiement">
-                                        <option value="Choisissez un mode de paiement">Choisissez un mode de paiement...</option>
-                                        <option value="1">virement bancaire</option>
-                                        <option value="2">chèque</option>
-                                    </select>
                                 </div>
                             @endforeach
                         @endif
@@ -140,15 +135,8 @@
                                         <input type="text" class="form-control" value = "Gratuit" readonly><br>
                                     @endif
 
-                                    <label for="">Domaine de formation</label>
-                                    <input type="text" class="form-control" value = "{{$cfp->domaine_de_formation}}" readonly><br>
 
-                                    <label for=""><small>Mode de paiement</small></label>
-                                    <select class="form-select" aria-label="Default select example" name = "mode_paiement">
-                                        <option value="Choisissez un mode de paiement">Choisissez un mode de paiement...</option>
-                                        <option value="1">virement bancaire</option>
-                                        <option value="2">chèque</option>
-                                    </select>
+
                                 </div>
                             @endforeach
                         @endif

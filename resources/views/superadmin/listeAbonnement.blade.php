@@ -47,7 +47,7 @@
             @endisset
             @isset($gratuit)
                 <h2 class="text-white font text-center mt-5"> Votre offre est {{$gratuit}} </h2>
-                @endisset
+            @endisset
 
             <div class="row align-items-center justify-content-center">
                 <div class="col-3 py-5">
@@ -89,18 +89,18 @@
                 @endisset
                @foreach ($typeAbonnement as $types)
                     @foreach ($tarif as $tf)
-                        @if($tf->type_abonnement_role_id == $types->id)
+                        @if($tf->type_abonnement_role_id == $types->types_id)
 
                             <div class="card_repeat bg-white">
                                 <div class="py-3">
 
                                     <button class="btn_premium">
-                                        <h4>{{ $types->type_abonnement->nom_type }}</h4>
+                                        <h4>{{ $types->nom_type }}</h4>
                                     </button>
                                     <br>
                                     <h1><input disabled value=" <?php echo number_format($tf->tarif, 2, ',', '.') ;  ?> Ar" style="text-align:center; border:none; width:300px; background-color:white;" id="prixMensuel"></h1><p></p>
                                     @foreach ($tarifAnnuel as $tfAnn)
-                                        @if($tfAnn->type_abonnement_role_id == $types->id)
+                                        @if($tfAnn->type_abonnement_role_id == $types->types_id)
                                             <h1><input disabled value=" <?php echo number_format($tfAnn->tarif, 2, ',', '.') ;  ?> Ar" style="display:none;text-align:center; border:none; width:300px; background-color:white;" id="prixAnnuel"></h1><p></p>
                                         @endif
                                     @endforeach
@@ -115,7 +115,7 @@
                                     <button class="form-control btn_join" id="abonnerMensuel"> <a href="{{route('abonnement-page',['id'=>$tf->id])}}"> S'abonner  </a> &nbsp;&nbsp;  <i class="fal fa-arrow-right"></i> </button><br>
 
                                     @foreach ($tarifAnnuel as $tfAnn)
-                                        @if($tfAnn->type_abonnement_role_id == $types->id)
+                                        @if($tfAnn->type_abonnement_role_id == $types->types_id)
                                             <button class="form-control btn_join" id="abonnerAnnuel" style="display: none"> <a href="{{route('abonnement-page',['id'=>$tfAnn->id])}}"> S'abonner  </a> &nbsp;&nbsp;  <i class="fal fa-arrow-right"></i> </button><br>
                                         @endif
                                     @endforeach

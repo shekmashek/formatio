@@ -190,13 +190,17 @@ class AbonnementController extends Controller
         // $role_id = User::where('Email', Auth::user()->email)->value('role_id');
 
         if (Gate::allows('isReferent')) {
+            $fonct = new FonctionGenerique();
             $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 2)->get();
             $typeAbonne_id = 2;
             $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->get();
             $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '3')->get();
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '4')->get();
 
-            $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
+            $resp = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $entreprise_id = $resp[0]->entreprise_id;
+            // $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
+
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
             $abn = type_abonnement::all();
             if ($test_abonne) {
@@ -212,12 +216,13 @@ class AbonnementController extends Controller
             $fonct = new FonctionGenerique();
             $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
-            $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
+            $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->where('status','!=','En attente')->exists();
+
             $abn =type_abonnement::all();
             $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 1)->get();
             $typeAbonne_id = 2;
-            dd($typeAbonne_id);
-            $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->get();
+
+            $typeAbonnement = $fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
 
             $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->get();
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
@@ -244,7 +249,8 @@ class AbonnementController extends Controller
         $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('id', $type_abonnement_role_id)->get();
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $role_id = User::where('id', $user_id)->value('role_id');
+
+
         $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
         if (Gate::allows('isReferent')) {
             $entreprise = responsable::with('entreprise')->where('user_id', $user_id)->get();
@@ -270,7 +276,6 @@ class AbonnementController extends Controller
         $cfp_id = cfp::where('user_id', $user_id)->value('id');
         if ($cfp_id == null) {
             $abonnement->date_demande = $dt;
-            $abonnement->mode_paiement = $request->mode_paiement;
             $abonnement->status = "En attente";
             $abonnement->type_abonnement_role_id = $request->type_abonnement_role_id;
             $abonnement->entreprise_id = $entreprise_id;
@@ -279,7 +284,6 @@ class AbonnementController extends Controller
         }
         if ($entreprise_id == null) {
             $abonnement_cfp->date_demande = $dt;
-            $abonnement_cfp->mode_paiement = $request->mode_paiement;
             $abonnement_cfp->status = "En attente";
             $abonnement_cfp->type_abonnement_role_id = $request->type_abonnement_role_id;
             $abonnement_cfp->cfp_id = $cfp_id;
