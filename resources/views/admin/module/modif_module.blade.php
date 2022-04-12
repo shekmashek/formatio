@@ -12,7 +12,7 @@
                     <div class="row g-0 m-0" style="align-items: center">
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            
+
 
                             <div class="col" align="right">
                                 <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
@@ -163,47 +163,33 @@
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    {{-- @if($mod->modalite_formation == 'En ligne')
+
                                                     <select
                                                         class="form-control select_formulaire modalite modalite input mt-3"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
+                                                        @if($mod->modalite_formation == 'En ligne')
                                                         <option value="{{$mod->modalite_formation}}" selected>
                                                             {{$mod->modalite_formation}}</option>
-                                                        <option value="Presentiel"> Présentiel </option>
-                                                        <option value="En ligne/Presentiel"> En ligne/Présentiel
-                                                        </option>
-                                                    </select>
-                                                    <label for="acf-modalite"
-                                                        class="form-control-placeholder">Choisissez la
-                                                        modalite de formation...</label>
-                                                    @endif --}}
-                                                    {{-- @if($mod->modalite_formation == 'Presentiel')
-                                                    <select
-                                                        class="form-control select_formulaire modalite modalite input mt-3"
-                                                        id="acf-modalite" name="modalite" style="height: 50px;">
-                                                        <option value="En ligne"> En ligne </option>
+                                                        <option value="Presentiel">Présentiel</option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                        @endif
+                                                        @if($mod->modalite_formation == 'Presentiel')
+                                                        <option value="En ligne">En ligne</option>
                                                         <option value="{{$mod->modalite_formation}}" selected>
                                                             {{$mod->modalite_formation}} </option>
-                                                        <option value="En ligne/Presentiel"> En ligne/Présentiel
-                                                        </option>
-                                                    </select>
-                                                    <label for="acf-modalite"
-                                                        class="form-control-placeholder">Choisissez la
-                                                        modalite de formation...</label>
-                                                    @endif --}}
-                                                    @if($mod->modalite_formation == 'En ligne/Presentiel')
-                                                    <select
-                                                        class="form-control select_formulaire modalite modalite input mt-3"
-                                                        id="acf-modalite" name="modalite" style="height: 50px;">
-                                                        <option value="En ligne"> En ligne </option>
-                                                        <option value="Presentiel"> Présentiel </option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                        @endif
+                                                        @if($mod->modalite_formation == 'En ligne/Presentiel')
+                                                        <option value="En ligne">En ligne</option>
+                                                        <option value="Presentiel">Présentiel</option>
                                                         <option value="{{$mod->modalite_formation}}" selected>
                                                             {{$mod->modalite_formation}} </option>
+                                                        @endif
+
                                                     </select>
                                                     <label for="acf-modalite"
                                                         class="form-control-placeholder">Choisissez la
                                                         modalite de formation...</label>
-                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -455,13 +441,11 @@
                                                                     placeholder="Nombre personne
                                                                     min" required><label for="acf-min"
                                                                     class="form-control-placeholder">Nombre personne
-                                                                    min</label>
+                                                                    minmale</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
                                                 <div class="form-group" id="premier_">
                                                     <div class="acf-field acf-field-text acf-field-max is-required">
                                                         <div class="acf-input">
@@ -475,7 +459,7 @@
                                                                     placeholder="Nombre personne
                                                                     max"><label for="acf-max"
                                                                     class="form-control-placeholder">Nombre personne
-                                                                    max</label>
+                                                                    maximale</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -553,9 +537,7 @@
                                             </div>
                                             <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
                                                     style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">Presentiel
-                                                    et a
-                                                    distance</span>
+                                                    class="acf-modalite">En ligne/Presentiel</span>
                                             </div>
                                             <div class="col" id="preview_niveau">
                                                 <i class='bx bx-equalizer bx_icon'
@@ -671,19 +653,18 @@
                                             <div class="row detail__formation__item__main">
                                                 <div class="detail__prix__main__presentiel pt-3">
                                                     <div>
-                                                        <p class="text-uppercase" id="preview_modalite"><span
-                                                                class="acf-modalite">Presentiel et a
-                                                                distance</span></p>
+                                                        <p class="text-uppercase text-center" id="preview_modalite"><span
+                                                                class="acf-modalite">En ligne/Presentiel</span></p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row detail__formation__item__main">
-                                                <div class="col-lg-5 detail__prix__main__ref">
+                                                <div class="col detail__prix__main__ref pt-2">
                                                     <div>
                                                         <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-7 detail__prix__main__ref2 pt-2">
+                                                <div class="col detail__prix__main__ref2 pt-2">
                                                     <div id="preview_reference">
                                                         <p class="acf-reference">10MG2022-01</p>
                                                     </div>
@@ -712,12 +693,12 @@
                                             </div>
                                             <hr class="hr">
                                             <div class="row detail__formation__item__rmain">
-                                                <div class="col-lg-4 detail__prix__main__prix">
+                                                <div class="col-lg-5 detail__prix__main__prix">
                                                     <div>
                                                         <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-8 detail__prix__main__prix2">
+                                                <div class="col-lg-7 detail__prix__main__prix2">
                                                     <div>
                                                         <p id="preview_prix"><span
                                                                 class="acf-prix">450000</span>&nbsp;AR&nbsp;HT

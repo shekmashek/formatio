@@ -63,7 +63,7 @@ $(".suppression").on('click', function(e) {
     let id = e.target.id;
     $.ajax({
         type: "get"
-        , url: 'destroy_module'
+        , url: '/destroy_module'
         ,dataType: "json"
         , data: {
             Id: id
@@ -78,6 +78,7 @@ $(".suppression").on('click', function(e) {
         }
         , error: function(error) {
             console.log(JSON.parse(error));
+            // console.log(JSON.stringify(error));
         }
     });
 });

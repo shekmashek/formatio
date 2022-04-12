@@ -1,5 +1,5 @@
 .accordion {
-    background-color: rgba(236, 235, 235, 0.521);
+    /* background-color: rgba(236, 235, 235, 0.521); */
     color: black;
     cursor: pointer;
     height: 3rem;
@@ -12,9 +12,9 @@
 }
 
 .accordion_prog input {
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
+    background-color: white;
+    /* border: none; */
+    border-radius: 5px;
     height: inherit;
     width: 90%;
     margin-top: 0;

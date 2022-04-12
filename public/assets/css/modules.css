@@ -592,8 +592,7 @@ font-size: 0.850rem;
 
 .detail__prix__main__prix2{
     color: #637381;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 0.8rem;
 }
 
 .postion_fixe a:hover{
@@ -681,4 +680,25 @@ font-size: 0.850rem;
     color: red;
     position: relative;
     top: .35rem;
+}
+
+#preview_reference{
+    font-size: 0.850rem;
+}
+
+.detail__prix__main__ref p,
+.detail__prix__main__dure p,
+.detail__prix__main__dure2 p,
+.detail__prix__main__prix p{
+    font-size: 0.850rem;
+    align-items: center;
+}
+
+.si_vide a:hover{
+    cursor: pointer;
+}
+
+.icon_vide{
+    font-size: 20rem;
+    color: #637381;
 }

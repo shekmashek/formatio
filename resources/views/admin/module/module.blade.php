@@ -31,7 +31,12 @@
                         <div class="d-flex">
                             <div class="col-12 ps-3">
                                 <div class="row pading_bas">
-
+                                    @if($mod_en_cours == null)
+                                    <div class="si_vide row mt-4">
+                                        <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
+                                        <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide'></i></a>
+                                    </div>
+                                    @else
                                     @foreach($mod_en_cours as $mod)
                                     <div class="col-4 list_module">
                                         <div class="row detail__formation__result new_card_module bg-light mb-3"
@@ -153,6 +158,7 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -171,6 +177,12 @@
                         <div class="d-flex">
                             <div class="col-12 ps-3">
                                 <div class="row pading_bas d-flex flex-wrap">
+                                    @if($mod_non_publies == null)
+                                    <div class="si_vide row mt-4">
+                                        <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
+                                        <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide'></i></a>
+                                    </div>
+                                    @else
                                     @foreach($mod_non_publies as $mod)
                                     <div class="col-4 list_module">
                                         <div class="row detail__formation__result new_card_module bg-light mb-3"
@@ -369,6 +381,7 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -387,6 +400,12 @@
                         <div class="d-flex">
                             <div class="col-12 ps-3">
                                 <div class="row pading_bas d-flex flex-wrap">
+                                    @if($mod_publies == null)
+                                    <div class="si_vide row mt-4">
+                                        <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
+                                        <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide'></i></a>
+                                    </div>
+                                    @else
                                     @foreach($mod_publies as $mod)
                                     <div class="col-4 list_module">
                                         <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
@@ -526,6 +545,7 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -690,8 +710,8 @@
                                                 <div class="row detail__formation__item__main">
                                                     <div class="detail__prix__main__presentiel pt-3">
                                                         <div>
-                                                            <p class="text-uppercase" id="preview_modalite"><span
-                                                                    class="acf-modalite" id="modalite2"></span></p>
+                                                            <p class="text-uppercase" id="preview_modalite">
+                                                                <span class="acf-modalite" id="modalite2"></span></p>
                                                         </div>
                                                     </div>
                                                 </div>

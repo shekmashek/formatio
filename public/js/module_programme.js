@@ -168,9 +168,9 @@ $(document).on("click", "#add_Cours1", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="remove_Cours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="remove_Cours" class="bx bx-x mt-3 " style="font-si2e: 14px; color: ; position:relative; left: 1remred" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -189,9 +189,9 @@ $(document).on("click", "#add_Cours", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -204,9 +204,9 @@ $(document).on("click", "#add_Cours3", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -219,9 +219,9 @@ $(document).on("click", "#add_Cours4", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -234,9 +234,9 @@ $(document).on("click", "#add_Cours5", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -249,9 +249,9 @@ $(document).on("click", "#add_Cours6", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -264,9 +264,9 @@ $(document).on("click", "#add_Cours7", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -279,9 +279,9 @@ $(document).on("click", "#add_Cours8", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -294,9 +294,9 @@ $(document).on("click", "#add_Cours9", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -309,9 +309,9 @@ $(document).on("click", "#add_Cours10", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -324,9 +324,9 @@ $(document).on("click", "#add_Cours11", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -339,9 +339,9 @@ $(document).on("click", "#add_Cours12", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -354,9 +354,9 @@ $(document).on("click", "#addCours0", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_0[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_0[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -369,9 +369,9 @@ $(document).on("click", "#addCours1", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_1[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_1[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -384,9 +384,9 @@ $(document).on("click", "#addCours2", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_2[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_2[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -399,9 +399,9 @@ $(document).on("click", "#addCours3", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_3[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_3[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -414,9 +414,9 @@ $(document).on("click", "#addCours4", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_4[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_4[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -429,9 +429,9 @@ $(document).on("click", "#addCours5", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_5[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_5[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -444,9 +444,9 @@ $(document).on("click", "#addCours6", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_6[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_6[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -459,9 +459,9 @@ $(document).on("click", "#addCours7", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_7[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_7[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -474,9 +474,9 @@ $(document).on("click", "#addCours8", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_8[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_8[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -489,9 +489,9 @@ $(document).on("click", "#addCours9", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_9[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_9[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -504,9 +504,9 @@ $(document).on("click", "#addCours10", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_10[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_10[]" placeholder="Points en cours">';
     html +=
-        '<i id="removeCours" class="bx bx-minus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '<i id="removeCours" class="bx bx-x mt-3 " style="font-size: 24px; color: red"; position:relative; left: 1rem role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
 
@@ -528,9 +528,9 @@ $(document).on("click", "#addProg", function() {
 
     html += '<span role="button" class="accordion accordion_prog active">';
     html +=
-        '<input type="text" class="form-control" name="titre_prog[]" placeholder="Titre de votre programme">';
+        '<input type="text" class="form-control" name="titre_prog[]" placeholder="Titre de section">';
     html +=
-        '<i id="removeProg" class="bx bx-minus pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button" title="ajouter un nouveau programme">';
+        '<i id="removeProg" class="bx bx-x pt-3 plus_prog" style="font-size: 24px; color: red; position: relative; right: .5rem" role="button" title="ajouter un nouveau programme">';
     html += "</i>";
     html += "</span>";
     html += '<div class="panel">';
@@ -538,11 +538,11 @@ $(document).on("click", "#addProg", function() {
     html += '<i class="bx bx-chevron-right pt-4">';
     html += "</i>&nbsp;";
     html +=
-        '<input type="text" class="form-control" name="cours_'+j+'[]" placeholder="Votre cours">';
+        '<input type="text" class="form-control" name="cours_'+j+'[]" placeholder="Points en cours">';
     html +=
         '<i id="addCours' +
         j +
-        '" class="bx bx-plus mt-3 background_plus" style="font-size: 14px; color: #801D68" role="button" title="ajouter un nouveau cours">';
+        '" class="bx bx-plus-medical mt-3 ms-2 icon_creer" style="font-size: 24px; position: relative; left: .5rem " role="button" title="ajouter un nouveau cours">';
     html += "</i>";
     html += "</span>";
     html += '<span id="newCours' +j+ '">';
@@ -612,8 +612,8 @@ function Cours() {
     html +=     '<div class="col-11">';
     html +=         '<div class="form-group">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="text" name="cours[]" id="cours" class="form-control input" placeholder="Nouveau Cours" required>';
-    html +=                 '<label for="cours" class="form-control-placeholder">Nouveau Cours';
+    html +=                 '<input type="text" name="cours[]" id="cours" class="form-control input" placeholder="Nouveau Point" required>';
+    html +=                 '<label for="cours" class="form-control-placeholder">Nouveau Point';
     html +=                 '</label>';
     html +=             '</div>';
     html +=         '</div>';

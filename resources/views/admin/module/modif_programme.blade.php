@@ -175,10 +175,12 @@
                                 <div id="newProg"></div>
                                 <div class="form-row d-flex flex-row">
                                     <input type="hidden" value="{{$id}}" name="id_module">
-                                    <button type="submit" class="btn btn-primary background_grey6 " id="nouveau_prg"
+                                    <button type="submit" class="btn btn-primary btn_enregistrer me-4" id="nouveau_prg"
                                         style="display:none">Enregistrer</button>
-                                    <button type="button" id="addProg" class="btn_creer btn pb-2"> <i class='bx bx-plus-medical icon_creer'></i>Nouveau
-                                        Programme</button>
+                                    <button type="button" id="addProg" class="btn_creer btn pb-2">
+                                        <i class='bx bx-plus-medical icon_creer'></i>
+                                        Ajouter un nouveau section dans votre programme
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -210,11 +212,13 @@
                                         @endforeach
                                         <button type="button" class="btn_creer ms-2 mb-2 mt-2 pb-2"
                                             data-bs-toggle="modal" data-bs-target="#Modal_cours_{{$prgc->id}}"
-                                            id="{{$prgc->id}}"><i class='bx bx-plus-medical icon_creer'></i>Nouvelle
-                                            Cours</button>
+                                            id="{{$prgc->id}}">
+                                            <i class='bx bx-plus-medical icon_creer'></i>
+                                            Ajouter de point dans votre section
+                                        </button>
                                         <button type="button" class="btn btn_creer ms-2 mb-2 mt-2 pb-2"
                                             data-bs-toggle="modal" data-bs-target="#Modal_{{$prgc->id}}"
-                                            id="{{$prgc->id}}"><i class='bx bxs-edit-alt icon_creer'></i>Modifier Cours et Programme</button>
+                                            id="{{$prgc->id}}"><i class='bx bxs-edit-alt icon_creer'></i>Modifier Section et Points</button>
                                     </div>
                                     {{-- data-target="#Modal_{{$prgc->id}}" --}}
 
@@ -234,9 +238,11 @@
                                                         @csrf
                                                         <input type="hidden" value="{{$prgc->id}}" name="id_prog">
                                                         <div class="form-row">
+                                                            <label for="" class="mb-2">Titre de Section</label>
                                                             <input type="text" name="titre_prog"
                                                                 class="w-100  titre_{{$i}} input" value="{{$prgc->titre}}">
                                                             <hr>
+                                                            <label for="" class="mb-2">Liste des Points en Cours</label>
                                                             <div class="d-flex flex-column">
                                                                 <?php $j=0 ?>
                                                                 @foreach ($cours as $c)
@@ -275,7 +281,7 @@
                                                     @csrf
                                                     <input type="hidden" name="id_prog" id="id" value="{{$prgc->id}}">
                                                     <div class="modal-header">
-                                                        <h6>Ajouter des nouvelles Cours dans&nbsp;{{$prgc->titre}}</h6>
+                                                        <h6>Ajouter des nouvelles Points dans&nbsp;{{$prgc->titre}}</h6>
                                                     </div>
                                                     <div class="modal-body mt-2 mb-2">
                                                         <div class="container">
@@ -292,10 +298,9 @@
                                                                     <div class="form-group">
                                                                         <div class="form-row">
                                                                             <input type="text" name="cours[]" id="cours"
-                                                                                class="form-control input" placeholder="Nouveau Cours" required>
+                                                                                class="form-control input" placeholder="Nouveau Point" required>
                                                                             <label for="cours"
-                                                                                class="form-control-placeholder">Nouveau
-                                                                                cours</label>
+                                                                                class="form-control-placeholder">Nouveau Point </label>
                                                                         </div>
                                                                     </div>
                                                                 </div>

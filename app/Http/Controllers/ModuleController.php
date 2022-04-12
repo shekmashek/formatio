@@ -259,7 +259,6 @@ class ModuleController extends Controller
 
             $niveau = Niveau::all();
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
-            dd($module_en_modif);
         } else {
 
             $niveau = Niveau::all();
@@ -291,14 +290,13 @@ class ModuleController extends Controller
     {
         $id = $request->id;
         //modifier les donnée
-        // DB::update('update modules set reference=?, nom_module=?, prix=?, duree=?, duree_jour=?, prerequis=?, objectif=?, modalite_formation=?, description=?, materiel_necessaire=?, bon_a_savoir=?, cible=?, prestation=?, min=?, max=? where id=?', [$request->reference, $request->nom_module, $request->prix, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->modalite, $request->description, $request->materiel, $request->bon_a_savoir, $request->cible, $request->prestation, $request->min_pers, $request->max_pers, $id]);
+        DB::update('update modules set reference=?, nom_module=?, prix=?, duree=?, duree_jour=?, prerequis=?, objectif=?, modalite_formation=?, description=?, materiel_necessaire=?, bon_a_savoir=?, cible=?, prestation=?, min=?, max=? where id=?', [$request->reference, $request->nom_module, $request->prix, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->modalite, $request->description, $request->materiel, $request->bon_a_savoir, $request->cible, $request->prestation, $request->min_pers, $request->max_pers, $id]);
         return redirect()->route('liste_module');
     }
 
     public function destroy(Request $request)
     {
         $id = $request->Id;
-        dd($id);
         // $module = module::find($id);
         //   $module->delete();
         DB::delete('delete from modules where id = ?', [$id]);

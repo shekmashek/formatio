@@ -167,49 +167,31 @@
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    @if($mod->modalite_formation == 'En ligne')
                                                     <select
                                                         class="form-control select_formulaire modalite modalite input mt-2"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
+                                                        @if($mod->modalite_formation == 'En ligne')
                                                         <option value="{{$mod->modalite_formation}}" selected>
                                                             {{$mod->modalite_formation}}</option>
-                                                        <option value="Presentiel"> Présentiel </option>
-                                                        <option value="Presentiel - En ligne"> Présentiel -
-                                                            En ligne
-                                                        </option>
-                                                    </select>
-                                                    <label for="acf-modalite"
-                                                        class="form-control-placeholder">Choisissez la
-                                                        modalite de formation...</label>
-                                                    @endif
-                                                    @if($mod->modalite_formation == 'Presentiel')
-                                                    <select
-                                                        class="form-control select_formulaire modalite modalite input mt-2"
-                                                        id="acf-modalite" name="modalite" style="height: 50px;">
-                                                        <option value="En ligne"> En ligne </option>
+                                                        <option value="Presentiel">Présentiel</option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                        @endif
+                                                        @if($mod->modalite_formation == 'Presentiel')
+                                                        <option value="En ligne">En ligne</option>
                                                         <option value="{{$mod->modalite_formation}}" selected>
                                                             {{$mod->modalite_formation}} </option>
-                                                        <option value="Presentiel - En ligne"> Présentiel -
-                                                            En ligne
-                                                        </option>
-                                                    </select>
-                                                    <label for="acf-modalite"
-                                                        class="form-control-placeholder">Choisissez la
-                                                        modalite de formation...</label>
-                                                    @endif
-                                                    @if($mod->modalite_formation == 'Presentiel - En ligne')
-                                                    <select
-                                                        class="form-control select_formulaire modalite modalite input mt-2"
-                                                        id="acf-modalite" name="modalite" style="height: 50px;">
-                                                        <option value="En ligne"> En ligne </option>
-                                                        <option value="Presentiel"> Présentiel </option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                        @endif
+                                                        @if($mod->modalite_formation == 'En ligne/Presentiel')
+                                                        <option value="En ligne">En ligne</option>
+                                                        <option value="Presentiel">Présentiel</option>
                                                         <option value="{{$mod->modalite_formation}}" selected>
                                                             {{$mod->modalite_formation}} </option>
+                                                        @endif
                                                     </select>
                                                     <label for="acf-modalite"
                                                         class="form-control-placeholder">Choisissez la
                                                         modalite de formation...</label>
-                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
