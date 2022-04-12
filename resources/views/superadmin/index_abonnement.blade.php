@@ -15,131 +15,132 @@
 </head>
 
 <body>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="row align-items-center justify-content-center">
+    <div class="container">
+        <div class="row">
+            <div class="m-4">
+                <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+                    <li class="nav-item">
+                        <a href="#abonnement" class="nav-link active" data-bs-toggle="tab">Abonnements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#facture" class="nav-link" data-bs-toggle="tab">Factures</a>
+                    </li>
+                </ul>
             </div>
-            @foreach ($typeAbonnement as $types)
-                @foreach ($tarif as $tf)
-                     <div class="col-lg-4 col-md-6 ">
-                        <div class="card d-flex align-items-center justify-content-center">
-                            <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
-                            <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
-                                    class="sup">AR</sup>/ mois</span>
-                            <ul class="mb-5 list-unstyled text-muted">
-                                <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités </li>
-                            </ul>
-                            <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">Commencer</a></div>
-                        </div>
-                    </div>
-                @endforeach
-            @endforeach
         </div>
-
-        <div class="col pt-5 px-5 ms-auto">
-            <div class="py-3">
-                <div class="card-title">
-                    @if(session()->has('message'))
-                        <div class="alert alert-success">
-                            {{ session()->get('message') }}
-                        </div>
-                    @endif
-
-                    <h3> Votre Compte actuel</h3>
-
+        <div class="row mt-5">
+            <div class="col">
+                <div class="row align-items-center justify-content-center">
                 </div>
-                <form action="{{route('enregistrer_abonnement')}}" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        @if($entreprise!=null)
-                            @foreach ($entreprise as $etp)
-                                <div class="col-md-5">
-                                    <label for="">Nom</label>
-                                    <input type="text" class="form-control" value="{{$etp->entreprise->nom_etp}}" readonly><br>
+                @foreach ($typeAbonnement as $types)
+                    @foreach ($tarif as $tf)
+                         <div class="col-lg-6 col-md-6 ">
+                            <div class="card d-flex align-items-center justify-content-center">
+                                <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
+                                <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
+                                        class="sup">AR</sup>/ mois</span>
+                                <ul class="mb-5 list-unstyled text-muted">
+                                    <li><span class="bx bx-check me-2"></span>Test gratuit</li>
+                                    <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
+                                    <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités </li>
+                                </ul>
+                                {{-- <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">Commencer</a></div> --}}
+                            </div>
+                        </div>
+                    @endforeach
+                @endforeach
+            </div>
 
-                                    <label for="">Adresse de facturation</label>
-                                    <input type="text" class="form-control" value = "{{$etp->entreprise->adresse}}" readonly><br>
-
-                                    <label for="">Email</label>
-                                    <input type="text" class="form-control" value = "{{$etp->entreprise->email_etp}}" readonly><br>
-
-                                    <label for="">Telephone</label>
-                                    <input type="text" class="form-control" value = "{{$etp->entreprise->telephone_etp}}" readonly><br>
-                                </div>
-
-                                <div class="col-md-5">
-                                    <label for="">Compte actuel</label>
-                                    @if($nb == 0)
-                                        <input type="text" class="form-control" value = "Gratuit" readonly><br>
-                                    @endif
-
-                                    <label for="">Referent</label>
-                                    <input type="text" class="form-control" value = "{{$etp->nom_resp}} {{$etp->prenom_resp}}" readonly><br>
-
-                                </div>
-                            @endforeach
-                        @endif
-                        @if($cfps!=null)
-                            @foreach ($cfps as $cfp)
-
-                                <div class="col-md-5">
-                                    <label for="">Nom</label>
-                                    <input type="text" class="form-control" value="{{$cfp->nom}}" readonly><br>
-
-                                    <label for="">Adresse de facturation</label>
-                                    <input type="text" class="form-control" value = "{{$cfp->adresse_lot}} {{$cfp->adresse_ville}} {{$cfp->adresse_region}}" readonly><br>
-
-                                    <label for="">Email</label>
-                                    <input type="text" class="form-control" value = "{{$cfp->email}}" readonly><br>
-
-                                    <label for="">Telephone</label>
-                                    <input type="text" class="form-control" value = "{{$cfp->telephone}}" readonly><br>
-                                </div>
-
-                                <div class="col-md-5">
-                                    <label for="">Compte actuel</label>
-                                    @if($nb == 0)
-                                        <input type="text" class="form-control" value = "Gratuit" readonly><br>
-                                    @endif
-
-
-
-                                </div>
-                            @endforeach
+            <div class="col-lg-6">
+                 <div class="card-title">
+                        @if(session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session()->get('message') }}
+                            </div>
                         @endif
 
+                        <h3> Votre Compte actuel: {{$type_abonnement}}</h3>
 
-                        <div class="col-md-1"></div>
                     </div>
+                    <form action="{{route('enregistrer_abonnement')}}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            @if($entreprise!=null)
+                                @foreach ($entreprise as $etp)
+                                    <div class="col-md-5">
+                                        <label for="">Nom</label>
+                                        <input type="text" class="form-control" value="{{$etp->entreprise->nom_etp}}" readonly><br>
 
-                    <div class="d-flex flex-row justify-content-lg-evenly">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                <small class="smalli">En envoyant cette demande d'abonnement, j'accepte les politiques de confidentialités,les Conditions générales d'utilisation,les conditions générales de vente </small>
-                            </label>
+                                        <label for="">Adresse de facturation</label>
+                                        <input type="text" class="form-control" value = "{{$etp->entreprise->adresse}}" readonly><br>
+
+                                        <label for="">Email</label>
+                                        <input type="text" class="form-control" value = "{{$etp->entreprise->email_etp}}" readonly><br>
+
+                                        <label for="">Telephone</label>
+                                        <input type="text" class="form-control" value = "{{$etp->entreprise->telephone_etp}}" readonly><br>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label for="">Compte actuel</label>
+                                        @if($nb == 0)
+                                            <input type="text" class="form-control" value = "Gratuit" readonly><br>
+                                        @endif
+
+                                        <label for="">Referent</label>
+                                        <input type="text" class="form-control" value = "{{$etp->nom_resp}} {{$etp->prenom_resp}}" readonly><br>
+
+                                    </div>
+                                @endforeach
+                            @endif
+                            @if($cfps!=null)
+                                @foreach ($cfps as $cfp)
+
+                                    <div class="col-md-5">
+                                        <label for="">Nom</label>
+                                        <input type="text" class="form-control" value="{{$cfp->nom}}" readonly><br>
+
+                                        <label for="">Adresse de facturation</label>
+                                        <input type="text" class="form-control" value = "{{$cfp->adresse_lot}} {{$cfp->adresse_ville}} {{$cfp->adresse_region}}" readonly><br>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label for="">E-mail</label>
+                                        <input type="text" class="form-control" value = "{{$cfp->email}}" readonly><br>
+
+                                        <label for="">Téléphone</label>
+                                        <input type="text" class="form-control" value = "{{$cfp->telephone}}" readonly><br>
+                                    </div>
+
+                                    {{-- <div class="col-md-5">
+                                        <label for="">Compte actuel</label>
+                                        @if($nb == 0)
+                                            <input type="text" class="form-control" value = "Gratuit" readonly><br>
+                                        @endif
+                                    </div> --}}
+                                @endforeach
+                            @endif
+
+
+                            <div class="col-md-1"></div>
                         </div>
-                        {{-- <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                <small class="smalli">Conditions générales d'utilisation</small>
-                            </label>
+
+                        <div class="d-flex flex-row justify-content-lg-evenly">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    <small class="smalli">En envoyant cette demande d'abonnement, j'accepte les politiques de confidentialités,les Conditions générales d'utilisation,les conditions générales de vente </small>
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                <small class="smalli">Conditions générales de vente</small>
-                            </label>
-                        </div> --}}
+                    <br><br>
+                    <div class="col text-center">
+                     <button class="btn btn-success" type="submit">Accepter le Changement de tarif</button>
                     </div>
-                <br><br>
-        <button class="btn btn-success  " type="submit">Accepter le Changement de tarif</button></center>
-                <input type="text" value =" {{$type_abonnement_role_id}} " hidden name="type_abonnement_role_id">
-                <input type="text" value="{{$categorie_paiement_id}}" hidden name="catg_id">
-            </form>
+                    <input type="text" value =" {{$type_abonnement_role_id}} " hidden name="type_abonnement_role_id">
+                    <input type="text" value="{{$categorie_paiement_id}}" hidden name="catg_id">
+                </form>
+
             </div>
         </div>
     </div>

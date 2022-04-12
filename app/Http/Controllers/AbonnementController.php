@@ -229,13 +229,30 @@ class AbonnementController extends Controller
 
                //liste facturation
             $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
+            if($facture!=null){
+                $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
+                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+                if($test_assujetti[0]->assujetti_id == 1) {
+                    $tva = ($facture[0]->montant_facture * 20) / 100;
+                    $net_ttc = $facture[0]->montant_facture + $tva;
+                }
+                if($test_assujetti[0]->assujetti_id == 2) {
+                    $tva = 0;
+                    $net_ttc = $facture[0]->montant_facture;
+                }
+            }
+            else{
+                $test_assujetti = $tva = $net_ttc ='';
+            }
+
+
             if ($test_abonne) {
                 $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-                return view('superadmin.listeAbonnement', compact('facture','abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
+                return view('superadmin.listeAbonnement', compact('net_ttc','tva','facture','abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('facture','abn', 'gratuit', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
+                return view('superadmin.listeAbonnement', compact('net_ttc','tva','facture','abn', 'gratuit', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
             }
 
 
@@ -248,6 +265,7 @@ class AbonnementController extends Controller
     //abonnement
     public function Abonnement()
     {
+        $fonct = new FonctionGenerique();
         $tarif_id = request()->id;
         $tarif = tarif_categorie::where('id', $tarif_id)->get();
         $categorie_paiement_id = tarif_categorie::where('id', $tarif_id)->value('categorie_paiement_id');
@@ -255,18 +273,23 @@ class AbonnementController extends Controller
         $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('id', $type_abonnement_role_id)->get();
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-
-
         $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
+
         if (Gate::allows('isReferent')) {
             $entreprise = responsable::with('entreprise')->where('user_id', $user_id)->get();
             $cfps = null;
             return view('superadmin.index_abonnement', compact('categorie_paiement_id', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'entreprise', 'type_abonnement_role_id'));
         }
         if(Gate::allows(('isCFP'))) {
-            $cfps = cfp::where('user_id', $user_id)->get();
+            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $cfp_id = $resp[0]->cfp_id;
+            $cfps = cfp::where('id', $cfp_id)->get();
+              //on verifie l'abonnemennt de l'of
+            $cfp_ab = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
+            if($cfp_ab == null) $type_abonnement = "Gratuit";
+            else $type_abonnement = $cfp_ab[0]->nom_type;
             $entreprise = null;
-            return view('superadmin.index_abonnement', compact('categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+            return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
         }
     }
 
@@ -277,6 +300,8 @@ class AbonnementController extends Controller
         $abonnement = new abonnement();
         $abonnement_cfp = new abonnement_cfp();
         $dt = Carbon::today()->toDateString();
+        $due_date = Carbon::today()->addDays(15)->toDateString();
+
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
         $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
@@ -303,7 +328,7 @@ class AbonnementController extends Controller
             $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
             $montant = $fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
 
-            DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$dt,1,$montant[0]->tarif]);
+            DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
 
         }
 

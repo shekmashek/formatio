@@ -80,7 +80,9 @@
                       <tr>
                         <th scope="col">Numéro de facture</th>
                         <th scope="col">Type d'abonnement</th>
-                        <th scope="col">Montant</th>
+                        <th scope="col">Montant HT</th>
+                        <th scope="col">TVA (20%)</th>
+                        <th scope="col">Net à payer TTC</th>
                         <th scope="col">Invoice date</th>
                         <th scope="col">Due date</th>
                         <th scope="col">Statut</th>
@@ -89,12 +91,16 @@
                     <tbody>
                       <tr>
                         @foreach ($facture as $fact )
-                            <td>{{$fact->num_facture}}</td>
+                            <td><a href="#">{{$fact->num_facture}}</a></td>
                             <td>{{$fact->nom_type}}</td>
                             <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
+                            <td>{{number_format($tva, 0, ',', '.')}} Ar</td>
+                            <td>{{number_format($net_ttc, 0, ',', '.')}} Ar</td>
                             <td>{{$fact->invoice_date}}</td>
                             <td>{{$fact->due_date}}</td>
-                            <td>{{$fact->status_facture}}</td>
+                            @if($fact->status_facture == "Non payé")
+                                <td><span style="background-color: red;padding:5px;color:white">{{$fact->status_facture}}</span></td>
+                            @endif
                         @endforeach
                       </tr>
                     </tbody>

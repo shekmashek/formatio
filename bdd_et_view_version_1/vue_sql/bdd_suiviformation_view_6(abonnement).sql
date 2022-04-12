@@ -76,6 +76,7 @@ JOIN type_abonnements type_ab ON type_ab.id = types.type_abonnement_id
 JOIN type_abonnes abonne ON abonne.id = types.type_abonne_id
 
 CREATE OR REPLACE VIEW v_abonnement_facture as SELECT
+    factures.id as facture_id,
     factures.num_facture,
     factures.invoice_date,
     factures.due_date,
