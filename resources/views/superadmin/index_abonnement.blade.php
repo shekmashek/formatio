@@ -15,24 +15,6 @@
 </head>
 
 <body>
-
-    {{-- <div class="abonnement_header">
-
-        <div class="row" style="color: white;">
-            <div class="col-md-4 text-center"><img class="img-fluid rounded-3" style="width: 150px; height:80px;" src="{{ asset('logo/logo_white_background.jpg') }}" alt=""></div>
-            <div class="col-md-4">
-                <div class="bar">
-                      <p> Pages  </p>
-                       <p> Authentification </p>
-                        <p>Application  </p>
-                        <p>e-commerce  </p>
-                </div>
-            </div>
-            <div class="col-md-4 text-center"><button class="buy_now"> Page d'accueil </button></div>
-        </div>
-    </div> --}}
-
-
     <div class="row mt-5">
         <div class="col-md-5">
             <div class="row align-items-center justify-content-center">
@@ -42,26 +24,21 @@
                 </div>
             </div>
             <center>
-            @foreach ($typeAbonnement  as $tp)
-                @foreach($tarif as $tf)
-
-                    <div class="card_repeat bg-light">
-                        <div class="py-3">
-
-                            <button class="btn_premium">
-                                <img src="{{asset('images/abonnement/'.$tp->type_abonnement['logo'])}}" style="width: 80px">
-                            </button><p><h1>@php
-                                echo number_format($tf->tarif, 2, ',', '.');
-                             @endphp Ar  </h1></p><br>
-
-                            <ul>
-                                <p> <i class="fal fa-check" style="font-size: 10px; padding: 4px; font-weight:bold;"></i>&nbsp;&nbsp; Collaboration illimité </p>
+            @foreach ($typeAbonnement as $types)
+                @foreach ($tarif as $tf)
+                     <div class="col-lg-4 col-md-6 ">
+                        <div class="card d-flex align-items-center justify-content-center">
+                            <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
+                            <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
+                                    class="sup">AR</sup>/ mois</span>
+                            <ul class="mb-5 list-unstyled text-muted">
+                                <li><span class="bx bx-check me-2"></span>Test gratuit</li>
+                                <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
+                                <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités </li>
                             </ul>
-                            <p></p>
-
+                            <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">Commencer</a></div>
                         </div>
                     </div>
-
                 @endforeach
             @endforeach
     </center>

@@ -30,78 +30,49 @@
                             <ul class="mb-5 list-unstyled text-muted">
                                 <li><span class="bx bx-check me-2"></span>Test gratuit</li>
                                 <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité utiles</li>
+                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité démo</li>
                             </ul>
                             <div class="btn btn-primary">Commencer</div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="card d-flex align-items-center justify-content-center">
-                            <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
-                            <p class="h-1 pt-5">Standard</p> <span class="price"> <span class="number">200 000</span> <sup
-                                    class="sup">AR</sup>/ mois</span>
-                            <ul class="mb-5 list-unstyled text-muted">
-                                <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité utiles</li>
-                            </ul>
-                            <div class="btn btn-primary">Commencer</div>
-                        </div>
-                    </div>
+                    @foreach ($typeAbonnement as $types)
+                        @foreach ($tarif as $tf)
+                            @if($tf->type_abonnement_role_id == $types->types_id)
+                                <div class="col-lg-4 col-md-6 ">
+                                    <div class="card d-flex align-items-center justify-content-center">
+                                        <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
+                                        <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
+                                                class="sup">AR</sup>/ mois</span>
+                                        <ul class="mb-5 list-unstyled text-muted">
+                                            <li><span class="bx bx-check me-2"></span>Test gratuit</li>
+                                            <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
+                                            <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités </li>
+                                        </ul>
+                                        <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">Commencer</a></div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endforeach
                     <div class="col-lg-4 col-md-6 ">
                         <div class="card d-flex align-items-center justify-content-center">
                             <div class="ribon"> <span class="bx bxs-diamond"></span> </div>
-                            <p class="h-1 pt-5">Standard</p> <span class="price"> <span class="number">2 400 000</span> <sup
-                                    class="sup">AR</sup>/ an</span>
+                            <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price">
+                                @foreach ($tarifAnnuel as $tfAnn)
+                                    @if($tfAnn->type_abonnement_role_id == $types->types_id)
+                                        <span class="number">{{number_format($tfAnn->tarif, 0, ',', '.')}}</span> <sup class="sup">AR</sup>/ an</span>
+                                    @endif
+                                @endforeach
+
                             <ul class="mb-5 list-unstyled text-muted">
                                 <li><span class="bx bx-check me-2"></span>Test gratuit</li>
                                 <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité utiles</li>
+                                <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités</li>
                             </ul>
-                            <div class="btn btn_primary">Commencer</div>
+                            <div class="btn btn_primary"><a href="{{route('abonnement-page',['id'=>$tfAnn->id])}}" target="_blank">Commencer</a></div>
                         </div>
                     </div>
                 </div><br><br>
-                <div class="row mt-3">
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="card d-flex align-items-center justify-content-center">
-                            <div class="ribon_premium"> <span class="bx bxs-paint"></span> </div>
-                            <p class="h-1 pt-5">DEMO Premium</p> <span class="price"> <span class="number">0</span> <sup
-                                    class="sup">AR</sup></span>
-                            <ul class="mb-5 list-unstyled text-muted">
-                                <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité utiles</li>
-                            </ul>
-                            <div class="btn btn-primary btn_premium">Commencer</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="card d-flex align-items-center justify-content-center">
-                            <div class="ribon_premium"> <span class="bx bxs-star-half"></span> </div>
-                            <p class="h-1 pt-5">Premium</p> <span class="price"> <span class="number">300 000</span> <sup class="sup">AR</sup>/ mois</span>
-                            <ul class="mb-5 list-unstyled text-muted">
-                                <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité utiles</li>
-                            </ul>
-                            <div class="btn btn-primary btn_premium">Commencer</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="card d-flex align-items-center justify-content-center">
-                            <div class="ribon_premium"> <span class="bx bxs-diamond"></span> </div>
-                            <p class="h-1 pt-5">Premium</p> <span class="price"> <span class="number">2 600 000</span> <sup
-                                    class="sup">AR</sup>/ an</span>
-                            <ul class="mb-5 list-unstyled text-muted">
-                                <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité utiles</li>
-                            </ul>
-                            <div class="btn btn_primary btn_premium">Commencer</div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="tab-pane fade" id="facture">
 
