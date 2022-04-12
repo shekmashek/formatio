@@ -97,33 +97,33 @@ class GroupeController extends Controller
 
         $type_formation = $request->type_formation;
         //condition de validation de formulaire
-        $request->validate(
-            [
-                'min_part' => "required|numeric|min:0",
-                'max_part' => "required|numeric|min:0",
-                'date_debut' => "required|date",
-                'date_fin' => "required|date",
-                'module_id' => "required",
-            ],
-            [
-                'date_debut.required' => 'la date du debut de formation ne doit pas être null',
-                'date_fin.required' => 'la date fin de formation ne doit pas être null',
-                'module_id.required' => 'le module  de la formation ne doit pas être null',
-            ]
-        );
+        // $request->validate(
+        //     [
+        //         'min_part' => "required|numeric|min:0",
+        //         'max_part' => "required|numeric|min:0",
+        //         'date_debut' => "required|date",
+        //         'date_fin' => "required|date",
+        //         'module_id' => "required",
+        //     ],
+        //     [
+        //         'date_debut.required' => 'la date du debut de formation ne doit pas être null',
+        //         'date_fin.required' => 'la date fin de formation ne doit pas être null',
+        //         'module_id.required' => 'le module  de la formation ne doit pas être null',
+        //     ]
+        // );
 
 
         try {
 
             // dd($request->module_id);
-            /* if($request->date_debut >= $request->date_fin){
+            if($request->date_debut >= $request->date_fin){
                 throw new Exception("Date de début doit être inférieur date de fin.");
             }
 
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
             }
-            if($request->module_id == 0){
+            if($request->module_id == null){
                 throw new Exception("Vous devez choisir un module de formation.");
             }
 
@@ -137,7 +137,6 @@ class GroupeController extends Controller
                 throw new Exception("Participant minimal doit être inférieur au participant maximal.");
             }
 
-*/
             DB::beginTransaction();
             $projet = new projet();
 
@@ -162,14 +161,14 @@ class GroupeController extends Controller
             return redirect()->route('detail_session', ['id_session' => $last_insert_groupe->id, 'type_formation' => $type_formation]);
         } catch (Exception $e) {
             DB::rollback();
-            return back()->with('groupe_error', "insertion de la session échouée!");
+            return back()->with('groupe_error', $e->getMessage());
         }
     }
 
-    public function modifier_session_inter(Request $request){
+    public function modifier_session_intra(Request $request){
         try{
             if($request->date_debut >= $request->date_fin){
-                throw new Exception("Date de début doit être inférieur date de fin.");
+                throw new Exception("Date de début doit être inférieur à la date de fin.");
             }
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
@@ -180,18 +179,39 @@ class GroupeController extends Controller
             if($request->payement == null){
                 throw new Exception("Vous devez choisir une entreprise pour la formation.");
             }
-            dd($request->min_part ,$request->max_part);
             if($request->min_part >= $request->max_part ){
                 throw new Exception("Participant minimal doit être inférieur au participant maximal.");
             }
-            // DB::beginTransaction();
-            DB::update('update groupes set max_participant = ? and min_participant = ? and module_id = ? and type_payement_id = ? and date_debut = ? and date_fin = ? where id = ?',
-            [$request->min_part,$request->max_part,$request->module_id,$request->payement,$request->date_debut,$request->date_fin,$request->id]);
-            // DB::commit();
+            DB::beginTransaction();
+            DB::update('update groupes set max_participant = ? ,min_participant = ? , module_id = ? ,type_payement_id = ? , date_debut = ? , date_fin = ? where id = ?',
+            [$request->max_part,$request->min_part,$request->module_id,$request->payement,$request->date_debut,$request->date_fin,$request->id]);
+            DB::commit();
             return back();
         }catch(Exception $e){
             DB::rollback();
-            return back()->with('groupe_error',"insertion de la session échouée!");
+            return back()->with('groupe_error',$e->getMessage());
+        }
+    }
+
+    public function modifier_session_inter(Request $request){
+        try{
+            if($request->date_debut >= $request->date_fin){
+                throw new Exception("Date de début doit être inférieur à la date de fin.");
+            }
+            if($request->date_debut == null || $request->date_fin == null){
+                throw new Exception("Date de début ou date de fin est vide.");
+            }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            }
+            DB::beginTransaction();
+            DB::update('update groupes set max_participant = ? ,min_participant = ? , date_debut = ? , date_fin = ? where id = ?',
+            [$request->max_part,$request->min_part,$request->date_debut,$request->date_fin,$request->id]);
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollback();
+            return back()->with('groupe_error',$e->getMessage());
         }
     }
 
@@ -313,7 +333,7 @@ class GroupeController extends Controller
     public function modifier_statut_session(Request $request){
         try{
             DB::beginTransaction();
-            if($request->statut == 8 || $request->statut == 7){
+            if($request->statut == 8 || $request->statut == 7 || $request->statut){
                 DB::delete('delete from details where groupe_id = ?',[$request->id]);
                 DB::delete('delete from participant_groupe where groupe_id = ?',[$request->id]);
                 DB::delete('delete from mes_documents where groupe_id = ?',[$request->id]);

@@ -4,22 +4,28 @@
 <div class="p-3 mb-5 bg-body rounded ">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
-            <h5>Session pour {{ $datas[0]->nom_module }} </h5>
             <div class="d-flex m-0 p-0 height_default">
-                <p class="m-0"> Session  &nbsp; &nbsp; </p>
-                <p class="numero_session text-dark mt-3"> <strong>n°: {{ $projet[0]->nom_groupe }}</strong>  </p>
-                <p class="m-0">&nbsp; &nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
-                <p class="m-0">&nbsp; appartenant au projet &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>{{ $projet[0]->nom_projet }}</strong> </p>
+                <h5>{{ $module_session }}</h5>&nbsp;&nbsp;&nbsp;
+                <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
             </div>
             <div class="d-flex m-0 p-0 height_default">
+                <p class="numero_session text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong>  </p>
+                <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
+                <p class="numero_session text-dark mt-3"> <strong>@php
+                    echo number_format($prix->montant_session,2,"."," ")
+                @endphp Ar</strong>  </p>
+                <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
+                <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
+            </div>
+            {{-- <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
                 <p class="numero_session text-dark mt-3"> <strong>@php
                     echo number_format($prix->montant_session,2,"."," ");
                 @endphp Ar</strong>  </p>
                 <p class="m-0">&nbsp;; apprenants inscrits : &nbsp;</p>
                 <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
-            </div>
+            </div> --}}
         </div>
         <div>
             <div class="btn_modifier_statut dropdown">
@@ -54,64 +60,47 @@
         </div>
     </nav>
     <section class="bg-light py-1">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex flex-wrap">
+        <div class="m-0 p-0">
+            <div class="d-flex justify-content-between">
                 @if ($type_formation_id == 1)
                     <div class="chiffre_d_affaire">
-                        <p class="p-0 m-0 text-center"> Referent entreprise </p>
-                        <div class="d-flex">
-                            <div>
-                                <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" width="50px" height="50px" class="img-fluid">
-                            </div>
-                            <div>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                            </div>
-                            {{-- <div class="chiffre_d_affaire">
-                                <p class="p-0 m-0 text-center"> Referent entreprise </p>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                            </div> --}}
+                        
+                        <div class="d-flex flex-row">
+                            <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>&nbsp;&nbsp;
+                            <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                            {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>&nbsp;&nbsp; --}}
+                            {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p> --}}
                         </div>
                     </div>
                 @endif
                 <div class="chiffre_d_affaire">
-                    <p class="p-0 m-0 text-center"> Organisme de formation </p>
-                    <div class="d-flex">
-                        <div>
-                            <img src="{{ asset('images/CFP/'.$projet[0]->logo_cfp) }}" alt="" width="50px" height="50px" class="img-fluid">
-                        </div>
-                        <div>
-                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>
-                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p>
-                        </div>
+                    
+                    <div class="d-flex flex-row">
+                        <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
+                        <img src="{{ asset('images/CFP/'.$projet[0]->logo_cfp) }}" alt="" class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                        {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>&nbsp;&nbsp; --}}
+                        {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p> --}}
                     </div>
                 </div>
-                <div class="chiffre_d_affaire">
-                    <p class="p-0 m-0 text-center"> Formateur(s) </p>
-                    <p class="p-0 m-0 text-center"> <strong>
-                       <div class="pad_img">
-                           @foreach ($formateur as $form)
-                                <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                           @endforeach()
-                            {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;"> --}}
-                       </div>
-                    </strong></p>
-                </div>
+                @canany(['isReferent','isCFP'])
+                    <div class="chiffre_d_affaire">
+                        <div class="d-flex flex-row">
+                            <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
+                            @foreach ($formateur_cfp as $form)
+                                    <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;">
+                            @endforeach()
+                                {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                                <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                                <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;"> --}}
+                        </div>
+                        </strong></p>
+                    </div>
+                @endcanany
+                
             </div>
-            <div class="d-flex me-2 flex-wrap">
+            {{-- <div class="d-flex me-2 flex-wrap">
                 <div class="{{ $projet[0]->class_status_groupe }}">{{ $projet[0]->item_status_groupe }}</div>
-                {{--
-                    <div class="status_grise">Confirmé</div>
-                <div class="status_confirme">Confirmé</div>
-                <div class="status_confirme">Confirmé</div>
-                <div class="statut_active">En cours</div>
-                <div class="status_termine">Terminé</div> --}}
-                {{-- <div class="status_archive">Archivé</div> --}}
-                {{-- <div class="status_annule">Annulé</div> --}}
-            </div>
+            </div> --}}
         </div>
     </section>
     <section>
@@ -178,7 +167,12 @@
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
                                         <p class="m-0 p-0">FRAIS ANNEXES</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @if(count($all_frais_annexe) == 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @endif
+                                        @if(count($all_frais_annexe) != 0)
+                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        @endif
                                     </button>
                                 </div>
                             @endcan
@@ -187,7 +181,7 @@
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
                                     <p class="m-0 p-0">DOCUMENTS</p>
                                     {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
-                                    <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                    {{-- <i class="fa fa-check-circle me-2" style="color: chartreuse"></i> --}}
                                 </button>
                             </div>
                             @if ($type_formation_id == 1)
@@ -209,13 +203,21 @@
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
                                         <p class="m-0 p-0">PRE EVALUATION</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @if($evaluation_avant <= 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @else
+                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        @endif
                                     </button>
                                 </div>
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @if($evaluation_apres <= 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @else
+                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        @endif
                                     </button>
                                 </div>
                             @endcan
@@ -223,7 +225,11 @@
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                     <p class="m-0 p-0">EVALUATION DES STAGIAIRES</p>
-                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    @if($evaluation_apres <= 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    @else
+                                        <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                    @endif
                                 </button>
                             </div>
                             @endcanany
@@ -400,7 +406,6 @@ p{
 }
 .chiffre_d_affaire{
     padding: 0 10px;
-    border-right: 2px solid rgb(15,126,145);
 }
 .status_grise{
     border-radius: 1rem;

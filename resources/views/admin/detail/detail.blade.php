@@ -115,6 +115,15 @@
         </ul>
     </div>
 @endif
+<nav class="d-flex justify-content-between mb-1 ">
+    <span class="titre_detail_session"><strong style="font-size: 14px">Détail(s) de la session</strong></span>
+    @canany(['isCFP'])
+    <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
+        data-bs-target="#modal_nouveau_detail">
+        <i class='bx bx-plus-medical icon_ajouter_detail'></i>
+        <small>Ajouter une détail</small></a>
+        @endcanany
+</nav>
 @if (count($datas) <= 0)
     @if ($type_formation_id == 1)
         <form onsubmit="change_active()" id="non_existante" action="{{ route('detail.store') }}" method="post">
@@ -183,7 +192,7 @@
                                             <select name="formateur[]" style="height: 2.361rem" id=""
                                                 class="form-control  my-1" required>
                                                 <option value="" selected hidden> Choisir formateur </option>
-                                                @foreach ($formateur as $format)
+                                                @foreach ($formateur_cfp as $format)
                                                     <option value="{{ $format->formateur_id }}">
                                                         {{ $format->nom_formateur . ' ' . $format->prenom_formateur }}
                                                     </option>
@@ -291,15 +300,6 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <nav class="d-flex justify-content-between mb-1 ">
-                            <span class="titre_detail_session"><strong style="font-size: 14px">Détail(s) de la session</strong></span>
-                            @canany(['isCFP'])
-                            <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
-                                data-bs-target="#modal_nouveau_detail">
-                                <i class='bx bx-plus-medical icon_ajouter_detail'></i>
-                                <small>Ajouter une détail</small></a>
-                                @endcanany
-                        </nav>
                         <div class="table-responsive">
                             <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
                                 <thead style="border-bottom: 1px solid black; line-height: 20px">

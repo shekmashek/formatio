@@ -1,4 +1,5 @@
 @import url("inputControl.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
 :root {
     --nav-width: 80px;
     --first-color: white;
@@ -14,6 +15,11 @@
     --button-color: #7635dc;
     --font-sidebar-color: #637381;
     --font-size-sidebar: 13px;
+}
+
+.rounded{
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif !important;
 }
 
 .changer_carret:focus{
