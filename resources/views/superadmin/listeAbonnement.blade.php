@@ -73,9 +73,32 @@
                         </div>
                     </div>
                 </div><br><br>
-            </div>
+            </div><br>
             <div class="tab-pane fade" id="facture">
-
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Numéro de facture</th>
+                        <th scope="col">Type d'abonnement</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Invoice date</th>
+                        <th scope="col">Due date</th>
+                        <th scope="col">Statut</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        @foreach ($facture as $fact )
+                            <td>{{$fact->num_facture}}</td>
+                            <td>{{$fact->nom_type}}</td>
+                            <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
+                            <td>{{$fact->invoice_date}}</td>
+                            <td>{{$fact->due_date}}</td>
+                            <td>{{$fact->status_facture}}</td>
+                        @endforeach
+                      </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

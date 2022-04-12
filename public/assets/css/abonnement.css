@@ -1,4 +1,4 @@
-/* .carHead{
+.carHead{
     width:auto;
     background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57));
     height:450px;
@@ -97,13 +97,13 @@ ul p{
 }
 .th_color{
     color: rgb(142,155,178);
-} */
+}
 
 
 
 
 /* Abonnement */
-/* .abonnement_header{
+.abonnement_header{
     width:auto;
     background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57));
     height:126px;
@@ -130,10 +130,10 @@ ul p{
 }
 .gratuit{
     font-weight: normal;
-} */
+}
 
 /* Activation abonnement */
-/* .card_abonnement{
+.card_abonnement{
     height: 80px;
     width: 100%;
 }
@@ -176,7 +176,7 @@ ul p{
 .select_type:focus{
     outline: none;
     box-shadow: none;
-} */
+}
 
 
 /* ---------------- */

@@ -41,11 +41,14 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_cfp AS SELECT
     a.date_fin,
     a.status,
     a.cfp_id,
-    a.categorie_paiement_id
+    a.categorie_paiement_id,
+    t_ab.nom_type
 FROM
     type_abonnement_roles t
 JOIN abonnement_cfps a ON
-    t.id = a.type_abonnement_role_id;
+    t.id = a.type_abonnement_role_id
+JOIN type_abonnements t_ab ON
+    t_ab.id = t.type_abonnement_id
 
 CREATE OR REPLACE VIEW v_categorie_abonnements_cfp AS SELECT
     ta.*,
@@ -71,3 +74,16 @@ CREATE OR REPLACE VIEW v_abonnement_role as SELECT
 FROM type_abonnement_roles types
 JOIN type_abonnements type_ab ON type_ab.id = types.type_abonnement_id
 JOIN type_abonnes abonne ON abonne.id = types.type_abonne_id
+
+CREATE OR REPLACE VIEW v_abonnement_facture as SELECT
+    factures.num_facture,
+    factures.invoice_date,
+    factures.due_date,
+    factures.statut as status_facture,
+    factures.montant_facture,
+    v_ab_cfp.*
+FROM
+    factures_abonnements_cfp factures
+JOIN v_type_abonnement_role_cfp v_ab_cfp ON v_ab_cfp.abonnement_id = factures.abonnement_cfps_id
+
+

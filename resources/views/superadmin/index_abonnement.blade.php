@@ -16,14 +16,9 @@
 
 <body>
     <div class="row mt-5">
-        <div class="col-md-5">
+        <div class="col">
             <div class="row align-items-center justify-content-center">
-                <div class="col-6 pt-5">
-
-
-                </div>
             </div>
-            <center>
             @foreach ($typeAbonnement as $types)
                 @foreach ($tarif as $tf)
                      <div class="col-lg-4 col-md-6 ">
@@ -41,21 +36,19 @@
                     </div>
                 @endforeach
             @endforeach
-    </center>
-
         </div>
 
-        <div class="col-md-7 pt-5 px-5 ms-auto">
-            <div class="card py-3">
+        <div class="col pt-5 px-5 ms-auto">
+            <div class="py-3">
                 <div class="card-title">
                     @if(session()->has('message'))
                         <div class="alert alert-success">
                             {{ session()->get('message') }}
                         </div>
                     @endif
-                  <center>
+
                     <h3> Votre Compte actuel</h3>
-                  </center>
+
                 </div>
                 <form action="{{route('enregistrer_abonnement')}}" method="POST">
                     @csrf
@@ -143,7 +136,7 @@
                         </div> --}}
                     </div>
                 <br><br>
-                <center><button class="btn btn-success  " type="submit">Accepter le Changement de tarif</button></center>
+        <button class="btn btn-success  " type="submit">Accepter le Changement de tarif</button></center>
                 <input type="text" value =" {{$type_abonnement_role_id}} " hidden name="type_abonnement_role_id">
                 <input type="text" value="{{$categorie_paiement_id}}" hidden name="catg_id">
             </form>
