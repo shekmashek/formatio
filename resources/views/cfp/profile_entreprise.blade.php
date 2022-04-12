@@ -51,23 +51,33 @@
     </style>
 
 
-    <div class="row w-100 bg-none mt-5 font_text">
+    <div class="row w-100 bg-none mt-3 font_text">
 
-        <div class="col-md-5">
+        <div class="col-md-7">
 
-            <div class="shadow p-3 mb-5 bg-body rounded ">
+            {{-- <div class="rounded "> --}}
                 <h4>Entreprise déjà collaborer</h4>
+                <table class="mt-3 table  table-borderless table-lg table-hover">
+                    <thead style="font-size:12.5px; color:#474747; border-bottom: 0.5px solid black; line-hight:20px">
+                        <th>Nom de l'entreprise</th>
+                        <th>Nom du centre de formation professionnel</th>
+                        <th>E-mail</th>
 
-                <table class="table  table-borderless table-lg">
-                    <tbody id="data_collaboration">
-
-                        @if (count($entreprise)<=0) <tr>
-                            <td> Aucun entreprise collaborer</td>
+                    </thead>
+                    <tbody id="data_collaboration" style="font-size: 11.5px;">
+                        @if (count($entreprise)<=0)
+                            <tr>
+                                <td> Aucun entreprise collaborer</td>
                             </tr>
                             @else
                             @foreach($entreprise as $etp)
                             <tr>
-                                <td>
+                                <td>{{$etp->nom_etp}}</td>
+                                <td>{{$etp->nom}}</td>
+                                <td>{{$etp->email_etp}}</td>
+
+                                {{-- <td>{{$etp->nom_secteur}}</td> --}}
+                                {{-- <td>
                                     <div align="left">
                                         <strong>{{$etp->nom_etp}}</strong>
                                         <p style="color: rgb(238, 150, 18)">{{$etp->email_etp}}</p>
@@ -77,7 +87,7 @@
                                     <div align="rigth">
                                         <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td>
 
                                     <div class="btn-group dropleft">
@@ -123,12 +133,12 @@
 
                 </table>
 
-            </div>
+            {{-- </div> --}}
 
 
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-5">
 
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
 
@@ -148,7 +158,8 @@
                         <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_resp" placeholder="Adresse mail*" required />
                     </div>
                     <div class="col ms-2">
-                        <button type="submit" class="btn btn-primary mt-2">Envoyer l'invitation</button>
+
+                        <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
                     </div>
                 </div>
             </form>

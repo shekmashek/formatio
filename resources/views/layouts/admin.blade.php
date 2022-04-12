@@ -42,7 +42,7 @@
             </li>
 
 
-            
+
                 @canany(['isReferent'])
                 <li>
                     <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
@@ -68,18 +68,18 @@
                     </a>
                 </li>
                 @endcanany
-            
+
 
 
 
             @canany(['isCFP'])
-            <li>
+            {{-- <li>
                 <a href="{{route('liste_module')}}" class="d-flex nav_linke">
                     <i class="bx bx-customize"></i>
                     <span class="links_name">Modules</span>
                 </a>
 
-            </li>
+            </li> --}}
             @endcanany
             {{-- entreprise --}}
             @canany(['isSuperAdmin','isAdmin'])
@@ -131,7 +131,7 @@
             @endcan
             {{-- projet de formation --}}
 
-            @canany(['isCFP','isFormateur'])
+            @can(['isFormateur'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
@@ -152,7 +152,7 @@
                 </p>
             </li>
             </li> --}}
-            @endcanany
+            @endcan
             @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
@@ -324,22 +324,25 @@
             @endcanany --}}
 
             {{-- calendrire de formations --}}
-            <li>
                 @canany(['isReferent','isStagiaire','isManager'])
-                    <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
-                        <i class='bx bxs-calendar'></i>
-                        <span class="links_name">Calendrier</span>
-                    </a>
+                    <li>
+                        <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
+                            <i class='bx bxs-calendar'></i>
+                            <span class="links_name">Calendrier</span>
+                        </a>
+                    </li>
                 @endcan
-                @canany(['isCFP', 'isFormateur'])
-                <a href="{{route('calendrier')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-calendar'></i>
-                    <span class="links_name">Calendrier</span>
-                </a>
+                @canany(['isFormateur'])
+                    <li>
+                        <a href="{{route('calendrier')}}" class="d-flex nav_linke">
+                            <i class='bx bxs-calendar'></i>
+                            <span class="links_name">Calendrier</span>
+                        </a>
+                    </li>
                 @endcanany
 
 
-            </li>
+
 
             {{-- commercial --}}
             {{-- @canany(['isSuperAdmin','isCFP','isReferent'])

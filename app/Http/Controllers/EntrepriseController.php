@@ -60,7 +60,6 @@ class EntrepriseController extends Controller
             $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
             $entreprise = $entp->getEntreprise($etp2, $etp1);
-
             return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp'));
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -348,13 +347,13 @@ class EntrepriseController extends Controller
         return view('admin.entreprise.modification_profil.edit_adresse', compact('etp'));
     }
     public function enregistrer_adresse_entreprise(Request $request,$id){
-       
-            DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ? 
+
+            DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ?
                where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
-            
+
             return redirect()->route('profile_entreprise',[$id]);
-        
-           
+
+
     }
     public function modification_site_etp_entreprise($id){
         $fonct = new FonctionGenerique();
