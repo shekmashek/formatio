@@ -91,7 +91,7 @@
                     <tbody>
                       <tr>
                         @foreach ($facture as $fact )
-                            <td><a href="#">{{$fact->num_facture}}</a></td>
+                            <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}">{{$fact->num_facture}}</a></td>
                             <td>{{$fact->nom_type}}</td>
                             <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
                             <td>{{number_format($tva, 0, ',', '.')}} Ar</td>

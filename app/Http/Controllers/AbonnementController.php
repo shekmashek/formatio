@@ -19,7 +19,7 @@ use App\cfp;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Facture;
 use function PHPSTORM_META\type;
 
 class AbonnementController extends Controller
@@ -36,6 +36,7 @@ class AbonnementController extends Controller
             if(Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fact = new Facture();
     }
     public function index()
     {
@@ -229,6 +230,23 @@ class AbonnementController extends Controller
 
                //liste facturation
             $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
+
+            //generation nouvelle facture chaque mois si l'utilisateur a choisi l'offre mensuel
+            $max_id_facture = DB::select(' SELECT  MAX(facture_id) as id_max from v_abonnement_facture ');
+            $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id','facture_id'],[$cfp_id,$max_id_facture[0]->id_max]);
+
+            $mois_dernier = $facture[0]->invoice_date;
+            $dt = Carbon::today()->toDateString();
+            $mois_suivant =  date('Y-m-d', strtotime($mois_dernier. ' + 30 days'));
+            dd($mois_suivant);
+            $due_suivant =  date('Y-m-d', strtotime($mois_suivant. ' + 15 days'));
+
+            //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle facture
+
+            if($dt == $mois_suivant ){
+                DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?,?,?,?,?)', [$facture[0]->abonnement_cfps_id,$mois_suivant,$due_suivant,2,$facture[0]->montant_facture]);
+            }
+
             if($facture!=null){
                 $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
@@ -401,6 +419,40 @@ class AbonnementController extends Controller
                 ->update(['status' => $Statut, 'date_debut' => $dt, 'date_fin' => $date_fin]);
             $liste = abonnement::where('id', $id)->get();
             return response()->json($liste);
+        }
+    }
+    //detail facture
+    public function detail_facture($id){
+        $fonct = new FonctionGenerique();
+        $mode_paiements = $fonct->findAll('mode_financements');
+
+        if(Gate::allows('isCFP')){
+            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $cfp_id = $resp[0]->cfp_id;
+            $cfp = $fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
+            $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
+            if($facture!=null){
+                $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
+                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+                if($test_assujetti[0]->assujetti_id == 1) {
+                    $tva = ($facture[0]->montant_facture * 20) / 100;
+                    $net_ttc = $facture[0]->montant_facture + $tva;
+                }
+                if($test_assujetti[0]->assujetti_id == 2) {
+                    $tva = 0;
+                    $net_ttc = $facture[0]->montant_facture;
+                }
+                $lettre_montant = $this->fact->int2str($net_ttc);
+            }
+            else{
+                $test_assujetti = $tva = $net_ttc ='';
+            }
+            return view('superadmin.detail_facture',compact('lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
+        }
+        if(Gate::allows('isReferent')){
+            $resp = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $entreprise_id = $resp[0]->entreprise_id;
+            $entreprises = $fonct->findWhere('entreprises',['id'],[$entreprise_id]);
         }
     }
 }

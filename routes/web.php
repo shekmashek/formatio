@@ -1114,13 +1114,10 @@ Route::post('enregistrer_nom_entreprise/{id}','EntrepriseController@enregistrer_
 Route::get('modification_logo/{id}','EntrepriseController@modification_logo')->name('modification_logo');
 Route::post('enregistrer_logo/{id}','EntrepriseController@enregistrer_logo')->name('enregistrer_logo');
 
-
-
-
-
-
-
 // modification session
 Route::post('modifier_session_inter','GroupeController@modifier_session_inter')->name('modifier_session_inter');
 
 Route::get('modifier_statut_session/{id}/{statut}','GroupeController@modifier_statut_session')->name('modifier_statut_session');
+
+//Route detail facture abonnement
+Route::get('/detail_facture_abonnement/{id}','AbonnementController@detail_facture')->name('detail_facture_abonnement');
