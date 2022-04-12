@@ -320,16 +320,24 @@
                                                     </div>
                                                     <div class="modal-body mt-2 mb-2">
                                                         <div class="container">
+                                                            <div class="row">
+                                                                <div class="mt-2 text-center">
+                                                                    <button id="addRow" type="button" class="btn_creer text-center mb-4 pb-2" onclick="competence();" >
+                                                                        <i class='bx bx-plus-medical icon_creer'></i>Ajouter une nouvelle ligne
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
                                                             <div class="d-flex">
-                                                                <div class="col-7">
+                                                                <div class="col-8">
                                                                     <div class="form-group">
                                                                         <div class="form-row">
                                                                             <input type="text" name="titre_competence[]"
                                                                                 id="titre_competence"
-                                                                                class="form-control input"
+                                                                                class="form-control input" placeholder="Compétences"
                                                                                 required>
                                                                             <label for="titre_competence"
-                                                                                class="form-control-placeholder">Compétences</label>
+                                                                                class="form-control-placeholder" >Compétences</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -339,24 +347,15 @@
                                                                             <input type="text" name="objectif[]"
                                                                                 id="objectif" min="1" max="10"
                                                                                 onfocus="(this.type='number')"
-                                                                                class="form-control input"
+                                                                                class="form-control input" placeholder="Notes"
                                                                                 required>
                                                                             <label for="objectif"
                                                                                 class="form-control-placeholder">Notes</label>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-1">
-                                                                    <div class="mt-3">
-                                                                        <button id="addRow" class="form-control btn_competence"
-                                                                            type="button" onclick="competence();"><i
-                                                                                class="bx bx-plus"
-                                                                                style="font-size: 20px"></i></button>
-                                                                    </div>
-                                                                </div>
                                                             </div>
-                                                            <div id="newRow"></div>
+                                                            <div class="newRow"></div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer d-flex flex-row">

@@ -847,7 +847,7 @@
                     <hr class="mt-2">
                     apprendre
                 </div>
-        </div>
+            </div>
 
     </div>
         {{-- footer --}}

@@ -30,7 +30,7 @@
 
 .detail__prix__head {
     color: white;
-    background-color: #7635dc;
+    background-color: #637381;
     text-align: center;
 }
 
@@ -587,12 +587,12 @@ font-size: 0.850rem;
 .detail__prix__main__ref .bx,
 .detail__prix__main__dure .bx,
 .detail__prix__main__prix .bx{
-    color: #7635dc;
+    color: #637381;
 }
 
 .detail__prix__main__prix2{
-    color: #7635dc;
-    font-size: 1rem;
+    color: #637381;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
@@ -663,4 +663,22 @@ font-size: 0.850rem;
     top: .2rem;
 }
 
+.effacer_cours{
+    background-color: white;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    transition: all .5s ease;
+    margin-top: 5px;
+}
 
+.effacer_cours:hover{
+    color: red;
+    transform: scale(1.05);
+}
+
+.effacer_cours .bx{
+    font-size: 1.5rem;
+    color: red;
+    position: relative;
+    top: .35rem;
+}

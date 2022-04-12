@@ -319,6 +319,7 @@ ul li a {
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-left: 1px solid grey;
     float: right;
+    z-index: 999;
 }
 
 .apprendre.afficher {
@@ -665,7 +666,7 @@ input:-webkit-autofill:active {
 
 .btn_annuler {
     padding: 5px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     background-color: rgba(197, 197, 197, 0.192);
     border-radius: 5px;
     border-width: 0;

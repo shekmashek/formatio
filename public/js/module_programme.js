@@ -608,11 +608,11 @@ function toggleItem() {
 
 function Cours() {
     var html = '';
-    html += '<div class="d-flex" id="row_new">';
+    html += '<div class="d-flex mt-3" id="row_new">';
     html +=     '<div class="col-11">';
     html +=         '<div class="form-group">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="text" name="cours[]" id="cours" class="form-control input" required>';
+    html +=                 '<input type="text" name="cours[]" id="cours" class="form-control input" placeholder="Nouveau Cours" required>';
     html +=                 '<label for="cours" class="form-control-placeholder">Nouveau Cours';
     html +=                 '</label>';
     html +=             '</div>';
@@ -620,18 +620,18 @@ function Cours() {
     html +=     '</div>';
 
     html +=     '<div class="col-1">';
-    html +=         '<div class="mt-3">';
+    html +=         '<div class="mt-2">';
     html +=             '<div class="form-row">';
-    html +=                 '<button id="removeRow" class="form-control btn_previous button_plus" type="button">';
-    html +=                     '<i class="bx bx-minus" style="font-size: 20px">';
+    html +=                 '<span id="removeRow" class="effacer_cours" role="button">';
+    html +=                     '<i class="bx bx-x">';
     html +=                     '</i>';
-    html +=                 '</button>';
+    html +=                 '</span>';
     html +=             '</div>';
     html +=         '</div>';
     html +=     '</div>';
     html += '</div>';
 
-    $('#newRow').append(html);
+    $('.newRow').append(html);
 }
 
 // remove row
