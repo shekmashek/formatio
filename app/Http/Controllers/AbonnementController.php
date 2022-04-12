@@ -226,15 +226,21 @@ class AbonnementController extends Controller
 
             $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->get();
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
+
+               //liste facturation
+            $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
             if ($test_abonne) {
                 $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-                return view('superadmin.listeAbonnement', compact('abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
+                return view('superadmin.listeAbonnement', compact('facture','abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('abn', 'gratuit', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
+                return view('superadmin.listeAbonnement', compact('facture','abn', 'gratuit', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
             }
-        } else {
+
+
+        }
+        else {
             $offregratuit = offre_gratuit::with('type_abonne')->get();
         }
     }
@@ -259,7 +265,6 @@ class AbonnementController extends Controller
         }
         if(Gate::allows(('isCFP'))) {
             $cfps = cfp::where('user_id', $user_id)->get();
-
             $entreprise = null;
             return view('superadmin.index_abonnement', compact('categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
         }
