@@ -389,8 +389,8 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if ($verify == 0) {
 
             $this->insert($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $tabDataDesc["remise"], $imput["type_facture"]);
-
-            return back()->with('success', 'creation de la facture du project est effectué');
+            return redirect()->route('liste_facture');
+           // return back()->with('success', 'creation de la facture du project est effectué');
         } else {
             return back()->with('error', 'Oups! la facture existe déjà!');
         }
@@ -554,10 +554,11 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
         for ($i = 0; $i < count($facture); $i += 1) {
             $tabSession = $fonction->findWhereMulitOne(
-                "v_groupe_projet_entreprise_module",
-                ["groupe_entreprise_id", "entreprise_id", "projet_id"],
-                [$facture[$i]->groupe_entreprise_id, $facture[$i]->entreprise_id, $facture[$i]->projet_id]
+                "v_groupe_projet_module",
+                ["groupe_entreprise_id","cfp_id"],
+                [$facture[$i]->groupe_entreprise_id,$cfp_id]
             );
+
             $concatModule .= "" . $tabSession->nom_formation . "->" . $tabSession->nom_module;
             $concatSession .= "" . $tabSession->nom_groupe;
             $concatRefModule .= "" . $tabSession->reference;
@@ -581,6 +582,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $fonction = new FonctionGenerique();
         $data = array();
         $facture = $fonction->findWherePagination($nomTab, $para, $val, $nbDebutPagination, $nbPage);
+        // $facture = $fonction->findWhere($nomTab, $para, $val);
 
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, $facture[$i]->cfp_id, $facture[$i]->projet_id);
@@ -590,6 +592,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $data[$i]->module_session = $sessionConactener["getModule"];
             $data[$i]->ref_session = $sessionConactener["getRefModule"];
         }
+
         return $data;
     }
 
@@ -635,11 +638,17 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     }
 
 
-    public function nb_liste_fact_cfp($nb_debut_pag, $cfp_id)
+    public function nb_liste_fact($nb_debut_pag,$nom_id, $cfp_id)
     {
-        $nb_limit=10;
-        $query = "SELECT cfp_id,( COUNT(num_facture)) totale_pagination FROM v_montant_facture WHERE cfp_id=? GROUP BY cfp_id";
-        $totale_pagination =  DB::select($query, [$cfp_id])[0]->totale_pagination; // 20
+        // $nb_limit=10;
+        $nb_limit=5;
+        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM v_montant_facture WHERE ".$nom_id."=?";
+       $tst =  DB::select($query, [$cfp_id]); // 20
+        if($tst!=null){
+            $totale_pagination = $tst[0]->totale_pagination;
+        } else {
+            $totale_pagination = 0;
+        }
         $debut_aff = 0;
         $fin_aff = 1;
 
@@ -651,23 +660,22 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $nb_debut_pag = 1;
         }
 
-        if($nb_debut_pag == 1){
-            $debut_pagination=0;
+        if($nb_debut_pag == 1){ // 1
+            $debut_pagination=0; //
             $debut_aff = 1;
-            if($nb_debut_pag >=$totale_pagination  ){
-                $fin_aff = $totale_pagination;
-            } else {
-                $fin_aff = $nb_limit;
-            }
+            $fin_aff = $debut_pagination + $nb_limit;
         }
-        elseif($nb_debut_pag  == $totale_pagination){
-            $debut_pagination = ($nb_debut_pag-1) * $nb_limit;
-            $fin_aff = ($nb_debut_pag-1) * $nb_limit;
+        if($nb_debut_pag > 1 && $nb_debut_pag < $totale_pagination){
+            $debut_pagination = ($nb_debut_pag-1) + $nb_limit;
+            $fin_aff = $nb_debut_pag + $nb_limit;
+
             $debut_aff = $nb_debut_pag;
-        } else {
-            $debut_pagination = ($nb_debut_pag-1) * $nb_limit;
-            $fin_aff = ($nb_debut_pag-1) * $nb_limit;
-            $debut_aff = $nb_debut_pag * $nb_limit;
+        }
+        if($nb_debut_pag  == $totale_pagination){
+            $debut_pagination = ($nb_debut_pag-1) + $nb_limit;
+            $fin_aff = ($nb_debut_pag-1) + $nb_limit;
+            $debut_aff = $nb_debut_pag;
+
         }
         $data["nb_limit"] = $nb_limit;
         $data["debut_aff"] = $debut_aff;

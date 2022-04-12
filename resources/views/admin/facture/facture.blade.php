@@ -208,17 +208,21 @@
 <div class="container-fluid">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>filtrer</a>
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
-        @if ($pagination["debut_aff"] <= $pagination["totale_pagination"] || $pagination["fin_aff"] <=$pagination["totale_pagination"]) <a href="#" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="#" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-            @elseif ($pagination["debut_aff"] == 1)
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-            @elseif ($pagination["debut_aff"] >= $pagination["totale_pagination"])
+
+
+        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
+        <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+        @elseif ($pagination["debut_aff"] == 1)
+        <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
             <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
             @else
-            <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+            <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
             @endif
     </span>
     <div class="m-4">
@@ -311,13 +315,13 @@
                                     </td>
                                     <td>
                                         @php
-                                        echo html_entity_decode($actif->session_facture)
+                                        echo html_entity_decode($actif->module_session)
                                         @endphp
                                     </td>
 
                                     <td>{{$actif->nom_projet.": "}}
                                         @php
-                                        echo html_entity_decode($actif->module_session)
+                                        echo html_entity_decode($actif->session_facture)
                                         @endphp
                                     </td>
                                     <td>{{$actif->invoice_date}}</td>
@@ -645,22 +649,6 @@
 
                 </div>
 
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col justify-content center" align="center">
-                            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group me-2" role="group" aria-label="First group">
-                                    @if ($data["pagination"] != null && $data["pagination"]->totale_pagination>0)
-                                    @for ($i=1;$i<=$data["pagination"]->totale_pagination;$i+=1)
-                                        <a href="{{route('liste_facture',$data['totale'])}}" class="nav-item"> <button type="button" class="btn btn-secondary">{{$i}}</button></a>
-                                        @endfor
-                                        @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
 
             </div>
 
@@ -760,7 +748,7 @@
                                 <br>
                                 <label for="dte_fin" class="form-label" align="left">Payement du <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="date" name="dte_fin" class="form-control" />
-                                <button type="submit" class="btn_creer">Recherche</button>
+                                <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>
                         </div>
 
@@ -772,7 +760,7 @@
                                 @csrf
                                 <label for="num_fact" class="form-control-placeholder">Numéro de facture<strong style="color:#ff0000;">*</strong></label>
                                 <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
-                                <input type="submit" class="btn_creer" id="exampleFormControlInput1" value="Recherce" />
+                                <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
                             </form>
                         </div>
                     </div>

@@ -196,13 +196,15 @@ create or replace view v_groupe_projet_module as
         mf.email,
         mf.telephone,
         mf.pourcentage,
-        tp.type
+        tp.type,
+        (g_etp.id) groupe_entreprise_id
     from groupes g
     join moduleformation mf on mf.module_id = g.module_id
     join projets p on p.id = g.projet_id
     join type_formations tf on p.type_formation_id = tf.id
     join cfps on cfps.id = p.cfp_id
-    join type_payement tp on tp.id = g.type_payement_id;
+    join type_payement tp on tp.id = g.type_payement_id
+    join groupe_entreprises g_etp on g.id = g_etp.groupe_id;
 
 
 create or replace view v_groupe_projet_entreprise_module as

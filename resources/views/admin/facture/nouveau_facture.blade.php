@@ -8,6 +8,17 @@
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlFactures.css')}}">
 <div class="container mb-5 mt-5">
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+        {{Session::get('success')}}
+    </div>
+    @endif
+
+    @if(Session::has('error'))
+    <div class="alert alert-danger">
+        {{Session::get('error')}}
+    </div>
+    @endif
     <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="container">
@@ -447,7 +458,7 @@
                                     }
                                     if (userData2.length > 0) {
                                         for (var $i = 0; $i < userData2.length; $i++) {
-                                            $(".session_id").append('<option value="' + userData2[$i].groupe_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                                            $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
                                         }
                                         document.getElementById("session_id_err").innerHTML = "";
                                     } else {
@@ -468,7 +479,7 @@
                                     var userData2 = response2;
                                     if (userData2.length > 0) {
                                         for (var $i = 0; $i < userData2.length - userData2.length; $i++) {
-                                            $("#session_id").append('<option value="' + userData2[$i].groupe_id + '">' + userData2[$i].nom_groupe + '</option>');
+                                            $("#session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '">' + userData2[$i].nom_groupe + '</option>');
                                             document.getElementById("module_id_ref").innerHTML = "" + userData2[$i].nom_formation + '/' + userData2[$i].nom_module + '/' + userData2[$i].reference;
                                         }
                                         document.getElementById("session_id_err").innerHTML = "";
@@ -521,7 +532,7 @@
                 }
                 if (userData2.length > 0) {
                     for (var $i = 0; $i < userData2.length; $i++) {
-                        $(".session_id").append('<option value="' + userData2[$i].groupe_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                        $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
                     }
                     document.getElementById("session_id_err").innerHTML = "";
                 } else {

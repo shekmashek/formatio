@@ -182,11 +182,12 @@ class FonctionGenerique extends Model
         $query = $fonction->queryWherePagination($nomTab, $para, $val);
         if ($nbDebutPagination <= 0) {
             $nbDebutPagination = 0;
-        } else {
+        }
+        else {
             $nbDebutPagination = $nbDebutPagination - 1;
         }
-        $query = $query . " LIMIT " . $nbDebutPagination . "," . $nbPage;
-        // dd($query);
+        $query = $query . " LIMIT " . $nbPage . " OFFSET " . $nbDebutPagination;
+    //    dd($query);
         $data =  DB::select($query);
         return $data;
     }
