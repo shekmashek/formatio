@@ -21,20 +21,22 @@
                 <div>
                     <p class="h2 text-center mt-3 mb-5">Choisissez Votre Abonnement</p>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="card d-flex align-items-center justify-content-center">
-                            <div class="ribon"> <span class="bx bxs-paint"></span> </div>
-                            <p class="h-1 pt-5">DEMO</p> <span class="price"> <span class="number">0</span> <sup
-                                    class="sup">AR</sup></span>
-                            <ul class="mb-5 list-unstyled text-muted">
-                                <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité démo</li>
-                            </ul>
-                            <div class="btn btn-primary">Commencer</div>
+               <div class="row mt-3">
+                    @if($abonnement_actuel == null)
+                        <div class="col-lg-4 col-md-6 ">
+                            <div class="card d-flex align-items-center justify-content-center">
+                                <div class="ribon"> <span class="bx bxs-paint"></span> </div>
+                                <p class="h-1 pt-5">DEMO</p> <span class="price"> <span class="number">0</span> <sup
+                                        class="sup">AR</sup></span>
+                                <ul class="mb-5 list-unstyled text-muted">
+                                    <li><span class="bx bx-check me-2"></span>Test gratuit</li>
+                                    <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
+                                    <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité démo</li>
+                                </ul>
+                                <div class="btn btn-primary">Votre offre actuel</div>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     @foreach ($typeAbonnement as $types)
                         @foreach ($tarif as $tf)
                             @if($tf->type_abonnement_role_id == $types->types_id)
@@ -48,7 +50,15 @@
                                             <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
                                             <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités </li>
                                         </ul>
-                                        <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">Commencer</a></div>
+                                        @if($abonnement_actuel != null)
+                                            @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id)
+                                                <div class="btn btn-primary">Votre offre actuel</div>
+                                            @else
+                                                <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
+                                            @endif
+                                        @else
+                                         <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
+                                        @endif
                                     </div>
                                 </div>
                             @endif
@@ -69,7 +79,7 @@
                                 <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
                                 <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités</li>
                             </ul>
-                            <div class="btn btn_primary"><a href="{{route('abonnement-page',['id'=>$tfAnn->id])}}" target="_blank">Commencer</a></div>
+                            <div class="btn btn_primary"><a href="{{route('abonnement-page',['id'=>$tfAnn->id])}}" target="_blank">S'abonner</a></div>
                         </div>
                     </div>
                 </div><br><br>
@@ -79,11 +89,7 @@
                     <thead>
                       <tr>
                         <th scope="col">Numéro de facture</th>
-                        @if($mois!=null)
-                            <th scope="col">Mois</th>
-                        @else
-                            <th scope="col">Année</th>
-                        @endif
+
 
                         <th scope="col">Type d'abonnement</th>
                         <th scope="col">Montant HT</th>
@@ -99,11 +105,7 @@
                         @foreach ($facture as $fact )
                             <tr>
                                 <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}" style="text-decoration: underline">{{$fact->num_facture}}</a></td>
-                                @if($mois!=null)
-                                    <td>{{$mois[$i]}}</td>
-                                @else
-                                    <td>{{$annee[$i]}}</td>
-                                @endif
+
 
                                 <td>{{$fact->nom_type}}</td>
                                 <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
