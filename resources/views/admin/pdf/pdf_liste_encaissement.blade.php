@@ -7,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
     <title>export pdf liste d'encaissement</title>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light">
+    {{-- <nav class="navbar navbar-expand-lg navbar-light">
         <div class="d-flex">
 
             <img src="{{ public_path('img/logo_formation/logo_transparent_background.png') }}" alt="logonmk" class="logo">
 
-        </div>
+    </div>
     </nav>
-
+    --}}
 
     <style type="text/css">
         /* h1 {
@@ -31,6 +31,8 @@
 
             font-size: 80%;
             } */
+
+
         h3 {
 
             font-size: 15px;
@@ -56,6 +58,7 @@
 
             font-size: 80%;
         }
+
         table,
         th,
         td {
@@ -63,8 +66,8 @@
         }
 
         .logo {
-            width: 138px;
-            height: 49px;
+            width: 120px;
+            height: 40px;
         }
 
         .logo-catalogue {
@@ -84,61 +87,138 @@
             color: white;
         }
 
-        hr {
+        /* hr {
+background-color: black;
+border: 2px solid;
+} */
+
+        .logo-catalogue {
+            width: 60px;
+            height: 60px;
+        }
+
+        .tarif-payer {
+            background-color: #04803A;
+            color: white;
+        }
+
+        .tarif-reste-positif {
+            background-color: red;
+            color: white;
+        }
+
+        .tarif-reste-negatif {
             background-color: black;
-            border: 2px solid;
+            color: white;
+        }
+
+        .titre-fiche-facture {
+            color: rgb(218, 25, 115);
+        }
+
+        .place_droite {
+            float: right;
+        }
+
+        .table_facture1 table,
+        .table_facture1 th,
+        .table_facture1 td {
+            border: none !important;
+            border-collapse: collapse;
+        }
+
+        .table_facture2 table,
+        .table_facture2 th,
+        .table_facture2 td {
+            border: none !important;
+            border-collapse: collapse;
+        }
+
+        .table_facture2 table td:nth-child(2) {
+            width: 300px;
+        }
+
+        tr {
+            border: none;
         }
 
     </style>
 
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid me-2 mr-2">
+        <div class="row table_facture1  me-2 mr-2">
             <div class="col">
-                <h3>Facture à payé</h3>
-
-                <table border="1" width="auto" class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Numero Facture</th>
-                            <th scope="col">date de création de facture</th>
-                            <th scope="col">date fin du facture</th>
-                            <th scope="col">Montant facture(Ariary)</th>
-                            <th scope="col">Payer(Ariary)</th>
-                            <th scope="col">Reste à payer(Ariary)</th>
-                        </tr>
-                    </thead>
+                <table class="table table_sans_bordure">
                     <tbody>
                         <tr>
-                            <td>{{ $montant_totale->num_facture }}</td>
-                            <td>{{ $montant_totale->invoice_date }}</td>
-                            <td>{{ $montant_totale->due_date }}</td>
-                            <td class="text-end">{{ number_format($montant_totale->montant_total, 2, ',', ' ') }}</td>
-                            <td class="text-end">{{ number_format($montant_totale->payement_totale, 2, ',', ' ') }}</td>
-                            <td class="text-end">{{ number_format($montant_totale->dernier_montant_ouvert, 2, ',', ' ') }}</td>
-
+                            <td colspan="3">
+                                <h6><img src="{{ public_path('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 300px; height: 90px;"></h6>
+                                {{-- <h6><img src="{{ asset('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 300px; height: 80px;"></h6> --}}
+                            </td>
+                            <td></td>
+                            <td>
+                                <div align="right">
+                                    <h3 class="mx-3">{{$montant_totale->reference_type_facture}}</h3>
+                                    <h5><strong>{{$cfp->nom}}</strong></h5>
+                                    <h6>{{$cfp->email}}</h6>
+                                    <h6>{{$cfp->adresse_lot." ".$cfp->adresse_quartier}}</h6>
+                                    <h6>{{$cfp->adresse_ville." ".$cfp->adresse_code_postal}}</h6>
+                                    <h6>{{$cfp->adresse_region}}</h6>
+                                    <h6>{{$cfp->telephone}}</h6>
+                                    @if($cfp->site_web!=null)
+                                    <h6>site: {{$cfp->site_web}}</h6>
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
-
+                        <tr>
+                            <th>
+                                <h5>Facturé à <strong>{{$entreprise->nom_etp}}</strong></h5>
+                                <h6>{{$entreprise->email_etp}}</h6>
+                                @if($entreprise->adresse_rue!=null && $entreprise->adresse_quartier!=null)
+                                <h6>{{$entreprise->adresse_rue." ".$entreprise->adresse_quartier}}</h6>
+                                @endif
+                                @if($entreprise->adresse_ville!=null && $entreprise->adresse_code_postal!=null && $entreprise->adresse_region!=null)
+                                <h6>{{$entreprise->adresse_ville." ".$entreprise->adresse_code_postal.", ".$entreprise->adresse_region}}</h6>
+                                @endif
+                                <h6>{{$entreprise->telephone_etp}}</h6>
+                                @if($entreprise->site_etp!=null)
+                                <h6>{{$entreprise->site_etp}}</h6>
+                                @endif
+                                <h6 class=" text-muted">nif: {{$entreprise->nif}}</h6>
+                                <h6 class=" text-muted">stat: {{$entreprise->stat}}</h6>
+                                <h6 class=" text-muted">cif: {{$entreprise->cif}}</h6>
+                                <h6 class=" text-muted">rcs: {{$entreprise->rcs}}</h6>
+                            </th>
+                            <td colspan="3"></td>
+                            <td>
+                                <div align="right">
+                                    <h6></h6><br>
+                                    <h6></h6><br>
+                                    <h4>Numéro de facture: {{$montant_totale->num_facture}}</h4>
+                                    <h4>Reference de bon de commande: {{$facture[0]->reference_bc}}</h4>
+                                    <h4>Date de facturation: {{$montant_totale->invoice_date}}</h4>
+                                    <h4>Payment du: {{$montant_totale->due_date}}</h4>
+                                    <h4>Amount Due(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}}</strong></h4>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
 
-    {{-- Ouverture de container --}}
-    <div class="container-fluid">
-        <div class="row">
+        {{-- Ouverture de container --}}
+        <div class="row me-2 mr-2">
             <div class="col-md-12">
-                <h3>Liste(s) de(s) Encaissement(s)</h3>
 
-                <table border="1" width="auto"  class="table">
-                    <thead>
+                <table class="table">
+                    <thead class="btn-secondary">
                         <tr>
-                            <th scope="col">Date payement</th>
+                            <th scope="col">Date</th>
                             <th scope="col">Libellé</th>
-                            <th scope="col">Facture</th>
-                            <th scope="col">Montant facture(Ariary)</th>
-                            <th scope="col">Paiement(Ariary)</th>
-                            <th scope="col">Montant ouvert(Ariary)</th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Paiement</th>
+                            <th scope="col">Montant ouvert</th>
                             <th scope="col">Mode de payement</th>
                             <th scope="col">Encaisseur</th>
                         </tr>
@@ -148,10 +228,9 @@
                         <tr>
                             <td>{{ $info->date_encaissement }}</td>
                             <td>{{ $info->libelle }}</td>
-                            <td>{{ $info->num_facture }}</td>
-                            <td class="text-end">{{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
-                            <td class="text-end">{{ number_format($info->payement, 2, ',', ' ') }}</td>
-                            <td class="text-end">{{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
+                            <td class="text-end">Ar {{ number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                            <td class="text-end">Ar {{ number_format($info->payement, 0, ',', ' ') }}</td>
+                            <td class="text-end">Ar {{ number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
                             <td>{{ $info->description }}</td>
                             <td>{{ $info->nom_resp_cfp}}</td>
                         </tr>
@@ -162,9 +241,8 @@
                 {{-- Fermeture de row et col --}}
             </div>
         </div>
+
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script> --}}

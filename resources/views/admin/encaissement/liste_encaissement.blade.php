@@ -1,8 +1,10 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Liste des encaissements</h3>
+<p class="text_header m-0 mt-1">Encaissement</p>
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+
 <style>
     table,
     th {
@@ -18,16 +20,203 @@
         font-size: 11px;
     }
 
+    .nav_bar_list:hover {
+        background-color: transparent;
+    }
+
+    .nav_bar_list .nav-item:hover {
+        border-bottom: 2px solid black;
+    }
+
+    .input_inscription {
+        padding: 2px;
+        border-radius: 100px;
+        box-sizing: border-box;
+        color: #9E9E9E;
+        border: 1px solid #BDBDBD;
+        font-size: 16px;
+        letter-spacing: 1px;
+        height: 50px !important;
+        border: 2px solid #aa076c17 !important;
+
+
+    }
+
+    .input_inscription:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 2px solid #AA076B !important;
+        outline-width: 0 !important;
+    }
+
+
+    .form-control-placeholder {
+        position: absolute;
+        top: 1rem;
+        padding: 12px 2px 0 2px;
+        padding: 0;
+        padding-top: 2px;
+        padding-bottom: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+        transition: all 300ms;
+        opacity: 0.5;
+        left: 2rem;
+    }
+
+    .input_inscription:focus+.form-control-placeholder,
+    .input_inscription:valid+.form-control-placeholder {
+        font-size: 95%;
+        font-weight: bolder;
+        top: 1rem;
+        transform: translate3d(0, -100%, 0);
+        opacity: 1;
+        backgroup-color: white;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        box-shadow: 0 0 0 30px white inset !important;
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+    }
+
+    .status_grise {
+        border-radius: 1rem;
+        background-color: #637381;
+        color: white;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    .status_reprogrammer {
+        border-radius: 1rem;
+        background-color: #00CDAC;
+        color: white;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    .status_cloturer {
+        border-radius: 1rem;
+        background-color: #314755;
+        color: white;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    .status_reporter {
+        border-radius: 1rem;
+        background-color: #26a0da;
+        color: white;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    .status_annulee {
+        border-radius: 1rem;
+        background-color: #b31217;
+        color: white;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    .status_termine {
+        border-radius: 1rem;
+        background-color: #1E9600;
+        color: white;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    .status_confirme {
+        border-radius: 1rem;
+        background-color: #2B32B2;
+        color: white;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    .statut_active {
+        border-radius: 1rem;
+        background-color: rgb(15, 126, 145);
+        color: whitesmoke;
+        width: 60%;
+        align-items: center margin: 0 auto;
+    }
+
+    /* .filter{
+    position: relative;
+    bottom: .5rem;
+    float: right;
+} */
+    .btn_creer {
+        background-color: white;
+        border: none;
+        border-radius: 30px;
+        padding: .2rem 1rem;
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btn_creer a {
+        font-size: .8rem;
+        position: relative;
+        bottom: .2rem;
+    }
+
+    .btn_creer:hover {
+        background: #6373812a;
+        color: blue;
+    }
+
+    .btn_creer:focus {
+        color: blue;
+        text-decoration: none;
+    }
+
+    .icon_creer {
+        background-image: linear-gradient(60deg, #f206ee, #0765f3);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        font-size: 1.5rem;
+        position: relative;
+        top: .4rem;
+        margin-right: .3rem;
+    }
+
+    .pagination {
+        background-clip: text;
+        margin-right: .3rem;
+        font-size: 2rem;
+        position: relative;
+        top: .7rem;
+    }
+
+    .pagination:hover {
+        color: #000000;
+        background-color: rgb(239, 239, 239);
+        border-radius: 1.3rem;
+    }
+
+    .nombre_pagination {
+        color: #626262;
+
+    }
+
 </style>
 <div class="container-fluid">
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-12">
             <br>
             <h3>EXTRAIT DE COMPTE CLIENT</h3>
         </div>
-    </div>
+    </div> --}}
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -35,134 +224,108 @@
 
                     <li class="nav-item">
                         <a class="nav-link btn_next  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">
-                            Liste des Factures</a>
-                    </li>
-                    @canany(['isSuperAdmin','isCFP'])
-                    <li class="nav-item ">
-                        <a class="nav-link btn_next {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
-                            PDF liste encaissement</a>
-                    </li>
-                    @endcanany
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{-- <a href="{{route('liste_facture',2)}}"><button class="btn btn-success">retour</button></a> --}}
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date payement</th>
-                                        <th scope="col">Libellé</th>
-                                        <th scope="col">Facture</th>
-                                        <th scope="col">Montant facture(Ariary)</th>
-                                        <th scope="col">Paiement(Ariary)</th>
-                                        <th scope="col">Montant ouvert(Ariary)</th>
-                                        <th scope="col">Mode de payement</th>
-                                        <th colspan="2">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($encaissement as $info)
-                                    <tr>
-                                        <td>{{ $info->date_encaissement }}</td>
-                                        <td>{{ $info->libelle }}</td>
-                                        <td>{{ $info->num_facture }}</td>
-                                        <td class="text-end">{{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
-                                        <td class="text-end">{{ number_format($info->payement, 2, ',', ' ') }}</td>
-                                        <td class="text-end">{{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
-                                        <td>{{ $info->description }}</td>
-                                        <td><button class="button_tail btn btn_next btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button></td>
-                                        <td style="width: 60px"><a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_next supprimer" style="color: red"><span class="fa fa-trash"></span></button></a></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-                @error('montant')
-                <span style="color: red">{{ $message }}</span>
-                @enderror
-                @error('libelle')
-                <span style="color: red">{{ $message }}</span>
-                @enderror
-
-            </div>
-        </div>
-
-        {{-- <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal-title text-md">
-                            <h5>Reste à payer : <strong><label id="montant"></label> Ar</strong></h5>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('encaisser') }}" id="formPayement" method="POST">
-        @csrf
-        <div class="inputbox inputboxP mt-3">
-            <span>Description</span>
-            <textarea autocomplete="off" name="libelle" id="libelle" class="text_description form-control" placeholder="description d'encaissement"></textarea>
-        </div>
-        <div class="inputbox inputboxP mt-3">
-            <span>Montant à facturer</span>
-            <input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" required="required"> </div>
-
-        <div class="form-group  mt-3">
-            <span>Mode de payement<strong style="color:#ff0000;">*</strong></span>
-            <select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example">
-                @foreach ($mode_payement as $mp)
-                <option value="{{ $mp->id }}">{{ $mp->description }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="inputbox inputboxP mt-3">
-            <span>Date de payement<strong style="color:#ff0000;">*</strong></span>
-            <input type="date" name="date_encaissement" class="form-control formPayement" required="required" value="{{ date('d/m/Y') }}">
-        </div>
-        <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
-        </form>
-        <div class="mt-4 mb-4">
-            <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_enregistrer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_enregistrer btnP px-3">Encaisser</button> </div>
-        </div>
-
-    </div>
-
+    Liste des Factures</a>
+    </li>
+    @canany(['isSuperAdmin','isCFP'])
+    <li class="nav-item ">
+        <a class="nav-link btn_next {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
+            PDF liste encaissement</a>
+    </li>
+    @endcanany
+    </ul>
 </div>
 </div>
-</div> --}}
-{{-- debut modal encaissement --}}
-<div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title text-md">
-                    <h5>Modification</h5>
+</nav> --}}
+<div class="m-4">
+    <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+        {{-- <li></li> --}}
+        <li class="nav-item">
+            <a href="{{route('liste_facture')}}" class="nav-link">
+                Facture
+            </a>
+        </li>
+        @canany(['isCFP'])
+        <li class="nav-item ">
+            <a class="nav-link {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
+                <i class="fa fa-download"></i>   PDF</a>
+        </li>
+        @endcanany
+    </ul>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {{-- <a href="{{route('liste_facture',2)}}"><button class="btn btn-success">retour</button></a> --}}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date payement</th>
+                                    <th scope="col">Libellé</th>
+                                    <th scope="col">Facture</th>
+                                    <th scope="col">Montant facture(Ariary)</th>
+                                    <th scope="col">Paiement(Ariary)</th>
+                                    <th scope="col">Montant ouvert(Ariary)</th>
+                                    <th scope="col">Mode de payement</th>
+                                    <th colspan="2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($encaissement as $info)
+                                <tr>
+                                    <td>{{ $info->date_encaissement }}</td>
+                                    <td>{{ $info->libelle }}</td>
+                                    <td>{{ $info->num_facture }}</td>
+                                    <td class="text-end">{{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
+                                    <td class="text-end">{{ number_format($info->payement, 2, ',', ' ') }}</td>
+                                    <td class="text-end">{{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
+                                    <td>{{ $info->description }}</td>
+                                    <td><button class="button_tail btn btn_next btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button></td>
+                                    <td style="width: 60px"><a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_next supprimer" style="color: red"><span class="fa fa-trash"></span></button></a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
             </div>
-            <div class="modal-body">
-                <form action="{{ route('modifier_encaissement') }}" method="POST">
-                    @csrf
-                    <div id="modification"></div>
-                </form>
-            </div>
+            @error('montant')
+            <span style="color: red">{{ $message }}</span>
+            @enderror
+            @error('libelle')
+            <span style="color: red">{{ $message }}</span>
+            @enderror
 
         </div>
     </div>
-</div>
-{{-- fin --}}
 
+    {{-- debut modal encaissement --}}
+    <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title text-md">
+                        <h5>Modification</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('modifier_encaissement') }}" method="POST">
+                        @csrf
+                        <div id="modification"></div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{-- fin --}}
+
+</div>
 </div>
 
 </div>
