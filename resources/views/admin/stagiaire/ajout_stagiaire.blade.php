@@ -11,20 +11,21 @@
             {{-- Nouveau apreanant --}}
             <section class="section_recherche m-0 p-2">
                 <div class="d-flex py-1 align-items-center align-content-center">
-                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
-                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control w-10">
+                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule : </p>&nbsp;
+                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="matricule_search_input form-control">
                     <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
-                    <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
-                        <i class="fa fa-search"></i>
+                    <button type="submit" class="btn btn-outline-secondary m-0 rechercher">
+                        <i class="fa fa-search m-0"></i>
                     </button>
                 </div>
                 <div class="d-flex mb-3">
-                    <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
-                    <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
-                    <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
+                    <span class="span_matricule" id="image_stg"></span>
+                    <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled > </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="nom" disabled > </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled> </span>
                     {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
                     <span class="span_ajout" id="boutton_add">
-                        <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
+                        
                     </span>
                 </div>
             </section><br>
@@ -36,17 +37,18 @@
             {{-- Nouveau apreanant --}}
             <section class="section_recherche m-0 p-2">
                 <div class="d-flex py-1 align-items-center align-content-center">
-                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule.</p>&nbsp;
-                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="form-control w-10">
+                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule :</p>&nbsp;
+                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="matricule_search_input form-control">
                     <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
                     <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
                 <div class="d-flex mb-3">
-                    <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled  placeholder="Matricule"> </span>
-                    <span class="span_name"> <input type="text" class="label_text" id="nom" disabled placeholder="Nom"> </span>
-                    <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled placeholder="Prénom"> </span>
+                    <span class="span_matricule" id="image_stg"></span>
+                    <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled> </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="nom" disabled > </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled > </span>
                     {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
                     <span class="span_ajout" id="boutton_add">
                         <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
@@ -64,8 +66,32 @@
         </div>
     </div> --}}
     {{-- <br> --}}
+    <style>
+        .titre_projet {
+            background: rgba(235, 233, 233, 0.658);
+            border-radius: 5px;
+        }
+
+        .titre_projet:hover {
+            color: #7635dc;
+            background-color: #6373811f;
+        }
+
+        .titre_projet .collapsed {
+            color: #637381;
+        }
+        .titre_projet {
+            color: #7635dc;
+        }
+    </style>
+    @if (count($stagiaire) <= 0)
+        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+            <span class="text-center">Aucun apprenant inscrit</span>
+        </div>
+    @else
         <table class="table table-hover table-borderless" id="test_table">
             <thead style="border-bottom: 1px solid black; line-height: 20px">
+                <th>Photo</th>
                 <th>Matricule</th>
                 <th>Nom</th>
                 <th>Prénom</th>
@@ -82,6 +108,14 @@
             <tbody id="participant_groupe">
                 @foreach ($stagiaire as  $stg)
                 <tr id="row_{{ $stg->stagiaire_id }}">
+                    <td>
+                        @if ($stg->photos != null)
+                            <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">
+                        @else
+                            <span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">{{ $stg->sans_photo }}
+                            </span>
+                        @endif
+                    </td>
                     <td>{{ $stg->matricule }}</td>
                     <td>{{ $stg->nom_stagiaire }}</td>
                     <td>{{ $stg->prenom_stagiaire }}</td>
@@ -114,8 +148,13 @@
                 @endforeach
             </tbody>
         </table>
+    @endif
 </div>
 <style>
+.matricule_search_input{
+    width: 40%;
+}
+
 .supprimer:hover{
     cursor: pointer;
 }
@@ -140,29 +179,29 @@
 }
 .span_name{
     width: 100%;
-    border-bottom: 1px solid grey;
-    padding-bottom: .8rem;
+    /* border-bottom: 1px solid grey; */
+    padding-bottom: .3rem;
     margin: 0 1rem;
     color: grey;
 }
 .span_ajout{
     width: 20%;
-    border-bottom: 1px solid grey;
-    padding-bottom: .8rem;
+    /* border-bottom: 1px solid grey; */
+    padding-bottom: .3rem;
     margin: 0 1rem;
     color: grey;
 }
 .span_matricule{
     width: 50%;
-    border-bottom: 1px solid grey;
-    padding-bottom: .8rem;
+    /* border-bottom: 1px solid grey; */
+    padding-bottom: .3rem;
     margin: 0 1rem;
     color: grey;
 }
-.section_recherche{
+/* .section_recherche{
     border: 3px solid rgba(230, 228, 228, 0.39);
     border-radius: .5rem;
-}
+} */
 .icon_box{
     font-size: 8PX;
 }
@@ -230,10 +269,20 @@ td{
             success:function(response){
                 // alert(JSON.stringify(response));
                 var userData=JSON.parse(response);
+                html = '';
+                if(userData[0].photos == null){
+                    html = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
+                }else{
+                    html = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
+                    html = html.replace(":?",userData[0].photos);
+                }
+                $("#image_stg").append(html);
                 $("#matricule").val(userData[0].matricule);
                 $("#nom").val(userData[0].nom_stagiaire);
                 $("#prenom").val(userData[0].prenom_stagiaire);
                 $("#departement").val(userData[0].nom_departement);
+                $("#boutton_add").append('<i class="boutton fa fa-plus-circle" id="add_apprenant"></i>');
+                // alert('eto');
                 // id_detail = userData[$i].id;
                 // $('#action1').val('Modifier');
            },
@@ -263,7 +312,16 @@ td{
                 $("#test_table > tbody").empty();
                 var html = '';
                 for (var i = 0; i < userData.length; i++){
+                    photo = '';
+                    if(userData[i].photos == null){
+                        photo = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
+                    }else{
+                        photo = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
+                        photo = photo.replace(":?",userData[i].photos);
+                    }
+                    // alert(html);    
                     html +='<tr id="row_'+userData[i].stagiaire_id+'">';
+                    html += '<td>'+photo+'</td>';
                     html +='<td>'+userData[i].matricule+'</td>';
                     html += '<td>'+userData[i].nom_stagiaire+'</td>';
                     html += '<td>'+userData[i].prenom_stagiaire+'</td>';
@@ -293,6 +351,8 @@ td{
                     html += '</div>';
                 }
                 $('#participant_groupe').append(html);
+                $(".span_ajout").hide();
+                $("#image_stg").hide();
                 // location.reload(true);
            },
            error:function(error){

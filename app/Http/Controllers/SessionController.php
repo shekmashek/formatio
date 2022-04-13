@@ -120,7 +120,7 @@ class SessionController extends Controller
         $stagiaire = [];
         $formateur_cfp = [];
         $fonct = new FonctionGenerique();
-        $module_session = DB::select('select nom_module from groupes,modules where groupes.module_id = modules.id')[0]->nom_module;
+        $module_session = DB::select('select reference,nom_module from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
 
@@ -141,9 +141,9 @@ class SessionController extends Controller
                 $entreprise_id = null;
             }
 
-            $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
+            // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
-            $formateur_cfp = $fonct->concatTwoList($formateur1, $formateur2);
+            $formateur_cfp = $fonct->concatTwoList($formateur2, []);
             // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             $documents = $drive->file_list($cfp_nom,"Mes documents");
@@ -235,7 +235,7 @@ class SessionController extends Controller
         $id = $request->Id;
         $etp = $request->etp;
         // $stg = DB::select('select * from v_stagiaire_entreprise where matricule = ?',[$id]);
-        $stg = DB::select('select * from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+        $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
         return response()->json($stg);
     }
 

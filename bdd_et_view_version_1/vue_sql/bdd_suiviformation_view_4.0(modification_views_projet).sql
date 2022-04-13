@@ -503,6 +503,7 @@ select
         s.entreprise_id,
         s.user_id,
         s.photos,
+        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photo,
         (s.service_id) departement_id,
         s.cin,
         s.date_naissance,

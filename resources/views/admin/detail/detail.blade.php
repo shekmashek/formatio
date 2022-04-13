@@ -280,6 +280,33 @@
     </form>
 @endif
 
+<style>
+    .titre_projet {
+        background: rgba(235, 233, 233, 0.658);
+        border-radius: 5px;
+    }
+
+    .titre_projet:hover {
+        color: #7635dc;
+        background-color: #6373811f;
+    }
+
+    .titre_projet .collapsed {
+        color: #637381;
+    }
+    .titre_projet {
+        color: #7635dc;
+    }
+</style>
+@canany(['isReferent','isFormateur'])
+    @if (count($datas) <= 0)
+        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+            <span class="text-center">Aucun detail de la session</span>
+        </div>
+    @endif
+@endcanany
+
+
 {{-- donnee non exiatante --}}
 
 @if (count($datas) > 0)

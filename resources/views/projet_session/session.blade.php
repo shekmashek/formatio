@@ -5,18 +5,21 @@
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
             <div class="d-flex m-0 p-0 height_default">
-                <h5>{{ $module_session }}</h5>&nbsp;&nbsp;&nbsp;
+                <h5>{{ $module_session->reference.' - '.$module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
                 <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
             </div>
             <div class="d-flex m-0 p-0 height_default">
-                <p class="numero_session text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong>  </p>
+                <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong>  </p>
                 <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>@php
+                @canany(['isCFP','isReferent'])
+                    <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
+                    <p class="text-dark mt-3"> <strong>@php
                     echo number_format($prix->montant_session,2,"."," ")
                 @endphp Ar</strong>  </p>
+                @endcanany
+                
                 <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
+                <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
             </div>
             {{-- <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
@@ -82,7 +85,7 @@
                         {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p> --}}
                     </div>
                 </div>
-                @canany(['isReferent','isCFP'])
+                @canany(['isCFP'])
                     <div class="chiffre_d_affaire">
                         <div class="d-flex flex-row">
                             <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
@@ -118,7 +121,7 @@
                             @endif
                         </button>
                     </div>
-                    @if ($type_formation_id == 1)
+                    {{-- @if ($type_formation_id == 1) --}}
                         @canany(['isCFP','isReferent','isFormateur'])
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
@@ -132,7 +135,7 @@
                                 </button>
                             </div>
                         @endcanany
-                    @endif
+                    {{-- @endif
 
                     @if ($type_formation_id == 2)
                         @canany(['isReferent'])
@@ -147,8 +150,8 @@
                                     @endif
                                 </button>
                             </div>
-                        @endcanany
-                    @endif
+                        @endcanany --}}
+                    {{-- @endif --}}
 
 
                             <div>
@@ -184,7 +187,7 @@
                                     {{-- <i class="fa fa-check-circle me-2" style="color: chartreuse"></i> --}}
                                 </button>
                             </div>
-                            @if ($type_formation_id == 1)
+                        {{-- @if ($type_formation_id == 1) --}}
                             @canany(['isStagiaire'])
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
@@ -239,7 +242,7 @@
                                     <i class="fal fa-dot-circle me-2" style="color: grey"></i>
                                 </button>
                             </div> --}}
-                        @endif
+                        {{-- @endif --}}
                 </div>
             </div>
 
@@ -267,20 +270,20 @@
                             @include('admin.detail.detail')
                       </div>
                       {{-- @if ($type_formation_id == 1) --}}
-                      @if ($type_formation_id == 1)
+                      {{-- @if ($type_formation_id == 1) --}}
                         @canany(['isCFP','isReferent','isFormateur'])
                             <div id="apprenant" class="tabcontent">
                                 @include('admin.stagiaire.ajout_stagiaire')
                             </div>
                         @endcanany
-                      @endif
-                      @if ($type_formation_id == 2)
-                        @canany(['isReferent'])
+                      {{-- @endif --}}
+                      {{-- @if ($type_formation_id == 2)
+                        @canany(['isReferent','isCFP'])
                             <div id="apprenant" class="tabcontent">
                                 @include('admin.stagiaire.ajout_stagiaire')
                             </div>
                         @endcanany
-                      @endif
+                      @endif --}}
 
                       <div id="ressource" class="tabcontent">
                         @include('projet_session.ressource')
@@ -349,8 +352,8 @@
 }
 
 .body_nav{
-    background-color: #e8e8e9;
-    color: rgb(3, 0, 0);
+    /* background-color: #e8e8e9;
+    color: rgb(3, 0, 0); */
     padding: 6px 8px;
     border-radius: 4px 4px 0 0;
     font-family: 'Open Sans';
@@ -490,9 +493,13 @@ p{
     padding-left: 6px;
     height: 100%;
     font-size: 12px;
-    background-color: rgba(230, 228, 228, 0.39);
-    border-bottom: 1px solid rgb(187, 183, 183);
+    /* background-color: rgba(230, 228, 228, 0.39);
+    border-bottom: 1px solid rgb(187, 183, 183); */
 }
+.planning:hover{
+    background-color: #eeeeee;
+}
+
 .dernier_planning{
     text-align: left;
     padding-left: 6px;
@@ -512,7 +519,7 @@ p{
 }
 .corps_planning{
     /* border: 1px solid grey; */
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 3px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 button{
     background-color: white;
@@ -552,7 +559,7 @@ button{
 }
 
 .btn_modifier_statut:hover{
-    background: #fffefe;
+    background: #eeeeee;
     color: rgb(0, 0, 0);
 }
 
