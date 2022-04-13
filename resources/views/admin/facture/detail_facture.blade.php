@@ -76,7 +76,8 @@
                     <div class="container-fluid my-2">
                         <div class="row p-2">
                             <div class="col-4">
-                                <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
+                                {{-- <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid"> --}}
+                                <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" style="width: 300px; height: 90px;">
                             </div>
                             <div class="col-8 text-end" align="rigth">
 
