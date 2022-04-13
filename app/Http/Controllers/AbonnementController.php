@@ -173,8 +173,6 @@ class AbonnementController extends Controller
     public function ListeAbonnement()
     {
 
-        // $role_id = User::where('Email', Auth::user()->email)->value('role_id');
-
         if (Gate::allows('isReferent')) {
             $fonct = new FonctionGenerique();
             $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 2)->get();
@@ -235,8 +233,7 @@ class AbonnementController extends Controller
                     $mois_suivant =  date('Y-m-d', strtotime($mois_dernier. ' + 31 days'));
                     $due_suivant =  date('Y-m-d', strtotime($mois_suivant. ' + 15 days'));
 
-                    //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle facture
-
+                    //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle factur
                     if($dt == $mois_suivant ){
                         $this->abonnement_model->insert_factures_abonnements_cfp($facture[0]->abonnement_cfps_id,$mois_suivant,$due_suivant,$facture[0]->montant_facture);
                     }
@@ -319,11 +316,27 @@ class AbonnementController extends Controller
             $cfp_id = $resp[0]->cfp_id;
             $cfps = cfp::where('id', $cfp_id)->get();
               //on verifie l'abonnemennt de l'of
-            $cfp_ab = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
-            if($cfp_ab == null) $type_abonnement = "Gratuit";
-            else $type_abonnement = $cfp_ab[0]->nom_type;
-            $entreprise = null;
-            return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+            $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
+            if($cfp_ab!=null){
+                $dtNow = Carbon::today()->toDateString();
+                $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($cfp_ab[0]->invoice_date)) . " + 31 days");
+                /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
+                if($dtNow < $un_mois_plus_tard){
+                     return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
+                }
+                else{
+                    if($cfp_ab == null) $type_abonnement = "Gratuit";
+                    else $type_abonnement = $cfp_ab[0]->nom_type;
+                    $entreprise = null;
+                    return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                }
+            }
+            else{
+                $type_abonnement = "Gratuit";
+                $entreprise = null;
+                return view('superadmin.index_abonnement', compact('entreprise','type_abonnement','categorie_paiement_id', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+            }
+
         }
     }
 
@@ -362,12 +375,14 @@ class AbonnementController extends Controller
             $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
             $montant = $fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
 
+
             // $last_num_facture = $fonct->fin
-            DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
+            $this->abonnement_model->insert_factures_abonnements_cfp($abonnement_cfp_id[0]->id,$dt,$due_date,$montant[0]->tarif);
+            // DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
 
         }
 
-        return redirect()->back()->with('message', 'Demande d\'abonnement envoyé');
+        return redirect()->route('ListeAbonnement');
     }
     //liste des demandes d'abonnement
     public function listeAbonne()

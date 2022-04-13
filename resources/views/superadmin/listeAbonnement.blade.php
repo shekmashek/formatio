@@ -18,9 +18,19 @@
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="abonnement">
+                @if (\Session::has('erreur'))
+                    <div class="row w-50 text-center mx-auto">
+                        <div class="alert alert-danger justify-content-center mt-5">
+                            <ul>
+                                <li>{!! \Session::get('erreur') !!}</li>
+                            </ul>
+                        </div>
+                    </div>
+                @endif
                 <div>
                     <p class="h2 text-center mt-3 mb-5">Choisissez Votre Abonnement</p>
                 </div>
+
                <div class="row mt-3">
                     @if($abonnement_actuel == null)
                         <div class="col-lg-4 col-md-6 ">
