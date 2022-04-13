@@ -12,8 +12,6 @@
                     <div class="row g-0 m-0" style="align-items: center">
                         @can('isCFP')
                         <div class="col-12 d-flex justify-content-between" style="align-items: center">
-
-
                             <div class="col" align="right">
                                 <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
                                     href="{{route('liste_module')}}">
@@ -40,32 +38,32 @@
                                         <p id="changer_module" onclick="changer_module();" role="button"
                                             class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i
                                                     class='bx bxs-cube-alt'
-                                                    style="color: #7635dc; font-size:2rem"></i><br><span>Module</span></a>
+                                                    style="color: #637381; font-size:1.5rem"></i><br><span>Module</span></a>
                                         </p>
                                         <p id="changer_objectif" onclick="changer_objectif();" role="button"
                                             class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut2"><i
                                                     class='bx bx-radio-circle-marked'
-                                                    style="color: #7635dc; font-size:2rem"></i><br><span>Objectif</span></a>
+                                                    style="color: #637381; font-size:1.5rem"></i><br><span>Objectif</span></a>
                                         </p>
                                         <p id="changer_cible" onclick="changer_cible();" role="button"
                                             class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i
                                                     class='bx bx-user'
-                                                    style="color: #7635dc; font-size:2rem"></i><br><span>Cible</span></a>
+                                                    style="color: #637381; font-size:1.5rem"></i><br><span>Cible</span></a>
                                         </p>
                                         <p id="changer_reference" onclick="changer_reference();" role="button"
                                             class="text-center btn_change_form py-2 mb-1"><a
                                                 href="#preview_reference"><i class='bx bx-clipboard'
-                                                    style="color: #7635dc; font-size:2rem"></i><br><span>Reference</span></a>
+                                                    style="color: #637381; font-size:1.5rem"></i><br><span>Reference</span></a>
                                         </p>
                                         <p id="changer_equipement" onclick="changer_equipement();" role="button"
                                             class="text-center btn_change_form py-2 mb-1"><a
                                                 href="#preview_equipement"><i class='bx bxs-cog'
-                                                    style="color: #7635dc; font-size:2rem"></i><br><span>Equipement</span></a>
+                                                    style="color: #637381; font-size:1.5rem"></i><br><span>Equipement</span></a>
                                         </p>
                                         <p id="changer_prestation" onclick="changer_prestation();" role="button"
                                             class="text-center btn_change_form py-2 mb-1"><a
                                                 href="#preview_prestation"><i class='bx bx-hive'
-                                                    style="color: #7635dc; font-size:2rem"></i><br><span>Prestation</span></a>
+                                                    style="color: #637381; font-size:1.5rem"></i><br><span>Prestation</span></a>
                                         </p>
                                     </div>
                                 </div>
@@ -103,7 +101,7 @@
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control descript descript input mt-3"
+                                                    <input type="text" class="form-control descript descript input"
                                                         id="acf-description" name="description" required
                                                         value="{{$mod->description}}" placeholder="Déscription"><label
                                                         for="acf-description"
@@ -125,7 +123,7 @@
                                                 <div class="acf-field acf-field-text acf-field-jour is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control jour jour input mt-3"
+                                                            <input type="text" class="form-control jour jour input"
                                                                 id="acf-jour" name="jour" min="1" max="365"
                                                                 onfocus="(this.type='number')"
                                                                 title="entrer une durée en jours"
@@ -143,7 +141,7 @@
                                                 <div class="acf-field acf-field-text acf-field-heur is-required">
                                                     <div class="acf-input">
                                                         <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control heur heur input mt-3"
+                                                            <input type="text" class="form-control heur heur input"
                                                                 id="acf-heur" name="heure" min="1" max="8760"
                                                                 onfocus="(this.type='number')"
                                                                 title="entrer une durée en heure"
@@ -163,7 +161,6 @@
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-
                                                     <select
                                                         class="form-control select_formulaire modalite modalite input mt-3"
                                                         id="acf-modalite" name="modalite" style="height: 50px;">
@@ -260,7 +257,7 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <textarea class="form-control cible cible text_area" id="acf-cible"
-                                                        name="cible" required>{{$mod->cible}}</textarea><label
+                                                        name="cible" required placeholder="Public Cible">{{$mod->cible}}</textarea><label
                                                         for="acf-cible"
                                                         class="form-control-placeholder-text_area">Public Cible</label>
                                                     @error('cible')
@@ -437,7 +434,7 @@
                                                                     name="min_pers" min="1" max="100"
                                                                     value="{{$mod->min_pers}}"
                                                                     onfocus="(this.type='number')"
-                                                                    title="entrer le nombre de personne maximale"
+                                                                    title="entrer le nombre de personne minimale"
                                                                     placeholder="Nombre personne
                                                                     min" required><label for="acf-min"
                                                                     class="form-control-placeholder">Nombre personne
@@ -495,12 +492,13 @@
                                         id="border_premier">
                                         <div class="col-lg-6 col-md-6  new_back">
                                             <div class="detail__formation__result__item ">
-                                                <h4><span id="preview_categ"><span
-                                                            class="py-4 acf-categorie">{{$mod->nom_formation}}</span></span><span
-                                                        style="color: black !important;">&nbsp;-&nbsp;</span>
-                                                    <span></span>
-                                                    <span id="preview_module"><span class="acf-nom_module">Excel
-                                                            avancee</span></span>
+                                                <h4>
+                                                    <span id="preview_module"><span class="acf-nom_module">Excel avancee</span>
+                                                    </span><br>
+                                                    <span id="preview_categ">
+                                                        <span class="py-4 acf-categorie">{{$mod->nom_formation}}</span>
+                                                    </span>
+
                                                 </h4>
                                                 <p id="preview_descript"><span class="acf-description">Optimiser et
                                                         automatiser vos tableaux sans programmer</span></p>
@@ -915,7 +913,7 @@
         var bouttons = document.getElementById("sixieme_vue2");
 
         var mod_preview = document.getElementById("border_premier");
-        $('#border_premier').css('border','4px solid #7635dc');
+        $('#border_premier').css('border','2px solid #7635dc');
         $('#border_objectif').css('border','none');
         $('#border_cible').css('border','none');
         $('#border_equipement').css('border','none');
@@ -984,7 +982,7 @@
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
 
-        $('#border_objectif').css('border','4px solid #7635dc');
+        $('#border_objectif').css('border','2px solid #7635dc');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
         $('#border_equipement').css('border','none');
@@ -1051,7 +1049,7 @@
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
 
-        $('#border_cible').css('border','4px solid #7635dc');
+        $('#border_cible').css('border','2px solid #7635dc');
         $('#border_premier').css('border','none');
         $('#border_objectif').css('border','none');
         $('#border_equipement').css('border','none');
@@ -1118,7 +1116,7 @@
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
 
-        $('#border_reference').css('border','4px solid #7635dc');
+        $('#border_reference').css('border','2px solid #7635dc');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
         $('#border_equipement').css('border','none');
@@ -1185,7 +1183,7 @@
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
 
-        $('#border_equipement').css('border','4px solid #7635dc');
+        $('#border_equipement').css('border','2px solid #7635dc');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
         $('#border_reference').css('border','none');
@@ -1252,7 +1250,7 @@
         var prestation = document.getElementById("sixieme_vue");
         var bouttons = document.getElementById("sixieme_vue2");
 
-        $('#border_prestation').css('border','4px solid #7635dc');
+        $('#border_prestation').css('border','2px solid #7635dc');
         $('#border_premier').css('border','none');
         $('#border_cible').css('border','none');
         $('#border_equipement').css('border','none');

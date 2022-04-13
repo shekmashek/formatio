@@ -9,13 +9,13 @@
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">
-                    <a href="#enCours" class="nav-link active" data-bs-toggle="tab">Programme à Compléter&nbsp;{{count($mod_en_cours)}}</a>
+                    <a href="#enCours" class="nav-link active" data-bs-toggle="tab">Programme à Compléter&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#nonPublies" class="nav-link" data-bs-toggle="tab">Compétence à compléter&nbsp;{{count($mod_non_publies)}}</a>
+                    <a href="#nonPublies" class="nav-link" data-bs-toggle="tab">Compétence à compléter&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#publies" class="nav-link" data-bs-toggle="tab">Votre Catalogue&nbsp;{{count($mod_publies)}}</a>
+                    <a href="#publies" class="nav-link" data-bs-toggle="tab">Votre Catalogue&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
                 </li>
             </ul>
 
@@ -356,12 +356,12 @@
                                                                 <div class="col-4">
                                                                     <div class="form-group ms-1">
                                                                         <div class="form-row">
-                                                                            <input type="text" name="objectif[]"
-                                                                                id="objectif" min="1" max="10"
+                                                                            <input type="text" name="notes[]"
+                                                                                id="notes" min="1" max="10"
                                                                                 onfocus="(this.type='number')"
                                                                                 class="form-control input" placeholder="Notes"
                                                                                 required>
-                                                                            <label for="objectif"
+                                                                            <label for="notes"
                                                                                 class="form-control-placeholder">Notes</label>
                                                                         </div>
                                                                     </div>
@@ -552,223 +552,226 @@
                     </div>
                 </div>
 
-                <div class="modal" id="ModalAffichage">
-                    <div class="modal-dialog">
-                        <div class="modal-content modal_grand">
-                            <div class="container-fluid">
-                                <div class="col-lg-12" id="preview_haut">
-                                    <div class="container py-4 bg-light">
-                                        <div class="row  bg-light justify-content-space-between py-3 px-5"
-                                            id="border_premier">
-                                            <div class="col-lg-6 col-md-6 new_back">
-                                                <div class="detail__formation__result__item ">
-                                                    <h4><span id="preview_categ"><span class="py-4 acf-categorie"
-                                                                id="nom_formation"></span></span><span
-                                                            style="color: black !important;">&nbsp;-&nbsp;</span>
-                                                        <span></span>
-                                                        <span id="preview_module"><span class="acf-nom_module"
-                                                                id="nom_module"></span></span>
-                                                    </h4>
-                                                    <p id="preview_descript"><span class="acf-description"
-                                                            id="description"></span></p>
-                                                    <div class="detail__formation__result__avis"
-                                                        style="color: black !important;">
-                                                        <div class="Stars" style="--note: 4.5;">
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star-half'></i>
+                <div>
+                    <div class="modal" id="ModalAffichage">
+                        <div class="modal-dialog">
+                            <div class="modal-content modal_grand">
+                                <div class="container-fluid">
+                                    <div class="col-lg-12" id="preview_haut">
+                                        <div class="container py-4 bg-light">
+                                            <div class="row  bg-light justify-content-space-between py-3 px-5"
+                                                id="border_premier">
+                                                <div class="col-lg-6 col-md-6 new_back">
+                                                    <div class="detail__formation__result__item ">
+                                                        <h4>
+                                                            <span id="preview_module">
+                                                                <span class="acf-nom_module" id="nom_module"></span>
+                                                            </span><br>
+                                                            <span id="preview_categ">
+                                                                <span class="py-4 acf-categorie" id="nom_formation"></span>
+                                                            <span>
+                                                        </h4>
+                                                        <p id="preview_descript"><span class="acf-description"
+                                                                id="description"></span></p>
+                                                        <div class="detail__formation__result__avis"
+                                                            style="color: black !important;">
+                                                            <div class="Stars" style="--note: 4.5;">
+                                                                <i class='bx bxs-star'></i>
+                                                                <i class='bx bxs-star'></i>
+                                                                <i class='bx bxs-star'></i>
+                                                                <i class='bx bxs-star'></i>
+                                                                <i class='bx bxs-star-half'></i>
+                                                            </div>
+                                                            <span><strong>4.5</strong>/5 (250 avis)</span>
                                                         </div>
-                                                        <span><strong>4.5</strong>/5 (250 avis)</span>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 detail__formation__result__content">
-                                                <div class="detail__formation__result__item2">
-                                                    {{-- <div class="text-center" id="imgDiv"><img
-                                                            src='{{asset("images/CFP/".$mod_en_cours[0]->logo)}}'
-                                                            alt="logo" id="logos" class="img-fluid"
-                                                            style="width: 200px; height: 100px;">
-                                                    </div> --}}
+                                                <div class="col-lg-6 col-md-6 detail__formation__result__content">
+                                                    <div class="detail__formation__result__item2">
+                                                        {{-- <div class="text-center" id="imgDiv"><img
+                                                                src='{{asset("images/CFP/".$mod_en_cours[0]->logo)}}'
+                                                                alt="logo" id="logos" class="img-fluid"
+                                                                style="width: 200px; height: 100px;">
+                                                        </div> --}}
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
+                                                    <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon"
+                                                            style="color: black !important;"></i>
+                                                        <span id="preview_jour"><span class="acf-jour"
+                                                                id="jour"></span>j</span>
+                                                        <span id="preview_heur">/<span class="acf-heur"
+                                                                id="heure"></span>h</span>
+                                                    </div>
+                                                    <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
+                                                            style="color: black !important;"></i>&nbsp;<span
+                                                            lass="acf-modalite" id="modalite"></span>
+                                                    </div>
+                                                    <div class="col" id="preview_niveau">
+                                                        <i class='bx bx-equalizer bx_icon'
+                                                            style="color: black !important;"></i>&nbsp;<span
+                                                            class="acf-niveau" id="niveau"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div
-                                                class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                                <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon"
-                                                        style="color: black !important;"></i>
-                                                    <span id="preview_jour"><span class="acf-jour"
-                                                            id="jour"></span>j</span>
-                                                    <span id="preview_heur">/<span class="acf-heur"
-                                                            id="heure"></span>h</span>
-                                                </div>
-                                                <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
-                                                        style="color: black !important;"></i>&nbsp;<span
-                                                        lass="acf-modalite" id="modalite"></span>
-                                                </div>
-                                                <div class="col" id="preview_niveau">
-                                                    <i class='bx bx-equalizer bx_icon'
-                                                        style="color: black !important;"></i>&nbsp;<span
-                                                        class="acf-niveau" id="niveau"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="row detail__formation__detail justify-content-space-between py-5 px-5">
-                                            <div class="col-lg-8 detail__formation__content">
+                                                class="row detail__formation__detail justify-content-space-between py-5 px-5">
+                                                <div class="col-lg-8 detail__formation__content">
 
-                                                <div class="row detail__formation__item__left__objectif"
-                                                    id="border_objectif">
-                                                    <div class="col-lg-12" id="preview_objectif">
-                                                        <span class="adresse__text">
-                                                            <i
-                                                                class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
-                                                        <p><span>>&nbsp;</span><span class="acf-objectif"
-                                                                id="objectif"></span></p>
+                                                    <div class="row detail__formation__item__left__objectif"
+                                                        id="border_objectif">
+                                                        <div class="col-lg-12" id="preview_objectif">
+                                                            <span class="adresse__text">
+                                                                <i
+                                                                    class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
+                                                            <p><span>>&nbsp;</span><span class="acf-objectif"
+                                                                    id="objectif"></span></p>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_cible">
-                                                    <div class="col-lg-6 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
-                                                                qui ?</span>
-                                                            <div class="col-12 px-2" id="preview_cible">
-                                                                <p><span>>&nbsp;</span><span class="acf-cible"
-                                                                        id="cible"></span></p>
+                                                    <div class="row detail__formation__item__left__adresse"
+                                                        id="border_cible">
+                                                        <div class="col-lg-6 d-flex flex-row">
+                                                            <div class="row d-flex flex-row">
+                                                                <span class="adresse__text"><i
+                                                                        class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
+                                                                    qui ?</span>
+                                                                <div class="col-12 px-2" id="preview_cible">
+                                                                    <p><span>>&nbsp;</span><span class="acf-cible"
+                                                                            id="cible"></span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6">
+                                                            <div class="row d-flex flex-row">
+                                                                <span class="adresse__text"><i
+                                                                        class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
+                                                                <div class="col-12" id="preview_prerequis">
+                                                                    <p><span>>&nbsp;</span><span class="acf-prerequis"
+                                                                            id="prerequis"></span></p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-lg-6">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
-                                                            <div class="col-12" id="preview_prerequis">
-                                                                <p><span>>&nbsp;</span><span class="acf-prerequis"
-                                                                        id="prerequis"></span></p>
+                                                    <div class="row detail__formation__item__left__adresse"
+                                                        id="border_equipement">
+                                                        <div class="col-lg-6 d-flex flex-row">
+                                                            <div class="row d-flex flex-row">
+                                                                <span class="adresse__text"><i
+                                                                        class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
+                                                                    necessaire</span>
+                                                                <div class="col-12" id="preview_materiel">
+                                                                    <p><span>>&nbsp;</span><span class="acf-materiel"
+                                                                            id="materiel"></span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6">
+                                                            <div class="row d-flex flex-row">
+                                                                <span class="adresse__text"><i
+                                                                        class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
+                                                                    a savoir</span>
+                                                                <div class="col-12" id="preview_bon_a_savoir">
+                                                                    <p><span>>&nbsp;</span><span class="acf-bon_a_savoir"
+                                                                            id="bon_a_savoir"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row detail__formation__item__left__adresse"
+                                                        id="border_prestation">
+                                                        <div class="col-lg-12 d-flex flex-row">
+                                                            <div class="row d-flex flex-row">
+                                                                <span class="adresse__text"><i
+                                                                        class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
+                                                                    pedagogiques</span>
+                                                                <div class="col-12" id="preview_prestation">
+                                                                    <p><span>>&nbsp;</span><span class="acf-prestation"
+                                                                            id="prestation"></span>
+                                                                    </p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_equipement">
-                                                    <div class="col-lg-6 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                                                necessaire</span>
-                                                            <div class="col-12" id="preview_materiel">
-                                                                <p><span>>&nbsp;</span><span class="acf-materiel"
-                                                                        id="materiel"></span></p>
+                                                <div class="col-lg-4 detail__formation__item__right" id="border_reference">
+                                                    <div class="row detail__formation__item__main__head align-items-center">
+                                                        <div class="detail__prix__head">
+                                                            <div class="detail__prix__text">
+                                                                <p class="pt-2"><b>INTRA</b></p>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-lg-6">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                                                a savoir</span>
-                                                            <div class="col-12" id="preview_bon_a_savoir">
-                                                                <p><span>>&nbsp;</span><span class="acf-bon_a_savoir"
-                                                                        id="bon_a_savoir"></span>
+                                                    <div class="row detail__formation__item__main">
+                                                        <div class="detail__prix__main__presentiel pt-3">
+                                                            <div>
+                                                                <p class="text-uppercase text-center" id="preview_modalite">
+                                                                    <span class="acf-modalite" id="modalite2"></span></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row detail__formation__item__main">
+                                                        <div class="col-lg-5 detail__prix__main__ref pt-2">
+                                                            <div>
+                                                                <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-7 detail__prix__main__ref2 pt-2">
+                                                            <div id="preview_reference">
+                                                                <p class="acf-reference text-center" id="reference"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="hr">
+                                                    <div class="row detail__formation__item__main">
+                                                        <div class="col-lg-5 detail__prix__main__dure">
+                                                            <div>
+                                                                <p><i
+                                                                        class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-7 detail__prix__main__dure2">
+                                                            <div >
+                                                                <p class="text-center">
+                                                                    <span id="preview_jour"><span class="acf-jour"
+                                                                            id="jour2"></span>j</span>
+                                                                    <span id="preview_heur">/<span class="acf-heur"
+                                                                            id="heure2"></span>h</span>
                                                                 </p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_prestation">
-                                                    <div class="col-lg-12 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                                                pedagogiques</span>
-                                                            <div class="col-12" id="preview_prestation">
-                                                                <p><span>>&nbsp;</span><span class="acf-prestation"
-                                                                        id="prestation"></span>
-                                                                </p>
+                                                    <hr class="hr">
+                                                    <div class="row detail__formation__item__rmain">
+                                                        <div class="col-lg-5 detail__prix__main__prix">
+                                                            <div>
+                                                                <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-7 detail__prix__main__prix2">
+                                                            <div>
+                                                                <p id="preview_prix" class="text-center"><span class="acf-prix"
+                                                                        id="prix"></span>&nbsp;AR&nbsp;HT</p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="col-lg-4 detail__formation__item__right" id="border_reference">
-                                                <div class="row detail__formation__item__main__head align-items-center">
-                                                    <div class="detail__prix__head">
-                                                        <div class="detail__prix__text">
-                                                            <p class="pt-2"><b>INTRA</b></p>
-                                                        </div>
-                                                    </div>
                                                 </div>
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="detail__prix__main__presentiel pt-3">
-                                                        <div>
-                                                            <p class="text-uppercase" id="preview_modalite">
-                                                                <span class="acf-modalite" id="modalite2"></span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="col-lg-5 detail__prix__main__ref">
-                                                        <div>
-                                                            <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 detail__prix__main__ref2 pt-2">
-                                                        <div id="preview_reference">
-                                                            <p class="acf-reference" id="reference"></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr">
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="col-lg-6 detail__prix__main__dure">
-                                                        <div>
-                                                            <p><i
-                                                                    class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 detail__prix__main__dure2">
-                                                        <div>
-                                                            <p>
-                                                                <span id="preview_jour"><span class="acf-jour"
-                                                                        id="jour2"></span>j</span>
-                                                                <span id="preview_heur">/<span class="acf-heur"
-                                                                        id="heure2"></span>h</span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr">
-                                                <div class="row detail__formation__item__rmain">
-                                                    <div class="col-lg-4 detail__prix__main__prix">
-                                                        <div>
-                                                            <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-8 detail__prix__main__prix2">
-                                                        <div>
-                                                            <p id="preview_prix" class="text-end"><span class="acf-prix"
-                                                                    id="prix"></span>&nbsp;AR&nbsp;HT</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn_next " id="fermer" data-bs-dismiss="modal">
-                                        Fermer </button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn_next " id="fermer" data-bs-dismiss="modal">
+                                            Fermer </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

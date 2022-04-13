@@ -219,11 +219,12 @@ class ModuleController extends Controller
         $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
         $programme = DB::select('select * from v_cours_programme where module_id = ?',[$id]);
         // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
-        if ($programme == null) {
+        // if ($programme == null) {
             return response()->json($module_en_cours);
-        }else{
-            return response()->json($module_en_cours,$programme);
-        }
+        // }
+        // }else{
+        //     return response()->json($module_en_cours,$programme);
+        // }
 
     }
 
@@ -372,7 +373,7 @@ class ModuleController extends Controller
         $statut = 2;
         $competence = $request->all();
         for($i = 0; $i < count($competence['titre_competence']); $i++){
-            $prog = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['objectif'][$i],$id]);
+            $prog = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['notes'][$i],$id]);
         }
         $changer_status = DB::update('update modules set status = ? where id = ?',[$statut,$id]);
         return back();

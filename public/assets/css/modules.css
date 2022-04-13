@@ -272,13 +272,13 @@
 
 .postion_fixe_form {
     position: sticky;
-    top: 2.5rem;
-    height: 17rem;
+    top: 4.5rem;
+    height: 20rem;
 }
 
 .postion_fixe {
     position: sticky;
-    top: 5rem;
+    top: 3rem;
     height: 15rem;
 }
 
@@ -342,11 +342,16 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-#preview_categ,
 #preview_module {
-    color: #7635dc;
-    font-weight: 400;
+    color: #637381;
 }
+
+#preview_categ {
+    color: #637381;
+    font-size: 0.850rem;
+}
+
+
 
 #preview_descript,
 #preview_haut2,
@@ -541,11 +546,15 @@ font-size: 0.850rem;
     opacity: 0;
 }
 
+.premier_wrap{
+    height: 70px;
+}
+
 .acf-input-wrap span{
     font-size: 0.850rem;
-    color:#c77cce;
+    color:rgba(255, 0, 0, 0.844);
     position: relative;
-    bottom: 1.5rem;
+    bottom: 2rem;
 }
 
 #premier_vue8{

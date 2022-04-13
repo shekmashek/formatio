@@ -25,6 +25,7 @@ $(".afficher").on('click', function(e) {
         , success: function(response) {
 
             let userData = JSON.parse(response);
+
             console.log(userData);
             //parcourir le premier tableau contenant les info sur les programmes
             for (let $i = 0; $i < userData.length; $i++) {
