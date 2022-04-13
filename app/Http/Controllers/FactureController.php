@@ -458,6 +458,9 @@ class FactureController extends Controller
         $para = ["groupe_id", "entreprise_id"];
         $path = "";
         $status = null;
+
+        $verify_num_fact = $this->fonct->findWhere("factures",["num_facture"],[ $request['num_facture']]);
+if(count($verify_num_fact)<=0){
         if ($request["session_id"] && $request["facture"]) {
 
             DB::beginTransaction();
@@ -532,8 +535,12 @@ class FactureController extends Controller
             return $status;
             //return redirect()->route('liste_facture');
         } else {
-            return back()->with("error_facture", "désoler,on ne peut creer une facture sans le montant totale! merci");
+            return back()->with("error", "désoler,on ne peut creer une facture sans le montant totale! merci");
         }
+    } else {
+        return back()->with("error", "le numero de la facture a été déjà utilisé! merci");
+
+    }
     }
 
     public function store(Request $request)

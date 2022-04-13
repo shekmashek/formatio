@@ -93,11 +93,13 @@
                     <div class="col-6 p-4">
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Numéro de facture</p> <input type="text" class="form-control input_simple" name="num_facture" required placeholder="reference du facture">
+                                <p class="m-0 pt-3 text-end me-3">Numéro de facture</p> <input type="text" class="form-control input_simple" name="num_facture" id="num_facture" required placeholder="reference du facture">
                                 @error('num_facture')
                                 <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror
                             </div>
+                            <p> <span style="color:#ff0000;" id="num_facture_err"></span></p>
+
                         </div>
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
@@ -368,8 +370,9 @@
             }
             , success: function(response) {
                 var userData = response;
+                alert("ok");
                 if (userData.length > 0) {
-                    document.getElementById("num_facture_err").innerHTML = "Numero Facture est déjà utiliser!";
+                    document.getElementById("num_facture_err").innerHTML = "le numero de la facture a été déjà utilisé! merci";
                 } else {
                     document.getElementById("num_facture_err").innerHTML = "";
                 }
