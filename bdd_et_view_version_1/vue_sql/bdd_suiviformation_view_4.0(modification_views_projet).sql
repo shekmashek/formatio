@@ -197,7 +197,8 @@ create or replace view v_groupe_projet_module as
         mf.telephone,
         mf.pourcentage,
         tp.type,
-        (g_etp.id) groupe_entreprise_id
+        (g_etp.id) groupe_entreprise_id,
+        g_etp.entreprise_id
     from groupes g
     join moduleformation mf on mf.module_id = g.module_id
     join projets p on p.id = g.projet_id

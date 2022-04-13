@@ -729,7 +729,11 @@
                                                 <hr>
                                                 <div class="text-center">
                                                     <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                                    <p id="liste_role" class="text-muted">Connécté en tant que : </p>
+
+                                                        <p class="text-muted">Connécté en tant que :
+                                                            <ul id="liste_role" class="d-flex flex-column"></ul>
+                                                        </p>
+
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">

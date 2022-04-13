@@ -129,7 +129,6 @@
         tr {
             border: none;
         }
-
     </style>
 
     <div class="container-fluid me-2 mr-2">
@@ -142,11 +141,8 @@
                                 <td colspan="3">
                                     <h6><img src="{{ public_path('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 300px; height: 90px;"></h6>
                                     {{-- <h6><img src="{{ asset('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 300px; height: 80px;"></h6> --}}
-
                                 </td>
-
                                 <td></td>
-
                                 <td>
                                     <div align="right">
                                         <h3 class="mx-3">{{$montant_totale->reference_type_facture}}</h3>
@@ -197,8 +193,6 @@
                         </tbody>
                     </table>
                 </div>
-
-
                 <div class="row me-2 mr-2">
                     <table class="table">
                         <thead class="btn-secondary">
@@ -236,7 +230,6 @@
                                 </th>
                             </tr>
                             @endforeach
-
                             @if($facture_acompte != null && strtoupper($facture[0]->reference_facture) == strtoupper("Facture"))
                             @foreach ($facture_acompte as $fa)
                             <tr>
@@ -282,11 +275,8 @@
                         </tbody>
                     </table>
                 </div>
-
                 <hr>
-
                 <div class="row table_facture2 me-2 mr-2">
-
                     <table class="table">
                         <tbody>
                             <tr>
@@ -300,7 +290,6 @@
                                 </td>
                             </tr>
                             @if($montant_totale->remise>0)
-
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -332,9 +321,7 @@
                                     </div>
                                 </td>
                             </tr>
-
                             @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
-
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -355,7 +342,6 @@
                                 <td>
                                     <div align="right">
                                         Ar {{number_format($montant_totale->montant_total,0,","," ")}}
-
                                     </div>
                                     <hr>
                                 </td>
@@ -364,9 +350,7 @@
                     </table>
 
                 </div>
-
-                <hr>
-
+                {{-- <hr> --}}
                 <div class="row table_facture2  me-2 mr-2 justify-content-center">
                     <table class="table table-borderless">
                         <tbody>
@@ -408,12 +392,9 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 </body>
