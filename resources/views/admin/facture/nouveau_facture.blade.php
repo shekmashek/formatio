@@ -368,13 +368,11 @@
             }
             , success: function(response) {
                 var userData = response;
-
                 if (userData.length > 0) {
                     document.getElementById("num_facture_err").innerHTML = "Numero Facture est déjà utiliser!";
                 } else {
                     document.getElementById("num_facture_err").innerHTML = "";
                 }
-
             }
             , error: function(error) {
                 console.log(error);
