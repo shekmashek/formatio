@@ -286,12 +286,12 @@ class HomeController extends Controller
             // dd($user_id, $centre_fp, $top_10_par_client);
 
 
-
+/*
 
             $drive = new getImageModel();
             $drive->create_folder($cfp);
             $drive->create_sub_folder($cfp, "Mes documents");
-
+*/
             $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $resp_cfp = DB::select('select * from responsables_cfp where user_id = ' . $user_id . ' ');
@@ -330,6 +330,7 @@ class HomeController extends Controller
                 $ref = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             }
 
+            // dd("ok");
             return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
         }
         if(Gate::allows('isSuperAdminPrincipale')) {
