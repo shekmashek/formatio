@@ -10,6 +10,7 @@ use App\responsable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Carbon\Carbon;
+use App\Models\AbonnementModel;
 use App\type_abonnement;
 use App\tarif_categorie;
 use App\type_abonne;
@@ -37,6 +38,7 @@ class AbonnementController extends Controller
             return $next($request);
         });
         $this->fact = new Facture();
+        $this->abonnement_model = new AbonnementModel();
     }
     public function index()
     {
@@ -65,18 +67,6 @@ class AbonnementController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'type_abonnement' => ["required"],
-        //     'logo_abonnement' => ["required"],
-        //     'limite' => ["required"]
-        // ],
-        //     [
-        //         'type_abonnement.required' => 'Entrez le type d\'abonnement',
-        //         'logo_abonnement.required' => 'Importez le logo',
-        //         'limite.required' => 'Entrez la limite'
-        //     ]
-        // );
-
         //enregistrement du type d'abonnement
         $typeAbonnement = new type_abonnement();
         $typeAbonnement->nom_type = $request->type_abonnement;
@@ -100,8 +90,8 @@ class AbonnementController extends Controller
 
         $idTypeAbonneRole = type_abonnement_role::where(['type_abonne_id' => $type_abonne_id], ['type_abonnement_id' => $id_abonnement])->value('id');
 
-        DB::insert('insert into tarif_categories (type_abonnement_role_id,categorie_paiement_id, tarif) values (?, ?, ?)', [$idTypeAbonneRole, 1, $request->tarif_ab]);
-        DB::insert('insert into tarif_categories (type_abonnement_role_id,categorie_paiement_id, tarif) values (?, ?, ?)', [$idTypeAbonneRole, 2, $request->tarif_annuel]);
+        $this->abonnement_model->insert_tarif_categories($idTypeAbonneRole,1,$request->tarif_ab);
+        $this->abonnement_model->insert_tarif_categories($idTypeAbonneRole,2,$request->tarif_annuel);
 
         return redirect()->back()->with('message', 'Configuration d\'abonnement enregistré avec succès');
     }
@@ -112,12 +102,7 @@ class AbonnementController extends Controller
 
         return view('superadmin.listeAbonnement', compact('tarifCategorie', 'limite'));
     }
-    // //affichage formulaire insertion tarif  par catégorie
-    // public function formulaire_tarif_categorie(){
-    //     $categorie = categorie_paiement::all();
-    //     $type_abonnement = type_abonnement::all();
-    //     return view('superadmin.tarif',compact('categorie','type_abonnement'));
-    // }
+
     //enregistrer tarif par cattegorie
     public function tarif_categorie(Request $request)
     {
@@ -232,20 +217,53 @@ class AbonnementController extends Controller
             $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
 
             //generation nouvelle facture chaque mois si l'utilisateur a choisi l'offre mensuel
-            $max_id_facture = DB::select(' SELECT  MAX(facture_id) as id_max from v_abonnement_facture ');
-            $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id','facture_id'],[$cfp_id,$max_id_facture[0]->id_max]);
+            $max_id_facture = $this->abonnement_model->findMax('v_abonnement_facture','facture_id');
 
-            $mois_dernier = $facture[0]->invoice_date;
-            $dt = Carbon::today()->toDateString();
-            $mois_suivant =  date('Y-m-d', strtotime($mois_dernier. ' + 30 days'));
-            dd($mois_suivant);
-            $due_suivant =  date('Y-m-d', strtotime($mois_suivant. ' + 15 days'));
+            $factures = $fonct->findWhere('v_abonnement_facture',['cfp_id','facture_id'],[$cfp_id,$max_id_facture[0]->id_max]);
+            $mois = array();
+            $annee = array();
 
-            //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle facture
+            if($factures!=null){
+                if($factures[0]->categorie_paiement_id == 1){
+                    $mois_dernier = $factures[0]->invoice_date;
+                    $dt = Carbon::today()->toDateString();
+                    $mois_suivant =  date('Y-m-d', strtotime($mois_dernier. ' + 31 days'));
+                    $due_suivant =  date('Y-m-d', strtotime($mois_suivant. ' + 15 days'));
 
-            if($dt == $mois_suivant ){
-                DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?,?,?,?,?)', [$facture[0]->abonnement_cfps_id,$mois_suivant,$due_suivant,2,$facture[0]->montant_facture]);
+                    //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle facture
+
+                    if($dt == $mois_suivant ){
+                        $this->abonnement_model->insert_factures_abonnements_cfp($facture[0]->abonnement_cfps_id,$mois_suivant,$due_suivant,$facture[0]->montant_facture);
+                    }
+                    setlocale(LC_TIME,"fr_FR");
+
+                    for ($i=0; $i < count($facture); $i++) {
+                        array_push($mois, strftime('%B',strtotime($factures[$i]->invoice_date)));
+                    }
+                }
+                else{
+                    $annee_dernier = $factures[0]->invoice_date;
+                    $dt = Carbon::today()->toDateString();
+                    $annee_suivant =  date('Y-m-d', strtotime($annee_dernier. ' + 365 days'));
+                    $due_suivant =  date('Y-m-d', strtotime($annee_suivant. ' + 15 days'));
+                     //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle facture
+
+                    if($dt == $annee_suivant ){
+                        $this->abonnement_model->insert_factures_abonnements_cfp($facture[0]->abonnement_cfps_id,$annee_suivant,$due_suivant,$facture[0]->montant_facture);
+                    }
+                    setlocale(LC_TIME,"fr_FR");
+
+                    for ($i=0; $i < count($facture); $i++) {
+                        array_push($annee, strftime('%Y',strtotime($factures[$i]->invoice_date)));
+                    }
+                }
             }
+
+            else{
+                $mois_dernier = $due_suivant = $mois = '';
+            }
+
+
 
             if($facture!=null){
                 $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
@@ -266,11 +284,11 @@ class AbonnementController extends Controller
 
             if ($test_abonne) {
                 $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-                return view('superadmin.listeAbonnement', compact('net_ttc','tva','facture','abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
+                return view('superadmin.listeAbonnement', compact('annee','mois','net_ttc','tva','facture','abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('net_ttc','tva','facture','abn', 'gratuit', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
+                return view('superadmin.listeAbonnement', compact('annee','mois','net_ttc','tva','facture','abn', 'gratuit', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
             }
 
 
@@ -346,6 +364,7 @@ class AbonnementController extends Controller
             $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
             $montant = $fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
 
+            // $last_num_facture = $fonct->fin
             DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
 
         }
@@ -397,7 +416,7 @@ class AbonnementController extends Controller
 
         $Statut = $request->Statut;
         $dt = Carbon::today()->toDateString();
-        $mensuel = strtotime(date("Y-m-d", strtotime($dt)) . " +31 day");
+        $mensuel = strtotime(date("Y-m-d", strtotime($dt)) . " + 31 days");
         $annuel = strtotime(date("Y-m-d", strtotime($dt)) . " +1 year");
 
         $test = abonnement::where('id', $id)->exists();
@@ -423,6 +442,7 @@ class AbonnementController extends Controller
     }
     //detail facture
     public function detail_facture($id){
+
         $fonct = new FonctionGenerique();
         $mode_paiements = $fonct->findAll('mode_financements');
 
@@ -430,7 +450,8 @@ class AbonnementController extends Controller
             $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
             $cfp = $fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
-            $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
+            $facture = $fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
+
             if($facture!=null){
                 $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA

@@ -23,6 +23,24 @@
             position: relative;
             top: .2rem;
         }
+        .status{
+            color: #637381;
+            font-size: 3rem;
+            justify-content: end;
+        }
+
+        .status span{
+            border: 3px solid red;
+            padding: .5rem 1rem;
+            border-radius: 10px;
+        }
+
+        .payer{
+            border: 3px solid rgb(7, 158, 7);
+            padding: .5rem 1rem;
+            border-radius: 10px;
+        }
+
 </style>
 
 <div id="page-wrapper">
@@ -36,7 +54,7 @@
                                 <div class="col" align="right">
                                     <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button>
                                     <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
-                                        <span class="btn_enregistrer text-center">Précedent</span>
+                                        <span class="btn_enregistrer text-center">Retour - Liste des factures</span>
                                     </a>
                                 </div>
                             </div>
@@ -49,16 +67,23 @@
             <div class="col-lg-12">
 
                 <div class="panel panel-default">
-
                     <div class="panel-body">
-
                         <div class="container-fluid my-2">
                             <div class="row p-2">
                                 <div class="col-4">
-                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
+                                    <img src="{{asset('images/talenta.png')}}" alt="logo_cfp" class="img-fluid">
                                 </div>
-                                <div class="col-8 text-end" align="rigth">
+                                @if ($facture[0]->status_facture == "Non payé")
+                                    <div class="status col-4 text-end">
+                                        <span>{{$facture[0]->status_facture}}</span>
+                                    </div>
+                                @else
+                                    <div class="payer col-4 text-end">
+                                        <span>{{$facture[0]->status_facture}}</span>
+                                    </div>
+                                @endif
 
+                                <div class="col-4 text-end" align="rigth">
                                     <div class="info_cfp">
                                         <h4 class="m-0 nom_cfp">Talenta</h4>
                                         <p class="m-0 adresse_cfp">contact@formation.mg</p>
@@ -67,15 +92,12 @@
                                         <p class="m-0 adresse_cfp">www.formation.mg</p><br>
                                         <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
                                         <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p>
-
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <hr>
                         <div class="container-fluid my-2">
-
                             <div class="row">
                                 <h5><strong>Facturé à</strong></h5>
 

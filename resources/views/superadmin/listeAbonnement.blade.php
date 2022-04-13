@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
 
-<div class="container">
+<div class="container-fluid">
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
@@ -79,6 +79,12 @@
                     <thead>
                       <tr>
                         <th scope="col">Numéro de facture</th>
+                        @if($mois!=null)
+                            <th scope="col">Mois</th>
+                        @else
+                            <th scope="col">Année</th>
+                        @endif
+
                         <th scope="col">Type d'abonnement</th>
                         <th scope="col">Montant HT</th>
                         <th scope="col">TVA (20%)</th>
@@ -89,20 +95,29 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                        @php $i = 0; @endphp
                         @foreach ($facture as $fact )
-                            <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}">{{$fact->num_facture}}</a></td>
-                            <td>{{$fact->nom_type}}</td>
-                            <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
-                            <td>{{number_format($tva, 0, ',', '.')}} Ar</td>
-                            <td>{{number_format($net_ttc, 0, ',', '.')}} Ar</td>
-                            <td>{{$fact->invoice_date}}</td>
-                            <td>{{$fact->due_date}}</td>
-                            @if($fact->status_facture == "Non payé")
-                                <td><span style="background-color: red;padding:5px;color:white">{{$fact->status_facture}}</span></td>
-                            @endif
+                            <tr>
+                                <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}" style="text-decoration: underline">{{$fact->num_facture}}</a></td>
+                                @if($mois!=null)
+                                    <td>{{$mois[$i]}}</td>
+                                @else
+                                    <td>{{$annee[$i]}}</td>
+                                @endif
+
+                                <td>{{$fact->nom_type}}</td>
+                                <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
+                                <td>{{number_format($tva, 0, ',', '.')}} Ar</td>
+                                <td>{{number_format($net_ttc, 0, ',', '.')}} Ar</td>
+                                <td>{{$fact->invoice_date}}</td>
+                                <td>{{$fact->due_date}}</td>
+                                @if($fact->status_facture == "Non payé")
+                                    <td><span style="background-color: red;padding:5px;color:white">{{$fact->status_facture}}</span></td>
+                                @endif
+                            </tr>
+                            @php $i += 1; @endphp
                         @endforeach
-                      </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -238,10 +253,10 @@
             document.getElementById('prixAnnuel').style.display = "block";
         }
 </script>
-<script>
+{{-- <script>
     $(document).on('load',function(load)){
         document.getElementById("mensuel").style.color = 'red';
 });
 
-</script>
+</script> --}}
 @endsection
