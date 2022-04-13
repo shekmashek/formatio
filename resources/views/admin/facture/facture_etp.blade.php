@@ -209,10 +209,10 @@
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>filtrer</a>
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
-
         @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
         <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
         @elseif ($pagination["debut_aff"] == 1)
         <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
@@ -221,13 +221,9 @@
             <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
             <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-            @elseif ($pagination["debut_aff"] >= $pagination["totale_pagination"])
-            <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
-            {{-- @else
+            @else
             <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a> --}}
+            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
             @endif
     </span>
     <div class="m-4">
@@ -284,7 +280,6 @@
                                     <th scope="col">Date de facturation</th>
                                     <th scope="col">Payement du</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -331,20 +326,6 @@
                                             {{$actif->facture_encour}}
                                         </div>
                                     </td>
-                                    @canany(['isReferent'])
-                                    <td>
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endcanany
                                     @endif
                                 </tr>
                                 @endforeach
@@ -372,7 +353,6 @@
                                     <th scope="col">Date de facturation</th>
                                     <th scope="col">Payement du</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -417,20 +397,6 @@
                                         {{-- {{$actif->facture_encour}} --}} en cour
                                         {{-- </div> --}}
                                     </td>
-                                    @canany(['isReferent'])
-                                    <td>
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endcanany
 
                                 </tr>
                                 @endforeach
@@ -459,7 +425,6 @@
                                     <th scope="col">Date de facturation</th>
                                     <th scope="col">Payement du</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -504,23 +469,7 @@
                                         {{-- <div style="background-color: blue; border-radius: 10px; text-align: center;color:white"> --}}
                                         {{$actif->facture_encour}}
                                         {{-- </div> --}}
-                                    </td>
-                                    @canany(['is'])
-                                    <td>
-                                        <div class="dropdown">
-                                            <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF</button></a>
-                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endcanany
+                                    </td>Ú
                                 </tr>
                                 @endforeach
                                 @else
@@ -540,7 +489,6 @@
             </div>
 
 
-
             <div class="filtrer mt-3">
                 <div class="row">
                     <div class="col">
@@ -552,7 +500,7 @@
                     <hr class="mt-2">
                     <div class="row mt-0">
                         <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par thématique de formation</a>
+                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_thematique">
                             <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
@@ -565,9 +513,8 @@
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>
                         </div>
-
                         <p>
-                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par Numero Facture</a>
+                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par numero de facture</a>
                         </p>
                         <div class="collapse multi-collapse" id="search_num_fact">
                             <form class=" mt-1 mb-2 form_colab" method="POST" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">

@@ -120,8 +120,6 @@ class FactureController extends Controller
             $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], 0, 5);
             $facture_encour = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["en_cour", $entreprise_id], 0, 5);
         }
-
-        // dd("ok");
         return view('admin.facture.facture_etp', compact('pagination', 'facture_actif', 'facture_payer', 'facture_encour'));
     }
 
