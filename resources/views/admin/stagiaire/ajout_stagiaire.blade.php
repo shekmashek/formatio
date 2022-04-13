@@ -23,7 +23,7 @@
                     <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled > </span>
                     <span class="span_name"> <input type="text" class="label_text" id="nom" disabled > </span>
                     <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled> </span>
-                    {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
+                    <span class="span_name"> <input type="text" class="label_text" id="fonction"> </span>
                     <span class="span_ajout" id="boutton_add">
                         
                     </span>
@@ -49,7 +49,7 @@
                     <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled> </span>
                     <span class="span_name"> <input type="text" class="label_text" id="nom" disabled > </span>
                     <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled > </span>
-                    {{-- <span class="span_name"> <input type="text" class="label_text" id="departement" disabled placeholder="Département"> </span> --}}
+                    <span class="span_name"> <input type="text" class="label_text" id="fonction"> </span>
                     <span class="span_ajout" id="boutton_add">
                         <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
                     </span>
@@ -95,12 +95,11 @@
                 <th>Matricule</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Sexe</th>
                 <th>Téléphone</th>
                 <th>E-mail</th>
                 <th>Fonction</th>
-                <th>Département</th>
-                <th>Service</th>
+                {{-- <th>Département</th>
+                <th>Service</th> --}}
                 @can('isCFP')
                      <th></th>
                 @endcan
@@ -119,12 +118,11 @@
                     <td>{{ $stg->matricule }}</td>
                     <td>{{ $stg->nom_stagiaire }}</td>
                     <td>{{ $stg->prenom_stagiaire }}</td>
-                    <td>{{ $stg->genre_stagiaire }}</td>
                     <td>{{ $stg->telephone_stagiaire }}</td>
                     <td>{{ $stg->mail_stagiaire }}</td>
                     <td>{{ $stg->fonction_stagiaire }}</td>
-                    <td>{{ $stg->nom_departement }}</td>
-                    <td>{{ $stg->nom_service }}</td>
+                    {{-- <td>{{ $stg->nom_departement }}</td>
+                    <td>{{ $stg->nom_service }}</td> --}}
                     @can('isCFP')
                         <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
                     @endcan
@@ -280,7 +278,7 @@ td{
                 $("#matricule").val(userData[0].matricule);
                 $("#nom").val(userData[0].nom_stagiaire);
                 $("#prenom").val(userData[0].prenom_stagiaire);
-                $("#departement").val(userData[0].nom_departement);
+                $("#fonction").val(userData[0].fonction_stagiaire);
                 $("#boutton_add").append('<i class="boutton fa fa-plus-circle" id="add_apprenant"></i>');
                 // alert('eto');
                 // id_detail = userData[$i].id;
@@ -325,12 +323,11 @@ td{
                     html +='<td>'+userData[i].matricule+'</td>';
                     html += '<td>'+userData[i].nom_stagiaire+'</td>';
                     html += '<td>'+userData[i].prenom_stagiaire+'</td>';
-                    html += '<td>'+userData[i].genre_stagiaire+'</td>';
                     html += '<td>'+userData[i].telephone_stagiaire+'</td>';
                     html += '<td>'+userData[i].mail_stagiaire+'</td>';
                     html += '<td>'+userData[i].fonction_stagiaire+'</td>';
-                    html += '<td>'+userData[i].nom_departement+'</td>';
-                    html += '<td>'+userData[i].nom_service+'</td>';
+                    // html += '<td>'+userData[i].nom_departement+'</td>';
+                    // html += '<td>'+userData[i].nom_service+'</td>';
                     html += '<td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#exampleModal_'+userData[i].stagiaire_id+'"><i class="fa fa-trash-alt supprimer"></i></button></td>';
                     html += '</tr>';
                     html += '<div class="modal fade" id="exampleModal_'+userData[i].stagiaire_id+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
