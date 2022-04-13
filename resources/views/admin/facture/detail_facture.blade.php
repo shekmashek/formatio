@@ -66,7 +66,6 @@
     </ul>
 
 
-
     <div class="row">
         <div class="col-lg-12">
 
@@ -173,11 +172,11 @@
                                                 Ar {{number_format($montant_facture->pu,0,","," ")}}
                                             </div>
                                         </td>
-                                        <th>
+                                        <td>
                                             <div align="right">
                                                 Ar {{number_format($montant_facture->hors_taxe,0,","," ")}}
                                             </div>
-                                        </th>
+                                        </td>
                                     </tr>
                                     @endforeach
 
@@ -194,11 +193,11 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <th>
+                                        <td>
                                             <div align="right">
                                                 Ar -{{number_format($fa->dernier_montant_ouvert,0,","," ")}}
                                             </div>
-                                        </th>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     @endif

@@ -771,5 +771,37 @@
 
 
 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+            <script type="text/javascript">
+                $(".payement").on('click', function(e) {
+                    $('#montant').html('');
+                    $("#numero_facture").html('')
+                    var id = $(this).data("id");
+                    $.ajax({
+                        method: "GET"
+                        , url: "{{route('montant_restant')}}"
+                        , data: {
+                            num_facture: id
+                        }
+                        , dataType: "html"
+                        , success: function(response) {
+                            var userData = JSON.parse(response);
+                            $("#montant").append(userData[0]);
+                            var html = '<input type="hidden" name="num_facture" value="' + userData[1] + '" required>';
+                            $('#numero_facture').append(html);
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                });
+            </script>
+            <script>
+                $(document).ready(function() {
+                    $("#myModal").modal('show');
+                });
+            </script>
 
             @endsection
