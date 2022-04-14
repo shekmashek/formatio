@@ -522,8 +522,10 @@ class FactureController extends Controller
         $para = ["groupe_id", "entreprise_id"];
         $path = "";
         $status = null;
+        // dd($request->input());
+if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entreprise_id>0){
 
-        $verify_num_fact = $this->fonct->findWhere("factures", ["num_facture"], [$request['num_facture']]);
+    $verify_num_fact = $this->fonct->findWhere("factures", ["num_facture"], [$request['num_facture']]);
         if (count($verify_num_fact) <= 0) {
             $verify_session_exist = $this->fact->veriry_session_deja_facture_sur_type_fact($cfp_id, $request->projet_id, $request);
 
@@ -628,6 +630,9 @@ class FactureController extends Controller
         } else {
             return back()->with("error", "le numero de la facture a été déjà utilisé! merci");
         }
+    }else {
+        return back()->with("error", "l'une de votre champs est invalid comme (type facture ou type de mode payement)! merci");
+    }
     }
 
     public function store(Request $request)
