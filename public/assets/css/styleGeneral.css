@@ -338,6 +338,42 @@ ul li a {
 .apprendre_btn button{
     display: grid;
 }
+
+
+
+.infos{
+    position: fixed;
+    top: 3rem;
+    right: -50px;
+    height: 100%;
+    width: 0px;
+    background: white;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    align-items: center;
+    color: var(--font-sidebar-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-left: 1px solid grey;
+    float: right;
+}
+
+.infos.afficher {
+    width: 400px;
+    overflow-y: auto;
+    right: 0px;
+}
+
+.infos p{
+    font-size: 1rem;
+}
+.infos .bx{
+    font-size: 1.5rem;
+}
+
+.infos_btn button{
+    display: grid;
+}
+
 .filtrer{
     position: fixed;
     top: 3rem;

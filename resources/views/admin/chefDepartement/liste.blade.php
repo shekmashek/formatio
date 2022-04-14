@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Manager</h3>
+    <h3 class="text_header m-0 mt-1">Manager</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/employes.css')}}">
@@ -8,10 +8,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading d-flex justify-content-end">
+                {{-- <div class="panel-heading d-flex justify-content-end">
                     <button type="button" class="btn_enregistrer"><a href="{{route('departement.create')}}">Nouveau
                             Employé</a></button>
-                </div>
+                </div> --}}
                 <div class="col-md-12 mb-3">
                     <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                         <li class="nav-item ms-5">

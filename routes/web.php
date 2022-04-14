@@ -370,7 +370,12 @@ Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->na
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
 Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
 
+
+// affichage info OF
+Route::get('afficher_info_of','CfpController@affInfoOf')->name('afficher_info_of');
 // route recherche par référence
+
+
 Route::get('rechercheReference/{reference?}','ModuleController@rechercheReference')->name('rechercheReference');
 Route::get('/searchReference','ModuleController@getModulesReference')->name('searchReference');
 //route recherche par categorie

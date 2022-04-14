@@ -58,7 +58,7 @@
             {{-- <div class="rounded "> --}}
                 <h4>Entreprise déjà collaborer</h4>
                 <table class="mt-3 table  table-borderless table-lg table-hover">
-                    <thead style="font-size:12.5px; color:#474747; border-bottom: 0.5px solid black; line-hight:20px">
+                    <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
                         <th>Nom de l'entreprise</th>
                         <th>Nom du centre de formation professionnel</th>
                         <th>E-mail</th>
