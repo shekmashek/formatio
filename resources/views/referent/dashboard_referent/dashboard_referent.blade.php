@@ -296,7 +296,8 @@
 </script>
 
 </div>
-@else
+@endif
+@if($test == 1)
 @extends('./layouts/admin')
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 @section('title')
