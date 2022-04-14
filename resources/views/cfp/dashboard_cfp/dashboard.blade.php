@@ -15,6 +15,10 @@
 
 <div class="p-1 m-0 mt-3">
     <div class="container-fluid" style="font-size: 11.8px;">
+        <div id="in" class="p-2 mt-1 alert alert-danger text-center" role="alert">
+            <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp;  {{$message}} </span> &nbsp;
+            <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('ListeAbonnement')}}">Régler mon abonnement</a>
+        </div>
         @if(count($dmd_cfp_etp) == null or count($dmd_cfp_etp) =='')
             <div id="in" class="p-2 mt-1 alert alert-danger text-center" role="alert">
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp;  Veuillez collaborer au moins avec une entreprise ! </span> &nbsp;

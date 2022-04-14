@@ -253,7 +253,6 @@ class HomeController extends Controller
 
         if (Gate::allows('isCFPPrincipale')) {
 
-
             $fonct = new FonctionGenerique();
 
             $user_id = Auth::user()->id;
@@ -329,9 +328,19 @@ class HomeController extends Controller
             } else {
                 $ref = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             }
+            //date now
+            $dtNow = Carbon::today()->toDateString();
+            $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
+            if($cfp_ab != null){
+                setlocale(LC_TIME,"fr_FR");
+                $j1 = strftime('%d',strtotime($cfp_ab[0]->due_date));
+                $j2 = strftime('%d',strtotime($dtNow));
+                $jour_restant = $j1 - $j2;
+                $message = "Il vous reste ".$jour_restant." jours pour payer votre abonnement";
+            }
+            else $message = "Vous êtes en mode gratuit";
 
-            // dd("ok");
-            return view('cfp.dashboard_cfp.dashboard', compact('nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+            return view('cfp.dashboard_cfp.dashboard', compact('message','nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
         }
         if(Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
@@ -357,7 +366,6 @@ class HomeController extends Controller
         // }
 
         if (Gate::allows('isReferentPrincipale')) {
-
 
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
@@ -394,6 +402,19 @@ class HomeController extends Controller
                 $nom_profil_referent = responsable::where('user_id', $user_id)->value('entreprise_id');
                 $etp = entreprise::where('id', $nom_profil_referent)->value('nom_etp');
                 $etp_id = entreprise::where('id', $nom_profil_referent)->value('id');
+
+                //date now
+                $dtNow = Carbon::today()->toDateString();
+                $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$etp_id]);
+                if($etp_ab != null){
+                    setlocale(LC_TIME,"fr_FR");
+                    $j1 = strftime('%d',strtotime($etp_ab[0]->due_date));
+                    $j2 = strftime('%d',strtotime($dtNow));
+                    $jour_restant = $j1 - $j2;
+                    $message = "Il vous reste ".$jour_restant." jours pour payer votre abonnement";
+                }
+                else $message = "Vous êtes en mode gratuit";
+
 
                 // $refs = DB::select('select nif,stat,rcs from entreprises where id = ' . $nom_profil_referent . ' ');
 
@@ -446,7 +467,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+                return view('referent.dashboard_referent.dashboard_referent', compact('message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
             }
         }
 
