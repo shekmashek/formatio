@@ -265,6 +265,7 @@ class AbonnementController extends Controller
             }
 
 
+
             if ($test_abonne) {
                 $payant = abonnement::with('type_abonnement_role')->where('entreprise_id', $responsable[0]->entreprise_id)->get();
                 return view('superadmin.listeAbonnement', compact('abonnement_actuel','annee','mois','net_ttc','tva','facture','abn', 'payant', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
