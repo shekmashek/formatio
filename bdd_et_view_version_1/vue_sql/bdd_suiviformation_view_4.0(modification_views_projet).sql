@@ -57,6 +57,7 @@ create or replace view v_groupe_entreprise as
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
+        g.modalite,
         case
             when g.status = 8 then 'Reprogrammer'
             when g.status = 7 then 'Annulée'
@@ -150,6 +151,7 @@ create or replace view v_groupe_projet_module as
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
+        g.modalite,
         case
             when g.status = 8 then 'Reprogrammer'
             when g.status = 7 then 'Annulée'
@@ -506,6 +508,7 @@ select
         s.entreprise_id,
         s.user_id,
         s.photos,
+        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photo,
         (s.service_id) departement_id,
         s.cin,
         s.date_naissance,

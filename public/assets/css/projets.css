@@ -1,4 +1,5 @@
 @import url("inputControl.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
 :root {
     --nav-width: 80px;
     --first-color: white;
@@ -16,13 +17,18 @@
     --font-size-sidebar: 13px;
 }
 
+.rounded{
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif !important;
+}
+
 .changer_carret:focus{
     text-decoration: none;
 }
 
 .form_session {
     background: white;
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
     padding: 3rem 2rem;
     border-radius: 5px
 }
@@ -213,10 +219,10 @@
     color: #7635dc;
 }
 
-.thead_projet {
+/* .thead_projet {
     color: #637381;
     background: #6373812a;
-}
+} */
 
 .thead_projet th {
     font-weight: 300;
@@ -229,14 +235,14 @@
     font-size: 0.875rem;
 }
 
-.tbody_projet tr {
+/* .tbody_projet tr {
     background-color: #f0f0f0;
-}
+} */
 
-.tbody_projet tr:hover {
+/* .tbody_projet tr:hover {
     background-color: #63738117;
     color: #637381;
-}
+} */
 
 .tbody_projet a {
     padding: 0.3rem;
@@ -377,7 +383,7 @@
     padding: 0.2rem;
     padding-left: 0.4rem;
     font-size: 0.85rem;
-    background-color: rgba(255, 255, 255, 0.822);
+    background-color: rgba(222, 222, 222, 0.822);
     border-radius: 5px;
     cursor: pointer;
     transition: all 200ms;

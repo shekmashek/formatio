@@ -2,7 +2,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container pt-5">
-    <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5>
+    {{-- <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5> --}}
     <div class="m-4">
         <h6>Listes des formations disponibles</h6>
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">

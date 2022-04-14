@@ -4,22 +4,32 @@
 <div class="p-3 mb-5 bg-body rounded ">
     <nav class="body_nav m-0 d-flex justify-content-between">
         <div>
-            <h5>Session </h5>
             <div class="d-flex m-0 p-0 height_default">
-                <p class="m-0"> Session  &nbsp; &nbsp; </p>
-                <p class="numero_session text-dark mt-3"> <strong>n°: {{ $projet[0]->nom_groupe }}</strong>  </p>
-                <p class="m-0">&nbsp; &nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
-                <p class="m-0">&nbsp; appartenant au projet &nbsp;</p>
-                <p class="numero_session text-dark mt-3"> <strong>{{ $projet[0]->nom_projet }}</strong> </p>
+                <h5>{{ $module_session->reference.' - '.$module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
+                <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
+                <span class="ms-3 mb-2 p-1 ps-2 pe-2" style="color: #bc76dd;">{{ $modalite }}</span>
             </div>
             <div class="d-flex m-0 p-0 height_default">
+                <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong>  </p>
+                <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @canany(['isCFP','isReferent'])
+                    <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
+                    <p class="text-dark mt-3"> <strong>@php
+                    echo number_format($prix->montant_session,2,"."," ")
+                @endphp Ar</strong>  </p>
+                @endcanany
+                
+                <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
+                <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
+            </div>
+            {{-- <div class="d-flex m-0 p-0 height_default">
                 <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
                 <p class="numero_session text-dark mt-3"> <strong>@php
                     echo number_format($prix->montant_session,2,"."," ");
                 @endphp Ar</strong>  </p>
                 <p class="m-0">&nbsp;; apprenants inscrits : &nbsp;</p>
                 <p class="numero_session text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
-            </div>
+            </div> --}}
         </div>
         <div>
             <div class="btn_modifier_statut dropdown">
@@ -54,64 +64,47 @@
         </div>
     </nav>
     <section class="bg-light py-1">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex flex-wrap">
+        <div class="m-0 p-0">
+            <div class="d-flex justify-content-between">
                 @if ($type_formation_id == 1)
                     <div class="chiffre_d_affaire">
-                        <p class="p-0 m-0 text-center"> Referent entreprise </p>
-                        <div class="d-flex">
-                            <div>
-                                <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" width="50px" height="50px" class="img-fluid">
-                            </div>
-                            <div>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                            </div>
-                            {{-- <div class="chiffre_d_affaire">
-                                <p class="p-0 m-0 text-center"> Referent entreprise </p>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                            </div> --}}
+                        
+                        <div class="d-flex flex-row">
+                            <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>&nbsp;&nbsp;
+                            <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                            {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>&nbsp;&nbsp; --}}
+                            {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p> --}}
                         </div>
                     </div>
                 @endif
                 <div class="chiffre_d_affaire">
-                    <p class="p-0 m-0 text-center"> Organisme de formation </p>
-                    <div class="d-flex">
-                        <div>
-                            <img src="{{ asset('images/CFP/'.$projet[0]->logo_cfp) }}" alt="" width="50px" height="50px" class="img-fluid">
-                        </div>
-                        <div>
-                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>
-                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p>
-                        </div>
+                    
+                    <div class="d-flex flex-row">
+                        <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
+                        <img src="{{ asset('images/CFP/'.$projet[0]->logo_cfp) }}" alt="" class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                        {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>&nbsp;&nbsp; --}}
+                        {{-- <p class="p-0 mt-3 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p> --}}
                     </div>
                 </div>
-                <div class="chiffre_d_affaire">
-                    <p class="p-0 m-0 text-center"> Formateur(s) </p>
-                    <p class="p-0 m-0 text-center"> <strong>
-                       <div class="pad_img">
-                           @foreach ($formateur as $form)
-                                <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                           @endforeach()
-                            {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
-                            <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;"> --}}
-                       </div>
-                    </strong></p>
-                </div>
+                @canany(['isCFP'])
+                    <div class="chiffre_d_affaire">
+                        <div class="d-flex flex-row">
+                            <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
+                            @foreach ($formateur_cfp as $form)
+                                    <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;">
+                            @endforeach()
+                                {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                                <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                                <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;"> --}}
+                        </div>
+                        </strong></p>
+                    </div>
+                @endcanany
+                
             </div>
-            <div class="d-flex me-2 flex-wrap">
+            {{-- <div class="d-flex me-2 flex-wrap">
                 <div class="{{ $projet[0]->class_status_groupe }}">{{ $projet[0]->item_status_groupe }}</div>
-                {{--
-                    <div class="status_grise">Confirmé</div>
-                <div class="status_confirme">Confirmé</div>
-                <div class="status_confirme">Confirmé</div>
-                <div class="statut_active">En cours</div>
-                <div class="status_termine">Terminé</div> --}}
-                {{-- <div class="status_archive">Archivé</div> --}}
-                {{-- <div class="status_annule">Annulé</div> --}}
-            </div>
+            </div> --}}
         </div>
     </section>
     <section>
@@ -129,7 +122,7 @@
                             @endif
                         </button>
                     </div>
-                    @if ($type_formation_id == 1)
+                    {{-- @if ($type_formation_id == 1) --}}
                         @canany(['isCFP','isReferent','isFormateur'])
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'apprenant')" style="width: 100%">
@@ -143,7 +136,7 @@
                                 </button>
                             </div>
                         @endcanany
-                    @endif
+                    {{-- @endif
 
                     @if ($type_formation_id == 2)
                         @canany(['isReferent'])
@@ -158,8 +151,8 @@
                                     @endif
                                 </button>
                             </div>
-                        @endcanany
-                    @endif
+                        @endcanany --}}
+                    {{-- @endif --}}
 
 
                             <div>
@@ -167,8 +160,7 @@
                                     <p class="m-0 p-0">RESSOURCES</p>
                                     @if(count($ressource) == 0)
                                     <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                                    @endif
-                                    @if(count($ressource) != 0)
+                                    @else
                                     <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                                     @endif
                                 </button>
@@ -178,7 +170,11 @@
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
                                         <p class="m-0 p-0">FRAIS ANNEXES</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @if(count($all_frais_annexe) <= 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @else
+                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        @endif
                                     </button>
                                 </div>
                             @endcan
@@ -187,10 +183,10 @@
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'document')" style="width: 100%">
                                     <p class="m-0 p-0">DOCUMENTS</p>
                                     {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
-                                    <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                    {{-- <i class="fa fa-check-circle me-2" style="color: chartreuse"></i> --}}
                                 </button>
                             </div>
-                            @if ($type_formation_id == 1)
+                        {{-- @if ($type_formation_id == 1) --}}
                             @canany(['isStagiaire'])
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'chaud')" style="width: 100%">
@@ -209,13 +205,21 @@
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation')" style="width: 100%">
                                         <p class="m-0 p-0">PRE EVALUATION</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @if($evaluation_avant <= 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @else
+                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        @endif
                                     </button>
                                 </div>
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @if($evaluation_apres <= 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @else
+                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        @endif
                                     </button>
                                 </div>
                             @endcan
@@ -223,7 +227,11 @@
                             <div>
                                 <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                     <p class="m-0 p-0">EVALUATION DES STAGIAIRES</p>
-                                    <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    @if($evaluation_apres <= 0)
+                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                    @else
+                                        <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                    @endif
                                 </button>
                             </div>
                             @endcanany
@@ -233,7 +241,7 @@
                                     <i class="fal fa-dot-circle me-2" style="color: grey"></i>
                                 </button>
                             </div> --}}
-                        @endif
+                        {{-- @endif --}}
                 </div>
             </div>
 
@@ -261,20 +269,20 @@
                             @include('admin.detail.detail')
                       </div>
                       {{-- @if ($type_formation_id == 1) --}}
-                      @if ($type_formation_id == 1)
+                      {{-- @if ($type_formation_id == 1) --}}
                         @canany(['isCFP','isReferent','isFormateur'])
                             <div id="apprenant" class="tabcontent">
                                 @include('admin.stagiaire.ajout_stagiaire')
                             </div>
                         @endcanany
-                      @endif
-                      @if ($type_formation_id == 2)
-                        @canany(['isReferent'])
+                      {{-- @endif --}}
+                      {{-- @if ($type_formation_id == 2)
+                        @canany(['isReferent','isCFP'])
                             <div id="apprenant" class="tabcontent">
                                 @include('admin.stagiaire.ajout_stagiaire')
                             </div>
                         @endcanany
-                      @endif
+                      @endif --}}
 
                       <div id="ressource" class="tabcontent">
                         @include('projet_session.ressource')
@@ -343,8 +351,8 @@
 }
 
 .body_nav{
-    background-color: #e8e8e9;
-    color: rgb(3, 0, 0);
+    /* background-color: #e8e8e9;
+    color: rgb(3, 0, 0); */
     padding: 6px 8px;
     border-radius: 4px 4px 0 0;
     font-family: 'Open Sans';
@@ -400,76 +408,97 @@ p{
 }
 .chiffre_d_affaire{
     padding: 0 10px;
-    border-right: 2px solid rgb(15,126,145);
 }
 .status_grise{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: rgb(150, 144, 144);
+    background-color: #637381;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
-.status_annule{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
+
+.status_reprogrammer{
     border-radius: 1rem;
-    background-color: rgb(184, 3, 3);
+    background-color: #00CDAC;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
+}
+
+.status_cloturer{
+    border-radius: 1rem;
+    background-color: #314755;
+    color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
+}
+
+.status_reporter{
+    border-radius: 1rem;
+    background-color: #26a0da;
+    color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
+}
+
+.status_annulee{
+    border-radius: 1rem;
+    background-color: #b31217;
+    color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
 .status_termine{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: green;
+    background-color: #1E9600;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
 .status_confirme{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
     border-radius: 1rem;
-    background-color: #801D68;
+    background-color: #2B32B2;
     color: white;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
-.status_archive{
-    margin: 0 2px;
-    padding: 4px 6px;
-    font-size: 10px;
-    font-weight: bold;
-    height: 50%;
-    border-radius: 1rem;
-    background-color: orangered;
-    color: white;
-}
+
 .statut_active{
-    margin: 0 2px;
-    font-size: 10px;
-    height: 50%;
-    font-weight: bold;
-    padding: 4px 6px;
     border-radius: 1rem;
     background-color: rgb(15,126,145);
     color: whitesmoke;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    padding :.1rem .5rem;
 }
+
 .planning{
     text-align: left;
     padding-left: 6px;
     height: 100%;
     font-size: 12px;
-    background-color: rgba(230, 228, 228, 0.39);
-    border-bottom: 1px solid rgb(187, 183, 183);
+    /* background-color: rgba(230, 228, 228, 0.39);
+    border-bottom: 1px solid rgb(187, 183, 183); */
 }
+.planning:hover{
+    background-color: #eeeeee;
+}
+
 .dernier_planning{
     text-align: left;
     padding-left: 6px;
@@ -489,7 +518,7 @@ p{
 }
 .corps_planning{
     /* border: 1px solid grey; */
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 3px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 button{
     background-color: white;
@@ -529,7 +558,7 @@ button{
 }
 
 .btn_modifier_statut:hover{
-    background: #fffefe;
+    background: #eeeeee;
     color: rgb(0, 0, 0);
 }
 

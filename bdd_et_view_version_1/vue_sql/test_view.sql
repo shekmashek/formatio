@@ -80,3 +80,6 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         mf.domaine_id = dom.id
     join type_formations tf
         on tf.id = p.type_formation_id
+
+
+select concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo from formateurs;

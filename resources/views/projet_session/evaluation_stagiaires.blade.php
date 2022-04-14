@@ -1,16 +1,16 @@
 <div class="row d-flex text-center">
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <Label style="font: 14px">Pré evaluation</Label>
-    </div>
+    <nav class="d-flex justify-content-between mb-1 ">
+        <span class="titre_detail_session"><strong style="font-size: 14px" >Pré évaluation</strong></span>
+    </nav>
     @if ($evaluation_avant == 0 || $evaluation_avant == null)
         <form action="{{ route('insert_evaluation_stagiaire') }}" method="POST">
         @csrf
         <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
         <input type="hidden" name="module" value="{{ $projet[0]->module_id }}">
         <div class="col-md-12 d-flex justify-content-around">
-            <table class="table" >
-                <thead>
-                <tr style="border: 0">
+            <table class="table table-borderless">
+                <thead style="border-bottom: 1px solid black; line-height: 20px">
+                <tr>
                     <th>Stagiaire(s)</th>
                     @foreach ($competences as $cp)
                         <th align="center">{{ $cp->titre_competence }}</th>
@@ -39,8 +39,8 @@
             <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
             <input type="hidden" name="module" value="{{ $projet[0]->module_id }}">
             <div class="col-md-12 d-flex justify-content-around">
-                <table class="table" >
-                    <thead>
+                <table class="table table-borderless" >
+                    <thead style="border-bottom: 1px solid black; line-height: 20px">
                     <tr style="border: 0">
                         <th>Stagiaire(s)</th>
                         @foreach ($competences as $cp)
