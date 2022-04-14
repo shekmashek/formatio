@@ -429,10 +429,10 @@
                                                         </a>
                                                     </li>
 
-                                                    <hr class="dropdown-divider">
+                                                    {{-- <hr class="dropdown-divider">
                                                     <a class="dropdown-item" href="{{route('facture')}} ">
                                                         <button type="submit" class="btn"> <i class='bx bx-plus-medical'></i> Nouveau facture
-                                                        </button></a>
+                                                        </button></a> --}}
                                                 </ul>
                                             </div>
                                         </div>
@@ -555,8 +555,8 @@
                                                         <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
                                                     </a>
                                                     <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a>
+                                                    {{-- <hr class="dropdown-divider">
+                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a> --}}
 
                                                 </ul>
                                             </div>
@@ -677,8 +677,8 @@
                                                         <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
                                                     </a>
                                                     <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a>
+                                                    {{-- <hr class="dropdown-divider">
+                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a> --}}
 
                                                 </ul>
                                             </div>
@@ -801,8 +801,8 @@
                                                 <ul class="dropdown-menu">
                                                     <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF</button></a>
                                                     <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                    <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a>
+                                                    {{-- <hr class="dropdown-divider">
+                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a> --}}
                                                 </ul>
                                             </div>
                                         </div>
@@ -860,7 +860,7 @@
                                 </div>
                                 <div class="inputbox inputboxP mt-3">
                                     <span>Date de payement<strong style="color:#ff0000;">*</strong></span>
-                                    <input type="date" name="date_encaissement" class="form-control formPayement" required="required" value="{{ date('d/m/Y') }}">
+                                    <input type="date" name="date_encaissement" id="date_encaissement" class="form-control formPayement" required="required" value="{{ date('d/m/Y') }}">
                                 </div>
                                 <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                             </form>
@@ -969,6 +969,7 @@
                             var userData = JSON.parse(response);
                             $("#montant").append(userData[0]);
                             var html = '<input type="hidden" name="num_facture" value="' + userData[1] + '" required>';
+                            document.getElementById("date_encaissement").setAttribute("min", userData[2]);
                             $('#numero_facture').append(html);
                         }
                         , error: function(error) {

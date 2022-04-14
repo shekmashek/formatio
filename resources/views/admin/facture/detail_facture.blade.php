@@ -45,13 +45,9 @@
     <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
         <li class="nav-item">
             <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
-                Liste des factures</a>
+                Facture</a>
         </li>
         @canany(['isCFP','isCFPrincipale'])
-        <li class="nav-item">
-            <a class="nav-link  {{ Route::currentRouteNamed('facture') ? 'active' : '' }}" href="{{route('facture')}}">
-                <i class='bx bx-plus-medical'></i> Nouveau Facture</a>
-        </li>
         <li class="nav-item">
             <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$montant_totale->num_facture)}}">
                 <i class="fa fa-download"></i> PDF</a>
@@ -127,11 +123,11 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-5">
                                 <div align="right" class="me-1">
-                                    <h5>Numéro de facture: {{$montant_totale->num_facture}}</h5>
-                                    <h6>Reference de bon de commande: {{$facture[0]->reference_bc}}</h6>
+                                    <h5>N° facture: {{$montant_totale->num_facture}}</h5>
+                                    <h6>N° BC: {{$facture[0]->reference_bc}}</h6>
                                     <h6>Date de facturation: {{$montant_totale->invoice_date}}</h6>
                                     <h6>Payement du: {{$montant_totale->due_date}}</h6>
-                                    <h6>Amount Due(MGA):Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
+                                    <h6>Amount Due(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
                                 </div>
                             </div>
 
@@ -217,7 +213,7 @@
                                         </td>
                                         <td>
                                             <div align="right">
-                                                <strong>Ar {{number_format($frais_annexe->hors_taxe,0,","," ")}}</strong>
+                                                Ar {{number_format($frais_annexe->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -308,8 +304,10 @@
 
                 <p>Arretée la présente facture à la somme de: {{$lettre_montant}} Ariary</p>
                 <p>mode de payement: {{$montant_totale->description_financement}}</p>
+                @if($facture[0]->other_message!=null)
                 <p>Autre Message</p>
                 <p style="max-width: 40%">{{$facture[0]->other_message}}</p>
+                @endif
                 <div class="container-fluid mb-5">
                     <div class="row text-muted">
                         <div class="col">

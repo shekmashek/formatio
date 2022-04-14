@@ -189,8 +189,8 @@ class EncaissementController extends Controller
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
         $numero_fact = $request->num_facture;
-        $montant_restant = DB::select('select dernier_montant_ouvert from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        $montant_restant = number_format($montant_restant[0]->dernier_montant_ouvert, 2, ",", " ");
-        return response()->json([$montant_restant, $numero_fact]);
+        $dta = DB::select('select dernier_montant_ouvert,invoice_date from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
+        $montant_restant = number_format($dta[0]->dernier_montant_ouvert, 2, ",", " ");
+        return response()->json([$montant_restant, $numero_fact,$dta[0]->invoice_date]);
     }
 }

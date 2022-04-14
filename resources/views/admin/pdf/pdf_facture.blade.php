@@ -129,6 +129,7 @@
         tr {
             border: none;
         }
+
     </style>
 
     <div class="container-fluid me-2 mr-2">
@@ -182,8 +183,8 @@
                                     <div align="right">
                                         <h6></h6><br>
                                         <h6></h6><br>
-                                        <h4>Numéro de facture: {{$montant_totale->num_facture}}</h4>
-                                        <h4>Reference de bon de commande: {{$facture[0]->reference_bc}}</h4>
+                                        <h4>N° facture: {{$montant_totale->num_facture}}</h4>
+                                        <h4>N° BC: {{$facture[0]->reference_bc}}</h4>
                                         <h4>Date de facturation: {{$montant_totale->invoice_date}}</h4>
                                         <h4>Payment du: {{$montant_totale->due_date}}</h4>
                                         <h4>Amount Due(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}}</strong></h4>
@@ -217,7 +218,7 @@
                                 <td>{{$montant_facture->nom_module}}</td>
                                 <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe." du ".$montant_facture->date_debut_session}}</td>
                                 <td>{{$montant_facture->nom_groupe}}</td>
-                                <td><strong>{{$montant_facture->qte}}</strong></td>
+                                <td>{{$montant_facture->qte}}</td>
                                 <td>
                                     <div align="left">
                                         Ar {{number_format($montant_facture->pu,0,","," ")}}
@@ -258,7 +259,7 @@
                                 <td></td>
                                 <td>{{$frais_annexe->description}}</td>
                                 <td></td>
-                                <td> <strong>{{$frais_annexe->qte}}</strong></td>
+                                <td> {{$frais_annexe->qte}}</td>
                                 <td>
                                     <div align="left">
                                         Ar {{number_format($frais_annexe->pu,0,","," ")}}
@@ -266,7 +267,7 @@
                                 </td>
                                 <td>
                                     <div align="right">
-                                        <strong>Ar {{number_format($frais_annexe->hors_taxe,0,","," ")}}</strong>
+                                        Ar {{number_format($frais_annexe->hors_taxe,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>
@@ -359,8 +360,10 @@
                                     <div align="left">
                                         <h6>Arretée la présente facture à la somme de: {{$lettre_montant}} Ariary</h6><br>
                                         <h6>mode de payement: {{$montant_totale->description_financement}}</h6><br>
+                                        @if($facture[0]->other_message!=null)
                                         <h6>Autre Message</h6><br>
                                         <p>{{$facture[0]->other_message}}</p><br>
+                                        @endif
                                     </div>
                                 </td>
                                 <td style="max-width: 25%"></td>
