@@ -302,11 +302,11 @@ class GroupeController extends Controller
             return back()->with('groupe_error', "insertion de la session échouée!");
         }
     }
-    
+
     public function modifier_statut_session(Request $request){
         try{
             DB::beginTransaction();
-            if($request->statut == 8 || $request->statut == 7 || $request->statut){
+            if($request->statut == 8 || $request->statut == 7 || $request->statut == 6){
                 DB::delete('delete from details where groupe_id = ?',[$request->id]);
                 DB::delete('delete from participant_groupe where groupe_id = ?',[$request->id]);
                 DB::delete('delete from mes_documents where groupe_id = ?',[$request->id]);
