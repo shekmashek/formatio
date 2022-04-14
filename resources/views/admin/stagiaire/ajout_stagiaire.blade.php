@@ -24,8 +24,8 @@
                     <span class="span_name"> <input type="text" class="label_text" id="nom" disabled > </span>
                     <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled> </span>
                     <span class="span_name"> <input type="text" class="label_text" id="fonction"> </span>
-                    <span class="span_ajout" id="boutton_add">
-                        
+                    <span class="span_ajout" id="boutton_add" style="display: none;">
+                        <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
                     </span>
                 </div>
             </section><br>
@@ -49,7 +49,7 @@
                     <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled> </span>
                     <span class="span_name"> <input type="text" class="label_text" id="nom" disabled > </span>
                     <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled > </span>
-                    <span class="span_name"> <input type="text" class="label_text" id="fonction"> </span>
+                    <span class="span_name"> <input type="text" class="label_text" id="fonction" disabled> </span>
                     <span class="span_ajout" id="boutton_add">
                         <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
                     </span>
@@ -85,7 +85,25 @@
         }
     </style>
     @if (count($stagiaire) <= 0)
-        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+        <table class="table table-hover table-borderless" id="test_table">
+            <thead style="border-bottom: 1px solid black; line-height: 20px">
+                <th>Photo</th>
+                <th>Matricule</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Téléphone</th>
+                <th>E-mail</th>
+                <th>Fonction</th>
+                {{-- <th>Département</th>
+                <th>Service</th> --}}
+                @can('isCFP')
+                    <th></th>
+                @endcan
+            </thead>
+            <tbody id="participant_groupe">
+            </tbody>
+        </table>
+        <div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide">
             <span class="text-center">Aucun apprenant inscrit</span>
         </div>
     @else
@@ -279,7 +297,9 @@ td{
                 $("#nom").val(userData[0].nom_stagiaire);
                 $("#prenom").val(userData[0].prenom_stagiaire);
                 $("#fonction").val(userData[0].fonction_stagiaire);
-                $("#boutton_add").append('<i class="boutton fa fa-plus-circle" id="add_apprenant"></i>');
+                // $("#boutton_add").append('<i class="boutton fa fa-plus-circle" id="add_apprenant"></i>');
+                $(".span_ajout").show();
+                // $(".span_ajout").hide();
                 // alert('eto');
                 // id_detail = userData[$i].id;
                 // $('#action1').val('Modifier');
@@ -306,7 +326,7 @@ td{
                 $("#matricule").val('');
                 $("#nom").val('');
                 $("#prenom").val('');
-                $("#departement").val('');
+                $("#fonction").val('');
                 $("#test_table > tbody").empty();
                 var html = '';
                 for (var i = 0; i < userData.length; i++){
@@ -350,7 +370,7 @@ td{
                 $('#participant_groupe').append(html);
                 $(".span_ajout").hide();
                 $("#image_stg").hide();
-                // location.reload(true);
+                $("#liste_vide").remove();
            },
            error:function(error){
               console.log(error)

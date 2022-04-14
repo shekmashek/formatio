@@ -211,7 +211,7 @@
             dataType: "html",
             success: function(response) {
                 var userData = JSON.parse(response);
-                html = '<h6 class="ms-5">Frais annexe pour la formation</h6>';
+                html = '';
                 for (let i = 0; i < userData.length; i++) {
                     html += '<div class="row ps-5" id="inputFormRow_frais">';
                     html += '<div class="col-md-4">';

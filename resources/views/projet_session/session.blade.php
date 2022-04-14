@@ -160,8 +160,7 @@
                                     <p class="m-0 p-0">RESSOURCES</p>
                                     @if(count($ressource) == 0)
                                     <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                                    @endif
-                                    @if(count($ressource) != 0)
+                                    @else
                                     <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                                     @endif
                                 </button>
@@ -171,10 +170,9 @@
                                 <div>
                                     <button class="planning d-flex justify-content-between py-1" onclick="openCity(event, 'frais')" style="width: 100%">
                                         <p class="m-0 p-0">FRAIS ANNEXES</p>
-                                        @if(count($all_frais_annexe) == 0)
+                                        @if(count($all_frais_annexe) <= 0)
                                             <i class="fal fa-dot-circle me-2" style="color: grey"></i>
-                                        @endif
-                                        @if(count($all_frais_annexe) != 0)
+                                        @else
                                             <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
