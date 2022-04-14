@@ -83,7 +83,7 @@
                     <div class="col-6 p-4">
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Numéro de facture</p> <input type="text" value="{{$montant_totale->num_facture}}" class="form-control input_simple" name="num_facture" required placeholder="reference du facture">
+                                <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" value="{{$montant_totale->num_facture}}" class="form-control input_simple" name="num_facture" required placeholder="reference du facture">
                                 @error('num_facture')
                                 <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror
@@ -91,7 +91,7 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Reference de bon de commande</p> <input type="text" value="{{$session[0]->reference_bc}}" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
+                                <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" value="{{$session[0]->reference_bc}}" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
                                 @error('reference_bc')
                                 <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror

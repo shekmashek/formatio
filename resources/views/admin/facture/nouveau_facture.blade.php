@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Nouveau facture</p>
+<p class="text_header m-0 mt-1">Nouveau facture</p>
 @endsection
 @section('content')
 {{--<link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
@@ -28,7 +28,7 @@
                         <h2>Nouvelle facture</h2>
                     </div>
                     <div class="col-6 text-end">
-                        <input type="submit" class="btn btn_submit" value="Enregistrer et continuer">
+                        <input type="submit" class="btn btn_submit" id="enregristrer_facture"  value="Enregistrer et continuer">
                     </div>
                 </div>
             </section>
@@ -44,19 +44,18 @@
                                 <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
                             </div>
                             <div class="col-8 text-end" align="rigth">
-                                <select class="text-end titre_facture form-select  mb-2 m-0" id="type_facture" name="type_facture" aria-label="Default select example" required>
-                                    <option onselected hidden> Type de Facture...</option>
+                                <select class="text-end titre_facture form-select  mb-2 m-0 " id="type_facture" name="type_facture" aria-label="Default select example" required>
+                                    <option onselected hidden value="0"> Type de Facture...</option>
                                     @foreach ($type_facture as $tp_fact)
                                     <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
                                     @endforeach
                                 </select>
-                                <select class="text-end titre_facture form-select  mb-2 m-0" id="id_mode_financement" name="id_mode_financement" aria-label="Default select example" required>
-                                    <option onselected hidden> Mode de payement...</option>
+                                <select class="text-end titre_facture form-select  mb-2 m-0 " id="id_mode_financement" name="id_mode_financement" aria-label="Default select example" required>
+                                    <option onselected hidden  value="0"> Mode de payement...</option>
                                     @foreach ($mode_payement as $mod)
                                     <option value="{{$mod->id}}">{{$mod->description}}</option>
                                     @endforeach
                                 </select>
-
                                 <input type="text" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture">
                                 <div class="info_cfp">
                                     <p class="m-0 nom_cfp">{{$cfp->nom}}</p>
@@ -93,7 +92,7 @@
                     <div class="col-6 p-4">
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Numéro de facture</p> <input type="text" class="form-control input_simple" name="num_facture" id="num_facture" required placeholder="reference du facture">
+                                <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="number" value="0" class="form-control input_simple" name="num_facture" id="num_facture" required>
                                 @error('num_facture')
                                 <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror
@@ -103,12 +102,13 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Reference de bon de commande</p> <input type="text" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
+                                <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
                                 @error('reference_bc')
                                 <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                 @enderror
-                                <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
                             </div>
+                            <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
+
                         </div>
                         <div class="row mb-2">
                             <div class="col-12 d-flex flex-row justify-content-end">
@@ -116,6 +116,8 @@
                             </div>
                         </div>
                         <div class="row">
+
+
                             <div class="col-12 d-flex flex-row justify-content-end">
                                 <p class="m-0 pt-3 text-end me-3">Payement du</p> <input type="date" class="form-control input_simple" name="due_date" id="due_date" required>
                             </div>
@@ -311,13 +313,33 @@
     </form>
 </div>
 {{-- <script src="{{asset('js/facture.js')}}"></script> --}}
-
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{asset('js/facture.js')}}"></script>
 <script type="text/javascript">
     /*=========================================================*/
+    $(document).on("keyup change", "#invoice_date", function() {
+        document.getElementById("due_date").setAttribute("min",$(this).val());
+    });
+
+
+
+
     $(document).ready(function() {
+        // document.getElementById("enregristrer_facture").setAttribute('disabled',"true");
+
+  /*      $(document).on("keyup change input", function() {
+
+        if(document.getElementById("projet_id_err").innerHTML!=''
+        && document.getElementById("num_facture_err").innerHTML!=''
+        && document.getElementById("session_id_err").innerHTML!=''){
+            document.getElementById("enregristrer_facture").setAttribute('disabled',"true");
+       }else {
+        document.getElementById("enregristrer_facture").removeAttr('disabled');
+
+        }
+    }); */
+
         $(".changer_carret").on("click", function() {
             if (
                 $(this)
@@ -360,7 +382,8 @@
 
 
     // ========= show facture existe déjà
-    $(document).on('change', '#num_facture', function() {
+    $(document).on("keyup change", "#num_facture", function() {
+   /* $(document).on('change', '#num_facture', function() { */
         var num_facture = $(this).val();
         $.ajax({
             url: '{{route("verifyFacture")}}'
@@ -370,7 +393,6 @@
             }
             , success: function(response) {
                 var userData = response;
-                alert("ok");
                 if (userData.length > 0) {
                     document.getElementById("num_facture_err").innerHTML = "le numero de la facture a été déjà utilisé! merci";
                 } else {
@@ -384,7 +406,8 @@
     });
 
     // ========= show reference bon de commande existe déjà
-    $(document).on('change', '#reference_bc', function() {
+/*
+    $(document).on('keyup change', '#reference_bc', function() {
         var reference_bc = $(this).val();
         $.ajax({
             url: '{{route("verifyReferenceBC")}}'
@@ -406,7 +429,7 @@
             }
         });
     });
-
+*/
     // ======== show entreprise
     $(document).on('change', '#entreprise_id', function() {
         $("#projet_id").empty();
@@ -434,6 +457,7 @@
 
                     if (userData.length <= 0) {
                         document.getElementById("projet_id_err").innerHTML = "Aucun projet a été détecter";
+
                     } else {
                         document.getElementById("projet_id_err").innerHTML = "";
                         for (var $i = 0; $i < (userData.length); $i++) {
@@ -493,6 +517,7 @@
                             });
                         }
                     }
+
                 } else {
                     document.getElementById("nom_etp").innerHTML = "";
                     document.getElementById("adresse_etp").innerHTML = "";
@@ -500,6 +525,8 @@
                     document.getElementById("mail_etp").innerHTML = "";
                     document.getElementById("site_etp").innerHTML = "";
                 }
+
+
             }
             , error: function(error) {
                 console.log(error);

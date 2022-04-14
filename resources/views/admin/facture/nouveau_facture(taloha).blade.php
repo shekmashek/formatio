@@ -391,6 +391,7 @@
 <script type="text/javascript">
     // ========= show facture existe déjà
     $(document).on('change', '#num_facture', function() {
+        alert("ok");
         var num_facture = $(this).val();
         $.ajax({
             url: '{{route("verifyFacture")}}'

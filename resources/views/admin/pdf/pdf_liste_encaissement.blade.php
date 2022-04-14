@@ -194,8 +194,8 @@ border: 2px solid;
                                 <div align="right">
                                     <h6></h6><br>
                                     <h6></h6><br>
-                                    <h4>Numéro de facture: {{$montant_totale->num_facture}}</h4>
-                                    <h4>Reference de bon de commande: {{$facture[0]->reference_bc}}</h4>
+                                    <h4>N° facture: {{$montant_totale->num_facture}}</h4>
+                                    <h4>N° BC: {{$facture[0]->reference_bc}}</h4>
                                     <h4>Date de facturation: {{$montant_totale->invoice_date}}</h4>
                                     <h4>Payment du: {{$montant_totale->due_date}}</h4>
                                     <h4>Amount Due(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}}</strong></h4>

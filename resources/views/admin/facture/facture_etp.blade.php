@@ -287,9 +287,27 @@
                                 @foreach ($facture_actif as $actif)
                                 <tr>
                                     <td>
-                                        <div style="background-color: rgb(226, 230, 238); border-radius: 10px; text-align: center">
-                                            {{$actif->reference_type_facture}}
-                                        </div>
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+
+                                            @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+
+                                        </a>
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
@@ -297,36 +315,51 @@
                                         </a>
                                     </th>
                                     <td>
-                                        <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_cfp}}
-                                        </div>
+                                            {{-- </div> --}}
+                                        </a>
                                     </td>
                                     <td>
-                                        @php
-                                        echo html_entity_decode($actif->ref_session)
-                                        @endphp
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @php
+                                            echo html_entity_decode($actif->ref_session)
+                                            @endphp
+                                        </a>
                                     </td>
                                     <td>
-                                        @php
-                                        echo html_entity_decode($actif->session_facture)
-                                        @endphp
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->nom_projet.": "}}
-                                        @php
-                                        echo html_entity_decode($actif->module_session)
-                                        @endphp
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->invoice_date}}</td>
-                                    <td>{{$actif->due_date}}</td>
-                                    @if ($actif->facture_encour == "valider")
-                                    <td>
-                                        <div style="background-color: rgb(208, 187, 231); border-radius: 10px; text-align: center">
-                                            {{$actif->facture_encour}}
-                                        </div>
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->invoice_date}}
+                                        </a>
                                     </td>
-                                    @endif
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->due_date}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                {{$actif->facture_encour}}
+                                            </div>
+                                        </a>
+                                    </td>
+
                                 </tr>
                                 @endforeach
                                 @else
@@ -360,9 +393,25 @@
                                 @foreach ($facture_encour as $actif)
                                 <tr>
                                     <td>
-                                        <div style="background-color: green; border-radius: 10px; text-align: center;color:white">
-                                            {{$actif->reference_type_facture}}
-                                        </div>
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+                                        </a>
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
@@ -370,32 +419,46 @@
                                         </a>
                                     </th>
                                     <td>
-                                        <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_cfp}}
-                                        </div>
+                                            {{-- </div> --}}
+                                        </a>
                                     </td>
-                                    <td>
-                                        @php
-                                        echo html_entity_decode($actif->ref_session)
-                                        @endphp
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @php
+                                            echo html_entity_decode($actif->ref_session)
+                                            @endphp
+                                        </a>
                                     </td>
-                                    <td>
-                                        @php
-                                        echo html_entity_decode($actif->session_facture)
-                                        @endphp
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->nom_projet.": "}}
-                                        @php
-                                        echo html_entity_decode($actif->module_session)
-                                        @endphp
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
                                     </td>
-                                    <td>{{$actif->invoice_date}}</td>
-                                    <td>{{$actif->due_date}}</td>
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->invoice_date}}
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->due_date}}
+                                        </a>
+                                    </td>
                                     <td>
-                                        {{-- <div style="background-color: green; border-radius: 10px; text-align: center;color:white"> --}}
-                                        {{-- {{$actif->facture_encour}} --}} en cour
-                                        {{-- </div> --}}
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                en cour
+                                            </div>
+                                        </a>
                                     </td>
 
                                 </tr>
@@ -432,9 +495,25 @@
                                 @foreach ($facture_payer as $actif)
                                 <tr>
                                     <td>
-                                        <div style="background-color: blue; border-radius: 10px; text-align: center;color:white">
-                                            {{$actif->reference_type_facture}}
-                                        </div>
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+                                        </a>
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
@@ -442,33 +521,48 @@
                                         </a>
                                     </th>
                                     <td>
-                                        <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                        </div>
+                                            {{-- </div> --}}
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @php
+                                            echo html_entity_decode($actif->ref_session)
+                                            @endphp
+                                        </a>
                                     </td>
                                     <td>
-                                        @php
-                                        echo html_entity_decode($actif->ref_session)
-                                        @endphp
-                                    </td>
-                                    <td>
-                                        @php
-                                        echo html_entity_decode($actif->session_facture)
-                                        @endphp
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->nom_projet.": "}}
-                                        @php
-                                        echo html_entity_decode($actif->module_session)
-                                        @endphp
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->invoice_date}}</td>
-                                    <td>{{$actif->due_date}}</td>
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->invoice_date}}
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            {{$actif->due_date}}
+                                        </a>
+                                    </td>
                                     <td>
-                                        {{-- <div style="background-color: blue; border-radius: 10px; text-align: center;color:white"> --}}
-                                        {{$actif->facture_encour}}
-                                        {{-- </div> --}}
+                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                {{$actif->facture_encour}}
+                                            </div>
+                                        </a>
                                     </td>Ú
                                 </tr>
                                 @endforeach
@@ -506,10 +600,10 @@
                             <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_debut" class="form-control" />
+                                <input required type="date" name="dte_debut"  id="dte_debut" class="form-control" />
                                 <br>
                                 <label for="dte_fin" class="form-label" align="left">Payement du <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_fin" class="form-control" />
+                                <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>
                         </div>
@@ -530,7 +624,16 @@
 
 
 
+            <script src="{{ asset('assets/js/jquery.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+            <meta name="csrf-token" content="{{ csrf_token() }}" />
 
+            <script type="text/javascript">
+                $(document).on("keyup change", "#dte_debut", function() {
+                    document.getElementById("dte_fin").setAttribute("min", $(this).val());
+                });
+
+            </script>
 
 
             @endsection

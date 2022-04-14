@@ -125,6 +125,7 @@ class FactureController extends Controller
 
     // ================== Rehcerche Par critère ==================
 
+
     public function search_par_date(Request $req, $nbPagination = null)
     {
         $invoice_dte = $req->dte_debut;
@@ -135,26 +136,87 @@ class FactureController extends Controller
             if (Gate::allows('isCFP')) {
                 $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
 
-                $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte,"cfp_id", $cfp_id);
-                $facture_inactif =  $this->fact->search_intervale_dte_generique_inactif($invoice_dte, $due_dte,"cfp_id", $cfp_id);
-                $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte,"cfp_id", $cfp_id);
-                $facture_encour = $this->fact->search_intervale_dte_generique_en_cour($invoice_dte, $due_dte,"cfp_id", $cfp_id);
-                $pagination =  $this->fact->nb_liste_fact($nbPagination, ["cfp_id"], [$cfp_id]);
+                $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $facture_inactif =  $this->fact->search_intervale_dte_generique_inactif($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $facture_encour = $this->fact->search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["cfp_id"], [$cfp_id]);
 
-                return view('admin.facture.facture', compact('pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+                return view('admin.facture.facture', compact('invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
             }
             if (Gate::allows('isReferent')) {
                 $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
 
-                $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte,"entreprise_id", $entreprise_id);
-                $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte,"entreprise_id", $entreprise_id);
-                $facture_encour = $this->fact->search_intervale_dte_generique_en_cour($invoice_dte, $due_dte,"entreprise_id", $entreprise_id);
-                $pagination =  $this->fact->nb_liste_fact($nbPagination, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+                $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 5);
+                $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 5);
+                $facture_encour = $this->fact->search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 5);
+                $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["entreprise_id", "activiter"], [$entreprise_id, True]);
 
-                return view('admin.facture.facture_etp', compact('pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
+                return view('admin.facture.facture_etp', compact('invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
             }
         } else {
             return back();
+        }
+    }
+
+    public function search_par_date_pagination($nbPagination, $invoice_dte, $due_dte)
+    {
+        $mode_payement = DB::select('select * from mode_financements');
+
+        if ($invoice_dte != null || $due_dte != null) {
+            if (Gate::allows('isCFP')) {
+                $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+
+                $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $facture_inactif =  $this->fact->search_intervale_dte_generique_inactif($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $facture_encour = $this->fact->search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
+                $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["cfp_id"], [$cfp_id]);
+
+                return view('admin.facture.facture', compact('invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+            }
+            if (Gate::allows('isReferent')) {
+                $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+
+                $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 5);
+                $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 5);
+                $facture_encour = $this->fact->search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 5);
+                $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+
+                return view('admin.facture.facture_etp', compact('invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
+            }
+        } else {
+            return back();
+        }
+    }
+
+    public function search_par_num_fact_pagination($nbPagination, $num_fact)
+    {
+        $mode_payement = DB::select('select * from mode_financements');
+        // public function search_num_fact_actif($nomTab, $num_fact, $satut_fact,$nom_champ_para, $cfp_id,$nb_debut_pag,$nbLimit_page)
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "valider", "cfp_id", $cfp_id, $nbPagination, 5);
+            $facture_inactif =  $this->fact->search_num_fact_inactif($num_fact, $cfp_id, $nbPagination, 5);
+            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "terminer", "cfp_id", $cfp_id, $nbPagination, 5);
+            $facture_encour = $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "en_cour", "cfp_id", $cfp_id, $nbPagination, 5);
+
+            $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["cfp_id"], [$cfp_id]);
+
+            return view('admin.facture.facture', compact('num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+        }
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+
+            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "valider", "entreprise_id", $entreprise_id, $nbPagination, 5);
+            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "terminer", "entreprise_id", $entreprise_id, $nbPagination, 5);
+            $facture_encour = $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "en_cour", "entreprise_id", $entreprise_id, $nbPagination, 5);
+
+            $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+
+            return view('admin.facture.facture_etp', compact('num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
         }
     }
 
@@ -165,29 +227,31 @@ class FactureController extends Controller
 
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "valider","cfp_id", $cfp_id);
-            $facture_inactif =  $this->fact->search_num_fact_inactif($num_fact, $cfp_id);
-            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "terminer","cfp_id", $cfp_id);
-            $facture_encour = $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "en_cour","cfp_id", $cfp_id);
+            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "valider", "cfp_id", $cfp_id, $nbPagination, 5);
+            $facture_inactif =  $this->fact->search_num_fact_inactif($num_fact, $cfp_id, $nbPagination, 5);
+            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "terminer", "cfp_id", $cfp_id, $nbPagination, 5);
+            $facture_encour = $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "en_cour", "cfp_id", $cfp_id, $nbPagination, 5);
 
-            $pagination =  $this->fact->nb_liste_fact($nbPagination, ["cfp_id"], [$cfp_id]);
+            // $pagination =  $this->fact->nb_liste_fact($nbPagination, ["cfp_id"], [$cfp_id]);
+            $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["cfp_id"], [$cfp_id]);
 
-            return view('admin.facture.facture', compact('pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
+
+            return view('admin.facture.facture', compact('num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
         }
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
 
-            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "valider","entreprise_id", $entreprise_id);
-            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "terminer","entreprise_id", $entreprise_id);
-            $facture_encour = $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "en_cour","entreprise_id", $entreprise_id);
+            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "valider", "entreprise_id", $entreprise_id, $nbPagination, 5);
+            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "terminer", "entreprise_id", $entreprise_id, $nbPagination, 5);
+            $facture_encour = $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "en_cour", "entreprise_id", $entreprise_id, $nbPagination, 5);
 
-            $pagination =  $this->fact->nb_liste_fact($nbPagination, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+            // $pagination =  $this->fact->nb_liste_fact($nbPagination, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+            $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["entreprise_id", "activiter"], [$entreprise_id, True]);
 
-            return view('admin.facture.facture_etp', compact('pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
+            return view('admin.facture.facture_etp', compact('num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
         }
     }
-
 
     public function redirection_facture($nbPage = null)
     {
@@ -452,94 +516,122 @@ class FactureController extends Controller
     public function create(Request $request)
     {
         $remise = $this->fonct->findWhereMulitOne("type_remise", ["id"], [$request->type_remise_id]);
-
+        $type_facture = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$request->type_facture]);
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $tax = $this->fonct->findWhereOne("taxes", "id", "=", $request->tax_id);
         $para = ["groupe_id", "entreprise_id"];
         $path = "";
         $status = null;
+        // dd($request->input());
+if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entreprise_id>0){
 
-        $verify_num_fact = $this->fonct->findWhere("factures",["num_facture"],[ $request['num_facture']]);
-if(count($verify_num_fact)<=0){
-        if ($request["session_id"] && $request["facture"]) {
+    $verify_num_fact = $this->fonct->findWhere("factures", ["num_facture"], [$request['num_facture']]);
+        if (count($verify_num_fact) <= 0) {
+            $verify_session_exist = $this->fact->veriry_session_deja_facture_sur_type_fact($cfp_id, $request->projet_id, $request);
 
-            DB::beginTransaction();
-            try {
-                //         $path =  $this->conactenation($request["session_id"], $request["facture"], $request);
+            if ($verify_session_exist <= 0) {
 
-                for ($i = 0; $i < count($request["session_id"]); $i++) {
-                    if ($request["facture"][$i] > 0) {
-                        $val = [$request["session_id"][$i], $request->entreprise_id];
-                        $result = $this->fonct->findWhereMulitOne("v_groupe_projet_entreprise", $para, $val);
+                if ($request["session_id"] && $request["facture"]) {
 
-                        $tabData['facture'] = $request["facture"][$i];
-                        $tabData['qte'] = $request["qte"][$i];
+                    DB::beginTransaction();
+                    try {
 
-                        $tabDataDate['due_date'] = $request['due_date'];
-                        $tabDataDate['invoice_date'] = $request['invoice_date'];
+                        for ($i = 0; $i < count($request["session_id"]); $i++) {
+                            //         if ($request["facture"][$i] > 0) {
+                            $val = [$request["session_id"][$i], $request->entreprise_id];
 
-                        $tabDataTypeFinance['tax_id'] = $request['tax_id'];
-                        $tabDataTypeFinance['id_mode_financement'] = $request['id_mode_financement'];
-                        $tabDataTypeFinance['id_type_payement'] = $request['id_type_payement'];
+                            $tabData['facture'] = $request["facture"][$i];
+                            $tabData['qte'] = $request["qte"][$i];
 
-                        $tabDataDesc['description'] = $request['description_facture'];
-                        $tabDataDesc['other_message'] = $request['other_message'];
-                        $tabDataDesc['remise'] = $request->remise;
-                        $tabDataDesc['remise_id'] = $request->type_remise_id;
+                            $tabDataDate['due_date'] = $request['due_date'];
+                            $tabDataDate['invoice_date'] = $request['invoice_date'];
 
-                        $status = $this->fact->verifyCreationFacture(
-                            $cfp_id,
-                            $request->projet_id,
-                            $request->entreprise_id,
-                            $request["session_id"][$i],
-                            $request,
-                            $tabData,
-                            $tax->pourcent,
-                            $tabDataDate,
-                            $tabDataTypeFinance,
-                            $tabDataDesc,
-                            $request['num_facture']
-                        );
-                    }
-                }
+                            $tabDataTypeFinance['tax_id'] = $request['tax_id'];
+                            $tabDataTypeFinance['id_mode_financement'] = $request['id_mode_financement'];
+                            $tabDataTypeFinance['id_type_payement'] = $request['id_type_payement'];
 
-                if ($request["frais_annexe_id"]) {
-                    for ($i = 0; $i < count($request["frais_annexe_id"]); $i += 1) {
-                        $id_frais = $request["frais_annexe_id"][$i];
-                        $montant = $request["montant_frais_annexe"][$i];
-                        $qte = $request["qte_annexe"][$i];
-                        $desc = $request["description_annexe"][$i];
+                            $tabDataDesc['description'] = $request['description_facture'];
+                            $tabDataDesc['other_message'] = $request['other_message'];
+                            $tabDataDesc['remise'] = $request->remise;
+                            $tabDataDesc['remise_id'] = $request->type_remise_id;
 
-                        if ($montant > 0) {
-                            $this->fact->insert_frais_annexe(
+                            /*  $status = $this->fact->verifyCreationFacture(
+                                    $cfp_id,
+                                    $request->projet_id,
+                                    $request->entreprise_id,
+                                    $request["session_id"][$i],
+                                    $request,
+                                    $tabData,
+                                    $tax->pourcent,
+                                    $tabDataDate,
+                                    $tabDataTypeFinance,
+                                    $tabDataDesc,
+                                    $request['num_facture']
+                                ); */
+                            $this->fact->insert(
                                 $cfp_id,
                                 $request->projet_id,
                                 $request->entreprise_id,
+                                $request["session_id"][$i],
+                                $tabData,
+                                $tax->pourcent,
+                                $tabDataDate,
+                                $tabDataTypeFinance,
+                                $tabDataDesc,
                                 $request['num_facture'],
-                                $qte,
-                                $id_frais,
-                                $montant,
-                                $desc,
-                                $tax->pourcent
+                                $request["reference_bc"],
+                                $tabDataDesc["remise"],
+                                $request["type_facture"]
                             );
+
+
+                            //        }
+                            // dd($request["session_id"][$i]);
                         }
+
+
+                        if ($request["frais_annexe_id"]) {
+                            for ($i = 0; $i < count($request["frais_annexe_id"]); $i += 1) {
+                                $id_frais = $request["frais_annexe_id"][$i];
+                                $montant = $request["montant_frais_annexe"][$i];
+                                $qte = $request["qte_annexe"][$i];
+                                $desc = $request["description_annexe"][$i];
+
+                                if ($montant > 0) {
+                                    $this->fact->insert_frais_annexe(
+                                        $cfp_id,
+                                        $request->projet_id,
+                                        $request->entreprise_id,
+                                        $request['num_facture'],
+                                        $qte,
+                                        $id_frais,
+                                        $montant,
+                                        $desc,
+                                        $tax->pourcent
+                                    );
+                                }
+                            }
+                        }
+
+
+                        return redirect()->route("liste_facture");
+                        //            $this->fact->SaveBCetFA($path, $request);
+                    } catch (Exception $e) {
+                        DB::rollback();
+                        echo $e->getMessage();
                     }
+                } else {
+                    return back()->with("error", "désoler,on ne peut creer une facture sans le montant totale! merci");
                 }
+            } else {
 
-                //            $this->fact->SaveBCetFA($path, $request);
-            } catch (Exception $e) {
-                DB::rollback();
-                echo $e->getMessage();
+                return back()->with("error", "l'une des sessions ont été déjà facturer sur le type de facture '" . $type_facture->reference . "'");
             }
-
-            return $status;
-            //return redirect()->route('liste_facture');
         } else {
-            return back()->with("error", "désoler,on ne peut creer une facture sans le montant totale! merci");
+            return back()->with("error", "le numero de la facture a été déjà utilisé! merci");
         }
-    } else {
-        return back()->with("error", "le numero de la facture a été déjà utilisé! merci");
-
+    }else {
+        return back()->with("error", "l'une de votre champs est invalid comme (type facture ou type de mode payement)! merci");
     }
     }
 
