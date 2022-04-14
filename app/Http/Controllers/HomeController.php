@@ -337,10 +337,15 @@ class HomeController extends Controller
                 $j2 = strftime('%d',strtotime($dtNow));
                 $jour_restant = $j1 - $j2;
                 $message = "Il vous reste ".$jour_restant." jours pour payer votre abonnement";
+                $test = 1;
             }
-            else $message = "Vous êtes en mode gratuit";
+            else {
+                $test = 0;
+                $message = "Vous êtes en mode gratuit";
+             }
+             return view('cfp.dashboard_cfp.dashboard', compact('test','message','nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
 
-            return view('cfp.dashboard_cfp.dashboard', compact('message','nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+
         }
         if(Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
@@ -412,8 +417,12 @@ class HomeController extends Controller
                     $j2 = strftime('%d',strtotime($dtNow));
                     $jour_restant = $j1 - $j2;
                     $message = "Il vous reste ".$jour_restant." jours pour payer votre abonnement";
+                    $test = 1;
                 }
-                else $message = "Vous êtes en mode gratuit";
+                else {
+                    $test = 0;
+                    $message = "Vous êtes en mode gratuit";
+                 }
 
 
                 // $refs = DB::select('select nif,stat,rcs from entreprises where id = ' . $nom_profil_referent . ' ');
@@ -467,7 +476,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+                return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
             }
         }
 
