@@ -295,7 +295,7 @@
                                 <td></td>
                                 <td>Remise</td>
                                 <td>
-                                    <div align="right" style="background-color: rgb(255, 204, 0)">
+                                    <div align="right">
                                         Ar -{{number_format($montant_totale->remise,0,","," ")}}
                                     </div>
                                 </td>
@@ -327,7 +327,7 @@
                                 <td></td>
                                 <td>Acompte</td>
                                 <td>
-                                    <div align="right" style="background-color: rgb(255, 204, 0)">
+                                    <div align="right">
                                         Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
                                     </div>
                                 </td>

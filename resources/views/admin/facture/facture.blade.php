@@ -210,20 +210,58 @@
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
 
-        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-        @elseif ($pagination["debut_aff"] == 1)
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+        @if(isset($invoice_dte) && isset($due_dte))
 
+        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
+        <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]) ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+        @elseif ($pagination["debut_aff"] == 1)
+        <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
         @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-            <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+            <a href="{{route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{  route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
             @else
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
             @endif
+
+            @elseif(isset($num_fact))
+
+            @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
+            <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @elseif ($pagination["debut_aff"] == 1)
+            <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+            @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
+                <a href="{{route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{  route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                @else
+                <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @endif
+
+                @else
+
+                @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
+                <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @elseif ($pagination["debut_aff"] == 1)
+                <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
+                    <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                    @else
+                    <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                    @endif
+
+                    @endif
+
+
+
     </span>
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
@@ -296,9 +334,28 @@
                                 @foreach ($facture_inactif as $actif)
                                 <tr>
                                     <td>
-                                        <div style="background-color: rgb(226, 230, 238); border-radius: 10px; text-align: center">
-                                            {{$actif->reference_type_facture}}
-                                        </div>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                            @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+
+                                        </a>
+
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -306,26 +363,49 @@
                                         </a>
                                     </th>
                                     <td>
-                                        <div style="background-color: rgb(164, 187, 233);  border-radius: 10px; text-align: center">{{$actif->nom_etp}}</div>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                            {{-- <div style="background-color: rgb(164, 187, 233);  border-radius: 10px; text-align: center"> --}}
+                                                {{$actif->nom_etp}}
+                                            {{-- </div> --}}
+                                        </a>
                                     </td>
                                     <td>
-                                        @php
-                                        echo html_entity_decode($actif->ref_session)
-                                        @endphp
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                            @php
+                                            echo html_entity_decode($actif->ref_session)
+                                            @endphp
+                                        </a>
                                     </td>
                                     <td>
-                                        @php
-                                        echo html_entity_decode($actif->module_session)
-                                        @endphp
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->nom_projet.": "}}
-                                        @php
-                                        echo html_entity_decode($actif->session_facture)
-                                        @endphp
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
                                     </td>
-                                    <td>{{$actif->invoice_date}}</td>
-                                    <td>{{$actif->due_date}}</td>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->invoice_date}}
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                            {{$actif->due_date}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
@@ -392,9 +472,27 @@
                                 @foreach ($facture_actif as $actif)
                                 <tr>
                                     <td>
-                                        <div style="background-color: rgb(226, 230, 238); border-radius: 10px; text-align: center">
-                                            {{$actif->reference_type_facture}}
-                                        </div>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                            @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+
+                                        </a>
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -402,34 +500,49 @@
                                         </a>
                                     </th>
                                     <td>
-                                        <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                        </div>
+                                        {{-- </div> --}}
+                                        </a>
                                     </td>
                                     <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         @php
                                         echo html_entity_decode($actif->ref_session)
                                         @endphp
+                                        </a>
                                     </td>
                                     <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         @php
                                         echo html_entity_decode($actif->session_facture)
                                         @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->nom_projet.": "}}
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->nom_projet.": "}}
                                         @php
                                         echo html_entity_decode($actif->module_session)
                                         @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->invoice_date}}</td>
-                                    <td>{{$actif->due_date}}</td>
-                                    @if ($actif->facture_encour == "valider")
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->invoice_date}}
+                                    </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->due_date}}
+                                        </a>
+                                    </td>
                                     <td>
-                                        <div style="background-color: rgb(208, 187, 231); border-radius: 10px; text-align: center">
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
                                             {{$actif->facture_encour}}
                                         </div>
+                                        </a>
                                     </td>
                                     @canany(['isCFP'])
                                     <td>
@@ -451,7 +564,7 @@
                                         </div>
                                     </td>
                                     @endcanany
-                                    @endif
+
                                 </tr>
                                 @endforeach
                                 @else
@@ -486,9 +599,25 @@
                                 @foreach ($facture_encour as $actif)
                                 <tr>
                                     <td>
-                                        <div style="background-color: green; border-radius: 10px; text-align: center;color:white">
-                                            {{$actif->reference_type_facture}}
-                                        </div>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+                                        </a>
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -496,32 +625,44 @@
                                         </a>
                                     </th>
                                     <td>
-                                        <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                        </div>
+                                        {{-- </div> --}}
+                                        </a>
                                     </td>
-                                    <td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         @php
                                         echo html_entity_decode($actif->ref_session)
                                         @endphp
+                                        </a>
                                     </td>
-                                    <td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         @php
                                         echo html_entity_decode($actif->session_facture)
                                         @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->nom_projet.": "}}
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->nom_projet.": "}}
                                         @php
                                         echo html_entity_decode($actif->module_session)
                                         @endphp
+                                        </a>
                                     </td>
-                                    <td>{{$actif->invoice_date}}</td>
-                                    <td>{{$actif->due_date}}</td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->invoice_date}}
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->due_date}}
+                                        </a>
+                                    </td>
                                     <td>
-                                        {{-- <div style="background-color: green; border-radius: 10px; text-align: center;color:white"> --}}
-                                        {{-- {{$actif->facture_encour}} --}} en cour
-                                        {{-- </div> --}}
+                                        <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                            en cour
+                                        </div>
                                     </td>
                                     @canany(['isCFP'])
                                     <td>
@@ -579,9 +720,25 @@
                                 @foreach ($facture_payer as $actif)
                                 <tr>
                                     <td>
-                                        <div style="background-color: blue; border-radius: 10px; text-align: center;color:white">
-                                            {{$actif->reference_type_facture}}
-                                        </div>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+                                        </a>
                                     </td>
                                     <th>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -589,33 +746,49 @@
                                         </a>
                                     </th>
                                     <td>
-                                        <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center">
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                        </div>
+                                        {{-- </div> --}}
+                                        </a>
                                     </td>
                                     <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         @php
                                         echo html_entity_decode($actif->ref_session)
                                         @endphp
+                                        </a>
                                     </td>
                                     <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
                                         @php
                                         echo html_entity_decode($actif->session_facture)
                                         @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->nom_projet.": "}}
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->nom_projet.": "}}
                                         @php
                                         echo html_entity_decode($actif->module_session)
                                         @endphp
+                                        </a>
                                     </td>
 
-                                    <td>{{$actif->invoice_date}}</td>
-                                    <td>{{$actif->due_date}}</td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->invoice_date}}
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        {{$actif->due_date}}
+                                        </a>
+                                    </td>
                                     <td>
-                                        {{-- <div style="background-color: blue; border-radius: 10px; text-align: center;color:white"> --}}
-                                        {{$actif->facture_encour}}
-                                        {{-- </div> --}}
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                        <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                            {{$actif->facture_encour}}
+                                        </div>
+                                        </a>
                                     </td>
                                     @canany(['isCFP'])
                                     <td>
@@ -797,11 +970,13 @@
                         }
                     });
                 });
+
             </script>
             <script>
                 $(document).ready(function() {
                     $("#myModal").modal('show');
                 });
+
             </script>
 
             @endsection

@@ -196,7 +196,7 @@
                                         <td></td>
                                         <td>
                                             <div align="right">
-                                                Ar -{{number_format($fa->dernier_montant_ouvert,0,","," ")}}
+                                                Ar -{{number_format($fa->montant_total,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
