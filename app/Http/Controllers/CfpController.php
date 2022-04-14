@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\responsable;
 use App\Mail\entrepriseMail;
 use Illuminate\Support\Facades\Auth;
+use App\cfp;
 use App\Models\FonctionGenerique;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
@@ -40,7 +41,36 @@ class CfpController extends Controller
         $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
         $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
         $cfp = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
+
+        // $ccfp = DB::select('select * from v_demmande_cfp_etp where entreprise_id = ?', [$entreprise_id]);
+        // $ccfp =cfp::findOrFail($entreprise_id);
+        // $ccfp =cfp::where('user_id',$user_id)->firstOrFail();
+        // $ccfp = cfp::query('select * form cfps')->findOrFail($entreprise_id);
+        // $ccfp = DB::table('cfps')->findOrFail($entreprise_id);
+        // $ccfp =DB::table('cfps')->get();
+        // dd($ccfp);
         return view('cfp.cfp', compact('cfp', 'refuse_demmande_cfp', 'invitation'));
+    }
+
+
+    public function affInfoOf(Request $request)
+    {
+        // $user_id = Auth::id();
+        $id = $request->Id;
+
+        // $fonct = new FonctionGenerique();
+
+        // $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+
+        // $refuse_demmande_cfp = $fonct->findWhere("v_refuse_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+        // $invitation = $fonct->findWhere("v_invitation_etp_pour_cfp", ["inviter_etp_id"], [$entreprise_id]);
+
+        // $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
+        // $etp2Collaborer = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+        // $cfp = $fonct->concatTwoList($etp1Collaborer, $etp2Collaborer);
+
+        $ccfp = DB::select('select * from v_demmande_cfp_etp where entreprise_id = ?', [$id]);
+       return response()->json($ccfp);
     }
 
     public function img_cfp($logo_cfp)
@@ -138,7 +168,7 @@ class CfpController extends Controller
          DB::update('update cfps set email = ? where id = ?', [$request->mail,$id]);
          return redirect()->route('profil_of',[$id]);
         }
- 
+
      }
      public function modifier_phone($id,Request $request){
         if($request->phone == null){
@@ -148,13 +178,13 @@ class CfpController extends Controller
          DB::update('update cfps set telephone= ? where id = ?', [$request->phone,$id]);
          return redirect()->route('profil_of',[$id]);
         }
- 
+
      }
     public function modifier_adresse($id,Request $request){
-         
+
             DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, $id]);
             return redirect()->route('profil_of',[$id]);
-       
+
 
     }
     public function modifier_slogan($id,Request $request){

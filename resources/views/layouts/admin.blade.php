@@ -324,7 +324,7 @@
             @endcanany --}}
 
             {{-- calendrire de formations --}}
-                @canany(['isReferent','isStagiaire','isManager'])
+                @canany(['isStagiaire','isManager'])
                     <li>
                         <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
                             <i class='bx bxs-calendar'></i>

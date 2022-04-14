@@ -134,18 +134,26 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    // $(".ui-helper-hidden-accessible").hide();
+
+let sidebar = document.querySelector(".sidebar");
+let affichertuto = document.querySelector(".apprendre");
+let afficherinfos = document.querySelector(".infos");
+let afficherfiltre = document.querySelector(".filtrer");
+let menu = document.querySelector(".bx-menu");
+
+
+
 
     function afficherTuto() {
         affichertuto.classList.toggle("afficher");
     }
-});
 
-let sidebar = document.querySelector(".sidebar");
-let affichertuto = document.querySelector(".apprendre");
-let afficherfiltre = document.querySelector(".filtrer");
-let menu = document.querySelector(".bx-menu");
+
+    function afficherInfos() {
+        afficherinfos.classList.toggle("afficher");
+    }
+
+
 
 function clickSidebar() {
     sidebar.classList.toggle("active");
