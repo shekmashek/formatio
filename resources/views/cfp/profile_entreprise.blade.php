@@ -53,31 +53,45 @@
 
     <div class="row w-100 bg-none mt-5 font_text">
 
-        <div class="col-md-5">
+        <div class="col-md-7">
 
-            <div class="shadow p-3 mb-5 bg-body rounded ">
+            {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
                 <h4>Entreprise déjà collaborer</h4>
 
-                <table class="table  table-borderless table-lg">
+                <table class="table  table-borderless table-lg table-hover">
+                    <thead  style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
+                        <th>Nom de l'entreprise</th>
+                        
+                        <th>E-mail</th>
+                    </thead>
                     <tbody id="data_collaboration">
 
                         @if (count($entreprise)<=0) <tr>
                             <td> Aucun entreprise collaborer</td>
                             </tr>
                             @else
+                          
+
                             @foreach($entreprise as $etp)
-                            <tr>
-                                <td>
+                            <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}"> 
+
+                                <td role="button"  onclick="afficherInfos();">{{$etp->nom_etp}}</td>
+                                
+                                <td role="button"  onclick="afficherInfos();">{{$etp->email_etp}}</td>
+                            
+                                {{-- <td>
                                     <div align="left">
+                                        
                                         <strong>{{$etp->nom_etp}}</strong>
-                                        <p style="color: rgb(238, 150, 18)">{{$etp->email_etp}}</p>
+                                        <p style="color: rgb(155, 129, 91)">{{$etp->email_etp}}</p>
                                         <h6>{{$etp->nom_secteur}}</h6>
+                                        
                                     </div>
                                 <td>
                                     <div align="rigth">
                                         <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td>
 
                                     <div class="btn-group dropleft">
@@ -123,12 +137,12 @@
 
                 </table>
 
-            </div>
+            {{-- </div> --}}
 
 
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-5">
 
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
 
@@ -148,7 +162,7 @@
                         <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_resp" placeholder="Adresse mail*" required />
                     </div>
                     <div class="col ms-2">
-                        <button type="submit" class="btn btn-primary mt-2">Envoyer l'invitation</button>
+                        <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
                     </div>
                 </div>
             </form>
@@ -190,7 +204,7 @@
                     <div class="table-responsive text-center">
 
                         <table class="table  table-borderless table-sm">
-                            <tbody id="data_collaboration">
+                            <tbody id="data_collaboration" style="font-size: 11.5px">
 
                                 @if (count($invitation_etp)<=0) <tr>
                                     <td> Aucun invitations en attente</td>
@@ -281,7 +295,46 @@
             {{-- </div> --}}
         </div>
 
+        <div class="infos mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0">infos</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                </div>
+                <hr class="mt-2">
+                <div style="font-size: 13px">
+                    <div class="text-center mt-2" >
+                 <span class="text-center" id="logo">
+                 </span>
+                     </div>
+                    <div class="text-center mt-2">
+                  <span id="nom_entreprise"> </span>
+                    </div>
+                    <div class="text-center mt-2">
+                        <span id="nom_reponsable"></span>
+                        <span id="prenom_responsable"></span> 
+                          </div>
+                          {{-- <div class="text-center mt-2">
+                            <span id="adresse_etp">
+                            <span> --}}
+                    <div class="text-center mt-2">
+                   <span id="email_etp"><span>
+                    </div>
+                    <div class="text-center mt-2">
+                   <span id="telephone_etp">
+                   <span>
 
+                   </div>
+                   <div class="text-center mt-2">
+
+                 <span id="site_etp"> </span>
+                
+                   </div>
+               
+            </div>
+        </div>
     </div>
 
 
@@ -290,7 +343,7 @@
 
 
 
-</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -380,6 +433,67 @@
         //     }
         // });
     });
+//     $(".information").on('click', function(e) {
+       
+//         let id = $(this).data("id");
+        
+//     $.ajax({
+//         type: "GET"
+//         , url: 'information_entreprise'
+//         , data: {
+//             Id: id
+//         }
+//         , success: function(response) {
+           
+//             let userData = JSON.parse(response);
+//             console.log(userData);
+//             //parcourir le premier tableau contenant les info sur les programmes
+//             for (let $i = 0; $i < userData.length; $i++){
+//                $("#nom_etp").text(userData[$i].nom_etp); 
+//                 $("#email_etp").text(userData[$i].email_etp);
+//                 $("#telephone_etp").text(userData[$i].telephone_etp);
+//                 $("#site_etp").text(userData[$i].site_etp);
+//                 $("#logo_etp").text(userData[$i].logo_etp);
+//             }
+
+        
+//         }
+//         , error: function(error) {
+//             console.log(JSON.parse(error));
+//         }
+//     });
+// });
+$(".information").on('click', function(e) {
+    let id = $(this).data("id");
+ 
+    $.ajax({
+        method: "GET"
+        , url: "/information_entreprise"
+        , data: {
+            Id: id
+        }
+        , dataType: "html"
+        , success: function(response) {
+            let userData= JSON.parse(response);
+            console.log(userData);
+            //parcourir le premier tableau contenant les info sur les programmes
+            for (let $i = 0; $i< userData.length; $i++ ) {
+
+                let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:60px">';
+                url_photo = url_photo.replace(":url_img", userData[$i].logo_etp);
+                $("#logo").html(" ");
+                $("#logo").append(url_photo);
+                $("#nom_entreprise").text(userData[$i].nom_etp); 
+                $("#nom_reponsable").text(userData[$i].nom_resp);
+                $("#prenom_responsable").text(userData[$i].prenom_resp);
+                // $("#adresse_etp").text(userData[$i].adresse);
+               $("#email_etp").text(userData[$i].email_etp);
+               $("#telephone_etp").text(userData[$i].telephone_etp);
+                $("#site_etp").text(userData[$i].site_etp);
+            }
+        }
+    });
+});
 
 </script>
 @endsection

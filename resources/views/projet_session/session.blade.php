@@ -61,7 +61,7 @@
                         <p class="p-0 m-0 text-center"> Referent entreprise </p>
                         <div class="d-flex">
                             <div>
-                                <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" width="50px" height="50px" class="img-fluid">
+                                <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" width="50px" height="50px" class="img-fluid" role="button" onclick="afficherInfos();">
                             </div>
                             <div>
                                 <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
@@ -92,7 +92,7 @@
                     <p class="p-0 m-0 text-center"> <strong>
                        <div class="pad_img">
                            @foreach ($formateur as $form)
-                                <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
+                                <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;" role="button" onclick="afficherProf();">
                            @endforeach()
                             {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
                             <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
@@ -319,8 +319,49 @@
         </div>
     </section>
 </div>
-
-
+<div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">infos</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+        </div>
+        <hr class="mt-2">
+        <div class="text-center mt-2">
+            <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" class="img-fluid text-center"  style="width:120px;height:60px;" role="button" onclick="afficherInfos();"  >
+            
+              </div>
+              <div >
+                  <p class="p-0 m-0 text-center" > <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                  <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                  <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
+                <p class="p-0 m-0 text-center"> <strong>  Adresse:{{ $projet[0]->adresse_rue}} {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal}} {{ $projet[0]->adresse_ville}} {{ $projet[0]->adresse_region}}</strong></p>
+              </div>
+       
+    </div>
+</div>
+</div>
+{{-- affiche prof --}}
+<div class="prof mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">Infos</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherProf();"></i>
+        </div>
+        <hr class="mt-2">
+        <div class="text-center mt-2">
+           
+              </div>
+              <div >
+                  
+              </div>
+       
+    </div>
+</div>
+</div>
 <style>
 .shadow{
     height: auto;

@@ -542,7 +542,9 @@ class HomeController extends Controller
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
             $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
+           
             $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
+            dd($data);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         }

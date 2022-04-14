@@ -71,20 +71,22 @@ class ProfController extends Controller
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $forma = new formateur();
-
-
         if (Gate::allows('isCFP')) {
 
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+    
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             // $formateur = $forma->getFormateur($formateur1, $formateur2);
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-
-
+            // dd($formateur);
+            // $formateurs=formateur::findorFail($cfp_id);
+         
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
+            
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
+            
             return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
 
             if (count($formateur) <= 0) {
@@ -102,6 +104,18 @@ class ProfController extends Controller
             // $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
             // return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
         }
+    }
+    public function information_formateur(Request $request)
+    {
+        $fonct = new FonctionGenerique();
+        $id = $request->Id;
+        // $user_id = Auth::user()->id;
+        // dd($user_id);
+        // $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+
+        $formateur = DB::select("select * from v_demmande_cfp_formateur where formateur_id = ?", [$id]);
+       
+        return response()->json($formateur);
     }
 
     public function create()
