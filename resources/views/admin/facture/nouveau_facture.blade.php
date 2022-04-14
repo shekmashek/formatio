@@ -56,7 +56,6 @@
                                     <option value="{{$mod->id}}">{{$mod->description}}</option>
                                     @endforeach
                                 </select>
-
                                 <input type="text" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture">
                                 <div class="info_cfp">
                                     <p class="m-0 nom_cfp">{{$cfp->nom}}</p>
