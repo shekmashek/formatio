@@ -9,6 +9,20 @@
     </div>
 @endif
 <section class="detail__formation mb-5">
+    <nav class="navigation_detail d-flex flex-row justify-content-between">
+        <div>
+            <ul class="d-flex flex-row">
+                <li class="me-5"><a href="#objectif">objectif</a></li>
+                <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
+                <li class="me-5"><a href="#programme">programme</a></li>
+                <li class="me-5"><a href="#avis">avis</a></li>
+                <li class="me-5"><a href="#dates">dates</a></li>
+            </ul>
+        </div>
+        <div>
+            <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button>
+        </div>
+    </nav>
     <div class="container py-5">
         <div class="row justify-content-space-between py-3 px-5 back" id="border_premier">
             <div class="col-lg-8 col-md-8 pe-5 module_detail">
@@ -31,6 +45,7 @@
                             style="width: 200px; height:100px;"></div>
                 </div>
             </div>
+            <div id="objectif"></div>
             <div class="row row-cols-auto module_detail_heure justify-content-around">
                 <div class="col"><i class="bx bxs-alarm bx_icon"></i>
                     <span>
@@ -50,13 +65,16 @@
             </div>
         </div>
         <div class="row detail__formation__detail py-5">
+
             <div class="col-lg-9 pe-5">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row module_detail_content p-5">
+
                     <div class="col-lg-12">
                         <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
+                        <div id="pour_qui"></div>
                         <a href="#programme__formation" class="btn_next" role="button">Consulter le programme de cette formation</a>
                     </div>
                 </div>
@@ -64,7 +82,7 @@
                 {{-- FIXME:mise en forme de design --}}
                 <h3 class="pt-3 pb-3 mt-5">A qui s'adresse cette formation?</h3>
                 <div class="row justify-content-between">
-                    <div class="col-lg-5 d-flex flex-row module_detail_objet">
+                    <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i class="bx bx-user adresse__icon"></i>&nbsp;Pour qui
                                 ?</span>
@@ -74,7 +92,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 module_detail_objet">
+                    <div class="col module_detail_objet">
                         <div class="row d-flex flex-row w-100">
                             <span class="adresse__text"><i
                                     class="bx bx-list-plus adresse__icon"></i>&nbsp;Prérequis</span>
@@ -91,7 +109,7 @@
                 </div>
 
                 <div class="row justify-content-between">
-                    <div class="col-lg-6 d-flex flex-row module_detail_objet">
+                    <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-cog adresse__icon"></i>&nbsp;Equipement
@@ -102,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-5 module_detail_objet">
+                    <div class="col module_detail_objet">
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-message-check adresse__icon"></i>&nbsp;Bon
@@ -129,6 +147,7 @@
                                 <p>{{$res->prestation}}</p>
                             </div>
                         </div>
+                        <div id="programme"></div>
                     </div>
                 </div>
                 @endforeach
@@ -160,11 +179,11 @@
                                     <?php $i++ ?>
                                 </div>
                                 @endforeach
+                                <div id="avis"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 {{-- section 5 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__programme__avis">
@@ -352,11 +371,13 @@
                 </div>
             </div>
         </div>
+
         <div class="container">
             <div class="row ">
                 <h3 class="pt-3 pb-3">Dates et Villes Session Inter</h3>
                 <div class="col-lg-12">
                     <div class="row">
+                        <div id="dates"></div>
                         <ul>
                             @foreach ($datas as $data)
                             <li class="date_ville px-2 mb-2">

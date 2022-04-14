@@ -6,28 +6,6 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
     <div class="container-fluid bg-light">
-        {{-- <nav class="navbar navbar-expand-lg w-100">
-            <div class="row w-100 g-0 m-0">
-                <div class="col-lg-12">
-                    <div class="row g-0 m-0" style="align-items: center">
-                        @can('isCFP')
-                        <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            <div class="col titre_page">
-                                <h3 class="mt-3"></h3>
-                            </div>
-
-                            <div class="col" align="right">
-                                <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}" href="{{route('liste_module')}}">
-                                    <span class="btn_enregistrer text-center">Précedent</span>
-                                </a>
-                            </div>
-                            @endcan
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <hr> --}}
         <div class="panel-body">
             <div class="row">
                 <form action="{{route('module.store')}}" method="POST" id="frm_new_module">
@@ -37,17 +15,17 @@
                             <div class="col-lg-1 postion_fixe">
                                 <div class="row">
                                     <div class="col text-left ps-0 me-3">
-                                        <p id="changer_module" onclick="changer_module();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i class='bx bxs-cube-alt' style="color: #7635dc; font-size:2rem"></i><br><span>Module</span></a>
+                                        <p id="changer_module" onclick="changer_module();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i class='bx bxs-cube-alt' style="color: #637381; font-size:1.5rem"></i><br><span>Module</span></a>
                                         </p>
-                                        <p id="changer_objectif" onclick="changer_objectif();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut2"><i class='bx bx-radio-circle-marked' style="color: #7635dc; font-size:2rem"></i><br><span>Objectif</span></a>
+                                        <p id="changer_objectif" onclick="changer_objectif();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut2"><i class='bx bx-radio-circle-marked' style="color: #637381; font-size:1.5rem"></i><br><span>Objectif</span></a>
                                         </p>
-                                        <p id="changer_cible" onclick="changer_cible();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i class='bx bx-user' style="color: #7635dc; font-size:2rem"></i><br><span>Cible</span></a>
+                                        <p id="changer_cible" onclick="changer_cible();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i class='bx bx-user' style="color: #637381; font-size:1.5rem"></i><br><span>Cible</span></a>
                                         </p>
-                                        <p id="changer_reference" onclick="changer_reference();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_reference"><i class='bx bx-clipboard' style="color: #7635dc; font-size:2rem"></i><br><span>Reference</span></a>
+                                        <p id="changer_reference" onclick="changer_reference();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_reference"><i class='bx bx-clipboard' style="color: #637381; font-size:1.5rem"></i><br><span>Reference</span></a>
                                         </p>
-                                        <p id="changer_equipement" onclick="changer_equipement();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_equipement"><i class='bx bxs-cog' style="color: #7635dc; font-size:2rem"></i><br><span>Equipement</span></a>
+                                        <p id="changer_equipement" onclick="changer_equipement();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_equipement"><i class='bx bxs-cog' style="color: #637381; font-size:1.5rem"></i><br><span>Equipement</span></a>
                                         </p>
-                                        <p id="changer_prestation" onclick="changer_prestation();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_prestation"><i class='bx bx-hive' style="color: #7635dc; font-size:2rem"></i><br><span>Préstation</span></a>
+                                        <p id="changer_prestation" onclick="changer_prestation();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_prestation"><i class='bx bx-hive' style="color: #637381; font-size:1.5rem"></i><br><span>Préstation</span></a>
                                         </p>
                                     </div>
                                 </div>
@@ -59,8 +37,8 @@
                                     <div class="form-group" id="premier_vue9">
                                         <div class="acf-field acf-field-text acf-field-categorie is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire input mt-3" id="acf-domaine" name="domaine" style="height: 50px;">
+                                                <div class="acf-input-wrap premier_wrap">
+                                                    <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez la
                                                             domaine de formation ...</option>
                                                         @foreach($domaine as $do)
@@ -76,7 +54,7 @@
                                     <div class="form-group" id="premier_vue2">
                                         <div class="acf-field acf-field-text acf-field-categorie is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
+                                                <div class="acf-input-wrap premier_wrap">
                                                     <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 50px;">
                                                         {{-- <option value="null" disable selected hidden>Choisissez la
                                                             catégorie de formation ...</option>
@@ -94,7 +72,7 @@
                                     <div class="form-group" id="premier_vue">
                                         <div class="acf-field acf-field-text acf-field-nom_module is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
+                                                <div class="acf-input-wrap premier_wrap">
                                                     <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required placeholder="Nom du module">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Nom du module</label>
                                                     @error('nom_module')
@@ -111,8 +89,8 @@
                                     <div class="form-group" id="premier_vue3">
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap mt-2">
-                                                    <input type="text" class="form-control descript descript input mt-4" id="acf-description" name="description" required placeholder="Déscription courte" maxlength="70" title="Limiter à 70 caractères">
+                                                <div class="acf-input-wrap premier_wrap mt-1">
+                                                    <input type="text" class="form-control descript descript input" id="acf-description" name="description" required placeholder="Déscription courte" maxlength="70" title="Limiter à 70 caractères">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Déscription courte</label>
                                                     @error('description')
                                                     <div class="col-sm-6">
@@ -130,8 +108,8 @@
                                             <div class="form-group" id="premier_vue4">
                                                 <div class="acf-field acf-field-text acf-field-jour is-required">
                                                     <div class="acf-input">
-                                                        <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control jour jour input mt-4" id="acf-jour" name="jour" min="1" max="365" onfocus="(this.type='number')" title="entrer une durée en jours" required  placeholder="Durée en Jours (J)">
+                                                        <div class="acf-input-wrap premier_wrap mt-1">
+                                                            <input type="text" class="form-control jour jour input " id="acf-jour" name="jour" min="1" max="365" onfocus="(this.type='number')" title="entrer une durée en jours" required  placeholder="Durée en Jours (J)">
                                                             <label for="acf-nom_module" class="form-control-placeholder">Durée en Jours (J)</label>
                                                         </div>
                                                     </div>
@@ -142,8 +120,8 @@
                                             <div class="form-group" id="premier_vue5">
                                                 <div class="acf-field acf-field-text acf-field-heur is-required">
                                                     <div class="acf-input">
-                                                        <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control heur heur input mt-4" id="acf-heur" name="heure" min="1" max="8760" onfocus="(this.type='number')" title="entrer une durée en heure" required placeholder="Durée en Heure (H)">
+                                                        <div class="acf-input-wrap premier_wrap mt-1">
+                                                            <input type="text" class="form-control heur heur input" id="acf-heur" name="heure" min="1" max="8760" onfocus="(this.type='number')" title="entrer une durée en heure" required placeholder="Durée en Heure (H)">
                                                             <label for="acf-nom_module" class="form-control-placeholder">Durée en Heure (H)</label>
                                                         </div>
                                                     </div>
@@ -156,8 +134,8 @@
                                     <div class="form-group" id="premier_vue6">
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire modalite modalite input mt-4" id="acf-modalite" name="modalite" style="height: 50px;">
+                                                <div class="acf-input-wrap premier_wrap mt-1">
+                                                    <select class="form-control select_formulaire modalite modalite input" id="acf-modalite" name="modalite" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez la
                                                             modalite de formation ...</option>
                                                         <option value="En ligne">En ligne</option>
@@ -173,7 +151,7 @@
                                     <div class="form-group" id="premier_vue7">
                                         <div class="acf-field acf-field-text acf-field-niveau is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
+                                                <div class="acf-input-wrap premier_wrap">
                                                     <select class="form-control select_formulaire niveau niveau input" id="acf-niveau" name="niveau" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez le
                                                             niveau de formation...</option>
@@ -270,9 +248,22 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix prix input mt-4" id="acf-prix" name="prix" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required placeholder="Prix en AR">
+                                                    <input type="text" class="form-control prix prix input mt-4" id="acf-prix" name="prix" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required placeholder="Prix en AR" onfocus="(this.type='number')">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Prix en AR</label>
                                                     @error('prix')
+                                                    <div class="col-sm-6">
+                                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="acf-field acf-field-text acf-field-prix is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap">
+                                                    <input type="text" class="form-control prix_groupe prix_groupe input mt-4" id="acf-prix_groupe" name="prix_groupe" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix par Groupe en AR" onfocus="(this.type='number')">
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix par Groupe en AR</label>
+                                                    @error('prix_groupe')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
                                                     </div>
@@ -349,19 +340,17 @@
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
                                                                 <input type="text" class="form-control min min input mt-4" id="acf-min" name="min_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne minimale" required placeholder="Nombre personne min">
-                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne min</label>
+                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne minimale</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
                                                 <div class="form-group" id="premier_">
                                                     <div class="acf-field acf-field-text acf-field-max is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
                                                                 <input type="text" class="form-control max max input mt-4" id="acf-max" name="max_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne maximale" required placeholder="Nombre personne max">
-                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne max</label>
+                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne maximale</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -832,13 +821,13 @@ function changer_module() {
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
     var mod_preview = document.getElementById("border_premier");
-    $("#border_premier").css("border", "4px solid #7635dc");
+    $("#border_premier").css("border", "2px solid #7635dc");
     $("#border_objectif").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
     $("#border_prestation").css("border", "none");
     $("#border_reference").css("border", "none");
-    $("#changer_module").css("border", "3px solid #7635dc");
+    $("#changer_module").css("border", "1px solid #7635dc");
     $("#changer_objectif").css("border", "none");
     $("#changer_cible").css("border", "none");
     $("#changer_equipement").css("border", "none");
@@ -906,13 +895,13 @@ function changer_objectif() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_objectif").css("border", "4px solid #7635dc");
+    $("#border_objectif").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
     $("#border_prestation").css("border", "none");
     $("#border_reference").css("border", "none");
-    $("#changer_objectif").css("border", "3px solid #7635dc");
+    $("#changer_objectif").css("border", "1px solid #7635dc");
     $("#changer_module").css("border", "none");
     $("#changer_cible").css("border", "none");
     $("#changer_equipement").css("border", "none");
@@ -978,13 +967,13 @@ function changer_cible() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_cible").css("border", "4px solid #7635dc");
+    $("#border_cible").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_objectif").css("border", "none");
     $("#border_equipement").css("border", "none");
     $("#border_prestation").css("border", "none");
     $("#border_reference").css("border", "none");
-    $("#changer_cible").css("border", "3px solid #7635dc");
+    $("#changer_cible").css("border", "1px solid #7635dc");
     $("#changer_objectif").css("border", "none");
     $("#changer_module").css("border", "none");
     $("#changer_equipement").css("border", "none");
@@ -1050,13 +1039,13 @@ function changer_reference() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_reference").css("border", "4px solid #7635dc");
+    $("#border_reference").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
     $("#border_prestation").css("border", "none");
     $("#border_objectif").css("border", "none");
-    $("#changer_reference").css("border", "3px solid #7635dc");
+    $("#changer_reference").css("border", "1px solid #7635dc");
     $("#changer_objectif").css("border", "none");
     $("#changer_cible").css("border", "none");
     $("#changer_equipement").css("border", "none");
@@ -1122,13 +1111,13 @@ function changer_equipement() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_equipement").css("border", "4px solid #7635dc");
+    $("#border_equipement").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_reference").css("border", "none");
     $("#border_prestation").css("border", "none");
     $("#border_objectif").css("border", "none");
-    $("#changer_equipement").css("border", "3px solid #7635dc");
+    $("#changer_equipement").css("border", "1px solid #7635dc");
     $("#changer_objectif").css("border", "none");
     $("#changer_cible").css("border", "none");
     $("#changer_module").css("border", "none");
@@ -1194,13 +1183,13 @@ function changer_prestation() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_prestation").css("border", "4px solid #7635dc");
+    $("#border_prestation").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
     $("#border_reference").css("border", "none");
     $("#border_objectif").css("border", "none");
-    $("#changer_prestation").css("border", "3px solid #7635dc");
+    $("#changer_prestation").css("border", "1px solid #7635dc");
     $("#changer_objectif").css("border", "none");
     $("#changer_cible").css("border", "none");
     $("#changer_equipement").css("border", "none");
@@ -1250,7 +1239,7 @@ function changer_prestation() {
 function resetForm() {
     changer_module();
     document.getElementById("frm_new_module").reset();
-    $("#changer_module").css("border", "3px solid #7635dc");
+    $("#changer_module").css("border", "1px solid #7635dc");
 }
 
 function suivant_objectif() {

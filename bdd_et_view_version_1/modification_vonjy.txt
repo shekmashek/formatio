@@ -83,7 +83,7 @@ add column point_champ int(5) default 0;
 recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_responsable_entreprise => bdd_suiviformation_view_29(budgetisation)
 
--------avril 5 
+-------avril 5
 recréer vu v_groupe_entreprise => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_projet_session_inter => bdd_suiviformation_view_4.0(modification_views_projet)
