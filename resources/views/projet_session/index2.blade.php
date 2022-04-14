@@ -227,6 +227,7 @@
                                 <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                     <th> Session </th>
                                     <th> Module </th>
+                                    <th> Modalité </th>
                                     {{-- @can('isCFP')
                                         @if ($prj->type_formation_id == 1)
                                             <th> Entreprise </th>
@@ -267,6 +268,7 @@
                                                             <td> {{ $pj->nom_etp }} </td>
                                                         @endif
                                                     @endcan --}}
+                                                    <td>{{ $pj->modalite }}</td>
                                                     @can('isReferent')
                                                         @if ($pj->type_formation_id == 1)
                                                             <td> {{ $pj->nom_cfp }} </td>
@@ -662,7 +664,7 @@
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
                                 <th> Date du projet</th>
-
+                                <th> Modalité</th>
                                 <th> Statut </th>
                             </thead>
                             <tbody class="tbody_projet">
@@ -685,6 +687,7 @@
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
+                                        <td>{{ $pj->modalite }}</td>
                                         <td class="text-center m-0">
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">{{ $pj->item_status_groupe }}</p>
                                         </td>
@@ -708,7 +711,7 @@
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
                                 {{-- <th> Date du projet</th> --}}
-
+                                <th>Modalité</th>
                                 <th> Statut </th>
                             </thead>
                             <tbody class="tbody_projet">
@@ -731,8 +734,9 @@
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
+                                        <td>{{ $pj->modalite }}</td>
                                         <td>
-                                            <p class="{{ $pj->class_status_groupe }} m-0 p-0">{{ $pj->item_status_groupe }}</p>
+                                            <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}</p>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -96,26 +96,7 @@ class GroupeController extends Controller
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
         $type_formation = $request->type_formation;
-        //condition de validation de formulaire
-        // $request->validate(
-        //     [
-        //         'min_part' => "required|numeric|min:0",
-        //         'max_part' => "required|numeric|min:0",
-        //         'date_debut' => "required|date",
-        //         'date_fin' => "required|date",
-        //         'module_id' => "required",
-        //     ],
-        //     [
-        //         'date_debut.required' => 'la date du debut de formation ne doit pas être null',
-        //         'date_fin.required' => 'la date fin de formation ne doit pas être null',
-        //         'module_id.required' => 'le module  de la formation ne doit pas être null',
-        //     ]
-        // );
-
-
         try {
-
-            // dd($request->module_id);
             if($request->date_debut >= $request->date_fin){
                 throw new Exception("Date de début doit être inférieur date de fin.");
             }
@@ -131,12 +112,14 @@ class GroupeController extends Controller
                 throw new Exception("Vous devez choisir une entreprise pour la formation.");
             }
             if($request->payement == null){
-                throw new Exception("Vous devez choisir une entreprise pour la formation.");
+                throw new Exception("Vous devez choisir le mode de payement pour la formation.");
             }
             if($request->min_part >= $request->max_part ){
                 throw new Exception("Participant minimal doit être inférieur au participant maximal.");
             }
-
+            if($request->modalite == null){
+                throw new Exception("Vous devez choisir la modalité de formation.");
+            }
             DB::beginTransaction();
             $projet = new projet();
 
@@ -149,8 +132,8 @@ class GroupeController extends Controller
             $groupe = new groupe();
             $nom_groupe = $groupe->generateNomSession($last_insert_projet->id);
             DB::insert(
-                'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,1,TRUE)',
-                [$request->max_part, $request->min_part, $nom_groupe, $last_insert_projet->id, $request->module_id, $request->payement, $request->date_debut, $request->date_fin]
+                'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,modalite,activiter) values(?,?,?,?,?,?,?,?,1,?,TRUE)',
+                [$request->max_part, $request->min_part, $nom_groupe, $last_insert_projet->id, $request->module_id, $request->payement, $request->date_debut, $request->date_fin,$request->modalite]
             );
 
             $last_insert_groupe = DB::table('groupes')->latest('id')->first();
@@ -221,19 +204,6 @@ class GroupeController extends Controller
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
         $type_formation = $request->type_formation;
-        //condition de validation de formulaire
-        $request->validate(
-            [
-                'date_debut' => "required|date",
-                'date_fin' => "required|date",
-                'module_id' => "required",
-            ],
-            [
-                'date_debut.required' => 'la date du debut de formation ne doit pas être null',
-                'date_fin.required' => 'la date fin de formation ne doit pas être null',
-                'module_id.required' => 'le module  de la formation ne doit pas être null',
-            ]
-        );
 
         try {
             if ($request->date_debut >= $request->date_fin) {
@@ -245,6 +215,9 @@ class GroupeController extends Controller
             if ($request->min_part >= $request->max_part) {
                 throw new Exception("Participant minimal doit être au participant maximal.");
             }
+            if($request->modalite == null){
+                throw new Exception("Vous devez choisir la modalité de formation.");
+            }
             DB::beginTransaction();
             $projet = new projet();
             $nom_projet = $projet->generateNomProjet();
@@ -254,8 +227,8 @@ class GroupeController extends Controller
             $groupe = new groupe();
             $nom_groupe = $groupe->generateNomSession($last_insert_projet->id);
             DB::insert(
-                'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,1,TRUE)',
-                [$request->max_part, $request->min_part, $nom_groupe, $last_insert_projet->id, $request->module_id, 1, $request->date_debut, $request->date_fin]
+                'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,modalite,activiter) values(?,?,?,?,?,?,?,?,1,?,TRUE)',
+                [$request->max_part, $request->min_part, $nom_groupe, $last_insert_projet->id, $request->module_id, 1, $request->date_debut, $request->date_fin,$request->modalite]
             );
 
             $last_insert_groupe = DB::table('groupes')->latest('id')->first();

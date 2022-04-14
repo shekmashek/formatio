@@ -7,6 +7,7 @@
             <div class="d-flex m-0 p-0 height_default">
                 <h5>{{ $module_session->reference.' - '.$module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
                 <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
+                <span class="ms-3 mb-2 p-1 ps-2 pe-2" style="color: #bc76dd;">{{ $modalite }}</span>
             </div>
             <div class="d-flex m-0 p-0 height_default">
                 <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong>  </p>
