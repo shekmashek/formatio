@@ -61,3 +61,10 @@ ALTER TABLE entreprises
 ALTER TABLE cfps
     add column assujetti_id bigint(20) unsigned,
     ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
+
+ALTER TABLE abonnement_cfps
+    add column activite boolean not null default true;
+
+ALTER TABLE abonnements
+    add column activite boolean not null default true;
+

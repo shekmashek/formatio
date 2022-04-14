@@ -52,7 +52,7 @@
                         <div class="row g-0 m-0" style="align-items: center">
                             <div class="col-12 d-flex justify-content-between" style="align-items: center">
                                 <div class="col" align="right">
-                                    <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button>
+                                    {{-- <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button> --}}
                                     <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
                                         <span class="btn_enregistrer text-center">Retour - Liste des factures</span>
                                     </a>
@@ -91,7 +91,7 @@
                                         <p class="m-0 adresse_cfp">+261 34 81 135 63</p>
                                         <p class="m-0 adresse_cfp">www.formation.mg</p><br>
                                         <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
-                                        <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p>
+                                        {{-- <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -100,20 +100,37 @@
                         <div class="container-fluid my-2">
                             <div class="row">
                                 <h5><strong>Facturé à</strong></h5>
-
-                                <div class="col-md-4">
-                                    <div align="left">
-                                        <h4 class="m-0 nom_cfp">{{$cfp->nom}}</h4>
-                                        <p class="m-0 adresse_cfp">{{$cfp->email}}</p>
-                                        <p class="m-0 adresse_cfp">{{$cfp->adresse_lot." ".$cfp->adresse_quartier}}</p>
-                                        <p class="m-0 adresse_cfp">{{$cfp->adresse_ville." ".$cfp->adresse_code_postal}}</p>
-                                        <p class="m-0 adresse_cfp">{{$cfp->adresse_region}}</p>
-                                        <p class="m-0 adresse_cfp">{{$cfp->telephone}}</p>
-                                        <p class="m-0 adresse_cfp">{{$cfp->site_web}}</p><br>
-                                        <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
-                                        <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p>
+                                @if($cfp!=null)
+                                    <div class="col-md-4">
+                                        <div align="left">
+                                            <h4 class="m-0 nom_cfp">{{$cfp->nom}}</h4>
+                                            <p class="m-0 adresse_cfp">{{$cfp->email}}</p>
+                                            <p class="m-0 adresse_cfp">{{$cfp->adresse_lot." ".$cfp->adresse_quartier}}</p>
+                                            <p class="m-0 adresse_cfp">{{$cfp->adresse_ville." ".$cfp->adresse_code_postal}}</p>
+                                            <p class="m-0 adresse_cfp">{{$cfp->adresse_region}}</p>
+                                            <p class="m-0 adresse_cfp">{{$cfp->telephone}}</p>
+                                            <p class="m-0 adresse_cfp">{{$cfp->site_web}}</p><br>
+                                            <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
+                                            <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+                                @if($entreprises!=null)
+                                    <div class="col-md-4">
+                                        <div align="left">
+                                            <h4 class="m-0 nom_cfp">{{$entreprises->nom_etp}}</h4>
+                                            <p class="m-0 adresse_cfp">{{$entreprises->email_etp}}</p>
+                                            <p class="m-0 adresse_cfp">{{$entreprises->adresse_rue." ".$entreprises->adresse_quartier}}</p>
+                                            <p class="m-0 adresse_cfp">{{$entreprises->adresse_ville." ".$entreprises->adresse_code_postal}}</p>
+                                            <p class="m-0 adresse_cfp">{{$entreprises->adresse_region}}</p>
+                                            <p class="m-0 adresse_cfp">{{$entreprises->telephone_etp}}</p>
+                                            <p class="m-0 adresse_cfp">{{$entreprises->site_etp}}</p><br>
+                                            <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
+                                            <p class="m-0 adresse_cfp">NIF : {{$entreprises->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$entreprises->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$entreprises->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$entreprises->cif}}</p>
+                                        </div>
+                                    </div>
+                                @endif
+
 
                                 <div class="col-md-3"></div>
                                 <div class="col-md-5">

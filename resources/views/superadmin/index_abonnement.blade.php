@@ -77,16 +77,16 @@
                                         @foreach ($entreprise as $etp)
                                             <div class="col-md-5">
                                                 <label for="">Nom</label>
-                                                <input type="text" class="form-control" value="{{$etp->entreprise->nom_etp}}" readonly><br>
+                                                <input type="text" class="form-control" value="{{$etp->nom_etp}}" readonly><br>
 
                                                 <label for="">Adresse de facturation</label>
-                                                <input type="text" class="form-control" value = "{{$etp->entreprise->adresse}}" readonly><br>
+                                                <input type="text" class="form-control" value = "{{$etp->adresse_lot}} {{$etp->adresse_quartier}} {{$etp->adresse_ville}} {{$etp->adresse_region}} {{$etp->adresse_code_postal}} " readonly><br>
 
                                                 <label for="">Email</label>
-                                                <input type="text" class="form-control" value = "{{$etp->entreprise->email_etp}}" readonly><br>
+                                                <input type="text" class="form-control" value = "{{$etp->email_etp}}" readonly><br>
 
                                                 <label for="">Telephone</label>
-                                                <input type="text" class="form-control" value = "{{$etp->entreprise->telephone_etp}}" readonly><br>
+                                                <input type="text" class="form-control" value = "{{$etp->telephone_etp}}" readonly><br>
                                             </div>
 
                                             <div class="col-md-5">

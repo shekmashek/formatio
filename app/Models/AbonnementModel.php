@@ -24,4 +24,13 @@ class AbonnementModel extends Model
             else $num_facture = $max_id[0]->id_max  +=  1;
             DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?,?,?,?,?)', [$abonnement_cfps_id,$invoice_date,$due_date,$num_facture,$montant_facture]);
         }
+
+          /** insertion de données dans factures_abonnements */
+          public function insert_factures_abonnements_etp($abonnement_id,$invoice_date,$due_date,$montant_facture){
+            //generation du numero de facture
+              $max_id = $this->findMax('factures_abonnements','num_facture');
+              if($max_id == null) $num_facture = 0;
+              else $num_facture = $max_id[0]->id_max  +=  1;
+              DB::insert('insert into factures_abonnements (abonnement_id, invoice_date,due_date,num_facture,montant_facture) values (?,?,?,?,?)', [$abonnement_id,$invoice_date,$due_date,$num_facture,$montant_facture]);
+          }
 }
