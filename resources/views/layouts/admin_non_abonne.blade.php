@@ -132,13 +132,13 @@
             {{-- projet de formation --}}
 
             @canany(['isCFP','isFormateur'])
-            <li>
+            {{-- <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
 
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_projet')}}" class="d-flex nav_linke">
@@ -154,13 +154,13 @@
             </li> --}}
             @endcanany
             @canany(['isReferent'])
-            <li>
+            {{-- <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
 
-            </li>
+            </li> --}}
             @endcanany
             @canany(['isReferent'])
             <li>
@@ -326,16 +326,16 @@
             {{-- calendrire de formations --}}
             <li>
                 @canany(['isReferent','isStagiaire','isManager'])
-                    <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
+                    {{-- <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
                         <i class='bx bxs-calendar'></i>
                         <span class="links_name">Calendrier</span>
-                    </a>
+                    </a> --}}
                 @endcan
                 @canany(['isCFP', 'isFormateur'])
-                <a href="{{route('calendrier')}}" class="d-flex nav_linke">
+                {{-- <a href="{{route('calendrier')}}" class="d-flex nav_linke">
                     <i class='bx bxs-calendar'></i>
                     <span class="links_name">Calendrier</span>
-                </a>
+                </a> --}}
                 @endcanany
 
 
