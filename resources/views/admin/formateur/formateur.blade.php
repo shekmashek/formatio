@@ -51,7 +51,7 @@
 
     </style>
 
-    <div class="row w-100 bg-none mt-2 font_text">
+    <div class="row w-100 bg-none mt-3 font_text">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
 
@@ -70,23 +70,29 @@
                 </div>
             </div>
         </nav>
-        <div class="col-md-5">
-            <div class="shadow p-3 mb-5 bg-body rounded ">
+        <div class="col-md-7">
+            {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
 
                 <h4>Formateurs déjà collaborer</h4>
 
-                <div class="table-responsive text-center">
+                {{-- <div class="table-responsive text-center"> --}}
 
-                    <table class="table  table-borderless table-sm">
-                        <tbody id="data_collaboration">
+                    <table class="table  table-borderless table-lg table-hover">
+                        <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
+                            <th>Nom & prénom formateur</th>
+                            <th>E-mail</th>
+                        </thead>
+                        <tbody id="data_collaboration" style="font-size: 11.5px">
 
                             @if (count($formateur)<=0) <tr>
                                 <td> Aucun formateur collaborer</td>
                                 </tr>
                                 @else
                                 @foreach($formateur as $frm)
-                                <tr>
-                                    <td>
+                                <tr class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
+                                    <td role="button" onclick="afficherInfos();">{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
+                                    <td role="button" onclick="afficherInfos();">{{$frm->mail_formateur}}</td>
+                                    {{-- <td>
                                         <div align="left">
                                             <strong>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</strong>
                                             <p style="color: rgb(238, 150, 18)">{{$frm->mail_formateur}}</p>
@@ -95,7 +101,7 @@
                                         <div align="rigth">
                                             <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <div class=" btn-group dropleft">
                                             <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -149,12 +155,12 @@
                                 @endif
                         </tbody>
                     </table>
-                </div>
+                {{-- </div> --}}
 
-            </div>
+            {{-- </div> --}}
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-5">
 
             <h4>Inviter un Formateur</h4>
             <p>
@@ -172,11 +178,49 @@
                         <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_format" placeholder="Adresse mail*" required />
                     </div>
                     <div class="col ms-2">
-                        <button type="submit" class="btn btn-primary mt-2">Envoyer l'invitation</button>
+                        <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
                     </div>
                 </div>
             </form>
 
+            
+        <div class="infos mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0">infos</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                </div>
+                <hr class="mt-2">
+              
+                <span class="text-center" id="logo"> </span>
+                <div style="font-size: 13px" >
+                <div class="text-center mt-2" >
+                <span id="nom"> </span>
+                </div>
+                <div class="text-center mt-1">
+                  <span id="prenom" > <span>
+                </div>
+                <div class="text-center mt-1">
+                    <span id="genre"> <span>
+                </div>
+                    <div class="text-center mt-1">
+                        <span id="email">  </span>
+                    </div>
+                    <div class="text-center mt-1">
+                        <span id="telephone">  </span>
+                    </div>
+                <div class="text-center mt-1">
+                        <span id="specialite" > <span>
+                </div>
+                <div class="text-center mt-1">
+                    <span id="adresse_formateur" > <span>
+            </div>
+            </div>
+                  
+            </div>
+        </div>
             @if(Session::has('success'))
             <div class="alert alert-success">
                 <strong> {{Session::get('success')}}</strong>
@@ -193,5 +237,40 @@
 
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+<script>
+    $(".information").on('click', function(e) {
+        
+    let id = $(this).data("id");
+    $.ajax({
+        method: "GET"
+        , url: "/information_formateur"
+        , data: {
+            Id: id
+        }
+        , dataType: "html"
+        , success: function(response) {
+            let userData= JSON.parse(response);
+            console.log(userData);
+            //parcourir le premier tableau contenant les info sur les programmes
+            for (let $i = 0; $i< userData.length; $i++ ) {
+
+                let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
+                url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                $("#logo").html(" ");
+                $("#logo").append(url_photo);
+                $("#nom").text(userData[$i].nom_formateur); 
+                $("#prenom").text(userData[$i].prenom_formateur);
+                $("#genre").text(userData[$i].genre);
+                 $("#email").text(userData[$i].mail_formateur);
+                 $("#telephone").text(userData[$i].numero_formateur);
+                 $("#specialite").text(userData[$i].specialite);
+                $("#adresse_formateur").text(userData[$i].adresse);
+            }
+        }
+    });
+});
+
+</script>
 @endsection

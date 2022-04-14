@@ -18,7 +18,7 @@
                     echo number_format($prix->montant_session,2,"."," ")
                 @endphp Ar</strong>  </p>
                 @endcanany
-                
+
                 <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
                 <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong>  </p>
             </div>
@@ -68,7 +68,7 @@
             <div class="d-flex justify-content-between">
                 @if ($type_formation_id == 1)
                     <div class="chiffre_d_affaire">
-                        
+
                         <div class="d-flex flex-row">
                             <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>&nbsp;&nbsp;
                             <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" alt="" class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
@@ -78,7 +78,7 @@
                     </div>
                 @endif
                 <div class="chiffre_d_affaire">
-                    
+
                     <div class="d-flex flex-row">
                         <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
                         <img src="{{ asset('images/CFP/'.$projet[0]->logo_cfp) }}" alt="" class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
@@ -100,7 +100,7 @@
                         </strong></p>
                     </div>
                 @endcanany
-                
+
             </div>
             {{-- <div class="d-flex me-2 flex-wrap">
                 <div class="{{ $projet[0]->class_status_groupe }}">{{ $projet[0]->item_status_groupe }}</div>
@@ -327,8 +327,49 @@
         </div>
     </section>
 </div>
+<div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">infos</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+        </div>
+        <hr class="mt-2">
+        <div class="text-center mt-2">
+            <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" class="img-fluid text-center"  style="width:120px;height:60px;" role="button" onclick="afficherInfos();"  >
 
+              </div>
+              <div >
+                  <p class="p-0 m-0 text-center" > <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                  <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                  <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
+                <p class="p-0 m-0 text-center"> <strong>  Adresse:{{ $projet[0]->adresse_rue}} {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal}} {{ $projet[0]->adresse_ville}} {{ $projet[0]->adresse_region}}</strong></p>
+              </div>
 
+    </div>
+</div>
+</div>
+{{-- affiche prof --}}
+<div class="prof mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">Infos</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherProf();"></i>
+        </div>
+        <hr class="mt-2">
+        <div class="text-center mt-2">
+
+              </div>
+              <div >
+
+              </div>
+
+    </div>
+</div>
+</div>
 <style>
 .shadow{
     height: auto;

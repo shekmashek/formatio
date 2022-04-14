@@ -122,6 +122,12 @@ Route::get('session_inter/{id?}','GroupeController@sessionInter')->name('session
 Route::resource('entreprise','EntrepriseController')->except([
     'create','edit','destroy','update'
 ]);
+//information sur l'entreprise
+
+Route::get('/information_entreprise','EntrepriseController@information_entreprise')->name('information_entreprise');
+//information sur le formateur
+Route::get('/information_formateur','ProfController@information_formateur')->name('information_formateur');
+
 //route profile entreprise
 Route::get('/profile_entreprise/{id}','EntrepriseController@profile_entreprise')->name('profile_entreprise');
 //
