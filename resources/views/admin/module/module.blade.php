@@ -371,7 +371,7 @@
                                                                                 class="form-control input" placeholder="Compétences"
                                                                                 required>
                                                                             <label for="titre_competence"
-                                                                                class="form-control-placeholder" >Compétences</label>
+                                                                                class="form-control-placeholder">Compétences</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>

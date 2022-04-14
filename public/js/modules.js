@@ -169,7 +169,7 @@ function competence() {
     html +=     '<div class="col-4">';
     html +=         '<div class="form-group ms-1">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="number" name="objectif[]" id="objectif" min="1" max="10" class="form-control input" placeholder="Notes" required>';
+    html +=                 '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
     html +=                 '<label for="objectif" class="form-control-placeholder">Notes';
     html +=                 '</label>';
     html +=             '</div>';
