@@ -1,0 +1,331 @@
+.carHead{
+    width:auto;
+    background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57));
+    height:450px;
+    border-radius:10px;
+    margin: 0 10px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-top: 20px;
+    color: black
+}
+.font{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-weight: bold;
+}
+.bar{
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.buy_now{
+    background-color: white;
+    color: rgb(142,155,178);
+    border: none;
+    border-radius: 2rem;
+    padding: 6px 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.btn_ligne{
+    border-radius: 10px;
+}
+.btn_month{
+    border: hidden;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+.btn_month:focus{
+    outline: none;
+    box-shadow: none;
+    box-shadow: 0 0 3px rgba(0, 0, 0,.5);
+}
+.card_repeat{
+    width: 320px;
+    border-radius: 1rem;
+    margin: 10px 10px;
+}
+ul p{
+    color: rgb(142,155,178);
+    text-align: left;
+}
+.btn_try{
+    background: linear-gradient(to right, rgb(251,206,51) , rgb(246,103,55));
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+.btn_premium{
+    background-color: rgb(233,236,239);
+    border-radius: 1rem;
+    padding: 3px 5px;
+    font-size: 12px;
+    border: none;
+    font-weight: bold;
+}
+.btn_try:hover{
+    font-size: 15px;
+    box-shadow: 1px solid rgb(251,206,51);
+}
+.bnt_try:focus{
+    color: white;
+    outline: none;
+    box-shadow: none;
+}
+.bnt_join:focus{
+    color: white;
+    outline: none;
+    box-shadow: none;
+}
+.btn_join{
+    background: linear-gradient(to right, rgb(54,61,104) , rgb(31,35,60));
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+.btn_join:hover{
+    font-size: 15px;
+    box-shadow: 1px solid rgb(251,206,51);
+}
+.fa-check{
+    color: white;
+    background-color: green;
+    border-radius: 2rem;
+}
+.th_color{
+    color: rgb(142,155,178);
+}
+
+
+
+
+/* Abonnement */
+.abonnement_header{
+    width:auto;
+    background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57));
+    height:126px;
+    border-radius:10px;
+    margin: 0 10px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-top: 20px;
+}
+.smalli{
+    font-size: 10px;
+}
+.change_tarif{
+    background: linear-gradient(to right, rgb(251,206,51) , rgb(246,103,55));
+    padding: 4px 5px;
+    border-radius: 2rem;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+.change_tarif:hover{
+    color: white;
+    font-size: 15px;
+}
+.gratuit{
+    font-weight: normal;
+}
+
+/* Activation abonnement */
+.card_abonnement{
+    height: 80px;
+    width: 100%;
+}
+.label_vert{
+    font-size: 12px;
+    background-color: rgb(226,246,237);
+    color: rgb(38,175,77);
+    padding: 2px 8px;
+    border-radius: 1rem;
+    font-weight: bold;
+}
+.label_orange{
+    font-size: 12px;
+    background-color: rgb(226,246,237);
+    color: rgb(248, 138, 35);
+    padding: 2px 8px;
+    border-radius: 1rem;
+    font-weight: bold;
+}
+.label_rouge{
+    font-size: 12px;
+    background-color: rgb(253,226,231);
+    color: rgb(230,60,60);
+    padding: 2px 8px;
+    border-radius: 1rem;
+    font-weight: bold;
+}
+.form-check-input:checked{
+    background-color: #55CE63;
+}
+.form-check-input:focus{
+    outline: none;
+    box-shadow: none;
+}
+.select_type{
+    padding: 2px 10px;
+    border-radius: 1rem;
+    border: none;
+}
+.select_type:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+
+/* ---------------- */
+
+.card {
+    max-width: 250px;
+    height: 380px;
+    position: relative;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 0 auto;
+    transition: all .5s ease;
+}
+
+.h-1 {
+    text-transform: uppercase
+}
+
+.ribon {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: #7635dc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.ribon_premium {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: gold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.ribon .bx {
+    font-size: 2rem;
+    color: white
+}
+
+.ribon_premium .bx{
+    font-size: 2rem;
+    color: white
+}
+
+.card .price {
+    color: #7635dc;
+    font-size: 25px
+}
+
+.card ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+.card ul li {
+    font-size: 12px;
+    margin-bottom: 8px
+}
+
+.card ul .bx.bx-check {
+    font-size: 1.5rem !important;
+    color: rgb(8, 192, 8)
+}
+
+.card:hover {
+    background-color: gold;
+    background-color: rgba(238, 237, 237, 0.624);
+    transform: scale(1.1);
+}
+
+.card:hover .bx.bx-check {
+    color: #7635dc
+}
+
+.card .btn {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7635dc;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    color: white;
+    transition: all .5s ease;
+}
+
+.card .btn_premium {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gold;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    color: white;
+    transition: all .5s ease;
+}
+
+.card .btn:hover{
+    transform: scale(1.05);
+}
+
+@media (max-width:500px) {
+    .card {
+        max-width: 100%
+    }
+}
+
+.navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+    transform: scale(1.1);
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
