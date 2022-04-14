@@ -43,9 +43,10 @@
                                             id="border_premier">
                                             <div class=" detail__formation__result__content">
                                                 <div class="detail__formation__result__item ">
-                                                    <h4 class="mt-3">
-                                                        <span id="preview_module"><span
-                                                                class="acf-nom_module">{{$mod->nom_module}}</span></span>
+                                                    <h4 class="mt-3 ">
+                                                        <span id="preview_module">
+                                                            <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        </span>
                                                     </h4>
                                                     <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
                                                     <p id="preview_descript"><span class="acf-description" style="font-size: 0.850rem">{{$mod->description}}</span></p>
@@ -59,6 +60,9 @@
                                                                 <i class='bx bxs-star-half'></i>
                                                             </div>
                                                             <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                            @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                            <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                            @endif
                                                         </div>
                                                         <div class="col-6 ms-3 w-100">
                                                             <p class="m-0">
@@ -66,12 +70,19 @@
                                                                     @php
                                                                     echo number_format($mod->prix, 0, ' ', ' ');
                                                                     @endphp
-                                                                    &nbsp;AR</span>&nbsp;HT
+                                                                    &nbsp;AR</span>&nbsp;HT<span>/pers</span>
                                                             </p>
-                                                            @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                            <span
-                                                                class="">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                            @endif
+                                                            <p class="m-0 ">
+                                                                <span class="new_module_prix">
+                                                                    @if($mod->prix_groupe == null)
+                                                                        <span>Groupe Indisponible</span>
+                                                                    @else
+                                                                        @php
+                                                                        echo number_format($mod->prix_groupe, 0, ' ', ' ');
+                                                                        @endphp
+                                                                        &nbsp;AR</span>&nbsp;HT<span>/grp</span>
+                                                                    @endif
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -206,6 +217,9 @@
                                                                 <i class='bx bxs-star-half'></i>
                                                             </div>
                                                             <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                            @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                            <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                            @endif
                                                         </div>
                                                         <div class="col-6 ms-3 w-100">
                                                             <p class="m-0">
@@ -213,11 +227,19 @@
                                                                     @php
                                                                     echo number_format($mod->prix, 0, ' ', ' ');
                                                                     @endphp
-                                                                    &nbsp;AR</span>&nbsp;HT
+                                                                    &nbsp;AR</span>&nbsp;HT<span>/pers</span>
                                                             </p>
-                                                            @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                            <span>{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                            @endif
+                                                            <p class="m-0 ">
+                                                                <span class="new_module_prix">
+                                                                    @if($mod->prix_groupe == null)
+                                                                        <span>Groupe Indisponible</span>
+                                                                    @else
+                                                                        @php
+                                                                        echo number_format($mod->prix_groupe, 0, ' ', ' ');
+                                                                        @endphp
+                                                                        &nbsp;AR</span>&nbsp;HT<span>/grp</span>
+                                                                    @endif
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -421,37 +443,39 @@
                                                     <p id="preview_descript"><span
                                                             class="acf-description">{{$mod->description}}</span></p>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="detail__formation__result__avis"
-                                                            style="color: black !important;">
-                                                            <div style="--note: 4.5;">
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star-half'></i>
-                                                            </div>
-                                                            <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                <div class="d-flex ">
+                                                    <div class="col-6 detail__formation__result__avis">
+                                                        <div style="--note: 4.5;">
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star-half'></i>
                                                         </div>
+                                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                        <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                        @endif
                                                     </div>
-                                                    <div class="col-6">
-                                                        <div class="detail__formation__result__content text-end">
-                                                            <div>
-                                                                @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                                <span
-                                                                    style="color: #7635dc">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                    <div class="col-6 ms-3 w-100">
+                                                        <p class="m-0">
+                                                            <span class="new_module_prix">
+                                                                @php
+                                                                echo number_format($mod->prix, 0, ' ', ' ');
+                                                                @endphp
+                                                                &nbsp;AR</span>&nbsp;HT<span>/pers</span>
+                                                        </p>
+                                                        <p class="m-0 ">
+                                                            <span class="new_module_prix">
+                                                                @if($mod->prix_groupe == null)
+                                                                    <span>Groupe Indisponible</span>
+                                                                @else
+                                                                    @php
+                                                                    echo number_format($mod->prix_groupe, 0, ' ', ' ');
+                                                                    @endphp
+                                                                    &nbsp;AR</span>&nbsp;HT<span>/grp</span>
                                                                 @endif
-                                                            </div>
-                                                            <div>
-                                                                <p style="margin: 0"><span class="new_module_prix">
-                                                                        @php
-                                                                        echo number_format($mod->prix, 0, ' ', ' ');
-                                                                        @endphp
-                                                                        &nbsp;AR</span>&nbsp;HT</p><span></span>
-                                                            </div>
-
-                                                        </div>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>

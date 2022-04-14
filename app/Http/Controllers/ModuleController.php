@@ -31,26 +31,7 @@ class ModuleController extends Controller
             return $next($request);
         });
     }
-    // public function index($id = null)
-    // {
-    //     $id_user = Auth::user()->id;
-    //     $cfp_id =cfp::where('user_id', $id_user)->value('id');
-    //     if (Gate::allows('isCFP')) {
-    //         $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
-    //         $categorie = formation::where('cfp_id', $cfp_id)->get();
-    //         if(count($infos) <= 0){
-    //             return view('admin.module.guide');
-    //         }else{
-    //             return view('admin.module.module', compact('infos', 'categorie'));
-    //         }
-    //     }
-    //     if (Gate::allows('isSuperAdmin')) {
-    //         $infos = DB::select('select * from moduleformation');
-    //         $categorie = formation::all();
-    //     }
 
-    //     return view('admin.module.module', compact('infos', 'categorie'));
-    // }
 
     public function index($id = null)
     {
@@ -193,7 +174,7 @@ class ModuleController extends Controller
         if ($validator->fails()) {
             return back();
         } else {
-            DB::insert('insert into modules(reference,nom_module,formation_id,prix,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?)', [$request->reference, $request->nom_module, $request->categorie, $request->prix, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->description, $request->modalite, $request->materiel, $request->niveau, $request->cible, $request->bon_a_savoir, $request->prestation, $request->min_pers, $request->max_pers, $cfp_id]);
+            DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?)', [$request->reference, $request->nom_module, $request->categorie, $request->prix,$request->prix_groupe, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->description, $request->modalite, $request->materiel, $request->niveau, $request->cible, $request->bon_a_savoir, $request->prestation, $request->min_pers, $request->max_pers, $cfp_id]);
             return redirect()->route('liste_module');
         }
     }
@@ -289,10 +270,51 @@ class ModuleController extends Controller
 
     public function update(Request $request)
     {
-        $id = $request->id;
-        //modifier les donnée
-        DB::update('update modules set reference=?, nom_module=?, prix=?, duree=?, duree_jour=?, prerequis=?, objectif=?, modalite_formation=?, description=?, materiel_necessaire=?, bon_a_savoir=?, cible=?, prestation=?, min=?, max=? where id=?', [$request->reference, $request->nom_module, $request->prix, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->modalite, $request->description, $request->materiel, $request->bon_a_savoir, $request->cible, $request->prestation, $request->min_pers, $request->max_pers, $id]);
-        return redirect()->route('liste_module');
+
+        $validator = Validator::make(
+            $request->all(),
+                [
+                    'reference' => 'required',
+                    'nom_module' => 'required',
+                    'prix' =>  'required',
+                    'heure' => 'required',
+                    'jour' => 'required',
+                    'prerequis' => 'required',
+                    'objectif' => 'required',
+                    'description' => 'required',
+                    'materiel' => 'required',
+                    'bon_a_savoir' => 'required',
+                    'cible' => 'required',
+                    'prestation' => 'required',
+                    'min_pers' => 'required',
+                    'max_pers' => 'required'
+                ],
+                [
+                    'reference.required' => 'Veuillez remplir le champ',
+                    'nom_module.required' => 'Veuillez remplir le champ',
+                    'prix.required' => 'Veuillez remplir le champ',
+                    'heure.required' => 'Veuillez remplir le champ',
+                    'jour.required' => 'Veuillez remplir le champ',
+                    'prerequis.required' => 'Veuillez remplir le champ',
+                    'objectif.requires' => 'Veuillez remplir le champ',
+                    'description.required' => 'Veuillez remplir le champ',
+                    'materiel.required' => 'Veuillez remplir le champ',
+                    'bon_a_savoir.required' => 'Veuillez remplir le champ',
+                    'cible.required' => 'Veuillez remplir le champ',
+                    'prestation.required' => 'Veuillez remplir le champ',
+                    'min_pers.required' => 'Veuillez remplir le champ',
+                    'max_pers.required' => 'Veuillez remplir le champ'
+                ]
+
+            );
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        } else {
+            $id = $request->id;
+            //modifier les donnée
+            DB::update('update modules set reference=?, nom_module=?, prix=?, prix_groupe=?, duree=?, duree_jour=?, prerequis=?, objectif=?, modalite_formation=?, description=?, materiel_necessaire=?, bon_a_savoir=?, cible=?, prestation=?, min=?, max=? where id=?', [$request->reference, $request->nom_module, $request->prix, $request->prix_groupe, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->modalite, $request->description, $request->materiel, $request->bon_a_savoir, $request->cible, $request->prestation, $request->min_pers, $request->max_pers, $id]);
+            return redirect()->route('liste_module');
+        }
     }
 
     public function destroy(Request $request)

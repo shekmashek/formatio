@@ -352,7 +352,6 @@
 }
 
 
-
 #preview_descript,
 #preview_haut2,
 #preview_modalite,
@@ -368,11 +367,31 @@
     padding-bottom: 8rem;
 }
 .new_module_prix {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     letter-spacing: 0;
-    color: #7635dc;
+    color: #637381;
     font-weight: 500;
     text-align: end;
+}
+
+.active_prix{
+    display: block;
+}
+
+.btn_changer_prix{
+    background:linear-gradient(60deg,#7635dc, #2B32B2)  ;
+    border: none;
+    border-radius: 30px;
+    padding: .2rem 1rem;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    transition: all .5s ease;
+}
+
+.btn_changer_prix:hover{
+    transform: scale(1.05);
+    color: white;
+
 }
 
 .detail__formation__result__avis span{

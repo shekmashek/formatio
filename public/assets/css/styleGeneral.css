@@ -736,6 +736,7 @@ input:-webkit-autofill:active {
     padding: .2rem 1rem;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    text-decoration: none;
 }
 
 .btn_creer a{
@@ -749,10 +750,10 @@ input:-webkit-autofill:active {
     color: blue;
 }
 
-.btn_creer:focus{
+/* .btn_creer:focus{
     color: blue;
     text-decoration: none;
-}
+} */
 
 .icon_creer{
     background-image: linear-gradient(60deg, #f206ee, #0765f3);

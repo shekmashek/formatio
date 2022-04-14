@@ -6,28 +6,6 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
     <div class="container-fluid bg-light">
-        {{-- <nav class="navbar navbar-expand-lg w-100">
-            <div class="row w-100 g-0 m-0">
-                <div class="col-lg-12">
-                    <div class="row g-0 m-0" style="align-items: center">
-                        @can('isCFP')
-                        <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            <div class="col titre_page">
-                                <h3 class="mt-3"></h3>
-                            </div>
-
-                            <div class="col" align="right">
-                                <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}" href="{{route('liste_module')}}">
-                                    <span class="btn_enregistrer text-center">Précedent</span>
-                                </a>
-                            </div>
-                            @endcan
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <hr> --}}
         <div class="panel-body">
             <div class="row">
                 <form action="{{route('module.store')}}" method="POST" id="frm_new_module">
@@ -270,9 +248,22 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix prix input mt-4" id="acf-prix" name="prix" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required placeholder="Prix en AR">
+                                                    <input type="text" class="form-control prix prix input mt-4" id="acf-prix" name="prix" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required placeholder="Prix en AR" onfocus="(this.type='number')">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Prix en AR</label>
                                                     @error('prix')
+                                                    <div class="col-sm-6">
+                                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="acf-field acf-field-text acf-field-prix is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap">
+                                                    <input type="text" class="form-control prix_groupe prix_groupe input mt-4" id="acf-prix_groupe" name="prix_groupe" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix par Groupe en AR" onfocus="(this.type='number')">
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix par Groupe en AR</label>
+                                                    @error('prix_groupe')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
                                                     </div>

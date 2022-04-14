@@ -84,7 +84,7 @@
 
                                                     <input type="text" class="form-control module module input"
                                                         id="acf-nom_module" name="nom_module" required
-                                                        value="{{$mod->nom_module}}" placeholder="Nom module"> <label
+                                                        value="{{$mod->nom_module}}" placeholder="Nom module" onkeyup="estComplet1();"> <label
                                                         for="acf-nom_module" class="form-control-placeholder">Nom
                                                         module</label>
                                                     @error('nom_module')
@@ -219,7 +219,7 @@
                                         <br>
                                         <p class="text-center mt-3" style="font-size: 16px"><a type="button"
                                                 class="new_list_nouvelle px-5 btn_next" onclick="suivant_objectif();"
-                                                href="#preview_haut2">Suivant</a></p>
+                                                href="#preview_haut2" id="suivant1">Suivant</a></p>
                                     </span>
 
 
@@ -323,11 +323,24 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control prix prix input  mt-3"
-                                                        id="acf-prix" name="prix" pattern="[0-9]{1,7}"
+                                                        id="acf-prix" name="prix" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}"
                                                         value="{{$mod->prix}}" onfocus="(this.type='number')"
                                                         placeholder="Prix en AR" required><label for="acf-prix"
                                                         class="form-control-placeholder">Prix en AR</label>
                                                     @error('prix')
+                                                    <div class="col-sm-6">
+                                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="acf-field acf-field-text acf-field-prix is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap">
+                                                    <input type="text" class="form-control prix_groupe prix_groupe input mt-4" id="acf-prix_groupe" name="prix_groupe" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix par Groupe en AR" value="{{$mod->prix_groupe}}" onfocus="(this.type='number')" onkeyup='estComplet();'>
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix par Groupe en AR</label>
+                                                    @error('prix_groupe')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
                                                     </div>
@@ -894,6 +907,18 @@
         }
     }
 
+    let nomModule = document.getElementById("acf-nom_module");
+    let suivant1 = document.getElementById("suivant1");
+    btn.disabled = true;
+
+    function estComplet1() {
+    if (nomModule.value != "") {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
+    }
+}
+
     function changer_module() {
         var mod = document.getElementById("premier_vue");
         var mod3 = document.getElementById("premier_vue3");
@@ -1350,6 +1375,44 @@
     function retour_prestation(){
         changer_equipement();
     }
+
+    let module_vide = document.getElementById("acf-nom_module");
+let descript_vide = document.getElementById("acf-description");
+let jour_vide = document.getElementById("acf-jour");
+let heure_vide = document.getElementById("acf-heur");
+let objectif_vide = document.getElementById("acf-objectif");
+let cible_vide = document.getElementById("acf-cible");
+let prerequis_vide = document.getElementById("acf-prerequis");
+let reference_vide = document.getElementById("acf-reference");
+let prix_vide = document.getElementById("acf-prix");
+let prix_groupe_vide = document.getElementById("acf-prix_groupe");
+let materiel_vide = document.getElementById("acf-materiel");
+let bonasavoir_vide = document.getElementById("acf-bon_a_savoir");
+let prestation_vide = document.getElementById("acf-prestation");
+let btn = document.getElementById("sauvegarder");
+btn.disabled = true;
+
+function estComplet() {
+    if (
+        module_vide.value != "" &&
+        descript_vide.value != "" &&
+        jour_vide.value != "" &&
+        heure_vide.value != "" &&
+        objectif_vide.value != "" &&
+        cible_vide.value != "" &&
+        prerequis_vide.value != "" &&
+        reference_vide.value != "" &&
+        prix_vide.value != "" &&
+        prix_groupe_vide.value != "" &&
+        materiel_vide.value != "" &&
+        bonasavoir_vide.value != "" &&
+        prestation_vide.value != ""
+    ) {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
+    }
+}
 
 </script>
 @endsection

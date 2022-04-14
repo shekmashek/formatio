@@ -193,3 +193,8 @@ function competence() {
 $(document).on('click', '#removeRow', function() {
     $(this).closest('#row_new').remove();
 });
+
+
+// $('.changer_prix').click(function(){
+//     $('.new_module_prix').toggle('active_prix');
+// })
