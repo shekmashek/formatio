@@ -115,7 +115,8 @@ Branch design_facture:
 
  --------------  suite ------------
 
- alter table facture drop type_payement_id;
- - add view v_count_session_facturer , v_count_session_projet  , v_projet_facturer_tmp , v_projet_facture
+  - alter table facture drop type_payement_id;
+ - add
+ view v_count_session_facturer , v_count_session_projet  , v_projet_facturer_tmp , v_projet_facture
 
  dans view facture N°4
