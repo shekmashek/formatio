@@ -35,58 +35,49 @@
                 </div>
 
                <div class="row mt-3">
-                    @if($abonnement_actuel == null)
-                        <div class="col-lg-4 col-md-6 mt-5">
-                            <div class="card d-flex align-items-center justify-content-center">
-                                <div class="ribon"> <span class="bx bxs-paint"></span> </div>
-                                <p class="h-1 pt-5">DEMO</p> <span class="price"> <span class="number">0</span> <sup
-                                        class="sup">AR</sup></span>
-                                <ul class="mb-5 list-unstyled text-muted">
-                                    <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                    <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                    <li><span class="bx bx-check me-2"></span>Accès aux Fonctionalité démo</li>
-                                </ul>
-                                <div class="btn btn-primary">Votre offre actuel</div>
-                            </div>
-                        </div>
-                    @endif
-                    @foreach ($typeAbonnement as $types)
-                        @foreach ($tarif as $tf)
-                            @if($tf->type_abonnement_role_id == $types->types_id)
-                                <div class="col-lg-4 col-md-6 mt-5">
-                                    <div class="card d-flex align-items-center justify-content-center">
-                                        <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
-                                        <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
-                                                class="sup">AR</sup>/ mois</span>
-                                        <ul class="mb-5 list-unstyled text-muted">
-                                            @if( $types->nom_type == 'TPE')
-                                                <li><span class="bx bx-check me-2"></span>0 - 9 employés</li>
-                                            @endif
-                                            @if( $types->nom_type == 'PME')
-                                                <li><span class="bx bx-check me-2"></span>10 - 49 employés</li>
-                                            @endif
-                                            @if( $types->nom_type == 'EI')
-                                                <li><span class="bx bx-check me-2"></span>50 - 249 employés</li>
-                                            @endif
-                                            @if( $types->nom_type == 'GE')
-                                                <li><span class="bx bx-check me-2"></span>250 employés</li>
-                                            @endif
+                    <div class="col-lg-12 d-flex">
+                        @foreach ($typeAbonnement as $types)
+                            @foreach ($tarif as $tf)
+                                @if($tf->type_abonnement_role_id == $types->types_id)
+                                    <div class="col mt-5 justify-content-between">
+                                        <div class="card d-flex align-items-center justify-content-center">
+                                            <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
+                                            <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
+                                                    class="sup">AR</sup>/ mois</span>
+                                            <ul class="mb-5 list-unstyled text-muted">
+                                                @if( $types->nom_type == 'Gratuit')
+                                                    <li><span class="bx bx-check me-2"></span>Essai gratuit pendant 60jours</li>
+                                                @endif
+                                                @if( $types->nom_type == 'TPE')
+                                                    <li><span class="bx bx-check me-2"></span>0 - 9 employés</li>
+                                                @endif
+                                                @if( $types->nom_type == 'PME')
+                                                    <li><span class="bx bx-check me-2"></span>10 - 49 employés</li>
+                                                @endif
+                                                @if( $types->nom_type == 'EI')
+                                                    <li><span class="bx bx-check me-2"></span>50 - 249 employés</li>
+                                                @endif
+                                                @if( $types->nom_type == 'GE')
+                                                    <li><span class="bx bx-check me-2"></span>250 employés</li>
+                                                @endif
 
-                                        </ul>
-                                        @if($abonnement_actuel != null)
-                                            @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id)
-                                               <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactiver mon offre</a></div>
+                                            </ul>
+                                            @if($abonnement_actuel != null)
+                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id)
+                                                <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactiver mon offre</a></div>
+                                                @else
+                                                    <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
+                                                @endif
                                             @else
-                                                <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
+                                            <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
                                             @endif
-                                        @else
-                                         <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
-                                        @endif
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
+                                @endif
+                            @endforeach
                         @endforeach
-                    @endforeach
+                    </div>
+
                     {{-- <div class="col-lg-4 col-md-6 ">
                         <div class="card d-flex align-items-center justify-content-center">
                             <div class="ribon"> <span class="bx bxs-diamond"></span> </div>
@@ -110,8 +101,6 @@
                     <thead>
                       <tr>
                         <th scope="col">Numéro de facture</th>
-
-
                         <th scope="col">Type d'abonnement</th>
                         <th scope="col">Montant HT</th>
                         <th scope="col">TVA (20%)</th>

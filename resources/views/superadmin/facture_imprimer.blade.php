@@ -1,8 +1,3 @@
-@extends('./layouts/admin')
-@section('title')
-    <h3 class="text-white ms-5">Détail facture</h3>
-@endsection
-@section('content')
 
 <style type="text/css">
     .btn_pdf{
@@ -43,26 +38,8 @@
 
 </style>
 
-<div id="page-wrapper">
+
     <div class="container-fluid">
-        <div class="row">
-            <nav class="navbar navbar-expand-lg w-100">
-                <div class="row w-100 g-0 m-0">
-                    <div class="col-lg-12">
-                        <div class="row g-0 m-0" style="align-items: center">
-                            <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                                <div class="col" align="right">
-                                    <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i><a href="{{route('impression_facture',$facture[0]->facture_id)}}"> PDF</a></button>
-                                    <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
-                                        <span class="btn_pdf text-center px-4 py-1" type="button">Retour à la liste des factures</span>
-                                    </a>
-                                </div>
-                            </div>
-                         </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
         <div class="row">
             <div class="col-lg-12">
 
@@ -71,7 +48,7 @@
                         <div class="container-fluid my-2">
                             <div class="row p-2">
                                 <div class="col-4">
-                                    <img src="{{asset('images/talenta.png')}}" alt="logo_cfp" class="img-fluid">
+                                    <img src="{{ public_path('images/talenta.png') }}" class="img-fluid">
                                 </div>
                                 @if ($facture[0]->status_facture == "Non payé")
                                     <div class="status col-4 text-end">
@@ -96,7 +73,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <hr>
                         <div class="container-fluid my-2">
                             <div class="row">
                                 <h5><strong>Facturé à</strong></h5>
@@ -151,7 +128,7 @@
                             </div>
                         </div>
 
-
+                        <hr>
 
 
                         <div class="container-fluid my-4">
@@ -177,7 +154,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
+                                <hr>
                             </div>
                         </div>
                     </div>
@@ -187,7 +164,5 @@
             </div>
         </div>
     </div>
-</div>
 
 
-@endsection

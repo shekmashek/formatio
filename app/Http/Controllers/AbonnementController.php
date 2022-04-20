@@ -18,6 +18,7 @@ use App\type_abonnement_role;
 use App\User;
 use App\cfp;
 use App\entreprise;
+use PDF;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -190,7 +191,7 @@ class AbonnementController extends Controller
             // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->get();
             $typeAbonnement = $fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
 
-            $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->get();
+            $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->orderBy('tarif','asc')->get();
 
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
 
@@ -644,5 +645,82 @@ class AbonnementController extends Controller
         //on met à 0 l'activite pour desactiver l'offre
         DB::update('update abonnement_cfps set activite = 0 where id = ?',[$abonnement_id[0]->abonnement_id]);
         return redirect()->back();
+    }
+    //impression facture
+    public function impression($id){
+        PDF::setOptions([
+            "defaultFont" => "Courier",
+            "defaultPaperSize" => "a4",
+            "dpi" => 130
+        ]);
+
+        $fonct = new FonctionGenerique();
+        $mode_paiements = $fonct->findAll('mode_financements');
+
+        if(Gate::allows('isCFP')){
+            $entreprises = null;
+            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $cfp_id = $resp[0]->cfp_id;
+            $cfp = $fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
+            $facture = $fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
+
+            if($facture!=null){
+                $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
+                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+                if($test_assujetti[0]->assujetti_id == 1) {
+                    $tva = ($facture[0]->montant_facture * 20) / 100;
+                    $net_ttc = $facture[0]->montant_facture + $tva;
+                }
+                if($test_assujetti[0]->assujetti_id == 2) {
+                    $tva = 0;
+                    $net_ttc = $facture[0]->montant_facture;
+                }
+                $lettre_montant = $this->fact->int2str($net_ttc);
+            }
+            else{
+                $test_assujetti = $tva = $net_ttc ='';
+            }
+
+            $pdf = PDF::loadView('superadmin.facture_imprimer', compact('entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
+
+        }
+        if(Gate::allows('isReferent')){
+            $cfp = null;
+            $resp = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $entreprise_id = $resp[0]->entreprise_id;
+            $entreprises = $fonct->findWhereMulitOne('entreprises',['id'],[$entreprise_id]);
+
+            $facture = $fonct->findWhere('v_abonnement_facture_entreprise',['facture_id'],[$id]);
+
+            if($facture!=null){
+                $test_assujetti = $fonct->findWhere('entreprises',['id'],[$entreprise_id]);
+                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+                if($test_assujetti[0]->assujetti_id == 1) {
+                    $tva = ($facture[0]->montant_facture * 20) / 100;
+                    $net_ttc = $facture[0]->montant_facture + $tva;
+                }
+                if($test_assujetti[0]->assujetti_id == 2) {
+                    $tva = 0;
+                    $net_ttc = $facture[0]->montant_facture;
+                }
+                $lettre_montant = $this->fact->int2str($net_ttc);
+            }
+            else{
+                $test_assujetti = $tva = $net_ttc ='';
+            }
+            $pdf = PDF::loadView('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            // return view('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+        }
+        $pdf->getDomPDF()->setHttpContext(
+            stream_context_create([
+                'ssl' => [
+                    'allow_self_signed' => TRUE,
+                    'verify_peer' => FALSE,
+                    'verify_peer_name' => FALSE,
+                ]
+            ])
+        );
+        return $pdf->download('facture abonnement.pdf');
+
     }
 }
