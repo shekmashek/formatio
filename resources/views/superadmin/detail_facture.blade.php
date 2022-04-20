@@ -52,9 +52,9 @@
                         <div class="row g-0 m-0" style="align-items: center">
                             <div class="col-12 d-flex justify-content-between" style="align-items: center">
                                 <div class="col" align="right">
-                                    {{-- <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button> --}}
+                                    <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button>
                                     <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
-                                        <span class="btn_enregistrer text-center">Retour - Liste des factures</span>
+                                        <span class="btn_pdf text-center px-4 py-1" type="button">Retour à la liste des factures</span>
                                     </a>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                         <p class="m-0 adresse_cfp">Lot IIN 60 Analamahitsy 101 Antananarivo Madagascar</p>
                                         <p class="m-0 adresse_cfp">+261 34 81 135 63</p>
                                         <p class="m-0 adresse_cfp">www.formation.mg</p><br>
-                                        <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
+
                                         {{-- <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p> --}}
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                             <p class="m-0 adresse_cfp">{{$cfp->adresse_region}}</p>
                                             <p class="m-0 adresse_cfp">{{$cfp->telephone}}</p>
                                             <p class="m-0 adresse_cfp">{{$cfp->site_web}}</p><br>
-                                            <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
+
                                             <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p>
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                                             <p class="m-0 adresse_cfp">{{$entreprises->adresse_region}}</p>
                                             <p class="m-0 adresse_cfp">{{$entreprises->telephone_etp}}</p>
                                             <p class="m-0 adresse_cfp">{{$entreprises->site_etp}}</p><br>
-                                            <p class="m-0 adresse_cfp"><strong>Informations légales</strong> </p>
+
                                             <p class="m-0 adresse_cfp">NIF : {{$entreprises->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$entreprises->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$entreprises->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$entreprises->cif}}</p>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-5">
                                     <div align="right" class="me-1">
-                                        <h5>Numéro de facture: {{$facture[0]->num_facture}}</h5>
+                                        <h5>Facture N°: {{$facture[0]->num_facture}}</h5>
                                         <h6>Date de facturation: {{$facture[0]->invoice_date}}</h6>
                                         <h6>Date d'échéance: {{$facture[0]->due_date}}</h6>
                                         <h6>Mode de paiement:
@@ -152,7 +152,7 @@
                         </div>
 
                         <hr>
-                        <h6 class="my-1">Facture: N° {{$facture[0]->num_facture}}</h6>
+
 
                         <div class="container-fluid my-4">
 

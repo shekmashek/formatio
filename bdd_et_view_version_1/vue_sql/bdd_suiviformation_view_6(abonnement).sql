@@ -9,6 +9,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_etp AS SELECT
     a.status,
     a.entreprise_id,
     a.categorie_paiement_id,
+    a.activite,
     t_ab.nom_type,
     cat_p.categorie
 
