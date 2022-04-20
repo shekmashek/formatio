@@ -18,6 +18,7 @@
                         <i class="fa fa-search m-0"></i>
                     </button>
                 </div>
+                <div class="d-flex mb-3" id="ajout_stg_mat"></div>
                 <div class="d-flex mb-3">
                     <span class="span_matricule" id="image_stg"></span>
                     <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled > </span>
@@ -44,6 +45,7 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
+                <div class="d-flex mb-3" id="ajout_stg_mat"></div>
                 <div class="d-flex mb-3">
                     <span class="span_matricule" id="image_stg"></span>
                     <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled> </span>
@@ -274,35 +276,63 @@ td{
     $(".rechercher").on('click',function(e){
         var id = $("#matricule_search").val();
         var etp_id = @php echo $entreprise_id; @endphp;
+        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
         $.ajax({
             type: "GET",
             url: "{{route('one_stagiaire')}}",
             data:{
                 Id:id,
-                etp:etp_id
+                etp:etp_id,
+                groupe:groupe_id
             },
             dataType: "html",
             success:function(response){
                 // alert(JSON.stringify(response));
-                var userData=JSON.parse(response);
-                html = '';
-                if(userData[0].photos == null){
-                    html = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
-                }else{
-                    html = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
-                    html = html.replace(":?",userData[0].photos);
+                var data=JSON.parse(response);
+
+                if(data['status'] == '200'){
+                    $('#ajout_stg_mat').html('');
+                    if(data['inscrit'] > 0){
+                        $("#matricule").val('');
+                        $("#nom").val('');
+                        $("#prenom").val('');
+                        $("#fonction").val('');
+                        $(".span_ajout").hide();
+                        $("#image_stg").html('');
+                        $('#ajout_stg_mat').append('<span style="color:red">Apprenant déjà inscrit dans cette session.</span>');
+                    }else{
+                        var userData = data['stagiaire'];
+                        $("#image_stg").html('');
+                        html = '';
+                        if(userData[0].photos == null){
+                            html = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
+                        }else{
+                            html = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
+                            html = html.replace(":?",userData[0].photos);
+                        }
+                        $("#image_stg").append(html);
+                        $("#matricule").val(userData[0].matricule);
+                        $("#nom").val(userData[0].nom_stagiaire);
+                        $("#prenom").val(userData[0].prenom_stagiaire);
+                        $("#fonction").val(userData[0].fonction_stagiaire);
+                        // $("#boutton_add").append('<i class="boutton fa fa-plus-circle" id="add_apprenant"></i>');
+                        $(".span_ajout").show();
+                        // $(".span_ajout").hide();
+                        // alert('eto');
+                        // id_detail = userData[$i].id;
+                        // $('#action1').val('Modifier');
+                    }
                 }
-                $("#image_stg").append(html);
-                $("#matricule").val(userData[0].matricule);
-                $("#nom").val(userData[0].nom_stagiaire);
-                $("#prenom").val(userData[0].prenom_stagiaire);
-                $("#fonction").val(userData[0].fonction_stagiaire);
-                // $("#boutton_add").append('<i class="boutton fa fa-plus-circle" id="add_apprenant"></i>');
-                $(".span_ajout").show();
-                // $(".span_ajout").hide();
-                // alert('eto');
-                // id_detail = userData[$i].id;
-                // $('#action1').val('Modifier');
+                if(data['status'] == '400'){
+                    $('#ajout_stg_mat').html('');
+                    $("#matricule").val('');
+                    $("#nom").val('');
+                    $("#prenom").val('');
+                    $("#fonction").val('');
+                    $(".span_ajout").hide();
+                    $("#image_stg").html('');
+                    $('#ajout_stg_mat').append('<span style="color:red">Matricule introuvable</span>');
+                }
            },
            error:function(error){
               console.log(error)

@@ -515,12 +515,12 @@
 
                                         $('#logo_formateur').append(logo_formateur);
 
-                                        logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:80px">';
+                                        logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:30px">';
                                         logo_etp = logo_etp.replace(":?",entreprises[$i].logo);
                                         $('#logo_etp').append(logo_etp);
 
                                         // $('#logo_cfp').append('<img src = "{{asset('images/users/users.png')}}"  style="width:30px">');
-                                        logo_cfp+='<img src = "{{asset('images/CFP/:?')}}"  style="width:80px">';
+                                        logo_cfp+='<img src = "{{asset('images/CFP/:?')}}"  style="width:30px">';
                                         logo_cfp = logo_cfp.replace(":?",userData[$i].logo);
                                         $('#logo_cfp').append(logo_cfp);
 
@@ -553,7 +553,7 @@
                                             html += '</td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
                                         }
                                         else{
-                                            html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                            html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:30px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
                                             html = html.replace(":?",stg[$a].stagiaire_id);
                                             html = html.replace(":!",stg[$a].photos);
 

@@ -119,6 +119,7 @@ class SessionController extends Controller
         $documents = [];
         $stagiaire = [];
         $formateur_cfp = [];
+        $salle_formation = [];
         $fonct = new FonctionGenerique();
         $module_session = DB::select('select reference,nom_module from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         if(Gate::allows('isCFP')){
@@ -147,6 +148,7 @@ class SessionController extends Controller
             // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             $documents = $drive->file_list($cfp_nom,"Mes documents");
+            $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent')){
             if (Gate::allows('isReferentPrincipale')) {
@@ -199,7 +201,7 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         //--modalite de formation
         $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','module_session','formateur_cfp','modalite'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','module_session','formateur_cfp','modalite','salle_formation'));
     }
 
     public function getFormateur(){
@@ -235,9 +237,17 @@ class SessionController extends Controller
     {
         $id = $request->Id;
         $etp = $request->etp;
-        // $stg = DB::select('select * from v_stagiaire_entreprise where matricule = ?',[$id]);
-        $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
-        return response()->json($stg);
+        $groupe = $request->groupe;
+        $stagiaire = DB::select('select id from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+        $existe = 0;
+        if(count($stagiaire) > 0){
+            $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
+            $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
+            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]); 
+        }else{
+            return response()->json(['status'=>'400']);
+        }
     }
 
     public function addParticipantGroupe(Request $request){
