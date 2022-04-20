@@ -708,8 +708,8 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            $pdf = PDF::loadView('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
-            // return view('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            // $pdf = PDF::loadView('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            return view('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([

@@ -1,4 +1,12 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Impression</title>
+
 <style type="text/css">
     .btn_pdf{
         padding: auto 2rem;
@@ -35,27 +43,26 @@
             padding: .5rem 1rem;
             border-radius: 10px;
         }
-
 </style>
-
-
+</head>
+<body>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="container-fluid my-2">
                             <div class="row p-2">
                                 <div class="col-4">
-                                    <img src="{{ public_path('images/talenta.png') }}" class="img-fluid">
+                                    {{-- <img src="{{ public_path('images/talenta.png') }}" class="img-fluid"> --}}
+                                    <img src="{{ asset('images/talenta.png') }}" class="img-fluid" width="500px">
                                 </div>
                                 @if ($facture[0]->status_facture == "Non payé")
-                                    <div class="status col-4 text-end">
+                                    <div class="status col-4 text-end" style="justify-content: center">
                                         <span>{{$facture[0]->status_facture}}</span>
                                     </div>
                                 @else
-                                    <div class="payer col-4 text-end">
+                                    <div class="payer col-4 text-end" style="justify-content: center">
                                         <span>{{$facture[0]->status_facture}}</span>
                                     </div>
                                 @endif
@@ -164,5 +171,10 @@
             </div>
         </div>
     </div>
+</body>
+</html>
+
+
+
 
 
