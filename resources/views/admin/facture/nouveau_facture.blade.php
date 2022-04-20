@@ -15,7 +15,7 @@
 {{-- https://www.youtube.com/watch?v=RBeqKYsw7CQ  link template facture videos youtube --}}
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlFactures.css')}}">
-<div class="container mb-5">
+<div class="container-fluid mb-5">
     @if(Session::has('success'))
     <div class="alert alert-success">
         {{Session::get('success')}}
@@ -29,7 +29,7 @@
     @endif
     <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="container">
+        <div class="container-fluid">
             <section class="section1 mb-4">
                 <div class="row">
                     <div class="col-6">

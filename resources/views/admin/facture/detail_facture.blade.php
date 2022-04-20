@@ -325,7 +325,7 @@
                 <div class="container-fluid mb-5">
                     <div class="row text-muted">
                         <div class="col">
-                            <p>Info légale: NIF: {{$cfp->nif}}</p>
+                            <p>NIF: {{$cfp->nif}}</p>
                         </div>
                         <div class="col">
                             <p>STAT: {{$cfp->stat}}</p>
