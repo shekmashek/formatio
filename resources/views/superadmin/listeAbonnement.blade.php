@@ -167,7 +167,17 @@
                                 @else
                                     <td>Terminé</td>
                                 @endif
-                                <td></td>
+                                <td>
+                                    <div class="btn-group dropleft">
+                                        <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href=""><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
 
                         @endforeach
