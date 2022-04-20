@@ -220,6 +220,10 @@
             @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
                 <a href="{{route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                 <a href="{{  route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                {{-- @elseif ($pagination["debut_aff"]<=1 && $pagination["fin_aff"]<=$pagination["nb_limit"])
+                <a href="{{route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{  route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a> --}}
+
                 @else
                 <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                 <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
@@ -322,7 +326,7 @@
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Payement du</th>
+                                    <th scope="col">Date de règlement</th>
                                     @canany(['isCFP'])
                                     <th scope="col" colspan="2">Action</th>
                                     @endcanany
@@ -379,16 +383,13 @@
                                     </td>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-
                                             @php
                                             echo html_entity_decode($actif->module_session)
                                             @endphp
                                         </a>
                                     </td>
 
-                                    <td>
-                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
-
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             {{$actif->nom_projet.": "}}
                                             @php
                                             echo html_entity_decode($actif->session_facture)
@@ -431,8 +432,8 @@
 
                                                     {{-- <hr class="dropdown-divider">
                                                     <a class="dropdown-item" href="{{route('facture')}} ">
-                                                        <button type="submit" class="btn"> <i class='bx bx-plus-medical'></i> Nouveau facture
-                                                        </button></a> --}}
+                                                    <button type="submit" class="btn"> <i class='bx bx-plus-medical'></i> Nouveau facture
+                                                    </button></a> --}}
                                                 </ul>
                                             </div>
                                         </div>
@@ -461,7 +462,7 @@
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Payement du</th>
+                                    <th scope="col">Date de règlement</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -515,7 +516,7 @@
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             @php
-                                            echo html_entity_decode($actif->session_facture)
+                                            echo html_entity_decode($actif->module_session)
                                             @endphp
                                         </a>
                                     </td>
@@ -523,7 +524,7 @@
                                     <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             {{$actif->nom_projet.": "}}
                                             @php
-                                            echo html_entity_decode($actif->module_session)
+                                            echo html_entity_decode($actif->session_facture)
                                             @endphp
                                         </a>
                                     </td>
@@ -588,7 +589,7 @@
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Payement du</th>
+                                    <th scope="col">Date de règlement</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -636,9 +637,10 @@
                                             @endphp
                                         </a>
                                     </td>
-                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             @php
-                                            echo html_entity_decode($actif->session_facture)
+                                            echo html_entity_decode($actif->module_session)
                                             @endphp
                                         </a>
                                     </td>
@@ -646,7 +648,7 @@
                                     <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             {{$actif->nom_projet.": "}}
                                             @php
-                                            echo html_entity_decode($actif->module_session)
+                                            echo html_entity_decode($actif->session_facture)
                                             @endphp
                                         </a>
                                     </td>
@@ -711,7 +713,7 @@
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Payement du</th>
+                                    <th scope="col">Date de règlement</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -763,7 +765,7 @@
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             @php
-                                            echo html_entity_decode($actif->session_facture)
+                                            echo html_entity_decode($actif->module_session)
                                             @endphp
                                         </a>
                                     </td>
@@ -771,7 +773,7 @@
                                     <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             {{$actif->nom_projet.": "}}
                                             @php
-                                            echo html_entity_decode($actif->module_session)
+                                            echo html_entity_decode($actif->session_facture)
                                             @endphp
                                         </a>
                                     </td>
@@ -920,7 +922,7 @@
                                 <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
                                 <br>
-                                <label for="dte_fin" class="form-label" align="left">Payement du <strong style="color:#ff0000;">*</strong></label>
+                                <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>

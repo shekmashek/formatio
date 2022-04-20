@@ -45,7 +45,6 @@ CREATE TABLE `factures` (
   `groupe_entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupe_entreprises(id) ON DELETE CASCADE,
   `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `type_financement_id` bigint(20) UNSIGNED NOT NULL REFERENCES mode_financements(id) ON DELETE CASCADE,
-  `type_payement_id` bigint(20) UNSIGNED DEFAULT NULL REFERENCES type_payement(id) ON DELETE CASCADE,
   `type_facture_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_facture(id) ON DELETE CASCADE,
   `tax_id` bigint(20) UNSIGNED NOT NULL REFERENCES taxes(id) ON DELETE CASCADE,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT 'aucun description',
