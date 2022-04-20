@@ -1,20 +1,20 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Moification facture</h3>
+    <h3 class="text-white ms-5">Modification facture</h3>
 @endsection
 @section('content')
 {{--<link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
 {{-- https://www.youtube.com/watch?v=RBeqKYsw7CQ  link template facture videos youtube --}}
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlFactures.css')}}">
-<div class="container mb-5 mt-5">
+<div class="container-fluid mb-5 mt-5">
     <form action="{{route('modifier_facture',[$montant_totale->num_facture,$montant_totale->entreprise_id])}}" id="msform_facture" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="container">
+        <div class="container-fluid">
             <section class="section1 mb-4">
                 <div class="row">
                     <div class="col-6">
-                        <h2>Nouvelle facture</h2>
+                        <h2>Modification facture</h2>
                     </div>
                     <div class="col-6 text-end">
                         <input type="submit" class="btn btn_submit" value="Modifier et continuer">
@@ -32,7 +32,7 @@
                             <div class="col-4">
                                 <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
                             </div>
-                            <div class="col-8 text-end" align="rigth">
+                            <div class="col-8 d-flex flex-column"  align="rigth">
                                 <select class="text-end titre_facture form-select  mb-2 m-0" id="type_facture" name="type_facture" aria-label="Default select example" required>
                                     <option value="{{$session[0]->type_facture_id}}">{{$session[0]->reference_facture}}</option>
                                     @foreach ($type_facture as $tp_fact)
@@ -46,7 +46,7 @@
                                     @endforeach
                                 </select>
 
-                                <input type="text" value="{{$session[0]->description_facture}}" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture">
+                                {{-- <input type="text" value="{{$session[0]->description_facture}}" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture"> --}}
                                 <div class="info_cfp">
                                     <p class="m-0 nom_cfp">{{$cfp->nom}}</p>
                                     <p class="m-0 adresse_cfp">{{$cfp->adresse_lot." ".$cfp->adresse_quartier}}</p>
@@ -105,7 +105,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Payement du</p> <input type="date" value="{{$montant_totale->due_date}}" class="form-control input_simple" name="due_date" id="due_date" required>
+                                <p class="m-0 pt-3 text-end me-3">Date de règlement</p> <input type="date" value="{{$montant_totale->due_date}}" class="form-control input_simple" name="due_date" id="due_date" required>
                             </div>
                         </div>
                     </div>
@@ -115,35 +115,41 @@
                 <div class="row services_factures">
                     <div class="col-12 pb-4 element">
                         <div class="row titres_services">
-                            <div class="col-3">
-                                <h6 class="m-0">Choisit le projet</h6>
+                            <div class="col-2">
+                                <h6 class="m-0">Projet</h6>
                             </div>
-                            <div class="col-5">
-                                <h6 class="m-0">Choisir votre session</h6>
+                            <div class="col-3">
+                                <h6 class="m-0">Session</h6>
                             </div>
                             <div class="col-1 text-end">
-                                <h6 class="m-0">Entrer le quantité</h6>
+                                <h6 class="m-0">Quantité</h6>
+                            </div>
+                            <div class="col-3">
+                                <h6 class="m-0">Unité</h6>
                             </div>
                             <div class="col-2">
-                                <h6 class="m-0">Entrer prix unitaire</h6>
+                                <h6 class="m-0">Prix unitaire</h6>
                             </div>
                             <div class="col-1 text-end">
                                 <h6 class="m-0"></h6>
                             </div>
                         </div>
                         <div class="row my-2" id="inputFormRowMontant">
-                            <div class="col-3">
+                            <div class="col-2">
                                 <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
                                     <option value="{{$projet->id}}">{{$projet->nom_projet}}</option>
                                 </select>
                             </div>
-                            <div class="col-5">
+                            <div class="col-3">
                                 <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
                                     <option value="{{$session[0]->groupe_entreprise_id}}">{{$session[0]->nom_groupe}}</option>
                                 </select>
                             </div>
                             <div class="col-1">
                                 <input type="number" value="{{$session[0]->qte}}" name="qte[]" id="qte[]" min="1" value="1" class="form-control qte input_quantite" required>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" name="description[]" value="{{$session[0]->description_facture}}" id="description[]" placeholder=" ex: personne ou groupe ou etc" class="form-control qte input_quantite" required>
                             </div>
                             <div class="col-2">
                                 <input type="number" value="{{$session[0]->pu}}" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
@@ -157,15 +163,18 @@
 
                         @if((count($session)-1)>0)
                         @for ($i=1;$i<count($session);$i+=1) <div class="row my-1" id="inputFormRowMontant">
-                            <div class="col-3">
+                            <div class="col-2">
                             </div>
-                            <div class="col-5">
+                            <div class="col-3">
                                 <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
                                     <option value="{{$session[$i]->groupe_entreprise_id}}">{{$session[$i]->nom_groupe}}</option>
                                 </select>
                             </div>
                             <div class="col-1">
                                 <input type="number" value="{{$session[$i]->qte}}" name="qte[]" id="qte[]" min="1" value="1" class="form-control qte input_quantite" required>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" name="description[]" value="{{$session[$i]->description_facture}}" id="description[]" placeholder=" ex: personne ou groupe ou etc" class="form-control qte input_quantite" required>
                             </div>
                             <div class="col-2">
                                 <input type="number" value="{{$session[$i]->pu}}" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
@@ -216,10 +225,10 @@
                             <h6 class="m-0">Déscriptions</h6>
                         </div>
                         <div class="col-1 text-end">
-                            <h6 class="m-0">Entrer le quantité</h6>
+                            <h6 class="m-0">Quantité</h6>
                         </div>
                         <div class="col-2">
-                            <h6 class="m-0">Entrer prix unitaire</h6>
+                            <h6 class="m-0">Prix unitaire</h6>
                         </div>
                         <div class="col-1 text-end">
                             <h6 class="m-0"></h6>
@@ -523,58 +532,6 @@
 
     });
 
-
-    $(document).on("keyup change", ".qte", function() {
-        var montant = 0;
-        var qte = 0;
-        var sum = 0;
-        montant = $(".facture").val();
-        qte = $(this).val();
-        sum = montant * qte;
-        document.getElementById("montant_plus_qte").innerHTML = sum;
-
-    });
-    $(document).on("keyup change", ".facture", function() {
-        var montant = 0;
-        var qte = 0;
-        var sum = 0;
-        montant = $(this).val();
-        qte = $(".qte").val();
-        sum = montant * qte;
-        document.getElementById("montant_plus_qte").innerHTML = sum;
-
-    });
-
-
-    $(document).on("keyup change", ".montant_session_facture", function() {
-        var sum = 0;
-        var pourcent = 0;
-        $(".montant_session_facture").each(function() {
-            sum += +$(this).val();
-        });
-        pourcent = $("#test_" + $(".calcule_pour_tax").val()).data("id");
-        document.getElementById("total_montant_session").innerHTML = sum;
-        var result = 0;
-        if (pourcent != 0) {
-            result = (sum / pourcent);
-        } else {
-            result = 0;
-        }
-        document.getElementById("montant_tax").innerHTML = result;
-    });
-
-
-    $(document).on("keyup change", ".frais_annexe", function() {
-        var sum = 0;
-        $(".frais_annexe").each(function() {
-            sum += +$(this).val();
-        });
-        document.getElementById("total_frais_annexe").innerHTML = sum;
-        //    document.getElementById("total_montant_frais_annexe").innerHTML=totale;
-
-    });
-
-
     // remove row
     $(document).on('click', '#removeRow', function() {
         $(this).closest('#inputFormRow').remove();
@@ -609,9 +566,9 @@
                     var userData = response;
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRowMontant">';
-                    html += '<div class="col-3">';
+                    html += '<div class="col-2">';
                     html += '</div>';
-                    html += '<div class="col-5">';
+                    html += '<div class="col-3">';
                     html += '<select class="form-select selectP input_section4"  id="session_id_new[]" name="session_id_new[]" required>';
 
                     for (var $i = 0; $i < userData.length; $i++) {
@@ -622,7 +579,9 @@
                     html += '<div class="col-1">';
                     html += '<input type="number" min="1" value="1" required class="form-control input_quantite" name="qte_new[]" id="qte_new[]">';
                     html += '</div>';
-
+                    html+='<div class="col-3">';
+                    html+='<input type="text" name="description_new[]" id="description_new[]" placeholder=" ex: personne ou groupe ou etc" class="form-control qte input_quantite" required>';
+                    html+='</div>';
                     html += '<div class="col-2">';
                     html += '<input type="number" min="0" value="0" required name="facture_new[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture_new[]" placeholder="0">';
                     html += '</div>';

@@ -203,6 +203,7 @@
                                 <th>Designation</th>
                                 <th></th>
                                 <th>Qte</th>
+                                <th>Unité</th>
                                 <th>PU HT</th>
                                 <th>
                                     <div align="right">
@@ -219,6 +220,11 @@
                                 <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe." du ".$montant_facture->date_debut_session}}</td>
                                 <td>{{$montant_facture->nom_groupe}}</td>
                                 <td>{{$montant_facture->qte}}</td>
+                                <td>
+                                    <div align="left">
+                                        {{$montant_facture->description_facture}}
+                                    </div>
+                                </td>
                                 <td>
                                     <div align="left">
                                         Ar {{number_format($montant_facture->pu,0,","," ")}}
@@ -312,6 +318,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @if($facture[0]->pourcent>0)
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -322,6 +329,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endif
                             @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
                             <tr>
                                 <td></td>
@@ -370,35 +378,42 @@
                                 <td style="max-width: 25%"></td>
                                 <td style="max-width: 25%"></td>
                             </tr>
-                            <tr class="text-muted" style="text-align: center">
+
+                            {{-- <div class="row p-2 justify-content-center text-center">
+                                <p>NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
+                </div> --}}
+                {{-- <tr class="text-muted" style="text-align: center">
                                 <td style="max-width: 25%">
                                     <div align="left">
                                         <p>Info légale: NIF: {{$cfp->nif}}</p>
-                                    </div>
-                                </td>
-                                <td style="max-width: 25%">
-                                    <div align="left">
-                                        <p>STAT: {{$cfp->stat}}</p>
-                                    </div>
-                                </td>
-                                <td style="max-width: 25%">
-                                    <div align="center">
-                                        <p>RCS: {{$cfp->rcs}}</p>
-                                    </div>
-                                </td>
-                                <td style="max-width: 25%">
-                                    <div align="right">
-                                        <p>CIF: {{$cfp->cif}}</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
+            </td>
+            <td style="max-width: 25%">
+                <div align="left">
+                    <p>STAT: {{$cfp->stat}}</p>
+                </div>
+            </td>
+            <td style="max-width: 25%">
+                <div align="center">
+                    <p>RCS: {{$cfp->rcs}}</p>
+                </div>
+            </td>
+            <td style="max-width: 25%">
+                <div align="right">
+                    <p>CIF: {{$cfp->cif}}</p>
+                </div>
+            </td>
+            </tr> --}}
+            </tbody>
+            </table>
+
         </div>
     </div>
-
+    </div>
+    <div class="row table_facture2  me-2 mr-2 justify-content-center text-center text-muted">
+        <p style=" font-size: 80%;">èNIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
+    </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
 
+<link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
+
 <div id="page-wrapper">
     <div class="container-fluid">
         {{-- <div class="row">
@@ -42,25 +44,28 @@
 </div>
 
 <div class="m-4">
-    <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-        <li class="nav-item">
-            <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
-                Facture</a>
-        </li>
-        @canany(['isCFP','isCFPrincipale'])
-        <li class="nav-item">
-            <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$montant_totale->num_facture)}}">
-                <i class="fa fa-download"></i> PDF</a>
-        </li>
-        @endcanany
-        @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
-        <li class="nav-item ">
-            <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
-                <i class="fa fa-download"></i> PDF</a>
-        </li>
-        @endcanany
-    </ul>
-
+    <section class="section1 mb-4">
+        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            <li class="nav-item">
+                <div class="btn_racourcis">
+                    <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
+                        Facture</a></div>
+            </li>
+            @canany(['isCFP','isCFPrincipale'])
+            <li class="nav-item">
+                <div class="btn_racourcis">
+                    <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$montant_totale->num_facture)}}">
+                        <i class="fa fa-download"></i> PDF</a></div>
+            </li>
+            @endcanany
+            @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
+            <li class="nav-item ">
+                <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
+                    <i class="fa fa-download"></i> PDF</a>
+            </li>
+            @endcanany
+        </ul>
+    </section>
 
     <div class="row">
         <div class="col-lg-12">
@@ -148,6 +153,7 @@
                                         <th>Designation</th>
                                         <th></th>
                                         <th>Qte</th>
+                                        <th>Unité</th>
                                         <th>PU HT</th>
                                         <th>
                                             <div align="right">
@@ -164,6 +170,11 @@
                                         <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe." du ".$montant_facture->date_debut_session}}</td>
                                         <td>{{$montant_facture->nom_groupe}}</td>
                                         <td>{{$montant_facture->qte}}</td>
+                                        <td>
+                                            <div align="left">
+                                                {{$montant_facture->description_facture}}
+                                            </div>
+                                        </td>
                                         <td>
                                             <div align="left">
                                                 Ar {{number_format($montant_facture->pu,0,","," ")}}
@@ -258,6 +269,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                @if($facture[0]->pourcent>0)
                                                 <tr>
                                                     <td>TVA({{$facture[0]->pourcent}} %)</td>
                                                     <td>
@@ -266,6 +278,8 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                @endif
+
                                                 @if($montant_totale->sum_acompte > 0 && strtoupper($facture[0]->reference_facture) == strtoupper("FACTURE"))
                                                 <tr>
                                                     <td>Acompte</td>
@@ -311,7 +325,7 @@
                 <div class="container-fluid mb-5">
                     <div class="row text-muted">
                         <div class="col">
-                            <p>Info légale: NIF: {{$cfp->nif}}</p>
+                            <p>NIF: {{$cfp->nif}}</p>
                         </div>
                         <div class="col">
                             <p>STAT: {{$cfp->stat}}</p>

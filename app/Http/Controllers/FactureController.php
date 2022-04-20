@@ -43,7 +43,11 @@ class FactureController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
-            $entreprise = $this->fonct->findAll("entreprises");
+            $etp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+
+            $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
+
             $project = $this->fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
             $taxe = $this->fonct->findAll("taxes");
             $type_facture = $this->fonct->findAll("type_facture");
@@ -172,7 +176,7 @@ class FactureController extends Controller
                 $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
                 $facture_encour = $this->fact->search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 5);
                 $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["cfp_id"], [$cfp_id]);
-
+                // dd($pagination);
                 return view('admin.facture.facture', compact('invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
             }
             if (Gate::allows('isReferent')) {
@@ -203,7 +207,6 @@ class FactureController extends Controller
             $facture_encour = $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "en_cour", "cfp_id", $cfp_id, $nbPagination, 5);
 
             $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["cfp_id"], [$cfp_id]);
-
             return view('admin.facture.facture', compact('num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer', 'facture_encour'));
         }
 
@@ -304,7 +307,7 @@ class FactureController extends Controller
     public function detail_facture_etp($cfp_id, $numero_fact)
     {
 
-        if (Gate::allows('isReferent')) {
+        // if (Gate::allows('isReferent')) {
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
 
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -334,7 +337,7 @@ class FactureController extends Controller
             } else {
                 $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
             }
-        }
+        // }
 
         return view("admin.facture.detail_facture", compact('entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }
@@ -518,17 +521,27 @@ class FactureController extends Controller
         $remise = $this->fonct->findWhereMulitOne("type_remise", ["id"], [$request->type_remise_id]);
         $type_facture = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$request->type_facture]);
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-        $tax = $this->fonct->findWhereOne("taxes", "id", "=", $request->tax_id);
+
+        // $tax = $this->fonct->findWhereOne("taxes", "id", "=", $request->tax_id);
         $para = ["groupe_id", "entreprise_id"];
         $path = "";
         $status = null;
-        // dd($request->input());
-if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entreprise_id>0){
 
+if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entreprise_id>0){
+    $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$request->entreprise_id]);
+    $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
+    $assujeti_cfp = $this->fonct->findWhereMulitOne("assujetti",["id"],[$cfp->assujetti_id]);
+    $assujeti_etp = $this->fonct->findWhereMulitOne("assujetti",["id"],[$entreprise->assujetti_id]);
+    $tax_id = $this->fonct->findWhereMulitOne("taxes",["pourcent"],[0.00])->id;
+    $tabDataTypeFinance['tax_id'] = $tax_id;
+
+    if($assujeti_cfp->assujetti == 1 && $assujeti_etp->assujetti == 1){
+            $tax_id = $this->fonct->findWhereMulitOne("taxes",["description"],["TVA"])->id;
+            $tabDataTypeFinance['tax_id'] = $tax_id;
+        }
     $verify_num_fact = $this->fonct->findWhere("factures", ["num_facture"], [$request['num_facture']]);
         if (count($verify_num_fact) <= 0) {
             $verify_session_exist = $this->fact->veriry_session_deja_facture_sur_type_fact($cfp_id, $request->projet_id, $request);
-
             if ($verify_session_exist <= 0) {
 
                 if ($request["session_id"] && $request["facture"]) {
@@ -537,44 +550,24 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
                     try {
 
                         for ($i = 0; $i < count($request["session_id"]); $i++) {
-                            //         if ($request["facture"][$i] > 0) {
                             $val = [$request["session_id"][$i], $request->entreprise_id];
 
                             $tabData['facture'] = $request["facture"][$i];
                             $tabData['qte'] = $request["qte"][$i];
-
                             $tabDataDate['due_date'] = $request['due_date'];
                             $tabDataDate['invoice_date'] = $request['invoice_date'];
-
-                            $tabDataTypeFinance['tax_id'] = $request['tax_id'];
                             $tabDataTypeFinance['id_mode_financement'] = $request['id_mode_financement'];
-                            $tabDataTypeFinance['id_type_payement'] = $request['id_type_payement'];
-
-                            $tabDataDesc['description'] = $request['description_facture'];
+                            $tabDataDesc['description'] = $request['description'][$i];
                             $tabDataDesc['other_message'] = $request['other_message'];
                             $tabDataDesc['remise'] = $request->remise;
                             $tabDataDesc['remise_id'] = $request->type_remise_id;
 
-                            /*  $status = $this->fact->verifyCreationFacture(
-                                    $cfp_id,
-                                    $request->projet_id,
-                                    $request->entreprise_id,
-                                    $request["session_id"][$i],
-                                    $request,
-                                    $tabData,
-                                    $tax->pourcent,
-                                    $tabDataDate,
-                                    $tabDataTypeFinance,
-                                    $tabDataDesc,
-                                    $request['num_facture']
-                                ); */
                             $this->fact->insert(
                                 $cfp_id,
                                 $request->projet_id,
                                 $request->entreprise_id,
                                 $request["session_id"][$i],
                                 $tabData,
-                                $tax->pourcent,
                                 $tabDataDate,
                                 $tabDataTypeFinance,
                                 $tabDataDesc,
@@ -584,9 +577,6 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
                                 $request["type_facture"]
                             );
 
-
-                            //        }
-                            // dd($request["session_id"][$i]);
                         }
 
 
@@ -606,8 +596,7 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
                                         $qte,
                                         $id_frais,
                                         $montant,
-                                        $desc,
-                                        $tax->pourcent
+                                        $desc
                                     );
                                 }
                             }
@@ -674,6 +663,7 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
 
     public function getGroupe_projet(Request $req)
     {
+       // $data = $this->fonct->findWhere("v_projet_facture", ["projet_id", "entreprise_id"], [$req->id, $req->entreprise_id]);
         $data = $this->fonct->findWhere("v_groupe_projet_entreprise_module", ["projet_id", "entreprise_id"], [$req->id, $req->entreprise_id]);
 
         return response()->json($data);
@@ -717,7 +707,9 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
     {
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $data["entreprise"] = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$req->id]);
-        $data["projet"] = $this->fonct->findWhere("v_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
+        $data["projet"] = $this->fonct->findWhere("v_projet_facture", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
+
+        //    $data["projet"] = $this->fonct->findWhere("v_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
         return response()->json($data);
     }
 
@@ -786,11 +778,9 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
                             $tabDataDate['due_date'] = $request['due_date'];
                             $tabDataDate['invoice_date'] = $request['invoice_date'];
 
-                            $tabDataTypeFinance['tax_id'] = $request['tax_id'];
                             $tabDataTypeFinance['id_mode_financement'] = $request['id_mode_financement'];
-                            $tabDataTypeFinance['id_type_payement'] = $request['id_type_payement'];
 
-                            $tabDataDesc['description'] = $request['description_facture'];
+                            $tabDataDesc['description'] = $request['description'][$i];
                             $tabDataDesc['other_message'] = $request['other_message'];
                             $tabDataDesc['remise'] = $request->remise;
                             $tabDataDesc['remise_id'] = $request->type_remise_id;
@@ -801,7 +791,6 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
                                 $entreprise_id,
                                 $request["session_id"][$i],
                                 $tabData,
-                                $tax->pourcent,
                                 $tabDataDate,
                                 $tabDataTypeFinance,
                                 $tabDataDesc,
@@ -827,9 +816,9 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
 
                             $tabDataTypeFinances['tax_id'] = $request['tax_id'];
                             $tabDataTypeFinances['id_mode_financement'] = $request['id_mode_financement'];
-                            $tabDataTypeFinances['id_type_payement'] = $request['id_type_payement'];
+                            // $tabDataTypeFinances['id_type_payement'] = $request['id_type_payement'];
 
-                            $tabDataDescs['description'] = $request['description_facture'];
+                            $tabDataDescs['description'] = $request['description_new'][$i];
                             $tabDataDescs['other_message'] = $request['other_message'];
                             $tabDataDescs['remise'] = $request->remise;
                             $tabDataDescs['remise_id'] = $request->type_remise_id;
