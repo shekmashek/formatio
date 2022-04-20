@@ -4,7 +4,7 @@
 @section('title')
 <p class="text_header m-0 mt-1">Tableau de bord</p>
 @endsection
-<div class="container" style="margin-top: 5rem">
+<div class="container me-0" style="margin-top: 5rem">
 
     <div class="p-0 m-0 mt-3">
         <div class="container-fluid" style="font-size: 11.8px;">

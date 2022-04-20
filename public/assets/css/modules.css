@@ -337,11 +337,6 @@
     transform: scale(0.9);
 }
 
-#border_premier{
-    background: rgb(194, 194, 194);
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
 #preview_module {
     color: #637381;
 }
@@ -599,8 +594,8 @@ font-size: 0.850rem;
 }
 
 .detail__formation__item__right{
-    border: 1px solid rgba(128, 128, 128, 0.336);
-    height: 20rem;
+    /* border: 1px solid rgba(128, 128, 128, 0.336); */
+    height: auto;
     position: sticky;
     top: 8.5rem;
 }
@@ -729,4 +724,14 @@ font-size: 0.850rem;
 .icon_vide{
     font-size: 20rem;
     color: #637381;
+}
+
+.btn_enregistrer{
+    background-color: #7635dc;
+}
+
+.btn_enregistrer:hover{
+    background-color: white;
+    color: #7635dc;
+    border: 1px solid #7635dc;
 }

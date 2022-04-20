@@ -24,7 +24,7 @@
 </div>
 <section class="detail__formation">
     <div class="container py-4 bg-light">
-        <div class="row bg-light justify-content-space-between py-3 px-5" id="border_premier">
+        <div class="row justify-content-space-between py-3 px-5" id="border_premier">
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
                     @foreach ($infos as $res)
@@ -76,11 +76,10 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
+                <h3 class="pb-3">Objectifs de la formation</h3>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
-                        <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
-                        <a href="#programme__formation" class="btn_next py-2">Consulter&nbsp;votre&nbsp;programme&nbsp;de&nbsp;formation</a>
                     </div>
                 </div>
 
@@ -329,73 +328,80 @@
             </div>
 
             {{-- FIXME:mise en forme de design --}}
-            <div class="col-lg-3 detail__formation__item__right">
-                <div class="row detail__formation__item__main__head align-items-center">
-                    <div class="detail__prix__head">
-                        <div class="detail__prix__text">
-                            <p class="pt-2"><b>INTRA</b></p>
-                        </div>
+            <div class="col-lg-3 detail__formation__item__right g-0 p-0 m-0">
+                @if($competences != null)
+                <div class="row g-0">
+                    <h5 class="text-center">Compétences à Evaluer</h5>
+                    <div class="row text-center">
+                        @foreach ($competences as $comp)
+                        <p>{{$comp->titre_competence}} évaluer à {{$comp->objectif}}/{{$comp->objectif}}</p>
+                        @endforeach
                     </div>
                 </div>
-                <div class="row detail__formation__item__main">
-                    <div class="detail__prix__main__presentiel pt-3">
-                        <div>
-                            <p class="text-uppercase text-center">{{$res->modalite_formation}}</p>
+                @endif
+                <div class="row ">
+                    <div class="row detail__formation__item__main__head align-items-center p-0 m-0">
+                        <div class="detail__prix__head">
+                            <div class="detail__prix__text">
+                                <p class="pt-2"><b>INTRA</b></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__main">
-                    <div class="col-lg-6 detail__prix__main__ref">
-                        <div>
-                            <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
+                    <div class="row detail__formation__item__main mt-3 text-center">
+                        <div class="col-lg-6 detail__prix__main__ref">
+                            <div>
+                                <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 detail__prix__main__ref2">
+                            <div>
+                                <p>{{ $res->reference }}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 detail__prix__main__ref2">
-                        <div>
-                            <p>{{ $res->reference }}</p>
+                    <hr class="hr">
+                    <div class="row detail__formation__item__main text-center">
+                        <div class="col-lg-6 detail__prix__main__dure js">
+                            <div>
+                                <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 detail__prix__main__dure2">
+                            <div>
+                                <p>
+                                    <span>
+                                        @isset($res->duree_jour)
+                                        {{$res->duree_jour}} jours
+                                        @endisset
+                                    </span>
+                                    <span>
+                                        @isset($res->duree)
+                                        /{{$res->duree}} h
+                                        @endisset
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__main">
-                    <div class="col-lg-6 detail__prix__main__dure">
-                        <div>
-                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span></p>
+                    <hr class="hr">
+                    <div class="row detail__formation__item__rmain mb-2 text-center">
+                        <div class="col-lg-6 detail__prix__main__prix">
+                            <div>
+                                <p><i class='bx bx-euro'></i>&nbsp;Prix :</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 detail__prix__main__dure2">
-                        <div>
-                            <p>
-                                <span>
-                                    @isset($res->duree_jour)
-                                    {{$res->duree_jour}} jours
-                                    @endisset
-                                </span>
-                                <span>
-                                    @isset($res->duree)
-                                    /{{$res->duree}} h
-                                    @endisset
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__rmain mb-2">
-                    <div class="col-lg-4 detail__prix__main__prix">
-                        <div>
-                            <p><i class='bx bx-euro'></i>&nbsp;Prix :</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 detail__prix__main__prix2">
-                        <div class="text-end">
-                            <p class="text-center"><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+                        <div class="col-lg-6 detail__prix__main__prix2">
+                            <div class="text-end">
+                                <p class="text-center"><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
 
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
+
         </div>
     </div>
 </section>
