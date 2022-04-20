@@ -582,6 +582,7 @@ ul li a {
 
 .header-right .pdp_profil_card .card {
     width: 400px !important;
+    width: inherit;
     border: none;
     border-radius: 8px;
     padding: 8px;
