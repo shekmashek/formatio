@@ -337,7 +337,9 @@
         </div>
         <hr class="mt-2">
         <div class="text-center mt-2">
-            <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" class="img-fluid text-center"  style="width:120px;height:60px;" role="button" onclick="afficherInfos();"  >
+            @if($type_formation_id == 1)
+                <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" class="img-fluid text-center"  style="width:120px;height:60px;" role="button" onclick="afficherInfos();"  >
+            @endif
 
               </div>
               <div >
@@ -535,7 +537,7 @@ p{
     /* width: 60%; */
     align-items: center
     margin: 0 auto;
-    
+
     padding : 0.1rem 0.5rem !important;
 }
 
