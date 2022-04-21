@@ -315,18 +315,18 @@
                 <div class="tab-content" id="nav-tabContent">
 
                     <div class="tab-pane fade show active" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
-                        {{-- <h6 style="color: #AA076B">Facture En Brouillon</h6> --}}
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type facture</th>
-                                    <th scope="col">Numéro de facture</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
                                     <th scope="col">Entreprise</th>
-                                    <th scope="col">Réference module</th>
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
                                     <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     @canany(['isCFP'])
                                     <th scope="col" colspan="2">Action</th>
                                     @endcanany
@@ -335,6 +335,7 @@
                             <tbody>
                                 @if (count($facture_inactif) > 0)
                                 @foreach ($facture_inactif as $actif)
+
                                 <tr>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -367,18 +368,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-
-                                            {{-- <div style="background-color: rgb(164, 187, 233);  border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                            {{-- </div> --}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
-
-                                            @php
-                                            echo html_entity_decode($actif->ref_session)
-                                            @endphp
                                         </a>
                                     </td>
                                     <td>
@@ -406,6 +396,14 @@
                                             {{$actif->due_date}}
                                         </a>
                                     </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
@@ -429,11 +427,6 @@
                                                             <button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>
                                                         </a>
                                                     </li>
-
-                                                    {{-- <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} ">
-                                                    <button type="submit" class="btn"> <i class='bx bx-plus-medical'></i> Nouveau facture
-                                                    </button></a> --}}
                                                 </ul>
                                             </div>
                                         </div>
@@ -442,7 +435,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="8" class="text-center" style="color:red;">Aucun Résultat</td>
+                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -451,18 +444,18 @@
                     {{-- --}}
 
                     <div class="tab-pane fade" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
-                        {{-- <h6 style="color: #AA076B">Facture Validé</h6> --}}
                         <table class="table  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type facture</th>
-                                    <th scope="col">Numéro de facture</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
                                     <th scope="col">Entreprise</th>
-                                    <th scope="col">Réference module</th>
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
                                     <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -501,16 +494,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                            {{-- </div> --}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            @php
-                                            echo html_entity_decode($actif->ref_session)
-                                            @endphp
                                         </a>
                                     </td>
                                     <td>
@@ -537,6 +521,14 @@
                                             {{$actif->due_date}}
                                         </a>
                                     </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -556,9 +548,6 @@
                                                         <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
                                                     </a>
                                                     <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                    {{-- <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a> --}}
-
                                                 </ul>
                                             </div>
                                         </div>
@@ -569,7 +558,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -578,18 +567,18 @@
                     {{-- --}}
 
                     <div class="tab-pane fade" id="nav-encour" role="tabpanel" aria-labelledby="nav-encour-tab">
-                        {{-- <h6 style="color: #AA076B">Facture En Cour</h6> --}}
                         <table class="table  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type facture</th>
-                                    <th scope="col">Numéro de facture</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
                                     <th scope="col">Entreprise</th>
-                                    <th scope="col">Réference module</th>
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
                                     <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -626,15 +615,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                            {{-- </div> --}}
-                                        </a>
-                                    </td>
-                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            @php
-                                            echo html_entity_decode($actif->ref_session)
-                                            @endphp
                                         </a>
                                     </td>
                                     <td>
@@ -660,6 +641,14 @@
                                             {{$actif->due_date}}
                                         </a>
                                     </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -679,8 +668,9 @@
                                                         <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal">Faire un encaissement</button>
                                                     </a>
                                                     <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                    {{-- <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a> --}}
+                                                    <hr class="dropdown-divider">
+                                                    <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
+                                                        <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
 
                                                 </ul>
                                             </div>
@@ -692,7 +682,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -702,18 +692,18 @@
                     {{-- --}}
 
                     <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
-                        {{-- <h6 style="color: #AA076B">Facture Payer</h6> --}}
                         <table class="table  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type facture</th>
-                                    <th scope="col">Numéro de facture</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
                                     <th scope="col">Entreprise</th>
-                                    <th scope="col">Réference module</th>
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
                                     <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -750,16 +740,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                            {{-- </div> --}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            @php
-                                            echo html_entity_decode($actif->ref_session)
-                                            @endphp
                                         </a>
                                     </td>
                                     <td>
@@ -786,6 +767,14 @@
                                             {{$actif->due_date}}
                                         </a>
                                     </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -801,10 +790,12 @@
                                                     <i class="fa fa-ellipsis-v"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF</button></a>
+                                                    <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>
                                                     <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                    {{-- <hr class="dropdown-divider">
-                                                    <a class="dropdown-item" href="{{route('facture')}} " style="color: green"><button type="text" class="btn "><i class='bx bx-plus-medical'></i> Nouveau facture</button></a> --}}
+                                                    <hr class="dropdown-divider">
+                                                    <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
+                                                        <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -814,7 +805,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -853,7 +844,7 @@
                                     <input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" required="required"> </div>
 
                                 <div class="form-group  mt-3">
-                                    <span>Mode de payement<strong style="color:#ff0000;">*</strong></span>
+                                    <span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>
                                     <select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example">
                                         @foreach ($mode_payement as $mp)
                                         <option value="{{ $mp->id }}">{{ $mp->description }}</option>

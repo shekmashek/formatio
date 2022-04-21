@@ -267,18 +267,18 @@
                 <div class="tab-content" id="nav-tabContent">
 
                     <div class="tab-pane fade show active" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
-                        {{-- <h6 style="color: #AA076B">Facture Validé</h6> --}}
                         <table class="table  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type facture</th>
-                                    <th scope="col">Numéro de facture</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
                                     <th scope="col">Organisme de formation</th>
-                                    <th scope="col">Réference module</th>
-                                    <th scope="col">Module de formation</th>
+                                   <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Payement du</th>
+                                    <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
@@ -316,16 +316,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_cfp}}
-                                            {{-- </div> --}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            @php
-                                            echo html_entity_decode($actif->ref_session)
-                                            @endphp
                                         </a>
                                     </td>
                                     <td>
@@ -352,6 +343,14 @@
                                             {{$actif->due_date}}
                                         </a>
                                     </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                             <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -364,7 +363,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -373,18 +372,18 @@
                     {{-- --}}
 
                     <div class="tab-pane fade" id="nav-encour" role="tabpanel" aria-labelledby="nav-encour-tab">
-                        {{-- <h6 style="color: #AA076B">Facture En Cour</h6> --}}
                         <table class="table  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type facture</th>
-                                    <th scope="col">Numéro de facture</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
                                     <th scope="col">Organisme de formation</th>
-                                    <th scope="col">Réference module</th>
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Payement du</th>
+                                    <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
@@ -420,15 +419,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_cfp}}
-                                            {{-- </div> --}}
-                                        </a>
-                                    </td>
-                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            @php
-                                            echo html_entity_decode($actif->ref_session)
-                                            @endphp
                                         </a>
                                     </td>
                                     <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
@@ -453,6 +444,14 @@
                                             {{$actif->due_date}}
                                         </a>
                                     </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                             <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -465,7 +464,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -475,18 +474,18 @@
                     {{-- --}}
 
                     <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
-                        {{-- <h6 style="color: #AA076B">Facture Payer</h6> --}}
                         <table class="table  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Type facture</th>
-                                    <th scope="col">Numéro de facture</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
                                     <th scope="col">Organisme de formation</th>
-                                    <th scope="col">Réference module</th>
                                     <th scope="col">Module de formation</th>
                                     <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Payement du</th>
+                                    <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
@@ -522,15 +521,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{-- <div style="background-color: rgb(164, 187, 233); border-radius: 10px; text-align: center"> --}}
                                             {{$actif->nom_etp}}
-                                            {{-- </div> --}}
-                                        </a>
-                                    </td>
-                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            @php
-                                            echo html_entity_decode($actif->ref_session)
-                                            @endphp
                                         </a>
                                     </td>
                                     <td>
@@ -557,18 +548,26 @@
                                             {{$actif->due_date}}
                                         </a>
                                     </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                             <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
                                                 {{$actif->facture_encour}}
                                             </div>
                                         </a>
-                                    </td>Ú
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                 </tr>
                                 @endif
                             </tbody>
@@ -600,20 +599,20 @@
                             <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_debut"  id="dte_debut" class="form-control" />
+                                <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
                                 <br>
-                                <label for="dte_fin" class="form-label" align="left">Payement du <strong style="color:#ff0000;">*</strong></label>
+                                <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>
                         </div>
                         <p>
-                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par numero de facture</a>
+                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
                         </p>
                         <div class="collapse multi-collapse" id="search_num_fact">
                             <form class=" mt-1 mb-2 form_colab" method="POST" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
                                 @csrf
-                                <label for="num_fact" class="form-control-placeholder">Numéro de facture<strong style="color:#ff0000;">*</strong></label>
+                                <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
                                 <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
                                 <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
                             </form>

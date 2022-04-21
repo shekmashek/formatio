@@ -186,8 +186,8 @@
                                         <h4>N° facture: {{$montant_totale->num_facture}}</h4>
                                         <h4>N° BC: {{$facture[0]->reference_bc}}</h4>
                                         <h4>Date de facturation: {{$montant_totale->invoice_date}}</h4>
-                                        <h4>Payment du: {{$montant_totale->due_date}}</h4>
-                                        <h4>Amount Due(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}}</strong></h4>
+                                        <h4>Date de règlement: {{$montant_totale->due_date}}</h4>
+                                        <h4>Reste à payer(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}}</strong></h4>
                                     </div>
                                 </td>
                             </tr>
@@ -367,7 +367,7 @@
                                 <td style="max-width: 25%">
                                     <div align="left">
                                         <h6>Arretée la présente facture à la somme de: {{$lettre_montant}} Ariary</h6><br>
-                                        <h6>mode de payement: {{$montant_totale->description_financement}}</h6><br>
+                                        <h6>mode de paiement: {{$montant_totale->description_financement}}</h6><br>
                                         @if($facture[0]->other_message!=null)
                                         <h6>Autre Message</h6><br>
                                         <p>{{$facture[0]->other_message}}</p><br>
@@ -378,41 +378,15 @@
                                 <td style="max-width: 25%"></td>
                                 <td style="max-width: 25%"></td>
                             </tr>
+                        </tbody>
+                    </table>
 
-                            {{-- <div class="row p-2 justify-content-center text-center">
-                                <p>NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
-                </div> --}}
-                {{-- <tr class="text-muted" style="text-align: center">
-                                <td style="max-width: 25%">
-                                    <div align="left">
-                                        <p>Info légale: NIF: {{$cfp->nif}}</p>
+                </div>
             </div>
-            </td>
-            <td style="max-width: 25%">
-                <div align="left">
-                    <p>STAT: {{$cfp->stat}}</p>
-                </div>
-            </td>
-            <td style="max-width: 25%">
-                <div align="center">
-                    <p>RCS: {{$cfp->rcs}}</p>
-                </div>
-            </td>
-            <td style="max-width: 25%">
-                <div align="right">
-                    <p>CIF: {{$cfp->cif}}</p>
-                </div>
-            </td>
-            </tr> --}}
-            </tbody>
-            </table>
-
         </div>
-    </div>
-    </div>
-    <div class="row table_facture2  me-2 mr-2 justify-content-center text-center text-muted">
-        <p style=" font-size: 80%;">èNIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
-    </div>
+        <div class="row table_facture2  me-2 mr-2 justify-content-center text-center text-muted">
+            <p style=" font-size: 80%;">èNIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 </body>

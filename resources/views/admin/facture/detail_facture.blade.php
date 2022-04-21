@@ -49,7 +49,7 @@
             <li class="nav-item">
                 <div class="btn_racourcis">
                     <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
-                        Facture</a></div>
+                        Retour à la liste des factures</a></div>
             </li>
             @canany(['isCFP','isCFPrincipale'])
             <li class="nav-item">
@@ -131,8 +131,8 @@
                                     <h5>N° facture: {{$montant_totale->num_facture}}</h5>
                                     <h6>N° BC: {{$facture[0]->reference_bc}}</h6>
                                     <h6>Date de facturation: {{$montant_totale->invoice_date}}</h6>
-                                    <h6>Payement du: {{$montant_totale->due_date}}</h6>
-                                    <h6>Amount Due(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
+                                    <h6>Date de règlement: {{$montant_totale->due_date}}</h6>
+                                    <h6>Reste à payer(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
                                 </div>
                             </div>
 
@@ -317,7 +317,7 @@
                 </div>
 
                 <p>Arretée la présente facture à la somme de: {{$lettre_montant}} Ariary</p>
-                <p>mode de payement: {{$montant_totale->description_financement}}</p>
+                <p>mode de paiement: {{$montant_totale->description_financement}}</p>
                 @if($facture[0]->other_message!=null)
                 <p>Autre Message</p>
                 <p style="max-width: 40%">{{$facture[0]->other_message}}</p>

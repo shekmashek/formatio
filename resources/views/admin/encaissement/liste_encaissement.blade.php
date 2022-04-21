@@ -241,91 +241,94 @@
         {{-- <li></li> --}}
         <li class="nav-item">
             <a href="{{route('liste_facture')}}" class="nav-link">
-                Facture
+                Retour à la liste des factures
             </a>
         </li>
         @canany(['isCFP'])
         <li class="nav-item ">
             <a class="nav-link {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
-                <i class="fa fa-download"></i>   PDF</a>
+                <i class="fa fa-download"></i> PDF</a>
         </li>
         @endcanany
     </ul>
 
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
 
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        {{-- <a href="{{route('liste_facture',2)}}"><button class="btn btn-success">retour</button></a> --}}
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Date payement</th>
-                                    <th scope="col">Libellé</th>
-                                    <th scope="col">Facture</th>
-                                    <th scope="col">Montant facture(Ariary)</th>
-                                    <th scope="col">Paiement(Ariary)</th>
-                                    <th scope="col">Montant ouvert(Ariary)</th>
-                                    <th scope="col">Mode de payement</th>
-                                    <th colspan="2">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($encaissement as $info)
-                                <tr>
-                                    <td>{{ $info->date_encaissement }}</td>
-                                    <td>{{ $info->libelle }}</td>
-                                    <td>{{ $info->num_facture }}</td>
-                                    <td class="text-end">{{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
-                                    <td class="text-end">{{ number_format($info->payement, 2, ',', ' ') }}</td>
-                                    <td class="text-end">{{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
-                                    <td>{{ $info->description }}</td>
-                                    <td><button class="button_tail btn btn_next btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button></td>
-                                    <td style="width: 60px"><a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_next supprimer" style="color: red"><span class="fa fa-trash"></span></button></a></td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{-- <a href="{{route('liste_facture',2)}}"><button class="btn btn-success">retour</button></a> --}}
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date de paiement</th>
+                                        <th scope="col">Libellé</th>
+                                        <th scope="col">N° facture</th>
+                                        <th scope="col">Montant facturer</th>
+                                        <th scope="col">Paiement</th>
+                                        <th scope="col">Montant ouvert</th>
+                                        <th scope="col">Mode de paiement</th>
+                                        <th  scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($encaissement as $info)
+                                    <tr>
+                                        <td>{{ $info->date_encaissement }}</td>
+                                        <td>{{ $info->libelle }}</td>
+                                        <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                            {{ $info->num_facture }}</a>
+                                        </td>
+                                        <td>Ar {{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
+                                        <td>Ar {{ number_format($info->payement, 2, ',', ' ') }}</td>
+                                        <td>Ar {{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
+                                        <td>Ar {{ $info->description }}</td>
+                                        <td><button class="button_tail btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button>&nbsp;
+                                            <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_creer btn-block mb-2 supprimer" style="color: red"><span class="fa fa-trash"></span></button></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
-            </div>
-            @error('montant')
-            <span style="color: red">{{ $message }}</span>
-            @enderror
-            @error('libelle')
-            <span style="color: red">{{ $message }}</span>
-            @enderror
-
-        </div>
-    </div>
-
-    {{-- debut modal encaissement --}}
-    <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title text-md">
-                        <h5>Modification</h5>
-                    </div>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ route('modifier_encaissement') }}" method="POST">
-                        @csrf
-                        <div id="modification"></div>
-                    </form>
-                </div>
+                @error('montant')
+                <span style="color: red">{{ $message }}</span>
+                @enderror
+                @error('libelle')
+                <span style="color: red">{{ $message }}</span>
+                @enderror
 
             </div>
         </div>
-    </div>
-    {{-- fin --}}
 
-</div>
+        {{-- debut modal encaissement --}}
+        <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title text-md">
+                            <h5>Modification</h5>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('modifier_encaissement') }}" method="POST">
+                            @csrf
+                            <div id="modification"></div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {{-- fin --}}
+
+    </div>
 </div>
 
 </div>
