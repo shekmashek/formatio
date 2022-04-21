@@ -337,7 +337,7 @@
         </div>
         <hr class="mt-2">
         <div class="text-center mt-2">
-            @if($type_formation_id)
+            @if($type_formation_id == 1)
             <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" class="img-fluid text-center"  style="width:120px;height:60px;" role="button" onclick="afficherInfos();"  >
             <div >
                 <p class="p-0 m-0 text-center" > <strong>{{ $projet[0]->nom_etp }}</strong></p>
