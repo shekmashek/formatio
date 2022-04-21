@@ -85,7 +85,7 @@
         </div>
         <div class="row ms-4">
             <div class="col-md-12 align-items-center">
-                <button type="button" id="save_frais_annexe" class="btn btn-success">Enregistrer</button>
+                <button type="button" id="save_frais_annexe" class="btn btn_enregistrer">Enregistrer</button>
             </div>
         </div>
     </div>

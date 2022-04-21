@@ -116,12 +116,12 @@
     </div>
 @endif
 <nav class="d-flex justify-content-between mb-1 ">
-    <span class="titre_detail_session"><strong style="font-size: 14px">Détail(s) de la session</strong></span>
+    <span class="titre_detail_session"><strong style="font-size: 14px">Séance(s) de la session</strong></span>
     @canany(['isCFP'])
     <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
         data-bs-target="#modal_nouveau_detail">
         <i class='bx bx-plus-medical icon_ajouter_detail'></i>
-        <small>Ajouter une détail</small></a>
+        <small>Ajouter une séance</small></a>
         @endcanany
 </nav>
 @if (count($datas) <= 0)
@@ -134,7 +134,7 @@
     @csrf
     <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
     <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
-
+           
     <div class="row">
         <div class="col-md-4 p-0">
             <div class="row">
@@ -158,7 +158,7 @@
                     @endif
                 </div>
                 <div class="col-md-8">
-                    <p><i class="fa fa-map-marker-alt"></i>&nbsp;Lieu de formation</p>
+                    <p><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</p>
                 </div>
             </div>
         </div>
@@ -243,10 +243,17 @@
                                         </div>
                                     </div>
                                 @endif
-                                <div class="col-md-7 px-0 pe-2">
+                                <div class="col-md-7 px-0 pe-2 salle_select"  data-id="{{ $i }}" id="{{ $i }}">
                                     <div class="input-group">
-                                        <input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" id="lieu" required
-                                            onblur="ville_Lieu();">
+                                        {{-- <input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" id="lieu" required
+                                            onblur="ville_Lieu();"> --}}
+                                            <select name="ville[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
+                                                <option>Choississez votre salle de formation&hellip;</option>
+                                                @foreach ($salle_formation as $salle)
+                                                    <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
+                                                @endforeach 
+                                                <option class="ajout_salle" value="ajout">Ajouter une autre salle</option>
+                                            </select>
                                         <button id="removeRow" type="button"><i
                                                 class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button>
                                         <input type="hidden" name="ville_lieu" id="ville_lieu">
@@ -259,6 +266,24 @@
                         $i++;
                     @endphp
                 @endwhile
+            </div>
+
+            <div class="modal" tabindex="-1" id="nouvelle_salle">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Nouvelle salle de formation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{-- <form action="#" method="POST"> --}}
+                                <label for="salle_formation" class="form-label">Salle</label>
+                                <input type="text"  class="form-control" id="salle_formation">
+                                <button type="button" id="enregistrer_salle" class="btn inserer_emargement p-1 mt-1" data-bs-dismiss="modal">Enregistrer</button>
+                            {{-- </form> --}}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="newRow"></div>
@@ -330,11 +355,12 @@
                         <div class="table-responsive">
                             <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
+                                    <th>Séance</th>
                                     @canany(['isReferent', 'isManager'])
                                         <th>CFP</th>
                                     @endcanany
                                     <th>Module</th>
-                                    <th width="30%">Lieu</th>
+                                    <th width="30%">Salle de formation</th>
                                     <th>Date</th>
                                     <th>Début</th>
                                     <th>Fin</th>
@@ -344,8 +370,12 @@
                                     @endcanany
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
                                     @foreach ($datas as $d)
                                         <tr>
+                                            <td>{{ $i }}</td>
                                             @canany(['isReferent', 'isManager'])
                                                 <td>{{ $d->nom_cfp }}</td>
                                             @endcanany
@@ -441,7 +471,7 @@
                                                                         </p>
                                                                     </div>
                                                                     <div class="form-group mx-auto col-md-12">
-                                                                        <label for="lieu">Lieu</label>
+                                                                        <label for="lieu">Salle de formation</label>
                                                                         <input type="text" class="form-control" id="lieu"
                                                                             name="lieu" placeholder="Lieu"
                                                                             value="{{ $d->lieu }}">
@@ -483,6 +513,9 @@
                                                 </div>
                                             @endcanany
                                         </tr>
+                                        @php
+                                            $i = $i + 1;
+                                        @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -495,7 +528,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content p-3">
                                         <div class="modal-title pt-3" style="height: 50px; align-items: center;">
-                                            <h5 class="text-center my-auto">Nouveau detail</h5>
+                                            <h5 class="text-center my-auto">Nouvelle séance</h5>
                                         </div>
                                         <form class="btn-submit" action="{{ route('detail.store') }}" method="post">
                                             @csrf
@@ -514,9 +547,13 @@
                                                 <p><strong style="color: red" id="err_formateur"></strong></p>
                                             </div>
                                             <div class="form-group mx-auto">
-                                                <label for="lieu">Lieu</label>
-                                                <input type="text" class="form-control" id="lieu" name="lieu[]"
-                                                    placeholder="Lieu">
+                                                <label for="lieu">Salle de formation</label>
+                                                <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
+                                                    <option>Choississez votre salle de formation&hellip;</option>
+                                                    @foreach ($salle_formation as $salle)
+                                                        <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
+                                                    @endforeach
+                                                </select>
 
                                             </div>
                                             <div class="form-group mx-auto">
@@ -536,7 +573,7 @@
                                                     max="18:08">
                                             </div>
                                             <div class="d-flex justify-content-center mt-2 mb-3 ">
-                                                <input type="submit" id="ajouter" class="btn inserer_emargement"
+                                                <input type="submit" id="ajouter" class="btn inserer_emargement p-2"
                                                     value="Ajouter">
                                             </div>
                                         </form>
@@ -567,7 +604,7 @@
                                                     placeholder="Groupe">
                                             </div>
                                             <div class="form-group">
-                                                <label for="lieu">Lieu</label>
+                                                <label for="lieu">Salle de formation</label>
                                                 <input type="text" class="form-control" id="lieuModif"
                                                     placeholder="Lieu">
                                             </div>
@@ -601,7 +638,40 @@
 @endif
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<script></script>
+<script>
+    $('select[name^=ville]').change(function() {
+        if ($(this).val() == 'ajout')
+        {
+            $('#nouvelle_salle').modal('show');
+        }
+    });
+
+    $("#enregistrer_salle").on('click', function(e) {
+        var salle = $('#salle_formation').val();
+        $.ajax({
+            type: "GET"
+            ,url: "{{ route('ajouter_salle_of') }}"
+            , data: {
+                salle:salle
+            }
+            , success: function(response) {
+                var data = JSON.parse(JSON.stringify(response));
+                if(data['status'] == '200'){
+                    var salle = data['salles'];
+                    var html = '';
+                    for (var i = 0; i < salle.length; i++){
+                        html += '<option value="'+salle[i].salle_formation+'">'+salle[i].salle_formation+'</option>'
+                    }
+                    html += '<option class="ajout_salle" value="ajout">Ajouter une autre salle</option>';
+                    $('.salle_de_formation').html(html);
+                }
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+    });
+</script>
 <script>
     $("#non_existante").on('submit', function() {
         document.getElementById('#non_existante').onsubmit = function() {

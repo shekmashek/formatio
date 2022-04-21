@@ -1125,3 +1125,5 @@ Route::post('modifier_session_intra','GroupeController@modifier_session_intra')-
 Route::post('modifier_session_inter','GroupeController@modifier_session_inter')->name('modifier_session_inter');
 
 Route::get('modifier_statut_session/{id}/{statut}','GroupeController@modifier_statut_session')->name('modifier_statut_session');
+
+Route::get('ajouter_salle_of','SessionController@ajouter_salle_of')->name('ajouter_salle_of');
