@@ -63,7 +63,7 @@
 
                                             </ul>
                                             @if($abonnement_actuel != null)
-                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id)
+                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id )
                                                 <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactiver mon offre</a></div>
                                                 @else
                                                     <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
@@ -78,22 +78,6 @@
                         @endforeach
                     </div>
 
-                    {{-- <div class="col-lg-4 col-md-6 ">
-                        <div class="card d-flex align-items-center justify-content-center">
-                            <div class="ribon"> <span class="bx bxs-diamond"></span> </div>
-                            <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price">
-                                @foreach ($tarifAnnuel as $tfAnn)
-                                    @if($tfAnn->type_abonnement_role_id == $types->types_id)
-                                        <span class="number">{{number_format($tfAnn->tarif, 0, ',', '.')}}</span> <sup class="sup">AR</sup>/ an</span>
-                                    @endif
-                                @endforeach
-
-                            <ul class="mb-5 list-unstyled text-muted">
-                                <li><span class="bx bx-check me-2"></span>0 - 9 employés</li>
-                            </ul>
-                            <div class="btn btn_primary"><a href="{{route('abonnement-page',['id'=>$tfAnn->id])}}" target="_blank">S'abonner</a></div>
-                        </div>
-                    </div> --}}
                 </div><br><br>
             </div><br>
             <div class="tab-pane fade" id="facture">
@@ -134,6 +118,20 @@
                 </table>
             </div>
             <div class="tab-pane fade" id="service">
+                @if (\Session::has('arret_immediat'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('arret_immediat') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+                @if (\Session::has('arret_fin'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('arret_fin') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                 <table class="table">
                     <thead>
                       <tr>
@@ -162,13 +160,18 @@
                                             <i class="fa fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href=""><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
-                                            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                            @can('isReferent')
+                                                <a class="dropdown-item" href="{{route('arret_immediat_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                <a class="dropdown-item" href="{{route('arret_fin_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                            @endcan
+                                            @can('isCFP')
+                                                <a class="dropdown-item" href=""><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-
                         @endforeach
 
                     </tbody>

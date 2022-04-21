@@ -168,7 +168,7 @@
                                     </thead>
                                     <tbody class="mb-1">
                                         <tr>
-                                            <td>Abonnement {{$facture[0]->nom_type}} - {{$facture[0]->categorie}} <br> Debut : <br> Fin:</td>
+                                            <td>Abonnement {{$facture[0]->nom_type}} - {{$facture[0]->categorie}} <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
                                             <td>{{number_format($facture[0]->montant_facture, 0, ',', '.')}} Ar</td>
                                             <td>{{number_format($tva,0,',','.')}} Ar</td>
                                             <td>{{number_format($net_ttc,0,',','.')}} Ar</td>
