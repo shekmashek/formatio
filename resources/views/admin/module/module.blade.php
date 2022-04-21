@@ -75,7 +75,7 @@
                                                             <p class="m-0 ">
                                                                 <span class="new_module_prix">
                                                                     @if($mod->prix_groupe == null)
-                                                                        <span>Groupe Indisponible</span>
+                                                                    <span>-&nbsp;&nbsp;&nbsp;AR&nbsp;HT<span>/grp</span></span>
                                                                     @else
                                                                         @php
                                                                         echo number_format($mod->prix_groupe, 0, ' ', ' ');
@@ -232,7 +232,7 @@
                                                             <p class="m-0 ">
                                                                 <span class="new_module_prix">
                                                                     @if($mod->prix_groupe == null)
-                                                                        <span>Groupe Indisponible</span>
+                                                                    <span>-&nbsp;&nbsp;&nbsp;AR&nbsp;HT<span>/grp</span></span>
                                                                     @else
                                                                         @php
                                                                         echo number_format($mod->prix_groupe, 0, ' ', ' ');
@@ -468,7 +468,7 @@
                                                         <p class="m-0 ">
                                                             <span class="new_module_prix">
                                                                 @if($mod->prix_groupe == null)
-                                                                    <span>Groupe Indisponible</span>
+                                                                    <span>-&nbsp;&nbsp;&nbsp;AR&nbsp;HT<span>/grp</span></span>
                                                                 @else
                                                                     @php
                                                                     echo number_format($mod->prix_groupe, 0, ' ', ' ');
@@ -537,7 +537,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="new_btn_programme text-center">
-                                                        <span class="btn btn_next">Publiées</span>
+                                                        <span class="btn text-success">En ligne</span>
                                                     </div>
                                                 </div>
                                             </div>

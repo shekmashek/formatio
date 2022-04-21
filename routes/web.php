@@ -375,6 +375,9 @@ Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifi
 Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->name('modifier_module_prog');
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
 Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
+Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('ajout_competence');
+Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
+Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
 
 
 // affichage info OF

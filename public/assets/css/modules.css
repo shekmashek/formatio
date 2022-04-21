@@ -593,12 +593,6 @@ font-size: 0.850rem;
     font-size: 1rem;
 }
 
-.detail__formation__item__right{
-    /* border: 1px solid rgba(128, 128, 128, 0.336); */
-    height: auto;
-    position: sticky;
-    top: 8.5rem;
-}
 .text_mod{
     color: #7635dc !important;
 }
@@ -734,4 +728,43 @@ font-size: 0.850rem;
     background-color: white;
     color: #7635dc;
     border: 1px solid #7635dc;
+}
+
+.competence_box{
+    border: 1px solid grey;
+    position: sticky;
+    top: 8.5rem;
+}
+
+.competence_box h5{
+    background-color: #637381;
+    color: white;
+    text-transform: uppercase;
+}
+
+.suppression_competence{
+    background-color: white;
+    padding-bottom: .5rem;
+    border-radius: 5px;
+    transition: all .5s ease;
+}
+
+.suppression_competence:hover{
+    color: red;
+    transform: scale(1.05);
+}
+
+.suppression_competence .bx{
+    font-size: 1.5rem;
+    color: red;
+    position: relative;
+    top: .35rem;
+}
+
+.text_prix{
+    font-weight: 700;
+}
+
+.check_comp{
+    color: #7635dc;
 }

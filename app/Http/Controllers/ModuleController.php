@@ -431,4 +431,45 @@ class ModuleController extends Controller
         $thematique = DB::select('select * from formations where domaine_id = ?', [$formtion_id]);
         return response()->json($thematique);
     }
+
+    public function ajout_new_competence(Request $request)
+    {
+        $id = $request->id;
+        $competence = $request->all();
+        for($i = 0; $i < count($competence['titre_competence']); $i++){
+            $comp = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['notes'][$i],$id]);
+        }
+        return back();
+    }
+
+    public function modif_competence(Request $request)
+    {
+        $id = $request->id;
+        $donnees = $request->all();
+        $fonct = new FonctionGenerique();
+
+        $competence = $fonct->findWhere('competence_a_evaluers', ['module_id'], [$id]);
+        for ($i = 0; $i < count($competence); $i++) {
+            $id_comp = $donnees['id_notes_' . $id . '_' . $competence[$i]->id];
+            $val_comp = $donnees['titre_competence_' . $id . '_' . $competence[$i]->id];
+            $val_note = $donnees['notes_' . $id . '_' . $competence[$i]->id];
+            if ($donnees['titre_competence_' . $id . '_' . $competence[$i]->id] != null) {
+                $cour = DB::update('update competence_a_evaluers set titre_competence=?, objectif=?  where module_id = ? and id = ?', [$val_comp, $val_note, $id_comp, $competence[$i]->id]);
+            } else {
+                return back()->with('error', "l'une de ces informations est invalide");
+            }
+        }
+        return back();
+    }
+    public function destroy_competence(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from competence_a_evaluers where id = ?', [$id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
 }

@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-            <div id="objectif"></div>
+                <div id="objectif"></div>
                 <div class="col"><i class="bx bxs-alarm bx_icon"></i>
                     <span class="text_black">
                         @isset($res->duree_jour)
@@ -68,7 +68,14 @@
                         class="text_black">&nbsp;{{$res->modalite_formation}}</span>
                 </div>
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span
-                        class="text_black">&nbsp;{{$res->niveau}}</span></div>
+                        class="text_black">&nbsp;{{$res->niveau}}</span>
+                </div>
+                <div class="col"><i class='bx bx-receipt bx_icon'></i><span
+                    class="text_black">&nbsp;{{ $res->reference }}</span>
+                </div>
+                <div class="col"><i class='bx bx-euro bx_icon'></i>
+                    <span class="text_black text_prix">&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</span>
+                </div>
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5 mb-5">
@@ -89,11 +96,9 @@
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-5 d-flex flex-row">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui
-                                ?</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->cible}}</p>
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?</span>
+                            <div class="col-12">
+                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->cible}}</p>
                             </div>
                         </div>
                     </div>
@@ -102,15 +107,8 @@
                         <div class="row d-flex flex-row w-100">
                             <span class="adresse__text"><i
                                     class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->prerequis}}</p>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row">
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
+                            <div class="col-12">
+                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->prerequis}}</p>
                             </div>
                         </div>
                     </div>
@@ -122,9 +120,8 @@
                             <span class="adresse__text"><i
                                     class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
                                 necessaire</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->materiel_necessaire}}</p>
+                            <div class="col-12">
+                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->materiel_necessaire}}</p>
                             </div>
                         </div>
                     </div>
@@ -134,15 +131,8 @@
                             <span class="adresse__text"><i
                                     class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
                                 a savoir</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->bon_a_savoir}}</p>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row">
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
+                            <div class="col-12">
+                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->bon_a_savoir}}</p>
                             </div>
                         </div>
                     </div>
@@ -155,9 +145,8 @@
                             <span class="adresse__text"><i
                                     class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
                                 pedagogiques</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->prestation}}</p>
+                            <div class="col-12">
+                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->prestation}}</p>
                             </div>
                         </div>
                     </div>
@@ -205,7 +194,6 @@
                                                     id="{{$c->cours_id}}"><i class='bx bx-x me-2'></i>Effacer</>
                                                 </span>
                                             </div>
-
                                         </div>
                                         @endif
                                         @endforeach
@@ -217,10 +205,12 @@
                                         </button>
                                         <button type="button" class="btn btn_creer ms-2 mb-2 mt-2 pb-2"
                                             data-bs-toggle="modal" data-bs-target="#Modal_{{$prgc->id}}"
-                                            id="{{$prgc->id}}"><i class='bx bxs-edit-alt icon_creer'></i>Modifier Section et Points</button>
+                                            id="{{$prgc->id}}">
+                                            <i class='bx bxs-edit-alt icon_creer'></i>
+                                            Modifier Section et Points
+                                        </button>
                                     </div>
                                     {{-- data-target="#Modal_{{$prgc->id}}" --}}
-
                                 </div>
                                 <div>
                                     <div class="modal fade" id="Modal_{{$prgc->id}}" tabindex="-1" role="dialog"
@@ -255,11 +245,9 @@
                                                                     value="{{$c->cours_id}}">
                                                                 <?php $j++ ?>
                                                                 @endif
-
                                                                 @endforeach
                                                             </div>
                                                         </div>
-
                                                 </div>
                                                 <div class="modal-footer d-flex flex-row">
                                                     <button type="button" class="btn  btn_previous"
@@ -328,79 +316,161 @@
             </div>
 
             {{-- FIXME:mise en forme de design --}}
-            <div class="col-lg-3 detail__formation__item__right g-0 p-0 m-0">
+            <div class="col-lg-3 g-0 p-0 m-0">
+
                 @if($competences != null)
-                <div class="row g-0">
-                    <h5 class="text-center">Compétences à Evaluer</h5>
-                    <div class="row text-center">
+                <div class="row g-0 competence_box mb-3 ">
+                    <h5 class="text-center py-2">Compétences à Acquérir</h5>
                         @foreach ($competences as $comp)
-                        <p>{{$comp->titre_competence}} évaluer à {{$comp->objectif}}/{{$comp->objectif}}</p>
+                        <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
+                            <div class="col-1">
+                                <i class="bx bx-check check_comp"></i>&nbsp;
+                            </div>
+                            <div class="col-11 mb-3">
+                                <span class="text-capitalize">{{$comp->titre_competence}}</span>
+                            </div>
+                        </div>
                         @endforeach
-                    </div>
+                        <div class="text-center">
+                            <button type="button" class="btn_creer ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}">
+                                <i class='bx bx-plus-medical icon_creer'></i>
+                                Ajouter
+                            </button>
+                            <button type="button" class="btn btn_creer ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}">
+                                <i class='bx bxs-edit-alt icon_creer'></i>
+                                Modifier
+                            </button>
+                        </div>
                 </div>
                 @endif
-                <div class="row ">
-                    <div class="row detail__formation__item__main__head align-items-center p-0 m-0">
-                        <div class="detail__prix__head">
-                            <div class="detail__prix__text">
-                                <p class="pt-2"><b>INTRA</b></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row detail__formation__item__main mt-3 text-center">
-                        <div class="col-lg-6 detail__prix__main__ref">
-                            <div>
-                                <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 detail__prix__main__ref2">
-                            <div>
-                                <p>{{ $res->reference }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hr">
-                    <div class="row detail__formation__item__main text-center">
-                        <div class="col-lg-6 detail__prix__main__dure js">
-                            <div>
-                                <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 detail__prix__main__dure2">
-                            <div>
-                                <p>
-                                    <span>
-                                        @isset($res->duree_jour)
-                                        {{$res->duree_jour}} jours
-                                        @endisset
-                                    </span>
-                                    <span>
-                                        @isset($res->duree)
-                                        /{{$res->duree}} h
-                                        @endisset
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hr">
-                    <div class="row detail__formation__item__rmain mb-2 text-center">
-                        <div class="col-lg-6 detail__prix__main__prix">
-                            <div>
-                                <p><i class='bx bx-euro'></i>&nbsp;Prix :</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 detail__prix__main__prix2">
-                            <div class="text-end">
-                                <p class="text-center"><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+                <div>
+                    <div class="modal fade" id="ModalCompetence_{{$id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="{{route('ajout_competence')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" id="id" value="{{$id}}">
+                                    <div class="modal-header">
+                                        <h6>Compétences a évaluer</h6>
+                                    </div>
+                                    <div class="modal-body mt-2 mb-2">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="mt-2 text-center">
+                                                    <button id="addRow" type="button" class="btn_creer text-center mb-4 pb-2" onclick="competence();" >
+                                                        <i class='bx bx-plus-medical icon_creer'></i>Ajouter une nouvelle ligne
+                                                    </button>
 
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="col-8">
+                                                    <div class="form-group">
+                                                        <div class="form-row">
+                                                            <input type="text" name="titre_competence[]"
+                                                                id="titre_competence"
+                                                                class="form-control input" placeholder="Compétences"
+                                                                required>
+                                                            <label for="titre_competence"
+                                                                class="form-control-placeholder">Compétences</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group ms-1">
+                                                        <div class="form-row">
+                                                            <input type="text" name="notes[]"
+                                                                id="notes" min="1" max="10"
+                                                                onfocus="(this.type='number')"
+                                                                class="form-control input" placeholder="Notes"
+                                                                required>
+                                                            <label for="notes"
+                                                                class="form-control-placeholder">Notes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="newRow"></div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex flex-row">
+                                        <button type="button" class="btn btn_annuler " id="fermer"
+                                            data-bs-dismiss="modal">Annuler</button>
+                                        <button type="submit"
+                                            class="btn btn_enregistrer non_pub">Enregistrer</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
+                <div>
+                    <?php $i=0 ?>
+                    <div class="modal fade" id="Modal_{{$id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="{{route('modifier_competence')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" id="id" value="{{$id}}">
+                                    <div class="modal-header">
+                                        <h6>Compétences a évaluer</h6>
+                                    </div>
+                                    <div class="modal-body mt-2 mb-2">
+                                        <div class="container">
+                                            @foreach ($competences as $comp)
+                                            <div class="d-flex">
+                                                <div class="col-9">
+                                                    <div class="form-group">
+                                                        <div class="form-row">
+                                                            <input type="text" name="titre_competence_{{$comp->module_id}}_{{$comp->id}}"
+                                                                id="titre_competence"
+                                                                class="form-control input mb-2 suppre_{{$comp->id}}" value="{{$comp->titre_competence}}" placeholder="Compétences"
+                                                                required>
+                                                            <input type="hidden"
+                                                                name="id_notes_{{$comp->module_id}}_{{$comp->id}}"
+                                                                value="{{$comp->module_id}}">
+                                                            <label for="titre_competence"
+                                                                class="form-control-placeholder">Compétences</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group ms-1">
+                                                        <div class="form-row">
+                                                            <input type="text" name="notes_{{$comp->module_id}}_{{$comp->id}}"
+                                                                id="notes" min="1" max="10"
+                                                                onfocus="(this.type='number')"
+                                                                class="form-control input mb-2 suppre_{{$comp->id}}" value="{{$comp->objectif}}" placeholder="Notes"
+                                                                required>
+                                                                <input type="hidden"
+                                                                    name="id_notes_{{$comp->module_id}}_{{$comp->id}}"
+                                                                    value="{{$comp->module_id}}">
+                                                            <label for="notes"
+                                                                class="form-control-placeholder">Notes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-1">
+                                                    <div class="px-2 mt-2 suppre_{{$comp->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$comp->id}}" data-id="{{$comp->id}}"><i class='bx bx-x me-2'></i></div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex flex-row">
+                                        <button type="button" class="btn btn_annuler " id="fermer"
+                                            data-bs-dismiss="modal">Annuler</button>
+                                        <button type="submit"
+                                            class="btn btn_enregistrer non_pub">Enregistrer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $i++ ?>
+                </div>
             </div>
+            {{-- modal competence ajouter --}}
 
         </div>
     </div>
