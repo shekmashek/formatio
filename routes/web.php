@@ -1137,9 +1137,7 @@ Route::get('modifier_statut_session/{id}/{statut}','GroupeController@modifier_st
 Route::get('/detail_facture_abonnement/{id}','AbonnementController@detail_facture')->name('detail_facture_abonnement');
 //désactiver mon offre
 Route::get('/desactiver_offre/{id}','AbonnementController@desactiver_offre')->name('desactiver_offre');
-<<<<<<< HEAD
 Route::get('ajouter_salle_of','SessionController@ajouter_salle_of')->name('ajouter_salle_of');
-=======
 //arret immédiat pour entreprises
 Route::get('/arret_immediat_abonnement_entreprise/{id}','AbonnementController@arret_immediat_abonnement_entreprise')->name('arret_immediat_abonnement_entreprise');
 Route::get('/arret_fin_abonnement_entreprise/{id}','AbonnementController@arret_fin_abonnement_entreprise')->name('arret_fin_abonnement_entreprise');
@@ -1148,4 +1146,3 @@ Route::get('/arret_immediat_abonnement_of/{id}','AbonnementController@arret_imme
 
 
 
->>>>>>> origin/abonnement_facture
