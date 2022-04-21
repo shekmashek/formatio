@@ -285,7 +285,7 @@
                                         <td>Ar {{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
                                         <td>Ar {{ number_format($info->payement, 2, ',', ' ') }}</td>
                                         <td>Ar {{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
-                                        <td>Ar {{ $info->description }}</td>
+                                        <td>{{ $info->description }}</td>
                                         <td><button class="button_tail btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button>&nbsp;
                                             <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_creer btn-block mb-2 supprimer" style="color: red"><span class="fa fa-trash"></span></button></a>
                                         </td>
