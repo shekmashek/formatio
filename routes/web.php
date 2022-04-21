@@ -1138,4 +1138,4 @@ Route::get('/detail_facture_abonnement/{id}','AbonnementController@detail_factur
 //désactiver mon offre
 Route::get('/desactiver_offre/{id}','AbonnementController@desactiver_offre')->name('desactiver_offre');
 //arret immédiat
-Route::get('/arret_immediat_abonnement_entreprise/{id}','AbonnementController@arret_immediat_abonnement_entreprise')->name('arret_immediat');
+Route::get('/arret_immediat_abonnement_entreprise/{id}','AbonnementController@arret_immediat_abonnement_entreprise')->name('arret_immediat_abonnement_entreprise');
