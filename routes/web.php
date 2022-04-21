@@ -1137,3 +1137,4 @@ Route::get('modifier_statut_session/{id}/{statut}','GroupeController@modifier_st
 Route::get('/detail_facture_abonnement/{id}','AbonnementController@detail_facture')->name('detail_facture_abonnement');
 //désactiver mon offre
 Route::get('/desactiver_offre/{id}','AbonnementController@desactiver_offre')->name('desactiver_offre');
+Route::get('ajouter_salle_of','SessionController@ajouter_salle_of')->name('ajouter_salle_of');

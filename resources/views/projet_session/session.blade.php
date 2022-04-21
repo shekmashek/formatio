@@ -7,7 +7,7 @@
             <div class="d-flex m-0 p-0 height_default">
                 <h5>{{ $module_session->reference.' - '.$module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
                 <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
-                <span class="ms-3 mb-2 p-1 ps-2 pe-2" style="color: #bc76dd;">{{ $modalite }}</span>
+                <span class="modalite ms-3 mb-2 p-1 ps-2 pe-2">{{ $modalite }}</span>
             </div>
             <div class="d-flex m-0 p-0 height_default">
                 <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong>  </p>
@@ -91,7 +91,7 @@
                         <div class="d-flex flex-row">
                             <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
                             @foreach ($formateur_cfp as $form)
-                                    <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;">
+                                <img src="{{ asset('images/formateurs/'.$form->photos) }}" alt="" class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;">
                             @endforeach()
                                 {{-- <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
                                 <img src="{{ asset('maquette/user.png') }}" alt="" class="img_superpose" height="30px" width="30px" style="border-radius: 50%;">
@@ -526,6 +526,17 @@ p{
     align-items: center
     margin: 0 auto;
     padding :.1rem .5rem;
+}
+
+.modalite{
+    border-radius: 1rem;
+    background-color: rgb(213, 146, 217);
+    color: whitesmoke;
+    /* width: 60%; */
+    align-items: center
+    margin: 0 auto;
+    
+    padding : 0.1rem 0.5rem !important;
 }
 
 .planning{
