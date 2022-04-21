@@ -134,7 +134,7 @@
     @csrf
     <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
     <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
-
+           
     <div class="row">
         <div class="col-md-4 p-0">
             <div class="row">
@@ -548,8 +548,12 @@
                                             </div>
                                             <div class="form-group mx-auto">
                                                 <label for="lieu">Salle de formation</label>
-                                                <input type="text" class="form-control" id="lieu" name="lieu[]"
-                                                    placeholder="Lieu">
+                                                <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
+                                                    <option>Choississez votre salle de formation&hellip;</option>
+                                                    @foreach ($salle_formation as $salle)
+                                                        <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
+                                                    @endforeach
+                                                </select>
 
                                             </div>
                                             <div class="form-group mx-auto">
@@ -569,7 +573,7 @@
                                                     max="18:08">
                                             </div>
                                             <div class="d-flex justify-content-center mt-2 mb-3 ">
-                                                <input type="submit" id="ajouter" class="btn inserer_emargement"
+                                                <input type="submit" id="ajouter" class="btn inserer_emargement p-2"
                                                     value="Ajouter">
                                             </div>
                                         </form>
@@ -660,9 +664,6 @@
                     }
                     html += '<option class="ajout_salle" value="ajout">Ajouter une autre salle</option>';
                     $('.salle_de_formation').html(html);
-                }
-                if(data['status'] == '400'){
-                    
                 }
             }
             , error: function(error) {
