@@ -158,10 +158,9 @@
 
                             <div class="row">
                                 <table class="table ">
-                                    <thead class="table-success">
+                                    <thead class="table" style="background-color:#acacac ">
                                         <tr>
-                                            <th scope="col">Type d'abonnement</th>
-                                            <th>Catégorie</th>
+                                            <th scope="col">Description</th>
                                             <th> Montant HT</th>
                                             <th> TVA (20%) </th>
                                             <th> Net à payer TTC </th>
@@ -169,8 +168,7 @@
                                     </thead>
                                     <tbody class="mb-1">
                                         <tr>
-                                            <td>{{$facture[0]->nom_type}}</td>
-                                            <td>{{$facture[0]->categorie}}</td>
+                                            <td>Abonnement {{$facture[0]->nom_type}} - {{$facture[0]->categorie}} <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
                                             <td>{{number_format($facture[0]->montant_facture, 0, ',', '.')}} Ar</td>
                                             <td>{{number_format($tva,0,',','.')}} Ar</td>
                                             <td>{{number_format($net_ttc,0,',','.')}} Ar</td>

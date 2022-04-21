@@ -611,7 +611,8 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            return view('superadmin.detail_facture',compact('entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
+            $dates_abonnement = $fonct->findWhere('abonnements',['cfp_id'],[$cfp_id]);
+            return view('superadmin.detail_facture',compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
         }
         if(Gate::allows('isReferent')){
             $cfp = null;
@@ -637,7 +638,8 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            return view('superadmin.detail_facture',compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            $dates_abonnement = $fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
+            return view('superadmin.detail_facture',compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
     }
     public function desactiver_offre($id){
@@ -680,8 +682,8 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-
-            $pdf = PDF::loadView('superadmin.facture_imprimer', compact('entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
+            $dates_abonnement = $fonct->findWhere('abonnements',['cfp_id'],[$cfp_id]);
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
 
         }
         if(Gate::allows('isReferent')){
@@ -708,8 +710,9 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            // $pdf = PDF::loadView('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
-            return view('superadmin.facture_imprimer', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            $dates_abonnement = $fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            // return view('admin.pdf.pdf_facture_abonnement', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
@@ -722,5 +725,10 @@ class AbonnementController extends Controller
         );
         return $pdf->download('facture abonnement.pdf');
 
+    }
+    //arret immediat de l'abonnement
+    public function arret_immediat_abonnement_entreprise($id){
+        DB::update('update abonnements set activite = ? where id = ?', [0,$id]);
+        return back();
     }
 }
