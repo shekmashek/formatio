@@ -496,4 +496,19 @@ class SessionController extends Controller
         }
     }
 
+    public function ajouter_salle_of(Request $request){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfp_id = $resp->cfp_id;
+        $salle = $request->salle;
+        if($salle == null){
+            return response()->json(['status'=>'400']);
+        }elseif($salle != null){
+            DB::insert("insert into salle_formation_of(cfp_id,salle_formation) value(?,?)",[$cfp_id,$salle]);
+            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]); 
+            return response()->json(['status'=>'200','salles'=>$salles]);
+        }
+    }
+
 }
