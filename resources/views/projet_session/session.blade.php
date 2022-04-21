@@ -337,17 +337,18 @@
         </div>
         <hr class="mt-2">
         <div class="text-center mt-2">
-            @if($type_formation_id == 1)
-                <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" class="img-fluid text-center"  style="width:120px;height:60px;" role="button" onclick="afficherInfos();"  >
+            @if($type_formation_id)
+            <img src="{{ asset('images/entreprises/'.$projet[0]->logo) }}" class="img-fluid text-center"  style="width:120px;height:60px;" role="button" onclick="afficherInfos();"  >
+            <div >
+                <p class="p-0 m-0 text-center" > <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
+              <p class="p-0 m-0 text-center"> <strong>  Adresse:{{ $projet[0]->adresse_rue}} {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal}} {{ $projet[0]->adresse_ville}} {{ $projet[0]->adresse_region}}</strong></p>
+            </div>
             @endif
 
-              </div>
-              <div >
-                  <p class="p-0 m-0 text-center" > <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                  <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                  <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
-                <p class="p-0 m-0 text-center"> <strong>  Adresse:{{ $projet[0]->adresse_rue}} {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal}} {{ $projet[0]->adresse_ville}} {{ $projet[0]->adresse_region}}</strong></p>
-              </div>
+         </div>
+
 
     </div>
 </div>
