@@ -643,10 +643,18 @@ class AbonnementController extends Controller
         }
     }
     public function desactiver_offre($id){
-        $abonnement_id = DB::select('select * from v_abonnement_facture where type_abonnement_id = ? order by facture_id desc limit 1', [$id]);
-        //on met à 0 l'activite pour desactiver l'offre
-        DB::update('update abonnement_cfps set activite = 0 where id = ?',[$abonnement_id[0]->abonnement_id]);
-        return redirect()->back();
+        if (Gate::allows('isReferent')) {
+            $abonnement_id = DB::select('select * from v_abonnement_facture_entreprise where type_abonnement_id = ? order by facture_id desc limit 1', [$id]);
+               //on met à 0 l'activite pour desactiver l'offre
+            DB::update('update abonnements set activite = 0 where id = ?',[$abonnement_id[0]->abonnement_id]);
+            return redirect()->back();
+        }
+        if (Gate::allows('isCFP')) {
+            $abonnement_id = DB::select('select * from v_abonnement_facture where type_abonnement_id = ? order by facture_id desc limit 1', [$id]);
+               //on met à 0 l'activite pour desactiver l'offre
+            DB::update('update abonnement_cfps set activite = 0 where id = ?',[$abonnement_id[0]->abonnement_id]);
+            return redirect()->back();
+        }
     }
     //impression facture
     public function impression($id){
@@ -726,9 +734,22 @@ class AbonnementController extends Controller
         return $pdf->download('facture abonnement.pdf');
 
     }
-    //arret immediat de l'abonnement
+    //arret  de l'abonnement pour entreprises
     public function arret_immediat_abonnement_entreprise($id){
         DB::update('update abonnements set activite = ? where id = ?', [0,$id]);
+        return back()->with('arret_immediat','Vous venez de désactiver votre abonnement');
+    }
+    public function arret_fin_abonnement_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $dateNow = Carbon::today()->toDateString();
+        $date_fin = $fonct->findWhere('abonnements',['id'],[$id]);
+        if($dateNow == $date_fin)  DB::update('update abonnements set activite = ? where id = ?', [0,$id]);
+        return back()->with('arret_fin','Votre abonnement sera désactivé automatiquement après un mois');
+    }
+    //arret de l'abonnemement pour cfp
+    public function arret_immediat_abonnement_of($id){
+        DB::update('update abonnement_cfps set activite = ? where id = ?', [0,$id]);
         return back();
     }
+
 }
