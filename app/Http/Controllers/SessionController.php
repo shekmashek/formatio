@@ -121,6 +121,7 @@ class SessionController extends Controller
         $formateur_cfp = [];
         $salle_formation = [];
         $fonct = new FonctionGenerique();
+        $projet = new projet();
         $module_session = DB::select('select reference,nom_module from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
@@ -131,7 +132,9 @@ class SessionController extends Controller
             $cfp_nom = $resp->nom_cfp;
 
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-            $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            // $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            $requette = $projet->requette_detail_session_of($cfp_id,$id);
+            $datas = DB::select($requette);
             // dd($datas);
             if($type_formation_id  == 1){
                 $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
