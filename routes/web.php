@@ -364,7 +364,7 @@ Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
 ]);
 Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
-Route::get('/liste_module/{id?}','ModuleController@index')->name('liste_module');
+Route::get('/liste_module/{id?}/{page?}/{index?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
 Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
@@ -378,6 +378,7 @@ Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('
 Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('ajout_competence');
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
+
 
 
 // affichage info OF

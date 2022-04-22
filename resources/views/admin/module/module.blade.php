@@ -5,6 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
     <div class="container-fluid pb-1">
+
         <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         <div class="m-4">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
@@ -22,6 +23,21 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="enCours">
                     <div class="container-fluid p-0 mt-3 me-3">
+                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin_page_en_cours }} sur {{ $nb_module_mod_en_cours }}</span>
+                            @if ($nb_par_page >= $nb_module_mod_en_cours)
+                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                            @elseif ($page == 1)
+                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @elseif ($page == $fin_page_en_cours || $page > $fin_page_en_cours)
+                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                            @else
+                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @endif
+                        </span>
                         <div class="row instruction mb-3">
                             <div class="col-12">
                                 <p class="mb-0 ">L'onglet En Cours de Création regroupe tous les modules qui ne sont pas encore términés. <br>
@@ -179,6 +195,21 @@
 
                 <div class="tab-pane fade" id="nonPublies">
                     <div class="container-fluid p-0 mt-3 me-3">
+                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin_page_non_publies }} sur {{ $nb_module_mod_non_publies }}</span>
+                            @if ($nb_par_page >= $nb_module_mod_non_publies)
+                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                            @elseif ($page == 1)
+                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @elseif ($page == $fin_page_non_publies || $page > $fin_page_non_publies)
+                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                            @else
+                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @endif
+                        </span>
                         <div class="row instruction mb-3">
                             <div class="col-12">
                                 <p class="mb-0 ">L'onglet Non Publiés regroupe tous les modules qui doivent êtres activés. <br>
@@ -413,6 +444,21 @@
 
                 <div class="tab-pane fade" id="publies">
                     <div class="container-fluid p-0 mt-3 me-3">
+                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin_page_publies }} sur {{ $nb_module_mod_publies }}</span>
+                            @if ($nb_par_page >= $nb_module_mod_publies)
+                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                            @elseif ($page == 1)
+                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @elseif ($page == $fin_page_publies || $page > $fin_page_publies)
+                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                            @else
+                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @endif
+                        </span>
                         <div class="row instruction mb-3">
                             <div class="col-12">
                                 <p class="mb-0 ">L'onglet Publiés regroupe tous les modules qui sont déjá mises en ligne. <br>
