@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('affParametre_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('aff_parametre_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
   </div>
 
     <div class="page-content page-container" id="page-content">

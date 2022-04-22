@@ -295,17 +295,17 @@ class ResponsableController extends Controller
 
 
     public function affParametreReferent(){
-        // dd('eto');
+
         // $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
         if (Gate::allows('isReferent')) {
             // dd('eto');
             // if ($id != null) {
             //     dd($id);
             //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
             // } else {
-                $id = responsable::where('user_id', Auth::user()->id)->value('id');
-                // $entreprise = responsable::where('user_id',$user_id)->value('id');
-                $branche = branche::findorFail($id);
+                $id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
+                $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
                 // dd($branch);
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
