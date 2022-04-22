@@ -30,6 +30,15 @@
                         </div>
                     </div>
                 @endif
+                @if (\Session::has('erreur_abonnement'))
+                    <div class="row w-50 text-center mx-auto">
+                        <div class="alert alert-danger justify-content-center mt-5">
+                            <ul>
+                                <li>{!! \Session::get('erreur_abonnement') !!}</li>
+                            </ul>
+                        </div>
+                    </div>
+                @endif
                 <div>
                     <p class="h2 text-center mt-3 mb-5">Choisissez Votre Abonnement</p>
                 </div>
