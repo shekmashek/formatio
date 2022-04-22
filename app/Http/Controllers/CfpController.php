@@ -50,7 +50,7 @@ class CfpController extends Controller
         // $ccfp = cfp::query('select * form cfps')->findOrFail($entreprise_id);
         // $ccfp = DB::table('cfps')->findOrFail($entreprise_id);
         // $ccfp =DB::table('cfps')->get();
-        // dd($ccfp);
+        // dd($cfp);
         return view('cfp.cfp', compact('cfp', 'refuse_demmande_cfp', 'invitation'));
     }
 
