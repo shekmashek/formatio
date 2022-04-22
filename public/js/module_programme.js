@@ -96,6 +96,28 @@ $(".suppression_programme").on("click", function(e) {
 //     });
 // });
 
+$(".suppression_competence").on('click', function(e) {
+  let id = $(this).data("id");
+  $.ajax({
+      type: "GET",
+      url: "/suppression_competence",
+      data: {
+          Id: id,
+      },
+      success: function(response) {
+          if (response.success) {
+          $("#competence_" + id).remove();
+          $(".suppre_" + id).remove();
+          } else {
+          alert("Error");
+          }
+      },
+      error: function(error) {
+          console.log(error);
+      },
+  });
+});
+
 $.ajaxSetup({
   headers: {
     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -627,6 +649,47 @@ function Cours() {
 
   $(".newRow").append(html);
 }
+
+function competence() {
+  var html = '';
+  html += '<div class="d-flex mt-2" id="row_new">';
+  html +=     '<div class="col-7">';
+  html +=         '<div class="form-group">';
+  html +=             '<div class="form-row">';
+  html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
+  html +=                 '<label for="titre_competence" class="form-control-placeholder">Compétences';
+  html +=                 '</label>';
+  html +=             '</div>';
+  html +=         '</div>';
+  html +=     '</div>';
+
+  html +=     '<div class="col-4">';
+  html +=         '<div class="form-group ms-1">';
+  html +=             '<div class="form-row">';
+  html +=                 '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
+  html +=                 '<label for="objectif" class="form-control-placeholder">Notes';
+  html +=                 '</label>';
+  html +=             '</div>';
+  html +=         '</div>';
+  html +=     '</div>';
+
+  html +=     '<div class="col-1">';
+  html +=         '<div class="mt-2">';
+  html +=                '<span id="removeRow" class="effacer_cours" role="button">';
+  html +=                     '<i class="bx bx-x">';
+  html +=                     '</i>';
+  html +=                 '</span>';
+  html +=         '</div>';
+  html +=     '</div>';
+  html += '</div>';
+
+  $('.newRow').append(html);
+}
+
+// remove row
+$(document).on('click', '#removeRow', function() {
+  $(this).closest('#row_new').remove();
+});
 
 // remove row
 $(document).on("click", "#removeRow", function() {

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Exports\FormationExport;
 use App\Imports\FormationImport;
 use App\Models\FonctionGenerique;
+use Carbon\Carbon;
 
 use Excel;
 use FontLib\Exception\FontNotFoundException;
@@ -32,32 +33,90 @@ class ModuleController extends Controller
         });
     }
 
-
-    public function index($id = null)
+    public function index($id = null, $page = null, $index = null)
     {
+        $module_model = new module();
         $fonct = new FonctionGenerique();
         $infos =null;
         $categorie=null;
         $id_user = Auth::user()->id;
+
+        $nb_par_page = 3;
+        if($page == null){
+            $page = 1;
+        }
         // $cfp_id = cfp::where('user_id', $id_user)->value('id');
         if (Gate::allows('isCFP')) {
             $cfp_id  = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
             $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
 
+            $nb_module_mod_en_cours = DB::select('select count(module_id) as nb_module from moduleformation as mf where NOT EXISTS (
+                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ?',[$cfp_id])[0]->nb_module;
+            $nb_module_mod_non_publies = DB::select('select count(module_id) as nb_module from moduleformation as mf where EXISTS (
+                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ?',[$cfp_id])[0]->nb_module;
+            $nb_module_mod_publies = DB::select('select count(module_id) as nb_module from moduleformation where status = 2 and cfp_id = ?',[$cfp_id])[0]->nb_module;
+            $fin_page_en_cours = ceil($nb_module_mod_en_cours/$nb_par_page);
+            $fin_page_non_publies = ceil($nb_module_mod_non_publies/$nb_par_page);
+            $fin_page_publies = ceil($nb_module_mod_publies/$nb_par_page);
+
+            if($page == 1){
+                $offset = 0;
+                $debut = 1;
+                if($nb_par_page > $nb_module_mod_en_cours){
+                    $fin_page_en_cours = $nb_module_mod_en_cours;
+                }else{
+                    $fin_page_en_cours = $nb_par_page;
+                }
+                if($nb_par_page > $nb_module_mod_non_publies){
+                    $fin_page_non_publies = $nb_module_mod_non_publies;
+                }else{
+                    $fin_page_non_publies = $nb_par_page;
+                }
+                if($nb_par_page > $nb_module_mod_publies){
+                    $fin_page_publies = $nb_module_mod_publies;
+                }else{
+                    $fin_page_publies = $nb_par_page;
+                }
+            }
+            elseif($page == $fin_page_en_cours){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin_page_en_cours =  $nb_module_mod_en_cours;
+            }
+            elseif($page == $fin_page_non_publies){
+                $offset = ($page - 1) * $nb_par_page;
+                dd($offset);
+
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin_page_non_publies =  $nb_module_mod_non_publies;
+            }
+            elseif($page == $fin_page_publies){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin_page_publies =  $nb_module_mod_publies;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = (($page - 1) * $nb_par_page) + 1;
+                $fin =  $page * $nb_par_page;
+            }
+
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             // $categorie = formation::where('cfp_id', $cfp_id)->get();
             $categorie = formation::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
-                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ?',[$cfp_id]);
+                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
             $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
-                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ?',[$cfp_id]);
-            $mod_publies = DB::select('select * from moduleformation where status = 2 and cfp_id = ?',[$cfp_id]);
+                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
+            $mod_publies = DB::select('select * from moduleformation where status = 2 and cfp_id = ? order by nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
             // $mod_pub_intra = DB::select('select nom_projet,module_id,date_debut,date_fin,nom_groupe,status_groupe from v_projet_session_inter where type_formation_id = ?',[1]);
 
+            // dd($mod_non_publies);
+            // dd($mod_publies);
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
-                return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp'));
+                return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -431,4 +490,46 @@ class ModuleController extends Controller
         $thematique = DB::select('select * from formations where domaine_id = ?', [$formtion_id]);
         return response()->json($thematique);
     }
+
+    public function ajout_new_competence(Request $request)
+    {
+        $id = $request->id;
+        $competence = $request->all();
+        for($i = 0; $i < count($competence['titre_competence']); $i++){
+            $comp = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',[$competence['titre_competence'][$i],$competence['notes'][$i],$id]);
+        }
+        return back();
+    }
+
+    public function modif_competence(Request $request)
+    {
+        $id = $request->id;
+        $donnees = $request->all();
+        $fonct = new FonctionGenerique();
+
+        $competence = $fonct->findWhere('competence_a_evaluers', ['module_id'], [$id]);
+        for ($i = 0; $i < count($competence); $i++) {
+            $id_comp = $donnees['id_notes_' . $id . '_' . $competence[$i]->id];
+            $val_comp = $donnees['titre_competence_' . $id . '_' . $competence[$i]->id];
+            $val_note = $donnees['notes_' . $id . '_' . $competence[$i]->id];
+            if ($donnees['titre_competence_' . $id . '_' . $competence[$i]->id] != null) {
+                $cour = DB::update('update competence_a_evaluers set titre_competence=?, objectif=?  where module_id = ? and id = ?', [$val_comp, $val_note, $id_comp, $competence[$i]->id]);
+            } else {
+                return back()->with('error', "l'une de ces informations est invalide");
+            }
+        }
+        return back();
+    }
+    public function destroy_competence(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from competence_a_evaluers where id = ?', [$id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
+
 }

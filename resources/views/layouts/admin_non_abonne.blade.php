@@ -779,7 +779,7 @@
             </header>
             {{-- header --}}
             {{-- content --}}
-            <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 4.5rem;">
+            <div class="container-fluid content_body px-0" style="padding-bottom: 1rem; padding-top: 4.5rem;">
                 @yield('content')
 
             </div>

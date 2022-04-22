@@ -157,7 +157,7 @@
         </div>
 
         <div class="row w-100">
-            
+
             <div class="col-12 ps-5">
                 <div class="row">
                     @if (Session::has('groupe_error'))

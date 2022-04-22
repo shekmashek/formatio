@@ -337,11 +337,6 @@
     transform: scale(0.9);
 }
 
-#border_premier{
-    background: rgb(194, 194, 194);
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
 #preview_module {
     color: #637381;
 }
@@ -598,12 +593,6 @@ font-size: 0.850rem;
     font-size: 1rem;
 }
 
-.detail__formation__item__right{
-    border: 1px solid rgba(128, 128, 128, 0.336);
-    height: 20rem;
-    position: sticky;
-    top: 8.5rem;
-}
 .text_mod{
     color: #7635dc !important;
 }
@@ -729,4 +718,53 @@ font-size: 0.850rem;
 .icon_vide{
     font-size: 20rem;
     color: #637381;
+}
+
+.btn_enregistrer{
+    background-color: #7635dc;
+}
+
+.btn_enregistrer:hover{
+    background-color: white;
+    color: #7635dc;
+    border: 1px solid #7635dc;
+}
+
+.competence_box{
+    border: 1px solid grey;
+    position: sticky;
+    top: 8.5rem;
+}
+
+.competence_box h5{
+    background-color: #637381;
+    color: white;
+    text-transform: uppercase;
+}
+
+.suppression_competence{
+    background-color: white;
+    padding-bottom: .5rem;
+    border-radius: 5px;
+    transition: all .5s ease;
+}
+
+.suppression_competence:hover{
+    color: red;
+    transform: scale(1.05);
+}
+
+.suppression_competence .bx{
+    font-size: 1.5rem;
+    color: red;
+    position: relative;
+    top: .35rem;
+}
+
+.text_prix{
+    font-weight: 700;
+}
+
+.check_comp{
+    color: #7635dc;
 }

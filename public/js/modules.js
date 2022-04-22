@@ -195,6 +195,7 @@ $(document).on('click', '#removeRow', function() {
 });
 
 
+
 // $('.changer_prix').click(function(){
 //     $('.new_module_prix').toggle('active_prix');
 // })
