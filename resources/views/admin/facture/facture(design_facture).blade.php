@@ -284,15 +284,23 @@
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
-                    Impayé
+                    Valider
                     @if (count($facture_actif) > 0)
                     {{count($facture_actif)}}
                     @endif
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
-                    Payé
+                <a href="#" class="nav-link" id="nav-encour-tab" data-bs-toggle="tab" data-bs-target="#nav-encour" type="button" role="tab" aria-controls="nav-encour" aria-selected="false">
+                    En cour
+                    @if (count($facture_encour) > 0)
+                    {{count($facture_encour)}}
+                    @endif
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
+                    Payer
                     @if (count($facture_payer) > 0)
                     {{count($facture_payer)}}
                     @endif
@@ -311,22 +319,14 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture<a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-                                    </th>
-                                    <th scope="col">Entreprise<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
+                                    <th scope="col">N° facture</th>
+                                    <th scope="col">Entreprise</th>
+                                    <th scope="col">Module de formation</th>
+                                    <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
-                                    <th scope="col">Total à payer<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
-                                    <th scope="col">Solde<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
-                                    <th scope="col">Status<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}</th>
+                                    <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
                                     @canany(['isCFP'])
                                     <th scope="col" colspan="2">Action</th>
                                     @endcanany
@@ -373,6 +373,21 @@
                                     </td>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
+                                    </td>
+
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             {{$actif->invoice_date}}
                                         </a>
                                     </td>
@@ -387,22 +402,6 @@
                                     </td>
                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
                                             Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{-- <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
-                                                nom envoyé
-                                            </div> --}}
-                                            @if ($actif->jour_restant >0)
-                                                <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
-                                                    nom envoyé
-                                                </div>
-                                            @else
-                                                <div style="background-color: red; border-radius: 10px; text-align: center;color:white">
-                                                    en retard
-                                                </div>
-                                            @endif
                                         </a>
                                     </td>
                                     <td>
@@ -449,23 +448,15 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture<a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-                                    </th>
-                                    <th scope="col">Entreprise<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
+                                    <th scope="col">N° facture</th>
+                                    <th scope="col">Entreprise</th>
+                                    <th scope="col">Module de formation</th>
+                                    <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
-                                    <th scope="col">Total à payer<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
-                                    <th scope="col">Solde<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-
-                                    </th>
-                                    <th scope="col">Status<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}</th>
-
+                                    <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -506,6 +497,22 @@
                                             {{$actif->nom_etp}}
                                         </a>
                                     </td>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
+                                    </td>
+
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
+                                    </td>
+
                                     <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             {{$actif->invoice_date}}
                                         </a>
@@ -524,30 +531,13 @@
                                     </td>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-
-                                            @if ($actif->jour_restant >0)
-                                            @if ($actif->facture_encour == "en_cour")
                                             <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                                partiellement payé
+                                                {{$actif->facture_encour}}
                                             </div>
-                                            @else
-                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                                envoyé
-                                            </div>
-                                            @endif
-
-                                            @else
-                                            <div style="background-color: red; border-radius: 10px; text-align: center;color:white">
-                                                en retard
-                                            </div>
-                                            @endif
-
                                         </a>
                                     </td>
                                     @canany(['isCFP'])
                                     <td>
-                                        @if ($actif->facture_encour == "valider")
-
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -561,9 +551,113 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                    </td>
+                                    @endcanany
 
-                                        @elseif ($actif->facture_encour == "en_cour")
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    {{-- --}}
 
+                    <div class="tab-pane fade" id="nav-encour" role="tabpanel" aria-labelledby="nav-encour-tab">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">N° facture</th>
+                                    <th scope="col">Entreprise</th>
+                                    <th scope="col">Module de formation</th>
+                                    <th scope="col">Projet session</th>
+                                    <th scope="col">Date de facturation</th>
+                                    <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (count($facture_encour) > 0)
+                                @foreach ($facture_encour as $actif)
+                                <tr>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            @if ($actif->reference_type_facture == "Facture")
+                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Avoir")
+                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @elseif($actif->reference_type_facture == "Acompte")
+                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @else
+                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                {{$actif->reference_type_facture}}
+                                            </div>
+                                            @endif
+                                        </a>
+                                    </td>
+                                    <th>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->num_facture}}
+                                        </a>
+                                    </th>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->nom_etp}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
+                                    </td>
+
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->invoice_date}}
+                                        </a>
+                                    </td>
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->due_date}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                en cour
+                                            </div>
+                                        </a>
+                                    </td>
+                                    @canany(['isCFP'])
+                                    <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -577,12 +671,10 @@
                                                     <hr class="dropdown-divider">
                                                     <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
                                                         <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
+
                                                 </ul>
                                             </div>
                                         </div>
-
-                                        @endif
-
                                     </td>
                                     @endcanany
 
@@ -604,18 +696,15 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture<a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
-                                    </th>
-                                    <th scope="col">Entreprise<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
-                                    </th>
+                                    <th scope="col">N° facture</th>
+                                    <th scope="col">Entreprise</th>
+                                    <th scope="col">Module de formation</th>
+                                    <th scope="col">Projet session</th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Total à payer<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Solde<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Status<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a></th>
+                                    <th scope="col">Date de règlement</th>
+                                    <th scope="col">Totale à payer</th>
+                                    <th scope="col">Reste à payer</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -654,6 +743,22 @@
                                             {{$actif->nom_etp}}
                                         </a>
                                     </td>
+                                    <td>
+                                        <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            @php
+                                            echo html_entity_decode($actif->module_session)
+                                            @endphp
+                                        </a>
+                                    </td>
+
+                                    <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            {{$actif->nom_projet.": "}}
+                                            @php
+                                            echo html_entity_decode($actif->session_facture)
+                                            @endphp
+                                        </a>
+                                    </td>
+
                                     <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             {{$actif->invoice_date}}
                                         </a>
@@ -672,8 +777,8 @@
                                     </td>
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
-                                                payé {{-- {{$actif->facture_encour}} --}}
+                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                {{$actif->facture_encour}}
                                             </div>
                                         </a>
                                     </td>
@@ -722,7 +827,6 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <div class="modal-title text-md">
-                                <h6>N° facture : <span class="text-mued" id="num_fact_encaissement"></span></h6>
                                 <h5>Reste à payer : <strong><label id="montant"></label> Ar</strong></h5>
                             </div>
                         </div>
@@ -826,40 +930,6 @@
                                 <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
                             </form>
                         </div>
-
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" aria-controls="detail_par_solde">Recherche par intervale de solde</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_solde">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left">Solde entre <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
-                                <br>
-                                <label for="dte_fin" class="form-label" align="left"> à <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
-                        </div>
-
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par Entreprise</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_etp">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left">Entreprise<strong style="color:#ff0000;">*</strong></label>
-
-                                <select autocomplete="on">
-                                    @foreach ($entreprise as $etp)
-                                        <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
-                                    @endforeach
-                                </select>
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
-                        </div>
-
-
                     </div>
                 </div>
             </div>
@@ -877,14 +947,8 @@
                     document.getElementById("dte_fin").setAttribute("min", $(this).val());
                 });
 
-                $(document).on("keyup change", "#solde_debut", function() {
-                    document.getElementById("solde_fin").setAttribute("min", $(this).val());
-                    $("#solde_fin").val($(this).val());
-                });
-
                 $(".payement").on('click', function(e) {
                     $('#montant').html('');
-                    $('#num_fact_encaissement').html('');
                     $("#numero_facture").html('')
                     var id = $(this).data("id");
                     $.ajax({
@@ -897,7 +961,6 @@
                         , success: function(response) {
                             var userData = JSON.parse(response);
                             $("#montant").append(userData[0]);
-                            $("#num_fact_encaissement").append(userData[1]);
                             var html = '<input type="hidden" name="num_facture" value="' + userData[1] + '" required>';
                             document.getElementById("date_encaissement").setAttribute("min", userData[2]);
                             $('#numero_facture').append(html);

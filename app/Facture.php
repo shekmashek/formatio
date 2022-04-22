@@ -511,7 +511,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
 
         $data = array();
-        $facture = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
+        $facture = DB::select("select * from v_facture_actif where facture_encour!='terminer' and invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
 
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
@@ -583,14 +583,16 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function search_num_fact_actif($nomTab, $num_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_num_fact_actif($nomTab, $num_fact,$para_col_fact,$opt_col_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
         } else {
             $nb_debut_pag -= 1;
         }
-        $facture = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
+        // $facture = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
+        $facture = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(".$para_col_fact.") ".$opt_col_fact." UPPER(?) and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
+
         $data = array();
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
