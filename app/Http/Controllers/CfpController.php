@@ -10,10 +10,12 @@ use App\responsable;
 use App\Mail\entrepriseMail;
 use Illuminate\Support\Facades\Auth;
 use App\cfp;
+use App\ResponsableCfpModel;
 use App\Models\FonctionGenerique;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
+use App\projet;
 
 class CfpController extends Controller
 {

@@ -26,7 +26,12 @@ create or replace view v_projet_session as
     from projets p
     join type_formations tf on p.type_formation_id = tf.id
     join cfps on p.cfp_id = cfps.id
+    join entreprise on
     join v_totale_session ts on ts.projet_id = p.id;
+
+
+
+
 
 create or replace view v_groupe_entreprise as
     select

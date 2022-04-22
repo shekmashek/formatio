@@ -61,9 +61,10 @@
 
                     <table class="table  table-borderless table-lg table-hover">
                         <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
-                            <th>Nom du centre de formation professionneml</th>
+                            <th>Organisme de Formation</th>
                             {{-- <th>Téléphone</th> --}}
-                            <th>E-mail</th>
+                            <th>Réferent Principal</th>
+                            <th>Action</th>
                         </thead>
                         <tbody id="data_collaboration" style="font-size: 11.5px;">
 
@@ -73,9 +74,11 @@
                                 @else
                                 @foreach($cfp as $centre)
                                 <tr>
-                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->nom}}</td>
+                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:60px; width:120px;"><span class="ms-3">{{$centre->nom}} </span></td>
                                     {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
-                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td>
+                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}}</span></td>
+                                    {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td> --}}
+
                                     {{-- <td>
                                         <div align="left">
                                             <strong>{{$centre->nom}}</strong>
@@ -88,7 +91,8 @@
                                         </div>
                                     </td> --}}
                                     <td>
-                                        <div class="btn-group dropleft">
+                                        <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
+                                        {{-- <div class="btn-group dropleft">
                                             <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </button>
@@ -96,7 +100,7 @@
                                                 <a class="dropdown-item" href="{{ route('detail_cfp',$centre->cfp_id) }}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
                                                 <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </td>
                                 </tr>
 
@@ -332,6 +336,7 @@
                 </div>
                 <div class="mt-1">
                     <span id="nom"></span>
+                    <span id="prenom"></span>
                 </div>
                 <div class="mt-1">
                     <span id="tel"></span>
@@ -370,7 +375,8 @@ $(".montrer").on('click', function(e) {
                 $("#donner").html(" ");
                 $("#donner").append(url_photo);
                 $("#donnerrrr").text(userData[$i].site_web);
-                $("#nom").text(userData[$i].nom);
+                $("#nom").text(userData[$i].nom_resp_cfp);
+                $("#prenom").text(userData[$i].prenom_resp_cfp);
                 $("#tel").text(userData[$i].telephone);
                 $("#adrlot").text(userData[$i].adresse_lot);
                 $("#adrlot2").text(userData[$i].adresse_quartier);
