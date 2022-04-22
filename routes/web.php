@@ -1162,4 +1162,7 @@ Route::get('/arret_fin_abonnement_entreprise/{id}','AbonnementController@arret_f
 Route::get('/arret_immediat_abonnement_of/{id}','AbonnementController@arret_immediat_abonnement_of')->name('arret_immediat_abonnement_of');
 
 
-
+Route::get('parametrage_salle','SalleFormationController@index')->name('parametrage_salle');
+Route::post('enregistrer_salle_of','SalleFormationController@store')->name('enregistrer_salle_of');
+Route::get('supprimer_salle/{id?}','SalleFormationController@destroy')->name('supprimer_salle');
+Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('modifier_salle');

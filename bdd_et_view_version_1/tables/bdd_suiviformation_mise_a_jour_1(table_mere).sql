@@ -62,14 +62,14 @@ INSERT INTO `type_payement` (`type`, `created_at`, `updated_at`) VALUES
 ('FP', NULL, NULL),
 ('FMFP', NULL, NULL);
 
-CREATE TABLE `offre_gratuits` (
-     `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-     `limite` INT,
-    `type_abonne_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnes(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-INSERT INTO `offre_gratuits` (`limite`, `type_abonne_id`) VALUES
-(5, 1),
-(2, 2);
+  CREATE TABLE `offre_gratuits` (
+      `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+      `limite` INT,
+      `type_abonne_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnes(id) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  INSERT INTO `offre_gratuits` (`limite`, `type_abonne_id`) VALUES
+  (5, 1),
+  (2, 2);
 
 CREATE TABLE `type_abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
