@@ -3,6 +3,7 @@
     <h3 class="text_header m-0 mt-1">Profil résponsable</h3>
 @endsection
 @section('content')
+
 {{-- <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
