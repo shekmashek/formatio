@@ -10,10 +10,12 @@ use App\responsable;
 use App\Mail\entrepriseMail;
 use Illuminate\Support\Facades\Auth;
 use App\cfp;
+use App\ResponsableCfpModel;
 use App\Models\FonctionGenerique;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
+use App\projet;
 
 class CfpController extends Controller
 {
@@ -48,7 +50,7 @@ class CfpController extends Controller
         // $ccfp = cfp::query('select * form cfps')->findOrFail($entreprise_id);
         // $ccfp = DB::table('cfps')->findOrFail($entreprise_id);
         // $ccfp =DB::table('cfps')->get();
-        // dd($ccfp);
+        // dd($cfp);
         return view('cfp.cfp', compact('cfp', 'refuse_demmande_cfp', 'invitation'));
     }
 

@@ -435,7 +435,6 @@ CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
     c.id AS cfp_id,
     c.nom,
     c.adresse_lot,
-    c.adresse_quartier,
     c.adresse_ville,
     c.adresse_region,
     c.email,
@@ -452,7 +451,11 @@ CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
     c.site_web,
     e.id AS entreprise_id,
     e.nom_etp,
-    (e.adresse_rue) adresse,
+    e.adresse_rue  AS adresse_rue_etp,
+    e.adresse_quartier  AS adresse_quartier_etp,
+    e.adresse_code_postal  AS adresse_code_etp,
+    e.adresse_ville  AS adresse_ville_etp,
+    e.adresse_region  AS adresse_region_etp,
     e.logo AS logo_etp,
     e.nif AS nif_etp,
     e.stat AS stat_etp,
@@ -463,7 +466,17 @@ CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
     e.email_etp,
     e.site_etp,
     e.activiter AS activer_etp,
-    e.telephone_etp
+    e.telephone_etp,
+    r.id AS responsable_id,
+    r.nom_resp AS nom_resp,
+    r.prenom_resp AS prenom_resp,
+    r.email_resp AS email_responsable,
+    r.photos AS photos_resp,
+    rc.id AS responsable_cfp_id,
+    rc.nom_resp_cfp,
+    rc.prenom_resp_cfp,
+    rc.photos_resp_cfp
+
 FROM
     demmande_cfp_etp d
 JOIN cfps c ON
@@ -472,8 +485,12 @@ JOIN entreprises e ON
     d.inviter_etp_id = e.id
 JOIN secteurs se ON
     e.secteur_id = se.id
+JOIN responsables r ON
+    r.entreprise_id = e.id
+JOIN responsables_cfp rc ON
+    rc.cfp_id = c.id
 WHERE
-    d.activiter = 1;
+    d.activiter = 1 and r.prioriter = 1 and rc.prioriter = 1;
 
 
 CREATE OR REPLACE VIEW v_demmande_etp_cfp AS SELECT
@@ -508,7 +525,16 @@ CREATE OR REPLACE VIEW v_demmande_etp_cfp AS SELECT
     e.email_etp,
     e.site_etp,
     e.activiter AS activer_etp,
-    e.telephone_etp
+    e.telephone_etp,
+    r.id AS responsable_id,
+    r.nom_resp AS nom_resp,
+    r.prenom_resp AS prenom_resp,
+    r.email_resp AS email_responsable,
+    r.photos AS photos_resp,
+    rc.id AS responsable_cfp_id,
+    rc.nom_resp_cfp,
+    rc.prenom_resp_cfp,
+    rc.photos_resp_cfp
 FROM
     demmande_etp_cfp d
 JOIN cfps c ON
@@ -517,8 +543,12 @@ JOIN entreprises e ON
     d.demmandeur_etp_id = e.id
 JOIN secteurs se ON
     e.secteur_id = se.id
+JOIN responsables r ON
+    r.entreprise_id = e.id
+JOIN responsables_cfp rc ON
+    rc.cfp_id = c.id
 WHERE
-    d.activiter = 1;
+    d.activiter = 1 and r.prioriter = 1 and rc.prioriter = 1;
 
 
 CREATE OR REPLACE VIEW v_refuse_demmande_cfp_etp AS SELECT

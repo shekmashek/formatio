@@ -83,3 +83,52 @@ CREATE OR REPLACE VIEW v_detailmodule AS
 
 
 select concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo from formateurs;
+
+
+CREATE OR REPLACE VIEW v_demmande_etp_cfp AS
+SELECT
+    d.activiter AS activiter_demande,
+    c.id AS cfp_id,
+    c.nom,
+    c.adresse_lot,
+    c.adresse_ville,
+    c.adresse_region,
+    c.email,
+    c.telephone,
+    c.slogan,
+    c.nif AS nif_cfp,
+    c.stat AS stat_cfp,
+    c.rcs AS rcs_cfp,
+    c.cif AS cif_cfp,
+    c.logo AS logo_cfp,
+    c.specialisation AS specialisation,
+    c.presentation AS presentation,
+    c.activiter AS activiter_cfp,
+    c.site_web,
+    e.id AS entreprise_id,
+    e.nom_etp,
+    (e.adresse_rue) adresse,
+    e.logo AS logo_etp,
+    e.nif AS nif_etp,
+    e.stat AS stat_etp,
+    e.cif AS cif_etp,
+    e.rcs AS rcs_etp,
+    e.secteur_id,
+    se.nom_secteur,
+    e.email_etp,
+    e.site_etp,
+    e.activiter AS activer_etp,
+    e.telephone_etp,
+    r.
+FROM
+    demmande_etp_cfp d
+JOIN cfps c ON
+    d.inviter_cfp_id = c.id
+JOIN entreprises e ON
+    d.demmandeur_etp_id = e.id
+JOIN secteurs se ON
+    e.secteur_id = se.id
+join responsables r on
+    r.entreprise_id = e.id
+WHERE
+    d.activiter = 1;

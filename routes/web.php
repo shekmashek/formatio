@@ -79,6 +79,8 @@ Route::get('/image-cfp/{logo_cfp}','CfpController@img_cfp')->name('image-cfp');
 
 Route::get('listes_notifs','HomeController@liste_notification')->name('listes_notifs');
 Route::get('listes_messages','HomeController@liste_message')->name('listes_messages');
+//route affiche chaque projet
+Route::get('tous_projets','HomeController@tous_projets')->name('tous_projets');
 
 // --------------------ROUTE ADMIN ---------------------------//
 
@@ -1027,6 +1029,10 @@ Route::get('/fonctionnalitea', function () {
 Route::get('budget','PlanFormationController@budfgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
+//Routerecherche cfp et entreprise
+Route::post('recherche_cfp','HomeController@recherche_cfp')->name('recherche_cfp');
+// Route::post('recherche_entreprise','HomeController@recherche_etp')->name('recherche_entreprise');
+
 
 //Route iframe
 Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
