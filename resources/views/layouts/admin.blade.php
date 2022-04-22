@@ -152,7 +152,7 @@
                 </p>
             </li>
             </li>
-            @endcanany--}}
+            @endcanany --}}
             @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
@@ -647,7 +647,7 @@
                                         </a>
 
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                            <li><a class="dropdown-item" href="{{route('affParametre_referent')}}"><i
+                                            <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}"><i
                                                         class="fas fa-building icon_plus  "></i>&nbsp; Information légales</a></li>
                                             <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
                                                         class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>

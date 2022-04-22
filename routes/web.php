@@ -255,8 +255,10 @@ Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name(
 Route::get('/profil_referent/{id?}', 'ResponsableController@affReferent')->name('profil_referent');
 
 // affichage parametre referent
-Route::get('/affParametre_referent', 'ResponsableController@affParametreReferent')->name('affParametre_referent');
+// Route::get('aff_parametre_referent', 'ResponsableController@affParametreReferent')->name('aff_parametre_referent');
 
+
+Route::get('aff_parametre_referent','ResponsableController@affParametreReferent')->name('aff_parametre_referent');
 
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
