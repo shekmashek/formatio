@@ -47,6 +47,24 @@ class ResponsableCfpController extends Controller
     }
 
 
+    public function affParametre_cfp($id = null)
+    {
+        $fonct = new FonctionGenerique();
+
+        if (Gate::allows('isCFP')) {
+            if ($id!=null) {
+                $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
+
+            }
+            else{
+                $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
+            }
+            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs'));
+
+        }
+
+    }
+
     public function index()
     {
         $user_id = Auth::id();

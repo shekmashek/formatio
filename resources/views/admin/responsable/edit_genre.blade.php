@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification genre</h3>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
@@ -9,7 +12,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-       
+
         <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 

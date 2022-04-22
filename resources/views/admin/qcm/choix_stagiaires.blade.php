@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Choix des stagiaires</h3>
+    <h3 class="text_header m-0 mt-1">Choix des stagiaires</h3>
 @endsection
 @section('content')
 <div class="page-wrapper">

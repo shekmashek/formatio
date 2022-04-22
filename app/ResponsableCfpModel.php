@@ -8,6 +8,7 @@ use App\Models\FonctionGenerique;
 
 class ResponsableCfpModel extends Model
 {
+    protected $table="responsables_cfp";
     public function verify_form($input)
     {
         $rules = [

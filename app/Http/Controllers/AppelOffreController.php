@@ -41,7 +41,7 @@ class AppelOffreController extends Controller
     {
         
         $appel_offre = new Appel_offre();
-        $nb_par_page = 5;
+        $nb_par_page = 1;
         if($page == null){
             $page = 1;
         }
@@ -53,13 +53,11 @@ class AppelOffreController extends Controller
             return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier','domaines'));
         }
         if (Gate::allows('isCFP')) {
-            
             $domaines = $this->fonct->findAll("domaines");
             $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [false]);
             // $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
             $entreprise_id=Appel_offre::value('entreprise_id');
             $entreprise=entreprise::findOrFail($entreprise_id);
-          
             //pâgination
             $nb_offre= DB::select('select count(formation_id) as nb_offre from v_appel_offre where entreprise_id = ?',[$entreprise_id])[0]->nb_offre;
             $fin_page = ceil($nb_offre/$nb_par_page);
@@ -83,10 +81,10 @@ class AppelOffreController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-            $appel_offre_publier= DB::select('select * from v_appel_offre where entreprise_id = ? limit ? offset ?', [$entreprise_id,$nb_par_page,$offset]);
+            $appel_offre_publier= DB::select('select * from v_appel_offre where entreprise_id = ? limit  ? offset  ?', [$entreprise_id,$nb_par_page,$offset]);
+            // dd($appel_offre_publier);
             // $sql = $appel_offre ->build_requette($entreprise_id, "v_appel_offre", $request, $nb_par_page, $offset);
             // $projet = DB::select($sql);
-
             return view('admin.appel_offre.appel_offre_cfp', compact('entreprise','appel_offre_publier','domaines','page','fin_page','nb_offre','debut','fin','nb_par_page'));
         }
     }
@@ -101,7 +99,6 @@ class AppelOffreController extends Controller
         $reference = $req->reference_search;
         if (Gate::allows('isReferent')) {
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
-
             if ($reference != null) {
                 $appel_offre_non_publier =  DB::select("select * from v_appel_offre where UPPER(nom_formation) LIKE UPPER('%" . $reference . "%') and entreprise_id=? and publier=false", [$resp_connecter->entreprise_id]);
                 $appel_offre_publier =  DB::select("select * from v_appel_offre where UPPER(nom_formation) LIKE UPPER('%" . $reference . "%') and entreprise_id=? and publier=true", [$resp_connecter->entreprise_id]);
