@@ -63,7 +63,7 @@
 
                                             </ul>
                                             @if($abonnement_actuel != null)
-                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id )
+                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id and $abonnement_actuel[0]->activite == 1)
                                                 <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactiver mon offre</a></div>
                                                 @else
                                                     <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>

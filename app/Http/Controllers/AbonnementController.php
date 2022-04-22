@@ -404,9 +404,10 @@ class AbonnementController extends Controller
             $entreprise = $fonct->findWhere('v_responsable_entreprise',['entreprise_id','prioriter'],[$entreprise_id,1]);
 
 
-              //on verifie l'abonnemennt de l'of
+              //on verifie l'abonnemennt de l'entreprise
             $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
             if($etp_ab!=null){
+                //on teste d'abord si le dernier abonnement est gratuit, si c'est gratuit il n'a plus droit d'accéder à ce type
                 $dtNow = Carbon::today()->toDateString();
                 $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($etp_ab[0]->invoice_date)) . " + 31 days");
                 /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
