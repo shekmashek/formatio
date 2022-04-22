@@ -212,40 +212,80 @@
 
         @if(isset($invoice_dte) && isset($due_dte))
 
-        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-        <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]) ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-        @elseif ($pagination["debut_aff"] <= 1) <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+            @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
+            <a href="{{ route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]) ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @elseif ($pagination["debut_aff"] <= 1) <a href="{{ route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
             @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                <a href="{{route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{  route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-                {{-- @elseif ($pagination["debut_aff"]<=1 && $pagination["fin_aff"]<=$pagination["nb_limit"])
-                <a href="{{route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{  route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a> --}}
+                <a href="{{route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{  route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-                @else
-                <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{ route('search_par_date_pagination',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @endif
+            @else
+                <a href="{{ route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @endif
 
-                @elseif(isset($num_fact))
+            @elseif(isset($solde_debut) && isset($solde_fin))
+
+            @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
+            <a href="{{ route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]) ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @elseif ($pagination["debut_aff"] <= 1) <a href="{{ route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
+                <a href="{{route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{  route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @else
+                <a href="{{ route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @endif
+{{--  --}}
+        @elseif(isset($num_fact))
 
                 @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-                <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($pagination["debut_aff"] == 1)
-                <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                    <a href="{{route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{  route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-                    @else
-                    <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('search_par_num_fact_pagination',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                    @endif
+                    <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                    @elseif ($pagination["debut_aff"] == 1)
+                    <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                    @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
+                    <a href="{{route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{  route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
                     @else
+                    <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                    @endif
+{{--  --}}
+        @elseif(isset($entiter_id))
+
+        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
+            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @elseif ($pagination["debut_aff"] == 1)
+            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
+            <a href="{{route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{  route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @else
+            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @endif
+
+            {{--  --}}
+                @else
 
                     @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
                     <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
@@ -261,7 +301,9 @@
                         <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                         @endif
 
-                        @endif
+
+
+        @endif
 
 
 
@@ -311,22 +353,22 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture<a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                     </th>
-                                    <th scope="col">Entreprise<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
-                                    <th scope="col">Total à payer<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
-                                    <th scope="col">Solde<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
-                                    <th scope="col">Status<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}</th>
+                                    <th scope="col">Status</th>
                                     @canany(['isCFP'])
                                     <th scope="col" colspan="2">Action</th>
                                     @endcanany
@@ -399,7 +441,7 @@
                                                     nom envoyé
                                                 </div>
                                             @else
-                                                <div style="background-color: red; border-radius: 10px; text-align: center;color:white">
+                                                <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
                                                     en retard
                                                 </div>
                                             @endif
@@ -408,8 +450,8 @@
                                     <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
+                                                <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li class="dropdown-item">
@@ -449,22 +491,22 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture<a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                     </th>
-                                    <th scope="col">Entreprise<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
-                                    <th scope="col">Total à payer<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
-                                    <th scope="col">Solde<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
 
                                     </th>
-                                    <th scope="col">Status<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}</th>
+                                    <th scope="col">Status</th>
 
                                     <th scope="col">Action</th>
                                 </tr>
@@ -537,7 +579,7 @@
                                             @endif
 
                                             @else
-                                            <div style="background-color: red; border-radius: 10px; text-align: center;color:white">
+                                            <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
                                                 en retard
                                             </div>
                                             @endif
@@ -550,8 +592,8 @@
 
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
+                                                <button type="button" class="btn  btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <a href="#" class="dropdown-item">
@@ -566,8 +608,8 @@
 
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
+                                                <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <a href="#" class="dropdown-item">
@@ -604,18 +646,18 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture<a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                     </th>
-                                    <th scope="col">Entreprise<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
                                     </th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
                                     </th>
-                                    <th scope="col">Total à payer<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
                                     </th>
-                                    <th scope="col">Solde<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
                                     </th>
-                                    <th scope="col">Status<button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a></th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -681,8 +723,8 @@
                                     <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-ellipsis-v"></i>
+                                                <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>
@@ -804,7 +846,7 @@
                             <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_thematique">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
+                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
@@ -819,9 +861,9 @@
                             <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par numero de facture</a>
                         </p>
                         <div class="collapse multi-collapse" id="search_num_fact">
-                            <form class=" mt-1 mb-2 form_colab" method="POST" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
                                 @csrf
-                                <label for="num_fact" class="form-control-placeholder">Numéro de facture<strong style="color:#ff0000;">*</strong></label>
+                                <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
                                 <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
                                 <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
                             </form>
@@ -831,7 +873,7 @@
                             <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" aria-controls="detail_par_solde">Recherche par intervale de solde</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_solde">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
+                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left">Solde entre <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
@@ -846,11 +888,11 @@
                             <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par Entreprise</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_etp">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
+                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left">Entreprise<strong style="color:#ff0000;">*</strong></label>
 
-                                <select autocomplete="on">
+                                <select name="entiter_id" id="entiter_id">
                                     @foreach ($entreprise as $etp)
                                         <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
                                     @endforeach
