@@ -256,6 +256,11 @@ Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name(
 //
 Route::get('/profil_referent/{id?}', 'ResponsableController@affReferent')->name('profil_referent');
 
+// affichage parametre referent
+// Route::get('aff_parametre_referent', 'ResponsableController@affParametreReferent')->name('aff_parametre_referent');
+
+
+Route::get('aff_parametre_referent','ResponsableController@affParametreReferent')->name('aff_parametre_referent');
 
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
@@ -1051,6 +1056,8 @@ Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name(
 //------------------------MODIFIER PROFIL RESPONSABLE OF---------------------------------//
 //affichage profil
 Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent')->name('profil_du_responsable');
+// Route aff parametre CFP
+Route::get('/affichage_parametre_cfp', 'ResponsableCfpController@affParametre_cfp')->name('affichage_parametre_cfp');
 //Route pour modifier chaque champs pour responsable
 Route::get('/modification_photo/{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
 Route::get('/modification_nom/{id}','ResponsableCfpController@edit_nom')->name('modification_nom');

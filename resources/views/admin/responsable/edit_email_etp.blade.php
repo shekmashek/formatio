@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Modification email</h3>
+    <h3 class="text_header m-0 mt-1">Modification entreprise</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
@@ -10,7 +10,7 @@
 <center>
 <div class="col-lg-4">
     <div class="p-3 form-control">
-    
+
         <form   class="btn-submit" action="{{route('update_entreprise',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 

@@ -152,7 +152,7 @@
                 </p>
             </li>
             </li>
-            @endcanany--}}
+            @endcanany --}}
             @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
@@ -572,7 +572,7 @@
 
                 <div class="col-4 header-right align-items-center d-flex flex-row">
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                        <div class="btn_creer me-3">
+                        <div class="btn_creer me-2">
                             <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
                         </div>
                         <div class="">
@@ -598,92 +598,144 @@
                             </div>
                             @endcan
                             @can('isReferent')
-                            <div class="btn_creer dropdown">
+                            <div class="d-flex flex-row">
+                                <div class="btn_creer dropdown">
 
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                                    <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
 
-                                </a>
+                                    </a>
 
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" href="{{route('departement.create')}}"><i
-                                                class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a></li>
-                                    <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
-                                                class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel d'offre</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
-                                                class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
-                                            stagiaire</a></li>
-                                    <li><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i
-                                                class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
-                                            formation</a></li>
-                                    <li><a class="dropdown-item" href="{{route('budget')}}"><i
-                                                class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('formations')}}">
-                                            <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module Interne
+                                    <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="{{route('departement.create')}}"><i
+                                                    class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a></li>
+                                        <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
+                                                    class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel d'offre</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
+                                                    class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
+                                                stagiaire</a></li>
+                                        <li><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i
+                                                    class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
+                                                formation</a></li>
+                                        <li><a class="dropdown-item" href="{{route('budget')}}"><i
+                                                    class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('formations')}}">
+                                                <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module Interne
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('formateurs')}}">
+                                                <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur Interne
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('projets')}}">
+                                                <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="ms-2">
+                                    <div class="btn_creer dropdown">
+
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                            <i class='bx bxs-cog icones_creer'></i>
+                                            Paramètres
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('formateurs')}}">
-                                            <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur Interne
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('projets')}}">
-                                            <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
-                                        </a>
-                                    </li>
 
-                                </ul>
+                                        <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}"><i
+                                                        class="fas fa-building icon_plus  "></i>&nbsp; Information légales</a></li>
+                                            <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
+                                                        class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                                <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de l'entreprise
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                                <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                                <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
+                                            </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             @endcan
                             @can('isCFP')
-                            <div class="btn_creer dropdown">
+                            <div class="d-flex flex-row">
+                                <div class="btn_creer dropdown">
 
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                                    <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                    <a class="dropdown-toggle ms-2" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
 
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="ya">
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('nouveau_module')}}">
-                                            <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="ya">
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('nouveau_module')}}">
+                                                <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
+                                                <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('nouveau_groupe',['type_formation'=>1])}}">
+                                                <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}">
+                                                <i class='bx bx-library icon_plus'></i>&nbsp;Projet Inter
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('facture')}}">
+                                                <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouvelle Facture
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="ms-2">
+                                    <div class="btn_creer dropdown">
+
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                            <i class='bx bxs-cog icones_creer'></i>
+                                            Paramètres
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
-                                            <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('nouveau_groupe',['type_formation'=>1])}}">
-                                            <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}">
-                                            <i class='bx bx-library icon_plus'></i>&nbsp;Projet Inter
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{route('facture')}}">
-                                            <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouveau Facture
-                                        </a>
-                                    </li>
-                                </ul>
+
+                                        <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}"><i
+                                                        class="fas fa-building icon_plus  "></i>&nbsp; Information légales</a></li>
+                                            <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
+                                                        class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                                <i class='bx bxs-building icon_plus'></i>&nbsp;Salle de formation
+                                            </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             @endcan
 
                         </div>
                     </div>
-                    <div class="col-2">
-                        <div class="header_img">
-                            <p class="m-0 mt-3">
-                            <i class='bx bxs-user-circle user_icon'></i>
-                            </p>
+                    <div class="ms-4">
+                        <div class=" btn_creer header_img" style="height: 34px">
+                            {{-- <p class="m-0 ms-2"></p> --}}
+                            {{-- <i class='bx bxs-user-circle user_icon'></i> --}}
+                            <span class="d-flex mt-1" style="text-decoration: none; color:black; font-size:12px" type="button">
+                                <i class=' bx bxs-user' style="font-size: 17px; position: relative; top:.1rem;"></i> <span class="mt-1" style="font-size: 11.7px">Vous</span> <i class='bx bx-caret-down mt-1'></i>
+                            </span>
                         </div>
-                        <div class="pdp_profil" id="box_profil">
+                        <div class="pdp_profil mt-3" id="box_profil">
                             <div class="container pdp_profil_card ">
                                 <div class="card">
                                     <div class="card-title">
