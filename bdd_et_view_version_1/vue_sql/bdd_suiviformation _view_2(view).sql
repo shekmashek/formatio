@@ -1,5 +1,4 @@
 CREATE OR REPLACE VIEW v_programme AS SELECT
-    cfp_id,
     formation_id,
     nom_formation,
     id_module,
@@ -20,7 +19,6 @@ FROM
         modules.reference,
         modules.nom_module,
         formations.domaine_id,
-        formations.cfp_id,
         formation_id,
         formations.nom_formation,
         prix,

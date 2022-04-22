@@ -10,7 +10,7 @@ create or replace view v_user_role as
         rl.role_name,
         rl.role_description
     from users as usr,roles as rl, role_users as rl_usr
-    where rl_usr.user_id = usr.id and rl_usr.role_id = rl.id
+    where rl_usr.user_id = usr.id and rl_usr.role_id = rl.id;
 
 create or replace view v_groupe_entreprise as
     select

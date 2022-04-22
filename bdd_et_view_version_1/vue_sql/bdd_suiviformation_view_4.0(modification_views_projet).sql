@@ -428,7 +428,6 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.mail_stagiaire,
         s.telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
-        s.photos,
         s.service_id as departement_id,
         s.cin,
         s.date_naissance,
@@ -662,8 +661,6 @@ create or replace view v_emargement as
     and pgd.stagiaire_id = dps.stagiaire_id;
 
 
-ALTER TABLE presences
-ADD CONSTRAINT presence_stg_constraint UNIQUE (detail_id,stagiaire_id);
 
 
 
