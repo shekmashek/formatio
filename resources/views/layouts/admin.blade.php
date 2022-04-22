@@ -652,7 +652,7 @@
                                             <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
                                                         class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                            <li><a class="dropdown-item" href="{{route('liste_departement')}}">
                                                 <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de l'entreprise
                                             </a></li>
                                             <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
