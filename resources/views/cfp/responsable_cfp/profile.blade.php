@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Profil du responsable de centre de formation</h3>
+@endsection
 @section('content')
 
 <style>
@@ -11,7 +14,9 @@
         border-radius: 75px;
     }
 
-   
+    .none:hover{
+        cursor:default;
+    }
 </style>
 <div class="row">
     <div class="row mt-2">
@@ -174,11 +179,11 @@
                 </div> --}}
 
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a href="{{route('profil_of',$refs->cfp_id)}}">
+                    {{-- <a href="{{route('profil_of',$refs->cfp_id)}}"> --}}
+                    <a class="none" href="">
                         <p class="p-1 m-0" style="font-size: 12px;">ORGANISME DE FORMATION<span style="float: right;">{{$refs->nom_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
-
                 </div>
 
                 {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">

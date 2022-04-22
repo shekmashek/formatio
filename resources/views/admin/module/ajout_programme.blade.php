@@ -5,40 +5,31 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/ajoutProgramme.css')}}">
-<div class="row">
-
-
-    <div class="col-lg-3">
-    </div>
-    <div class="col-lg-9">
-
-        <div class="formation__search">
-            <div class="formation__search__form">
-                <form class="" method="GET" action="{{route('result_formation')}}">
-                    {{-- <form action="{{ route('search') }}" method="GET">
-                        <input type="text" name="search" class="form-control" required />: --}}
-                        @csrf
-                        <input type="text" id="reference_search" name="nom_formation"
-                            placeholder="Recherche Formation par example excel" class="form-control" autocomplete="off">
-                        <button type="submit" class="btn">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </form>
-            </div>
+<div class="row navigation_detail">
+    <div class="ps-5 col justify-content-between d-flex flex-row">
+        <div>
+            <ul class="d-flex flex-row">
+                <li class="me-5"><a href="#objectif">objectif</a></li>
+                <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
+                <li class="me-5"><a href="#programme">programme</a></li>
+            </ul>
         </div>
-        @foreach ($categorie as $ctg )
-        <button type="button" class="btn btn" style="border-radius: 15px"><a
-                href="{{route('select_par_module',$ctg->id)}}">{{$ctg->nom_formation}}</a></button>
-        @endforeach
+        <div>
+            <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
+            href="{{route('liste_module')}}">
+            <span class="btn_enregistrer text-center">Précedent</span>
+        </a>
+        </div>
     </div>
 </div>
 <section class="detail__formation">
     <div class="container py-4">
-        <div class="row detail__formation__result bg-light justify-content-space-between py-3 px-5">
+        <div class="row bg-light justify-content-space-between py-3 px-5">
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
-                    <h4 class="py-4">{{$res->nom_formation}} - {{$res->nom_module}}</h4>
+                    <h4 class="py-4">{{$res->nom_module}}</h4>
+                    <p>{{$res->nom_formation}}</p>
                     <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
@@ -50,11 +41,20 @@
             </div>
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                 <div class="detail__formation__result__item2">
+                        <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
+
+                        <div class="text-center">
+                            <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
+                        </div>
+                    @can('isReferent')
                     <a href="#">
                         <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
+
+                        <div class="text-center">
+                            <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
+                        </div>
                     </a>
-                    <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
-                            style="width: 200px; height:100px;"></div>
+                    @endcan
                 </div>
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
@@ -70,6 +70,7 @@
                         @endisset
                     </span> </p>
                 </div>
+                <div id="objectif"></div>
                 <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
@@ -79,12 +80,11 @@
             <div class="col-lg-9 detail__formation__content">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
+                <h3 class="pb-3">Objectifs de la formation  </h3>
                 <div class="row detail__formation__item__left__objectif">
+                    <div id="pour_qui"></div>
                     <div class="col-lg-12">
-                        <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
-                        <a href="#programme__formation"><button type="button" class="btn btn-warning">Consulter le
-                                programme de cette formation</button></a>
                     </div>
                 </div>
                 {{-- section 1 --}}
@@ -118,7 +118,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="programme__formation"></div>
                 </div>
 
                 <div class="row detail__formation__item__left__adresse">
@@ -151,9 +150,8 @@
                             </div>
                         </div>
                     </div>
-                    <div id="programme__formation"></div>
                 </div>
-
+                <div id="programme"></div>
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-12 d-flex flex-row">
                         <div class="row d-flex flex-row">
@@ -166,7 +164,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="programme__formation"></div>
                 </div>
                 @endforeach
                 {{-- section 3 --}}
@@ -183,48 +180,26 @@
                     <h3 class="pt-3 pb-3">Programme de la formation</h3>
                     <div></div>
                     <div class="col-lg-12">
-                        {{-- <div class="row detail__formation__item__left__accordion">
-                            <div class="accordion" id="accordion__program">
-                                <?php //$i=1 ?>
-                                @foreach ($programmes as $prgc)
-                                <div class="card">
-                                    <div class="card-header" id="heading1">
-                                        <h2 class="mb-0"><button class="btn btn-block text-left" type="button"
-                                                data-toggle="collapse" data-target="#collapse{{$i}}"
-                                                aria-expanded="true" id="icon" aria-controls="collapse1"><i
-                                                    class="bx bxs-plus-circle icon-prog-list"
-                                                    id="icon"></i>&nbsp;&nbsp;{{$i}} - {{$prgc->titre}}</button></h2>
-                                    </div>
-                                    @foreach ($cours as $c)
-                                    @if($c->programme_id == $prgc->id)
-                                    <div id="collapse{{$i}}" class="collapse show" aria-labelledby="heading1"
-                                        data-parent="#accordion__program">
-                                        <div class="card-body"> <i
-                                                class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}</div>
-                                    </div>
-                                    @endif
-                                    @endforeach
-                                    <?php //$i++ ?>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div> --}}
                         <form action="{{route('insert_prog_cours')}}" method="POST" class="w-100">
                             @csrf
                             <div class="row detail__formation__item__left__accordion">
-                                 <span role="button" class="accordion accordion_prog"><input type="text"
-                                        class="form-control" name="titre_prog[0]"
-                                        placeholder="Titre de votre programme"><i id="addProg"
-                                        class="bx bxs-plus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px"
-                                        role="button" title="ajouter un nouveau programme"></i></span>
+                                <button type="button" id="addProg" class="btn_creer btn pb-2 w-50 mb-3" title="ajouter un nouveau programme">
+                                    <i class='bx bx-plus-medical icon_creer'></i>
+                                    Ajouter un nouveau section dans votre programme
+                                </button>
+                                <span role="button" class="accordion ">
+                                    <input type="text" class="form-control input" name="titre_prog[0]" placeholder="Titre de votre programme" required>
+                                </span>
                                 <div class="panel" id="heading2">
-                                    <span class="d-flex input_cours"><i
-                                            class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                            class="form-control" name="cours_0[]" placeholder="Votre cours"><i
-                                            id="addCours0" class="bx bx-plus-circle pt-3 ms-3 ps-2"
-                                            style="font-size: 24px; color: #801D68" role="button"
-                                            title="ajouter un nouveau cours"></i></span>
+                                    <span class="d-flex input_cours">
+                                        <i class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
+                                            class="form-control" name="cours_0[]" placeholder="Votre cours">
+                                    </span>
                                     <span id="newCours0"></span>
+                                    <button type="button" class="btn_creer ms-2 mb-2 mt-2 pb-2" id="addCours0" title="ajouter un nouveau cours">
+                                        <i class='bx bx-plus-medical icon_creer'></i>
+                                        Ajouter de point dans votre section
+                                    </button>
                                 </div>
                             </div>
                             <br>
@@ -359,17 +334,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="row detail__formation__item__main">
-                    <div class="detail__prix__main__presentiel pt-3">
-                        <div>
-                            <p class="text-uppercase">{{$res->modalite_formation}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row detail__formation__item__main">
+                <div class="row detail__formation__item__main mt-3 text-center">
                     <div class="col-lg-6 detail__prix__main__ref">
                         <div>
-                            <p><i class="bx bx-clipboard"></i>&nbsp;Reference</p>
+                            <p><i class="bx bx-clipboard"></i>&nbsp;Réf :</p>
                         </div>
                     </div>
                     <div class="col-lg-6 detail__prix__main__ref2">
@@ -379,10 +347,10 @@
                     </div>
                 </div>
                 <hr class="hr">
-                <div class="row detail__formation__item__main">
+                <div class="row detail__formation__item__main text-center">
                     <div class="col-lg-6 detail__prix__main__dure">
                         <div>
-                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span></p>
+                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span></p>
                         </div>
                     </div>
                     <div class="col-lg-6 detail__prix__main__dure2">
@@ -403,21 +371,22 @@
                     </div>
                 </div>
                 <hr class="hr">
-                <div class="row detail__formation__item__rmain">
-                    <div class="col-lg-4 detail__prix__main__prix">
-                        <div>
-                            <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
+                <div class="row detail__formation__item__rmain text-center">
+                    <div class="col-lg-6 detail__prix__main__prix">
+                        <div >
+                            <p><i class='bx bx-euro'></i>&nbsp;Prix : </p>
                         </div>
                     </div>
-                    <div class="col-lg-8 detail__prix__main__prix2">
-                        <div class="text-end">
+                    <div class="col-lg-6 detail__prix__main__prix2">
+                        <div>
                             <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
 
                         </div>
                     </div>
                 </div>
-                <hr class="hr">
+
               @can('isReferent')
+              <hr class="hr">
               <div class="row detail__formation__item__main">
                 <div class="col-lg-12 detail__prix__main__btn py-5">
                     <form action="{{route('demande_devis.store')}}" method="post">
@@ -482,7 +451,7 @@
             var domaine_id = userData[2];
             $('.sous-formation-row').html('');
             var html = '';
-             for (let i = 0; i < formations.length; i++) {
+            for (let i = 0; i < formations.length; i++) {
                 var url_formation = '{{ route("select_par_formation", ":id") }}';
                 url_formation = url_formation.replace(':id', formations[i].id);
                 html += '<dl class="sous-formation-items" data-role="two-menu">';
@@ -516,8 +485,10 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_0[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
+        html += '</span>';
         html += '</span>';
 
         $('#newCours0').append(html);
@@ -529,9 +500,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_1[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours1').append(html);
     });
@@ -542,9 +516,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_2[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours2').append(html);
     });
@@ -555,9 +532,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_3[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours3').append(html);
     });
@@ -568,9 +548,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_4[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours4').append(html);
     });
@@ -581,9 +564,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_5[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours5').append(html);
     });
@@ -594,9 +580,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_6[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours6').append(html);
     });
@@ -607,9 +596,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_7[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours7').append(html);
     });
@@ -620,9 +612,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_8[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours8').append(html);
     });
@@ -633,9 +628,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_9[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours9').append(html);
     });
@@ -646,9 +644,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_10[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours10').append(html);
     });
@@ -660,8 +661,10 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_11[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
+        html += '</span>';
         html += '</span>';
 
         $('#newCours11').append(html);
@@ -673,9 +676,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_12[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours12').append(html);
     });
@@ -686,9 +692,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_13[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours13').append(html);
     });
@@ -699,9 +708,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_14[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours14').append(html);
     });
@@ -712,9 +724,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_15[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours15').append(html);
     });
@@ -725,9 +740,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_16[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours17').append(html);
     });
@@ -738,9 +756,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_17[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours18').append(html);
     });
@@ -751,9 +772,12 @@
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_18[]" placeholder="Votre cours">';
-        html += '<i id="removeCours" class="bx bx-minus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
+        html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Effacer';
         html += '</span>';
+        html += '</span>';
+
 
         $('#newCours19').append(html);
     });
@@ -769,21 +793,25 @@
         var html = '';
         html += '<div class="row detail__formation__item__left__accordion" id="heading1">';
 
-        html += '<span role="button" class="accordion accordion_prog active">';
+        html += '<span role="button" class="accordion  d-flex">';
         html += '<input type="text" class="form-control" name="titre_prog['+i+']" placeholder="Titre de votre programme">';
-        html += '<i id="removeProg" class="bx bxs-minus-circle pt-3 ms-3 ps-2 plus_prog" style="font-size: 24px" role="button" title="ajouter un nouveau programme">';
-        html += '</i>';
+        html += '<span class="suppression_programme px-2 pt-3 d-flex" role="button" title="Supprimer le cours" id="removeProg" title="Supprimer un programme">';
+        html += '<i class="bx bx-x me-2">';
+        html += '</i>Supprimer';
+        html += '</span>';
         html += '</span>';
 
-        html += '<div class="panel">';
+        html += '<div class="panel pb-4">';
         html += '<span class="d-flex input_cours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
         html += '<input type="text" class="form-control" name="cours_'+i+'[]"  placeholder="Votre cours">';
-        html += '<i id="addCours'+i+'" class="bx bx-plus-circle pt-3 ms-3 ps-2" style="font-size: 24px; color: #801D68" role="button" title="ajouter un nouveau cours">';
-        html += '</i>';
         html += '</span>';
         html += '<span id="newCours'+i+'">';
+        html += '</span>';
+        html += '<span class="btn_creer px-2 ms-2 mb-2 mt-3 py-2" role="button" title="Supprimer le cours" id="addCours'+i+'" title="ajouter un nouveau cours">';
+        html += '<i class="bx bx-plus-medical icon_creer">';
+        html += '</i>Ajouter de point dans votre section';
         html += '</span>';
         html += '</div>';
 

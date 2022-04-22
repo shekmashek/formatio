@@ -79,6 +79,8 @@ Route::get('/image-cfp/{logo_cfp}','CfpController@img_cfp')->name('image-cfp');
 
 Route::get('listes_notifs','HomeController@liste_notification')->name('listes_notifs');
 Route::get('listes_messages','HomeController@liste_message')->name('listes_messages');
+//route affiche chaque projet
+Route::get('tous_projets','HomeController@tous_projets')->name('tous_projets');
 
 // --------------------ROUTE ADMIN ---------------------------//
 
@@ -254,6 +256,11 @@ Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name(
 //
 Route::get('/profil_referent/{id?}', 'ResponsableController@affReferent')->name('profil_referent');
 
+// affichage parametre referent
+// Route::get('aff_parametre_referent', 'ResponsableController@affParametreReferent')->name('aff_parametre_referent');
+
+
+Route::get('aff_parametre_referent','ResponsableController@affParametreReferent')->name('aff_parametre_referent');
 
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
@@ -364,7 +371,7 @@ Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
 ]);
 Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
-Route::get('/liste_module/{id?}','ModuleController@index')->name('liste_module');
+Route::get('/liste_module/{id?}/{page?}/{index?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
 Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
@@ -375,6 +382,10 @@ Route::get('modifier_module/{id}','ModuleController@modifier_mod')->name('modifi
 Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->name('modifier_module_prog');
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
 Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
+Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('ajout_competence');
+Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
+Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
+
 
 
 // affichage info OF
@@ -1027,6 +1038,10 @@ Route::get('/fonctionnalitea', function () {
 Route::get('budget','PlanFormationController@budfgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
+//Routerecherche cfp et entreprise
+Route::post('recherche_cfp','HomeController@recherche_cfp')->name('recherche_cfp');
+// Route::post('recherche_entreprise','HomeController@recherche_etp')->name('recherche_entreprise');
+
 
 //Route iframe
 Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
@@ -1045,6 +1060,8 @@ Route::post('supprimer_iframe_cfp','HomeController@supprimer_iframe_cfp')->name(
 //------------------------MODIFIER PROFIL RESPONSABLE OF---------------------------------//
 //affichage profil
 Route::get('/profil_du_responsable/{id?}', 'ResponsableCfpController@affReferent')->name('profil_du_responsable');
+// Route aff parametre CFP
+Route::get('/affichage_parametre_cfp', 'ResponsableCfpController@affParametre_cfp')->name('affichage_parametre_cfp');
 //Route pour modifier chaque champs pour responsable
 Route::get('/modification_photo/{id}','ResponsableCfpController@edit_photo')->name('modification_photo');
 Route::get('/modification_nom/{id}','ResponsableCfpController@edit_nom')->name('modification_nom');

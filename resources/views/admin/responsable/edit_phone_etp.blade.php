@@ -1,7 +1,10 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification téléphone entreprise</h3>
+@endsection
 @section('content')
 
-  
+
 <div class="col" style="margin-left: 25px">
   <a href="{{route('profil_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
@@ -9,7 +12,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-       
+
         <form   class="btn-submit" action="{{route('update_entreprise',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 

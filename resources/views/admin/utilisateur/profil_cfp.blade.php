@@ -1,8 +1,11 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Profil du responsable de centre de formation</h3>
+@endsection
 @section('content')
 <div class="page-content page-container" id="page-content">
     <div class="col" style="margin-left: 25px">
-        <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+        <a href="{{route('affichage_parametre_cfp')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
     </div>
     @foreach ($liste_cfps as $cfp)
 
@@ -99,7 +102,7 @@
 
                                                  <p class="m-b-10 m-t-2 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
                                         <a href="{{ route('modification_email',$cfp->id) }}">
-                                              
+
                                                  <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
                                         </a>
                                         </div>

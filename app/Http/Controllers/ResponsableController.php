@@ -18,6 +18,7 @@ use App\entreprise;
 use App\User;
 use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
+use App\branche;
 /* ====================== Exportation Excel ============= */
 use App\Exports\ResponsableExport;
 use Excel;
@@ -271,22 +272,55 @@ class ResponsableController extends Controller
     }
     public function affReferent($id = null)
     {
+        $user_id = Auth::user()->id;
         if (Gate::allows('isReferent')) {
             if ($id != null) {
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
             } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
+                $entreprise = responsable::where('user_id',$user_id)->value('id');
+                $branche = branche::findorFail($id);
+                // dd($branch);
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
             }
             // dd($refs);
-            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
+            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise','branche'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
             return view('admin.responsable.profilResponsable', compact('refs'));
         }
     }
+
+
+    public function affParametreReferent(){
+
+        // $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        if (Gate::allows('isReferent')) {
+            // dd('eto');
+            // if ($id != null) {
+            //     dd($id);
+            //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+            // } else {
+                $id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
+                $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
+                // dd($branch);
+                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+                $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
+                // dd('eto2');
+            // }
+
+            return view('admin.responsable.affichage_parametreReferent', compact('refs','nom_entreprise','branche'));
+        }
+        // // if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
+
+        // //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        // //     return view('admin.responsable.affichage_parametreReferent', compact('refs'));
+        // }
+    }
+
 
     public function show($id)
     {

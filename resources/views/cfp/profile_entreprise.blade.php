@@ -62,9 +62,11 @@
                     <thead  style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
                         <th>Nom de l'entreprise</th>
 
-                        <th>E-mail</th>
+                        <th>Réferent Principal</th>
+                        <th>Action</th>
+
                     </thead>
-                    <tbody id="data_collaboration">
+                    <tbody id="data_collaboration" style="font-size: 11.5px;">
 
                         @if (count($entreprise)<=0) <tr>
                             <td> Aucun entreprise collaborer</td>
@@ -75,9 +77,9 @@
                             @foreach($entreprise as $etp)
                             <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
 
-                                <td role="button"  onclick="afficherInfos();">{{$etp->nom_etp}}</td>
+                                <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px"><span class="ms-3">{{$etp->nom_etp}}</span></td>
 
-                                <td role="button"  onclick="afficherInfos();">{{$etp->email_etp}}</td>
+                                <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span></td>
 
                                 {{-- <td>
                                     <div align="left">
@@ -93,8 +95,10 @@
                                     </div>
                                 </td> --}}
                                 <td>
+                                    <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
 
-                                    <div class="btn-group dropleft">
+
+                                    {{-- <div class="btn-group dropleft">
                                         <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v"></i>
                                         </button>
@@ -102,7 +106,7 @@
                                             <a class="dropdown-item" href="{{route('profile_entreprise',$etp->entreprise_id)}}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
                                             <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_{{$etp->entreprise_id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </td>
                                 {{-- modal delete  --}}
                                 <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -328,6 +332,12 @@
 
                    </div>
                    <div class="text-center mt-2">
+                    <span id="adrlot"></span>
+                    <span id="adrlot2"></span>
+                    <span id="adrlot3"></span>
+                    <span id="adrlot4"></span>
+                </div>
+                   <div class="text-center mt-2">
 
                  <span id="site_etp"> </span>
 
@@ -486,8 +496,11 @@ $(".information").on('click', function(e) {
                 $("#nom_entreprise").text(userData[$i].nom_etp);
                 $("#nom_reponsable").text(userData[$i].nom_resp);
                 $("#prenom_responsable").text(userData[$i].prenom_resp);
-                // $("#adresse_etp").text(userData[$i].adresse);
-               $("#email_etp").text(userData[$i].email_etp);
+                $("#adrlot").text(userData[$i].adresse_rue_etp);
+                $("#adrlot2").text(userData[$i].adresse_quartier_etp);
+                $("#adrlot3").text(userData[$i].adresse_ville_etp);
+                $("#adrlot4").text(userData[$i].adresse_region_etp);
+               $("#email_etp").text(userData[$i].email_responsable);
                $("#telephone_etp").text(userData[$i].telephone_etp);
                 $("#site_etp").text(userData[$i].site_etp);
             }

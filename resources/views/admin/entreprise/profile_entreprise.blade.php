@@ -1,12 +1,12 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Profil d'entreprise</h3>
+    <h3 class="text_header m-0 mt-1">Profil d'entreprise</h3>
 @endsection
 @section('content')
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profil_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('aff_parametre_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
   </div>
-  
+
     <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
@@ -14,10 +14,10 @@
                     <div class="card user-card-full">
                         <div class="row m-l-2 m-r-2">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
-              
+
 
                                 <div class="card-block text-center text-white">
-                                  
+
                                     <div class="m-b-25">
 
                                         <div class="hover">
@@ -25,7 +25,7 @@
                                             <br>
 
                                             <a href="{{route('modification_logo',$entreprise->id)}}">
-                                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="25%" height="25%" class="img-radius">
+                                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="35%" height="35%" class="img-radius">
                                             </a>
                                         </div>
                                     </div>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="hover" >
                                     <a href="{{route('modification_nom_entreprise',$entreprise->id)}}">
-                                     <h4 class="f-w-600 mt-5" style="margin-left: 50px">{{$entreprise->nom_etp }}</h4>
+                                     <h4 class="f-w-600 mt-5" style="margin-left: 142px">{{$entreprise->nom_etp }}</h4>
                                     </a>
                                 </div>
                             </div>
@@ -42,7 +42,37 @@
                                 <div class="card-block">
                                     <div class="row">
                                         <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
-                                            <div class="row">
+                                            <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;Assugetti</p>
+                                                        <a href="{{route('modification_rcs_entreprise',$entreprise->id)}}">
+
+                                                        <h6 class="text-muted f-w-400">
+                                                            @if($entreprise->rcs==NULL)
+                                                            <strong style="color: red">incomplète</strong>
+                                                            @else
+                                                            {{$entreprise->rcs}}
+                                                            @endif
+                                                        </h6>
+                                                        </a>
+                                                    </div>
+                                                    {{-- <div class="col-sm-6">
+                                                        <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;CIF</p>
+                                                        <a href="{{route('modification_cif_entreprise',$entreprise->id)}}">
+
+                                                        <h6 class="text-muted f-w-400">
+                                                            @if($entreprise->cif==NULL)
+                                                            <strong style="color: red">incomplète</strong>
+                                                            @else
+                                                            {{$entreprise->cif}}
+                                                            @endif</h6>
+                                                        </a>
+                                                    </div> --}}
+                                                </div>
+                                            </div>
+
+                                        <div class="row">
                                         <div class="col-md-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-envelope"></i>&nbsp;E-mail</p>
                                             <a href="{{route('modification_email_entreprise',$entreprise->id)}}">
@@ -55,9 +85,9 @@
 
                                                 </h6>
                                             </a>
-                                      
+
                                          </div>
-                                   
+
                                         <div class="col-md-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
                                             <a href="{{route('modification_telephone_entreprise',$entreprise->id)}}">
@@ -83,11 +113,11 @@
                                                             @else
                                                             {{$entreprise->nif}}
                                                             @endif
-        
+
                                                         </h6>
                                                     </a>
                                                 </div>
-                                               
+
                                             <div class="col-md-6">
                                                 <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;STAT</p>
                                                 <a href="{{route('modification_stat_entreprise',$entreprise->id)}}">
@@ -101,7 +131,7 @@
                                                 </a>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
@@ -109,7 +139,7 @@
                                         <div class="col-md-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;RCS</p>
                                             <a href="{{route('modification_rcs_entreprise',$entreprise->id)}}">
-                                           
+
                                             <h6 class="text-muted f-w-400">
                                                 @if($entreprise->rcs==NULL)
                                                 <strong style="color: red">incomplète</strong>
@@ -146,14 +176,14 @@
                                                 <strong style="color: red">incomplète</strong>
                                                 @else
                                                 {{$entreprise->adresse_rue}} {{$entreprise->adresse_quartier}} {{$entreprise->adresse_code_postal}} {{$entreprise->adresse_ville}} {{$entreprise->adresse_region}}
-                                               
+
                                                 @endif</h6>
                                             </a>
                                              </div>
                                             <div class="col-md-6">
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp;Site web</p>
                                                 <a href="{{route('modification_site_etp_entreprise',$entreprise->id)}}">
-                                           
+
                                                 <h6 class="text-muted f-w-400">
                                                 @if($entreprise->site_etp==NULL)
                                                 <strong style="color: red">incomplète</strong>
@@ -165,8 +195,8 @@
                                             </div>
                                         </div>
                                         </div>
-                                        
-                                    
+
+
                                     <div class="row">
                                         <div class="row">
                                         <div class="col-md-6">
@@ -180,9 +210,9 @@
                                             </h6>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="m-b-10 f-w-600"><i class="bx bx-briefcase"></i>&nbsp;Départements</p>
+                                            <p class="ms-4 m-b-10 f-w-600"><i class="bx bx-briefcase"></i>&nbsp;Départements</p>
                                             @for($i = 0;$i<count($departement);$i++)
-                                                <h6 class="text-muted f-w-400">
+                                                <h6 class="ms-4 text-muted f-w-400">
                                                     @if($departement[$i]->nom_departement==NULL)
                                                     <strong style="color: red">incomplète</strong>
                                                     @else

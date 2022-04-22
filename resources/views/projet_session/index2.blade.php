@@ -157,7 +157,7 @@
         </div>
 
         <div class="row w-100">
-            
+
             <div class="col-12 ps-5">
                 <div class="row">
                     @if (Session::has('groupe_error'))
@@ -841,20 +841,48 @@
                                             </select>
 
                                     </div>
-
+                                  
                                     <div class="row px-3 mt-2">
                                             <select name="annee" id="annee" class="filtre_projet">
                                                 <option value="null" selected>Années</option>
                                             </select>
-                                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-                                    </div>
+                                    <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
 
+                                    </div>
+                                  
                                 </form>
                             </div>
-
-                    </div>
+                    
                     @endcanany
                 </div>
+                @can('isReferent')
+                <div class="row px-3 mt-2">
+                    <form  action="{{ route('recherche_cfp') }}" method="POST" >
+                        @csrf
+                        <div class="form-group mt-1 mb-1">
+                        <input type="text " class="form-control input" name="cfp_search">
+                        <label class="form-control-placeholder">Organisme de formation</label>
+                    </div>
+                    <div class="row px-3">
+                        <button class="btn btn_next mt-3 mb-3" type="submit">Rechercher</button>
+                    </div>
+                    </form>
+                </div>
+                @endcan
+                {{-- @can('isCFP')
+                <div class="row px-3 mt-2">
+                    <form  action="{{ route('recherche_entreprise') }}" method="POST">
+                        @csrf
+                        <div class="form-group mt-1 mb-1">
+                        <input type="text " class="form-control input"   name="entreprise">
+                        <label class="form-control-placeholder">Entreprise</label>
+                    </div>
+                    <div class="row px-3">
+                        <button class="btn btn_next mt-3 mb-3" type="submit">Rechercher</button>
+                    </div>
+                    </form>
+                </div>
+                @endcan --}}
                 @canany(['isReferent', 'isCFP'])
                 <div class="col-12 ps-5">
                 @endcanany
