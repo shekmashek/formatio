@@ -3,6 +3,7 @@ CREATE OR REPLACE VIEW v_moduleformation AS SELECT
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
     f.id AS formation_id,
     f.nom_formation,
@@ -165,6 +166,7 @@ CREATE OR REPLACE VIEW v_cours_programme AS SELECT
     m.nom_module,
     m.formation_id,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.prerequis,
     m.objectif,
@@ -175,6 +177,7 @@ LEFT JOIN programmes p ON
     c.programme_id = p.id
 JOIN modules m ON
     m.id = p.module_id;
+
 CREATE OR REPLACE VIEW v_froid_evaluations AS SELECT
     id,
     cfp_id,
@@ -296,11 +299,13 @@ LEFT JOIN v_pourcentage_avis pa ON
     mn.id = pa.module_id AND mn.nombre = pa.note
 ORDER BY
     mn.id;
+
 CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.id AS module_id,
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.modalite_formation,
     m.duree_jour,
@@ -335,11 +340,13 @@ JOIN niveaux n ON
     n.id = m.niveau_id
 LEFT JOIN v_moyenne_avis_module a ON
     m.id = a.module_id;
+
 CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.id AS module_id,
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.modalite_formation,
     m.duree_jour,

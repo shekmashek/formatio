@@ -1,14 +1,22 @@
 @extends('./layouts/admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
-<div class="container pt-5">
+<div class="container pt-1">
     <div class="row">
-        <h5 class="my-3 text-center">Le Projet de Formation intra entreprise</h5>
-        <form action="{{ route('groupe.store') }}" id="formPayement" method="POST" class="form_session">
+        {{-- <h5 class="my-3 text-center">Le Projet de Formation intra entreprise</h5> --}}
+        
+        <form action="{{ route('groupe.store') }}" id="formPayement" method="POST" class="form_session pt-2">
             @csrf
             <input type="hidden" name="type_formation" value="{{ $type_formation }}">
             <div class="row">
-                <h5 class="mb-4 text-center">Ajouter votre nouvelle Session</h5>
+                <h5 class="mb-2 text-center">Créer une nouvelle session de projet intra</h5>
+                @if (Session::has('groupe_error'))
+                    <div class="alert alert-danger ms-2 me-2">
+                        <ul>
+                            <li>{!! \Session::get('groupe_error') !!}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="form-group">
                     <div class="form-row d-flex">
                         <div class="col">
@@ -54,6 +62,18 @@
                                         minimal</label>
                                 </div>
                             </div>
+                            <div class="row px-3 mt-2">
+                                <div class="form-group mt-1 mb-1">
+                                    <select class="form-select selectP input" id="etp_id" name="modalite"
+                                        aria-label="Default select example">
+                                        {{-- <option value="null" selected hidden>Choisir l'entreprise souhaité...</option> --}}
+                                        <option value="Présentielle">Présentielle</option>
+                                        <option value="En ligne">En ligne</option>
+                                        <option value="Présentiel/En ligne">Présentiel/En ligne</option>
+                                    </select>
+                                    <label class="ml-3 form-control-placeholder" for="etp_id">Modalite</label>
+                                </div>
+                            </div>
                             <div class="text-center "><button type="submit" form="formPayement" class="btn btn_enregistrer">Valider</button></div>
                         </div>
                         <div class="col">
@@ -70,9 +90,9 @@
                                     <select class="form-select selectP input" id="module_id" name="module_id"
                                         aria-label="Default select example">
                                         <option onselected>Choisir la module du session</option>
-                                        @foreach ($modules as $mod)
+                                        {{-- @foreach ($modules as $mod)
                                         <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                     <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
                                         class="text-danger">*</strong></label>
@@ -101,13 +121,18 @@
                                         maximal</label>
                                 </div>
                             </div>
-                            <div class="text-center "><button type="button" class="btn  btn_annuler" data-dismiss="modal">Annuler</button></div>
+                            <div class="text-center " id="annuler_session"><a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_annuler" data-dismiss="modal">Annuler</button></a></div>
                         </div>
                     </div>
                 </div>
         </form>
     </div>
 </div>
+<style>
+    #annuler_session{
+        margin-top: 6rem;
+    }
+</style>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 {{-- <script src="{{asset('js/projet_inter_intra.js')}}"></script> --}}
 <script>

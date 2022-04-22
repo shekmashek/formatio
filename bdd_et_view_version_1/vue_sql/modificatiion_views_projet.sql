@@ -116,6 +116,7 @@ create or replace view v_groupe_projet_entreprise_module as
         mf.reference,
         mf.nom_module,
         mf.prix,
+        mf.prix_groupe,
         mf.duree,
         mf.modalite_formation,
         mf.duree_jour,

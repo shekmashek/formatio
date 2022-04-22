@@ -72,7 +72,7 @@
 
 
 
-            @canany(['isCFP'])
+            {{-- @canany(['isCFP'])
             <li>
                 <a href="{{route('liste_module')}}" class="d-flex nav_linke">
                     <i class="bx bx-customize"></i>
@@ -80,7 +80,7 @@
                 </a>
 
             </li>
-            @endcanany
+            @endcanany --}}
             {{-- entreprise --}}
             @canany(['isSuperAdmin','isAdmin'])
             <li>
@@ -131,14 +131,14 @@
             @endcan
             {{-- projet de formation --}}
 
-            @canany(['isCFP','isFormateur'])
+            {{-- @canany(['isCFP','isFormateur'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
 
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_projet')}}" class="d-flex nav_linke">
@@ -151,8 +151,8 @@
                 <p class="my-1" id="projets_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;">
                 </p>
             </li>
-            </li> --}}
-            @endcanany
+            </li>
+            @endcanany--}}
             @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
@@ -323,23 +323,23 @@
             </li>
             @endcanany --}}
 
-            {{-- calendrire de formations --}}
+            {{-- calendrire de formations
             <li>
                 @canany(['isReferent','isStagiaire','isManager'])
                     <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
                         <i class='bx bxs-calendar'></i>
                         <span class="links_name">Calendrier</span>
                     </a>
-                @endcan
-                @canany(['isCFP', 'isFormateur'])
+                @endcan--}}
+                {{-- @canany(['isCFP', 'isFormateur'])
                 <a href="{{route('calendrier')}}" class="d-flex nav_linke">
                     <i class='bx bxs-calendar'></i>
                     <span class="links_name">Calendrier</span>
                 </a>
-                @endcanany
+                @endcanany -
 
 
-            </li>
+            </li>-}}
 
             {{-- commercial --}}
             {{-- @canany(['isSuperAdmin','isCFP','isReferent'])
@@ -729,7 +729,11 @@
                                                 <hr>
                                                 <div class="text-center">
                                                     <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
-                                                    <p id="liste_role" class="text-muted">Connécté en tant que : </p>
+
+                                                        <p class="text-muted">Connécté en tant que :
+                                                            <ul id="liste_role" class="d-flex flex-column"></ul>
+                                                        </p>
+
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
@@ -847,7 +851,7 @@
                     <hr class="mt-2">
                     apprendre
                 </div>
-        </div>
+            </div>
 
     </div>
         {{-- footer --}}

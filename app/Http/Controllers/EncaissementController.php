@@ -23,6 +23,7 @@ class EncaissementController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
     public function index(Request $request)
     {
@@ -56,7 +57,8 @@ class EncaissementController extends Controller
             encaissement::validation($request);
             encaissement::insert($request, $cfp_id, $resp->id, $resp->nom_resp_cfp . " " . $resp->prenom_resp_cfp);
             DB::commit();
-            return back()->with('encaissement_ok', 'Paiement réussi');
+            // return back()->with('encaissement_ok', 'Paiement réussi');
+            return redirect()->route('liste_facture');
         } catch (Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Paiements échoué');
@@ -80,9 +82,12 @@ class EncaissementController extends Controller
         $cfp_id = $resp->cfp_id;
 
 
-        // $numero_fact = $request->num_facture;
+        $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
+        $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+
         $montant_totale = $fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
+        $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$montant_totale->entreprise_id]);
 
         PDF::setOptions([
             "defaultFont" => "Courier",
@@ -91,7 +96,7 @@ class EncaissementController extends Controller
         ]);
 
 
-        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement', 'montant_totale'));
+        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement', 'montant_totale','cfp','entreprise','facture'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -184,8 +189,8 @@ class EncaissementController extends Controller
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
         $numero_fact = $request->num_facture;
-        $montant_restant = DB::select('select dernier_montant_ouvert from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        $montant_restant = number_format($montant_restant[0]->dernier_montant_ouvert, 2, ",", " ");
-        return response()->json([$montant_restant, $numero_fact]);
+        $dta = DB::select('select dernier_montant_ouvert,invoice_date from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
+        $montant_restant = number_format($dta[0]->dernier_montant_ouvert, 2, ",", " ");
+        return response()->json([$montant_restant, $numero_fact,$dta[0]->invoice_date]);
     }
 }

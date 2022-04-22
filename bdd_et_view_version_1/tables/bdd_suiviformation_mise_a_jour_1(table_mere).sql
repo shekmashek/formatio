@@ -90,7 +90,7 @@ CREATE TABLE `mode_financements` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `mode_financements` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Virement banquaire', NULL, NULL),
+(1, 'Virement bancaire', NULL, NULL),
 (2, 'Chèque', NULL, NULL),
 (3, 'Espece', NULL, NULL);
 

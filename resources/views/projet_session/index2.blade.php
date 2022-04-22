@@ -157,8 +157,16 @@
         </div>
 
         <div class="row w-100">
+            
             <div class="col-12 ps-5">
                 <div class="row">
+                    @if (Session::has('groupe_error'))
+                        <div class="alert alert-danger ms-2 me-2">
+                            <ul>
+                                <li>{!! Session::get('groupe_error') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
                 @canany(['isCFP'])
                     <div class="m" id="corps">
                         @if (count($projet) <= 0)
@@ -215,10 +223,11 @@
                                     </div>
                                 </div>
 
-                            <table class="table table-stripped m-0 p-0 collapse" id="collapseprojet_{{ $prj->projet_id }}" aria-labelledby="collapseprojet_{{ $prj->projet_id }}">
-                                <thead class="thead_projet">
+                            <table class="table table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{ $prj->projet_id }}" aria-labelledby="collapseprojet_{{ $prj->projet_id }}">
+                                <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                     <th> Session </th>
                                     <th> Module </th>
+                                    <th> Modalité </th>
                                     {{-- @can('isCFP')
                                         @if ($prj->type_formation_id == 1)
                                             <th> Entreprise </th>
@@ -259,6 +268,7 @@
                                                             <td> {{ $pj->nom_etp }} </td>
                                                         @endif
                                                     @endcan --}}
+                                                    <td>{{ $pj->modalite }}</td>
                                                     @can('isReferent')
                                                         @if ($pj->type_formation_id == 1)
                                                             <td> {{ $pj->nom_cfp }} </td>
@@ -289,7 +299,7 @@
                                                                     </div>
                                                                     @if ($prj->type_formation_id == 1)
                                                                         <div class="row">
-                                                                            <form action="{{ route('modifier_session_inter') }}" id="formPayement" method="POST">
+                                                                            <form action="{{ route('modifier_session_intra') }}" id="formPayement" method="post">
                                                                                 @csrf
                                                                                 <input type="hidden" name="id" value="{{ $pj->groupe_id }}">
                                                                                 <div class="row">
@@ -299,7 +309,7 @@
                                                                                                 <div class="row ps-3 mt-2">
                                                                                                     <div class="form-group mt-1 mb-1">
                                                                                                         <input type="text" id="min" class="form-control input" name="date_debut"
-                                                                                                            required onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_debut))}}">
+                                                                                                            required onfocus="(this.type='date')" value="{{$pj->date_debut}}">
                                                                                                         <label class="ml-3 form-control-placeholder" for="min">Date debut du session<strong
                                                                                                             class="text-danger">*</strong></label>
                                                                                                     </div>
@@ -322,7 +332,7 @@
                                                                                                 <div class="row ps-3 mt-2">
                                                                                                     <div class="form-group mt-1 mb-1">
                                                                                                         <input type="text" id="min" class="form-control input" name="date_fin"
-                                                                                                            required onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_fin))}}">
+                                                                                                            required onfocus="(this.type='date')" value="{{$pj->date_fin}}">
                                                                                                         <label class="ml-3 form-control-placeholder" for="min">Date fin du session<strong
                                                                                                             class="text-danger">*</strong></label>
                                                                                                     </div>
@@ -331,7 +341,7 @@
                                                                                                     <div class="form-group mt-1 mb-1">
                                                                                                         <select class="form-select selectP input" id="module_id" name="module_id"
                                                                                                             aria-label="Default select example">
-                                                                                                            <option {{ $pj->module_id }}>{{ $pj->nom_module }}</option>
+                                                                                                            <option value="{{ $pj->module_id }}">{{ $pj->nom_module }}</option>
                                                                                                             @foreach ($module as $mod)
                                                                                                             <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
                                                                                                             @endforeach
@@ -390,73 +400,77 @@
                                                                         <div class="row">
                                                                             <div class="form-group">
                                                                                 <div class="form-row d-flex">
-                                                                                    <div class="col">
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div class="form-group mt-1 mb-1">
-                                                                                                <input type="text" id="min"
-                                                                                                    class="form-control input"
-                                                                                                    name="date_debut" required
-                                                                                                    onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_debut))}}">
-                                                                                                <label
-                                                                                                    class="form-control-placeholder"
-                                                                                                    for="min">Date debut<strong
-                                                                                                    class="text-danger">*</strong></label>
+                                                                                    <form action="{{ route('modifier_session_inter') }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="id" value="{{ $pj->groupe_id }}">
+                                                                                        <div class="col">
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        name="date_debut" required
+                                                                                                        onfocus="(this.type='date')" value="{{$pj->date_debut}}">
+                                                                                                    <label
+                                                                                                        class="form-control-placeholder"
+                                                                                                        for="min">Date debut<strong
+                                                                                                        class="text-danger">*</strong></label>
+                                                                                                </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div class="form-group mt-1 mb-1">
-                                                                                                <input type="text" id="min"
-                                                                                                    class="form-control input"
-                                                                                                    min="1" max="50"
-                                                                                                    name="min_part" required
-                                                                                                    onfocus="(this.type='number')" value="{{ $pj->min_participant }}">
-                                                                                                <label
-                                                                                                    class="form-control-placeholder"
-                                                                                                    for="min">Participant
-                                                                                                    minimal</label>
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        min="1" max="50"
+                                                                                                        name="min_part" required
+                                                                                                        onfocus="(this.type='number')" value="{{ $pj->min_participant }}">
+                                                                                                    <label
+                                                                                                        class="form-control-placeholder"
+                                                                                                        for="min">Participant
+                                                                                                        minimal</label>
+                                                                                                </div>
                                                                                             </div>
-                                                                                        </div>
 
-                                                                                        <div class="text-center ps-3"><button
-                                                                                                type="submit"
-                                                                                                class="btn btn_enregistrer">Valider</button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col">
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div class="form-group mt-1 mb-1">
-                                                                                                <input type="text" id="min"
-                                                                                                    class="form-control input"
-                                                                                                    name="date_fin" required
-                                                                                                    onfocus="(this.type='date')" value="{{date('d/m/Y',strtotime($pj->date_fin)) }}">
-                                                                                                <label
-                                                                                                    class=" form-control-placeholder"
-                                                                                                    for="min">Date fin<strong
-                                                                                                    class="text-danger">*</strong></label>
+                                                                                            <div class="text-center ps-3"><button
+                                                                                                    type="submit"
+                                                                                                    class="btn btn_enregistrer">Valider</button>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="row ps-3 mt-2">
-                                                                                            <div class="form-group mt-1 mb-1">
-                                                                                                <input type="text" id="min"
-                                                                                                    class="form-control input"
-                                                                                                    min="1" max="50"
-                                                                                                    name="max_part" required
-                                                                                                    onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
-                                                                                                <label
-                                                                                                    class="form-control-placeholder"
-                                                                                                    for="min">Participant
-                                                                                                    maximal</label>
+                                                                                        <div class="col">
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        name="date_fin" required
+                                                                                                        onfocus="(this.type='date')" value="{{$pj->date_fin}}">
+                                                                                                    <label
+                                                                                                        class=" form-control-placeholder"
+                                                                                                        for="min">Date fin<strong
+                                                                                                        class="text-danger">*</strong></label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row ps-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <input type="text" id="min"
+                                                                                                        class="form-control input"
+                                                                                                        min="1" max="50"
+                                                                                                        name="max_part" required
+                                                                                                        onfocus="(this.type='number')" value="{{ $pj->max_participant }}">
+                                                                                                    <label
+                                                                                                        class="form-control-placeholder"
+                                                                                                        for="min">Participant
+                                                                                                        maximal</label>
+                                                                                                </div>
+                                                                                            </div>
+
+
+                                                                                            <div class="text-center ps-3"><button
+                                                                                                    type="button"
+                                                                                                    class="btn btn_annuler"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    aria-label="Close">Annuler</button>
                                                                                             </div>
                                                                                         </div>
-
-
-                                                                                        <div class="text-center ps-3"><button
-                                                                                                type="button"
-                                                                                                class="btn btn_annuler"
-                                                                                                data-bs-dismiss="modal"
-                                                                                                aria-label="Close">Annuler</button>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -642,15 +656,15 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0 mt-2">
-                            <thead class="thead_projet">
+                        <table class="table table-hover m-0 p-0 mt-2 table-borderless">
+                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
                                 <th> Date du projet</th>
-
+                                <th> Modalité</th>
                                 <th> Statut </th>
                             </thead>
                             <tbody class="tbody_projet">
@@ -673,8 +687,9 @@
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
-                                        <td>
-                                            <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
+                                        <td>{{ $pj->modalite }}</td>
+                                        <td class="text-center m-0">
+                                            <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">{{ $pj->item_status_groupe }}</p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -688,15 +703,15 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0 mt-2">
-                            <thead class="thead_projet">
+                        <table class="table table-hover table-borderless m-0 p-0 mt-2">
+                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
                                 {{-- <th> Date du projet</th> --}}
-
+                                <th>Modalité</th>
                                 <th> Statut </th>
                             </thead>
                             <tbody class="tbody_projet">
@@ -719,8 +734,9 @@
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
+                                        <td>{{ $pj->modalite }}</td>
                                         <td>
-                                            <p class="en_cours m-0 p-0">{{ $pj->item_status_groupe }}</p>
+                                            <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}</p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -734,8 +750,8 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-stroped m-0 p-0">
-                            <thead class="thead_projet">
+                        <table class="table table-hover table-borderless m-0 p-0">
+                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 {{-- <th>Projet</th> --}}
                                 <th> Session </th>
                                 <th> Date du session</th>

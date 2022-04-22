@@ -313,26 +313,21 @@ FROM
     v_dernier_encaissement;
 
 
-
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     factures.cfp_id,
     (factures.projet_id) as projet_id,
     factures.entreprise_id,
-    bon_de_commande,
     factures.type_facture_id,
     (type_facture.description) description_type_facture,
     (type_facture.reference) reference_facture,
-    (factures.devise) facture,
     factures.hors_taxe,
     factures.groupe_entreprise_id,
-    v_groupe_projet_entreprise_module.nom_projet,
-    v_groupe_projet_entreprise_module.groupe_id,
-    v_groupe_projet_entreprise_module.nom_groupe,
-    (v_groupe_projet_entreprise_module.date_debut) date_debut_session,
-    v_groupe_projet_entreprise_module.reference,
-    v_groupe_projet_entreprise_module.nom_module,
-    v_groupe_projet_entreprise_module.modalite_formation,
-    v_groupe_projet_entreprise_module.duree_jour,
+    v_groupe_projet_module.nom_projet,
+    v_groupe_projet_module.groupe_id,
+    v_groupe_projet_module.nom_groupe,
+    (v_groupe_projet_module.date_debut) date_debut_session,
+    v_groupe_projet_module.reference,
+    v_groupe_projet_module.nom_module,
     invoice_date,
     due_date,
     tax_id,
@@ -345,88 +340,17 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     num_facture,
     factures.activiter,
     pu,
-    type_financement_id,
-    (mode_financements.description) description_financement,
-    entreprises.nom_etp,
-    entreprises.adresse_rue,
-    entreprises.adresse_quartier,
-    entreprises.adresse_code_postal,
-    entreprises.adresse_ville,
-    entreprises.adresse_region,
-    entreprises.logo,
     reference_bc,
-    remise,
-    entreprises.nif,
-    entreprises.stat,
-    entreprises.rcs,
-    entreprises.cif,
-    entreprises.secteur_id,
-    (secteurs.nom_secteur) secteur_activite,
-    entreprises.site_etp,
-    entreprises.email_etp,
-    entreprises.telephone_etp
+    type_financement_id,
+    (mode_financements.description) description_financement
 FROM
     factures,
-    v_groupe_projet_entreprise_module,type_facture,
-    taxes,mode_financements,
-    entreprises,
-    secteurs
+    v_groupe_projet_module,type_facture,
+    taxes,mode_financements
 WHERE
-    factures.entreprise_id = entreprises.id AND entreprises.secteur_id = secteurs.id AND
-    factures.tax_id = taxes.id AND
-    factures.groupe_entreprise_id = v_groupe_projet_entreprise_module.groupe_entreprise_id
-    AND type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id
-GROUP BY
-    entreprises.adresse_rue,
-    entreprises.adresse_quartier,
-    entreprises.adresse_code_postal,
-    entreprises.adresse_ville,
-    entreprises.adresse_region,
-    factures.cfp_id,
-    factures.projet_id,
-    factures.entreprise_id,
-    factures.type_facture_id,
-    type_facture.description,
-    type_facture.reference,
-    factures.groupe_entreprise_id,
-    v_groupe_projet_entreprise_module.nom_projet,
-    v_groupe_projet_entreprise_module.groupe_id,
-    v_groupe_projet_entreprise_module.nom_groupe,
-    v_groupe_projet_entreprise_module.date_debut,
-    v_groupe_projet_entreprise_module.reference,
-    v_groupe_projet_entreprise_module.nom_module,
-    v_groupe_projet_entreprise_module.modalite_formation,
-    v_groupe_projet_entreprise_module.duree_jour,
-    bon_de_commande,
-    factures.devise,
-    factures.hors_taxe,
-    invoice_date,
-    due_date,
-    tax_id,
-    taxes.description,
-    taxes.pourcent,
-    factures.description,
-    other_message,
-    qte,
-    num_facture,
-    factures.activiter,
-    pu,
-    type_financement_id,
-    mode_financements.description,
-    entreprises.nom_etp,
-    entreprises.adresse_rue,
-    entreprises.logo,
-    reference_bc,
-    remise,
-    entreprises.nif,
-    entreprises.stat,
-    entreprises.rcs,
-    entreprises.cif,
-    entreprises.secteur_id,
-    secteurs.nom_secteur,
-    entreprises.site_etp,
-    entreprises.email_etp,
-    entreprises.telephone_etp;
+     factures.tax_id = taxes.id AND
+    factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id
+    AND type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
 
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
@@ -570,14 +494,55 @@ FROM
 GROUP BY
     cfp_id;
 
--- create or replace view v_compte_facture_actif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_actif group by entreprise_id,cfp_id;
--- create or replace view v_compte_facture_inactif as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_inactif group by entreprise_id,cfp_id;
--- create or replace view v_compte_facture_en_cour as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_existant where facture_encour='en_cour' group by entreprise_id,cfp_id;
--- create or replace view v_compte_facture_payer as select cfp_id,entreprise_id, (COUNT(IFNULL(num_facture,0))) totale from v_facture_existant where facture_encour='terminer' group by entreprise_id,cfp_id;
-
--- create or replace view v_compte_facture_actif_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_actif group by cfp_id;
--- create or replace view v_compte_facture_inactif_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_inactif group by cfp_id;
--- create or replace view v_compte_facture_en_cour_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_en_cour group by cfp_id;
--- create or replace view v_compte_facture_payer_cfp as select cfp_id, (COUNT(totale)) totale from v_compte_facture_payer  group by cfp_id;
 
 
+
+
+CREATE OR REPLACE view v_count_session_facturer as
+SELECT
+    (COUNT(factures.groupe_entreprise_id)) session_facturer,
+    v_groupe_entreprise.projet_id,
+    v_groupe_entreprise.entreprise_id
+FROM
+    v_groupe_entreprise
+LEFT JOIN factures ON v_groupe_entreprise.groupe_entreprise_id = factures.groupe_entreprise_id
+GROUP BY
+    v_groupe_entreprise.projet_id,
+    v_groupe_entreprise.entreprise_id;
+
+CREATE OR REPLACE VIEW v_count_session_projet AS SELECT
+    (COUNT(groupe_entreprise_id)) session_non_facturer,
+    projet_id,
+    entreprise_id
+FROM
+    v_groupe_entreprise
+GROUP BY
+    projet_id,
+    entreprise_id;
+
+CREATE OR REPLACE VIEW v_projet_facturer_tmp AS SELECT
+    (
+        ROUND(
+            (
+                (session_facturer * 100) / session_non_facturer
+            ),
+            0
+        )
+    ) pourcent_facturer,
+    v_count_session_projet.projet_id,
+    v_count_session_projet.entreprise_id,
+    projets.nom_projet,
+    projets.cfp_id
+FROM
+    v_count_session_facturer,
+    v_count_session_projet,
+    projets
+WHERE
+    v_count_session_facturer.projet_id = v_count_session_projet.projet_id AND
+    v_count_session_facturer.entreprise_id = v_count_session_projet.entreprise_id AND
+    v_count_session_facturer.projet_id = projets.id AND
+    v_count_session_projet.projet_id = projets.id;
+
+
+CREATE OR REPLACE view v_projet_facture as
+select * from v_projet_facturer_tmp where pourcent_facturer <100 order by pourcent_facturer asc;

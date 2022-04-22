@@ -11,6 +11,12 @@
     text-decoration-line: underline;
 }
 
+.section1{
+    position: sticky;
+    top: 4rem;
+    background-color: white;
+}
+
 .header_facture,
 .entreprise_facturer{
     border: 1px solid rgba(196, 196, 196, 0.474);
@@ -52,9 +58,7 @@
     padding-right: 10px;
     font-size: 1.5rem;
     text-transform: capitalize;
-    align-items: end;
     margin-bottom: 5px;
-    float: right;
 }
 
 .debut{

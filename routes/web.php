@@ -122,6 +122,12 @@ Route::get('session_inter/{id?}','GroupeController@sessionInter')->name('session
 Route::resource('entreprise','EntrepriseController')->except([
     'create','edit','destroy','update'
 ]);
+//information sur l'entreprise
+
+Route::get('/information_entreprise','EntrepriseController@information_entreprise')->name('information_entreprise');
+//information sur le formateur
+Route::get('/information_formateur','ProfController@information_formateur')->name('information_formateur');
+
 //route profile entreprise
 Route::get('/profile_entreprise/{id}','EntrepriseController@profile_entreprise')->name('profile_entreprise');
 //
@@ -370,7 +376,12 @@ Route::get('modifier_module_prog/{id}','ModuleController@modifier_mod_prog')->na
 Route::get('modifier_module_pub/{id}','ModuleController@modifier_mod_publies')->name('modifier_module_pub');
 Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('ajout_programme');
 
+
+// affichage info OF
+Route::get('afficher_info_of','CfpController@affInfoOf')->name('afficher_info_of');
 // route recherche par référence
+
+
 Route::get('rechercheReference/{reference?}','ModuleController@rechercheReference')->name('rechercheReference');
 Route::get('/searchReference','ModuleController@getModulesReference')->name('searchReference');
 //route recherche par categorie
@@ -534,8 +545,10 @@ Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFactu
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
 
 //============================== recherche facture ================
-Route::post('search_par_date','FactureController@search_par_date')->name('search_par_date');
-Route::post('search_par_num_fact','FactureController@search_par_num_fact')->name('search_par_num_fact');
+Route::get('search_par_date_pagination/{nbPage?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date_pagination')->name('search_par_date_pagination');
+Route::post('search_par_date/{nbPage?}','FactureController@search_par_date')->name('search_par_date');
+Route::get('search_par_num_fact_pagination/{nbPage?}/{num_fact?}','FactureController@search_par_num_fact_pagination')->name('search_par_num_fact_pagination');
+Route::post('search_par_num_fact/{nbPage?}','FactureController@search_par_num_fact')->name('search_par_num_fact');
 
 
 // ==========================================================================
@@ -723,7 +736,7 @@ Route::post('enregistrer_abonnement','AbonnementController@enregistrer_abonnemen
 Route::get('activation_page','AbonnementController@activation')->name('activation_page');
 Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
 Route::get('activer_compte','AbonnementController@activer')->name('activer_compte');
-
+Route::get('/impression_facture/{id}','AbonnementController@impression')->name('impression_facture');
 //====================== Demmande de collaboration
 Route::get('collaboration','CollaborationController@collaboration')->name('collaboration');
 
@@ -1114,13 +1127,22 @@ Route::post('enregistrer_nom_entreprise/{id}','EntrepriseController@enregistrer_
 Route::get('modification_logo/{id}','EntrepriseController@modification_logo')->name('modification_logo');
 Route::post('enregistrer_logo/{id}','EntrepriseController@enregistrer_logo')->name('enregistrer_logo');
 
-
-
-
-
-
-
 // modification session
+Route::post('modifier_session_intra','GroupeController@modifier_session_intra')->name('modifier_session_intra');
 Route::post('modifier_session_inter','GroupeController@modifier_session_inter')->name('modifier_session_inter');
 
 Route::get('modifier_statut_session/{id}/{statut}','GroupeController@modifier_statut_session')->name('modifier_statut_session');
+
+//Route detail facture abonnement
+Route::get('/detail_facture_abonnement/{id}','AbonnementController@detail_facture')->name('detail_facture_abonnement');
+//désactiver mon offre
+Route::get('/desactiver_offre/{id}','AbonnementController@desactiver_offre')->name('desactiver_offre');
+Route::get('ajouter_salle_of','SessionController@ajouter_salle_of')->name('ajouter_salle_of');
+//arret immédiat pour entreprises
+Route::get('/arret_immediat_abonnement_entreprise/{id}','AbonnementController@arret_immediat_abonnement_entreprise')->name('arret_immediat_abonnement_entreprise');
+Route::get('/arret_fin_abonnement_entreprise/{id}','AbonnementController@arret_fin_abonnement_entreprise')->name('arret_fin_abonnement_entreprise');
+//arret immédiat pour organisme de formation
+Route::get('/arret_immediat_abonnement_of/{id}','AbonnementController@arret_immediat_abonnement_of')->name('arret_immediat_abonnement_of');
+
+
+

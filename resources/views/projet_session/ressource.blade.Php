@@ -17,9 +17,11 @@
 @endif --}}
 
 {{-- @if (count($stagiaire) != 0) --}}
-
+<nav class="d-flex justify-content-between mb-1 ">
+    <span class="titre_detail_session"><strong style="font-size: 14px">Gestion des resources pour la session</strong></span>
+</nav>
 <div class="mb-3 pe-5 ps-1 col-12 pb-5">
-    <div class="row ms-4 mt-0">
+    <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
         <div class="col-md-5 ">
             <span>
                 <h6>Matériel nécessaire</h6>
@@ -31,11 +33,11 @@
             </span>
         </div>
     </div>
-    <div class="row ms-4 mt-0 align-content-center">
+    <div class="row mt-0 align-content-center">
         <div id="affiche_ressource">
             @foreach ($ressource as $r)
                 <div class="d-flex mt-0 " id="ressource_{{ $r->id }}"
-                    style="border-bottom: 1px solid black; line-height: 20px">
+                    >
                     <div class="col-md-5 ">
                         <section>
                             <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
@@ -57,7 +59,7 @@
         </div>
     </div>
 
-    <div class="ms-4 mt-3">
+    <div class="mt-3">
         <h6 class="p-0 ms-3">Ajouter une autre ressource </h6>
         <section class="row px-3">
             <div class="col-md-8  py-0 px-1">
@@ -139,7 +141,7 @@
                     html += '</section>';
                     html += '</div>';
 
-                    html += '<hr class="m-0">';
+                    html += '';
                     html += '</div>';
                 }
                 $('#affiche_ressource').append(html);

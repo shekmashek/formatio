@@ -4,6 +4,9 @@
     }
 
 </style>
+<nav class="d-flex justify-content-between mb-1 ">
+    <span class="titre_detail_session"><strong style="font-size: 14px" >Emargement des apprenants</strong></span>
+</nav>
 <div class="container">
     <div class="row m-0">
         <div class="col-md-2 text-center">Module</div>

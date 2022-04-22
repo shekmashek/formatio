@@ -111,15 +111,18 @@ class SessionController extends Controller
         $id = request()->id_session;
         $type_formation_id = request()->type_formation;
         // ???--mbola tsy mety
-        $test = DB::select('select count(id) as nombre from details')[0]->nombre;
+        $test = DB::select('select count(id) as nombre from details where groupe_id = ?',[$id])[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
         // ???--
         $competences = [];
         $all_frais_annexe = [];
         $documents = [];
         $stagiaire = [];
-
+        $formateur_cfp = [];
+        $salle_formation = [];
         $fonct = new FonctionGenerique();
+        $projet = new projet();
+        $module_session = DB::select('select reference,nom_module from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
 
@@ -129,7 +132,9 @@ class SessionController extends Controller
             $cfp_nom = $resp->nom_cfp;
 
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-            $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            // $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+            $requette = $projet->requette_detail_session_of($cfp_id,$id);
+            $datas = DB::select($requette);
             // dd($datas);
             if($type_formation_id  == 1){
                 $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
@@ -139,9 +144,14 @@ class SessionController extends Controller
                 $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
                 $entreprise_id = null;
             }
-            // dd($projet);
+
+            // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
+            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
+            $formateur_cfp = $fonct->concatTwoList($formateur2, []);
+            // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             $documents = $drive->file_list($cfp_nom,"Mes documents");
+            $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent')){
             if (Gate::allows('isReferentPrincipale')) {
@@ -181,46 +191,20 @@ class SessionController extends Controller
             $cfp_nom = cfp::where('id',$cfp_id)->value('nom');
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
-        // if(Gate::allows('isStagiaire')){
-        //     $evaluation = new EvaluationChaud();
-        //     $etp_id = stagiaire::where('user_id',$user_id)->value('entreprise_id');
-        //     $matricule = stagiaire::where('user_id',$user_id)->value('matricule');
-        //     $stg_id = stagiaire::where('user_id',$user_id)->value('id');
-        //     $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
-        //     $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
-        //     $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-        //     $data = $evaluation->findDetailProject($matricule,$id); // return les information du project avec detail et information du stagiaire
-        //     $projet = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
-        //     $stagiaire = $data['stagiaire'];
-        //     $detail = $data['detail'];
-        // }
 
         $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
-        // ---apprenants
-        // $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
-        // ---ressources
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
         $presence_detail = DB::select("select * from v_emargement where groupe_id = ?", [$projet[0]->groupe_id]);
-
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
-        // dd($competences);
-        // ---------evalution fait par les stagiaires
-        // $evaluation = new EvaluationChaud();
-        // $matricule = "ETU001";
-        // $session_id = 1;
-        // $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
-        // $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
-        // $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
-        // $detail = $evaluation->findDetailProject($matricule,$session_id); // return les information du project avec detail et information du stagiaire
-        // dd($detail);
-        // dd($prix);
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix'));
+        //--modalite de formation
+        $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','module_session','formateur_cfp','modalite','salle_formation'));
     }
 
     public function getFormateur(){
@@ -256,9 +240,17 @@ class SessionController extends Controller
     {
         $id = $request->Id;
         $etp = $request->etp;
-        // $stg = DB::select('select * from v_stagiaire_entreprise where matricule = ?',[$id]);
-        $stg = DB::select('select * from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
-        return response()->json($stg);
+        $groupe = $request->groupe;
+        $stagiaire = DB::select('select id from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+        $existe = 0;
+        if(count($stagiaire) > 0){
+            $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
+            $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
+            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]); 
+        }else{
+            return response()->json(['status'=>'400']);
+        }
     }
 
     public function addParticipantGroupe(Request $request){
@@ -504,6 +496,21 @@ class SessionController extends Controller
             return redirect()->route('detail_session',['id_session'=>$request->id_groupe]);
         }catch(Exception $e){
             return back()->with('error','Insription échouée!');
+        }
+    }
+
+    public function ajouter_salle_of(Request $request){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfp_id = $resp->cfp_id;
+        $salle = $request->salle;
+        if($salle == null){
+            return response()->json(['status'=>'400']);
+        }elseif($salle != null){
+            DB::insert("insert into salle_formation_of(cfp_id,salle_formation) value(?,?)",[$cfp_id,$salle]);
+            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]); 
+            return response()->json(['status'=>'200','salles'=>$salles]);
         }
     }
 

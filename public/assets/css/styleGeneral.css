@@ -319,6 +319,7 @@ ul li a {
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-left: 1px solid grey;
     float: right;
+    z-index: 999;
 }
 
 .apprendre.afficher {
@@ -337,6 +338,73 @@ ul li a {
 .apprendre_btn button{
     display: grid;
 }
+/* infos */
+.infos{
+    position: fixed;
+    top: 3rem;
+    right: -50px;
+    height: 100%;
+    width: 0px;
+    background: white;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    align-items: center;
+    color: var(--font-sidebar-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-left: 1px solid grey;
+    float: right;
+    z-index: 999;
+}
+
+.infos.afficher {
+    width: 400px;
+    overflow-y: auto;
+    right: 0px;
+}
+
+.infos p{
+    font-size: 1rem;
+}
+.infos .bx{
+    font-size: 1.5rem;
+}
+
+.infos_btn button{
+    display: grid;
+}
+.prof{
+    position: fixed;
+    top: 3rem;
+    right: -50px;
+    height: 100%;
+    width: 0px;
+    background: white;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    align-items: center;
+    color: var(--font-sidebar-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-left: 1px solid grey;
+    float: right;
+    z-index: 999;
+}
+
+.prof.afficher {
+    width: 400px;
+    overflow-y: auto;
+    right: 0px;
+}
+
+.prof p{
+    font-size: 1rem;
+}
+.prof .bx{
+    font-size: 1.5rem;
+}
+
+.prof_btn button{
+    display: grid;
+}
 .filtrer{
     position: fixed;
     top: 3rem;
@@ -351,6 +419,7 @@ ul li a {
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-left: 1px solid grey;
     float: right;
+    z-index: 999;
 }
 
 .filtrer.afficher {
@@ -513,6 +582,7 @@ ul li a {
 
 .header-right .pdp_profil_card .card {
     width: 400px !important;
+    width: inherit;
     border: none;
     border-radius: 8px;
     padding: 8px;
@@ -627,7 +697,7 @@ input:-webkit-autofill:active {
 
 .btn_enregistrer {
     padding: 5px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     background-color: #7635dc;
     border-radius: 5px;
     border-width: 0;
@@ -638,6 +708,7 @@ input:-webkit-autofill:active {
     transition: all 200ms;
     color: white;
     width: 13rem;
+    text-transform: capitalize !important;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
@@ -664,7 +735,7 @@ input:-webkit-autofill:active {
 
 .btn_annuler {
     padding: 5px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     background-color: rgba(197, 197, 197, 0.192);
     border-radius: 5px;
     border-width: 0;
@@ -734,6 +805,7 @@ input:-webkit-autofill:active {
     padding: .2rem 1rem;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    text-decoration: none;
 }
 
 .btn_creer a{
@@ -747,10 +819,10 @@ input:-webkit-autofill:active {
     color: blue;
 }
 
-.btn_creer:focus{
+/* .btn_creer:focus{
     color: blue;
     text-decoration: none;
-}
+} */
 
 .icon_creer{
     background-image: linear-gradient(60deg, #f206ee, #0765f3);
@@ -1123,3 +1195,8 @@ font-size: 0.850rem;
 }
 /*btn admin créer*/
 
+.active_role .bx{
+    color: green;
+    font-size: 10px;
+    position: relative;
+}

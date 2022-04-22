@@ -83,7 +83,7 @@ add column point_champ int(5) default 0;
 recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_responsable_entreprise => bdd_suiviformation_view_29(budgetisation)
 
--------avril 5 
+-------avril 5
 recréer vu v_groupe_entreprise => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_projet_session_inter => bdd_suiviformation_view_4.0(modification_views_projet)
@@ -93,3 +93,16 @@ recréer vu v_projet_session_inter => bdd_suiviformation_view_4.0(modification_v
 recréer vu v_groupe_entreprise => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
 recréer vu v_projet_session_inter => bdd_suiviformation_view_4.0(modification_views_projet)
+
+----------avril 13
+recréer vu v_stagiaire_groupe => bdd_suiviformation_view_4.0(modification_views_projet)
+
+----------avril 14
+ALTER TABLE groupes ADD COLUMN modalite VARCHAR(200); 
+
+recréer vu v_groupe_projet_module  => bdd_suiviformation_view_4.0(modification_views_projet)
+recréer vu v_groupe_entreprise  => bdd_suiviformation_view_4.0(modification_views_projet)
+recréer vu v_projet_formateur  => bdd_suiviformation_view_4.0(modification_views_projet)
+
+-------avril 20
+creation table salle_formation_of => Modification_bdd(projet)

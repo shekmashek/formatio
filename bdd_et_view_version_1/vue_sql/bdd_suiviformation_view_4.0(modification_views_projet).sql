@@ -57,15 +57,16 @@ create or replace view v_groupe_entreprise as
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
+        g.modalite,
         case
             when g.status = 8 then 'Reprogrammer'
             when g.status = 7 then 'Annulée'
             when g.status = 6 then 'Reporté'
             when g.status = 5 then 'Cloturé'
-            when g.status = 2 then 
-                case 
-                    when (g.date_fin - curdate()) < 0 then 'Terminé' 
-                    when (g.date_debut - curdate()) < 0 then 'En cours' 
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'Terminé'
+                    when (g.date_debut - curdate()) < 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -74,10 +75,10 @@ create or replace view v_groupe_entreprise as
             when g.status = 7 then 'status_annulee'
             when g.status = 6 then 'status_reporter'
             when g.status = 5 then 'status_cloturer'
-            when g.status = 2 then 
-                case 
-                    when (g.date_fin - curdate()) < 0 then 'status_termine' 
-                    when (g.date_debut - curdate()) < 0 then 'statut_active' 
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'status_termine'
+                    when (g.date_debut - curdate()) < 0 then 'statut_active'
                     else 'status_confirme' end
             when g.status = 1 then 'status_grise'
             when g.status = 0 then 'Créer'end class_status_groupe,
@@ -150,15 +151,16 @@ create or replace view v_groupe_projet_module as
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
+        g.modalite,
         case
             when g.status = 8 then 'Reprogrammer'
             when g.status = 7 then 'Annulée'
             when g.status = 6 then 'Reporté'
             when g.status = 5 then 'Cloturé'
-            when g.status = 2 then 
-                case 
-                    when (g.date_fin - curdate()) < 0 then 'Terminé' 
-                    when (g.date_debut - curdate()) < 0 then 'En cours' 
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'Terminé'
+                    when (g.date_debut - curdate()) < 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -167,10 +169,10 @@ create or replace view v_groupe_projet_module as
             when g.status = 7 then 'status_annulee'
             when g.status = 6 then 'status_reporter'
             when g.status = 5 then 'status_cloturer'
-            when g.status = 2 then 
-                case 
-                    when (g.date_fin - curdate()) < 0 then 'status_termine' 
-                    when (g.date_debut - curdate()) < 0 then 'statut_active' 
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'status_termine'
+                    when (g.date_debut - curdate()) < 0 then 'statut_active'
                     else 'status_confirme' end
             when g.status = 1 then 'status_grise'
             when g.status = 0 then 'Créer'end class_status_groupe,
@@ -196,13 +198,16 @@ create or replace view v_groupe_projet_module as
         mf.email,
         mf.telephone,
         mf.pourcentage,
-        tp.type
+        tp.type,
+        (g_etp.id) groupe_entreprise_id,
+        g_etp.entreprise_id
     from groupes g
     join moduleformation mf on mf.module_id = g.module_id
     join projets p on p.id = g.projet_id
     join type_formations tf on p.type_formation_id = tf.id
     join cfps on cfps.id = p.cfp_id
-    join type_payement tp on tp.id = g.type_payement_id;
+    join type_payement tp on tp.id = g.type_payement_id
+    join groupe_entreprises g_etp on g.id = g_etp.groupe_id;
 
 
 create or replace view v_groupe_projet_entreprise_module as
@@ -503,6 +508,7 @@ select
         s.entreprise_id,
         s.user_id,
         s.photos,
+        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photo,
         (s.service_id) departement_id,
         s.cin,
         s.date_naissance,
@@ -685,10 +691,10 @@ create or replace view v_projet_session_inter as
             when g.status = 7 then 'Annulée'
             when g.status = 6 then 'Reporté'
             when g.status = 5 then 'Cloturé'
-            when g.status = 2 then 
-                case 
-                    when (g.date_fin - curdate()) < 0 then 'Terminé' 
-                    when (g.date_debut - curdate()) < 0 then 'En cours' 
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'Terminé'
+                    when (g.date_debut - curdate()) < 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -697,10 +703,10 @@ create or replace view v_projet_session_inter as
             when g.status = 7 then 'status_annulee'
             when g.status = 6 then 'status_reporter'
             when g.status = 5 then 'status_cloturer'
-            when g.status = 2 then 
-                case 
-                    when (g.date_fin - curdate()) < 0 then 'status_termine' 
-                    when (g.date_debut - curdate()) < 0 then 'statut_active' 
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'status_termine'
+                    when (g.date_debut - curdate()) < 0 then 'statut_active'
                     else 'status_confirme' end
             when g.status = 1 then 'status_grise'
             when g.status = 0 then 'Créer'end class_status_groupe,

@@ -1,3 +1,6 @@
+<nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
+    <span class="titre_detail_session"><strong style="font-size: 14px" >Frais annexes pour la session</strong></span>
+</nav>
 <div class="mb-3 col-12 pb-5 section">
     @if (count($all_frais_annexe)<=0 || $all_frais_annexe==NULL)
     <div id="form_frais_annexe">
@@ -82,7 +85,7 @@
         </div>
         <div class="row ms-4">
             <div class="col-md-12 align-items-center">
-                <button type="button" id="save_frais_annexe" class="btn btn-success">Enregistrer</button>
+                <button type="button" id="save_frais_annexe" class="btn btn_enregistrer">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -92,7 +95,7 @@
         $somme = 0;
     @endphp
     @if (count($all_frais_annexe)>0)
-        <h6 class="ms-5">Frais annexe pour la formation</h6>
+        {{-- <h6 class="ms-5">Frais annexe pour la formation</h6> --}}
             @foreach($all_frais_annexe as $frais)
                 <div class="row ps-5" id="inputFormRow_frais">
                     <div class="col-md-4">
@@ -208,7 +211,7 @@
             dataType: "html",
             success: function(response) {
                 var userData = JSON.parse(response);
-                html = '<h6 class="ms-5">Frais annexe pour la formation</h6>';
+                html = '';
                 for (let i = 0; i < userData.length; i++) {
                     html += '<div class="row ps-5" id="inputFormRow_frais">';
                     html += '<div class="col-md-4">';

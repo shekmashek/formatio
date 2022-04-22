@@ -11,6 +11,7 @@ use App\entreprise;
 use App\DepartementEntreprise;
 use App\User;
 use App\cfp;
+use App\v_demmande_cfp_etp;
 use App\Secteur;
 use App\Mail\entrepriseMail;
 use App\Models\getImageModel;
@@ -47,6 +48,7 @@ class EntrepriseController extends Controller
 
 
         $user_id = Auth::id();
+
         $fonct = new FonctionGenerique();
         $entp = new entreprise();
 
@@ -54,12 +56,21 @@ class EntrepriseController extends Controller
         if (Gate::allows('isCFP')) {
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+        //    dd($cfp_id);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
             $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            // dd($refuse_demmande_etp);
             $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+
             $entreprise = $entp->getEntreprise($etp2, $etp1);
+            //  $entreprisess=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);
+            //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);
+            // $entreprises=entreprise::query()->findOrFail($cfp_id);
+            // $entreprises=entreprise::findOrFail($entp);
+
 
             return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp'));
         }
@@ -72,6 +83,18 @@ class EntrepriseController extends Controller
             // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
             return view('admin.entreprise.entreprise', compact('datas', 'entreprise'));
         }
+    }
+    public function information_entreprise(Request $request)
+    {
+        $user_id = Auth::id();
+        $id = $request->Id;
+
+        $fonct = new FonctionGenerique();
+        $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+        $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
+      return response()->json($entreprises);
+
+
     }
 
 
@@ -348,13 +371,13 @@ class EntrepriseController extends Controller
         return view('admin.entreprise.modification_profil.edit_adresse', compact('etp'));
     }
     public function enregistrer_adresse_entreprise(Request $request,$id){
-       
-            DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ? 
+
+            DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ?
                where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
-            
+
             return redirect()->route('profile_entreprise',[$id]);
-        
-           
+
+
     }
     public function modification_site_etp_entreprise($id){
         $fonct = new FonctionGenerique();

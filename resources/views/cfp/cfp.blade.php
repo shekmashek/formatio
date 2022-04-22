@@ -52,15 +52,20 @@
 
     <div class="row w-100 bg-none mt-5 font_text">
 
-        <div class="col-md-5">
-            <div class="shadow p-3 mb-5 bg-body rounded ">
+        <div class="col-md-7">
+            {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
 
                 <h4>Centre de Formation Professionel déjà collaborer</h4>
 
-                <div class="table-responsive text-center">
+                {{-- <div class="table-responsive text-center"> --}}
 
-                    <table class="table  table-borderless table-sm">
-                        <tbody id="data_collaboration">
+                    <table class="table  table-borderless table-lg table-hover">
+                        <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
+                            <th>Nom du centre de formation professionneml</th>
+                            {{-- <th>Téléphone</th> --}}
+                            <th>E-mail</th>
+                        </thead>
+                        <tbody id="data_collaboration" style="font-size: 11.5px;">
 
                             @if (count($cfp)<=0) <tr>
                                 <td> Aucun centre de formation collaborer</td>
@@ -68,7 +73,10 @@
                                 @else
                                 @foreach($cfp as $centre)
                                 <tr>
-                                    <td>
+                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->nom}}</td>
+                                    {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
+                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td>
+                                    {{-- <td>
                                         <div align="left">
                                             <strong>{{$centre->nom}}</strong>
                                             <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
@@ -78,7 +86,7 @@
                                         <div align="rigth">
                                             <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <div class="btn-group dropleft">
                                             <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -123,15 +131,15 @@
                                 @endif
                         </tbody>
                     </table>
-                </div>
-            </div>
+                {{-- </div> --}}
+            {{-- </div> --}}
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-5">
 
             <h4>Inviter un Centre de Formation Professionel(CFP) à partir de son responsable</h4>
             <p>
-                Pour travailler avec une Centre de Formation Professionel(CFP),il suffit simplement de se collaborer.
+                Pour travailler avec une Centre de Formation Professionel(CFP), il suffit simplement de se collaborer.
                 La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail vers son responsable</strong>".
             </p>
 
@@ -145,7 +153,7 @@
                         <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_cfp" placeholder="Adresse mail*" required />
                     </div>
                     <div class="col ms-2">
-                        <button type="submit" class="btn btn-primary mt-2">Envoyer l'invitation</button>
+                        <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
                     </div>
                 </div>
 
@@ -289,7 +297,92 @@
 
     </div>
 </div>
-
+<div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">Infos</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+        </div>
+        <hr class="mt-2">
+        {{-- @foreach($ccfp as $centre)
+            <span class="text-center"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+            <div class="text-center mt-2" style="font-size:14px">
+                <div class="mt-1">
+                    <span>{{$centre->nom}}</span>
+                </div>
+                <div class="mt-1">
+                    <span>{{$centre->site_web}}</span>
+                </div>
+                <div class="mt-1">
+                    <span>{{$centre->email}}</span>
+                </div>
+            </div>
+        @endforeach --}}
+            <div class="text-center mt-2" style="font-size:14px">
+                {{-- <div class="mt-1">
+                    <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+                </div> --}}
+                <div class="mt-1">
+                    <span style="text-center" id="donner"></span>
+                </div>
+                <div class="mt-1">
+                    <span id="donnerrrr"></span>
+                </div>
+                <div class="mt-1">
+                    <span id="nom"></span>
+                </div>
+                <div class="mt-1">
+                    <span id="tel"></span>
+                </div>
+                <div class="mt-1">
+                    <span id="adrlot"></span>
+                    <span id="adrlot2"></span>
+                    <span id="adrlot3"></span>
+                    <span id="adrlot4"></span>
+                </div>
+                <div class="mt-1">
+                    <span id="mail"></span>
+                </div>
+            </div>
+    </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(".montrer").on('click', function(e) {
+    let id = $(this).data("id");
+    $.ajax({
+        method: "GET"
+        , url: "/afficher_info_of"
+        , data: {
+            Id: id
+        }
+        , dataType: "html"
+        , success: function(response) {
+            let userData= JSON.parse(response);
+            console.log(userData);
+            //parcourir le premier tableau contenant les info sur les programmes
+            for (let $i = 0; $i < userData.length; $i++) {
+                let url_photo = '<img src="{{asset("images/CFP/:url_img")}}" style="height:60px; width:120px;">';
+                url_photo = url_photo.replace(":url_img", userData[$i].logo_cfp);
+                $("#donner").html(" ");
+                $("#donner").append(url_photo);
+                $("#donnerrrr").text(userData[$i].site_web);
+                $("#nom").text(userData[$i].nom);
+                $("#tel").text(userData[$i].telephone);
+                $("#adrlot").text(userData[$i].adresse_lot);
+                $("#adrlot2").text(userData[$i].adresse_quartier);
+                $("#adrlot3").text(userData[$i].adresse_ville);
+                $("#adrlot4").text(userData[$i].adresse_region);
+                // $("#adrqurt").text(userData[$i].adresse_Quartier);
+                // $("#adrv").text(userData[$i].adresse_ville);
+                // $("#adrr").text(userData[$i].adresse_region);
+                $("#mail").text(userData[$i].email);
+            }
+        }
+    });
+});
+</script>
 @endsection
