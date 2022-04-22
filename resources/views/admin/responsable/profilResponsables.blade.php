@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Profil résponsable</h3>
+    <h3 class="text_header m-0 mt-1">Profil résponsable</h3>
 @endsection
 @section('content')
 {{-- <div class="page-content page-container" id="page-content">
@@ -69,7 +69,9 @@
         border-radius: 75px;
     }
 
-   
+    .none:hover{
+        cursor:default;
+    }
 </style>
 <div class="row">
     <div class="row mt-2">
@@ -94,7 +96,6 @@
                         @else
                         <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                         @endif
-
 
                     </a>
                 </div>
@@ -183,12 +184,16 @@
 
 
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a href="{{route('profile_entreprise',$refs->entreprise_id)}}">
-                        <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-
-                        </p>
+                    {{-- <a href="{{route('profile_entreprise',$refs->entreprise_id)}}"> --}}
+                    <a href="" class="none">
+                        <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                     </a>
+                </div>
 
+                <div style="border-bottom: solid 1px #e8dfe5;" class="">
+                    <a href="" class="none">
+                        <p class="p-1 m-0" style="font-size: 10.3px;">Branche<span style="float: right;">{{$branche->nom_branche}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                    </a>
                 </div>
 
                 {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
