@@ -1,83 +1,55 @@
-@extends('./layouts/admin')
-@section('content')
-    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation" {{ empty($tabName) || $tabName == 'insertion_salle' ? 'active' : '' }}>
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#insertion_salle" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Liste des salles</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Keep Last Selected Bootstrap Tab Active on Page Refresh</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+		localStorage.setItem('activeTab', $(e.target).attr('href'));
+	});
+	var activeTab = localStorage.getItem('activeTab');
+	if(activeTab){
+		$('#myTab a[href="' + activeTab + '"]').tab('show');
+	}
+});
+</script>
+<style>
+	.bs-example{
+		margin: 20px;
+	}
+</style>
+</head>
+<body>
+<div class="bs-example">
+  	<ul class="nav nav-tabs" id="myTab">
+        <li class="nav-item">
+            <a href="#sectionA" class="nav-link active" data-toggle="tab">Section A</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#liste_salle" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajout d' une salle</button>
+        <li class="nav-item">
+            <a href="#sectionB" class="nav-link" data-toggle="tab">Section B</a>
+        </li>
+        <li class="nav-item">
+            <a href="#sectionC" class="nav-link" data-toggle="tab">Section C</a>
         </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="insertion_salle" role="tabpanel" aria-labelledby="home-tab">
-            @if (Session::has('salle_error'))
-                <div class="alert alert-danger ms-1 me-1">
-                    <ul class="p-0">
-                        <li>{!! Session::get('salle_error') !!}</li>
-                    </ul>
-                </div>
-            @endif
-            <table class="table table-hover table-borderless">
-                <thead style="border-bottom: 1px solid black; line-height: 20px">
-                  <tr>
-                    <th>Salle de formation</th>
-                    <th rowspan="2"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach ($salles as $salle)
-                        <tr>
-                            <td>{{ $salle->salle_formation }}</td>
-                            <td><a href="" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_modifier_salle_{{ $salle->id }}"><i class="bx bx-edit"></i></a></td>
-                            <td><a href="{{ route('supprimer_salle',[$salle->id]) }}"><i class="bx bx-trash"></i></a></td>
-                        </tr>
-                        <div class="modal fade"
-                            id="modal_modifier_salle_{{ $salle->id }}">
-                            <div class="modal-dialog">
-                                <div class="modal-content p-3">
-                                    <div class="modal-title pt-3"
-                                        style="height: 50px; align-items: center;">
-                                        <h5 class="text-center my-auto">Modifier la salle de formation</h5>
-                                    </div>
-                                    <form action="{{ route('modifier_salle',[$salle->id]) }}" method="POST">
-                                        @csrf
-                                        <label for="exampleDataList" class="form-label">Salle de formation</label>
-                                        <input class="form-control" name="salle" id="exampleDataList" value="{{ $salle->salle_formation }}">
-                                        <button type="submit" class="btn btn_enregistrer mt-2">Modifier</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </tbody>
-              </table>
+    <div class="tab-content">
+        <div id="sectionA" class="tab-pane fade show active">
+            <h3>Section A</h3>
+            <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
         </div>
-        <div class="tab-pane fade" id="liste_salle" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="container mt-1">
-                <div class="row">
-                    <div class="col-md-6">
-                        @if (Session::has('salle_error'))
-                            <div class="alert alert-danger ms-2 me-2">
-                                <ul>
-                                    <li>{!! Session::get('salle_error') !!}</li>
-                                </ul>
-                            </div>
-                        @endif
-                        <form action="{{ route('enregistrer_salle_of') }}" method="POST">
-                            @csrf
-                            <label for="exampleDataList" class="form-label">Salle de formation</label>
-                            <input class="form-control" name="salle" id="exampleDataList" placeholder="Salle de formation...">
-                            <button type="submit" class="btn btn_enregistrer mt-2">Enregistrer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div id="sectionB" class="tab-pane fade">
+            <h3>Section B</h3>
+            <p>Vestibulum nec erat eu nulla rhoncus fringilla ut non neque. Vivamus nibh urna, ornare id gravida ut, mollis a magna. Aliquam porttitor condimentum nisi, eu viverra ipsum porta ut. Nam hendrerit bibendum turpis, sed molestie mi fermentum id. Aenean volutpat velit sem. Sed consequat ante in rutrum convallis. Nunc facilisis leo at faucibus adipiscing.</p>
+        </div>
+        <div id="sectionC" class="tab-pane fade">
+            <h3>Section C</h3>
+            <p>Vestibulum nec erat eu nulla rhoncus fringilla ut non neque. Vivamus nibh urna, ornare id gravida ut, mollis a magna. Aliquam porttitor condimentum nisi, eu viverra ipsum porta ut. Nam hendrerit bibendum turpis, sed molestie mi fermentum id. Aenean volutpat velit sem. Sed consequat ante in rutrum convallis. Nunc facilisis leo at faucibus adipiscing.</p>
         </div>
     </div>
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#myTab button[data-bs-target="#@php old('tabName') @endphp"]').show();
-        });
-    </script>
-@endsection
+</div>
+</body>
+</html>

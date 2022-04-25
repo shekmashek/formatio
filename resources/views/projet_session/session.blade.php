@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('modifier_statut_session',[$projet[0]->groupe_id,7]) }}">
+                        <a class="dropdown-item" href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}">
                             <i class='bx bx-x'></i>&nbsp;Annulée
                         </a>
                     </li>
