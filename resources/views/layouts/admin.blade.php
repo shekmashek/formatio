@@ -658,7 +658,7 @@
                                             <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
                                                 <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
                                             </a></li>
-                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                 <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
                                             </a></li>
                                         </ul>
@@ -716,7 +716,7 @@
                                             <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
                                                         class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                 <i class='bx bxs-building icon_plus'></i>&nbsp;Salle de formation
                                             </a></li>
                                         </ul>

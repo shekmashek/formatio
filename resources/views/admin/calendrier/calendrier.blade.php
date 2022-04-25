@@ -384,6 +384,7 @@
                         }
                         , editable: true
                         , eventClick: function(info) {
+                            // alert('eto');
                             $('#detail').css('display','block');
 
                             $.ajax({
@@ -455,7 +456,7 @@
 
                                     var liste_app = document.getElementById('liste_app');
                                     liste_app.innerHTML = '';
-                                    // alert(JSON.stringify(response));
+                                    // alert(entreprises[0].nom_etp);
 
                                     var userDataDetail = JSON.parse(response);
                                     // alert(userData.length);
@@ -500,6 +501,7 @@
                                         cfp = cfp.replace(":?",userData[$i].cfp_id);
                                         $('#cfp').append(cfp);
 
+                                        // alert(entreprises[$i].nom_etp);
                                         etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+entreprises[$i].nom_etp+'</a>'
                                         etp = etp.replace(":?",entreprises[$i].entreprise_id);
                                         $('#etp').append(etp);

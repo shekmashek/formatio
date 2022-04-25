@@ -30,6 +30,15 @@
                         </div>
                     </div>
                 @endif
+                @if (\Session::has('erreur_abonnement'))
+                    <div class="row w-50 text-center mx-auto">
+                        <div class="alert alert-danger justify-content-center mt-5">
+                            <ul>
+                                <li>{!! \Session::get('erreur_abonnement') !!}</li>
+                            </ul>
+                        </div>
+                    </div>
+                @endif
                 <div>
                     <p class="h2 text-center mt-3 mb-5">Choisissez Votre Abonnement</p>
                 </div>
@@ -63,7 +72,7 @@
 
                                             </ul>
                                             @if($abonnement_actuel != null)
-                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id )
+                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id and $abonnement_actuel[0]->activite == 1)
                                                 <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactiver mon offre</a></div>
                                                 @else
                                                     <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
