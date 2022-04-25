@@ -26,7 +26,6 @@ create or replace view v_projet_session as
     from projets p
     join type_formations tf on p.type_formation_id = tf.id
     join cfps on p.cfp_id = cfps.id
-    join entreprise on
     join v_totale_session ts on ts.projet_id = p.id;
 
 
@@ -522,7 +521,7 @@ select
         s.activiter as activiter_stagiaire,
         s.branche_id,
         ifnull(d.nom_departement,' ') as nom_departement,
-         ifnull(d.nom_service,' ') as nom_service,
+        ifnull(d.nom_service,' ') as nom_service,
         mf.reference,
         mf.nom_module,
         mf.nom_formation,

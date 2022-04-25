@@ -23,19 +23,19 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="enCours">
                     <div class="container-fluid p-0 mt-3 me-3">
-                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin_page_en_cours }} sur {{ $nb_module_mod_en_cours }}</span>
+                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut_mod_en_cours."-".$fin_page_en_cours }} sur {{ $nb_module_mod_en_cours }}</span>
                             @if ($nb_par_page >= $nb_module_mod_en_cours)
-                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                             @elseif ($page == 1)
-                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
                             @elseif ($page == $fin_page_en_cours || $page > $fin_page_en_cours)
-                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                             @else
-                                <a href="{{ route('liste_module',[1,$page-1,1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
                             @endif
                         </span>
                         <div class="row instruction mb-3">
@@ -195,19 +195,19 @@
 
                 <div class="tab-pane fade" id="nonPublies">
                     <div class="container-fluid p-0 mt-3 me-3">
-                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin_page_non_publies }} sur {{ $nb_module_mod_non_publies }}</span>
+                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut_mod_non_publies."-".$fin_page_non_publies }} sur {{ $nb_module_mod_non_publies }}</span>
                             @if ($nb_par_page >= $nb_module_mod_non_publies)
-                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                             @elseif ($page == 1)
-                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
                             @elseif ($page == $fin_page_non_publies || $page > $fin_page_non_publies)
-                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                             @else
-                                <a href="{{ route('liste_module',[1,$page-1,2]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,2]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
                             @endif
                         </span>
                         <div class="row instruction mb-3">
@@ -444,19 +444,19 @@
 
                 <div class="tab-pane fade" id="publies">
                     <div class="container-fluid p-0 mt-3 me-3">
-                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut."-".$fin_page_publies }} sur {{ $nb_module_mod_publies }}</span>
+                        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut_mod_publies."-".$fin_page_publies }} sur {{ $nb_module_mod_publies }}</span>
                             @if ($nb_par_page >= $nb_module_mod_publies)
-                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                             @elseif ($page == 1)
-                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
                             @elseif ($page == $fin_page_publies || $page > $fin_page_publies)
-                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
                             @else
-                                <a href="{{ route('liste_module',[1,$page-1,3]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_module',[1,$page+1,3]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page-1]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                <a href="{{ route('liste_module',[1,$page+1]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
                             @endif
                         </span>
                         <div class="row instruction mb-3">
@@ -857,6 +857,7 @@
                         <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
                     </div>
                     <hr class="mt-2">
+
                 </div>
             </div>
         </div>
@@ -865,4 +866,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="{{asset('js/modules.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTab a[href="#{{ old('tab') }}"]').tab('show')
+        });
+    </script>
     @endsection

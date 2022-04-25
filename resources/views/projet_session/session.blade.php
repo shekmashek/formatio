@@ -343,11 +343,11 @@
                 <p class="p-0 m-0 text-center" > <strong>{{ $projet[0]->nom_etp }}</strong></p>
                 <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
                 <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
-              <p class="p-0 m-0 text-center"> <strong>  Adresse:{{ $projet[0]->adresse_rue}} {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal}} {{ $projet[0]->adresse_ville}} {{ $projet[0]->adresse_region}}</strong></p>
+                <p class="p-0 m-0 text-center"> <strong>  Adresse:{{ $projet[0]->adresse_rue}} {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal}} {{ $projet[0]->adresse_ville}} {{ $projet[0]->adresse_region}}</strong></p>
             </div>
             @endif
 
-         </div>
+        </div>
 
 
     </div>
