@@ -327,4 +327,40 @@ class FonctionGenerique extends Model
     {
         DB::delete('delete from ' . $table . ' where ' . $colonne . ' = ?', [$id]);
     }
+
+    // find where avec odrer by
+    public function queryWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy=[],$order,$nbPag,$nb_limit)
+    {
+        if($nbPag==null){
+            $nbPag = 0;
+        }
+        $query = "SELECT * FROM " . $nomTab . " WHERE ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "" . $opt[$i] . " ? ";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            $query .= "  ORDER BY ";
+
+            for ($j1 = 0; $j1 < count($tabOrderBy); $j1++) {
+                $query .= " " . $tabOrderBy[$j1];
+                if ($j1 + 1 < count($tabOrderBy)) {
+                    $query .= " , ";
+                }
+            }
+            $query .= " ".$order."  limit ".$nb_limit." offset ".$nbPag;
+            return $query;
+        }
+    }
+
+    public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy=[],$order,$nbPag,$nb_limit)
+    {
+        $data =  DB::select($this->queryWhereTrieOrderBy($nomTab, $para, $opt, $val,$tabOrderBy,$order,$nbPag,$nb_limit), $val);
+        return $data;
+    }
+
 }

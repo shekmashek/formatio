@@ -550,6 +550,7 @@ Route::get('search_par_num_fact/{nbPage?}/{num_fact?}','FactureController@search
 Route::get('search_par_entiter/{nbPage?}/{entiter_id?}','FactureController@search_par_entiter')->name('search_par_entiter');
 Route::get('search_par_solde_pagination/{nbPage?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date_pagination')->name('search_par_solde_pagination');
 Route::get('search_par_solde/{nbPage?}/{solde_debut?}/{solde_fin?}','FactureController@search_par_intervale_solde')->name('search_par_solde');
+Route::get('trie_par_num_facture','FactureController@trie_par_num_facture')->name('trie_par_num_facture');
 
 
 // ==========================================================================
