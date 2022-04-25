@@ -15,3 +15,32 @@ JOIN responsables r ON
 -----------20Avril
 recréer vu v_demmande_cfp_etp =>bdd_suiviformation_view_5(collaboration)
 recréer vu v_demmande_etp_cfp =>bdd_suiviformation_view_5(collaboration)
+
+
+
+
+CREATE TABLE cfps (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nom varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci NULL,
+  adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  adresse_region varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone varchar(10) COLLATE utf8mb4_unicode_ci,
+  slogan varchar(255) COLLATE utf8mb4_unicode_ci NULL,
+  nif varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  stat varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  rcs varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  cif varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+  created_at timestamp NULL DEFAULT current_timestamp(),
+  updated_at timestamp NULL DEFAULT current_timestamp(),
+  logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  activiter boolean not null default true,
+  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default,
+  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
