@@ -402,33 +402,41 @@ class AbonnementController extends Controller
             $resp = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $entreprise_id = $resp[0]->entreprise_id;
             $entreprise = $fonct->findWhere('v_responsable_entreprise',['entreprise_id','prioriter'],[$entreprise_id,1]);
-
+            $cfps = null;
 
               //on verifie l'abonnemennt de l'entreprise
             $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
             if($etp_ab!=null){
-                //on teste d'abord si le dernier abonnement est gratuit, si c'est gratuit il n'a plus droit d'accéder à ce type
+                //on teste d'abord si le dernier abonnement est gratuit,
                 if($etp_ab[0]->nom_type == "Gratuit") {
+                   // si l'utilisateur choisi encore l'offre gratuit, il n'a plus droit d'accéder une deuxieme fois à cette offre
                     if($typeAbonnement[0]->nom_type == "Gratuit"){
                         return back()->with('erreur_abonnement','Vous ne pouvez plus choisir une deuxième fois cette offre');
                     }
+                    // si l'utilisateur choisi une autre offre
+                    else{
+                        $type_abonnement = $etp_ab[0]->nom_type;
+                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                    }
 
                 }
-                if($typeAbonnement[0]->nom_type == "Gratuit"){
-                    return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
+                //si le dernnier abonnement n'est pas gratuit
+                if($etp_ab[0]->nom_type != "Gratuit"){
+
+                    $dtNow = Carbon::today()->toDateString();
+                    $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($etp_ab[0]->invoice_date)) . " + 31 days");
+                    /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
+                    if($dtNow < $un_mois_plus_tard){
+                         return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
+                    }
+                    else{
+
+                        if($etp_ab == null) $type_abonnement = "Gratuit";
+                        else $type_abonnement = $etp_ab[0]->nom_type;
+                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                    }
                 }
-                $dtNow = Carbon::today()->toDateString();
-                $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($etp_ab[0]->invoice_date)) . " + 31 days");
-                /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
-                if($dtNow < $un_mois_plus_tard){
-                     return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
-                }
-                else{
-                    if($etp_ab == null) $type_abonnement = "Gratuit";
-                    else $type_abonnement = $etp_ab[0]->nom_type;
-                    $cfps = null;
-                    return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
-                }
+
             }
             else{
                 $type_abonnement = "Gratuit";
