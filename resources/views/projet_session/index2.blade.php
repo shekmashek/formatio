@@ -160,18 +160,18 @@
 
             <div class="col-12 ps-5">
                 <div class="row">
-                    @if (Session::has('groupe_error'))
-                        <div class="alert alert-danger ms-2 me-2">
-                            <ul>
-                                <li>{!! Session::get('groupe_error') !!}</li>
-                            </ul>
-                        </div>
-                    @endif
                 @canany(['isCFP'])
                     <div class="m" id="corps">
                         @if (count($projet) <= 0)
                             <div class="row d-flex mt-3 titre_projet p-1 mb-1">
                                 <p class="text-center text_aucun">Vous n'avez pas encore du projet.</p>
+                            </div>
+                        @endif
+                        @if (Session::has('groupe_error'))
+                            <div class="alert alert-danger ms-2 me-2">
+                                <ul>
+                                    <li>{!! \Session::get('groupe_error') !!}</li>
+                                </ul>
                             </div>
                         @endif
                         @foreach ($projet as $prj)
@@ -530,6 +530,18 @@
                                                                                                         minimal</label>
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <div class="row px-3 mt-2">
+                                                                                                <div class="form-group mt-1 mb-1">
+                                                                                                    <select class="form-select selectP input" id="etp_id" name="modalite"
+                                                                                                        aria-label="Default select example">
+                                                                                                        {{-- <option value="null" selected hidden>Choisir l'entreprise souhaité...</option> --}}
+                                                                                                        <option value="Présentielle">Présentielle</option>
+                                                                                                        <option value="En ligne">En ligne</option>
+                                                                                                        <option value="Présentiel/En ligne">Présentiel/En ligne</option>
+                                                                                                    </select>
+                                                                                                    <label class="ml-3 form-control-placeholder" for="etp_id">Modalite</label>
+                                                                                                </div>
+                                                                                            </div>
 
                                                                                             <div class="text-center ps-3"><button
                                                                                                     type="submit"
@@ -563,12 +575,11 @@
                                                                                                 </div>
                                                                                             </div>
 
-
                                                                                             <div class="text-center ps-3"><button
                                                                                                     type="button"
                                                                                                     class="btn btn_annuler"
                                                                                                     data-bs-dismiss="modal"
-                                                                                                    aria-label="Close">Annuler</button>
+                                                                                                    aria-label="Close" style="margin-top: 6rem;">Annuler</button>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
