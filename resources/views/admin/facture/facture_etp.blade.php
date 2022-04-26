@@ -263,19 +263,19 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">N° facture
                                     </th>
-                                    <th scope="col">Organisme de formation &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Organisme de formation
 
                                     </th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Date de règlement
 
                                     </th>
-                                    <th scope="col">Total à payer &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Total à payer
 
                                     </th>
-                                    <th scope="col">Reste à payer &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Reste à payer
 
                                     </th>
                                     <th scope="col">Status</th>
@@ -374,19 +374,19 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">N° facture
                                     </th>
-                                    <th scope="col">Organisme de formation &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Organisme de formation
 
                                     </th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Date de règlement
 
                                     </th>
-                                    <th scope="col">Total à payer &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Total à payer
 
                                     </th>
-                                    <th scope="col">Reste à payer &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie"><i class="fa fa-arrow-down"></i></button> </a>
+                                    <th scope="col">Reste à payer
 
                                     </th>
                                     <th scope="col">Status</th>
@@ -484,7 +484,7 @@
                             <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_thematique">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="POST" enctype="multipart/form-data">
+                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
@@ -498,7 +498,7 @@
                             <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
                         </p>
                         <div class="collapse multi-collapse" id="search_num_fact">
-                            <form class=" mt-1 mb-2 form_colab" method="POST" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
                                 @csrf
                                 <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
                                 <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
@@ -509,7 +509,7 @@
                             <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" aria-controls="detail_par_solde">Recherche par intervale de solde</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_solde">
-                            <form class="mt-1 mb-2 form_colab" action="#" method="POST" enctype="multipart/form-data">
+                            <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left">Solde entre <strong style="color:#ff0000;">*</strong></label>
                                 <input required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
@@ -524,7 +524,7 @@
                             <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par Entreprise</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_etp">
-                            <form class="mt-1 mb-2 form_colab" action="#" method="POST" enctype="multipart/form-data">
+                            <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
 

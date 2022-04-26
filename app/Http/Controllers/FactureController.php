@@ -231,7 +231,7 @@ class FactureController extends Controller
             $facture_payer =  $this->fact->search_entiter_actif("v_facture_actif", "cfp_id", $entiter_id, "facture_encour", "=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 5);
             $pagination =  $this->fact->nb_liste_fact_entiter($nbPagination, "cfp_id", $entiter_id, ["entreprise_id", "activiter"], [$entreprise_id, True]);
 
-            return view('admin.facture.facture_etp', compact('cfp', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
+            return view('admin.facture.facture_etp', compact('cfp', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
         }
     }
 
@@ -268,7 +268,7 @@ class FactureController extends Controller
             $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "facture_encour", "=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 5);
             $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["entreprise_id", "activiter"], [$entreprise_id, True]);
 
-            return view('admin.facture.facture_etp', compact('cfp', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer', 'facture_encour'));
+            return view('admin.facture.facture_etp', compact('cfp', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
         }
     }
 
@@ -939,7 +939,7 @@ class FactureController extends Controller
     public function trie_par_num_facture(Request $req)
     {
         $data_num_fact_trie = null;
-        if ($req->data_num_fact_trie == 0) {
+        if ($req->data_value == 0) {
             $data_num_fact_trie = "ASC";
         } else {
             $data_num_fact_trie = "DESC";
@@ -951,35 +951,40 @@ class FactureController extends Controller
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination-1), 5);
             $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination-1), 5);
-           $query =  $this->fonct->queryWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination-1), 5);
             $data["facture_actif"] = $facture_actif;
             $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_inactif" => $facture_inactif,
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "OF"
+            ]);
         }
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination-1), 5);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["entreprise_id"], ["="], [$entreprise_id], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination-1), 5);
 
             $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "ETP"
+            ]);
         }
 
-        return response()->json([
-            "facture_inactif" => $facture_inactif,
-            "facture_actif" => $facture_actif,
-            "facture_payer" => $facture_payer,
-            "dernier_ordre" => $query
-        ]);
+
     }
 
-    public function trie_par_entreprise(Request $req)
+    public function trie_par_entiter(Request $req)
     {
         $data_etp_trie = null;
-        if ($req->data_etp_trie == 0) {
+        if ($req->data_value == 0) {
             $data_etp_trie = "ASC";
         } else {
             $data_etp_trie = "DESC";
@@ -988,38 +993,43 @@ class FactureController extends Controller
         if (Gate::allows('isCFP')) {
 
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["entreprise"], $data_etp_trie, ($req->nb_pagination-1), 5);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["entreprise"], $data_etp_trie, ($req->nb_pagination-1), 5);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["entreprise"], $data_etp_trie, ($req->nb_pagination-1), 5);
-            $query =  $this->fonct->queryWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["entreprise"], $data_etp_trie, ($req->nb_pagination-1), 5);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["nom_etp"], $data_etp_trie, ($req->nb_pagination-1), 5);
+            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["nom_etp"], $data_etp_trie, ($req->nb_pagination-1), 5);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["nom_etp"], $data_etp_trie, ($req->nb_pagination-1), 5);
+
             $data["facture_actif"] = $facture_actif;
             $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_inactif" => $facture_inactif,
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "OF"
+            ]);
         }
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["entreprise"], $data_etp_trie, ($req->nb_pagination-1), 5);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["entreprise_id"], ["="], [$entreprise_id], ["entreprise"], $data_etp_trie, ($req->nb_pagination-1), 5);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["entreprise"], $data_etp_trie, ($req->nb_pagination-1), 5);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["nom_cfp"], $data_etp_trie, ($req->nb_pagination-1), 5);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["nom_cfp"], $data_etp_trie, ($req->nb_pagination-1), 5);
 
             $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "ETP"
+            ]);
         }
 
-        return response()->json([
-            "facture_inactif" => $facture_inactif,
-            "facture_actif" => $facture_actif,
-            "facture_payer" => $facture_payer,
-            "dernier_ordre" => $query
-        ]);
     }
 
     public function trie_par_dte(Request $req)
     {
         $data_dte_trie = null;
-        if ($req->data_dte_trie == 0) {
+        if ($req->data_value == 0) {
             $data_dte_trie = "ASC";
         } else {
             $data_dte_trie = "DESC";
@@ -1031,35 +1041,41 @@ class FactureController extends Controller
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["due_date"], $data_dte_trie, ($req->nb_pagination-1), 5);
             $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["due_date"], $data_dte_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_dte_trie, ($req->nb_pagination-1), 5);
-            $query =  $this->fonct->queryWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["due_date"], $data_dte_trie, ($req->nb_pagination-1), 5);
+
             $data["facture_actif"] = $facture_actif;
             $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_inactif" => $facture_inactif,
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "OF"
+            ]);
         }
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["due_date"], $data_dte_trie, ($req->nb_pagination-1), 5);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["entreprise_id"], ["="], [$entreprise_id], ["due_date"], $data_dte_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["due_date"], $data_dte_trie, ($req->nb_pagination-1), 5);
 
             $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "ETP"
+            ]);
         }
 
-        return response()->json([
-            "facture_inactif" => $facture_inactif,
-            "facture_actif" => $facture_actif,
-            "facture_payer" => $facture_payer,
-            "dernier_ordre" => $query
-        ]);
+
     }
 
     public function trie_par_totale_payer(Request $req)
     {
         $data_total_payer_trie = null;
-        if ($req->data_total_payer_trie == 0) {
+        if ($req->data_value == 0) {
             $data_total_payer_trie = "ASC";
         } else {
             $data_total_payer_trie = "DESC";
@@ -1071,35 +1087,41 @@ class FactureController extends Controller
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination-1), 5);
             $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_total_payer_trie, ($req->nb_pagination-1), 5);
-            $query =  $this->fonct->queryWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination-1), 5);
+
             $data["facture_actif"] = $facture_actif;
             $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_inactif" => $facture_inactif,
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "OF"
+            ]);
         }
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination-1), 5);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["entreprise_id"], ["="], [$entreprise_id], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination-1), 5);
 
             $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "ETP"
+            ]);
         }
 
-        return response()->json([
-            "facture_inactif" => $facture_inactif,
-            "facture_actif" => $facture_actif,
-            "facture_payer" => $facture_payer,
-            "dernier_ordre" => $query
-        ]);
+
     }
 
     public function trie_par_reste_payer(Request $req)
     {
         $data_reste_payer_trie = null;
-        if ($req->data_reste_payer_trie == 0) {
+        if ($req->data_value == 0) {
             $data_reste_payer_trie = "ASC";
         } else {
             $data_reste_payer_trie = "DESC";
@@ -1111,29 +1133,34 @@ class FactureController extends Controller
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination-1), 5);
             $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_reste_payer_trie, ($req->nb_pagination-1), 5);
-            $query =  $this->fonct->queryWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination-1), 5);
+
             $data["facture_actif"] = $facture_actif;
             $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_inactif" => $facture_inactif,
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "OF"
+            ]);
         }
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
             $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination-1), 5);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["entreprise_id"], ["="], [$entreprise_id], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination-1), 5);
             $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination-1), 5);
 
             $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
             $data["facture_payer"] = $facture_payer;
+
+            return response()->json([
+                "facture_actif" => $facture_actif,
+                "facture_payer" => $facture_payer,
+                "entiter" => "ETP"
+            ]);
         }
 
-        return response()->json([
-            "facture_inactif" => $facture_inactif,
-            "facture_actif" => $facture_actif,
-            "facture_payer" => $facture_payer,
-            "dernier_ordre" => $query
-        ]);
     }
 
 
