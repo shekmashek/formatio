@@ -176,18 +176,18 @@ class FonctionGenerique extends Model
         return DB::select($query);
     }
 
-    public function findWherePagination($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage)
+    public function findWherePagination($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage, $col_order_by, $order)
     {
         $fonction = new FonctionGenerique();
         $query = $fonction->queryWherePagination($nomTab, $para, $val);
         if ($nbDebutPagination <= 0) {
             $nbDebutPagination = 0;
-        }
-        else {
+        } else {
             $nbDebutPagination = $nbDebutPagination - 1;
         }
+        $query = $query . " ORDER BY " . $col_order_by . "  " . $order;
         $query = $query . " LIMIT " . $nbPage . " OFFSET " . $nbDebutPagination;
-    //    dd($query);
+        //    dd($query);
         $data =  DB::select($query);
         return $data;
     }
@@ -329,9 +329,9 @@ class FonctionGenerique extends Model
     }
 
     // find where avec odrer by
-    public function queryWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy=[],$order,$nbPag,$nb_limit)
+    public function queryWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
     {
-        if($nbPag==null){
+        if ($nbPag == null) {
             $nbPag = 0;
         }
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
@@ -352,15 +352,14 @@ class FonctionGenerique extends Model
                     $query .= " , ";
                 }
             }
-            $query .= " ".$order."  limit ".$nb_limit." offset ".$nbPag;
+            $query .= " " . $order . "  limit " . $nb_limit . " offset " . $nbPag;
             return $query;
         }
     }
 
-    public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy=[],$order,$nbPag,$nb_limit)
+    public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
     {
-        $data =  DB::select($this->queryWhereTrieOrderBy($nomTab, $para, $opt, $val,$tabOrderBy,$order,$nbPag,$nb_limit), $val);
+        $data =  DB::select($this->queryWhereTrieOrderBy($nomTab, $para, $opt, $val, $tabOrderBy, $order, $nbPag, $nb_limit), $val);
         return $data;
     }
-
 }

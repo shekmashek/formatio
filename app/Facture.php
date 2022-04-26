@@ -481,7 +481,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     // ================= recherche par multi critère
 
-    public function search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         $data = array();
 
@@ -491,7 +491,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $nb_debut_pag -= 1;
         }
 
-        $facture = DB::select("select * from v_facture_actif where invoice_date>='" . $invoice_dte . "' and invoice_date<='" . $due_dte . "' and " . $nom_champ_para . "=? and facture_encour='en_cour'  limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
+        $facture = DB::select("select * from v_facture_actif where invoice_date>='" . $invoice_dte . "' and invoice_date<='" . $due_dte . "' and " . $nom_champ_para . "=? and facture_encour='en_cour' order by " . $col_order_by . " " . $order . "   limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
             $data[$i] = $facture[$i];
@@ -502,7 +502,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function search_intervale_dte_generique_actif($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_intervale_dte_generique_actif($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
@@ -511,67 +511,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
 
         $data = array();
-        $facture = DB::select("select * from v_facture_actif where facture_encour!='terminer' and invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
-
-        for ($i = 0; $i < count($facture); $i += 1) {
-            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
-            $data[$i] = $facture[$i];
-            $data[$i]->session_facture = $sessionConactener["getSession"];
-            $data[$i]->module_session = $sessionConactener["getModule"];
-            $data[$i]->ref_session = $sessionConactener["getRefModule"];
-        }
-        return $data;
-    }
-
-    public function search_intervale_dte_generique_payer($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
-    {
-        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
-            $nb_debut_pag = 0;
-        } else {
-            $nb_debut_pag -= 1;
-        }
-
-        $data = array();
-        $facture = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and " . $nom_champ_para . "=? and UPPER(facture_encour)=UPPER('terminer') limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
-        for ($i = 0; $i < count($facture); $i += 1) {
-            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
-            $data[$i] = $facture[$i];
-            $data[$i]->session_facture = $sessionConactener["getSession"];
-            $data[$i]->module_session = $sessionConactener["getModule"];
-            $data[$i]->ref_session = $sessionConactener["getRefModule"];
-        }
-        return $data;
-    }
-
-    public function search_intervale_dte_generique_inactif($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
-    {
-        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
-            $nb_debut_pag = 0;
-        } else {
-            $nb_debut_pag -= 1;
-        }
-        $facture = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
-        $data = array();
-        for ($i = 0; $i < count($facture); $i += 1) {
-            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
-            $data[$i] = $facture[$i];
-            $data[$i]->session_facture = $sessionConactener["getSession"];
-            $data[$i]->module_session = $sessionConactener["getModule"];
-            $data[$i]->ref_session = $sessionConactener["getRefModule"];
-        }
-        return $data;
-    }
-
-    public function search_intervale_solde_generique_actif($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
-    {
-        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
-            $nb_debut_pag = 0;
-        } else {
-            $nb_debut_pag -= 1;
-        }
-
-        $data = array();
-        $facture = DB::select("select * from v_facture_actif where facture_encour!='terminer' and montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
+        $facture = DB::select("select * from v_facture_actif where facture_encour!='terminer' and invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . "  limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
 
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
@@ -583,7 +523,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function search_intervale_solde_generique_payer($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_intervale_dte_generique_payer($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
@@ -592,7 +532,46 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
 
         $data = array();
-        $facture = DB::select("select * from v_facture_actif where facture_encour='terminer' and montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
+        $facture = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and " . $nom_champ_para . "=? and UPPER(facture_encour)=UPPER('terminer') order by " . $col_order_by . " " . $order . "  limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_intervale_dte_generique_inactif($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_intervale_solde_generique_actif($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+
+        $data = array();
+        $facture = DB::select("select * from v_facture_actif where facture_encour!='terminer' and montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
 
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
@@ -604,14 +583,35 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function search_intervale_solde_generique_inactif($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_intervale_solde_generique_payer($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
         } else {
             $nb_debut_pag -= 1;
         }
-        $facture = DB::select("select * from v_facture_inactif where montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
+
+        $data = array();
+        $facture = DB::select("select * from v_facture_actif where facture_encour='terminer' and montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
+
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_intervale_solde_generique_inactif($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from v_facture_inactif where montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
         $data = array();
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
@@ -624,34 +624,14 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     }
 
 
-    public function search_etp_inactif($etp_id, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_etp_inactif($etp_id, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
         } else {
             $nb_debut_pag -= 1;
         }
-        $facture = DB::select("select * from v_facture_inactif where entreprise_id = " . $etp_id . " and cfp_id=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
-        $data = array();
-        for ($i = 0; $i < count($facture); $i += 1) {
-            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
-
-            $data[$i] = $facture[$i];
-            $data[$i]->session_facture = $sessionConactener["getSession"];
-            $data[$i]->module_session = $sessionConactener["getModule"];
-            $data[$i]->ref_session = $sessionConactener["getRefModule"];
-        }
-        return $data;
-    }
-
-    public function search_num_fact_inactif($num_fact, $cfp_id, $nb_debut_pag, $nbLimit_page)
-    {
-        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
-            $nb_debut_pag = 0;
-        } else {
-            $nb_debut_pag -= 1;
-        }
-        $facture = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
+        $facture = DB::select("select * from v_facture_inactif where entreprise_id = " . $etp_id . " and cfp_id=?  order by " . $col_order_by . " " . $order . " limit  " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
         $data = array();
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
@@ -664,14 +644,34 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function search_entiter_actif($nomTab,$par_entiter_search, $entiter_id, $para_col_fact, $opt_col_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_num_fact_inactif($num_fact, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
         } else {
             $nb_debut_pag -= 1;
         }
-         $facture = DB::select("select * from " . $nomTab . " where ".$par_entiter_search." = " . $entiter_id . " and  UPPER(" . $para_col_fact . ") " . $opt_col_fact . " UPPER(?) and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
+        $facture = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?  order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_entiter_actif($nomTab, $par_entiter_search, $entiter_id, $para_col_fact, $opt_col_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from " . $nomTab . " where " . $par_entiter_search . " = " . $entiter_id . " and  UPPER(" . $para_col_fact . ") " . $opt_col_fact . " UPPER(?) and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
 
         $data = array();
         for ($i = 0; $i < count($facture); $i += 1) {
@@ -684,14 +684,14 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function search_num_fact_actif($nomTab, $num_fact, $para_col_fact, $opt_col_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page)
+    public function search_num_fact_actif($nomTab, $num_fact, $para_col_fact, $opt_col_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
         } else {
             $nb_debut_pag -= 1;
         }
-         $facture = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(" . $para_col_fact . ") " . $opt_col_fact . " UPPER(?) and " . $nom_champ_para . "=? limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
+        $facture = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(" . $para_col_fact . ") " . $opt_col_fact . " UPPER(?) and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . "  limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
 
         $data = array();
         for ($i = 0; $i < count($facture); $i += 1) {
@@ -713,11 +713,11 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function getListDataFacture($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage)
+    public function getListDataFacture($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage, $col_order_by, $order)
     {
         $fonction = new FonctionGenerique();
         $data = array();
-        $facture = $fonction->findWherePagination($nomTab, $para, $val, $nbDebutPagination, $nbPage);
+        $facture = $fonction->findWherePagination($nomTab, $para, $val, $nbDebutPagination, $nbPage, $col_order_by, $order);
 
         for ($i = 0; $i < count($facture); $i += 1) {
             $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
@@ -837,9 +837,9 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
     }
 
-    public function queryWhere_entiter($nomTab,$para_col, $entiter_id, $para = [], $val = [])
+    public function queryWhere_entiter($nomTab, $para_col, $entiter_id, $para = [], $val = [])
     {
-        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM " . $nomTab . " WHERE  ".$para_col." =" . $entiter_id . "  AND ";
+        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM " . $nomTab . " WHERE  " . $para_col . " =" . $entiter_id . "  AND ";
         if (count($para) != count($val)) {
             return "ERROR: tail des onnees parametre et value est different";
         } else {
@@ -853,9 +853,9 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
     }
 
-    public function getNbPagination_entiter($para_col,$entiter_id, $para = [], $val = [])
+    public function getNbPagination_entiter($para_col, $entiter_id, $para = [], $val = [])
     {
-        $data =  DB::select($this->queryWhere_entiter("v_montant_facture",$para_col, $entiter_id, $para, $val), $val);
+        $data =  DB::select($this->queryWhere_entiter("v_montant_facture", $para_col, $entiter_id, $para, $val), $val);
         return $data[0];
     }
 
@@ -926,9 +926,9 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         return $data;
     }
 
-    public function nb_liste_fact_entiter($nb_debut_pag,$para_col, $entiter_id, $para = [], $val = [])
+    public function nb_liste_fact_entiter($nb_debut_pag, $para_col, $entiter_id, $para = [], $val = [])
     {
-        $nbPag =  $this->getNbPagination_entiter($para_col,$entiter_id, $para, $val);
+        $nbPag =  $this->getNbPagination_entiter($para_col, $entiter_id, $para, $val);
         $data = $this->nb_liste_fact_pagination($nbPag, $nb_debut_pag);
         return $data;
     }
