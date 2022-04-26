@@ -20,7 +20,7 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="abonnement">
+            <div class="tab-pane fade " id="abonnement">
                 @if (\Session::has('erreur'))
                     <div class="row w-50 text-center mx-auto">
                         <div class="alert alert-danger justify-content-center mt-5">
@@ -127,7 +127,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade" id="service">
+            <div class="tab-pane fade show active" id="service">
                 @if (\Session::has('arret_immediat'))
                     <div class="alert alert-success">
                         <ul>
@@ -165,21 +165,29 @@
                                     <td>Terminé</td>
                                 @endif
                                 <td>
-                                    <div class="btn-group dropleft">
-                                        <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v"></i>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          Arrêter le service
                                         </button>
-                                        <div class="dropdown-menu">
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @can('isReferent')
-                                                <a class="dropdown-item" href="{{route('arret_immediat_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
-                                                <a class="dropdown-item" href="{{route('arret_fin_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{route('arret_immediat_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="{{route('arret_fin_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                                </li>
                                             @endcan
                                             @can('isCFP')
-                                                <a class="dropdown-item" href=""><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
-                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                                <li>
+                                                    <a class="dropdown-item" href=""><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                                </li>
                                             @endcan
-                                        </div>
-                                    </div>
+                                        </ul>
+                                      </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -191,14 +199,6 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script>
-    $(document).ready(function(){
-    // Handling data-toggle manually
-        $('.navigation_module').click(function(){
-            alert($('.navigation_module a:first').tab('show'));
-        });
-    });
-</script>
+
 
 @endsection
