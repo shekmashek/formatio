@@ -203,6 +203,10 @@
 
     }
 
+    .color-text-trie {
+        color: blue;
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -342,7 +346,7 @@
             </li>
         </ul>
 
-        {{-- <div id="list_data_trie_brouillon"></div> --}}
+
         <div class="row">
             <div class="col-12">
 
@@ -355,16 +359,16 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Type</th>
-                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                     </th>
-                                    <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                     </th>
                                     <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                     </th>
-                                    <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                     </th>
-                                    <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                    <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                     </th>
                                     <th scope="col">Status</th>
                                     @canany(['isCFP'])
@@ -485,16 +489,16 @@
                         <table class="table table-hover">
                             <tr>
                                 <th scope="col">Type</th>
-                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
-                                <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
                                 <th scope="col">Date de facturation</th>
-                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
-                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
-                                <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
                                 <th scope="col">Status</th>
                                 @canany(['isCFP'])
@@ -635,16 +639,16 @@
                         <table class="table table-hover">
                             <tr>
                                 <th scope="col">Type</th>
-                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                 </th>
-                                <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                 </th>
                                 <th scope="col">Date de facturation</th>
-                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                 </th>
-                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                 </th>
-                                <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
                                 </th>
                                 <th scope="col">Status</th>
                                 @canany(['isCFP'])
@@ -1269,11 +1273,55 @@
                 $(".num_fact_trie").on('click', function(e) {
                     var valiny = $(this).val();
 
-                    if ($(this).val() == 0) {
-                        $(this).val(1);
+
+                    if ($(".num_fact_trie").val() == 0) {
+                        $(".num_fact_trie").val(1);
                     } else {
-                        $(this).val(0);
+
+                        $(".num_fact_trie").val(0);
                     }
+
+                    if (
+                        $(".num_fact_trie")
+                        .find(".icon_trie")
+                        .hasClass("fa-arrow-down")
+                    ) {
+                        $(".num_fact_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-down")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-up");
+                    } else {
+                        $(".num_fact_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-up")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-down");
+                    }
+
+                    $('.nom_entiter_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.dte_reglement_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.total_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.rest_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
 
                     $.ajax({
                         method: "GET"
@@ -1284,6 +1332,9 @@
                         }
                         , dataType: "html"
                         , success: function(response) {
+
+
+
                             var valiny = JSON.parse(response);
                             var resultat = getDataFacture(response);
 
@@ -1310,10 +1361,52 @@
                 $(".nom_entiter_trie").on('click', function(e) {
                     var valiny = $(this).val();
 
-                    if ($(this).val() == 0) {
-                        $(this).val(1);
+                    if (
+                        $(".nom_entiter_trie")
+                        .find(".icon_trie")
+                        .hasClass("fa-arrow-down")
+                    ) {
+                        $(".nom_entiter_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-down")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-up");
                     } else {
-                        $(this).val(0);
+                        $(".nom_entiter_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-up")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-down");
+                    }
+
+                    $('.num_fact_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+
+                    $('.dte_reglement_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+
+                    $('.total_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+
+                    $('.rest_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+
+                    if ($(".nom_entiter_trie").val() == 0) {
+                        $(".nom_entiter_trie").val(1);
+                    } else {
+                        $(".nom_entiter_trie").val(0);
                     }
 
                     $.ajax({
@@ -1325,6 +1418,7 @@
                         }
                         , dataType: "html"
                         , success: function(response) {
+
                             var valiny = JSON.parse(response);
                             var resultat = getDataFacture(response);
 
@@ -1349,10 +1443,53 @@
                 $(".dte_reglement_trie").on('click', function(e) {
                     var valiny = $(this).val();
 
-                    if ($(this).val() == 0) {
-                        $(this).val(1);
+                    if (
+                        $(".dte_reglement_trie")
+                        .find(".icon_trie")
+                        .hasClass("fa-arrow-down")
+                    ) {
+                        $(".dte_reglement_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-down")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-up");
                     } else {
-                        $(this).val(0);
+                        $(".dte_reglement_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-up")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-down");
+                    }
+
+
+                    $('.num_fact_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.nom_entiter_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.total_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.rest_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    if ($(".dte_reglement_trie").val() == 0) {
+                        $(".dte_reglement_trie").val(1);
+                    } else {
+                        $(".dte_reglement_trie").val(0);
                     }
 
                     $.ajax({
@@ -1364,6 +1501,7 @@
                         }
                         , dataType: "html"
                         , success: function(response) {
+
                             var valiny = JSON.parse(response);
                             var resultat = getDataFacture(response);
 
@@ -1388,10 +1526,51 @@
                 $(".total_payer_trie").on('click', function(e) {
                     var valiny = $(this).val();
 
-                    if ($(this).val() == 0) {
-                        $(this).val(1);
+                    if (
+                        $(".total_payer_trie")
+                        .find(".icon_trie")
+                        .hasClass("fa-arrow-down")
+                    ) {
+                        $(".total_payer_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-down")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-up");
                     } else {
-                        $(this).val(0);
+                        $(".total_payer_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-up")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-down");
+                    }
+
+                    $('.num_fact_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.nom_entiter_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.dte_reglement_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+
+                    $('.rest_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("fa-arrow-up")
+                        .removeClass("color-text-trie")
+                        .addClass("fa-arrow-down");
+                    if ($(".total_payer_trie").val() == 0) {
+                        $(".total_payer_trie").val(1);
+                    } else {
+                        $(".total_payer_trie").val(0);
                     }
 
                     $.ajax({
@@ -1403,6 +1582,9 @@
                         }
                         , dataType: "html"
                         , success: function(response) {
+
+
+
                             var valiny = JSON.parse(response);
                             var resultat = getDataFacture(response);
 
@@ -1426,10 +1608,51 @@
                 $(".rest_payer_trie").on('click', function(e) {
                     var valiny = $(this).val();
 
-                    if ($(this).val() == 0) {
-                        $(this).val(1);
+                    if (
+                        $(".rest_payer_trie")
+                        .find(".icon_trie")
+                        .hasClass("fa-arrow-down")
+                    ) {
+                        $(".rest_payer_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-down")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-up");
                     } else {
-                        $(this).val(0);
+                        $(".rest_payer_trie")
+                            .find(".icon_trie")
+                            .removeClass("fa-arrow-up")
+                            .addClass("color-text-trie")
+                            .addClass("fa-arrow-down");
+                    }
+
+                    $('.num_fact_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+
+                    $('.nom_entiter_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+
+                    $('.dte_reglement_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+
+                    $('.total_payer_trie')
+                        .find(".icon_trie")
+                        .removeClass("color-text-trie")
+                        .removeClass("fa-arrow-up")
+                        .addClass("fa-arrow-down");
+                    if ($(".rest_payer_trie").val() == 0) {
+                        $(".rest_payer_trie").val(1);
+                    } else {
+                        $(".rest_payer_trie").val(0);
                     }
 
                     $.ajax({
@@ -1441,6 +1664,7 @@
                         }
                         , dataType: "html"
                         , success: function(response) {
+
                             var valiny = JSON.parse(response);
                             var resultat = getDataFacture(response);
 
