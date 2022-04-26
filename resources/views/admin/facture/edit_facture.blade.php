@@ -190,7 +190,7 @@
 
                     <div id="newRowMontant"></div>
 
-                    <div class="row mb-1" >
+                    {{-- <div class="row mb-1" >
                         <div class="col2 text-end"></div>
 
                         <div class="col-8 d-flex flex-row justify-content-end">
@@ -203,11 +203,8 @@
                             </select>
                         </div>
                         <div class="col-3 text-end">
-                            {{-- <p class="m-0 pt-2"><span id="montant_tax" class="montant_session_facture">
-                                    {{number_format($montant_totale->tva,0,","," ")}}
-                                </span>&nbsp;MGA</p> --}}
-                        </div>
-                    </div>
+                           </div>
+                    </div> --}}
                 </div>
 
                 <div class="row nouveau_service g-0">

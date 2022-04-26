@@ -242,7 +242,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $reference_bc, $remise, $type_facture_id, $num_facture, $idGroupe_etp, $entrerpsie_id, $cfp_id
         ];
         DB::update('update factures set hors_taxe=?, projet_id=?, invoice_date=?, due_date=?, description=?, other_message=?,
-        qte=?, type_financement_id=?, pu=?, reference_bc=?, remise=?, type_facture_id=? where num_facture=? and groupe_entreprise_id=? and entreprise_id=? and cfp_id=?', $data);
+        qte=?, type_financement_id=?, pu=?, reference_bc=?, remise=?, type_facture_id=?,num_facture=? where  groupe_entreprise_id=? and entreprise_id=? and cfp_id=?', $data);
         DB::commit();
     }
 
