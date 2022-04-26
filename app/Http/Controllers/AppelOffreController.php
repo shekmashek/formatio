@@ -57,6 +57,7 @@ class AppelOffreController extends Controller
             $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [false]);
             // $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
             $entreprise_id=Appel_offre::value('entreprise_id');
+   
             $entreprise=entreprise::findOrFail($entreprise_id);
             //pâgination
             $nb_offre= DB::select('select count(formation_id) as nb_offre from v_appel_offre where entreprise_id = ?',[$entreprise_id])[0]->nb_offre;
@@ -81,8 +82,9 @@ class AppelOffreController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-            $appel_offre_publier= DB::select('select * from v_appel_offre where entreprise_id = ? limit  ? offset  ?', [$entreprise_id,$nb_par_page,$offset]);
-            // dd($appel_offre_publier);
+            $appel_offre_publier= DB::select('select * from v_appel_offre ');
+          // $appel_offre_publier= DB::select('select * from v_appel_offre limit  ? offset  ?', [$nb_par_page,$offset]); 
+           // dd($appel_offre_publier);
             // $sql = $appel_offre ->build_requette($entreprise_id, "v_appel_offre", $request, $nb_par_page, $offset);
             // $projet = DB::select($sql);
             return view('admin.appel_offre.appel_offre_cfp', compact('entreprise','appel_offre_publier','domaines','page','fin_page','nb_offre','debut','fin','nb_par_page'));

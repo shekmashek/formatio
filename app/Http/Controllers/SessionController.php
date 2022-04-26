@@ -439,7 +439,7 @@ class SessionController extends Controller
             $date_fin = $session->date_fin;
             $mail_acteur = $session->email_etp;
             $mail_cfp = $session->mail_cfp;
-            Mail::to($mail_cfp)->send(new cloture_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
+            Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
         }
         DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
         return back();
