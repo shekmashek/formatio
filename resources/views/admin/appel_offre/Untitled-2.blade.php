@@ -133,10 +133,10 @@
                             <a href="{{ route('appel_offre.publier', [1, $page + 1]) }}" role="button"><i
                                     class='bx bx-chevron-right pagination'></i></a>
                         @endif
-                    </span> --}}
+                    </span>
                     <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i
                             class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-                </div>
+                </div> --}}
 
                 {{-- <div class="row">
     <div class="col-2  mt-2 filtre">
@@ -223,7 +223,7 @@
                                                 <tr class="test">
                                                     <th scope="row">
                                                         <span role="button" onclick="afficherInfos();">
-                                                            <img src="{{asset('images/entreprises/'.$publier->logo)}}"
+                                                            <img src="{{asset('images/entreprises/'.$entreprise->logo)}}"
                                                                 class="card-img-top" alt="..."
                                                                 style="width: 100px; height:40px;">
                                                             <br>
@@ -263,7 +263,7 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div align="left">
-                                                           <img src="{{asset('images/entreprises/'.$publier->logo)}}" 
+                                                            <img src="{{asset('images/entreprises/'.$entreprise->logo)}}"
                                                                 class="card-img-top" alt="..."
                                                                 style="width: 100px; height:40px;">
                                                             <h5>{{ $publier->nom_etp }}</h5>
@@ -411,25 +411,25 @@
                     </div>
                     <div class="col text-end">
                         <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
-                    </div>
+                    {{-- </div>
                     <hr class="mt-2">
-                   <span class="text-center"> <img src="{{asset('images/entreprises/'.$publier->logo)}}" style="height: 100px;width:100px"></span>  
-                   <div style="font-size: 13px">
+                    <span class="text-center"> <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" style="height: 100px;width:100px"></span>
+                    <div style="font-size: 13px">
                         <div class="text-center mt-2">
-                            <span>  {{$publier->nom_etp}}</span>
+                            <span>  {{$entreprise->nom_etp}}</span>
                         </div>
                         <div class="text-center mt-2">
-                            <span>Email:{{$publier->email_etp}}</span>
+                            <span>Email:{{$entreprise->email_etp}}</span>
                         </div>
                         <div class="text-center mt-2">
-                            <span> Téléphone:{{$publier->telephone_etp}}</span>
+                            <span> Téléphone:{{$entreprise->telephone_etp}}</span>
                         
                         </div>
                         <div class="text-center mt-2">
-                            <span> Site web:{{$publier->site_etp}}</span>
+                            <span> Site web:{{$entreprise->site_etp}}</span>
                          </div>
                          
-                        </div> 
+                        </div>  --}}
 
 
 

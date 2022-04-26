@@ -90,7 +90,7 @@
                                 @else
                                 @foreach($formateur as $frm)
                                 <tr class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
-                                    <td role="button" onclick="afficherInfos();">{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
+                                    <td role="button" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</span></td>
                                     <td role="button" onclick="afficherInfos();">{{$frm->mail_formateur}}</td>
                                     {{-- <td>
                                         <div align="left">
