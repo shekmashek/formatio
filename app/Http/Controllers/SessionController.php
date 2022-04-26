@@ -247,7 +247,7 @@ class SessionController extends Controller
             $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
             $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
             $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
-            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]); 
+            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]);
         }else{
             return response()->json(['status'=>'400']);
         }
@@ -440,6 +440,20 @@ class SessionController extends Controller
             $mail_cfp = $session->mail_cfp;
             Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
         }
+        // if(Gate::allows('isCFP')){
+        //     dd("eto");
+        //     $fonct = new FonctionGenerique();
+        //     $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+        //     $name_session = $session->nom_groupe;
+        //     $name_etp = $session->nom_etp;
+        //     $name_cfp = $session->nom_cfp;
+        //     $date_debut = $session->date_debut;
+        //     $date_fin = $session->date_fin;
+        //     $mail_acteur = $session->email_etp;
+
+        //     $mail_cfp = $session->mail_cfp;
+        //     Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
+        // }
         DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
         return back();
     }
@@ -509,7 +523,7 @@ class SessionController extends Controller
             return response()->json(['status'=>'400']);
         }elseif($salle != null){
             DB::insert("insert into salle_formation_of(cfp_id,salle_formation) value(?,?)",[$cfp_id,$salle]);
-            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]); 
+            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]);
             return response()->json(['status'=>'200','salles'=>$salles]);
         }
     }
