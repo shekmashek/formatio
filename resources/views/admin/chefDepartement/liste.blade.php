@@ -41,6 +41,114 @@
                             </a>
                         </li>
                     </ul>
+
+                    {{-- filtrer les equipes--}}
+
+                    <div class="filtrer mt-3">
+                        <div class="row">
+                            <div class="col">
+                                <p class="m-0">Filter vos projets</p>
+                            </div>
+                            <div class="col text-end">
+                                <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                            </div>
+                            <hr class="mt-2">
+                            @canany(['isReferent', 'isCFP'])
+                            <div class="col-12 pe-3">
+                                    <div class="row mb-3 p-2 pt-0">
+                                        <form action="{{ route('') }}" method="GET">
+                                            <input type="hidden" name="type_formation" value="{{ $referent }}">
+                                            <div class="row px-3 mt-2">
+                                                    <select name="mois" id="mois" class="filtre_projet">
+                                                        <option value="null" selected>Mois</option>
+                                                        <option style="background-color: red;color: red;" value="1">Janvier</option>
+                                                        <option value="2">Février</option>
+                                                        <option value="3">Mars</option>
+                                                        <option value="4">Avril</option>
+                                                        <option value="5">Mai</option>
+                                                        <option value="6">Juin</option>
+                                                        <option value="7">Juillet</option>
+                                                        <option value="8">Août</option>
+                                                        <option value="9">Septembre</option>
+                                                        <option value="10">Octobre</option>
+                                                        <option value="11">Novembre</option>
+                                                        <option value="12">Décembre</option>
+                                                    </select>
+                                                </div>
+                                                <div class="row px-3 mt-2">
+                                                            <select name="trimestre" id="trimestre" class="filtre_projet">
+                                                        <option value="null" selected>Trimestres</option>
+                                                        <option value="1">1e Trimestre</option>
+                                                        <option value="2">2e Trimestre</option>
+                                                        <option value="3">3e Trimestre</option>
+                                                        <option value="4">4e Trimestre</option>
+                                                    </select>
+
+                                                    </div>
+
+                                                    <div class="row px-3 mt-2">
+                                                    <select name="semestre" id="semestre" class="filtre_projet">
+                                                        <option value="null" selected>Semestres</option>
+                                                        <option value="1">1e Semestre</option>
+                                                        <option value="2">2e Semestre</option>
+                                                    </select>
+
+                                            </div>
+
+                                            <div class="row px-3 mt-2">
+                                                    <select name="annee" id="annee" class="filtre_projet">
+                                                        <option value="null" selected>Années</option>
+                                                    </select>
+                                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+
+                                            </div>
+
+                                        </form>
+                                    </div>
+
+                            @endcanany
+                        </div>
+                        @can('isReferent')
+                        <div class="row px-3 mt-2">
+                            <form  action="{{ route('recherche_cfp') }}" method="POST" >
+                                @csrf
+                                <div class="form-group mt-1 mb-1">
+                                <input type="text " class="form-control input" name="cfp_search">
+                                <label class="form-control-placeholder">Organisme de formation</label>
+                            </div>
+                            <div class="row px-3">
+                                <button class="btn btn_next mt-3 mb-3" type="submit">Rechercher</button>
+                            </div>
+                            </form>
+                        </div>
+                        @endcan
+                        {{-- @can('isCFP')
+                        <div class="row px-3 mt-2">
+                            <form  action="{{ route('recherche_entreprise') }}" method="POST">
+                                @csrf
+                                <div class="form-group mt-1 mb-1">
+                                <input type="text " class="form-control input"   name="entreprise">
+                                <label class="form-control-placeholder">Entreprise</label>
+                            </div>
+                            <div class="row px-3">
+                                <button class="btn btn_next mt-3 mb-3" type="submit">Rechercher</button>
+                            </div>
+                            </form>
+                        </div>
+                        @endcan --}}
+                        @canany(['isReferent', 'isCFP'])
+                        <div class="col-12 ps-5">
+                        @endcanany
+                        @canany(['isFormateur','isStagiaire'])
+                            <div class="col-12 ps-5">
+                        @endcanany
+                    </div>
+
+                    <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+
+                    {{-- fin filtre equipes--}}
+
+
                 </div>
                 @if(Session::has('error'))
                 <div class="alert alert-danger">
@@ -256,7 +364,7 @@
                                 </table>
                             </div>
                         </div>
-                        @endfor
+
                         </tbody>
                         </table>
                     </div>
@@ -599,7 +707,6 @@
                             </div>
                         </div>
                     </div>
-                    @endfor
                     </tbody>
                     </table>
                 </div>
@@ -610,6 +717,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<script src="{{ asset('js/index2.js') }}"></script>
 <script type="text/javascript">
     //Pour chaque div de classe randomColor
     $(".randomColor").each(function() {
@@ -618,6 +726,50 @@
     })
 
 </script>
+
+
+{{--filtrer les equipes--}}
+
+<script>
+
+$("#formation_session_id").on("change", function() {
+    var id = $("#formation_session_id").val();
+    $("#module_id option").remove();
+    $.ajax({
+        method: "GET",
+        url: "{{ route('module_formation') }}",
+        data: {
+            id: id,
+        },
+        dataType: "html",
+        _token: "{{ csrf_token() }}",
+        success: function(response) {
+            var data = JSON.parse(response);
+            if (data.length <= 0) {
+                document.getElementById("module_id_err").innerHTML =
+                    "Aucun module a été détecter! veuillez choisir la formation";
+            } else {
+                // document.getElementById("module_id_err").innerHTML = "";
+                for (var $i = 0; $i < data.length; $i++) {
+                    $("#module_id").append(
+                        '<option value="' +
+                            data[$i].id +
+                            '">' +
+                            data[$i].nom_module +
+                            "</option>"
+                    );
+                }
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        },
+    });
+});
+</script>
+{{--fin filtre equipes--}}
+
+
 <script>
     $.ajaxSetup({
         headers: {
