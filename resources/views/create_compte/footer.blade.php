@@ -176,7 +176,7 @@
 
 
     /*-----------------------------------------------*/
-    $(document).on('change', '#cin_resp_cfp', function() {
+    $(document).on('keyup change', '#cin_resp_cfp', function() {
         var result = $(this).val();
         document.getElementById("cin_resp_cfp_err").innerHTML = "";
 
@@ -206,7 +206,7 @@
 
     });
 
-    $(document).on('change', '#email_resp_cfp', function() {
+    $(document).on('keyup change', '#email_resp_cfp', function() {
         var result = $(this).val();
         if (result.length < 3) {
             document.getElementById("email_resp_cfp_err").innerHTML = "mail invalide !";
@@ -249,7 +249,7 @@
     });
 */
 
-    $(document).on('change', '#logo_cfp', function() {
+    $(document).on('keyup change', '#logo_cfp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_cfp").innerHTML = '';
         if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
@@ -275,7 +275,7 @@
 
 */
 
-    $(document).on('change', '#nif_cfp', function() {
+    $(document).on('keyup change', '#nif_cfp', function() {
         var nif = $(this).val();
         if ($('#nif_cfp').val().length < 7) {
             document.getElementById("nif_cfp_err").innerHTML = "NIF incomplète!";
@@ -306,7 +306,7 @@
 
     /*================= entreprise =====================*/
 
-    $(document).on('change', '#cin_resp_etp', function() {
+    $(document).on('keyup change', '#cin_resp_etp', function() {
         var result = $(this).val();
         document.getElementById("cin_resp_etp_err").innerHTML = "";
 
@@ -335,7 +335,7 @@
 
     });
 
-    $(document).on('change', '#email_resp_etp', function() {
+    $(document).on('keyup change', '#email_resp_etp', function() {
         var result = $(this).val();
         if (result.length < 3) {
             document.getElementById("email_resp_etp_err").innerHTML = "mail invalide !";
@@ -375,7 +375,7 @@
 
     });
 */
-    $(document).on('change', '#matricule_resp_etp', function() {
+    $(document).on('keyup change', '#matricule_resp_etp', function() {
         var result = $(this).val();
         if (result.length < 2) {
             document.getElementById("matricule_resp_etp_err").innerHTML = "Matricule ne doit pas être null";
@@ -386,7 +386,7 @@
     });
 
 
-    $(document).on('change', '#logo_etp', function() {
+    $(document).on('keyup change', '#logo_etp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_etp").innerHTML = '';
 
@@ -413,7 +413,7 @@
 */
 
 
-    $(document).on('change', '#nif_etp', function() {
+    $(document).on('keyup change', '#nif_etp', function() {
         var nif = $(this).val();
 
         if (nif.length < 7) {
@@ -469,7 +469,7 @@
 */
 
 
-    $(document).on('change', '#name_entreprise', function() {
+    $(document).on('keyup change', '#name_entreprise', function() {
         var id = $(this).val();
         // document.getElementById('name_entreprise_desc').value = id;
         document.getElementById('name_entreprise_desc').innerHTML = id;
@@ -477,7 +477,7 @@
     });
 
     // ====== recherche name cfp et entreprise
-    $(document).on('change', '#name_cfp', function() {
+    $(document).on('keyup change', '#name_cfp', function() {
         var result = $(this).val();
 
         $.ajax({
@@ -501,7 +501,7 @@
         });
     });
 
-    $(document).on('change', '#name_etp', function() {
+    $(document).on('keyup change', '#name_etp', function() {
         var result = $(this).val();
         $.ajax({
             url: '{{route("verify_name_etp")}}'

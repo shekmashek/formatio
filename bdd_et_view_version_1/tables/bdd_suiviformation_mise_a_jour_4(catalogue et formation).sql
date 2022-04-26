@@ -59,6 +59,8 @@ CREATE TABLE modules (
   cible varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   min int(11) NOT NULL,
   max int(11) NOT NULL,
+  prix_groupe int(11) NULL,
+  status int(11) default 0,
   bon_a_savoir TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
   prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

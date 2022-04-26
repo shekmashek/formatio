@@ -20,7 +20,7 @@ FROM
         modules.reference,
         modules.nom_module,
         formations.domaine_id,
-        formations.cfp_id,
+        modules.cfp_id,
         formation_id,
         formations.nom_formation,
         prix,

@@ -49,6 +49,8 @@ class EncaissementController extends Controller
 
     public function encaissement(Request $request)
     {
+        // dd($request->input());
+
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
