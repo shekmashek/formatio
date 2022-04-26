@@ -407,7 +407,7 @@
     border: none;
 }
 
-.nav-tabs .nav-link.active {
+.nav-item.active .nav-link {
     border-bottom: 3px solid #7635dc !important;
     border: none;
 }
