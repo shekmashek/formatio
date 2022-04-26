@@ -440,21 +440,21 @@ class SessionController extends Controller
             $mail_cfp = $session->mail_cfp;
             Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
         }
-        // if(Gate::allows('isCFP')){
-        //     dd("eto");
-        //     $fonct = new FonctionGenerique();
-        //     $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
-        //     $name_session = $session->nom_groupe;
-        //     $name_etp = $session->nom_etp;
-        //     $name_cfp = $session->nom_cfp;
-        //     $date_debut = $session->date_debut;
-        //     $date_fin = $session->date_fin;
-        //     $mail_acteur = $session->email_etp;
+        if(Gate::allows('isCFP')){
+            $fonct = new FonctionGenerique();
+            $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+            $name_session = $session->nom_groupe;
+            $name_etp = $session->nom_etp;
+            $name_cfp = $session->nom_cfp;
+            $date_debut = $session->date_debut;
+            $date_fin = $session->date_fin;
+            $mail_acteur = $session->email_etp;
+            $mail_cfp = $session->mail_cfp;
+            Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
+        }
 
-        //     $mail_cfp = $session->mail_cfp;
-        //     Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
-        // }
-        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+
+        DB::update('update groupes set status = 7 where id = ?',[$request->groupe]);
         return back();
     }
 
