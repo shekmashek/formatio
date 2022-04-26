@@ -247,7 +247,7 @@
                                     <div class="input-group">
                                         {{-- <input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" id="lieu" required
                                             onblur="ville_Lieu();"> --}}
-                                            <select name="ville[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
+                                            <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
                                                 <option>Choississez votre salle de formation&hellip;</option>
                                                 @foreach ($salle_formation as $salle)
                                                     <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>

@@ -421,7 +421,7 @@ class SessionController extends Controller
         $date_debut = $session->date_debut;
         $date_fin = $session->date_fin;
         $mail_etp = $session->email_etp;
-        Mail::to($session->mail_cfp)->send(new acceptation_session($mail_etp,$name_session,$name_etp,$date_debut,$date_fin));
+        Mail::to('vonjitahinaranjelison@gmail.com')->send(new acceptation_session('contact@formation.mg',$name_session,$name_etp,$date_debut,$date_fin));
         // fin
         DB::update('update groupes set status = 2 where id = ?',[$request->groupe]);
         return back();
@@ -440,7 +440,7 @@ class SessionController extends Controller
             $mail_cfp = $session->mail_cfp;
             Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
         }
-        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+        DB::update('update groupes set status = 7 where id = ?',[$request->groupe]);
         return back();
     }
 
