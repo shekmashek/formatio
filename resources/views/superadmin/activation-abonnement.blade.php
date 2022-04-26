@@ -48,17 +48,17 @@
                     <b>Abonnement</b>
                     @if($liste!=null)
                         @foreach ($liste as $lst)
-                            <p><h5 class="th_color">{{$lst->categorie_paiement->categorie}} </h5></p>
-                            <input type="text" value = "{{$lst->categorie_paiement->categorie}}" hidden id="abonnementCtg">
+                            <p><h5 class="th_color">{{$lst->categorie}} </h5></p>
+                            <input type="text" value = "{{$lst->categorie}}" hidden id="abonnementCtg">
                         @break
                         @endforeach
                     @endif
-                    @if($cfpListe!=null)
+                    {{-- @if($cfpListe!=null)
                         @foreach ($cfpListe as $lst)
-                            <p><h5 class="th_color">{{$lst->categorie_paiement->categorie}} </h5></p>
-                            <input type="text" value = "{{$lst->categorie_paiement->categorie}}" hidden id="abonnementCtg">
+                            <p><h5 class="th_color">{{$lst->categorie}} </h5></p>
+                            <input type="text" value = "{{$lst->categorie}}" hidden id="abonnementCtg">
                         @endforeach
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="card card_abonnement mx-1 align-items-center text-center">
                     <b>Tarif</b>

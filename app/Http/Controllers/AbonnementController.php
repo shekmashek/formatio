@@ -600,7 +600,8 @@ class AbonnementController extends Controller
         $fonct = new FonctionGenerique();
         $id = request()->id;
         $type_abonnement_role_id = abonnement::where('id', $id)->value('type_abonnement_role_id');
-        if ($type_abonnement_role_id) {
+        dd( $type_abonnement_role_id );
+        if ($type_abonnement_role_id!=null) {
 
             $type = type_abonnement_role::with('type_abonnement', 'type_abonne')->where('id', $type_abonnement_role_id)->get();
             $ctg_id = abonnement::where('type_abonnement_role_id', $type_abonnement_role_id)->value('categorie_paiement_id');
