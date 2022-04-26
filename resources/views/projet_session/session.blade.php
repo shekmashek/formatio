@@ -40,7 +40,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="ya">
                     <li class="mt-1">
-                        <a class="dropdown-item" href="{{ route('modifier_statut_session',[$projet[0]->groupe_id,5]) }}">
+                        <a class="dropdown-item" href="{{ route('cloture_session',[$projet[0]->groupe_id,5]) }}">
                             <i class='bx bx-check'></i>&nbsp;Cloturé
                         </a>
                     </li>
@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('modifier_statut_session',[$projet[0]->groupe_id,7]) }}">
+                        <a class="dropdown-item" href="{{ route('annuler_session',[$projet[0]->groupe_id]) }}">
                             <i class='bx bx-x'></i>&nbsp;Annulée
                         </a>
                     </li>

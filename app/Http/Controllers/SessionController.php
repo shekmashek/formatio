@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use phpseclib3\Crypt\RC2;
 use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
+use App\Mail\cloture_session;
 use App\Models\getImageModel;
 use App\Presence;
 use Exception;
@@ -438,13 +439,37 @@ class SessionController extends Controller
             $date_fin = $session->date_fin;
             $mail_acteur = $session->email_etp;
             $mail_cfp = $session->mail_cfp;
-            Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
+            Mail::to($mail_cfp)->send(new cloture_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
         }
         DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
         return back();
     }
 
 
+    public function cloture_session(Request $request){
+        if(Gate::allows('isReferent')){
+            $fonct = new FonctionGenerique();
+            $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+            $name_session = $session->nom_groupe;
+            $name_etp = $session->nom_etp;
+            $name_cfp = $session->nom_cfp;
+            $date_debut = $session->date_debut;
+            $date_fin = $session->date_fin;
+            //$mail_acteur = $session->email_etp;
+            $mail_cfp = $session->mail_cfp;
+      
+            //modif
+            $resp = $fonct->findWhereMulitOne('responsables_cfp', ['cfp_id','prioriter'], [$session->cfp_id,'1']) ;
+            $mail_chef = $resp->email_resp_cfp;
+            
+            $mail_connecte = Auth::user()->email;
+      
+            Mail::to($mail_chef)->send(new cloture_session($mail_connecte,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
+        }
+
+        //DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+        return back();
+    }
 
     public function save_documents(Request $request){
         $user_id = Auth::user()->id;
