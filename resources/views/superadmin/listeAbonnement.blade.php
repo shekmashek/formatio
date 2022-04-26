@@ -9,13 +9,13 @@
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#abonnement" class="nav-link active" data-bs-toggle="tab">Abonnements</a>
+                <a href="#service" class="nav-link active" data-bs-toggle="tab">Historique des services</a>
+            </li>
+            <li class="nav-item">
+                <a href="#abonnement" class="nav-link " data-bs-toggle="tab">Abonnements</a>
             </li>
             <li class="nav-item">
                 <a href="#facture" class="nav-link" data-bs-toggle="tab">Factures</a>
-            </li>
-            <li class="nav-item">
-                <a href="#service" class="nav-link" data-bs-toggle="tab">Historique des services</a>
             </li>
         </ul>
 
@@ -39,6 +39,7 @@
                         </div>
                     </div>
                 @endif
+
                 <div>
                     <p class="h2 text-center mt-3 mb-5">Choisissez Votre Abonnement</p>
                 </div>
@@ -73,7 +74,7 @@
                                             </ul>
                                             @if($abonnement_actuel != null)
                                                 @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id and $abonnement_actuel[0]->activite == 1)
-                                                <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactiver mon offre</a></div>
+                                                <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactivation immédiat de mon offre</a></div>
                                                 @else
                                                     <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
                                                 @endif
@@ -189,5 +190,15 @@
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+    // Handling data-toggle manually
+        $('.navigation_module').click(function(){
+            alert($('.navigation_module a:first').tab('show'));
+        });
+    });
+</script>
 
 @endsection

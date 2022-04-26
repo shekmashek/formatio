@@ -703,7 +703,7 @@ class AbonnementController extends Controller
         }
     }
     public function desactiver_offre($id){
-        // dd($id);
+
         if (Gate::allows('isReferent')) {
             $abonnement_id = DB::select('select * from v_abonnement_facture_entreprise where type_abonnement_id = ? order by facture_id desc limit 1', [$id]);
                //on met à 0 l'activite pour desactiver l'offre
