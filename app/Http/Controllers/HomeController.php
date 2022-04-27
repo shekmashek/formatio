@@ -1080,6 +1080,28 @@ public function recherche_cfp(Request $request,$page = null)
         $iframe_of = $fonct->findAll("v_cfp_iframe");
         return view('bi.iframe',compact('of','iframe_etp','iframe_of'));
     }
+    //taxe
+    public function taxe(){
+        
+        return view('layouts.taxe');
+    }
+    //enregistrer taxe
+    public function taxe_enregistrer(Request $request)
+    {    
+        $inserer = DB::insert('insert into valeur_TVA (tva) value (?)', [$request->tva]);
+        return back();
+    }
+    //devise
+    public function devise(){
+        
+        return view('layouts.devis');
+    }
+    //enregistrer devise
+    public function devise_enregistrer(Request $request)
+    {    
+        $inserer = DB::insert('insert into devise (devise) value (?)', [$request->devis]);
+        return back();
+    }
     public function enregistrer_iframe_etp(Request $request){
         $url_iframe = $request->iframe_url;
         $etp_id = $request->entreprise_id;

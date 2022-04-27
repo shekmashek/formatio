@@ -124,7 +124,7 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('profil_cfp',1) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
+                                        <a class="dropdown-item" href="{{ route('profil_du_responsable',1) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
                                         <a class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $etp->id }}" id="{{ $etp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$etp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
                                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$etp->id}}"> <button class="btn btn_enregistrer">Supprimer</button></a>
                                     </ul>

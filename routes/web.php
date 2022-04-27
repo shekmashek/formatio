@@ -1042,6 +1042,12 @@ Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->
 Route::post('recherche_cfp','HomeController@recherche_cfp')->name('recherche_cfp');
 // Route::post('recherche_entreprise','HomeController@recherche_etp')->name('recherche_entreprise');
 
+//Route pour taxe dans interface super Admin
+Route::get('taxes','HomeController@taxe')->name('taxes');
+Route::get('devise','HomeController@devise')->name('devise');
+
+Route::post('taxe_enregistrer','HomeController@taxe_enregistrer')->name('taxe_enregistrer');
+Route::post('devise_enregistrer','HomeController@devise_enregistrer')->name('devise_enregistrer');
 
 //Route iframe
 Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
