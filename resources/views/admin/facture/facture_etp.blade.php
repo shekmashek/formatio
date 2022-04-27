@@ -424,7 +424,7 @@
                                     </th>
                                     <td>
                                         <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->nom_etp}}
+                                            {{$actif->nom_cfp}}
                                         </a>
                                     </td>
 
