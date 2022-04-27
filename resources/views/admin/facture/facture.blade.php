@@ -210,7 +210,7 @@
 </style>
 
 <div class="container-fluid">
-    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>filtrer</a>
+    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
 
@@ -353,71 +353,6 @@
 
 
                 <div class="tab-content" id="nav-tabContent">
-
-                    {{-- <form class="row g-3 needs-validation" novalidate>
-                        <div class="col-md-4">
-                            <label for="validationCustom01" class="form-label">First name</label>
-                            <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="validationCustom02" class="form-label">Last name</label>
-                            <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="validationCustomUsername" class="form-label">Username</label>
-                            <div class="input-group has-validation">
-                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                                <div class="invalid-feedback">
-                                    Please choose a username.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="validationCustom03" class="form-label">City</label>
-                            <input type="text" class="form-control" id="validationCustom03" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid city.
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="validationCustom04" class="form-label">State</label>
-                            <select class="form-select" id="validationCustom04" required>
-                                <option selected disabled value="">Choose...</option>
-                                <option>...</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Please select a valid state.
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="validationCustom05" class="form-label">Zip</label>
-                            <input type="text" class="form-control" id="validationCustom05" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid zip.
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                                <label class="form-check-label" for="invalidCheck">
-                                    Agree to terms and conditions
-                                </label>
-                                <div class="invalid-feedback">
-                                    You must agree before submitting.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-primary" type="submit">Submit form</button>
-                        </div>
-                    </form> --}}
 
                     <div class="tab-pane fade show active" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
                         <table class="table table-hover">
@@ -766,16 +701,16 @@
                         <table class="table table-hover">
                             <tr>
                                 <th scope="col">Type</th>
-                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
-                                <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
                                 <th scope="col">Date de facturation</th>
-                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
-                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
-                                <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a> {{-- &nbsp;&nbsp;<a href="#" style="color: rgb(25, 25, 30);"><button class="btn btn_creer_trie"><i class="fa fa-arrow-up"></i></a></button> --}}
+                                <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                 </th>
                                 <th scope="col">Status</th>
                                 @canany(['isCFP'])
@@ -836,7 +771,7 @@
                                     <td>
                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                             <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
-                                                payé {{-- {{$actif->facture_encour}} --}}
+                                                payé
                                             </div>
                                         </a>
                                     </td>
@@ -1011,12 +946,13 @@
                 <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
                     @csrf
                     <label for="dte_debut" class="form-label" align="left">Entreprise<strong style="color:#ff0000;">*</strong></label>
-
+                    <br>
                     <select name="entiter_id" id="entiter_id">
                         @foreach ($entreprise as $etp)
                         <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
                         @endforeach
                     </select>
+                    <br>
                     <button type="submit" class="btn_creer mt-2">Recherche</button>
                 </form>
             </div>

@@ -48,7 +48,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                     return 'trois';
                 case 4:
                     return 'quatre';
-                case 5:
+                case 10:
                     return 'cinq';
                 case 6:
                     return 'six';
@@ -68,7 +68,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                     return 'treize';
                 case 14:
                     return 'quatorze';
-                case 15:
+                case 110:
                     return 'quinze';
                 case 16:
                     return 'seize';
@@ -84,7 +84,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                         return 'trente';
                     case 40:
                         return 'quarante';
-                    case 50:
+                    case 100:
                         return 'cinquante';
                     case 60:
                         return 'soixante';
@@ -886,7 +886,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     public function nb_liste_fact_pagination($nbPag, $nb_debut_pag)
     {
-        $nb_limit = 5;
+        $nb_limit = 10;
         if ($nbPag != null) {
             $totale_pagination = $nbPag->totale_pagination;
         } else {
