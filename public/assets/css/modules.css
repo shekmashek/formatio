@@ -767,3 +767,19 @@ font-size: 0.850rem;
 .check_comp{
     color: #7635dc;
 }
+
+.accordion-item{
+    border: none;
+}
+
+.accordion-button:not(.collapsed) {
+    color: white;
+    background-color: #637381;
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+.accordion-body {
+    padding: 1rem 1.25rem;
+    border: 1px solid #63738175;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

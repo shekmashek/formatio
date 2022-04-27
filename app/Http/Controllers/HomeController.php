@@ -361,7 +361,6 @@ class HomeController extends Controller
         }
         if(Gate::allows('isSuperAdmin')) {
             return view('layouts.accueil_admin');
-
         }
         // if(Gate::allows('isSuperAdminPrincipale')) {
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
@@ -615,7 +614,7 @@ public function recherche_cfp(Request $request,$page = null)
             $page = 1;
         }
         $fonct = new FonctionGenerique();
-        
+
         $projet_model = new projet();
         $totale_invitation = 0;
         $entp = new entreprise();

@@ -409,7 +409,7 @@ ul li a {
     position: fixed;
     top: 3rem;
     right: -50px;
-    height: 100%;
+    min-height: 100%;
     width: 0px;
     background: white;
     padding: 6px 14px;
@@ -420,6 +420,7 @@ ul li a {
     border-left: 1px solid grey;
     float: right;
     z-index: 999;
+    overflow-y: scroll !important;
 }
 
 .filtrer.afficher {

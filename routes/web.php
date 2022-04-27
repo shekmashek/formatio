@@ -386,6 +386,10 @@ Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('a
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
 
+//============================== recherche module ================
+Route::post('search_par_ref/{id}','ModuleController@search_par_ref')->name('search_par_ref');
+
+//==============================================
 
 
 // affichage info OF

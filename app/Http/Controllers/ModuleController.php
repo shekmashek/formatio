@@ -34,7 +34,6 @@ class ModuleController extends Controller
     }
 
     public function index($id = null, $page = null){
-        $module_model = new module();
         $fonct = new FonctionGenerique();
         $infos =null;
         $categorie=null;
@@ -46,6 +45,8 @@ class ModuleController extends Controller
             $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             $categorie = formation::all();
+            $date_creation = module::all();
+            $niveau = Niveau::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
                 select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.nom_module desc',[$cfp_id]);
             $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
@@ -55,7 +56,7 @@ class ModuleController extends Controller
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
-                return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp'));
+                return view('admin.module.module', compact('infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -63,7 +64,7 @@ class ModuleController extends Controller
             $categorie = formation::all();
         }
 
-        return view('admin.module.module', compact('categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
+        return view('admin.module.module', compact('categorie','niveau','date_creation','mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
     }
 
     // pagination non utiliser
@@ -298,15 +299,7 @@ class ModuleController extends Controller
     {
         $id = $request->Id;
         $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
-        $programme = DB::select('select * from v_cours_programme where module_id = ?',[$id]);
-        // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
-        // if ($programme == null) {
-            return response()->json($module_en_cours);
-        // }
-        // }else{
-        //     return response()->json($module_en_cours,$programme);
-        // }
-
+        return response()->json($module_en_cours);
     }
 
     public function modifier_mod(Request $request)
@@ -571,6 +564,10 @@ class ModuleController extends Controller
                 'message' => 'Data deleted successfully',
             ]
         );
+    }
+
+    public function recherche_ref_nomMod_frmt(){
+
     }
 
 }

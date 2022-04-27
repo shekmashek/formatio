@@ -841,7 +841,7 @@
                                             </select>
 
                                     </div>
-                                  
+
                                     <div class="row px-3 mt-2">
                                             <select name="annee" id="annee" class="filtre_projet">
                                                 <option value="null" selected>Années</option>
@@ -849,10 +849,10 @@
                                     <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
 
                                     </div>
-                                  
+
                                 </form>
                             </div>
-                    
+
                     @endcanany
                 </div>
                 @can('isReferent')
