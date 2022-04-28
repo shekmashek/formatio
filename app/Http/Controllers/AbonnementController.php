@@ -433,7 +433,6 @@ class AbonnementController extends Controller
                         return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
                     }
 
-                    }
                 }
                 //si le dernnier abonnement n'est pas gratuit
                 if($etp_ab[0]->nom_type != "Gratuit"){
