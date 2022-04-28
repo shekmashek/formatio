@@ -1,8 +1,8 @@
-CREATE TABLE devise
-(
- `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
- `devise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- CREATE TABLE devise
+-- (
+--  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--  `devise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE valeur_TVA
 (
@@ -47,6 +47,7 @@ insert into taux_devises(devise_id,valeur_default,valeur_ariary,created_at,updat
 
 
 CREATE OR REPLACE VIEW v_devise AS SELECT
+   (taux_devises.id) taux_devise_id,
     taux_devises.devise_id,
     valeur_default,
     description,
@@ -79,10 +80,3 @@ GROUP BY
     updated_at;
 
 
-/*
-1-> 4500 AR
-? -> 100 AR
-==> 1OO * 1/4500 = Dollar
-
-100 Ar =>  () $
-*/

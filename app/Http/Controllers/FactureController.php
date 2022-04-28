@@ -658,6 +658,7 @@ if($request->type_facture>0 && $request->id_mode_financement>0 && $request->entr
     public function getFrais_annexe()
     {
         $data = $this->fonct->findAll("frais_annexes");
+        dd($data);
         return response()->json($data);
     }
 

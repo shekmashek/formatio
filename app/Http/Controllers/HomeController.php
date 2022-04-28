@@ -23,9 +23,11 @@ use App\responsable;
 use App\ResponsableCfpModel;
 use App\stagiaire;
 use App\User;
+use App\taux_devises;
 use Illuminate\Support\Facades\Gate;
 use App\Models\FonctionGenerique;
 use App\cfp;
+use App\Devise;
 use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
@@ -44,6 +46,7 @@ class HomeController extends Controller
     {
         $this->collaboration = new Collaboration();
         $this->middleware('auth');
+        $this->fonct = new FonctionGenerique();
         $this->middleware(function ($request, $next) {
             if (Auth::user()->exists == false) return view('auth.connexion');
             return $next($request);
@@ -1092,16 +1095,103 @@ public function recherche_cfp(Request $request,$page = null)
         return back();
     }
     //devise
+    public function getDevise()
+    {
+        $data = $this->fonct->findAll("devises");
+      
+        return response()->json($data);
+    }
+
     public function devise(){
+       
         
-        return view('layouts.devis');
+        $liste=DB::select('select * from devises ');
+        $devises=DB::select('select * from v_devise order by created_at Desc ');
+        $taux=DB::select('select * from taux_devises ');
+              $dev = new Devise();
+        $devis_actuel =  $dev->getListDevise();
+      
+        return view('layouts.devis',compact('taux','liste','devis_actuel','devises'));
+    }
+    public function edit($id)
+    {
+       
+       $devise_edit=Devise::findOrfail($id);
+       return view('layouts.edit_devise',compact('devise_edit'));
+    }
+    public function update_devise(Request $request,$id)
+    {
+        // Devise::where('id',$id)->update([
+        // 'description'=>$request->description,
+        // 'reference'=>$request->reference
+        // ]);
+        DB::update('update devises set description = ?, reference= ?  where id= ?', [$request->description,$request->reference,$id]);
+        return redirect()->route('devise');
+    }
+    //delete devise
+    public function delete_devise(Request $request,$id)
+    {
+        // DB::table('devises ')->where('id', $id)->delete();
+        $id = $request->id;
+       
+        DB::delete('delete from devises where id = ?', [$id]);
+
+        return redirect()->route('devise');
+    }
+    //edit taux_devise
+    public function edit_taux_devise($id)
+    {
+        $taux_edit=taux_devises::findOrfail($id);
+        return view('layouts.edit_taux_devise',compact('taux_edit'));
+    }
+    public function update_taux(Request $request,$id)
+    {
+       
+        DB::update('update taux_devises set valeur_ariary= ?, created_at= ?  where id= ?', [$request->ar,$request->data_tx,$id]);
+        return redirect()->route('devise');
+    }
+    public function delete_taux(Request $request,$id)
+    {
+        $id = $request->id;
+       
+        DB::delete('delete from taux_devises  where id = ?', [$id]);
+
+        return redirect()->route('devise');
     }
     //enregistrer devise
     public function devise_enregistrer(Request $request)
-    {    
-        $inserer = DB::insert('insert into devise (devise) value (?)', [$request->devis]);
+    {   
+        if ($request["devise"]) {
+            for ($i = 0; $i < count($request["devise"]); $i += 1) {
+                $devis= $request["devise"][$i];
+                $ref= $request["reference"][$i];
+        $inserer = DB::insert('insert into devises (description,reference) value (?,?)', [$devis,$ref]);
+                   
+            }
+        }
+
         return back();
     }
+    //taxe devise
+    public function taux_enregistrer(Request $request)
+    {   
+        $date_taux=$request->date_taux;
+   
+        if ($request["devise_id"]) {
+            for ($i = 0; $i < count($request["devise_id"]); $i += 1) {
+                $devis_id= $request["devise_id"][$i];
+                $val= $request["valeur"][$i];
+                $ariary= $request["ar"][$i];
+        $inserer = DB::insert('insert into taux_devises (devise_id,valeur_default,valeur_ariary,created_at,updated_at) value (?,?,?,?,?)', [$devis_id,$val,$ariary,$date_taux,$date_taux]);
+                   
+            }
+        }
+
+
+        
+        return back();
+    }
+  
     public function enregistrer_iframe_etp(Request $request){
         $url_iframe = $request->iframe_url;
         $etp_id = $request->entreprise_id;
