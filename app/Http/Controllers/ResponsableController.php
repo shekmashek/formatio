@@ -134,14 +134,14 @@ class ResponsableController extends Controller
     public function index($id = null)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
+        
         $info_impression = [
             'id' => null,
             'nom_entreprise' => 'Tout'
         ];
-
+       
         if ($id) $datas = responsable::orderBy('nom_resp')->with('User', 'entreprise')->take($id)->get();
         else  $datas =  responsable::orderBy("nom_resp")->with('User', 'entreprise')->get();
-
         return view('admin.responsable.responsable', compact('datas', 'liste', 'info_impression'));
     }
 

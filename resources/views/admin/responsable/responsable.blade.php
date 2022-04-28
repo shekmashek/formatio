@@ -143,7 +143,7 @@
                                                         <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_{{$d->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li>
 
                                                         @endcan
-                                                        <li type="button" style="font-size:15px;"><a href="{{route('affResponsable', $d)}}" class="afficher" title="Afficher le profil" id="{{$d->id}}"><i style="font-size:18px;" class="fa fa-user"></i>&nbsp; Profil </a></li>
+                                                        <li type="button" style="font-size:15px;"><a href="{{route('profil_referent', $d)}}" class="afficher" title="Afficher le profil" id="{{$d->id}}"><i style="font-size:18px;" class="fa fa-user"></i>&nbsp; Profil </a></li>
                                                     </div>
                                                 </div>
                                             </center>

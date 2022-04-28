@@ -660,6 +660,7 @@ class FactureController extends Controller
     public function getFrais_annexe()
     {
         $data = $this->fonct->findAll("frais_annexes");
+        dd($data);
         return response()->json($data);
     }
 

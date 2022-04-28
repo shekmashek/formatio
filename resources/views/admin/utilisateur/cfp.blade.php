@@ -82,8 +82,8 @@
         <tbody>
             @foreach ($cfps as $cfp)
             <tr>
-                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_cfp',$cfp->id) }}"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$cfp->logo)}}" style="cellapading=0;" cellspacing="0"> </a></td>
-                <td> <a class="dropdown-item" href="{{ route('profil_cfp',$cfp->id) }}"><strong>{{ $cfp->nom }}</strong> </a></td>
+                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_du_responsable',$cfp->id) }}"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$cfp->logo)}}" style="cellapading=0;" cellspacing="0"> </a></td>
+                <td> <a class="dropdown-item" href="{{ route('profil_du_responsable',$cfp->id) }}"><strong>{{ $cfp->nom }}</strong> </a></td>
                 <td>{{ $cfp->email }}</td>
                 <td>{{ $cfp->telephone }}</td>
                 <td>{{ $cfp->site_cfp }}</td>
@@ -95,7 +95,7 @@
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ route('profil_cfp',$cfp->id) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
+                                <a class="dropdown-item" href="{{ route('profil_du_responsable',$cfp->id) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
                                 <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$cfp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
                                 <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$cfp->id}}" style="color: red">Supprimer</button></a>
 

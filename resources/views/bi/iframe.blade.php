@@ -9,6 +9,7 @@
             <div class="m-4">
                 <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                     <li class="nav-item">
+                       
                         <a class="nav-link btn_enregistrer" class=" active" id="tab_etp" data-bs-toggle="tab" href="#etp" type="button" role="tab" aria-controls="etp" aria-selected="true">
                             Entreprises</a>
                     </li>
