@@ -1161,14 +1161,15 @@ public function recherche_cfp(Request $request,$page = null)
     //enregistrer devise
     public function devise_enregistrer(Request $request)
     {   
-        if ($request["devise"]) {
-            for ($i = 0; $i < count($request["devise"]); $i += 1) {
-                $devis= $request["devise"][$i];
-                $ref= $request["reference"][$i];
-        $inserer = DB::insert('insert into devises (description,reference) value (?,?)', [$devis,$ref]);
+        // if ($request["devise"]) {
+        //     for ($i = 0; $i < count($request["devise"]); $i += 1) {
+        //         $devis= $request["devise"][$i];
+        //         $ref= $request["reference"][$i];
+        // $inserer = DB::insert('insert into devises (description,reference) value (?,?)', [$devis,$ref]);
                    
-            }
-        }
+        //     }
+        // }
+        $inserer = DB::insert('insert into devise (devise) value (?)', [$request->devis]);
 
         return back();
     }

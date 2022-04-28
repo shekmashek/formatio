@@ -16,20 +16,23 @@
              <form method="POST" action="{{route('devise_enregistrer')}}">
                 @csrf
                     
-                     {{-- <input type="text" class="form-control test input"  name="devis">
-                    {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-                        {{-- <label class="ml-3 form-control-placeholder" >Devise</label>
+                    <input type="text" class="form-control test input"  name="devis">
+ 
+                        <label class="ml-3 form-control-placeholder" >Devise</label>
                         </div>
-                        </div> --}} 
+                        </div> 
+                        <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                    </form>
+              </div>
                     {{-- <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
                     <input type="text" class="form-control test input"  name="valeur">
-                {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-                    {{-- <label class="ml-3 form-control-placeholder" >Valeur</label>
+
+                    <label class="ml-3 form-control-placeholder" >Valeur</label>
                 
                 </div>
-                </div> --}} 
-                <div class="col-12 pb-4 element">
+                </div>  --}}
+                {{-- <div class="col-12 pb-4 element">
                     <div class="row titres_services">
                         <div class="col-4">
                             <h6 class="m-0">Description</h6>
@@ -173,7 +176,7 @@
 </div>
 
 {{-- <script src="{{asset('js/facture.js')}}"></script> --}}
-<script src="{{ asset('assets/js/jquery.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
     // add row
@@ -188,7 +191,6 @@
                     html += '<div class="row my-1" id="inputFormRow">';
                     html += '<div class="col-4">';
                     html += '<input type="text" class="form-control selectP input_section4"  id="devise[]" name="devise[]" required>';
-
                     // for (var $i = 0; $i < userData.length; $i++) {
                     //     html += '<option value="' + userData[$i].id + '">' + userData[$i].description + '</option>';
                     // }
@@ -198,8 +200,6 @@
                     html += '<div class="col-4">';
                     html += '  <input type="text" name="reference[]" id="reference[]" class="text_reference form-control" placeholder="AR ou € ou $">';
                     html += '</div>';
-
-                    
 
                     html += '<div class="col-1 text-end pt-2">';
                     html += '<p class="m-0"><span>';
@@ -277,5 +277,5 @@
     });
 
 </script>
-</script>
+</script>  --}}
 @endsection
