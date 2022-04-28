@@ -312,7 +312,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script> --}}
 
     <script>
-
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
         window.addEventListener("DOMContentLoaded", (event) => {
 
             var nom_module = $('#nom_module').val();
@@ -336,7 +343,7 @@
                         event.push({
                             title: groupe_entreprises[$i].nom_formation
                             , start: details[$i][0].date_detail
-                            ,backgroundColor:"green"
+                            ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i][0].nom_projet
                             , h_debut: details[$i][0].h_debut
                             , h_fin: details[$i][0].h_fin
