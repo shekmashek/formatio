@@ -333,6 +333,7 @@
                     var userDataDetail = JSON.parse(data);
                     // alert(userData.length);
                     var details = userDataDetail['detail'];
+
                     var modules = userDataDetail['modules'];
                     var formations = userDataDetail['formations'];
 
@@ -391,7 +392,7 @@
                         }
                         , editable: true
                         , eventClick: function(info) {
-                            // alert('eto');
+                            alert(info.event.extendedProps.detail_id);
                             $('#detail').css('display','block');
 
                             $.ajax({

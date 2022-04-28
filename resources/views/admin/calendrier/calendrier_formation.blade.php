@@ -333,7 +333,7 @@
                     var userDataDetail = JSON.parse(data);
 
                     var details = userDataDetail['details'];
-                    console.log(details);
+
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
                     var detail_id = userDataDetail['detail_id'];
 
