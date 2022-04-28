@@ -10,9 +10,8 @@
     }
 
 </style>
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
-{{--<link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
-{{-- https://www.youtube.com/watch?v=RBeqKYsw7CQ  link template facture videos youtube --}}
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlFactures.css')}}">
 <div class="container-fluid mb-5">
@@ -27,266 +26,278 @@
         {{Session::get('error')}}
     </div>
     @endif
-    <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="container-fluid">
-            <section class="section1 mb-4">
-                <div class="row">
-                    <div class="col-6">
-                        <h2>Nouvelle facture</h2>
+
+    <div class="m-4">
+        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            {{-- <li></li> --}}
+            <li class="nav-item">
+                <a href="{{route('liste_facture')}}" class="nav-link">
+                    Retour à la liste des factures
+                </a>
+            </li>
+        </ul>
+
+        <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="container-fluid">
+                <section class="section1 mb-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h2>Nouvelle facture</h2>
+                        </div>
+                        <div class="col-6 text-end">
+                            <input type="submit" class="btn btn_submit " id="enregristrer_facture" value="Enregistrer et continuer">
+                        </div>
                     </div>
-                    <div class="col-6 text-end">
-                        <input type="submit" class="btn btn_submit " id="enregristrer_facture" value="Enregistrer et continuer">
-                    </div>
-                </div>
-            </section>
-            <section class="section2 mb-4">
-                <div class="row header_facture">
-                    <h6 class="mb-0 changer_carret d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
-                        Adresse et coordonnées de l'entreprise, titre, résumé et logo
-                        <i class="bx bx-caret-down carret-icon text-end"></i>
-                    </h6>
-                    <div class="col-12 collapse" id="titre">
-                        <div class="row p-2">
-                            <div class="col-4">
-                                <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
-                            </div>
-                            <div class="col-8 d-flex flex-column" align="right">
-                                <div>
-                                    <select class="text-end titre_facture form-select  mb-2 m-0 " id="type_facture" name="type_facture" aria-label="Default select example" required>
-                                        <option onselected hidden value="0"> Type de Facture...</option>
-                                        @foreach ($type_facture as $tp_fact)
-                                        <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
-                                        @endforeach
-                                    </select>
+                </section>
+                <section class="section2 mb-4">
+                    <div class="row header_facture">
+                        <h6 class="mb-0 changer_carret d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
+                            Adresse et coordonnées de l'entreprise, titre, résumé et logo
+                            <i class="bx bx-caret-down carret-icon text-end"></i>
+                        </h6>
+                        <div class="col-12 collapse" id="titre">
+                            <div class="row p-2">
+                                <div class="col-4">
+                                    <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
                                 </div>
-                                <div>
-                                    <select class="text-end titre_facture form-select  mb-2 m-0 " id="id_mode_financement" name="id_mode_financement" aria-label="Default select example">
-                                        <option onselected hidden value="0"> Mode de payement...</option>
-                                        @foreach ($mode_payement as $mod)
-                                        <option value="{{$mod->id}}">{{$mod->description}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-8 d-flex flex-column" align="right">
+                                    <div>
+                                        <select class="text-end titre_facture form-select  mb-2 m-0 " id="type_facture" name="type_facture" aria-label="Default select example" required>
+                                            <option onselected hidden value="0"> Type de Facture...</option>
+                                            @foreach ($type_facture as $tp_fact)
+                                            <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="text-end titre_facture form-select  mb-2 m-0 " id="id_mode_financement" name="id_mode_financement" aria-label="Default select example">
+                                            <option onselected hidden value="0"> Mode de payement...</option>
+                                            @foreach ($mode_payement as $mod)
+                                            <option value="{{$mod->id}}">{{$mod->description}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    {{-- <input type="hidden" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture"> --}}
+                                    {{-- <br> --}}
+                                    <div class="info_cfp">
+                                        <p class="m-0 nom_cfp ">{{$cfp->nom}}</p>
+                                        <p class="m-0 adresse_cfp">{{$cfp->adresse_lot." ".$cfp->adresse_quartier}}</p>
+                                        <p class="m-0 adresse_cfp">{{$cfp->adresse_ville." ".$cfp->adresse_code_postal}}</p>
+                                        <p class="m-0 adresse_cfp">{{$cfp->adresse_region}}</p>
+                                    </div>
                                 </div>
-
-                                {{-- <input type="hidden" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture"> --}}
-                                {{-- <br> --}}
-                                <div class="info_cfp" >
-                                    <p class="m-0 nom_cfp ">{{$cfp->nom}}</p>
-                                    <p class="m-0 adresse_cfp">{{$cfp->adresse_lot." ".$cfp->adresse_quartier}}</p>
-                                    <p class="m-0 adresse_cfp">{{$cfp->adresse_ville." ".$cfp->adresse_code_postal}}</p>
-                                    <p class="m-0 adresse_cfp">{{$cfp->adresse_region}}</p>
-                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section class="section3">
-                <div class="row entreprise_facturer">
-                    <div class="col-6 p-4">
-                        <h6>Facturer à</h6>
-                        <div class="form-group">
-                            <select class="form-select selectP input_entreprise mb-2" id="entreprise_id" name="entreprise_id" aria-label="Default select example" required>
-                                <option onselected hidden> Ajouter l'entreprise à facturer...</option>
-                                @foreach ($entreprise as $tp)
-                                <option value="{{$tp->entreprise_id}}">{{$tp->nom_etp}}</option>
-                                @endforeach
-                            </select>
-                            <div class="details">
-                                <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
-                                <p class="m-0 " id="adresse_etp"></p>
-                                <p class="mt-3 m-0 " id="tel_etp"></p>
-                                <p class="m-0 " id="mail_etp"></p>
-                                <p class="m-0 " id="site_etp"></p>
-                                <p class="m-0 " id="info_légale_etp"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 p-4">
-                        <div class="row mb-2">
-                            <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" placeholder="N° facture" class="form-control input_simple" name="num_facture" id="num_facture" required>
-                                @error('num_facture')
-                                <p> <span style="color:#ff0000;"> {{$message}} </span></p>
-                                @enderror
-                            </div>
-                            <p> <span style="color:#ff0000;" id="num_facture_err"></span></p>
-
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
-                                @error('reference_bc')
-                                <p> <span style="color:#ff0000;"> {{$message}} </span></p>
-                                @enderror
-                            </div>
-                            <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
-
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Date de facturation</p> <input type="date" class="form-control input_simple" name="invoice_date" id="invoice_date" required>
-                            </div>
-                        </div>
-                        <div class="row">
-
-
-                            <div class="col-12 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Date de règlement</p> <input type="date" class="form-control input_simple" name="due_date" id="due_date" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="section4 mb-4">
-                <div class="row services_factures">
-                    <div class="col-12 pb-4 element">
-                        <div class="row titres_services">
-                            <div class="col-2">
-                                <h6 class="m-0">Projet</h6>
-                            </div>
-                            <div class="col-3">
-                                <h6 class="m-0">Session</h6>
-                            </div>
-                            <div class="col-1">
-                                <h6 class="m-0">Quantité</h6>
-                            </div>
-                            <div class="col-3">
-                                <h6 class="m-0">Unité</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="m-0">Prix unitaire</h6>
-                            </div>
-                            <div class="col-1 text-end">
-                                <h6 class="m-0"></h6>
-                            </div>
-                        </div>
-                        <div class="row my-3">
-                            <div class="col-2">
-                                <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
+                </section>
+                <section class="section3">
+                    <div class="row entreprise_facturer">
+                        <div class="col-6 p-4">
+                            <h6>Facturer à</h6>
+                            <div class="form-group">
+                                <select class="form-select selectP input_entreprise mb-2" id="entreprise_id" name="entreprise_id" aria-label="Default select example" required>
+                                    <option onselected hidden> Ajouter l'entreprise à facturer...</option>
+                                    @foreach ($entreprise as $tp)
+                                    <option value="{{$tp->entreprise_id}}">{{$tp->nom_etp}}</option>
+                                    @endforeach
                                 </select>
-                                <span style="color:#ff0000;" id="projet_id_err">Aucun projet a été
-                                    détecter</span>
-                            </div>
-                            <div class="col-3">
-                                <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
-                                </select>
-                                <span style="color:#ff0000;" id="session_id_err">Aucun session a été
-                                    détecter</span>
-                            </div>
-                            <div class="col-1">
-                                <input type="number" name="qte[]" id="qte[]" min="1" value="1" class="form-control qte input_quantite" required>
-                            </div>
-                            <div class="col-3">
-                                <input type="text" name="description[]" id="description[]" placeholder=" ex: personne ou groupe ou etc" class="form-control qte input_quantite" required>
-                            </div>
-                            <div class="col-2">
-                                <input type="number" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
-                            </div>
-                            <div class="col-1 text-end pt-2">
+                                <div class="details">
+                                    <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
+                                    <p class="m-0 " id="adresse_etp"></p>
+                                    <p class="mt-3 m-0 " id="tel_etp"></p>
+                                    <p class="m-0 " id="mail_etp"></p>
+                                    <p class="m-0 " id="site_etp"></p>
+                                    <p class="m-0 " id="info_légale_etp"></p>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-6 p-4">
+                            <div class="row mb-2">
+                                <div class="col-12 d-flex flex-row justify-content-end">
+                                    <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" placeholder="N° facture" class="form-control input_simple" name="num_facture" id="num_facture" required>
+                                    @error('num_facture')
+                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    @enderror
+                                </div>
+                                <p> <span style="color:#ff0000;" id="num_facture_err"></span></p>
+
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-12 d-flex flex-row justify-content-end">
+                                    <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" class="form-control input_simple reference_bc" name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
+                                    @error('reference_bc')
+                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    @enderror
+                                </div>
+                                <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
+
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-12 d-flex flex-row justify-content-end">
+                                    <p class="m-0 pt-3 text-end me-3">Date de facturation</p> <input type="date" class="form-control input_simple" name="invoice_date" id="invoice_date" required>
+                                </div>
+                            </div>
+                            <div class="row">
+
+
+                                <div class="col-12 d-flex flex-row justify-content-end">
+                                    <p class="m-0 pt-3 text-end me-3">Date de règlement</p> <input type="date" class="form-control input_simple" name="due_date" id="due_date" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section4 mb-4">
+                    <div class="row services_factures">
+                        <div class="col-12 pb-4 element">
+                            <div class="row titres_services">
+                                <div class="col-2">
+                                    <h6 class="m-0">Projet</h6>
+                                </div>
+                                <div class="col-3">
+                                    <h6 class="m-0">Session</h6>
+                                </div>
+                                <div class="col-1">
+                                    <h6 class="m-0">Quantité</h6>
+                                </div>
+                                <div class="col-3">
+                                    <h6 class="m-0">Unité</h6>
+                                </div>
+                                <div class="col-2">
+                                    <h6 class="m-0">Prix unitaire</h6>
+                                </div>
+                                <div class="col-1 text-end">
+                                    <h6 class="m-0"></h6>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-2">
+                                    <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
+                                    </select>
+                                    <span style="color:#ff0000;" id="projet_id_err">Aucun projet a été
+                                        détecter</span>
+                                </div>
+                                <div class="col-3">
+                                    <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
+                                    </select>
+                                    <span style="color:#ff0000;" id="session_id_err">Aucun session a été
+                                        détecter</span>
+                                </div>
+                                <div class="col-1">
+                                    <input type="number" name="qte[]" id="qte[]" min="1" value="1" class="form-control qte input_quantite" required>
+                                </div>
+                                <div class="col-3">
+                                    <input type="text" name="description[]" id="description[]" placeholder=" ex: personne ou groupe ou etc" class="form-control qte input_quantite" required>
+                                </div>
+                                <div class="col-2">
+                                    <input type="number" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
+                                </div>
+                                <div class="col-1 text-end pt-2">
+                                </div>
+                            </div>
 
 
 
-                        <div class="row">
+                            <div class="row">
 
-                            <div id="newRowMontant"></div>
+                                <div id="newRowMontant"></div>
 
-                            {{-- <div class="row mb-2">
+                                {{-- <div class="row mb-2">
                                 <div class="col-9 d-flex flex-row justify-content-end">
                                     <p class="m-0 pt-3 text-end me-3">Taxe</p>
                                     <select class="form-select selectP input_tax calcule_pour_tax" aria-label="Default select example" name="tax_id" id="tax_id">
                                         @foreach ($taxe as $t)
                                         <option id="test_{{$t->id}}" value="{{$t->id}}" data-id={{$t->pourcent}}>{{$t->description}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-3 text-end">
-                                </div>
-                            </div> --}}
-                        </div>
-
-
-
-
-                    </div>
-
-                    <div class="row nouveau_service g-0">
-                        <div class="col-12 py-2 text-center">
-
-                            <span><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></span>
-                        </div>
-                    </div>
-                    <div class="col-12 pb-4 element">
-                        <div class="row titres_services">
-                            <div class="col-4">
-                                <h6 class="m-0">Frais annexes</h6>
-                            </div>
-                            <div class="col-4">
-                                <h6 class="m-0">Descriptions</h6>
-                            </div>
-                            <div class="col-1">
-                                <h6 class="m-0">Quantité</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="m-0">Prix unitaire</h6>
-                            </div>
-                            <div class="col-1 text-end">
-                                <h6 class="m-0"></h6>
-                            </div>
-                        </div>
-
-                        <div id="newRow"></div>
-
-
-
-                    </div>
-                    <div class="row nouveau_service g-0">
-                        <div class="col-12 py-2 text-center">
-                            <span> <a href="#" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </span>
-                        </div>
-                    </div>
-
-                    <div class="row mb-2 g-0 p-2">
-                        <div class="col-9 d-flex flex-row justify-content-end">
-                            <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
-                            <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label="Default select example">
-                                @foreach ($type_remise as $re)
-                                <option value="{{$re->id}}" selected>{{$re->description}}</option>
                                 @endforeach
-
-                            </select>
-                        </div>
-                        <div class="col-3 text-end">
-                        </div>
+                                </select>
+                            </div>
+                            <div class="col-3 text-end">
+                            </div>
+                        </div> --}}
                     </div>
 
-                    <hr>
-                    <div class="row mb-2 g-0">
-                        <div class="col-12 ">
-                            <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>
-                            <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'Vos commentaires ou descriptions'"></textarea>
-                        </div>
+
+
+
+            </div>
+
+            <div class="row nouveau_service g-0">
+                <div class="col-12 py-2 text-center">
+
+                    <span><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></span>
+                </div>
+            </div>
+            <div class="col-12 pb-4 element">
+                <div class="row titres_services">
+                    <div class="col-4">
+                        <h6 class="m-0">Frais annexes</h6>
+                    </div>
+                    <div class="col-4">
+                        <h6 class="m-0">Descriptions</h6>
+                    </div>
+                    <div class="col-1">
+                        <h6 class="m-0">Quantité</h6>
+                    </div>
+                    <div class="col-2">
+                        <h6 class="m-0">Prix unitaire</h6>
+                    </div>
+                    <div class="col-1 text-end">
+                        <h6 class="m-0"></h6>
                     </div>
                 </div>
-            </section>
-            <section class="section5 mb-4">
-                <div class="row header_facture">
-                    <h6 class="mb-0 changer_carret2 d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
-                        Informations légales
-                        <i class="bx bx-caret-down carret-icon text-end"></i>
-                    </h6>
-                    <div class="col-12 collapse" id="titre">
-                        <div class="row p-2 justify-content-center text-center">
-                            <p>NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
-                        </div>
-                    </div>
+
+                <div id="newRow"></div>
+
+
+
+            </div>
+            <div class="row nouveau_service g-0">
+                <div class="col-12 py-2 text-center">
+                    <span> <a href="#" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </span>
                 </div>
-            </section>
+            </div>
+
+            <div class="row mb-2 g-0 p-2">
+                <div class="col-9 d-flex flex-row justify-content-end">
+                    <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
+                    <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label="Default select example">
+                        @foreach ($type_remise as $re)
+                        <option value="{{$re->id}}" selected>{{$re->description}}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+                <div class="col-3 text-end">
+                </div>
+            </div>
+
+            <hr>
+            <div class="row mb-2 g-0">
+                <div class="col-12 ">
+                    <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>
+                    <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'Vos commentaires ou descriptions'"></textarea>
+                </div>
+            </div>
+    </div>
+    </section>
+    <section class="section5 mb-4">
+        <div class="row header_facture">
+            <h6 class="mb-0 changer_carret2 d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
+                Informations légales
+                <i class="bx bx-caret-down carret-icon text-end"></i>
+            </h6>
+            <div class="col-12 collapse" id="titre">
+                <div class="row p-2 justify-content-center text-center">
+                    <p>NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
+                </div>
+            </div>
         </div>
-    </form>
+    </section>
+</div>
+</form>
+</div>
 </div>
 {{-- <script src="{{asset('js/facture.js')}}"></script> --}}
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
@@ -424,7 +435,7 @@
                     } else {
                         document.getElementById("projet_id_err").innerHTML = "";
                         for (var $i = 0; $i < (userData.length); $i++) {
-                            $("#projet_id").append('<option value="' + userData[$i].projet_id + '">' + userData[$i].nom_projet + ' ('+ userData[$i].pourcent_facturer+'% facturé)</option>');
+                            $("#projet_id").append('<option value="' + userData[$i].projet_id + '">' + userData[$i].nom_projet + ' (' + userData[$i].pourcent_facturer + '% facturé)</option>');
                         }
                         prj_id = $("#projet_id").val();
 
