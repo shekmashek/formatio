@@ -931,7 +931,7 @@
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
         //On change la couleur de fond au hasard
-        $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
+            $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         })
 
         $(document).ready(function() {

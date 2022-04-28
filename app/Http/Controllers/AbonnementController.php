@@ -496,6 +496,9 @@ class AbonnementController extends Controller
                     $dtNow = Carbon::today()->toDateString();
                     $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($cfp_ab[0]->invoice_date)) . " + 31 days");
                     /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
+                    if($cfp_ab[0]->type_arret == ""){
+                        return back()->with('erreur','Vous devriez arrêter votre abonnement actuel avant de s\'abonner à une autre offre');
+                    }
                     if($dtNow < $un_mois_plus_tard){
                          return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
                     }
