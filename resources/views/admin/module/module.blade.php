@@ -859,28 +859,38 @@
                                     aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form action="">
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-6 me-1 justify-content-center">
+                                                    <select name="ref" id="ref" class="form-control mb-2">
+                                                        <option value="null" disable selected hidden>Référence</option>
+                                                        @foreach($mod_en_cours as $mod_prog)
+                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-6 justify-content-center">
+                                                    <select name="niveau" id="niveau" class="form-control mb-2">
+                                                        <option value="null" disable selected hidden>Niveau</option>
+                                                        @foreach($niveau as $niv)
+                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="form-row">
                                                 <div class="col justify-content-center">
-                                                    <div class="form-groupe">
-                                                        <select name="ref" id="ref" class="form-control mb-2">
-                                                            <option value="null" disable selected hidden>Référence</option>
-                                                            @foreach($mod_en_cours as $mod_prog)
-                                                            <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <select name="nom_mod" id="nom_mod" class="form-control mb-2">
-                                                            <option value="null" disable selected hidden>Nom de module</option>
-                                                            @foreach($mod_en_cours as $mod_prog)
-                                                            <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <select name="thematique" id="thematique" class="form-control mb-2">
-                                                            <option value="null" disable selected hidden>Thématique</option>
-                                                            @foreach($categorie as $categ)
-                                                            <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2">
+                                                        <option value="null" disable selected hidden>Nom de module</option>
+                                                        @foreach($mod_en_cours as $mod_prog)
+                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <select name="thematique" id="thematique" class="form-control mb-2">
+                                                        <option value="null" disable selected hidden>Thématique</option>
+                                                        @foreach($categorie as $categ)
+                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-row d-flex flex-row">
@@ -904,37 +914,42 @@
                                                 </div>
                                             </div>
                                             <div class="form-row d-flex flex-row">
-                                                <div class="col-6 justify-content-center me-1">
-                                                    <select name="niveau" id="niveau" class="form-control mb-2">
-                                                        <option value="null" disable selected hidden>Niveau</option>
-                                                        @foreach($niveau as $niv)
-                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                <div class="col">
+                                                    <label>Durée en Heure</label>
+                                                    <div class="d-flex flex-row">
+                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour.value=value" class="slide_range">
+                                                        <input type="text" id="rangeHour" class="prix_range" readonly/>
+                                                    </div>
                                                 </div>
-                                                <div class="col-3 justify-content-center me-1">
-                                                    <select name="heure" id="heure" class="form-control mb-2">
-                                                        <option value="null" disable selected hidden>Heure</option>
-                                                        @for($i = 0; $i <= 30; $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                                <div class="col-3 justify-content-center">
-                                                    <select name="jours" id="jours" class="form-control mb-2">
-                                                        <option value="null" disable selected hidden>Jours</option>
-                                                        @for($i = 0; $i <= 5; $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                    </select>
+                                                <div class="col">
+                                                    <label>Durée en Jours</label>
+                                                    <div class="d-flex flex-row">
+                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay.value=value" class="slide_range">
+                                                        <input type="text" id="rangeDay" class="prix_range" readonly/>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="form-row">
-                                                <div>
-                                                    <input type="range" id="cowbell" name="cowbell"
-                                                           min="0" max="100" value="90" step="10">
-                                                    <label for="cowbell">Cowbell</label>
-                                                  </div>
+                                            <p class="m-0 mb-1">Intervalle de prix par personne</p>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-8">
+                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangePrimary.value=value" class="slide_range w-100">
+                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangeSecondary.value=value" class="slide_range w-100">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="rangePrimary" class="prix_range" readonly/>
+                                                    <input type="text" id="rangeSecondary" class="prix_range" readonly/>
+                                                </div>
+                                            </div>
+                                            <p class="m-0 mb-1">Intervalle de prix par groupe</p>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-8">
+                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangePrimary1.value=value" class="slide_range w-100">
+                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangeSecondary2.value=value" class="slide_range w-100">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="rangePrimary1" class="prix_range" readonly/>
+                                                    <input type="text" id="rangeSecondary2" class="prix_range" readonly/>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -1012,6 +1027,6 @@
         let activeTab = localStorage.getItem('activeTab');
         if(activeTab){
             $('#myTab a[href="' + activeTab + '"]').tab('show');
-        }
+    }
 </script>
 @endsection

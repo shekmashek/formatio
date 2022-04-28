@@ -783,3 +783,20 @@ font-size: 0.850rem;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+.prix_range{
+    border: none;
+    background-color: transparent;
+    padding-left: 2rem;
+}
+.prix_range:focus{
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.slide_range{
+    background-color: #7635dc !important;
+}
+
+
