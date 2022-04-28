@@ -121,6 +121,7 @@ class FonctionGenerique extends Model
         $data =  DB::select($fonction->queryWhereParam($nomTab, $para, $opt, $val), $val);
         return $data;
     }
+
     public function findWhereParamOr($nomTab, $para = [], $opt = [], $val = [])
     {
         $fonction = new FonctionGenerique();
@@ -176,21 +177,22 @@ class FonctionGenerique extends Model
         return DB::select($query);
     }
 
-    public function findWherePagination($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage)
+    public function findWherePagination($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage, $col_order_by, $order)
     {
         $fonction = new FonctionGenerique();
         $query = $fonction->queryWherePagination($nomTab, $para, $val);
         if ($nbDebutPagination <= 0) {
             $nbDebutPagination = 0;
-        }
-        else {
+        } else {
             $nbDebutPagination = $nbDebutPagination - 1;
         }
+        $query = $query . " ORDER BY " . $col_order_by . "  " . $order;
         $query = $query . " LIMIT " . $nbPage . " OFFSET " . $nbDebutPagination;
-    //    dd($query);
+        //    dd($query);
         $data =  DB::select($query);
         return $data;
     }
+
 
     public function findAllQuery($query)
     {
@@ -327,4 +329,82 @@ class FonctionGenerique extends Model
     {
         DB::delete('delete from ' . $table . ' where ' . $colonne . ' = ?', [$id]);
     }
+
+    // find where avec odrer by
+    public function queryWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
+    {
+        if ($nbPag == null) {
+            $nbPag = 0;
+        }
+        $query = "SELECT * FROM " . $nomTab . " WHERE ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "" . $opt[$i] . " ? ";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            $query .= "  ORDER BY ";
+
+            for ($j1 = 0; $j1 < count($tabOrderBy); $j1++) {
+                $query .= " " . $tabOrderBy[$j1];
+                if ($j1 + 1 < count($tabOrderBy)) {
+                    $query .= " , ";
+                }
+            }
+            $query .= " " . $order . "  limit " . $nb_limit . " offset " . $nbPag;
+            return $query;
+        }
+    }
+
+    public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
+    {
+        $data =  DB::select($this->queryWhereTrieOrderBy($nomTab, $para, $opt, $val, $tabOrderBy, $order, $nbPag, $nb_limit), $val);
+        return $data;
+    }
+
+    public function nb_liste_pagination($totaleDataList, $nb_debut_pag)
+    {
+        $nb_limit = 5;
+        if ($totaleDataList != null) {
+            $totale_pagination = $totaleDataList->totale_pagination;
+        } else {
+            $totale_pagination = 0;
+        }
+        $debut_aff = 0;
+        $fin_aff = 1;
+
+        if ($totale_pagination == 1) {
+            $nb_debut_pag = 1;
+            $fin_aff = 1;
+        }
+        if ($nb_debut_pag <= 0 || $nb_debut_pag == null) {
+            $nb_debut_pag = 1;
+        }
+
+        if ($nb_debut_pag == 1) { // 1
+            $debut_pagination = 0; //
+            $debut_aff = 1;
+            $fin_aff = $debut_pagination + $nb_limit;
+        }
+        if ($nb_debut_pag > 1 && $nb_debut_pag < $totale_pagination) {
+            $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
+            $fin_aff = $nb_debut_pag + $nb_limit;
+
+            $debut_aff = $nb_debut_pag;
+        }
+        if ($nb_debut_pag  == $totale_pagination) {
+            $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
+            $fin_aff = ($nb_debut_pag - 1) + $nb_limit;
+            $debut_aff = $nb_debut_pag;
+        }
+        $data["nb_limit"] = $nb_limit;
+        $data["debut_aff"] = $debut_aff;
+        $data["fin_aff"] = $fin_aff;
+        $data["totale_pagination"] = $totale_pagination;
+        return $data;
+    }
+
 }

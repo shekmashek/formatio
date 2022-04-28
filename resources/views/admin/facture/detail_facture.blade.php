@@ -10,44 +10,13 @@
 
 <div id="page-wrapper">
     <div class="container-fluid">
-        {{-- <div class="row">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                            <li class="nav-item btn_next">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
-        Liste des Factures</a>
-        </li>
-        @canany(['isCFP','isCFPrincipale'])
-        <li class="nav-item btn_next">
-            <a class="nav-link  {{ Route::currentRouteNamed('facture') ? 'active' : '' }}" href="{{route('facture')}}">
-                Nouveau Facture</a>
-        </li>
-        <li class="nav-item btn_next">
-            <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$montant_totale->num_facture)}}">
-                PDF</a>
-        </li>
-        @endcanany
-        @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
-        <li class="nav-item btn_next">
-            <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
-                PDF</a>
-        </li>
-        @endcanany
-        </ul>
-    </div>
-</div>
-</nav> --}}
 </div>
 
 <div class="m-4">
     <section class="section1 mb-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <div class="btn_racourcis">
+                <div class="">
                     <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
                         Retour à la liste des factures</a></div>
             </li>

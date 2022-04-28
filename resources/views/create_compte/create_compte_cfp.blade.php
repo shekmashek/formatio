@@ -119,14 +119,10 @@
                                 {{ $errors->first('logo_cfp') }}
                             </div>
                             @endif
-                            <p id="error_logo_cfp" style="color:#ff0000;"></p>
+                            <p id="error_logo_cfp" style="color:#ff0000;">les extension de type *.jpg, *.png et *.jpeg seulement sont autorisé</p>
 
                         </div>
-                        {{-- <div class="form-group">
-                            <input type="text" name="web_cfp" class="form-control input_inscription" id="web_cfp" />
-                            <label class="ml-3 form-control-placeholder" for="web_cfp">Web</label>
-                        </div> --}}
-                            <input type="button" name="next" class="next action-button  suivant_of_1 " value="Suivant" />
+                            <input type="button" name="next" class="next btn action-button suivant_of_1"  id="suivant_of_1"  value="Suivant" />
                             {{-- <input type="button" name="next" class="next action-button " value="Suivant" /> --}}
 
 
@@ -168,17 +164,6 @@
                             @enderror
                             <span style="color:#ff0000;" id="cin_resp_cfp_err"></span>
                         </div>
-                        {{-- <div class="form-group">
-                            <input type="text" required name="fonction_resp_cfp" class="form-control input_inscription" id="fonction_resp_cfp" />
-                            <label for="fonction_resp_cfp" class="form-control-placeholder" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                            @error('fonction_resp_cfp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="fonction_resp_cfp_err"></span>
-
-                        </div> --}}
                         <div class="form-group">
                             <input type="email" required name="email_resp_cfp" class="form-control input_inscription" id="email_resp_cfp" />
                             <label for="email_resp_cfp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
@@ -187,21 +172,12 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
-                            <span style="color:#ff0000;" id="email_resp_cfp_err"></span>
+                            <span style="color:#ff0000;" id="email_resp_cfp_err"> veuillez entrer votre mail</span>
                         </div>
-                        {{-- <div class="form-group">
-                            <input type="text" max=10 required name="tel_resp_cfp" class="form-control input_inscription" id="tel_resp_cfp" />
-                            <label for="tel_resp_cfp" class="form-control-placeholder" align="left">Téléphone responsable<strong style="color:#ff0000;">*</strong></label>
-                            @error('tel_resp_cfp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="tel_resp_cfp_err"></span>
-                        </div> --}}
+
                         <div class="row">
                             <div class="col-sm-12">
-                                <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
+                                <input name="value_confident" id="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
                                 <label class="form-check-label m-0" for="flexCheckDefault" align="left">
                                     <a href="{{route('condition_generale_de_vente')}}" target="_blank" class="nav-item" style="font-size: 14px">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
                                 </label>
@@ -235,7 +211,7 @@
 
 
                                 <input type="button" name="previous" class="previous action-button" value="Précedent" />
-                                <button type="submit" class=" action-button suivant_of_confirmer">Confirmer</button>
+                                <button type="submit" class=" action-button  btn  suivant_of_confirmer" id="suivant_of_confirmer">Confirmer</button>
                                 {{-- <button type="submit" class=" action-button">Confirmer</button> --}}
 
 

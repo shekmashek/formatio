@@ -80,7 +80,6 @@
                 <li class="active" id="etape1"></li>
                 <li id="etape2"></li>
                 <li id="etape3"></li>
-                {{-- <li id="confirm"></li> --}}
             </ul>
 
             <div id="formulaire">
@@ -96,7 +95,6 @@
                             </div>
                             @enderror
                             <span style="color:#ff0000;" id="name_etp_err"></span>
-
                         </div>
 
                         <div class="form-group">
@@ -118,7 +116,7 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
-                            <p id="error_logo_etp" style="color:#ff0000;"></p>
+                            <p id="error_logo_etp" style="color:#ff0000;">les extension de type *.jpg, *.png et *.jpeg seulement sont autorisé</p>
 
                         </div>
                         <div class="row">
@@ -135,11 +133,7 @@
 
                         </div>
 
-                        {{-- <div class="row" align="center"> --}}
-                        <input type="button" name="next" class="next action-button  suivant_etp_1 " value="Suivant" />
-                        {{-- <input type="button" name="next" class="next action-button " value="Suivant" /> --}}
-                        {{--  --}}
-                        {{-- </div> --}}
+                        <input type="button" name="next" class="next btn action-button  suivant_etp_1 " id="suivant_etp_1" value="Suivant" />
                 </fieldset>
 
 
@@ -205,7 +199,7 @@
                                 <span style="color:#ff0000;"> {{$message}} </span>
                             </div>
                             @enderror
-                            <span style="color:#ff0000;" id="email_resp_etp_err"></span>
+                            <span style="color:#ff0000;" id="email_resp_etp_err"> veuillez entrer votre mail</span>
 
                         </div>
 
@@ -243,18 +237,16 @@
                         </div>
 
 
+                        <input type="button" name="previous" class="previous action-button" value="Précedent" />
 
-        <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                        <button type="submit" class="btn action-button suivant_etp_confirmer" id="suivant_etp_confirmer">Confirmer</button>
 
-
-        <button type="submit" class=" action-button suivant_etp_confirmer">Confirmer</button>
-
-                                {{-- <button type="submit" class=" action-button">Confirmer</button> --}}
-                        </div>
-                </fieldset>
+                        {{-- <button type="submit" class=" action-button">Confirmer</button> --}}
+            </div>
+            </fieldset>
 
 
-    </div>
+        </div>
 
 
 
