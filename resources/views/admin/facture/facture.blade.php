@@ -890,13 +890,14 @@
 <div class="filtrer mt-3">
     <div class="row">
         <div class="col">
-            <p class="m-0">Filter</p>
+            <p class="m-0">Filtre</p>
         </div>
         <div class="col text-end">
             <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
         </div>
         <hr class="mt-2">
-        <div class="row mt-0">
+        <div class="row mt-0 navigation_module">
+            <hr>
             <p>
                 <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
             </p>
@@ -911,7 +912,7 @@
                     <button type="submit" class="btn_creer mt-2">Recherche</button>
                 </form>
             </div>
-
+            <hr>
             <p>
                 <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par numero de facture</a>
             </p>
@@ -923,7 +924,7 @@
                     <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
                 </form>
             </div>
-
+            <hr>
             <p>
                 <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" aria-controls="detail_par_solde">Recherche par intervale de solde</a>
             </p>
@@ -938,7 +939,7 @@
                     <button type="submit" class="btn_creer mt-2">Recherche</button>
                 </form>
             </div>
-
+            <hr>
             <p>
                 <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par Entreprise</a>
             </p>
@@ -947,7 +948,7 @@
                     @csrf
                     <label for="dte_debut" class="form-label" align="left">Entreprise<strong style="color:#ff0000;">*</strong></label>
                     <br>
-                    <select name="entiter_id" id="entiter_id">
+                    <select class="form-select" name="entiter_id" id="entiter_id">
                         @foreach ($entreprise as $etp)
                         <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
                         @endforeach
@@ -956,7 +957,7 @@
                     <button type="submit" class="btn_creer mt-2">Recherche</button>
                 </form>
             </div>
-
+            <hr>
 
         </div>
     </div>

@@ -3,12 +3,22 @@
 <h3 class="text-white ms-5">Modification facture</h3>
 @endsection
 @section('content')
-{{--<link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
-{{-- https://www.youtube.com/watch?v=RBeqKYsw7CQ  link template facture videos youtube --}}
+
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlFactures.css')}}">
 <div class="container-fluid mb-5 mt-5">
 
+    <div class="m-4">
+        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            {{-- <li></li> --}}
+            <li class="nav-item">
+                <a href="{{route('liste_facture')}}" class="nav-link">
+                    Retour à la liste des factures
+                </a>
+            </li>
+        </ul>
 
         <form action="{{route('modifier_facture',[$montant_totale->num_facture,$montant_totale->entreprise_id])}}" id="msform_facture" method="POST" enctype="multipart/form-data">
             @csrf
@@ -284,6 +294,7 @@
                 </div>
             </div>
     </div>
+</div>
     </section>
     <section class="section5 mb-4">
         <div class="row header_facture">

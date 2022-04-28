@@ -210,7 +210,7 @@
 </style>
 
 <div class="container-fluid">
-    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>filtrer</a>
+    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
         @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
@@ -471,7 +471,7 @@
             <div class="filtrer mt-3">
                 <div class="row">
                     <div class="col">
-                        <p class="m-0">Filter</p>
+                        <p class="m-0">Filtre</p>
                     </div>
                     <div class="col text-end">
                         <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
@@ -492,6 +492,7 @@
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>
                         </div>
+                        <hr>
                         <p>
                             <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
                         </p>
@@ -503,6 +504,7 @@
                                 <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
                             </form>
                         </div>
+                        <hr>
                         <p>
                             <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" aria-controls="detail_par_solde">Recherche par intervale de solde</a>
                         </p>
@@ -517,16 +519,16 @@
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>
                         </div>
-
+                        <hr>
                         <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par Entreprise</a>
+                            <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par organisme</a>
                         </p>
                         <div class="collapse multi-collapse" id="detail_par_etp">
                             <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
                                 @csrf
                                 <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
                                 <br>
-                                <select autocomplete="on">
+                                <select class="form-select" autocomplete="on">
                                     @foreach ($cfp as $cf)
                                     <option value="{{$cf->cfp_id}}">{{$cf->nom}}</option>
                                     @endforeach
@@ -535,6 +537,7 @@
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </form>
                         </div>
+                        <hr>
 
                     </div>
                 </div>
