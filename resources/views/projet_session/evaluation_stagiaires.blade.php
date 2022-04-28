@@ -20,7 +20,13 @@
                 <tbody>
                     @foreach ($stagiaire as $stg)
                         <tr>
-                            <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }}</td>
+                            <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">
+                                @if ($stg->photos == null)
+                                    <span class="me-2">{{ $stg->sans_photos }}</span>
+                                @else
+                                    <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
+                                @endif
+                            </td>
                             @for ($i = 0; $i < count($competences); $i++)
                                 <td class="text-center"><input class="p-0 m-0" style="height: 1.563rem; width: 9rem;" type="number" min="1" max="10" placeholder="notes" name="note[{{ $stg->stagiaire_id }}][{{ $competences[$i]->id }}]" required></td>
                             @endfor
@@ -51,7 +57,13 @@
                     <tbody>
                         @foreach ($stagiaire as $stg)
                             <tr>
-                                <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }}</td>
+                                <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">
+                                    @if ($stg->photos == null)
+                                        <span class="me-2">{{ $stg->sans_photos }}</span>
+                                    @else
+                                        <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
+                                    @endif
+                                </td>
                                 @for ($i = 0; $i < count($competences); $i++)
                                     @foreach ($evaluation_stg as $e_stg)
                                         @if ($e_stg->stagiaire_id == $stg->stagiaire_id && $e_stg->competence_id == $competences[$i]->id)

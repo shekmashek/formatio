@@ -265,12 +265,23 @@ class GroupeController extends Controller
         return back();
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $id = $request->id_get;
-        // $del = groupe::where('id', $id)->delete();
-        DB::delete('delete from groupes where id = ?', [$id]);
-        return back();
+        try{
+            DB::beginTransaction();
+            DB::delete('delete from details where groupe_id = ?',[$id]);
+            DB::delete('delete from participant_groupe where groupe_id = ?',[$id]);
+            DB::delete('delete from mes_documents where groupe_id = ?',[$id]);
+            DB::delete('delete from ressources where groupe_id = ?',[$id]);
+            DB::delete('delete from evaluation_stagiaires where groupe_id = ?',[$id]);
+            DB::delete('delete from groupe_entreprises where groupe_id = ?',[$id]);
+            DB::delete('delete from groupes where id = ?',[$id]);
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollBack();
+            return back()->with('groupe_error',$e->getMessage());
+        }
     }
 
     public function insert_session(Request $request)
@@ -331,19 +342,4 @@ class GroupeController extends Controller
         }
     }
 
-    public function supprimer_groupe($id){
-        try{
-            DB::beginTransaction();
-            DB::delete('delete from details where groupe_id = ?',[$id]);
-            DB::delete('delete from participant_groupe where groupe_id = ?',[$id]);
-            DB::delete('delete from mes_documents where groupe_id = ?',[$id]);
-            DB::delete('delete from ressources where groupe_id = ?',[$id]);
-            DB::delete('delete from evaluation_stagiaires where groupe_id = ?',[$id]);
-            DB::commit();
-            return back();
-        }catch(Exception $e){
-            DB::rollBack();
-            return back()->with('groupe_error',"Modification du statut de la session échouée!");
-        }
-    }
 }

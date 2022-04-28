@@ -385,7 +385,7 @@
                                             <td>{{ $d->h_debut }} h</td>
                                             <td>{{ $d->h_fin }} h</td>
                                             {{-- test commit --}}
-                                            <td>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}</td>
+                                            <td><img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}</td>
                                             @canany(['isCFP'])
                                                 <td>
                                                     <a href="" aria-current="page" data-bs-toggle="modal"

@@ -116,7 +116,7 @@ Route::get('liste_groupe','GroupeController@index')->name('liste_groupe');
 Route::get('nouveau_groupe/{type_formation}','GroupeController@create')->name('nouveau_groupe');
 Route::get('nouveau_groupe_inter/{type_formation}','GroupeController@createInter')->name('nouveau_groupe_inter');
 Route::get('edit_groupe','GroupeController@edit')->name('edit_groupe');
-Route::get('destroy_groupe','GroupeController@destroy')->name('destroy_groupe');
+Route::get('destroy_groupe/{id}','GroupeController@destroy')->name('destroy_groupe');
 Route::post('update_groupe/{idGroupe}','GroupeController@update')->name('update_groupe');
 Route::post('nouveau_session_inter','GroupeController@storeInter')->name('nouveau_session_inter');
 Route::get('session_inter/{id?}','GroupeController@sessionInter')->name('session_inter');

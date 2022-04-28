@@ -250,6 +250,7 @@
                                         @if ($prj->type_formation_id == 1)
                                             <th></th>
                                         @endif
+                                        <th></th>
                                     </thead>
                                     <tbody class="tbody_projet">
 
@@ -275,16 +276,10 @@
                                                         </td>
                                                         <td>{{ $pj->modalite }}</td>
                                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
-                                                        <td align="center">
-                                                            <div class="{{ $pj->class_status_groupe }} m-0">
-                                                                {{ $pj->item_status_groupe }}</div>
+                                                        <td align="center" style="min-width: 6rem;">
+                                                            <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
+                                                                {{ $pj->item_status_groupe }}</p>
                                                         </td>
-                                                        @can('isCFP')
-                                                            <td class="centrer_edit"><a href="#" data-bs-toggle="modal"
-                                                                    data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}"
-                                                                    data-backdrop="static">
-                                                                    Editer</a></td>
-                                                        @endcan
                                                         @if ($prj->type_formation_id == 1)
                                                             <td>
                                                                 <a style="background: none"
@@ -292,7 +287,39 @@
                                                                         class="btn rapport_finale">Rapport</button></a>
                                                             </td>
                                                         @endif
+                                                        @can('isCFP')
+                                                            <td class="centrer_edit"><a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}"
+                                                                    data-backdrop="static" class="bx bx-edit" style="font-size: 1.2rem;">
+                                                                    </a></td>
+                                                        @endcan
+                                                        
+                                                        <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td>
 
+                                                        {{-- debut supprimer session --}}
+                                                            <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
+                                                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header  d-flex justify-content-center"
+                                                                            style="background-color:rgb(224,182,187);">
+                                                                            <h6 class="modal-title">Avertissement !</h6>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <small>Vous êtes sur le point d'effacer une donnée, cette
+                                                                                action est irréversible. Continuer ?</small>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal"> Non </button>
+                                                                            <button type="button" class="btn btn-secondary"><a
+                                                                                    href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        {{-- fin supprimer session --}}
                                                         {{-- Debut modal edit session --}}
                                                         <div>
                                                             <div class="modal fade"

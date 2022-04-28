@@ -101,6 +101,7 @@ class Projet extends Model
             dom.id as id_domaine,
             dom.nom_domaine,
             mf.nom_formation,
+            f.photos,
             f.nom_formateur,
             f.prenom_formateur,
             f.mail_formateur,
