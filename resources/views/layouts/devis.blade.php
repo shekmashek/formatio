@@ -129,7 +129,7 @@
                     href="{{route('edit_devise',$list->id)}}"><i class='bx bxs-edit-alt'  style="color: green"></i></a>
                 
                 <a
-                    href="{{route('delete_devise',$list->id)}}"><i class='bx bx-trash' style="color: red"></i></a>
+                    href="{{route('delete_devise',$list->id)}}" onclick="return  confirm('voulez vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
                 </td>
             </tr>   
         </tbody> 
@@ -163,7 +163,7 @@
                     href="{{route('edit_taux_devise',$devise->taux_devise_id)}}"><i class='bx bxs-edit-alt'  style="color: green"></i></a>
                 
                 <a
-                    href="{{route('delete_taux',$devise->taux_devise_id)}}" onclick="confirm('voulez-vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
+                    href="{{route('delete_taux',$devise->taux_devise_id)}}" onclick="return  confirm('voulez vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
             </td>
         </tr>   
     </tbody> 
@@ -176,8 +176,6 @@
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
-
-
     // add row
     $(document).on('click', '#addRow', function() {
         $('#frais').empty();
@@ -186,9 +184,6 @@
             , type: 'get'
             , success: function(response) {
                 var userData = response;
-             
-                //    alert(JSON.stringify(userData));
-
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRow">';
                     html += '<div class="col-4">';

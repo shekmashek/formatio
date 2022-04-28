@@ -9,7 +9,7 @@ use App\Models\FonctionGenerique;
 
 class Devise extends Model
 {
-    //
+    
     protected $table="devises";
 
     public function queryWhereParamDernierDevis($nomTab,$val = [])
