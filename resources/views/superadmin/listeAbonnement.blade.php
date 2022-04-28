@@ -4,23 +4,27 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid">
-    <div class="m-4">
+    <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li class="nav-item">
-                <a href="#service" class="nav-link active" data-bs-toggle="tab">Historique des services</a>
+            <li class="nav-item active">
+                <a href="#service" class="nav-link active" data-toggle="tab">Historique des services</a>
             </li>
             <li class="nav-item">
-                <a href="#abonnement" class="nav-link " data-bs-toggle="tab">Abonnements</a>
+                <a href="#abonnement" class="nav-link " data-toggle="tab">Abonnements</a>
             </li>
             <li class="nav-item">
-                <a href="#facture" class="nav-link" data-bs-toggle="tab">Factures</a>
+                <a href="#facture" class="nav-link" data-toggle="tab">Factures</a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade " id="abonnement">
+            <div class="tab-pane fade show" id="abonnement">
                 @if (\Session::has('erreur'))
                     <div class="row w-50 text-center mx-auto">
                         <div class="alert alert-danger justify-content-center mt-5">
@@ -76,10 +80,10 @@
                                                 @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id and $abonnement_actuel[0]->activite == 1)
                                                 <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactivation immédiat de mon offre</a></div>
                                                 @else
-                                                    <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
+                                                    <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}">S'abonner</a></div>
                                                 @endif
                                             @else
-                                            <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">S'abonner</a></div>
+                                            <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}">S'abonner</a></div>
                                             @endif
                                         </div>
                                     </div>
@@ -90,7 +94,7 @@
 
                 </div><br><br>
             </div><br>
-            <div class="tab-pane fade" id="facture">
+            <div class="tab-pane fade show" id="facture">
                 <table class="table">
                     <thead>
                       <tr>
@@ -198,7 +202,16 @@
         </div>
     </div>
 </div>
-
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            let lien = ($(e.target).attr('href'));
+            localStorage.setItem('activeTab', lien);
+        });
+        let activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+</script>
 
 
 @endsection

@@ -212,6 +212,7 @@ class AbonnementController extends Controller
 
                 $test_activite = DB::select('select * from abonnements where  id = ?', [$dernier_facture[0]->abonnement_id]);
                 if( $test_activite[0]->activite == 1){
+
                     if($dernier_facture[0]->categorie_paiement_id == 1){
                         $mois_dernier = $dernier_facture[0]->invoice_date;
                         $dt = Carbon::today()->toDateString();
@@ -419,6 +420,7 @@ class AbonnementController extends Controller
             $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
 
             if($etp_ab!=null){
+
                 //on teste d'abord si le dernier abonnement est gratuit,
                 if($etp_ab[0]->nom_type == "Gratuit") {
                    // si l'utilisateur choisi encore l'offre gratuit, il n'a plus droit d'accéder une deuxieme fois à cette offre
@@ -434,10 +436,12 @@ class AbonnementController extends Controller
                 }
                 //si le dernnier abonnement n'est pas gratuit
                 if($etp_ab[0]->nom_type != "Gratuit"){
-
                     $dtNow = Carbon::today()->toDateString();
                     $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($etp_ab[0]->invoice_date)) . " + 31 days");
                     //on verifie le type d'arret du dernier abonnement
+                    if($etp_ab[0]->type_arret == ""){
+                        return back()->with('erreur','Vous devriez arrêter votre abonnement actuel avant de s\'abonner à une autre offre');
+                    }
                     if($etp_ab[0]->type_arret == 'fin abonnement'){
                          /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
                         if($dtNow < $un_mois_plus_tard){
@@ -600,20 +604,23 @@ class AbonnementController extends Controller
         $fonct = new FonctionGenerique();
         $id = request()->id;
         $type_abonnement_role_id = abonnement::where('id', $id)->value('type_abonnement_role_id');
-        dd( $type_abonnement_role_id );
-        if ($type_abonnement_role_id!=null) {
 
+        if ($type_abonnement_role_id!=null) {
             $type = type_abonnement_role::with('type_abonnement', 'type_abonne')->where('id', $type_abonnement_role_id)->get();
             $ctg_id = abonnement::where('type_abonnement_role_id', $type_abonnement_role_id)->value('categorie_paiement_id');
 
             $tarif =tarif_categorie::with('categorie_paiement')->where('type_abonnement_role_id', $type_abonnement_role_id)->where('categorie_paiement_id', $ctg_id)->get();
 
             $nbAbonnement = type_abonnement_role::withCount('abonnement')->where('id', $type_abonnement_role_id)->get();
-            // $liste =abonnement::with('type_abonnement_role', 'entreprise', 'categorie_paiement')->where('type_abonnement_role_id', $type_abonnement_role_id)->get();
-            $liste = $fonct->findWhereMulitOne('v_abonnement_facture_entreprise',['type_abonnement_role_id'],[$type_abonnement_role_id]);
+            // $liste = abonnement::with('type_abonnement_role', 'entreprise', 'categorie_paiement')->where('type_abonnement_role_id', $type_abonnement_role_id)->get();
+            $liste = $fonct->findWhere('v_abonnement_facture_entreprise',['type_abonnement_role_id'],[$type_abonnement_role_id]);
+            $nom_entreprise = [];
+            for ($i=0; $i < count($liste); $i++) {
+                array_push($nom_entreprise ,$fonct->findWhere('entreprises',['id'],[$liste[$i]->entreprise_id]));
+            }
 
             $cfpListe = null;
-            return view('superadmin.activation-abonnement', compact('cfpListe', 'tarif', 'id', 'type', 'nbAbonnement', 'liste'));
+            return view('superadmin.activation-abonnement', compact('cfpListe', 'tarif', 'id', 'type', 'nbAbonnement', 'liste','nom_entreprise'));
         }
 
         if ($type_abonnement_role_id == null) {
@@ -717,6 +724,7 @@ class AbonnementController extends Controller
                 $test_assujetti = $tva = $net_ttc ='';
             }
             $dates_abonnement = $fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
+
             return view('superadmin.detail_facture',compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
     }
