@@ -47,18 +47,17 @@
                 <div class="card card_abonnement mx-1 align-items-center text-center">
                     <b>Abonnement</b>
                     @if($liste!=null)
-                        @foreach ($liste as $lst)
-                            <p><h5 class="th_color">{{$lst->categorie_paiement->categorie}} </h5></p>
-                            <input type="text" value = "{{$lst->categorie_paiement->categorie}}" hidden id="abonnementCtg">
-                        @break
-                        @endforeach
+                        {{-- @foreach ($liste as $listes) --}}
+                            <p><h5 class="th_color">{{$liste[0]->categorie}} </h5></p>
+                            <input type="text" value = "{{$liste[0]->categorie}}" hidden id="abonnementCtg">
+                        {{-- @endforeach --}}
                     @endif
-                    @if($cfpListe!=null)
+                    {{-- @if($cfpListe!=null)
                         @foreach ($cfpListe as $lst)
-                            <p><h5 class="th_color">{{$lst->categorie_paiement->categorie}} </h5></p>
-                            <input type="text" value = "{{$lst->categorie_paiement->categorie}}" hidden id="abonnementCtg">
+                            <p><h5 class="th_color">{{$lst->categorie}} </h5></p>
+                            <input type="text" value = "{{$lst->categorie}}" hidden id="abonnementCtg">
                         @endforeach
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="card card_abonnement mx-1 align-items-center text-center">
                     <b>Tarif</b>
@@ -87,27 +86,29 @@
                     </thead>
                     <tbody>
                         @if($liste!=null)
-                            @foreach ($liste as $listes)
-                                <tr>
-                                    <td class="th_color"> {{$listes->entreprise->nom_etp}} </td>
-                                    <td class="th_color">  {{$listes->date_demande}} </td>
-                                    <td class="th_color"> <span id = "debut_{{$listes->id}}" >{{$listes->date_debut}}</span> </td>
-                                    <td class="th_color"><span id = "fin_{{$listes->id}}" > {{$listes->date_fin}} </span> </td>
-                                    @if($listes->status == "En attente")
-                                        <td> <label class="label_orange" id = "label_statut_{{$listes->id}}" > {{$listes->status}} </label> </td>
-                                    @elseif ($listes->status == "Activé")
-                                        <td> <label class="label_vert" id = "label_statut_{{$listes->id}}"> {{$listes->status}} </label> </td>
-                                    @else
-                                        <td> <label class="label_rouge" id = "label_statut_{{$listes->id}}"> {{$listes->status}} </label> </td>
-                                    @endif
-                                    <td>
-                                        <!-- Default switch -->
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input activer" data-id="{{$listes->id}}" type="checkbox" role="switch"/>
-                                            <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->id}}">Activer</label>
-                                        </div>
-                                    </td>
-                                </tr>
+                            @php $i = 0; @endphp
+                            @foreach($liste as $listes)
+                                    <tr>
+                                        <td class="th_color"> {{$nom_entreprise[$i][0]->nom_etp}} </td>
+                                        <td class="th_color">  {{$listes->date_demande}} </td>
+                                        <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
+                                        <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
+                                        @if($listes->status == "En attente")
+                                            <td> <label class="label_orange" id = "label_statut_{{$listes->abonnement_id}}" > {{$listes->status}} </label> </td>
+                                        @elseif ($listes->status == "Activé")
+                                            <td> <label class="label_vert" id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
+                                        @else
+                                            <td> <label class="label_rouge" id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
+                                        @endif
+                                        <td>
+                                            <!-- Default switch -->
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input activer" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
+                                                <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->abonnement_id}}">Activer</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @php $i+=1; @endphp
                             @endforeach
                         @else
                             @foreach ($cfpListe as $listes)

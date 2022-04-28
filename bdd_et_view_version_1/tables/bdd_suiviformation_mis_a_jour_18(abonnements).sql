@@ -68,3 +68,8 @@ ALTER TABLE abonnement_cfps
 ALTER TABLE abonnements
     add column activite boolean not null default true;
 
+ALTER TABLE abonnements
+  add column type_arret varchar(50) COLLATE utf8mb4_unicode_ci;
+
+ALTER TABLE abonnement_cfps
+  add column type_arret varchar(50) COLLATE utf8mb4_unicode_ci;
