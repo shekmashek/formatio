@@ -39,6 +39,7 @@ class FactureController extends Controller
     {
         $user_id = Auth::user()->id;
 
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
@@ -53,13 +54,13 @@ class FactureController extends Controller
             $type_facture = $this->fonct->findAll("type_facture");
             $mode_payement = $this->fonct->findAll("mode_financements");
             $type_remise = $this->fonct->findAll("type_remise");
-            return view('admin.facture.nouveau_facture', compact('type_remise', 'cfp', 'project', 'entreprise', 'taxe', 'mode_payement', 'type_facture'));
+            return view('admin.facture.nouveau_facture', compact('devise','type_remise', 'cfp', 'project', 'entreprise', 'taxe', 'mode_payement', 'type_facture'));
         }
     }
 
     public function listeFacture($nbPagination = null)
     {
-
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $user_id = Auth::user()->id;
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
         $pagination =  $this->fact->nb_liste_fact($nbPagination, ["cfp_id"], [$cfp_id]);
@@ -84,14 +85,14 @@ class FactureController extends Controller
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
-            return view('admin.facture.facture', compact('entreprise', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view('admin.facture.facture', compact('devise','entreprise', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
         }
     }
 
 
     public function listeFacture_referent($nbPagination = null)
     {
-
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $user_id = Auth::user()->id;
         $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
         $cfp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
@@ -112,7 +113,7 @@ class FactureController extends Controller
             $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "entreprise_id"], ["terminer", $entreprise_id], 0, 10, "invoice_date", "DESC");
             $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], 0, 10, "invoice_date", "DESC");
         }
-        return view('admin.facture.facture_etp', compact('cfp', 'pagination', 'facture_actif', 'facture_payer'));
+        return view('admin.facture.facture_etp', compact('devise','cfp', 'pagination', 'facture_actif', 'facture_payer'));
     }
 
     // ================== Rehcerche Par critère ==================
@@ -120,10 +121,10 @@ class FactureController extends Controller
 
     public function search_par_intervale_solde(Request $req, $nbPagination = null, $solde_debut_pag = null, $solde_fin_pag = null)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $solde_debut = $req->solde_debut;
         $solde_fin = $req->solde_fin;
         $mode_payement = DB::select('select * from mode_financements');
-        // dd($nbPagination);
         if ($solde_debut_pag != null || $solde_fin_pag != null) {
             $solde_debut = $solde_debut_pag;
             $solde_fin = $solde_fin_pag;
@@ -143,7 +144,7 @@ class FactureController extends Controller
             $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-            return view('admin.facture.facture', compact('entreprise', 'solde_debut', 'solde_fin', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view('admin.facture.facture', compact('devise','entreprise', 'solde_debut', 'solde_fin', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
@@ -155,12 +156,13 @@ class FactureController extends Controller
             $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
 
-            return view('admin.facture.facture_etp', compact('cfp', 'solde_debut', 'solde_fin', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            return view('admin.facture.facture_etp', compact('devise','cfp', 'solde_debut', 'solde_fin', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
         }
     }
 
     public function search_par_date(Request $req, $nbPagination = null, $invoice_dte_pag = null, $due_dte_pag = null)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $invoice_dte = null;
         $due_dte = null;
@@ -184,7 +186,7 @@ class FactureController extends Controller
             $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
             $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["cfp_id"], [$cfp_id]);
 
-            return view('admin.facture.facture', compact('entreprise', 'invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view('admin.facture.facture', compact('devise','entreprise', 'invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
@@ -196,13 +198,14 @@ class FactureController extends Controller
             $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
             $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["entreprise_id", "activiter"], [$entreprise_id, True]);
 
-            return view('admin.facture.facture_etp', compact('cfp', 'invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            return view('admin.facture.facture_etp', compact('devise','cfp', 'invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
         }
     }
 
 
     public function search_par_entiter(Request $req, $nbPagination = null, $entiter_id_pag = null)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $entiter_id = null;
 
@@ -222,7 +225,7 @@ class FactureController extends Controller
             $facture_payer =  $this->fact->search_entiter_actif("v_facture_actif", "entreprise_id", $entiter_id, "facture_encour", "=", "terminer", "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
             $pagination =  $this->fact->nb_liste_fact_entiter($nbPagination, "entreprise_id", $entiter_id, ["cfp_id"], [$cfp_id]);
 
-            return view('admin.facture.facture', compact('entreprise', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view('admin.facture.facture', compact('devise','entreprise', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
         }
 
         if (Gate::allows('isReferent')) {
@@ -235,12 +238,13 @@ class FactureController extends Controller
             $facture_payer =  $this->fact->search_entiter_actif("v_facture_actif", "cfp_id", $entiter_id, "facture_encour", "=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
             $pagination =  $this->fact->nb_liste_fact_entiter($nbPagination, "cfp_id", $entiter_id, ["entreprise_id", "activiter"], [$entreprise_id, True]);
 
-            return view('admin.facture.facture_etp', compact('cfp', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            return view('admin.facture.facture_etp', compact('devise','cfp', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
         }
     }
 
     public function search_par_num_fact(Request $req, $nbPagination = null, $num_fact_pag = null)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $num_fact = null;
 
@@ -259,7 +263,7 @@ class FactureController extends Controller
             $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-            return view('admin.facture.facture', compact('entreprise', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view('admin.facture.facture', compact('devise','entreprise', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
         }
 
         if (Gate::allows('isReferent')) {
@@ -272,7 +276,7 @@ class FactureController extends Controller
             $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "facture_encour", "=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
             $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["entreprise_id", "activiter"], [$entreprise_id, True]);
 
-            return view('admin.facture.facture_etp', compact('cfp', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            return view('admin.facture.facture_etp', compact('devise','cfp', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
         }
     }
 
@@ -289,6 +293,7 @@ class FactureController extends Controller
 
     public function detail_facture($numero_fact)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
@@ -319,7 +324,7 @@ class FactureController extends Controller
             } else {
                 $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
             }
-            return view("admin.facture.detail_facture", compact('entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+            return view("admin.facture.detail_facture", compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
         }
     }
 
@@ -327,6 +332,7 @@ class FactureController extends Controller
     public function detail_facture_etp($cfp_id, $numero_fact)
     {
 
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
 
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -358,11 +364,12 @@ class FactureController extends Controller
         }
 
 
-        return view("admin.facture.detail_facture", compact('entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        return view("admin.facture.detail_facture", compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }
 
     public function generatePDF($numero_fact)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -401,7 +408,7 @@ class FactureController extends Controller
             "dpi" => 130
         ]);
 
-        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
 
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
@@ -419,7 +426,7 @@ class FactureController extends Controller
     public function generatePDF_etp($cfp_id, $numero_fact)
     {
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
-
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
 
         $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
@@ -454,7 +461,7 @@ class FactureController extends Controller
             "dpi" => 130
         ]);
 
-        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -525,7 +532,6 @@ class FactureController extends Controller
         $type_facture = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$request->type_facture]);
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
 
-        // $tax = $this->fonct->findWhereOne("taxes", "id", "=", $request->tax_id);
         $para = ["groupe_id", "entreprise_id"];
         $path = "";
         $status = null;
@@ -581,7 +587,6 @@ class FactureController extends Controller
                                 );
                             }
 
-
                             if ($request["frais_annexe_id"]) {
                                 for ($i = 0; $i < count($request["frais_annexe_id"]); $i += 1) {
                                     $id_frais = $request["frais_annexe_id"][$i];
@@ -603,10 +608,7 @@ class FactureController extends Controller
                                     }
                                 }
                             }
-
-
                             return redirect()->route("liste_facture");
-                            //            $this->fact->SaveBCetFA($path, $request);
                         } catch (Exception $e) {
                             DB::rollback();
                             echo $e->getMessage();
@@ -660,13 +662,11 @@ class FactureController extends Controller
     public function getFrais_annexe()
     {
         $data = $this->fonct->findAll("frais_annexes");
-        dd($data);
         return response()->json($data);
     }
 
     public function getGroupe_projet(Request $req)
     {
-        // $data = $this->fonct->findWhere("v_projet_facture", ["projet_id", "entreprise_id"], [$req->id, $req->entreprise_id]);
         $data = $this->fonct->findWhere("v_groupe_projet_entreprise_module", ["projet_id", "entreprise_id"], [$req->id, $req->entreprise_id]);
 
         return response()->json($data);
@@ -712,8 +712,6 @@ class FactureController extends Controller
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $data["entreprise"] = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$req->id]);
         $data["projet"] = $this->fonct->findWhere("v_projet_facture", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
-
-        //    $data["projet"] = $this->fonct->findWhere("v_projet_entreprise", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
         return response()->json($data);
     }
 
@@ -735,6 +733,7 @@ class FactureController extends Controller
 
     public function edit_facture($numero_fact)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
@@ -751,15 +750,13 @@ class FactureController extends Controller
             $type_facture = $this->fonct->findWhereParam("type_facture", ["id"], ["!="], [$session[0]->type_facture_id]);
             $mode_payement = $this->fonct->findWhereParam("mode_financements", ["id"], ["!="], [$session[0]->type_facture_id]);
             $type_remise = $this->fonct->findWhereParam("type_remise", ["id"], ["!="], [$montant_totale->remise_id]);
-            return view('admin.facture.edit_facture', compact('init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
+            return view('admin.facture.edit_facture', compact('devise','init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
         }
     }
 
 
     public function modifier_facture($num_facture, $entreprise_id, Request $request)
     {
-
-        // dd($request->input());
         $remise = $this->fonct->findWhereMulitOne("type_remise", ["id"], [$request->type_remise_id]);
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
 
@@ -943,6 +940,8 @@ class FactureController extends Controller
 
     public function trie_par_num_facture(Request $req)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $data_num_fact_trie = null;
         if ($req->data_value == 0) {
             $data_num_fact_trie = "ASC";
@@ -964,6 +963,7 @@ class FactureController extends Controller
                 "facture_inactif" => $facture_inactif,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "OF"
             ]);
         }
@@ -979,6 +979,7 @@ class FactureController extends Controller
             return response()->json([
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "ETP"
             ]);
         }
@@ -986,6 +987,8 @@ class FactureController extends Controller
 
     public function trie_par_entiter(Request $req)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $data_etp_trie = null;
         if ($req->data_value == 0) {
             $data_etp_trie = "ASC";
@@ -1008,6 +1011,7 @@ class FactureController extends Controller
                 "facture_inactif" => $facture_inactif,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "OF"
             ]);
         }
@@ -1023,6 +1027,7 @@ class FactureController extends Controller
             return response()->json([
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "ETP"
             ]);
         }
@@ -1030,6 +1035,8 @@ class FactureController extends Controller
 
     public function trie_par_dte(Request $req)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $data_dte_trie = null;
         if ($req->data_value == 0) {
             $data_dte_trie = "ASC";
@@ -1052,6 +1059,7 @@ class FactureController extends Controller
                 "facture_inactif" => $facture_inactif,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "OF"
             ]);
         }
@@ -1067,6 +1075,7 @@ class FactureController extends Controller
             return response()->json([
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "ETP"
             ]);
         }
@@ -1074,6 +1083,8 @@ class FactureController extends Controller
 
     public function trie_par_totale_payer(Request $req)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $data_total_payer_trie = null;
         if ($req->data_value == 0) {
             $data_total_payer_trie = "ASC";
@@ -1096,6 +1107,7 @@ class FactureController extends Controller
                 "facture_inactif" => $facture_inactif,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "OF"
             ]);
         }
@@ -1111,6 +1123,7 @@ class FactureController extends Controller
             return response()->json([
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "ETP"
             ]);
         }
@@ -1118,6 +1131,8 @@ class FactureController extends Controller
 
     public function trie_par_reste_payer(Request $req)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $data_reste_payer_trie = null;
         if ($req->data_value == 0) {
             $data_reste_payer_trie = "ASC";
@@ -1140,6 +1155,7 @@ class FactureController extends Controller
                 "facture_inactif" => $facture_inactif,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "OF"
             ]);
         }
@@ -1155,6 +1171,7 @@ class FactureController extends Controller
             return response()->json([
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
+                "devise" => $devise,
                 "entiter" => "ETP"
             ]);
         }

@@ -142,6 +142,7 @@ class ResponsableController extends Controller
        
         if ($id) $datas = responsable::orderBy('nom_resp')->with('User', 'entreprise')->take($id)->get();
         else  $datas =  responsable::orderBy("nom_resp")->with('User', 'entreprise')->get();
+        
         return view('admin.responsable.responsable', compact('datas', 'liste', 'info_impression'));
     }
 

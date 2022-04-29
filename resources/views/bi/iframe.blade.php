@@ -2,6 +2,35 @@
 @section('title')
     <h3 class="text-white ms-5">Bussness intelligent</h3>
 @endsection
+<style>
+    .navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+    transform: scale(1.1);
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+</style>
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -9,14 +38,14 @@
             <div class="m-4">
                 <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                     <li class="nav-item">
-                       
-                        <a class="nav-link btn_enregistrer" class=" active" id="tab_etp" data-bs-toggle="tab" href="#etp" type="button" role="tab" aria-controls="etp" aria-selected="true">
+                        <a class="nav-link active" id="tab_etp" data-bs-toggle="tab" href="#etp" type="button" role="tab" aria-controls="etp" aria-selected="true">
                             Entreprises</a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a class="nav-link btn_enregistrer" class=" active" id="tab_of" data-bs-toggle="tab" href="#of" type="button" role="tab" aria-controls="of" aria-selected="true">
+                        <a class="nav-link" id="tab_of" data-bs-toggle="tab" href="#of" type="button" role="tab" aria-controls="of" aria-selected="true">
                             Organisme de Formation</a>
                     </li>
+                    
                 </ul>
                 <div class="tab-content mt-5" id="myTabContent">
                     {{-- entreprises --}}

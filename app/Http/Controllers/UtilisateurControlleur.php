@@ -37,6 +37,7 @@ class UtilisateurControlleur extends Controller
         $liste = entreprise::orderBy('nom_etp')->get();
         if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
         else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
+       
         return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
     }
 

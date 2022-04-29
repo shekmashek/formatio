@@ -101,7 +101,7 @@
                                     <h6>N° BC: {{$facture[0]->reference_bc}}</h6>
                                     <h6>Date de facturation: {{$montant_totale->invoice_date}}</h6>
                                     <h6>Date de règlement: {{$montant_totale->due_date}}</h6>
-                                    <h6>Reste à payer(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
+                                    <h6>Reste à payer({{$devise->devise}}): {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
                                 </div>
                             </div>
 
@@ -146,12 +146,12 @@
                                         </td>
                                         <td>
                                             <div align="left">
-                                                Ar {{number_format($montant_facture->pu,0,","," ")}}
+                                                {{$devise->devise." ".number_format($montant_facture->pu,0,","," ")}}
                                             </div>
                                         </td>
                                         <td>
                                             <div align="right">
-                                                Ar {{number_format($montant_facture->hors_taxe,0,","," ")}}
+                                                {{$devise->devise." ".number_format($montant_facture->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -172,7 +172,7 @@
                                         <td></td>
                                         <td>
                                             <div align="right">
-                                                Ar -{{number_format($fa->montant_total,0,","," ")}}
+                                                {{$devise->devise." -".number_format($fa->montant_total,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -188,12 +188,12 @@
                                         <td>{{$frais_annexe->qte}}</td>
                                         <td>
                                             <div align="left">
-                                                Ar {{number_format($frais_annexe->pu,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->pu,0,","," ")}}
                                             </div>
                                         </td>
                                         <td>
                                             <div align="right">
-                                                Ar {{number_format($frais_annexe->hors_taxe,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -215,7 +215,7 @@
                                                     <td>Montant Brut HT</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->montant_brut_ht,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->montant_brut_ht,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -225,7 +225,7 @@
                                                     <td>Remise</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar -{{number_format($montant_totale->remise,0,","," ")}}
+                                                            {{$devise->devise." -".number_format($montant_totale->remise,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -234,7 +234,7 @@
                                                     <td>Net Commercial HT</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->net_commercial,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->net_commercial,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -243,7 +243,7 @@
                                                     <td>TVA({{$facture[0]->pourcent}} %)</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->tva,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->tva,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -254,7 +254,7 @@
                                                     <td>Acompte</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
+                                                            {{$devise->devise." -".number_format($montant_totale->sum_acompte,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -269,7 +269,7 @@
                                                     <td>Net à payer TTC</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->montant_total,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->montant_total,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -285,7 +285,7 @@
                     </div>
                 </div>
 
-                <p>Arretée la présente facture à la somme de: {{$lettre_montant}} Ariary</p>
+                <p>Arretée la présente facture à la somme de: {{$lettre_montant." ".$devise->devise}}</p>
                 <p>mode de paiement: {{$montant_totale->description_financement}}</p>
                 @if($facture[0]->other_message!=null)
                 <p>Autre Message</p>
