@@ -12,9 +12,13 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item mx-1">
+                            {{-- <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}">
                                     Entreprises</a>
+                            </li> --}}
+                            <li class="nav-item mx-1">
+                                <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
+                                    Responsables des ETP</a>
                             </li>
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
@@ -46,14 +50,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                        <li class="nav-item mx-1">
-                            <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
-                                Responsables des ETP</a>
-                        </li>
-                        <li class="nav-item mx-1">
+                       
+                        {{-- <li class="nav-item mx-1">
                             <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
                                 Stagiaires</a>
-                        </li>
+                        </li> --}}
                     </ul>
 
 
@@ -62,13 +63,13 @@
         </nav>
 
 
-        <form action="{{ route('utilisateur_new_etp') }}">
+        {{-- <form action="{{ route('utilisateur_new_etp') }}">
             @csrf
             <p style="display: flex; justify-content:end;">
                 <button type="submit" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Entreprise</button>
                 &nbsp;
             </p>
-        </form>
+        </form> --}}
 
         <div class="container-fluid">
             <table class="table">
@@ -124,9 +125,9 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('profil_du_responsable',1) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                        <a class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $etp->id }}" id="{{ $etp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$etp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
-                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$etp->id}}"> <button class="btn btn_enregistrer">Supprimer</button></a>
+                                        <a class="dropdown-item" href="{{ route('profile_entreprise',$etp->id)}}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
+                                        {{-- <a class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $etp->id }}" id="{{ $etp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$etp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$etp->id}}"> <button class="btn btn_enregistrer">Supprimer</button></a> --}}
                                     </ul>
                                 </div>
                             </div>

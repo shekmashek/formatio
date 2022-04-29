@@ -102,6 +102,43 @@
             </li>
             </li> --}}
             @endcanany
+            @canany(['isSuperAdmin'])
+                    
+                                    {{-- <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3"  >
+                                        <span class="d-flex flex-column">  <i class='bx bxs-user'></i><span class="text_racourcis">Utilisateurs</span></span>
+                                      
+                                      
+                                    </a> --}}
+                                    <li>
+                                        <a href="{{route('categorie')}}" class="d-flex nav_linke">
+                                            <i class='bx bxs-doughnut-chart'></i>
+                                            <span class="links_name">Categories de formation</span>
+                                        </a>
+                        
+                                    </li>
+                                    <li>
+                                        <a href="{{route('module')}}"  class="d-flex nav_linke">
+                                            <i class='bx bx-book'></i>
+                                            <span class="links_name">Formations</span>
+                                        </a>
+                        
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('taxes') }}"   class="d-flex nav_linke">
+                                            <i class='bx bx-spreadsheet'></i>
+                                            <span class="links_name">Taxe</span>
+                                        </a>
+                        
+                                    </li>
+                                    <li>
+                                        <a  href="{{ route('devise') }}"   class="d-flex nav_linke">
+                                            <i class='bx bx-receipt'></i>
+                                            <span class="links_name">Devise</span>
+                                        </a>
+                        
+                                    </li>
+ 
+                     @endcanany
             @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_departement')}}" class="d-flex nav_linke">
@@ -190,7 +227,7 @@
             </li>
             @endcanany
             {{-- utilisateurs --}}
-            @canany(['isSuperAdmin','isAdmin'])
+            {{-- @canany(['isSuperAdmin','isAdmin'])
          
             <li>
                 <a href="{{route('utilisateur_stagiaire')}}" class="d-flex nav_linke">
@@ -206,7 +243,7 @@
                 </a>
 
             </li>
-            @endcanany
+            @endcanany --}}
             {{-- formateurs --}}
 
             @canany(['isCFP'])
@@ -234,7 +271,7 @@
             </li> --}}
             @endcanany
             {{-- manager --}}
-            @canany(['isSuperAdmin','isAdmin'])
+            {{-- @canany(['isSuperAdmin','isAdmin'])
             <li>
                 <a href="{{route('employes')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
@@ -250,7 +287,7 @@
                 </a>
 
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}} 
             @canany(['isReferent'])
             <li>
                 <a href="{{route('employes')}}" class="d-flex nav_linke">
@@ -363,7 +400,7 @@
 
             @endcanany
             {{-- competence --}}
-            @canany(['isSuperAdmin','isReferent','isManager'])
+            @canany(['isReferent','isManager'])
             @canany(['isReferent'])
             <li>
                 <a href="{{route('demande_test_niveau')}}" class="d-flex nav_linke">
@@ -388,7 +425,7 @@
             @endcanany
 
             {{-- plan de formation --}}
-            @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
+            @canany(['isStagiaire','isManager','isReferent'])
             <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
@@ -489,36 +526,7 @@
                     <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt="" class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
                 <div class="col-5 align-items-center justify-content-start d-flex flex-row ">
-                    @canany(['isSuperAdmin'])
                     
-                                    <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3"  >
-                                        <span class="d-flex flex-column">  <i class='bx bxs-user'></i><span class="text_racourcis">Utilisateurs</span></span>
-                                      
-                                      
-                                    </a>
-                                        <a href="{{route('categorie')}}"  class="btn_racourcis me-4 mt-3"  >
-                                          
-                                           <span class="d-flex flex-column"><i class='bx bxs-doughnut-chart'></i><span class="text_racourcis">Categories</span></span>
-                                        </a>
-                                   
-                                        <a href="{{route('module')}}"  class="btn_racourcis me-4 mt-3"  >
-                                      
-                                           <span class="d-flex flex-column"><i class='bx bx-book'></i><span class="text_racourcis"> Formations</span></span>
-
-                                        </a>
-                                        <a href="{{ route('taxes') }}" class="btn_racourcis me-4 mt-3"    >
-                                            <span class="d-flex flex-column"><i class='bx bx-spreadsheet'></i><span class="text_racourcis"> Taxe</span></span>
-                                        </a>
-                                        <a href="{{ route('devise') }}" class="btn_racourcis me-4 mt-3"    >
-                                            <span class="d-flex flex-column"><i class='bx bx-receipt'></i><span class="text_racourcis"> Devise</span></span>
-                                        </a>
-                                       
-                                          
-                            
-                                       
-                                   
-                                 
-                     @endcanany
                     @canany('isReferent','isStagiaire','isManager')
                     <div class="row">
                        
@@ -580,14 +588,38 @@
                     </div>
                     @endcanany
                 </div>
-
                 <div class="col-4 header-right align-items-center d-flex flex-row">
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
+                        @can('isStagiaire')
+
                         <div class="btn_creer me-2">
                             <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
                         </div>
                      
-                        <div class="">
+                        @endcan
+                        @can('isManager')
+
+                        <div class="btn_creer me-2">
+                            <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
+                        </div>
+                     
+                        @endcan
+                        @can('isReferent')
+
+                        <div class="btn_creer me-2">
+                            <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
+                        </div>
+                     
+                        @endcan
+                        @can('isCFP')
+
+                        <div class="btn_creer me-2">
+                            <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
+                        </div>
+                     
+                        @endcan
+                     
+                             <div class="">
                             @can('isManager')
                             <div class="btn_creer dropdown">
 

@@ -4,32 +4,47 @@
     <p class="text_header m-0 mt-1">Devise
     </p>
 @endsection
+
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 @section('content')
-<div class="container">
+<center>
+<div class="col-lg-4 mt-5">
+    <div class="p-3 form-control">
+ <form method="POST" action="{{route('devise_enregistrer')}}">
+    @csrf
+        <div class="row px-3 mt-4">
+                <div class="form-group mt-1 mb-1">
+                    <input type="text" class="form-control test input"  name="devis">
+ 
+                    <label class="ml-3 form-control-placeholder" >Devise</label>
+                 
 
-<div class="row">
-   
-    <div class="col-md-6 mt-3">
-        <h3>Devises</h3>
-             <form method="POST" action="{{route('devise_enregistrer')}}">
-                @csrf
-                    
-                     {{-- <input type="text" class="form-control test input"  name="devis">
-                    {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-                        {{-- <label class="ml-3 form-control-placeholder" >Devise</label>
-                        </div>
-                        </div> --}} 
+            </div>
+            </div>
+        {{-- <div class="row px-3 mt-4">
+            <div class="form-group mt-1 mb-1">
+        <input type="text" class="form-control test input"  name="valeur">
+    {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
+        {{-- <label class="ml-3 form-control-placeholder" >Valeur</label>
+    
+    </div>
+    </div> --}} 
+    <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+ </form>
+</div>
+</div>
+</center>
+
                     {{-- <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
                     <input type="text" class="form-control test input"  name="valeur">
-                {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-                    {{-- <label class="ml-3 form-control-placeholder" >Valeur</label>
+
+                    <label class="ml-3 form-control-placeholder" >Valeur</label>
                 
                 </div>
-                </div> --}} 
-                <div class="col-12 pb-4 element">
+                </div>  --}}
+                {{-- <div class="col-12 pb-4 element">
                     <div class="row titres_services">
                         <div class="col-4">
                             <h6 class="m-0">Description</h6>
@@ -129,7 +144,7 @@
                     href="{{route('edit_devise',$list->id)}}"><i class='bx bxs-edit-alt'  style="color: green"></i></a>
                 
                 <a
-                    href="{{route('delete_devise',$list->id)}}"><i class='bx bx-trash' style="color: red"></i></a>
+                    href="{{route('delete_devise',$list->id)}}" onclick="return  confirm('voulez vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
                 </td>
             </tr>   
         </tbody> 
@@ -163,7 +178,7 @@
                     href="{{route('edit_taux_devise',$devise->taux_devise_id)}}"><i class='bx bxs-edit-alt'  style="color: green"></i></a>
                 
                 <a
-                    href="{{route('delete_taux',$devise->taux_devise_id)}}" onclick="confirm('voulez-vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
+                    href="{{route('delete_taux',$devise->taux_devise_id)}}" onclick="return  confirm('voulez vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
             </td>
         </tr>   
     </tbody> 
@@ -173,11 +188,9 @@
 </div>
 
 {{-- <script src="{{asset('js/facture.js')}}"></script> --}}
-<script src="{{ asset('assets/js/jquery.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript">
-
-
     // add row
     $(document).on('click', '#addRow', function() {
         $('#frais').empty();
@@ -186,14 +199,10 @@
             , type: 'get'
             , success: function(response) {
                 var userData = response;
-             
-                //    alert(JSON.stringify(userData));
-
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRow">';
                     html += '<div class="col-4">';
                     html += '<input type="text" class="form-control selectP input_section4"  id="devise[]" name="devise[]" required>';
-
                     // for (var $i = 0; $i < userData.length; $i++) {
                     //     html += '<option value="' + userData[$i].id + '">' + userData[$i].description + '</option>';
                     // }
@@ -203,8 +212,6 @@
                     html += '<div class="col-4">';
                     html += '  <input type="text" name="reference[]" id="reference[]" class="text_reference form-control" placeholder="AR ou € ou $">';
                     html += '</div>';
-
-                    
 
                     html += '<div class="col-1 text-end pt-2">';
                     html += '<p class="m-0"><span>';
@@ -282,5 +289,5 @@
     });
 
 </script>
-</script>
+</script>  --}}
 @endsection
