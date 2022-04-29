@@ -17,15 +17,15 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                {{-- <li class="nav-item mx-1">
+                                <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}">
                                         Entreprises</a>
-                                </li> --}}
+                                </li>
                                 
-                                <li class="nav-item mx-1">
+                                {{-- <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('liste_entreprise') ? 'active' : '' }}" href="{{route('liste_entreprise')}}">
                                         Entreprises</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
                                         Organisme de Formation</a>
@@ -93,7 +93,7 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th> # </th>
+                                        <th> Photos</th>
                                         <th>Nom d'utilisateur</th>
                                         <th>E-mail</th>
                                         <th> Téléphone </th>
@@ -135,9 +135,9 @@
                                                         <i class="fa fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                                        <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
-                                                        <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a>
+                                                        <a class="dropdown-item" href="{{route('profil_referent')}}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
+                                                        {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                                        <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a> --}}
                                                     </ul>
                                                 </div>
                                             </div>

@@ -20,8 +20,8 @@
                                     Entreprises</a>
                             </li>
                             <li class="nav-item mx-1">
-                                <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
-                                    Organisme de Formation</a>
+                                <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_resp_cfp') ? 'active' : '' }}" href="{{route('utilisateur_resp_cfp')}}">
+                                    Responsables des OF</a>
                             </li>
                             <li class="nav-item mx-1">
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
@@ -48,14 +48,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <li class="nav-item mx-1">
-                    <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_resp_cfp') ? 'active' : '' }}" href="{{route('utilisateur_resp_cfp')}}">
-                        Responsables des OF</a>
-                </li>
-                <li class="nav-item mx-1">
+              
+                {{-- <li class="nav-item mx-1">
                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_formateur') ? 'active' : '' }}" href="{{route('utilisateur_formateur')}}">
                         Formateurs</a>
-                </li>
+                </li> --}}
             </ul>
 
 
@@ -63,13 +60,13 @@
     </div>
 </nav>
 
-<form action="{{ route('utilisateur_new_cfp') }}">
+{{-- <form action="{{ route('utilisateur_new_cfp') }}">
     @csrf
     <p style="display: flex; justify-content:end;">
         <button type="submit" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Organisme</button>
         &nbsp;
     </p>
-</form>
+</form> --}}
 <div class="container-fluid">
     <table class="table">
         <thead>
@@ -85,7 +82,7 @@
         <tbody>
             @foreach ($cfps as $cfp)
             <tr>
-                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_du_responsable',$cfp->id) }}"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$cfp->logo)}}" style="cellapading=0;" cellspacing="0"> </a></td>
+                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_du_responsable',$cfp->id) }}"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$cfp->logo)}}" style="width:120px;hei" cellspacing="0"> </a></td>
                 <td> <a class="dropdown-item" href="{{ route('profil_du_responsable',$cfp->id) }}"><strong>{{ $cfp->nom }}</strong> </a></td>
                 <td>{{ $cfp->email }}</td>
                 <td>{{ $cfp->telephone }}</td>
@@ -98,9 +95,9 @@
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ route('profil_du_responsable',$cfp->id) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$cfp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
-                                <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$cfp->id}}" style="color: red">Supprimer</button></a>
+                                <a class="dropdown-item" href="{{ route('affichage_parametre_cfp',$cfp->id) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
+                                {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$cfp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$cfp->id}}" style="color: red">Supprimer</button></a> --}}
 
                             </ul>
                         </div>
