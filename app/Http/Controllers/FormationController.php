@@ -405,7 +405,7 @@ class FormationController extends Controller
     public function alphabet_filtre(Request $request)
     {
         $alpha = $request->Alpha;
-        $cfp = DB::select('select * from cfps where nom like "' . $alpha . '%" order by nom asc limit 0,5');
+        $cfp = DB::select('select * from cfps where nom like "' . $alpha . '%" order by nom asc');
         // $cfp = $this->fonct->findWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], [$alpha."%"], ["nom"], "ASC", 0, 5);
         return response()->json($cfp);
     }
