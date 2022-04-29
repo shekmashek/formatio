@@ -12,16 +12,6 @@
     <title>export pdf liste d'encaissement</title>
 </head>
 <body>
-
-    {{-- <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="d-flex">
-
-            <img src="{{ public_path('img/logo_formation/logo_transparent_background.png') }}" alt="logonmk" class="logo">
-
-    </div>
-    </nav>
-    --}}
-
     <style type="text/css">
         /* h1 {
 
@@ -56,7 +46,7 @@
 
         p {
 
-            font-size: 80%;
+            font-size: 70%;
         }
 
         table,
@@ -86,11 +76,6 @@
             background-color: black;
             color: white;
         }
-
-        /* hr {
-background-color: black;
-border: 2px solid;
-} */
 
         .logo-catalogue {
             width: 60px;
@@ -152,7 +137,6 @@ border: 2px solid;
                         <tr>
                             <td colspan="3">
                                 <h6><img src="{{ public_path('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 300px; height: 90px;"></h6>
-                                {{-- <h6><img src="{{ asset('images/CFP/'.$cfp->logo) }}" alt="logonmk" style="width: 300px; height: 80px;"></h6> --}}
                             </td>
                             <td></td>
                             <td>
@@ -198,7 +182,7 @@ border: 2px solid;
                                     <h4>N° BC: {{$facture[0]->reference_bc}}</h4>
                                     <h4>Date de facturation: {{$montant_totale->invoice_date}}</h4>
                                     <h4>Date de règlement: {{$montant_totale->due_date}}</h4>
-                                    <h4>Reste à payer(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}}</strong></h4>
+                                    <h4>Reste à payer({{$devise->devise}}): {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}}</strong></h4>
                                 </div>
                             </td>
                         </tr>
@@ -219,7 +203,7 @@ border: 2px solid;
                             <th scope="col">Montant</th>
                             <th scope="col">Paiement</th>
                             <th scope="col">Montant ouvert</th>
-                            <th scope="col">Mode de payement</th>
+                            <th scope="col">Mode de paiement</th>
                             <th scope="col">Encaisseur</th>
                         </tr>
                     </thead>
@@ -228,9 +212,9 @@ border: 2px solid;
                         <tr>
                             <td>{{ $info->date_encaissement }}</td>
                             <td>{{ $info->libelle }}</td>
-                            <td class="text-end">Ar {{ number_format($info->montant_facture, 0, ',', ' ') }}</td>
-                            <td class="text-end">Ar {{ number_format($info->payement, 0, ',', ' ') }}</td>
-                            <td class="text-end">Ar {{ number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                            <td class="text-end">{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                            <td class="text-end">{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                            <td class="text-end">{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
                             <td>{{ $info->description }}</td>
                             <td>{{ $info->nom_resp_cfp}}</td>
                         </tr>
@@ -245,7 +229,7 @@ border: 2px solid;
     </div>
 
     <div class="row table_facture2  me-2 mr-2 justify-content-center text-center text-muted">
-        <p> NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
+        <p> nif: {{$cfp->nif}}&nbsp;&nbsp; stat: {{$cfp->stat}}&nbsp;&nbsp; rcs: {{$cfp->rcs}} &nbsp;&nbsp; cif: {{$cfp->cif}}</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>

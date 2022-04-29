@@ -332,10 +332,10 @@
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
                                                     <input type="text" class="form-control prix prix input mt-3"
-                                                        id="acf-prix" name="prix" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix en AR"
+                                                        id="acf-prix" name="prix" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix en {{$devise->devise}}"
                                                         value="{{$mod->prix}}" onfocus="(this.type='number')"><label
                                                         for="acf-prix" class="form-control-placeholder">Prix en
-                                                        AR</label>
+                                                        {{$devise->devise}}</label>
                                                     @error('prix')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -347,8 +347,8 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix_groupe prix_groupe input mt-4" id="acf-prix_groupe" name="prix_groupe" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix par Groupe en AR" value="{{$mod->prix_groupe}}" onfocus="(this.type='number')">
-                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix par Groupe en AR</label>
+                                                    <input type="text" class="form-control prix_groupe prix_groupe input mt-4" id="acf-prix_groupe" name="prix_groupe" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix par Groupe en {{$devise->devise}}" value="{{$mod->prix_groupe}}" onfocus="(this.type='number')">
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix par Groupe en {{$devise->devise}}</label>
                                                     @error('prix_groupe')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -708,7 +708,7 @@
                                     </div>
                                     <div class="col-lg-8 detail__prix__main__prix2">
                                         <div>
-                                            <p id="preview_prix"><span class="acf-prix">450000</span>&nbsp;AR&nbsp;HT
+                                            <p id="preview_prix"><span class="acf-prix">450000</span>&nbsp;{{$devise->devise}}&nbsp;HT
                                             </p>
                                         </div>
                                     </div>

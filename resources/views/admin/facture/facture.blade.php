@@ -426,11 +426,11 @@
                                         </a>
                                     </td>
                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
                                         </a>
                                     </td>
                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                         </a>
                                     </td>
                                     <td>
@@ -551,11 +551,11 @@
                                         </a>
                                     </td>
                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
                                         </a>
                                     </td>
                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                         </a>
                                     </td>
                                     <td>
@@ -631,7 +631,7 @@
                                             <div class="modal-header">
                                                 <div class="modal-title text-md">
                                                     <h6>Encaisser la facture N°: <span class="text-mued" id="num_fact_encaissement">{{ $actif->num_facture }}</span></h6>
-                                                    <h5>Reste à payer : <strong><label id="montant"></label> Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}</strong></h5>
+                                                    <h5>Reste à payer : <strong><label id="montant"></label> {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}</strong></h5>
                                                 </div>
                                             </div>
                                             <div class="modal-body">
@@ -761,11 +761,11 @@
                                         </a>
                                     </td>
                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            Ar {{number_format($actif->montant_total,0,","," ")}}
+                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
                                         </a>
                                     </td>
                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            Ar {{number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                         </a>
                                     </td>
                                     <td>
@@ -931,10 +931,10 @@
             <div class="collapse multi-collapse" id="detail_par_solde">
                 <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
                     @csrf
-                    <label for="dte_debut" class="form-label" align="left">Solde entre <strong style="color:#ff0000;">*</strong></label>
+                    <label for="dte_debut" class="form-label" align="left">Solde entre {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                     <input required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
                     <br>
-                    <label for="dte_fin" class="form-label" align="left"> à <strong style="color:#ff0000;">*</strong></label>
+                    <label for="dte_fin" class="form-label" align="left"> à {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                     <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
                     <button type="submit" class="btn_creer mt-2">Recherche</button>
                 </form>
@@ -1037,7 +1037,7 @@
         return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
     }
 
-    function getDataFactureBrouillon(facture_inactif) {
+    function getDataFactureBrouillon(facture_inactif, devise) {
         var html_inactif = '';
         if (facture_inactif.length > 0) {
 
@@ -1084,8 +1084,8 @@
                 html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].invoice_date + " </a> </td><td>";
                 html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].due_date + " </a> </td><td>";
 
-                html_inactif += "  <a href=" + url_detail_facture + ">  Ar " + number_format(facture_inactif[i_act].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_inactif += "  <a href=" + url_detail_facture + ">  Ar " + number_format(facture_inactif[i_act].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_inactif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_inactif[i_act].montant_total, 0, ",", " ") + " </a> </td><td>";
+                html_inactif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_inactif[i_act].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
 
                 html_inactif += "  <a href=" + url_detail_facture + "> ";
 
@@ -1125,7 +1125,7 @@
     }
 
 
-    function getDataFactureValider(facture_actif) {
+    function getDataFactureValider(facture_actif, devise) {
         var html_actif = '';
         // var mode_payement = @php $mode_payement;  @endphp;
 
@@ -1183,8 +1183,8 @@
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].invoice_date + " </a> </td><td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].due_date + " </a> </td><td>";
 
-                html_actif += "  <a href=" + url_detail_facture + ">  Ar " + number_format(facture_actif[i_actif].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_actif += "  <a href=" + url_detail_facture + ">  Ar " +number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].montant_total, 0, ",", " ") + " </a> </td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
 
 
 
@@ -1238,7 +1238,7 @@
                 html_actif += '<div class="modal-title text-md">';
                 html_actif += '<h6>Encaisser la facture  N° : <span class="text-mued" id="num_fact_encaissement">' + facture_actif[i_actif].num_facture + '</span></h6>';
 
-                html_actif += '<h5>Reste à payer : <strong><label id="montant"></label> Ar ' + number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + '</strong></h5>';
+                html_actif += '<h5>Reste à payer : <strong><label id="montant"></label> ' + devise.devise + ' ' + number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + '</strong></h5>';
                 html_actif += '</div>';
                 html_actif += '</div>';
                 html_actif += '<div class="modal-body">';
@@ -1286,7 +1286,7 @@
         return html_actif;
     }
 
-    function getDataFacturePayer(facture_payer) {
+    function getDataFacturePayer(facture_payer, devise) {
         var html_payer = '';
         if (facture_payer.length > 0) {
 
@@ -1335,8 +1335,8 @@
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].invoice_date + " </a> </td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].due_date + " </a> </td><td>";
 
-                html_payer += "  <a href=" + url_detail_facture + ">  Ar " + number_format(facture_payer[i_payer].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_payer += "  <a href=" + url_detail_facture + ">  Ar " + number_format(facture_payer[i_payer].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].montant_total, 0, ",", " ") + " </a> </td><td>";
+                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
 
                 html_payer += "  <a href=" + url_detail_facture + "> ";
                 html_payer += '<div style="background-color:  rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';
@@ -1365,6 +1365,7 @@
 
     function getDataFacture(response) {
         var valiny = JSON.parse(response);
+        var devise = valiny["devise"];
 
         if (valiny["entiter"] == "OF") {
 
@@ -1372,9 +1373,9 @@
             var facture_actif = valiny["facture_actif"];
             var facture_payer = valiny["facture_payer"];
 
-            var html_inactif = getDataFactureBrouillon(facture_inactif);
-            var html_actif = getDataFactureValider(facture_actif);
-            var html_payer = getDataFacturePayer(facture_payer);
+            var html_inactif = getDataFactureBrouillon(facture_inactif, devise);
+            var html_actif = getDataFactureValider(facture_actif, devise);
+            var html_payer = getDataFacturePayer(facture_payer, devise);
 
             return {
                 "html_inactif": html_inactif
@@ -1384,8 +1385,8 @@
         } else {
             var facture_actif = valiny["facture_actif"];
             var facture_payer = valiny["facture_payer"];
-            var html_actif = getDataFactureValider(facture_actif);
-            var html_payer = getDataFacturePayer(facture_payer);
+            var html_actif = getDataFactureValider(facture_actif, devise);
+            var html_payer = getDataFacturePayer(facture_payer, devise);
 
             return {
                 "html_actif": html_actif

@@ -73,8 +73,8 @@
                 <div class="col"><i class='bx bx-receipt bx_icon'></i><span
                     class="text_black">&nbsp;{{ $res->reference }}</span>
                 </div>
-                <div class="col"><i class='bx bx-euro bx_icon'></i>
-                    <span class="text_black text_prix">&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</span>
+                <div class="col">{{$devise->devise}}
+                    <span class="text_black text_prix">&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;</span>&nbsp;HT</span>
                 </div>
             </div>
         </div>

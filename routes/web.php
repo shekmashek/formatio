@@ -362,9 +362,13 @@ Route::get('select_par_module/{id}','FormationController@affichageParModule')->n
 Route::get('select_tous','FormationController@affichageTousCategories')->name('select_tous');
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}','SessionController@inscription')->name('inscriptionInter');
 //route annuaire de cfp
-Route::get('annuaire','FormationController@annuaire')->name('annuaire');
+Route::get('annuaire/{page?}','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
+
+// filtre annuaire cfp
+Route::get('annuaire+recherche+par+entiter/{page?}/{nom_entiter?}','FormationController@search_par_nom_entiter')->name('annuaire+recherche+par+entiter');
+Route::get('annuaire+recherche+par+adresse/{page?}/{qter?}/{vlle?}/{postal?}/{reg?}','FormationController@search_par_adresse')->name('annuaire+recherche+par+adresse');
 
 //route module
 Route::resource('module','ModuleController')->except([
@@ -1052,20 +1056,20 @@ Route::post('recherche_cfp','HomeController@recherche_cfp')->name('recherche_cfp
 //Route pour taxe dans interface super Admin
 Route::get('taxes','HomeController@taxe')->name('taxes');
 Route::get('devise','HomeController@devise')->name('devise');
-Route::get('getDevise','HomeController@getDevise')->name('getDevise');
+// Route::get('getDevise','HomeController@getDevise')->name('getDevise');
 Route::post('taxe_enregistrer','HomeController@taxe_enregistrer')->name('taxe_enregistrer');
 Route::post('devise_enregistrer','HomeController@devise_enregistrer')->name('devise_enregistrer');
-Route::post('taux_enregistrer','HomeController@taux_enregistrer')->name('taux_enregistrer');
-//Route deviser edit
-Route::get('edit_devise/{id}','HomeController@edit')->name('edit_devise');
+// Route::post('taux_enregistrer','HomeController@taux_enregistrer')->name('taux_enregistrer');
+// //Route deviser edit
+// Route::get('edit_devise/{id}','HomeController@edit')->name('edit_devise');
 
-Route::post('update_devise/{id}','HomeController@update_devise')->name('update_devise');
-//delete devises
-Route::get('delete_devise/{id}','HomeController@delete_devise')->name('delete_devise');
-//rout edit taux devise
-Route::get('edit_taux_devise/{id}','HomeController@edit_taux_devise')->name('edit_taux_devise');
-Route::get('delete_taux/{id}','HomeController@delete_taux')->name('delete_taux');
-Route::post('update_taux/{id}','HomeController@update_taux')->name('update_taux');
+// Route::post('update_devise/{id}','HomeController@update_devise')->name('update_devise');
+// //delete devises
+// Route::get('delete_devise/{id}','HomeController@delete_devise')->name('delete_devise');
+// //rout edit taux devise
+// Route::get('edit_taux_devise/{id}','HomeController@edit_taux_devise')->name('edit_taux_devise');
+// Route::get('delete_taux/{id}','HomeController@delete_taux')->name('delete_taux');
+// Route::post('update_taux/{id}','HomeController@update_taux')->name('update_taux');
 //Route iframe
 Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
 Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');

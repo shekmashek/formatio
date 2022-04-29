@@ -78,7 +78,7 @@
                                     @php
                                     echo number_format($info->prix, 0, ' ', ' ');
                                     @endphp
-                                    &nbsp;AR</span>&nbsp;HT</p>
+                                    &nbsp;{{$devise->devise}}</span>&nbsp;HT</p>
                             <p>Réference : <span>{{$info->reference}}</span></p>
                         </div>
 
