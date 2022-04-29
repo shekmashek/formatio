@@ -392,7 +392,7 @@
                         }
                         , editable: true
                         , eventClick: function(info) {
-                            alert(info.event.extendedProps.detail_id);
+
                             $('#detail').css('display','block');
 
                             $.ajax({
