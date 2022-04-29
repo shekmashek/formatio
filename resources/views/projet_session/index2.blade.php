@@ -191,6 +191,8 @@
                                                         echo $prj->nom_projet . ' ' . $prj->totale_session . ' session';
                                                     } elseif ($prj->totale_session > 1) {
                                                         echo $prj->nom_projet . ' ' . $prj->totale_session . ' sessions';
+                                                    }elseif ($prj->totale_session == 0) {
+                                                        echo $prj->nom_projet ;
                                                     }
                                                 @endphp
                                                 &nbsp;&nbsp;&#10148;&nbsp;@php
@@ -256,7 +258,7 @@
 
                                         @if ($prj->totale_session <= 0)
                                             <tr>
-                                                <td colspan="5"> Aucun session</td>
+                                                <td colspan="5"> Aucune session</td>
 
                                             </tr>
                                         @else

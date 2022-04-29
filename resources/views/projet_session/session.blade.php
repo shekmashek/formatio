@@ -198,8 +198,8 @@
 
     .modalite {
         border-radius: 1rem;
-        background-color: rgb(213, 146, 217);
-        color: whitesmoke;
+        /* background-color: rgb(213, 146, 217); */
+        /* color: whitesmoke; */
         /* width: 60%; */
         align-items: center margin: 0 auto;
 
@@ -334,41 +334,43 @@
                     <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
                 </div>
             </div>
-            <div>
-                <div class="btn_modifier_statut dropdown">
+            @canany(['isReferent','isCFP'])
+                <div>
+                    <div class="btn_modifier_statut dropdown">
 
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
-                        aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                        <i class='bx bx-slider icon_creer'></i>Modifier statut
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                            aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                            <i class='bx bx-slider icon_creer'></i>Modifier statut
 
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="ya">
-                        <li class="mt-1">
-                            <a class="dropdown-item"
-                                href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 5]) }}">
-                                <i class='bx bx-check'></i>&nbsp;Cloturé
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 6]) }}">
-                                <i class='bx bxs-report'></i>&nbsp;Reporté
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('annuler_session', [$projet[0]->groupe_id]) }}">
-                                <i class='bx bx-x'></i>&nbsp;Annulée
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 8]) }}">
-                                <i class='bx bx-refresh'></i>&nbsp;Repprogrammer
-                            </a>
-                        </li>
-                    </ul>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="ya">
+                            <li class="mt-1">
+                                <a class="dropdown-item"
+                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 5]) }}">
+                                    <i class='bx bx-check'></i>&nbsp;Cloturé
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 6]) }}">
+                                    <i class='bx bxs-report'></i>&nbsp;Reporté
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('annuler_session', [$projet[0]->groupe_id]) }}">
+                                    <i class='bx bx-x'></i>&nbsp;Annulée
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 8]) }}">
+                                    <i class='bx bx-refresh'></i>&nbsp;Repprogrammer
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            @endcanany
         </nav>
         <section class="bg-light py-1">
             <div class="m-0 p-0">

@@ -276,6 +276,7 @@ class GroupeController extends Controller
             DB::delete('delete from evaluation_stagiaires where groupe_id = ?',[$id]);
             DB::delete('delete from groupe_entreprises where groupe_id = ?',[$id]);
             DB::delete('delete from groupes where id = ?',[$id]);
+            DB::delete('delete from groupe_entreprises where id = ?',[$id]);
             DB::commit();
             return back();
         }catch(Exception $e){
