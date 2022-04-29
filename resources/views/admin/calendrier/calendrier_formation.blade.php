@@ -323,7 +323,6 @@
         window.addEventListener("DOMContentLoaded", (event) => {
 
             var nom_module = $('#nom_module').val();
-
             $.ajax({
                 type: "GET"
                 , url: "{{route('allEventEntreprise')}}"
@@ -331,9 +330,7 @@
                 , success: function(data) {
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
-
                     var details = userDataDetail['details'];
-                    console.log(details);
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
                     var detail_id = userDataDetail['detail_id'];
 
@@ -498,8 +495,10 @@
                                                 logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
                                                 $('#logo_formateur').removeClass('randomColor photo_users');
                                             }
-                                            else{
-                                                logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
+                                            else if(test_photo=='non'){
+                                                // console.log(photo_formateur[0]);
+                                                // alert(JSON.stringify(photo_formateur));
+                                                // logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
                                                 // $('.photo_users').append(html);
                                             }
 
@@ -519,20 +518,20 @@
                                             html = html.replace(":?",userData[$i].formateur_id);
                                             $('#formateur').append(html);
 
-                                            formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+formations[$i].nom_formation+'</a>'
+                                            formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+formations[$i].nom_formation+'</a>';
                                             formation = formation.replace(":?",formations[$i].formation_id);
-                                            alert(formations[$i].nom_formation);
+
                                             $('#formation').append(formation);
 
 
-                                            modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+formations[$i].nom_module+'</a>'
+                                            modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+formations[$i].nom_module+'</a>';
                                             modules = modules.replace(":?",formations[$i].module_id);
                                             $('#module').append(modules);
 
                                         }
                                         var html = '';
                                         for (var $j = 0; $j < date_groupe.length; $j++) {
-                                            html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'&nbsp <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                            html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i>'+date_groupe[$j].date_detail+'<i class = "bx bxs-time icones"></i>'+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>';
                                         }
                                         $('#date_formation').append(html);
 
@@ -540,12 +539,12 @@
 
                                         for (var $a = 0; $a < stg.length; $a++) {
                                             if(stg[$a].photos == null) {
-                                            html += '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
+                                                html = '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html += '</td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
                                             }
                                             else{
-                                                html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html = html.replace(":!",stg[$a].photos);
 

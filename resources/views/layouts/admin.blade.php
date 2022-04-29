@@ -191,7 +191,7 @@
             @endcanany
             {{-- utilisateurs --}}
             @canany(['isSuperAdmin','isAdmin'])
-         
+
             <li>
                 <a href="{{route('utilisateur_stagiaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-user-circle'></i>
@@ -422,7 +422,7 @@
                 </a>
             </li> --}}
             @endcanany
-           
+
             @canany(['isReferent','isCFP'])
             <li>
                 <a href="{{route('ListeAbonnement')}}" class="d-flex nav_linke">
@@ -462,7 +462,7 @@
             </li>
             @endcan
         </ul>
-        
+
         {{-- <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
@@ -490,19 +490,19 @@
                 </div>
                 <div class="col-5 align-items-center justify-content-start d-flex flex-row ">
                     @canany(['isSuperAdmin'])
-                    
+
                                     <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3"  >
                                         <span class="d-flex flex-column">  <i class='bx bxs-user'></i><span class="text_racourcis">Utilisateurs</span></span>
-                                      
-                                      
+
+
                                     </a>
                                         <a href="{{route('categorie')}}"  class="btn_racourcis me-4 mt-3"  >
-                                          
+
                                            <span class="d-flex flex-column"><i class='bx bxs-doughnut-chart'></i><span class="text_racourcis">Categories</span></span>
                                         </a>
-                                   
+
                                         <a href="{{route('module')}}"  class="btn_racourcis me-4 mt-3"  >
-                                      
+
                                            <span class="d-flex flex-column"><i class='bx bx-book'></i><span class="text_racourcis"> Formations</span></span>
 
                                         </a>
@@ -512,16 +512,16 @@
                                         <a href="{{ route('devise') }}" class="btn_racourcis me-4 mt-3"    >
                                             <span class="d-flex flex-column"><i class='bx bx-receipt'></i><span class="text_racourcis"> Devise</span></span>
                                         </a>
-                                       
-                                          
-                            
-                                       
-                                   
-                                 
+
+
+
+
+
+
                      @endcanany
                     @canany('isReferent','isStagiaire','isManager')
                     <div class="row">
-                       
+
                         <form method="GET" action="{{route('result_formation')}}">
                             @csrf
                             <div class="form-row">
@@ -540,7 +540,7 @@
                                     @canany(['isCFP','isFormateur'])
                                     <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
                                     @endcanany
-                                   
+
                                 </div>
                             </div>
                         </form>
@@ -586,7 +586,7 @@
                         <div class="btn_creer me-2">
                             <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
                         </div>
-                     
+
                         <div class="">
                             @can('isManager')
                             <div class="btn_creer dropdown">
@@ -955,10 +955,10 @@
                     var userData = response;
 
                     if(userData['photo'] == 'oui'){
-                        vaphoto_usersr html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
+                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
                         html = html.replace(":?", userData['user']);
                         // alert(JSON.stringify(userData));
-                        $('.').append(html);
+                        $('.photo_users').append(html);
                     }
                     if(userData['photo'] == 'non'){
                         var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];

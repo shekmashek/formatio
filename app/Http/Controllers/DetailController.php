@@ -171,11 +171,13 @@ class DetailController extends Controller
 
         }
 
-        if(Gate::allows('isManager')) $entreprise_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
-        if(Gate::allows('isReferent')) $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+        // if(Gate::allows('isManager')) $entreprise_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
 
 
-        if(Gate::allows('isManager') or Gate::allows('isReferent')){
+
+        if( Gate::allows('isReferent')){
+
+            $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
             $module = $request->module;
             $type_formation = $request->types_formation;
             $statut_projet = $request->statut_projet;
@@ -203,12 +205,13 @@ class DetailController extends Controller
                 inner join cfps on details.cfp_id = cfps.id
                 where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
             }
+
             for ($i=0; $i < count($groupe_entreprises); $i++) {
                 array_push($detail_id,DB::select('
                      SELECT  id as details_id  from details
                      where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
             }
-            return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
+        return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
 
         }
     }
