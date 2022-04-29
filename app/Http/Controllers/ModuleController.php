@@ -45,82 +45,25 @@ class ModuleController extends Controller
         $categorie=null;
         $id_user = Auth::user()->id;
 
-        $nb_par_page = 3;
-        if($page == null){
-            $page = 1;
-        }
         // $cfp_id = cfp::where('user_id', $id_user)->value('id');
         if (Gate::allows('isCFP')) {
             $cfp_id  = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
             $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
-
-            $nb_module_mod_en_cours = DB::select('select count(module_id) as nb_module from moduleformation as mf where NOT EXISTS (
-                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ?',[$cfp_id])[0]->nb_module;
-            $nb_module_mod_non_publies = DB::select('select count(module_id) as nb_module from moduleformation as mf where EXISTS (
-                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ?',[$cfp_id])[0]->nb_module;
-            $nb_module_mod_publies = DB::select('select count(module_id) as nb_module from moduleformation where status = 2 and cfp_id = ?',[$cfp_id])[0]->nb_module;
-            $fin_page_en_cours = ceil($nb_module_mod_en_cours/$nb_par_page);
-            $fin_page_non_publies = ceil($nb_module_mod_non_publies/$nb_par_page);
-            $fin_page_publies = ceil($nb_module_mod_publies/$nb_par_page);
-
-            if($page == 1){
-                $offset = 0;
-                $debut = 1;
-                if($nb_par_page > $nb_module_mod_en_cours){
-                    $fin_page_en_cours = $nb_module_mod_en_cours;
-                }else{
-                    $fin_page_en_cours = $nb_par_page;
-                }
-                if($nb_par_page > $nb_module_mod_non_publies){
-                    $fin_page_non_publies = $nb_module_mod_non_publies;
-                }else{
-                    $fin_page_non_publies = $nb_par_page;
-                }
-                if($nb_par_page > $nb_module_mod_publies){
-                    $fin_page_publies = $nb_module_mod_publies;
-                }else{
-                    $fin_page_publies = $nb_par_page;
-                }
-            }
-            elseif($page == $fin_page_en_cours){
-                $offset = ($page - 1) * $nb_par_page;
-                $debut = (($page - 1) * $nb_par_page) + 1;
-                $fin_page_en_cours =  $nb_module_mod_en_cours;
-            }
-            elseif($page == $fin_page_non_publies){
-                $offset = ($page - 1) * $nb_par_page;
-                dd($offset);
-
-                $debut = (($page - 1) * $nb_par_page) + 1;
-                $fin_page_non_publies =  $nb_module_mod_non_publies;
-            }
-            elseif($page == $fin_page_publies){
-                $offset = ($page - 1) * $nb_par_page;
-                $debut = (($page - 1) * $nb_par_page) + 1;
-                $fin_page_publies =  $nb_module_mod_publies;
-            }
-            else{
-                $offset = ($page - 1) * $nb_par_page;
-                $debut = (($page - 1) * $nb_par_page) + 1;
-                $fin =  $page * $nb_par_page;
-            }
-
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
-            // $categorie = formation::where('cfp_id', $cfp_id)->get();
             $categorie = formation::all();
+            $date_creation = module::all();
+            $niveau = Niveau::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
-                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
+                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.nom_module desc',[$cfp_id]);
             $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
-                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
-            $mod_publies = DB::select('select * from moduleformation where status = 2 and cfp_id = ? order by nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
-            // $mod_pub_intra = DB::select('select nom_projet,module_id,date_debut,date_fin,nom_groupe,status_groupe from v_projet_session_inter where type_formation_id = ?',[1]);
+                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by nom_module desc',[$cfp_id]);
+            $mod_publies = DB::select('select * from moduleformation where status = 2 and cfp_id = ? order by nom_module desc',[$cfp_id]);
 
-            // dd($mod_non_publies);
-            // dd($mod_publies);
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
-                return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
+                // return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
+                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -128,8 +71,111 @@ class ModuleController extends Controller
             $categorie = formation::all();
         }
 
-        return view('admin.module.module', compact('devise','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
+        // return view('admin.module.module', compact('devise','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
+        return view('admin.module.module', compact('devise','categorie','niveau','date_creation','mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
     }
+
+    // pagination non utiliser
+    // public function index($id = null, $page = null){
+    //     $module_model = new module();
+    //     $fonct = new FonctionGenerique();
+    //     $infos =null;
+    //     $categorie=null;
+    //     $id_user = Auth::user()->id;
+
+    //     $nb_par_page = 3;
+    //     if($page == null){
+    //         $page = 1.0;
+    //     }
+    //     if (Gate::allows('isCFP')) {
+    //         $cfp_id  = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
+    //         $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
+
+    //         $nb_module_mod_en_cours = DB::select('select count(module_id) as nb_module from moduleformation as mf where NOT EXISTS (
+    //             select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ?',[$cfp_id])[0]->nb_module;
+
+    //         $nb_module_mod_non_publies = DB::select('select count(module_id) as nb_module from moduleformation as mf where EXISTS (
+    //             select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ?',[$cfp_id])[0]->nb_module;
+    //         $nb_module_mod_publies = DB::select('select count(module_id) as nb_module from moduleformation where status = 2 and cfp_id = ?',[$cfp_id])[0]->nb_module;
+    //         $fin_page_en_cours = ceil($nb_module_mod_en_cours/$nb_par_page);
+    //         $fin_page_non_publies = ceil($nb_module_mod_non_publies/$nb_par_page);
+    //         $fin_page_publies = ceil($nb_module_mod_publies/$nb_par_page);
+    //         $debut_mod_publies = 0;
+    //         $debut_mod_non_publies = 0;
+    //         $debut_mod_en_cours = 0;
+    //         if($page == 1){
+
+    //             $offset = 0;
+    //             $debut_mod_en_cours = 1;
+    //             $debut_mod_non_publies = 1;
+    //             $debut_mod_publies = 1;
+    //             if($nb_par_page > $nb_module_mod_en_cours){
+    //                 $fin_page_en_cours = $nb_module_mod_en_cours;
+    //             }else{
+    //                 $fin_page_en_cours = $nb_par_page;
+    //             }
+    //             if($nb_par_page > $nb_module_mod_non_publies){
+    //                 $fin_page_non_publies = $nb_module_mod_non_publies;
+    //             }else{
+    //                 $fin_page_non_publies = $nb_par_page;
+    //             }
+    //             if($nb_par_page > $nb_module_mod_publies){
+    //                 $fin_page_publies = $nb_module_mod_publies;
+    //             }else{
+    //                 $fin_page_publies = $nb_par_page;
+    //             }
+
+    //         }
+    //         elseif($page == $fin_page_en_cours){
+
+    //             $offset = ($page - 1) * $nb_par_page;
+    //             $debut_mod_en_cours = (($page - 1) * $nb_par_page) + 1;
+    //             $fin_page_en_cours =  $nb_module_mod_en_cours;
+    //         }
+    //         elseif($page == $fin_page_non_publies){
+
+    //             $offset = ($page - 1) * $nb_par_page;
+    //             $debut_mod_non_publies = (($page - 1) * $nb_par_page) + 1;
+    //             $fin_page_non_publies =  $nb_module_mod_non_publies;
+    //         }
+    //         elseif($page == $fin_page_publies){
+    //             $offset = ($page - 1) * $nb_par_page;
+    //             $debut_mod_publies = (($page - 1) * $nb_par_page) + 1;
+    //             $fin_page_publies =  $nb_module_mod_publies;
+    //             dd( $fin_page_publies );
+    //         }
+    //         else{
+
+    //             $offset = ($page - 1) * $nb_par_page;
+    //             $debut_mod_en_cours = (($page - 1) * $nb_par_page) + 1;
+    //             $debut_mod_non_publies = (($page - 1) * $nb_par_page) + 1;
+    //             $debut_mod_publies = (($page - 1) * $nb_par_page) + 1;
+    //             $fin_page_en_cours =  $page * $nb_par_page;
+    //             $fin_page_non_publies =  $page * $nb_par_page;
+    //             $fin_page_publies =  $page * $nb_par_page;
+    //         }
+
+    //         $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
+    //         $categorie = formation::all();
+    //         $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
+    //             select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
+    //         $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
+    //             select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
+    //         $mod_publies = DB::select('select * from moduleformation where status = 2 and cfp_id = ? order by nom_module desc limit ? offset ?',[$cfp_id,$nb_par_page,$offset]);
+
+    //         if (count($infos) <= 0) {
+    //             return view('admin.module.guide');
+    //         } else {
+    //             return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut_mod_publies','debut_mod_non_publies','debut_mod_en_cours','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
+    //         }
+    //     }
+    //     if (Gate::allows('isSuperAdmin')) {
+    //         $infos = DB::select('select * from moduleformation');
+    //         $categorie = formation::all();
+    //     }
+
+    //     return view('admin.module.module', compact('categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
+    // }
 
     /*   ====================  Generate PDF gestion de Catalogue     */
 
@@ -263,15 +309,7 @@ class ModuleController extends Controller
     {
         $id = $request->Id;
         $module_en_cours = DB::select('select * from moduleformation where module_id = ?',[$id]);
-        $programme = DB::select('select * from v_cours_programme where module_id = ?',[$id]);
-        // $nom_formation = formation::where('id', $id_formation)->value('nom_formation');
-        // if ($programme == null) {
-            return response()->json($module_en_cours);
-        // }
-        // }else{
-        //     return response()->json($module_en_cours,$programme);
-        // }
-
+        return response()->json($module_en_cours);
     }
 
     public function modifier_mod(Request $request)
@@ -547,6 +585,10 @@ class ModuleController extends Controller
                 'message' => 'Data deleted successfully',
             ]
         );
+    }
+
+    public function recherche_ref_nomMod_frmt(){
+
     }
 
 }

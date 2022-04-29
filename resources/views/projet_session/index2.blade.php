@@ -269,7 +269,7 @@
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
                                                         <td>{{ $pj->nom_module }}</td>
-                                                        <td> 
+                                                        <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
                                                                     {{ $etp->nom_etp }}
@@ -295,7 +295,7 @@
                                                                     data-backdrop="static" class="bx bx-edit" style="font-size: 1.2rem;">
                                                                     </a></td>
                                                         @endcan
-                                                        
+
                                                         <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td>
 
                                                         {{-- debut supprimer session --}}
@@ -891,7 +891,7 @@
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
-                                        <td> 
+                                        <td>
                                             @foreach ($entreprise as $etp)
                                                 @if ($etp->groupe_id == $pj->groupe_id)
                                                     {{ $etp->nom_etp }}

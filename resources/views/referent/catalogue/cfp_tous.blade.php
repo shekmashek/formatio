@@ -82,12 +82,8 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-8 justify-content-center px-5">
+            <div class="col-10 justify-content-center px-5">
                 <div id="result">
                     @foreach ($cfps as $cfp)
                     <div class="row detail_content mb-5">

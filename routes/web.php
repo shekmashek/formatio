@@ -375,7 +375,7 @@ Route::resource('module','ModuleController')->except([
     'index','edit','destroy','update','create'
 ]);
 Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
-Route::get('/liste_module/{id?}/{page?}/{index?}','ModuleController@index')->name('liste_module');
+Route::get('/liste_module/{id?}/{page?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
 Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
@@ -390,6 +390,15 @@ Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('a
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
 
+//============================== recherche module ================
+Route::post('search_par_ref/{id}','ModuleController@search_par_ref')->name('search_par_ref');
+Route::get('search_par_date_pagination/{nbPage?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date_pagination')->name('search_par_date_pagination');
+Route::post('search_par_date/{nbPage?}','FactureController@search_par_date')->name('search_par_date');
+Route::get('search_par_num_fact_pagination/{nbPage?}/{num_fact?}','FactureController@search_par_num_fact_pagination')->name('search_par_num_fact_pagination');
+Route::post('search_par_num_fact/{nbPage?}','FactureController@search_par_num_fact')->name('search_par_num_fact');
+
+
+//==============================================
 
 
 // affichage info OF

@@ -292,7 +292,7 @@ class FormationController extends Controller
     /*  public function annuaire(){
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $pagination = Cfp::orderBy('nom')->paginate(9);
+            $pagination = Cfp::orderBy('nom')->paginate(1);
             return view('referent.catalogue.cfp_tous', compact('pagination','initial'));
         }
     } */

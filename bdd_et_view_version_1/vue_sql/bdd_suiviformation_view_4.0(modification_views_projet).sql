@@ -522,7 +522,7 @@ select
         s.activiter as activiter_stagiaire,
         s.branche_id,
         ifnull(d.nom_departement,' ') as nom_departement,
-         ifnull(d.nom_service,' ') as nom_service,
+        ifnull(d.nom_service,' ') as nom_service,
         mf.reference,
         mf.nom_module,
         mf.nom_formation,
