@@ -265,7 +265,14 @@ class EntrepriseController extends Controller
         $entreprise = entreprise::with('Secteur')->findOrFail($id);
         // $departement = DepartementEntreprise::with('Departement')->where('entreprise_id', $id)->get();
         $departement = DB::select('select * from departement_entreprises where entreprise_id = ?', [$id]);
+        if (Gate::allows('isReferent')) {
         return view('admin.entreprise.profile_entreprise', compact('entreprise', 'departement'));
+
+        }
+        else{
+            return view('admin.entreprise.profile_entreprises', compact('entreprise', 'departement'));
+        }
+        
     }
 
     public function getImage($path)
