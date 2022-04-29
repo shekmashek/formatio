@@ -26,6 +26,8 @@ class ModuleController extends Controller
 {
     public function __construct()
     {
+        $this->fonct = new FonctionGenerique();
+
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
@@ -35,6 +37,8 @@ class ModuleController extends Controller
 
     public function index($id = null, $page = null, $index = null)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $module_model = new module();
         $fonct = new FonctionGenerique();
         $infos =null;
@@ -116,7 +120,7 @@ class ModuleController extends Controller
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
-                return view('admin.module.module', compact('infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
+                return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -124,7 +128,7 @@ class ModuleController extends Controller
             $categorie = formation::all();
         }
 
-        return view('admin.module.module', compact('categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
+        return view('admin.module.module', compact('devise','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
     }
 
     /*   ====================  Generate PDF gestion de Catalogue     */
@@ -241,6 +245,8 @@ class ModuleController extends Controller
 
     public function show($id)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $categorie = formation::orderBy('nom_formation')->get();
         $module = module::where('formation_id', $id)->orderBy('Reference')->with('Formation')->get();
         return view('admin.module.module', compact('module', 'categorie'));
@@ -270,6 +276,8 @@ class ModuleController extends Controller
 
     public function modifier_mod(Request $request)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $id = $request->id;
         $fonct = new FonctionGenerique();
         if (Gate::allows('isCFP')) {
@@ -288,15 +296,18 @@ class ModuleController extends Controller
 
         }
 
-        return view('admin.module.modif_module', compact('module_en_modif', 'niveau'));
+        return view('admin.module.modif_module', compact('devise','module_en_modif', 'niveau'));
     }
 
     public function modifier_mod_prog(Request $request)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $id = $request->id;
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
-            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+            $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
+            // $cfp_id = cfp::where('user_id', $id_user)->value('id');
 
             $niveau = Niveau::all();
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
@@ -306,11 +317,13 @@ class ModuleController extends Controller
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
 
-        return view('admin.module.modif_module_prog', compact('module_en_modif', 'niveau'));
+        return view('admin.module.modif_module_prog', compact('devise','module_en_modif', 'niveau'));
     }
 
     public function modifier_mod_publies(Request $request)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $id = $request->id;
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
@@ -324,7 +337,7 @@ class ModuleController extends Controller
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
 
-        return view('admin.module.modif_module_publies', compact('module_en_modif', 'niveau'));
+        return view('admin.module.modif_module_publies', compact('devise','module_en_modif', 'niveau'));
     }
 
     public function update(Request $request)
@@ -410,6 +423,8 @@ class ModuleController extends Controller
 
     public function rechercheReference(Request $request)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $reference = $request->reference;
         if ($reference == '') {
             $module = module::orderBy('Reference')->with('formation')->get();
@@ -417,10 +432,11 @@ class ModuleController extends Controller
             $module = module::where('reference', $reference)->get();
         }
         $categorie = formation::orderBy('nom_formation')->get();
-        return view('admin.module.module', compact('module', 'categorie'));
+        return view('admin.module.module', compact('devise','module', 'categorie'));
     }
     public function recherchecategorie(Request $request)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         $ctg = $request->categorie;
 
@@ -431,7 +447,7 @@ class ModuleController extends Controller
         }
         $formation_id = formation::where('nom_formation', $ctg)->value('id');
         $module = module::where('formation_id', $formation_id)->get();
-        return view('admin.module.module', compact('categorie', 'module'));
+        return view('admin.module.module', compact('devise','categorie', 'module'));
     }
     public function getCategorie(Request $request)
     {
@@ -462,6 +478,7 @@ class ModuleController extends Controller
 
     public function affichageParModule($id){
         $id = request('id');
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         $categorie= DB::select('select * from formations where status = 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = '.$id.') as moduleExiste');
@@ -480,7 +497,7 @@ class ModuleController extends Controller
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
-            return view('admin.module.ajout_programme',compact('infos','cours','programmes','nb_avis','liste_avis','categorie','id'));
+            return view('admin.module.ajout_programme',compact('devise','infos','cours','programmes','nb_avis','liste_avis','categorie','id'));
         }
         else return redirect()->route('liste_module');
     }

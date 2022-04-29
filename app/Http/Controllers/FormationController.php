@@ -27,8 +27,9 @@ class FormationController extends Controller
         });
     }
     public function index($id = null)
-
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $id_user = Auth::user()->id;
         if (Gate::allows('isCFP')) {
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
@@ -52,7 +53,7 @@ class FormationController extends Controller
 
             $categorie = DB::select('select * from formations where status = 1 limit 5');
             $module = DB::select('select * from moduleformation where  status = 2 limit 6');
-            return view('referent.catalogue.formation', compact('categorie', 'module'));
+            return view('referent.catalogue.formation', compact('devise','categorie', 'module'));
         }
     }
 
@@ -188,9 +189,11 @@ class FormationController extends Controller
     }
     public function affichageParFormation($id)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2', [$id]);
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin from v_session_projet where formation_id = ? and type_formation_id = 2', [$id]);
-        return view('referent.catalogue.liste_formation', compact('infos', 'datas'));
+        return view('referent.catalogue.liste_formation', compact('devise','infos', 'datas'));
     }
 
     public function affichageTousCategories()
@@ -201,6 +204,8 @@ class FormationController extends Controller
 
     public function affichageParModule($id)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $id = request('id');
         $categories = DB::select('select * from formations where status = 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id . ' and status = 2) as moduleExiste');
@@ -219,7 +224,7 @@ class FormationController extends Controller
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
             $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_session_projet where module_id = ? and type_formation_id = 2', [$id]);
-            return view('referent.catalogue.detail_formation', compact('infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categories', 'id'));
+            return view('referent.catalogue.detail_formation', compact('devise','infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categories', 'id'));
         } else return redirect()->route('liste_formation');
     }
     public function categorie_formations()

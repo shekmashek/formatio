@@ -16,16 +16,6 @@ CREATE TABLE devise
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 insert into devise values
-(1,"Ariary","AR"),
-(2,"Euro","€"),
-(3,"Dollar","$");
-
-
-CREATE OR REPLACE VIEW v_devise AS SELECT
-  *
-FROM
-    devise
-ORDER BY
- id DESC;
+(1,"Ariary","AR");
 
 
