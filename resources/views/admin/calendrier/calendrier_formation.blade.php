@@ -333,7 +333,7 @@
                     var userDataDetail = JSON.parse(data);
 
                     var details = userDataDetail['details'];
-
+                    console.log(details);
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
                     var detail_id = userDataDetail['detail_id'];
 
@@ -438,9 +438,10 @@
                                         formateur.innerHTML = '';
                                         var lieu = document.getElementById('lieu');
                                         lieu.innerHTML = '';
-
+                                        @canany(['isReferent','isCFP','isFormateur'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
+                                        @endcanany
                                         // alert(JSON.stringify(response));
 
                                         var userDataDetail = JSON.parse(response);
@@ -454,6 +455,7 @@
                                         var initial_stg = userDataDetail['initial_stg'];
                                         var entreprises = userDataDetail['entreprises'];
                                         var formations = userDataDetail['formations'];
+
                                         var id_detail = userDataDetail['id_detail'];
                                         var images = '';
                                         var html = '';
@@ -467,6 +469,7 @@
                                         var etp = '';
                                         var printpdf = '';
                                         for (var $i = 0; $i < userData.length; $i++) {
+
                                             printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
                                             printpdf = printpdf.replace(":?",id_detail);
                                             $('#printpdf').append(printpdf);
@@ -500,6 +503,7 @@
                                                 // $('.photo_users').append(html);
                                             }
 
+
                                             $('#logo_formateur').append(logo_formateur);
 
                                             logo_etp+='<img src = "{{asset('images/entreprises/:?')}}"  style="width:80px">';
@@ -517,6 +521,7 @@
 
                                             formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+formations[$i].nom_formation+'</a>'
                                             formation = formation.replace(":?",formations[$i].formation_id);
+                                            alert(formations[$i].nom_formation);
                                             $('#formation').append(formation);
 
 
