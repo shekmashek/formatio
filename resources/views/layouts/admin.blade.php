@@ -525,6 +525,7 @@
                                         onclick="afficher_annuaire()"><span class="d-flex flex-column"><i class='bx bx-analyse'></i><span class="text_racourcis">Annuaire</span></span></a>
                                     @canany(['isReferent','isStagiaire','isManager'])
                                         <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
+                                        <a href="{{route('employes')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">Listes employées</span></span></a>
                                     @endcan
                                     @canany(['isCFP','isFormateur'])
                                     <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
@@ -538,14 +539,19 @@
                     @canany('isCFP')
                     <div class="d-flex flex-row">
                         <a href="{{route('liste_module')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-customize'></i><span
-                                    class="text_racourcis">Modules</span></span></a>
+                                class="d-flex flex-column"><i class='bx bxs-customize'></i><span class="text_racourcis">Modules</span></span>
+                        </a>
                         <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bx-library'></i><span
-                                    class="text_racourcis">Projets</span></span></a>
+                                class="d-flex flex-column"><i class='bx bx-library'></i><span class="text_racourcis">Projets</span></span>
+                        </a>
                         <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
-                                    class="text_racourcis">Agenda</span></span></a>
+                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i>
+                                <span class="text_racourcis">Agenda</span></span>
+                        </a>
+                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
+                            class="d-flex flex-column"><i class='bx bxs-group'></i>
+                            <span class="text_racourcis">Listes equipes</span></span>
+                    </a>
                     </div>
                     @endcanany
                     @canany('isStagiaire')
@@ -655,7 +661,7 @@
                                             <li><a class="dropdown-item" href="{{route('liste_departement')}}">
                                                 <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de l'entreprise
                                             </a></li>
-                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                            <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}">
                                                 <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
                                             </a></li>
                                             <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">

@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">tableau de compétence</h3>
+    <h3 class="text_header m-0 mt-1">Tableau de compétence</h3>
 @endsection
 @section('content')
 <link href="{{asset('css/tableau_competence.css')}}" rel="stylesheet">

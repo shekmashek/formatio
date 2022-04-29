@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text-white ms-5" style="font-size: 20px;">Programme</p>
+<p class="text_header m-0 mt-1" style="font-size: 20px;">Programme</p>
 @endsection
 @section('content')
 <div id="page-wrapper">

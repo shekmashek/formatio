@@ -1,8 +1,11 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification logo</h3>
+@endsection
 @section('content')
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profile_entreprise',$etp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+    <a href="{{route('aff_parametre_referent',$etp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
 </div>
 <center>            
 

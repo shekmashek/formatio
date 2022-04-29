@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Salle de formation</h3>
+@endsection
 @section('content')
     <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">

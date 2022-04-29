@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Ajout cours</h3>
+    <h3 class="text_header m-0 mt-1">Ajout cours</h3>
 @endsection
 @section('content')
 <div id="page-wrapper">
