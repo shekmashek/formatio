@@ -843,6 +843,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         if (count($para) != count($val)) {
             return "ERROR: tail des onnees parametre et value est different";
         } else {
+
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
                 if ($i + 1 < count($para)) {

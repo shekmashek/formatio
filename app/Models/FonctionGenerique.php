@@ -336,16 +336,21 @@ class FonctionGenerique extends Model
         if ($nbPag == null) {
             $nbPag = 0;
         }
-        $query = "SELECT * FROM " . $nomTab . " WHERE ";
+        $query = "SELECT * FROM " . $nomTab;
         if (count($para) != count($val)) {
             return "ERROR: tail des onnees parametre et value est different";
         } else {
-            for ($i = 0; $i < count($para); $i++) {
-                $query .= "" . $para[$i] . "" . $opt[$i] . " ? ";
-                if ($i + 1 < count($para)) {
-                    $query .= " AND ";
+
+            if(count($para)>0 && count($val)>0){
+                $query .= " WHERE ";
+                for ($i = 0; $i < count($para); $i++) {
+                    $query .= "" . $para[$i] . " " . $opt[$i] . " ? ";
+                    if ($i + 1 < count($para)) {
+                        $query .= " AND ";
+                    }
                 }
             }
+
             $query .= "  ORDER BY ";
 
             for ($j1 = 0; $j1 < count($tabOrderBy); $j1++) {
@@ -361,15 +366,45 @@ class FonctionGenerique extends Model
 
     public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
     {
+
+        // $nbPag= ($nbPag-1);
         $data =  DB::select($this->queryWhereTrieOrderBy($nomTab, $para, $opt, $val, $tabOrderBy, $order, $nbPag, $nb_limit), $val);
         return $data;
     }
 
-    public function nb_liste_pagination($totaleDataList, $nb_debut_pag)
+
+
+    public function queryPagination($nomTab, $col_para, $para = [], $opt = [], $val = [],$constraint)
     {
-        $nb_limit = 5;
+        $query = "SELECT ( COUNT(".$col_para.")) totale FROM " . $nomTab ;
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+
+            if(count($para)>0 && count($val)>0){
+                $query .= " WHERE ";
+                for ($i = 0; $i < count($para); $i++) {
+                    $query .= "" . $para[$i] . " ".$opt[$i]." ?";
+                    if ($i + 1 < count($para)) {
+                        $query .= " ".$constraint." ";
+                    }
+                }
+            }
+
+            return $query;
+        }
+    }
+
+    public function getNbrePagination($nomTab, $col_para, $para = [], $opt = [], $val = [],$constraint){
+        $data =  DB::select($this->queryPagination($nomTab, $col_para, $para, $opt, $val,$constraint), $val);
+        return $data[0]->totale;
+    }
+
+    public function nb_liste_pagination($totaleDataList, $nb_debut_pag,$nb_limit)
+    {
+        // $nb_limit = 5;
         if ($totaleDataList != null) {
-            $totale_pagination = $totaleDataList->totale_pagination;
+            $totale_pagination = $totaleDataList;
         } else {
             $totale_pagination = 0;
         }
@@ -400,6 +435,7 @@ class FonctionGenerique extends Model
             $fin_aff = ($nb_debut_pag - 1) + $nb_limit;
             $debut_aff = $nb_debut_pag;
         }
+
         $data["nb_limit"] = $nb_limit;
         $data["debut_aff"] = $debut_aff;
         $data["fin_aff"] = $fin_aff;
