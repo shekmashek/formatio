@@ -420,7 +420,7 @@ ul li a {
     border-left: 1px solid grey;
     float: right;
     z-index: 999;
-    overflow-y: scroll !important;
+    overflow-x: hidden;
 }
 
 .filtrer.afficher {

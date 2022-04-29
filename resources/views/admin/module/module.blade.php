@@ -844,8 +844,8 @@
                 <div class="col text-end">
                     <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
                 </div>
-                <hr class="mt-2">
-                <div class="row">
+                <hr class="mt-2 mb-0">
+                <div class="row gutter_none">
                     <div class="col">
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item">
@@ -861,7 +861,7 @@
                                         <form action="">
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-6 me-1 justify-content-center">
-                                                    <select name="ref" id="ref" class="form-control mb-2">
+                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Référence</option>
                                                         @foreach($mod_en_cours as $mod_prog)
                                                         <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
@@ -869,7 +869,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-6 justify-content-center">
-                                                    <select name="niveau" id="niveau" class="form-control mb-2">
+                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Niveau</option>
                                                         @foreach($niveau as $niv)
                                                         <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
@@ -879,13 +879,13 @@
                                             </div>
                                             <div class="form-row">
                                                 <div class="col justify-content-center">
-                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2">
+                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Nom de module</option>
                                                         @foreach($mod_en_cours as $mod_prog)
                                                         <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <select name="thematique" id="thematique" class="form-control mb-2">
+                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Thématique</option>
                                                         @foreach($categorie as $categ)
                                                         <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
@@ -896,7 +896,7 @@
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-5 me-1 justify-content-center">
                                                     <div class="form-groupe">
-                                                        <select name="date_creation" id="date_creation" class="form-control mb-2">
+                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
                                                             <option value="null" disable selected hidden>Création</option>
                                                             @foreach($date_creation as $date)
                                                             <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
@@ -905,7 +905,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-7 justify-content-center">
-                                                    <select name="modalites" id="modalites" class="form-control mb-2">
+                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Modalité Formation</option>
                                                         <option value="En ligne">En ligne</option>
                                                         <option value="Presentiel">Présentiel</option>
@@ -914,42 +914,45 @@
                                                 </div>
                                             </div>
                                             <div class="form-row d-flex flex-row">
-                                                <div class="col">
+                                                <div class="col-6">
                                                     <label>Durée en Heure</label>
                                                     <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour.value=value" class="slide_range">
-                                                        <input type="text" id="rangeHour" class="prix_range" readonly/>
+                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour.value=value" class="slide_range slide_hour">
+                                                        <input type="text" id="rangeHour" class="prix_range prix_slide" readonly/>
                                                     </div>
                                                 </div>
-                                                <div class="col">
+                                                <div class="col-6">
                                                     <label>Durée en Jours</label>
                                                     <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay.value=value" class="slide_range">
-                                                        <input type="text" id="rangeDay" class="prix_range" readonly/>
+                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay.value=value" class="slide_range slider_day">
+                                                        <input type="text" id="rangeDay" class="prix_range prix_slide" readonly/>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par personne en AR</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
-                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangePrimary.value=value" class="slide_range w-100">
-                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangeSecondary.value=value" class="slide_range w-100">
+                                                    <div class="d-flex flex-row">
+                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers">
+                                                    </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <input type="text" id="rangePrimary" class="prix_range" readonly/>
-                                                    <input type="text" id="rangeSecondary" class="prix_range" readonly/>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par groupe en AR</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
-                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangePrimary1.value=value" class="slide_range w-100">
-                                                    <input type="range" name="range" step="50000" min="100000" max="1000000" value="" onchange="rangeSecondary2.value=value" class="slide_range w-100">
+                                                    <div class="d-flex flex-row">
+                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe">
+                                                    </div>
                                                 </div>
                                                 <div class="col-4">
                                                     <input type="text" id="rangePrimary1" class="prix_range" readonly/>
-                                                    <input type="text" id="rangeSecondary2" class="prix_range" readonly/>
                                                 </div>
+                                            </div>
+                                            <div class="text-center mt-1">
+                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
                                             </div>
                                         </form>
                                     </div>
@@ -966,17 +969,100 @@
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form action="">
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-6 me-1 justify-content-center">
+                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Référence</option>
+                                                        @foreach($mod_non_publies as $mod_prog)
+                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-6 justify-content-center">
+                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Niveau</option>
+                                                        @foreach($niveau as $niv)
+                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="form-row">
                                                 <div class="col justify-content-center">
+                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Nom de module</option>
+                                                        @foreach($mod_non_publies as $mod_prog)
+                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Thématique</option>
+                                                        @foreach($categorie as $categ)
+                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-5 me-1 justify-content-center">
                                                     <div class="form-groupe">
-                                                        <select name="ref" id="ref" class="form-control">
-                                                            <option value="null" disable selected hidden>référence</option>
-                                                            @foreach($mod_en_cours as $mod_prog)
-                                                            <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
+                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
+                                                            <option value="null" disable selected hidden>Création</option>
+                                                            @foreach($date_creation as $date)
+                                                            <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-7 justify-content-center">
+                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Modalité Formation</option>
+                                                        <option value="En ligne">En ligne</option>
+                                                        <option value="Presentiel">Présentiel</option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-6">
+                                                    <label>Durée en Heure</label>
+                                                    <div class="d-flex flex-row">
+                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour1.value=value" class="slide_range slide_hour">
+                                                        <input type="text" id="rangeHour1" class="prix_range prix_slide" readonly/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Durée en Jours</label>
+                                                    <div class="d-flex flex-row">
+                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay1.value=value" class="slide_range slider_day">
+                                                        <input type="text" id="rangeDay1" class="prix_range prix_slide" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="m-0 mb-1">Intervalle de prix par personne en AR</p>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-8">
+                                                    <div class="d-flex flex-row">
+                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="rangeSecondary" class="prix_range" readonly/>
+                                                </div>
+                                            </div>
+                                            <p class="m-0 mb-1">Intervalle de prix par groupe en AR</p>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-8">
+                                                    <div class="d-flex flex-row">
+                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="rangeSecondary1" class="prix_range" readonly/>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-1">
+                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
                                             </div>
                                         </form>
                                     </div>
@@ -994,17 +1080,100 @@
                                     aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form action="">
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-6 me-1 justify-content-center">
+                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Référence</option>
+                                                        @foreach($mod_publies as $mod_prog)
+                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-6 justify-content-center">
+                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Niveau</option>
+                                                        @foreach($niveau as $niv)
+                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="form-row">
                                                 <div class="col justify-content-center">
+                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Nom de module</option>
+                                                        @foreach($mod_publies as $mod_prog)
+                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Thématique</option>
+                                                        @foreach($categorie as $categ)
+                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-5 me-1 justify-content-center">
                                                     <div class="form-groupe">
-                                                        <select name="ref" id="ref" class="form-control">
-                                                            <option value="null" disable selected hidden>référence</option>
-                                                            @foreach($mod_en_cours as $mod_prog)
-                                                            <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
+                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
+                                                            <option value="null" disable selected hidden>Création</option>
+                                                            @foreach($date_creation as $date)
+                                                            <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-7 justify-content-center">
+                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
+                                                        <option value="null" disable selected hidden>Modalité Formation</option>
+                                                        <option value="En ligne">En ligne</option>
+                                                        <option value="Presentiel">Présentiel</option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-6">
+                                                    <label>Durée en Heure</label>
+                                                    <div class="d-flex flex-row">
+                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour2.value=value" class="slide_range slide_hour">
+                                                        <input type="text" id="rangeHour2" class="prix_range prix_slide" readonly/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Durée en Jours</label>
+                                                    <div class="d-flex flex-row">
+                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay2.value=value" class="slide_range slider_day">
+                                                        <input type="text" id="rangeDay2" class="prix_range prix_slide" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="m-0 mb-1">Intervalle de prix par personne en AR</p>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-8">
+                                                    <div class="d-flex flex-row">
+                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers2">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="rangeThird" class="prix_range" readonly/>
+                                                </div>
+                                            </div>
+                                            <p class="m-0 mb-1">Intervalle de prix par groupe en AR</p>
+                                            <div class="form-row d-flex flex-row">
+                                                <div class="col-8">
+                                                    <div class="d-flex flex-row">
+                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe2">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" id="rangeThird1" class="prix_range" readonly/>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-1">
+                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
                                             </div>
                                         </form>
                                     </div>
@@ -1021,12 +1190,36 @@
 <script src="{{asset('js/modules.js')}}"></script>
 <script>
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            let lien = ($(e.target).attr('href'));
-            localStorage.setItem('activeTab', lien);
-        });
-        let activeTab = localStorage.getItem('activeTab');
-        if(activeTab){
-            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        let lien = ($(e.target).attr('href'));
+        localStorage.setItem('activeTab', lien);
+    });
+    let activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
+    document.getElementById('prix_pers').addEventListener('input', function (e) {
+        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+        rangePrimary.value = valeur;
+    });
+    document.getElementById('prix_groupe').addEventListener('input', function (e) {
+        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+        rangePrimary1.value = valeur;
+    });
+    document.getElementById('prix_pers1').addEventListener('input', function (e) {
+        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+        rangeSecondary.value = valeur;
+    });
+    document.getElementById('prix_groupe1').addEventListener('input', function (e) {
+        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+        rangeSecondary1.value = valeur;
+    });
+    document.getElementById('prix_pers2').addEventListener('input', function (e) {
+        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+        rangeThird.value = valeur;
+    });
+    document.getElementById('prix_groupe2').addEventListener('input', function (e) {
+        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+        rangeThird1.value = valeur;
+    });
 </script>
 @endsection

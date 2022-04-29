@@ -6,28 +6,14 @@
         <div class="row">
             <h4 class="text-center mb-3">Les Organismes de Formations près de chez vous</h4>
             <div class="row mb-5">
-
                 <div class="col-12 alphabet">
                     @foreach ($initial as $init)
                         <span title="{{$init->initial}}" class="lien_filtre activer" id="{{$init->initial}}" role="button">{{$init->initial}}</span>
                     @endforeach
-                    {{-- @php
-                        for($i ='A'; $i != 'AA'; $i++){
-                            if ($init->initial == $i) {
-                                echo '<span title="'.$init->initial.'" class="lien_filtre" id="'.$init->initial.'" role="button">'.$init->initial.'</span>';
-                            }
-                        }
-                    @endphp --}}
+                </div>
+            </div>
 
-                </div>
-            </div>
-            <div class="col-3 filtres">
-                <h6>Filtrer les résultats</h6>
-                <div class="row">
-                    <p>Categories</p>
-                </div>
-            </div>
-            <div class="col-9 justify-content-center px-5">
+            <div class="col-10 justify-content-center px-5">
                 <div id="result">
                 @foreach ($pagination as $cfp)
                 <div class="row detail_content mb-5">

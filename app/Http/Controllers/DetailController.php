@@ -158,12 +158,13 @@ class DetailController extends Controller
             inner join cfps on details.cfp_id = cfps.id
             where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
         }
+
         for ($i=0; $i < count($groupe_entreprises); $i++) {
             array_push($detail_id,DB::select('
                  SELECT  id as details_id  from details
                  where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
         }
-        return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
+     //   return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
     }
 
     public function informationModule(Request $request)

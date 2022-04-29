@@ -26,15 +26,11 @@
                                 }
                                 echo $jours1.'<br>';
                                 echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
-                                // if ($jours1 = $jours_today) {
-                                //         echo (strftime("%A", strtotime($jours1))."<br/>");
-                                //         echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
-                                //     }
                             @endphp
                         </p>
-                          @else
-                              <p> Aucun horaire</p>
-                          @endif
+                        @else
+                            <p> Aucun horaire</p>
+                        @endif
 
                         </div>
                         <div class="col-9">

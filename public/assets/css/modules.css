@@ -799,4 +799,28 @@ font-size: 0.850rem;
     background-color: #7635dc !important;
 }
 
+.slide_hour,
+.slider_day{
+    width: 70px;
+}
+
+.outline_none:focus{
+    box-shadow: none;
+    outline: none;
+}
+.outline:not(:placeholder-shown){
+    border: 1px solid rgb(38, 106, 243);
+}
+
+.prix_slide{
+    width: 50px;
+}
+
+.gutter_none{
+    --bs-gutter-x: 0rem !important;
+}
+.text_prix{
+    color: black;
+    font-weight: 500;
+}
 
