@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification photo</h3>
+@endsection
 @section('content')
 
 <div class="col" style="margin-left: 25px">

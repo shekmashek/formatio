@@ -94,6 +94,26 @@ class CfpController extends Controller
         $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
         return view('cfp.modification_profil.edit_adresse', compact('cfp'));
     }
+
+    public function edit_assujetti_cfp($id,Request $request){
+        $cfp_assujetti = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        // dd($cfp_assujetti);
+        return view('cfp.modification_profil.modification_assujetti_cfp', compact('cfp_assujetti'));
+    }
+
+    public function enregistrer_assujetti_cfp(Request $request,$id){
+        $id_assujeti = $request->assujetti;
+        // dd($id_assujeti);
+        if($id_assujeti == null){
+            return back()->withErrors("erreur_assujetti", "Choississez vos type d'assujetti à la TVA de votre entreprise avant de cliquer sur enregistrer");
+           }
+           else{
+            DB::update('update cfps set assujetti_id = ? where id = ?', [$request->assujetti,$id]);
+            // ('insert into values (?, ?)' entreprises set assujeti_id = ? where id = ?', [$request->assujetti,$id]);
+            return redirect()->route('affichage_parametre_cfp',[$id]);
+           }
+    }
+
     public function edit_email($id,Request $request){
         $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
         return view('cfp.modification_profil.edit_email', compact('cfp'));

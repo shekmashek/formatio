@@ -1,5 +1,8 @@
 @extends('./layouts/admin')
 @section('title')
+    <h3 class="text_header m-0 mt-1">Modification stat</h3>
+@endsection
+@section('title')
     <h3 class="text-white ms-5">Modification STAT</h3>
 @endsection
 @section('content')
@@ -8,7 +11,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profile_entreprise',$etp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('aff_parametre_referent',$etp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
     @if (\Session::has('erreur_stat'))

@@ -1120,6 +1120,10 @@ Route::get('/modification_logo_cfp/{id}','CfpController@edit_logo')->name('modif
 Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
 Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
 Route::get('/modification_adresse_organisme/{id}','CfpController@edit_adresse')->name('modification_adresse_organisme');
+
+Route::get('/modification_assujetti_cfp/{id}','CfpController@edit_assujetti_cfp')->name('modification_assujetti_cfp');
+Route::post('enregistrer_assujetti_cfp/{id}','CfpController@enregistrer_assujetti_cfp')->name('enregistrer_assujetti_cfp');
+
 Route::get('/modification_slogan/{id}','CfpController@edit_slogan')->name('modification_slogan');
 Route::get('/modification_site_web/{id}','CfpController@edit_site')->name('modification_site_web');
 Route::get('/modification_email/{id}','CfpController@edit_mail')->name('modification_email');
@@ -1160,6 +1164,13 @@ Route::get('modification_stat_entreprise/{id}','EntrepriseController@modificatio
 Route::post('enregistrer_stat_entreprise/{id}','EntrepriseController@enregistrer_stat_entreprise')->name('enregistrer_stat_entreprise');
 Route::get('modification_rcs_entreprise/{id}','EntrepriseController@modification_rcs_entreprise')->name('modification_rcs_entreprise');
 Route::post('enregistrer_rcs_entreprise/{id}','EntrepriseController@enregistrer_rcs_entreprise')->name('enregistrer_rcs_entreprise');
+
+
+Route::get('modification_assujetti_entreprise/{id}','EntrepriseController@modification_assujetti_entreprise')->name('modification_assujetti_entreprise');
+Route::post('enregistrer_assujetti_entreprise/{id}','EntrepriseController@enregistrer_assujetti_entreprise')->name('enregistrer_assujetti_entreprise');
+
+
+
 Route::get('modification_cif_entreprise/{id}','EntrepriseController@modification_cif_entreprise')->name('modification_cif_entreprise');
 Route::post('enregistrer_cif_entreprise/{id}','EntrepriseController@enregistrer_cif_entreprise')->name('enregistrer_cif_entreprise');
 Route::get('modification_adresse_entreprise/{id}','EntrepriseController@modification_adresse_entreprise')->name('modification_adresse_entreprise');

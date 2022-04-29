@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="hover" >
                                     <a href="{{ route('modification_nom_organisme',$cfp->id) }}">
-                                     <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
+                                     <h4 class="f-w-600 mt-5">{{$cfp->nom }}</h4>
                                     </a>
                                 </div>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
@@ -44,11 +44,24 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="card-block">
+                                <div class="col-lg-12 text-center d-flex flex-column">
+                                    <span style="font-size: 17px;"><i class='bx bx-money-withdraw'></i> Assujetti à la TVA</span>
+                                    @if($cfp->assujetti_id == null)
+                                    <a href="{{route('modification_assujetti_cfp',$cfp->id)}}">
+                                        <p class="mt-2 text-primary text-decoration-underline">incomplète</p>
+                                    </a>
+                                    @elseif($cfp->assujetti_id == 1)
+                                        <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"><span class="mt-2 text-primary text-decoration-underline">Assujetti</span></a>
+                                    @else 
+                                        <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"><span class="mt-2 text-primary text-decoration-underline">Non assujetti</span></a> 
+                                    @endif
+                                    <hr class="m-0 p-0 mt-0">
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <h6 class="m-b-20  f-w-600">Centre de formaton</h6>
-                                        <hr>
-                                        <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
+                                        {{-- <h6 class="m-b-20  f-w-600">Centre de formaton</h6> --}}
+                                        {{-- <hr> --}}
+                                        <p class="mt-3 m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
                                         <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
@@ -117,8 +130,8 @@
                                     </div>
 
                                     <div class="col-lg-6">
-                                        <br><br>
-                                        <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Horaire d'ouverture</p>
+                                        
+                                        <p class="mt-3 m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Horaire d'ouverture</p>
                                         <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_horaire',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
