@@ -1,15 +1,19 @@
 @extends('./layouts/admin')
 @section('content')
-    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Liste des salles</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+<div class="container" role="tabpanel">
+    <ul class="nav nav-tabs navigation_salle mt-4" id="myTab" role="tablist">
+        <li class="nav-item active" role="presentation">
+        <a href="#liste_salle" class="nav-link active" id="home-tab" data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Liste des salles</a>
         </li>
         <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajout d' une salle</button>
+            <a href="#ajout_salle" class="nav-link" id="profile-tab" data-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajout d' une salle</a>
         </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="tab-content"  id="myTabContent">
+        <div class="tab-pane fade show active" id="liste_salle" role="tabpanel" aria-labelledby="home-tab">
             @if (Session::has('salle_error'))
                 <div class="alert alert-danger ms-1 me-1">
                     <ul class="p-0">
@@ -52,7 +56,7 @@
                 </tbody>
               </table>
         </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade show" id="ajout_salle" role="tabpanel" aria-labelledby="profile-tab">
             <div class="container mt-1">
                 <div class="row">
                     <div class="col-md-6">
@@ -74,4 +78,43 @@
             </div>
         </div>
     </div>
+</div>
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        let lien = ($(e.target).attr('href'));
+        localStorage.setItem('activeTab', lien);
+    });
+    let activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+</script>
+<style>
+.navigation_salle .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item.active .nav-link {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+    transform: scale(1.1);
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+</style>
 @endsection

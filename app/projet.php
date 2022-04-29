@@ -36,7 +36,7 @@ class Projet extends Model
         }elseif(Gate::allows('isReferent') || Gate::allows('isManager') || Gate::allows('isStagiaire')){
             $sql = $sql." and entreprise_id = ".$role;
         }
-         
+
         if(empty($request->annee) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
             return $sql." order by date_projet desc limit ".$limit." offset ".$offset;
         }
@@ -101,6 +101,8 @@ class Projet extends Model
             dom.id as id_domaine,
             dom.nom_domaine,
             mf.nom_formation,
+            f.photos,
+            concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
             f.nom_formateur,
             f.prenom_formateur,
             f.mail_formateur,
@@ -125,6 +127,6 @@ class Projet extends Model
             mf.domaine_id = dom.id
         join type_formations tf
             on tf.id = p.type_formation_id
-        where d.cfp_id = '.$cfp_id.' and d.groupe_id = '.$groupe_id;
+        where d.cfp_id = '.$cfp_id.' and d.groupe_id = '.$groupe_id.' order by d.date_detail';
     }
 }

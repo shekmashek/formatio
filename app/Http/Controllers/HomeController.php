@@ -800,17 +800,20 @@ public function recherche_cfp(Request $request,$page = null)
 
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+            // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
-            $entreprise = $entp->getEntreprise($etp2, $etp1);
+            // $entreprise = $entp->getEntreprise($etp2, $etp1);
+            // dd($entreprise);
             $type_formation = DB::select('select * from type_formations');
 
             $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
             $module = $fonct->findWhere("v_module",['cfp_id','status'],[$cfp_id,2]);
             $payement = $fonct->findAll("type_payement");
-            $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
-            return view('projet_session.index2', compact('projet', 'data', 'entreprise', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'projet_formation','payement','entreprise','page','fin_page','nb_projet','debut','fin','nb_par_page'));
+            // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
+            $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
+            // dd($data);
+            return view('projet_session.index2', compact('projet', 'data', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id','entreprise', 'projet_formation','payement','page','fin_page','nb_projet','debut','fin','nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
@@ -843,11 +846,11 @@ public function recherche_cfp(Request $request,$page = null)
             // fin pagination
 
             $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?',[$cfp_id,$formateur_id,$nb_par_page,$offset]);
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+            // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
-            $entreprise = $entp->getEntreprise($etp2, $etp1);
-
+            // $entreprise = $entp->getEntreprise($etp2, $etp1);
+            $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
             $type_formation = DB::select('select * from type_formations');

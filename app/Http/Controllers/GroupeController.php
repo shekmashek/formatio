@@ -265,23 +265,42 @@ class GroupeController extends Controller
         return back();
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $id = $request->id_get;
-        // $del = groupe::where('id', $id)->delete();
-        DB::delete('delete from groupes where id = ?', [$id]);
-        return back();
+        try{
+            DB::beginTransaction();
+            DB::delete('delete from details where groupe_id = ?',[$id]);
+            DB::delete('delete from participant_groupe where groupe_id = ?',[$id]);
+            DB::delete('delete from mes_documents where groupe_id = ?',[$id]);
+            DB::delete('delete from ressources where groupe_id = ?',[$id]);
+            DB::delete('delete from evaluation_stagiaires where groupe_id = ?',[$id]);
+            DB::delete('delete from groupe_entreprises where groupe_id = ?',[$id]);
+            DB::delete('delete from groupes where id = ?',[$id]);
+            DB::delete('delete from groupe_entreprises where id = ?',[$id]);
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollBack();
+            return back()->with('groupe_error',$e->getMessage());
+        }
     }
 
     public function insert_session(Request $request)
     {
         try {
-     /*       if ($request->date_debut >= $request->date_fin) {
+            if($request->date_debut >= $request->date_fin){
                 throw new Exception("Date de début doit être inférieur date de fin.");
             }
-            if ($request->date_debut == null || $request->date_fin == null) {
+
+            if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
-            }  */
+            }
+            if($request->min_part >= $request->max_part ){
+                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            }
+            if($request->modalite == null){
+                throw new Exception("Vous devez choisir la modalité de formation.");
+            }
             DB::beginTransaction();
             $projet = $request->projet;
             $fonct = new FonctionGenerique();
@@ -289,8 +308,8 @@ class GroupeController extends Controller
             $groupe = new groupe();
             $nom_groupe = $groupe->generateNomSession($projet);
             DB::insert(
-                'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter) values(?,?,?,?,?,?,?,?,1,TRUE)',
-                [$request->max_part, $request->min_part, $nom_groupe, $projet, $session->module_id, $session->type_payement_id, $request->date_debut, $request->date_fin]
+                'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,activiter,modalite) values(?,?,?,?,?,?,?,?,1,TRUE,?)',
+                [$request->max_part, $request->min_part, $nom_groupe, $projet, $session->module_id, $session->type_payement_id, $request->date_debut, $request->date_fin,$request->modalite]
             );
             $last_insert_groupe = DB::table('groupes')->latest('id')->first();
 
@@ -299,7 +318,7 @@ class GroupeController extends Controller
             return back();
         } catch (Exception $e) {
             DB::rollback();
-            return back()->with('groupe_error', "insertion de la session échouée!");
+            return back()->with('groupe_error', $e->getMessage());
         }
     }
 
@@ -323,4 +342,5 @@ class GroupeController extends Controller
             return back()->with('groupe_error',"Modification du statut de la session échouée!");
         }
     }
+
 }

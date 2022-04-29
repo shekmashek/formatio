@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 
 class SalleFormationController extends Controller
 {
@@ -53,11 +54,10 @@ class SalleFormationController extends Controller
             $cfp_id = $resp->cfp_id;
             DB::insert('insert into salle_formation_of(cfp_id,salle_formation) values(?,?)',[$cfp_id,$request->salle]);
             return back();
+                // return redirect()->back()->withInput(['tabName'=>'insertion_salle']);
         }catch(Exception $e){
             return back()->with('salle_error', $e->getMessage());
         }
-        
-        
     }
 
 

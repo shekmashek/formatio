@@ -43,10 +43,16 @@
                                 $status='non';
                             @endphp
                             <div class="row m-0 p-0 d-flex flex-grow">
-                                <div class="col-md-1 text-center">{{ $pre->matricule }}</div>
+                                <div class="col-md-2 text-center">
+                                    @if ($pre->photos == null)
+                                        <span class="me-2" height="30px" width="30px" style="border-radius: 50%;">{{ $pre->sans_photos }}</span>{{$pre->matricule }}
+                                    @else
+                                        <img src="{{ asset('images/stagiaires/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
+                                    @endif
+                                </div>
                                 <div class="col-md-2 text-center">{{ $pre->nom_stagiaire }}</div>
                                 <div class="col-md-2 text-center">{{ $pre->prenom_stagiaire }}</div>
-                                <div class="col-md-3 text-center" id="resultat_presence_{{ $dt->detail_id . $pre->stagiaire_id }}">
+                                <div class="col-md-2 text-center" id="resultat_presence_{{ $dt->detail_id . $pre->stagiaire_id }}">
                                     <label class="present_label">
                                         <input class="m-2 present" type="radio" id="present"
                                             data-id="{{ $dt->detail_id . $pre->stagiaire_id }}"
@@ -87,7 +93,13 @@
                                 $status='oui';
                             @endphp
                             <div class="row m-0 p-0 d-flex flex-grow" id="edit_emargement_{{ $dt->detail_id.$pre->stagiaire_id }}">
-                                <div class="col-md-1 text-center">{{ $pre->matricule }}</div>
+                                <div class="col-md-2 text-center">
+                                    @if ($pre->photos == null)
+                                        <span class="me-2" height="30px" width="30px" style="border-radius: 50%;">{{ $pre->sans_photos }}</span>{{$pre->matricule }}
+                                    @else
+                                        <img src="{{ asset('images/stagiaires/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
+                                    @endif
+                                </div>
                                 <div class="col-md-2 text-center">{{ $pre->nom_stagiaire }}</div>
                                 <div class="col-md-2 text-center">{{ $pre->prenom_stagiaire }}</div>
                                 <div class="col-md-3 text-center mt-1" id="resultat_presence_{{ $pre->detail_id . $pre->stagiaire_id }}">
@@ -95,7 +107,7 @@
                                             {{ $pre->text_status }}
                                     </label>
                                 </div>
-                                <div class="col-md-2 mt-2">
+                                <div class="col-md-1 mt-2">
                                     <i type="button" class="bx bx-edit edit_presence"  data-detail="{{ $dt->detail_id }}" data-stagiaire="{{ $pre->stagiaire_id }}"></i>
                                 </div>
                             </div>

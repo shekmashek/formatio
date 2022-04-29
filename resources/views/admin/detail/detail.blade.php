@@ -75,7 +75,7 @@
     }
 
 
-.btn_ajouter_detail{    
+.btn_ajouter_detail{
     padding: .3rem 1rem;
     padding-bottom: .4rem;
     color: black;
@@ -134,7 +134,7 @@
     @csrf
     <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
     <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
-           
+
     <div class="row">
         <div class="col-md-4 p-0">
             <div class="row">
@@ -247,11 +247,11 @@
                                     <div class="input-group">
                                         {{-- <input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" id="lieu" required
                                             onblur="ville_Lieu();"> --}}
-                                            <select name="ville[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
+                                            <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
                                                 <option>Choississez votre salle de formation&hellip;</option>
                                                 @foreach ($salle_formation as $salle)
                                                     <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
-                                                @endforeach 
+                                                @endforeach
                                                 <option class="ajout_salle" value="ajout">Ajouter une autre salle</option>
                                             </select>
                                         <button id="removeRow" type="button"><i
@@ -385,7 +385,13 @@
                                             <td>{{ $d->h_debut }} h</td>
                                             <td>{{ $d->h_fin }} h</td>
                                             {{-- test commit --}}
-                                            <td>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}</td>
+                                            <td>
+                                                @if ($d->photos == null)
+                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photo }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                @else
+                                                    <img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                @endif
+                                            </td>
                                             @canany(['isCFP'])
                                                 <td>
                                                     <a href="" aria-current="page" data-bs-toggle="modal"

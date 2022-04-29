@@ -404,27 +404,12 @@ class DetailController extends Controller
 
     public function store(Request $request)
     {
-        $user_id = Auth::user()->id;
-        // $cfp_id = cfp::where('user_id', $user_id)->value('id');
-        $fonct = new FonctionGenerique();
-        $resp = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id]);
-        $cfp_id = $resp->cfp_id;
-
-        //condition de validation de formulaire
-        $request->validate(
-            [
-                'lieu' => ["required"],
-                'debut' => ["required"],
-                'fin' => ["required"]
-            ],
-            [
-                'lieu.required' => 'Veuillez remplir le champ',
-                'debut.required' => 'Veuillez remplir le champ',
-                'fin.required' => 'Veuillez remplir le champ'
-            ]
-        );
         try{
+            $user_id = Auth::user()->id;
             DB::beginTransaction();
+            $fonct = new FonctionGenerique();
+            $resp = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id]);
+            $cfp_id = $resp->cfp_id;
             for ($i = 0; $i < count($request['lieu']); $i++) {
                 if($request['lieu'][$i]== null){
                     throw new Exception("Vous devez completer le champ lieu.");
