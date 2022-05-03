@@ -14,6 +14,7 @@ use App\chefDepartement;
 use App\chefDepartementEntreprise;
 use App\responsable;
 use App\Models\FonctionGenerique;
+use App\Role;
 use App\RoleUser;
 
 use Illuminate\Support\Facades\Gate;
@@ -104,6 +105,59 @@ class DepartementController extends Controller
         $roles_not_actif_manager = $role->getNotRoleUser("v_role_user_etp_manager", $chef, $etp_id);
 
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
+    }
+
+    // filtre fonction
+    public function filtre(Request $request){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $emps = DB::table("stagiaires")
+                ->select("*")
+                ->where('entreprise_id', '=', $etp_id)
+                // ->where('fonction_stagiaire', 'like', '%'.$request->get('test').'%')
+                ->where('stagiaires.id',$request->test)
+                ->get();
+
+        // dd($emps);        
+        return view('admin.chefDepartement.filtre', compact('emps'));
+    }
+    
+    // filtre name
+    public function filtreName(Request $request){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $emps = DB::table("stagiaires")
+                ->select("*")
+                ->where('entreprise_id', '=', $etp_id)
+                ->where('nom_stagiaire', 'like', '%'.$request->get('name').'%')
+                ->orWhere('matricule', 'like', '%'.$request->get('name').'%')
+                ->get();
+
+        // dd($emps);    
+        return json_encode($emps);    
+    }
+
+    // filtre matricule
+    public function filtreMatricule(Request $request){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $emps = DB::table("stagiaires")
+                ->select("*")
+                ->where('entreprise_id', '=', $etp_id)
+                ->where('matricule', 'like', '%'.$request->get('matricule').'%')
+                ->get();
+
+        // dd($emps);   
+        return json_encode($emps);    
     }
 
     /*   public function liste()

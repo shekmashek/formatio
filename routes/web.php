@@ -1213,3 +1213,9 @@ Route::get('parametrage_salle','SalleFormationController@index')->name('parametr
 Route::post('enregistrer_salle_of','SalleFormationController@store')->name('enregistrer_salle_of');
 Route::get('supprimer_salle/{id?}','SalleFormationController@destroy')->name('supprimer_salle');
 Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('modifier_salle');
+
+//filtre employes
+// Route::get('/employes/filtre', 'DepartementController@filtre');
+Route::post('/employes/filtre/query', 'DepartementController@filtre')->name('stagiaire.filter');
+Route::get('/employes/filtre/query/name', 'DepartementController@filtreName')->name('stagiaire.filter.name');
+Route::get('/employes/filtre/query/matricule', 'DepartementController@filtreMatricule')->name('stagiaire.filter.matricule');
