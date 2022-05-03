@@ -332,14 +332,14 @@
                     var userDataDetail = JSON.parse(data);
                     var details = userDataDetail['details'];
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
-                    console.log(details);
+
                     var detail_id = userDataDetail['detail_id'];
 
 
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
-                            title: groupe_entreprises[0].nom_formation
+                            title: groupe_entreprises[$i][0].nom_formation
                             , start: details[$i][0].date_detail
                             ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i][0].nom_projet
@@ -363,7 +363,7 @@
                         , headerToolbar: {
                             left: 'prev,next'
                             , center: 'title'
-                            , right: 'dayGridMonth,timeGridWeek'
+                            , right: 'dayGridMonth'
 
                         }
                         , editable: true
@@ -496,10 +496,10 @@
                                                 logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
                                                 $('#logo_formateur').removeClass('randomColor photo_users');
                                             }
-                                            else if(test_photo=='non'){
+                                            else {
                                                 // console.log(photo_formateur[0]);
                                                 // alert(JSON.stringify(photo_formateur));
-                                                // logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
+                                                logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
                                                 // $('.photo_users').append(html);
                                             }
 

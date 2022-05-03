@@ -142,12 +142,15 @@ class DetailController extends Controller
             $groupe_id = DB::select('SELECT * FROM participant_groupe
                  WHERE stagiaire_id = ?',[$stagiaire_id]);
 
-            $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
-            INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-            INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-            INNER JOIN modules ON groupes.module_id = modules.id
-            INNER JOIN formations ON modules.formation_id = formations.id
-            WHERE groupe_entreprises.groupe_id = ?',[$groupe_id[0]->groupe_id]);
+            $groupe_entreprises = array();
+            for ($i=0; $i < count($groupe_id); $i++) {
+                array_push($groupe_entreprises,DB::select('SELECT * FROM groupe_entreprises
+                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                WHERE groupe_entreprises.groupe_id = ?',[$groupe_id[$i]->groupe_id]));
+            }
 
             $details = array();
             $detail_id = array();

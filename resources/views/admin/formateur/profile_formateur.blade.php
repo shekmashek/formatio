@@ -101,23 +101,24 @@
                                                 </div>
                                             </div>
                                         </span>
-                                    @else
+                                        @else
                                         <img src="{{asset('images/formateurs/'.$formateur->photos)}}" class="image-ronde">
                                         @endif
                                     </a>
                                     </div>
                                     <div  style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_nom',$formateur->id)}}" >
-                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;">NOM<span style="float: right;">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        <p class="p-1 m-0" id="nom" style="font-size: 12px;">NOM<span style="float: right;">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
-                                     </p></a>
+                                        </p></a>
 
-                                    </div>
-                                    <div id="nom" style="border-bottom: solid 1px #e8dfe5;">
-                                     <a href="{{route('editer_naissance',$formateur->id)}}" >
-                                     <p class="p-1 m-0" style="font-size: 12px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($formateur->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                        </div>
+                                        <div id="nom" style="border-bottom: solid 1px #e8dfe5;">
+                                        <a href="{{route('editer_naissance',$formateur->id)}}" >
+                                        <p class="p-1 m-0" style="font-size: 12px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($formateur->date_naissance))}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
-                                     </p></a>
+                                        </p>
+                                    </a>
 
                                     </div>
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">

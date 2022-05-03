@@ -387,7 +387,7 @@
                         , headerToolbar: {
                             left: 'prev,next'
                             , center: 'title'
-                            , right: 'dayGridMonth,timeGridWeek'
+                            , right: 'dayGridMonth'
 
                         }
                         , editable: true
