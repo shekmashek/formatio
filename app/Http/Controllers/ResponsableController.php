@@ -306,7 +306,7 @@ class ResponsableController extends Controller
             // } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
                 $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
-                // dd($branch);
+              
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
                 // dd('eto2');

@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Affichage du parametre de centre de formation</h3>
+    <h3 class="text_header m-0 mt-1">Paramètrage du centre de formation</h3>
 @endsection
 @section('content')
 <style>

@@ -80,7 +80,13 @@
 
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
                     <a href="" class="none">
-                        <p class="p-1 m-0" style="font-size: 10.3px;">Branche<span style="float: right;">{{$branche->nom_branche}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                         <p class="p-1 m-0" style="font-size: 10.3px;">Branche<span style="float: right;">
+                        @if($branche !=null)
+                     {{$branche->nom_branche}} 
+                        @else 
+                        incomplète
+                        @endif
+                      &nbsp;<i class="fas fa-angle-right"></i></span></p>
                     </a>
                 </div>
                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>

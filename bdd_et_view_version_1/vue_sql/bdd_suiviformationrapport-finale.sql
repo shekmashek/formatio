@@ -44,14 +44,6 @@ select
     from details,sessions
     where session_id = sessions.id  group by projet_id,lieu,session_id,date_debut,date_fin;
 
-/*
-insert into formateurs(nom_formateur,prenom_formateur,photos,numero_formateur,mail_formateur) values('RANDRIAMANJAKONY','Iary','/rdrBF0Cl5qXhMcoaE1Eshx3vM3LBDWBYzgY4dnIJ.png','0023853213','iary@gmail.com');
-insert into formateurs(nom_formateur,prenom_formateur,photos,numero_formateur,mail_formateur) values('RAMAHENINARISON','Lovaniaina Olivier','/rdrBF0Cl5qXhMcoaE1Eshx3vM3LBDWBYzgY4dnIJ.png','865120102','lova@gmail.com');
-insert into formateurs(nom_formateur,prenom_formateur,photos,numero_formateur,mail_formateur) values('RASOLOFONIRINA','Urluc','/rdrBF0Cl5qXhMcoaE1Eshx3vM3LBDWBYzgY4dnIJ.png','52013102100','urluc@gmail.com');
-insert into formateurs(nom_formateur,prenom_formateur,photos,numero_formateur,mail_formateur) values('RAKOTONDRASOA','Francky ','/rdrBF0Cl5qXhMcoaE1Eshx3vM3LBDWBYzgY4dnIJ.png','5121231231','francky@gmail.com');
-insert into formateurs(nom_formateur,prenom_formateur,photos,numero_formateur,mail_formateur) values('RAKOTOMALALA','Tiavina  ','/rdrBF0Cl5qXhMcoaE1Eshx3vM3LBDWBYzgY4dnIJ.png','5121054015','tiavina@gmail.com');
-*/
-
 create table but_objectif(
     id bigint(20) unsigned primary key not null auto_increment,
     description TEXT,
