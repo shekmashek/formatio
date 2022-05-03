@@ -83,24 +83,25 @@
                             <td role="button" onclick="afficherInfos();"><img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span></td>
 
                             <td>
-                                {{-- <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a> --}}
+                                <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
 
+                            </td>
+                            <td>
                                 <div class="dropdown mt-3">
                                     <div class="btn-group dropstart">
                                         <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li class="dropdown-item">
+                                            {{-- <li class="dropdown-item">
                                                 <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
                                                 </a>
-                                            </li>
+                                            </li> --}}
                                             <li>
                                                 <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-
                             </td>
                             {{-- modal delete  --}}
                             <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -853,12 +853,12 @@ create or replace view v_projet_formation as
 -- from groupes g
 -- join projets p on p.id = g.projet_id
 -- join moduleformation mf on g.module_id = mf.module_id
--- group by 
+-- group by
 --     g.projet_id,
 --     p.nom_projet,
 --     mf.formation_id,
 --     mf.nom_formation,
---     p.cfp_id; 
+--     p.cfp_id;
 
 
 
@@ -868,7 +868,7 @@ select
     f.photos
 from details d
 join formateurs f on f.id = d.formateur_id
-group by 
+group by
     d.groupe_id,
     d.formateur_id,
     f.photos;
