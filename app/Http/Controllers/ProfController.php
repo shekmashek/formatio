@@ -75,18 +75,18 @@ class ProfController extends Controller
 
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-    
+
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             // $formateur = $forma->getFormateur($formateur1, $formateur2);
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             // dd($formateur);
             // $formateurs=formateur::findorFail($cfp_id);
-         
+
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
-            
+
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-            
+
             return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
 
             if (count($formateur) <= 0) {
@@ -114,7 +114,7 @@ class ProfController extends Controller
         // $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
 
         $formateur = DB::select("select * from v_demmande_cfp_formateur where formateur_id = ?", [$id]);
-       
+
         return response()->json($formateur);
     }
 
@@ -480,26 +480,27 @@ class ProfController extends Controller
          if (Gate::allows('isFormateur')){
             $id = formateur::where('user_id', Auth::user()->id)->value('id');
             $competence = competenceFormateur::where('formateur_id', $id)->get();
-
-
             $experience = experienceFormateur::where('formateur_id', $id)->get();
             $formateur = formateur::findOrFail($id);
             if($formateur->genre_id == 1) $genre = "Femme";
             if($formateur->genre_id == 2) $genre = "Homme";
             if($formateur->genre_id == null) $genre = " ";
+            return view('admin.formateur.profile_formateur', compact('formateur','genre','competence','experience'));
          }
          else{
             $formateur = formateur::findOrFail($id);
+            $initial_formateur = DB::select('select SUBSTRING(nom_formateur, 1, 1) AS nm,  SUBSTRING(prenom_formateur, 1, 1) AS pr from formateurs where id =  ?', [$id ]);
+
             $competence = competenceFormateur::where('formateur_id', $id)->get();
             $experience = experienceFormateur::where('formateur_id', $id)->get();
             if($formateur->genre_id == 1) $genre = "Femme";
             if($formateur->genre_id == 2) $genre = "Homme";
             if($formateur->genre_id == null) $genre = " ";
+            return view('profil_public.formateur', compact('initial_formateur','formateur','genre','competence','experience'));
 
          }
 
 
-        return view('admin.formateur.profile_formateur', compact('formateur','genre','competence','experience'));
     }
 
     //modification  profil

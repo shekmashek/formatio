@@ -339,7 +339,12 @@
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
-                            title: groupe_entreprises[$i][0].nom_formation
+                            @can('isStagiaire')
+                                title: groupe_entreprises[$i][0].nom_formation
+                            @endcan
+                            @can('isReferent')
+                            title: groupe_entreprises[$i].nom_formation
+                            @endcan
                             , start: details[$i][0].date_detail
                             ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i][0].nom_projet
