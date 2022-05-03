@@ -192,7 +192,7 @@
                                             <select name="formateur[]" style="height: 2.361rem" id=""
                                                 class="form-control  my-1" required>
                                                 <option value="" selected hidden> Choisir formateur </option>
-                                                @foreach ($formateur_cfp as $format)
+                                                @foreach ($formateur as $format)
                                                     <option value="{{ $format->formateur_id }}">
                                                         {{ $format->nom_formateur . ' ' . $format->prenom_formateur }}
                                                     </option>
@@ -387,7 +387,7 @@
                                             {{-- test commit --}}
                                             <td>
                                                 @if ($d->photos == null)
-                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photo }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
                                                     <img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif

@@ -206,19 +206,6 @@
         padding: 0.1rem 0.5rem !important;
     }
 
-    .planning {
-        text-align: left;
-        padding-left: 6px;
-        height: 100%;
-        font-size: 12px;
-        /* background-color: rgba(230, 228, 228, 0.39);
-    border-bottom: 1px solid rgb(187, 183, 183); */
-    }
-
-    .planning:hover {
-        background-color: #eeeeee;
-    }
-
     .dernier_planning {
         text-align: left;
         padding-left: 6px;
@@ -287,6 +274,72 @@
         color: rgb(0, 0, 0);
     }
 
+    .planning {
+        text-align: left;
+        padding-left: 6px;
+        height: 100%;
+        font-size: 12px;
+        margin-bottom: .3rem;
+        margin-top: .3rem;
+        /* transform: rotate(-45deg); */
+        /* overflow: hidden;
+        background: linear-gradient(to right, #fff 20%, #fff 40%, #ECD08C 50%, #ECD08C 55%, #fff 70%, #fff 100%);
+        background-size: 200% auto;
+        
+        animation: shine 3s linear infinite; */
+    }
+
+    /* .test_animation{
+        position: absolute;
+        display: block;
+        overflow: hidden;
+        background: linear-gradient(to right, #fff 20%, #fff 40%, #ECD08C 50%, #ECD08C 55%, #fff 70%, #fff 100%);
+        background-size: 200% auto;
+    } */
+
+    .planning:hover {
+        background-color: #eeeeee;
+    }
+
+    @keyframes shine {
+        to {
+        background-position: 200% center;
+        }
+    }fff
+
+    @keyframes test{
+        0%{
+            /* opacity: 1; */
+            /* color: red; */
+            /* font-size: .1rem; */
+            /* background-color: #fdaed5; */
+            
+        }
+        25%{
+            /* font-size: .8rem;
+            color: black; */
+        }
+        50%{
+            /* transition: all .5s ease;
+            transform: scale(1.1); */
+        }
+        75%{
+            /* color: #7635dc; */
+        }
+        100%{
+            /* opacity: 1; */
+            /* transform: rotateZ(360deg); */
+        }
+    }
+
+
+    /* .test_animation{
+        animation-name: test;
+        animation-duration: 3s;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+    } */
+
     /* .btn_modifier_statut:focus{
     color: blue;
     text-decoration: none;
@@ -322,13 +375,13 @@
                 <div class="d-flex m-0 p-0 height_default">
                     <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong> </p>
                     <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @canany(['isCFP', 'isReferent'])
+                    &nbsp;&nbsp;&nbsp;
+                    {{-- @canany(['isCFP', 'isReferent'])
                         <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
                         <p class="text-dark mt-3"> <strong>@php
                             echo number_format($prix->montant_session, 2, '.', ' ');
                         @endphp Ar</strong> </p>
-                    @endcanany
+                    @endcanany --}}
 
                     <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
                     <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
@@ -418,7 +471,7 @@
                         <div class="nav-item active" role="presentation">
                             <a href="#detail" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between py-1 active"
+                                <button class="planning d-flex justify-content-between py-1 active test_animation"
                                     onclick="openCity(event, 'detail')" style="width: 100%">
                                     <p class="m-0 p-0">PLANNING</p>
                                     @if ($test == 0)
@@ -434,7 +487,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between py-1 test_animation"
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
                                         <p class="m-0 p-0">APPRENANTS</p>
                                         @if (count($stagiaire) == 0)

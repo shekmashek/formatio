@@ -252,7 +252,7 @@
                                         @if ($prj->type_formation_id == 1)
                                             <th></th>
                                         @endif
-                                        <th></th>
+                                        {{-- <th></th> --}}
                                     </thead>
                                     <tbody class="tbody_projet">
 
@@ -296,7 +296,7 @@
                                                                     </a></td>
                                                         @endcan
 
-                                                        <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td>
+                                                        {{-- <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td> --}}
 
                                                         {{-- debut supprimer session --}}
                                                             <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
