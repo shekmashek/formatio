@@ -61,9 +61,9 @@ CREATE TABLE `branches` (
 
 CREATE TABLE `abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date NOT '0000-0000-00',
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` date DEFAULT null,
+  `date_debut` date DEFAULT null,
+  `date_fin` date DEFAULT null,
   `mode_financement_id` bigint(20) UNSIGNED NOT NULL  REFERENCES mode_financements(id) ON DELETE CASCADE,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_role_id` bigint(20) UNSIGNED NOT NULL  REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
@@ -90,8 +90,8 @@ CREATE TABLE chef_departements (
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   photos varchar(255) COLLATE utf8mb4_unicode_ci,
   activiter boolean not null default true,
-  created_at timestamp NULL DEFAULT 'XXXXXX',
-  updated_at timestamp NULL DEFAULT 'XXXXXX'
+  created_at timestamp,
+  updated_at timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -99,8 +99,8 @@ CREATE TABLE `chef_dep_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `departement_entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES departement_entreprises(id) ON DELETE CASCADE,
   `chef_departement_id` bigint(20) UNSIGNED NOT NULL REFERENCES chef_departements(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT 'XXXXXXX',
-  `updated_at` timestamp NULL DEFAULT 'XXXXXXX'
+  `created_at` timestamp ,
+  `updated_at` timestamp 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -130,8 +130,8 @@ CREATE TABLE responsables (
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   activiter boolean not null default true,
   prioriter boolean not null default false,
-  created_at timestamp NULL DEFAULT current_timestamp(),
-  updated_at timestamp NULL DEFAULT current_timestamp()
+  created_at timestamp ,
+  updated_at timestamp 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

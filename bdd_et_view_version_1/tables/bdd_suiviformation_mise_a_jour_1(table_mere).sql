@@ -12,7 +12,7 @@ INSERT INTO genre (id,genre, created_at, updated_at) VALUES
 CREATE TABLE roles (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   role_name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+  role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT  current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -160,7 +160,7 @@ CREATE TABLE `tarif_categories` (
 
 
 CREATE TABLE cfps (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,74
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
@@ -178,8 +178,7 @@ CREATE TABLE cfps (
   updated_at timestamp NULL DEFAULT current_timestamp(),
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default 'XXXXXXX',
-  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
+  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE horaires (
@@ -204,15 +203,15 @@ CREATE TABLE reseaux_sociaux (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL;
-alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
-alter table cfps rename column domaine_de_formation to slogan;
+-- alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL;
+-- alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
+-- alter table cfps rename column domaine_de_formation to slogan;
 
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date NOT current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` date DEFAULT NULL,
+  `date_debut` date DEFAULT NULL,
+  `date_fin` date DEFAULT NULL,
   `mode_paiement` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_role_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
@@ -228,14 +227,14 @@ CREATE TABLE responsables_cfp(
   nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  date_naissance_resp_cfp date default current_timestamp(),
+  date_naissance_resp_cfp date default null,
   cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX',
   email_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
   fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
