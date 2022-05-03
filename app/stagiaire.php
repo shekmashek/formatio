@@ -56,11 +56,11 @@ class Stagiaire extends Model
     public function insert_multi($doner, $user_id,$entreprise_id)
     {
         $data = [
-            $doner["matricule"],$doner["nom"],$doner["prenom"],$doner["sexe"],$doner["dte"],$doner["cin"],$doner["email"],$doner["tel"],
-            $doner["fonction"],$entreprise_id,$user_id,$doner["departement_id"]
+            $doner["matricule"],$doner["nom"],$doner["prenom"],$doner["cin"],$doner["email"],
+            $entreprise_id,$user_id
         ];
 
-        DB::insert('insert into stagiaires (matricule,nom_stagiaire,prenom_stagiaire,genre_stagiaire,date_naissance,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,entreprise_id,user_id,photos,adresse,niveau_etude,lieu_travail,departement_id,created_at) values (?,?,?,?,?,?,?,?,?,?,?,"##","##","##","##",?,NOW())', $data);
+        DB::insert('insert into stagiaires (matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,entreprise_id,user_id,created_at) values (?,?,?,?,?,?,?,NOW())', $data);
         DB::commit();
     }
 }

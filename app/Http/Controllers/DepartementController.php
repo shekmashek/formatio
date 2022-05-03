@@ -68,6 +68,7 @@ class DepartementController extends Controller
         return back();
     }
 
+
     public function liste()
     {
         $fonct = new FonctionGenerique();

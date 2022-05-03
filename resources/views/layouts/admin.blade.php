@@ -253,6 +253,14 @@
             @endcanany
             @canany(['isReferent'])
             <li>
+                <a href="{{route('employes.liste')}}" class="d-flex nav_linke">
+                    <i class='bx bxs-user-rectangle'></i>
+                    <span class="links_name">Mes employer</span>
+                </a>
+
+            </li>
+
+            <li>
                 <a href="{{route('employes')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
                     <span class="links_name">Equipe admnistrative</span>

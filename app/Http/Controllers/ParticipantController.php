@@ -49,6 +49,13 @@ class ParticipantController extends Controller
         return response()->json($service);
     }
 
+
+
+    public function liste_employer(){
+
+        return view("admin.entreprise.employer.liste_employer");
+    }
+
     public function index()
     {
         $email_error = "";
@@ -1013,23 +1020,14 @@ class ParticipantController extends Controller
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $liste_dep = $fonct->findWhere("departement_entreprises", ["entreprise_id"], [$entreprise_id]);
-
-            return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep'));
+            return view("admin.entreprise.employer.export_nouveau_employer", compact('liste_dep'));
         }
 
         if (Gate::allows('isManager')) {
             $chef_id = $fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->id;
             $dep_etp_id = $fonct->findWhereMulitOne("chef_dep_entreprises", ["chef_departement_id"], [$chef_id])->departement_entreprise_id;
             $liste_dep = $fonct->findWhere("v_departement", ["departement_id"], [$dep_etp_id]);
-
-            return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep'));
-        }
-
-        if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin')) {
-            $liste_dep = $fonct->findAll("departements");
-            $liste_etp = $fonct->findAll("entreprises");
-
-            return view('admin.participant.export_excel_nouveau_participant', compact('liste_dep', 'liste_etp'));
+            return view('admin.entreprise.employer.export_nouveau_employer', compact('liste_dep'));
         }
     }
 
@@ -1044,18 +1042,13 @@ class ParticipantController extends Controller
             $doner["matricule"] = $req["matricule_" . $i];
             $doner["nom"]  = $req["nom_" . $i];
             $doner["prenom"]  = $req["prenom_" . $i];
-            $doner["sexe"]  = $req["sexe_" . $i];
-            $doner["dte"]  = $req["naissance_" . $i];
             $doner["cin"]  = $req["cin_" . $i];
             $doner["email"]  = $req["email_" . $i];
             $doner["tel"]  = $req["tel_" . $i];
-            $doner["fonction"]  = $req["fonction_" . $i];
-            $doner["departement_id"]  = $req["departement_id"];
-
             if ($req["matricule_" . $i] != null && $req["nom_" . $i] != null) {
                 if (
-                    $req["prenom_" . $i] != null && $req["sexe_" . $i] != null && $req["naissance_" . $i] != null && $req["cin_" . $i] != null
-                    && $req["email_" . $i] != null && $req["tel_" . $i] != null && $req["fonction_" . $i] != null
+                   $req["cin_" . $i] != null
+                    && $req["email_" . $i] != null
                 ) {
 
                     $verify = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req["email_" . $i]]);
@@ -1065,12 +1058,16 @@ class ParticipantController extends Controller
                         $user = new User();
                         $user->name = $req["nom_" . $i];
                         $user->email = $req["email_" . $i];
+                        $user->cin = $req["cin_" . $i];
                         $ch1 = "0000";
                         $user->password = Hash::make($ch1);
-                        $user->role_id = '3';
+                        // $user->role_id = '3';
                         $user->save();
-
-                        $user_stg_id = User::where('email', $req["email_" . $i])->value('id');
+                        $user_stg_id = $fonct->findWhereMulitOne("users",["email"],[$req["email_" . $i]])->id;
+                        //  User::where('email', $req["email_" . $i])->value('id');
+                        DB::insert("insert into role_users(user_id,role_id,activiter) values(?,?,?)",[$user_stg_id, 3,"1"]);
+                        DB::commit();
+                        // dd($user_stg_id);
 
                         if (Gate::allows('isReferent')) {
                             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
@@ -1080,7 +1077,6 @@ class ParticipantController extends Controller
 
                             Mail::to($doner['email'])->send(new save_new_compte_stagiaire_Mail($doner["nom"] . ' ' . $doner["prenom"], $doner['email'], $etp->nom_etp));
 
-                            return back()->with('success', "terminé!");
                         }
                     } else {
                         return back()->with('error', "erreur,l'une des données existes déjà!");
@@ -1092,5 +1088,8 @@ class ParticipantController extends Controller
                 return back()->with('error', "champs vide");
             }
         }
+
+        return back()->with('success', "terminé!");
+
     }
 }
