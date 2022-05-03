@@ -39,61 +39,40 @@
                                 La première étape pour pouvoir publier votre module consiste à compléter votre programme
                                 de formation et vos cours.</p>
                         </div>
-                        <div class="d-flex">
-                            <div class="col-12 ps-3">
-                                <div class="row pading_bas">
-                                    @if($mod_en_cours == null)
-                                    <div class="si_vide row mt-4">
-                                        <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                        <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide'></i></a>
-                                    </div>
-                                    @else
-                                    @foreach($mod_en_cours as $mod)
-                                    <div class="col-4 list_module">
-                                        <div class="row detail__formation__result new_card_module bg-light mb-3"
-                                            id="border_premier">
-                                            <div class=" detail__formation__result__content">
-                                                <div class="detail__formation__result__item ">
-                                                    <h4 class="mt-3 ">
-                                                        <span id="preview_module">
-                                                            <span class="acf-nom_module">{{$mod->nom_module}}</span>
-                                                        </span>
-                                                    </h4>
-                                                    <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
-                                                    <p id="preview_descript"><span class="acf-description" style="font-size: 0.850rem">{{$mod->description}}</span></p>
-                                                    <div class="d-flex ">
-                                                        <div class="col-6 detail__formation__result__avis">
-                                                            <div style="--note: 4.5;">
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star'></i>
-                                                                <i class='bx bxs-star-half'></i>
-                                                            </div>
-                                                            <span><strong>0.0</strong>/5 (aucun avis)</span>
-                                                            @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                            <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                            @endif
-                                                        </div>
-                                                        <div class="col-6 ms-3 w-100">
-                                                            <p class="m-0">
-                                                                <span class="new_module_prix">
-                                                                    @php
-                                                                    echo number_format($mod->prix, 0, ' ', ' ');
-                                                                    @endphp
-                                                                    &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
-                                                            </p>
-                                                            <p class="m-0 ">
-                                                                <span class="new_module_prix">
-                                                                    @if($mod->prix_groupe == null)
-                                                                    <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                                    @else
-                                                                        @php
-                                                                        echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                                        @endphp
-                                                                        &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
-                                                                    @endif
-                                                            </p>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col-12 ps-3">
+                            <div class="row pading_bas">
+                                @if($mod_en_cours == null)
+                                <div class="si_vide row mt-4">
+                                    <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
+                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                </div>
+                                @else
+                                @foreach($mod_en_cours as $mod)
+                                <div class="col-4 list_module">
+                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
+                                        id="border_premier">
+                                        <div class=" detail__formation__result__content">
+                                            <div class="detail__formation__result__item ">
+                                                <h4 class="mt-3 ">
+                                                    <span id="preview_module">
+                                                        <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                    </span>
+                                                </h4>
+                                                <span id="preview_categ"><span class=" acf-categorie"
+                                                        style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
+                                                <p id="preview_descript"><span class="acf-description"
+                                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
+                                                <div class="d-flex ">
+                                                    <div class="col-6 detail__formation__result__avis">
+                                                        <div style="--note: 4.5;">
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star'></i>
+                                                            <i class='bx bxs-star-half'></i>
                                                         </div>
                                                         <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                         @if($mod->min_pers != 0 && $mod->max_pers != 0)
@@ -410,25 +389,32 @@
 
                                                             </div>
                                                         </div>
-                                                        <div class="col-6 ms-3 w-100">
-                                                            <p class="m-0">
-                                                                <span class="new_module_prix">
-                                                                    @php
-                                                                    echo number_format($mod->prix, 0, ' ', ' ');
-                                                                    @endphp
-                                                                    &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
-                                                            </p>
-                                                            <p class="m-0 ">
-                                                                <span class="new_module_prix">
-                                                                    @if($mod->prix_groupe == null)
-                                                                    <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                                    @else
-                                                                        @php
-                                                                        echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                                        @endphp
-                                                                        &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
-                                                                    @endif
-                                                            </p>
+                                                        <div class="d-flex">
+                                                            <div class="col-8">
+                                                                <div class="form-group">
+                                                                    <div class="form-row">
+                                                                        <input type="text" name="titre_competence[]"
+                                                                            id="titre_competence"
+                                                                            class="form-control input"
+                                                                            placeholder="Compétences" required>
+                                                                        <label for="titre_competence"
+                                                                            class="form-control-placeholder">Compétences</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="form-group ms-1">
+                                                                    <div class="form-row">
+                                                                        <input type="text" name="notes[]" id="notes"
+                                                                            min="1" max="10"
+                                                                            onfocus="(this.type='number')"
+                                                                            class="form-control input"
+                                                                            placeholder="Notes" required>
+                                                                        <label for="notes"
+                                                                            class="form-control-placeholder">Notes</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="newRow"></div>
                                                     </div>
@@ -652,30 +638,7 @@
                                                             <i class='bx bxs-star'></i>
                                                             <i class='bx bxs-star-half'></i>
                                                         </div>
-                                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
-                                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                        <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-6 ms-3 w-100">
-                                                        <p class="m-0">
-                                                            <span class="new_module_prix">
-                                                                @php
-                                                                echo number_format($mod->prix, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
-                                                        </p>
-                                                        <p class="m-0 ">
-                                                            <span class="new_module_prix">
-                                                                @if($mod->prix_groupe == null)
-                                                                    <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                                @else
-                                                                    @php
-                                                                    echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                                    @endphp
-                                                                    &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
-                                                                @endif
-                                                        </p>
+                                                        <span><strong>4.5</strong>/5 (250 avis)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -849,11 +812,12 @@
                                                         <div>
                                                             <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
                                                         </div>
-                                                        <div class="col-lg-7 detail__prix__main__prix2">
-                                                            <div>
-                                                                <p id="preview_prix" class="text-center"><span class="acf-prix"
-                                                                        id="prix"></span>&nbsp;{{$devise->devise}}&nbsp;HT</p>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-7 detail__prix__main__prix2">
+                                                        <div>
+                                                            <p id="preview_prix" class="text-center"><span
+                                                                    class="acf-prix" id="prix"></span>&nbsp;AR&nbsp;HT
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>

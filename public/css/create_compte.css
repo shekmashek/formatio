@@ -1,21 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
+
 * {
     margin: 0;
-    padding: 0
+    padding: 0;
+    font-family: "Roboto", sans-serif;
 }
 
-html {
-    height: 100%
+body {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    color: var(--body-font-color);
+    overflow: auto;
 }
 
 #grad1 {
     background-color:  #9C27B0;
-    background-image: linear-gradient(120deg, #FF4081, #801D68)
+    background-image: linear-gradient(120deg, #FF4081, #7635dc)
 }
 
 #msform_facture {
     text-align: center;
     position: relative;
-
 }
 
 #msform_facture fieldset .form-card {
@@ -73,13 +79,13 @@ html {
     box-shadow: none !important;
     border: none;
     font-weight: bold;
-    border-bottom: 2px solid #801D68;
+    border-bottom: 2px solid #7635dc;
     outline-width: 0
 }
 
 #msform_facture .action-button {
     width: 100px;
-    background: #801D68;
+    background: #7635dc;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -91,7 +97,7 @@ html {
 
 #msform_facture .action-button:hover,
 #msform_facture .action-button:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px #801D68
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #7635dc
 }
 
 #msform_facture .action-button-previous {
@@ -120,7 +126,7 @@ select.list-dt {
 }
 
 select.list-dt:focus {
-    border-bottom: 2px solid #801D68
+    border-bottom: 2px solid #7635dc
 }
 
 .card {
@@ -184,12 +190,12 @@ select.list-dt:focus {
     line-height: 45px;
     display: block;
     font-size: 18px;
-    color: #801D68;
+    color: #7635dc;
     background: white;
     border-radius: 50%;
     margin: 0 auto 10px auto;
     padding: 2px;
-    border: 1px solid #801D68 !important;
+    border: 1px solid #7635dc !important;
 }
 
 #progressbars li:after {
@@ -205,8 +211,8 @@ select.list-dt:focus {
 
 #progressbars li.active:before,
 #progressbars li.active:after {
-    background: #801D68;
-    border: 1px solid #801D68 !important;
+    background: #7635dc;
+    border: 1px solid #7635dc !important;
     color: white;
 }
 
@@ -240,8 +246,6 @@ select.list-dt:focus {
     object-fit: cover
 }
 
-
-
 #progressbars #etape1:before {
     font-family: FontAwesome;
     content: "1"
@@ -260,3 +264,114 @@ select.list-dt:focus {
     content: "\f00c"
 }
 
+.choix_compte{
+    background: linear-gradient(60deg, #4222c3, #7635dc);
+    color: white;
+    padding: 3rem;
+}
+
+.info_choix{
+    height: 100vh;
+}
+
+.choix_compte h3{
+    font-size: 3rem;
+    margin-top: 3.5rem;
+}
+
+.choix_compte img{
+    width: 200px;
+    height: 170px;
+    margin-top: .5rem;
+    margin-right: .5rem;
+    margin-left: .5rem;
+}
+
+.choix_compte .text_inscript{
+    font-size: 2rem;
+    padding-left: 3rem;
+    padding-right: 1.5rem;
+    margin-top: 2rem;
+    font-weight: 700;
+}
+
+.content_choice{
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    height: auto;
+    width: 90%;
+    margin: auto auto;
+    color: black;
+}
+
+.content_choice h4{
+    height: 0px;
+}
+
+.content_choice .txt_commencer{
+    font-size: 1.7rem;
+}
+.content_choice .icon_choice{
+    font-size: 5rem;
+    color: #637381;
+}
+
+.content_choice .txt_titre{
+    color: black;
+    font-size: 1.5rem;
+}
+
+.vous_etes{
+    color: black;
+    font-size: 1.3rem;
+}
+
+.content_choice a {
+    text-decoration: none;
+    color: inherit;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+.content_choice a:hover{
+    color: black;
+}
+
+.separateur{
+    font-size: 2.5rem;
+    margin-top: 3.3rem;
+}
+
+@keyframes images{
+    0%{
+      opacity: 0;
+    }
+    25%{
+      transform: rotate(180deg);
+    }
+    50%{
+      transform: rotate(-180deg);
+    }
+    75%{
+      opacity: 1;
+    }
+  }
+
+.image_accueil{
+    animation-name: images;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-delay: 5s;
+}
+
+.form_content{
+    padding-top: 7rem;
+    background: linear-gradient(60deg, #4222c3, #7635dc);
+}
+
+.form_content .txt_enter{
+    color: white;
+    margin-bottom: 3rem;
+}
