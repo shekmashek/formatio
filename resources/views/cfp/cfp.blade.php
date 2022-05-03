@@ -1,8 +1,9 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Organisme de formation</p>
+<p class="text_header m-0 mt-1">Organisme de formation collaboré</p>
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <div class="container-fluid justify-content-center pb-3">
 
     <style type="text/css">
@@ -53,89 +54,83 @@
     <div class="row w-100 bg-none mt-5 font_text">
 
         <div class="col-md-7">
-            {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
 
-                <h4>Centre de Formation Professionel déjà collaborer</h4>
+            <h4>Organimse de formation déjà collaboré</h4>
 
-                {{-- <div class="table-responsive text-center"> --}}
+            <table class="table  table-borderless table-lg table-hover">
+                <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
+                    <th>Organisme de formation</th>
+                    <th>Réferent principal</th>
+                    <th>Action</th>
+                </thead>
+                <tbody id="data_collaboration" style="font-size: 11.5px;">
 
-                    <table class="table  table-borderless table-lg table-hover">
-                        <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
-                            <th>Organisme de Formation</th>
-                            {{-- <th>Téléphone</th> --}}
-                            <th>Réferent Principal</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody id="data_collaboration" style="font-size: 11.5px;">
+                    @if (count($cfp)<=0) <tr>
+                        <td colspan="3" class="text-center"> Aucun Organisme de formation collaboré</td>
+                        </tr>
+                        @else
+                        @foreach($cfp as $centre)
+                        <tr>
+                            <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:60px; width:120px;"><span class="ms-3">{{$centre->nom}} </span></td>
+                            <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span></td>
 
-                            @if (count($cfp)<=0) <tr>
-                                <td> Aucun centre de formation collaborer</td>
-                                </tr>
-                                @else
-                                @foreach($cfp as $centre)
-                                <tr>
-                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:60px; width:120px;"><span class="ms-3">{{$centre->nom}} </span></td>
-                                    {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
-                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span></td>
-                                    {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td> --}}
+                            <td>
+                                {{-- <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a> --}}
 
-                                    {{-- <td>
-                                        <div align="left">
-                                            <strong>{{$centre->nom}}</strong>
-                                            <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
-                                            <h6>{{$centre->slogan}}</h6>
-                                        </div>
-                                    <td>
-                                        <div align="rigth">
-                                            <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
-                                        </div>
-                                    </td> --}}
-                                    <td>
-                                        <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
-                                        {{-- <div class="btn-group dropleft">
-                                            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{ route('detail_cfp',$centre->cfp_id) }}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
-                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
-                                            </div>
-                                        </div> --}}
-                                    </td>
-                                </tr>
-
-
-                                {{-- modal delete  --}}
-                                <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                <h6 class="modal-title text-white">Avertissement !</h6>
-
-                                            </div>
-                                            <div class="modal-body">
-                                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Non </button>
-                                                <form action="{{route('mettre_fin_cfp_etp')}}" method="post">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                    <input name="cfp_id" type="text" value="{{$centre->cfp_id}}" hidden>
-                                                </form>
-                                            </div>
-                                        </div>
+                                <div class="dropdown mt-3">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-item">
+                                                <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                                {{-- fin  --}}
+                            </td>
+                        </tr>
+
+
+                        {{-- modal delete  --}}
+                        <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
+                                @csrf
+
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                        <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                    </div>
+
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                        <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                        <input name="cfp_id" type="text" value="{{$centre->cfp_id}}" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        </div>
+
+                        {{-- fin  --}}
 
 
 
-                                @endforeach
-                                @endif
-                        </tbody>
-                    </table>
-                {{-- </div> --}}
+                        @endforeach
+                        @endif
+                </tbody>
+            </table>
+            {{-- </div> --}}
             {{-- </div> --}}
         </div>
 
@@ -151,10 +146,10 @@
                 @csrf
                 <div class="form-row d-flex">
                     <div class="col">
-                        <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_cfp" placeholder="Nom*" required />
+                        <input type="text" autocomplete="off" class="form-control mb-2" id="inlineFormInput" name="nom_cfp" placeholder="Nom*" required />
                     </div>
                     <div class="col ms-2">
-                        <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_cfp" placeholder="Adresse mail*" required />
+                        <input type="email" autocomplete="off" class="form-control  mb-2" id="inlineFormInput" name="email_cfp" placeholder="Adresse mail*" required />
                     </div>
                     <div class="col ms-2">
                         <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
@@ -312,83 +307,84 @@
         <hr class="mt-2">
         {{-- @foreach($ccfp as $centre)
             <span class="text-center"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
-            <div class="text-center mt-2" style="font-size:14px">
-                <div class="mt-1">
-                    <span>{{$centre->nom}}</span>
-                </div>
-                <div class="mt-1">
-                    <span>{{$centre->site_web}}</span>
-                </div>
-                <div class="mt-1">
-                    <span>{{$centre->email}}</span>
-                </div>
+        <div class="text-center mt-2" style="font-size:14px">
+            <div class="mt-1">
+                <span>{{$centre->nom}}</span>
             </div>
+            <div class="mt-1">
+                <span>{{$centre->site_web}}</span>
+            </div>
+            <div class="mt-1">
+                <span>{{$centre->email}}</span>
+            </div>
+        </div>
         @endforeach --}}
-            <div class="text-center mt-2" style="font-size:14px">
-                {{-- <div class="mt-1">
+        <div class="text-center mt-2" style="font-size:14px">
+            {{-- <div class="mt-1">
                     <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
-                </div> --}}
-                <div class="mt-1">
-                    <span style="text-center" id="donner"></span>
-                </div>
-                <div class="mt-1">
-                    <span id="donnerrrr"></span>
-                </div>
-                <div class="mt-1">
-                    <span id="nom"></span>
-                    <span id="prenom"></span>
-                </div>
-                <div class="mt-1">
-                    <span id="tel"></span>
-                </div>
-                <div class="mt-1">
-                    <span id="adrlot"></span>
-                    <span id="adrlot2"></span>
-                    <span id="adrlot3"></span>
-                    <span id="adrlot4"></span>
-                </div>
-                <div class="mt-1">
-                    <span id="mail"></span>
-                </div>
-            </div>
+        </div> --}}
+        <div class="mt-1">
+            <span style="text-center" id="donner"></span>
+        </div>
+        <div class="mt-1">
+            <span id="donnerrrr"></span>
+        </div>
+        <div class="mt-1">
+            <span id="nom"></span>
+            <span id="prenom"></span>
+        </div>
+        <div class="mt-1">
+            <span id="tel"></span>
+        </div>
+        <div class="mt-1">
+            <span id="adrlot"></span>
+            <span id="adrlot2"></span>
+            <span id="adrlot3"></span>
+            <span id="adrlot4"></span>
+        </div>
+        <div class="mt-1">
+            <span id="mail"></span>
+        </div>
     </div>
+</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-$(".montrer").on('click', function(e) {
-    let id = $(this).data("id");
-    $.ajax({
-        method: "GET"
-        , url: "/afficher_info_of"
-        , data: {
-            Id: id
-        }
-        , dataType: "html"
-        , success: function(response) {
-            let userData= JSON.parse(response);
-            console.log(userData);
-            //parcourir le premier tableau contenant les info sur les programmes
-            for (let $i = 0; $i < userData.length; $i++) {
-                let url_photo = '<img src="{{asset("images/CFP/:url_img")}}" style="height:60px; width:120px;">';
-                url_photo = url_photo.replace(":url_img", userData[$i].logo_cfp);
-                $("#donner").html(" ");
-                $("#donner").append(url_photo);
-                $("#donnerrrr").text(userData[$i].site_web);
-                $("#nom").text(userData[$i].nom_resp_cfp);
-                $("#prenom").text(userData[$i].prenom_resp_cfp);
-                $("#tel").text(userData[$i].telephone);
-                $("#adrlot").text(userData[$i].adresse_lot);
-                $("#adrlot2").text(userData[$i].adresse_quartier);
-                $("#adrlot3").text(userData[$i].adresse_ville);
-                $("#adrlot4").text(userData[$i].adresse_region);
-                // $("#adrqurt").text(userData[$i].adresse_Quartier);
-                // $("#adrv").text(userData[$i].adresse_ville);
-                // $("#adrr").text(userData[$i].adresse_region);
-                $("#mail").text(userData[$i].email);
+    $(".montrer").on('click', function(e) {
+        let id = $(this).data("id");
+        $.ajax({
+            method: "GET"
+            , url: "/afficher_info_of"
+            , data: {
+                Id: id
             }
-        }
+            , dataType: "html"
+            , success: function(response) {
+                let userData = JSON.parse(response);
+                console.log(userData);
+                //parcourir le premier tableau contenant les info sur les programmes
+                for (let $i = 0; $i < userData.length; $i++) {
+                    let url_photo = '<img src="{{asset("images/CFP/:url_img")}}" style="height:60px; width:120px;">';
+                    url_photo = url_photo.replace(":url_img", userData[$i].logo_cfp);
+                    $("#donner").html(" ");
+                    $("#donner").append(url_photo);
+                    $("#donnerrrr").text(userData[$i].site_web);
+                    $("#nom").text(userData[$i].nom_resp_cfp);
+                    $("#prenom").text(userData[$i].prenom_resp_cfp);
+                    $("#tel").text(userData[$i].telephone);
+                    $("#adrlot").text(userData[$i].adresse_lot);
+                    $("#adrlot2").text(userData[$i].adresse_quartier);
+                    $("#adrlot3").text(userData[$i].adresse_ville);
+                    $("#adrlot4").text(userData[$i].adresse_region);
+                    // $("#adrqurt").text(userData[$i].adresse_Quartier);
+                    // $("#adrv").text(userData[$i].adresse_ville);
+                    // $("#adrr").text(userData[$i].adresse_region);
+                    $("#mail").text(userData[$i].email);
+                }
+            }
+        });
     });
-});
+
 </script>
 @endsection

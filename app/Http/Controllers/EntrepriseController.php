@@ -92,7 +92,12 @@ class EntrepriseController extends Controller
 
         $fonct = new FonctionGenerique();
         $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-        $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
+      //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
+
+        $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$id]);
+        $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
+        $entreprises=$fonct->concatTwoList($etp1,$etp2);
+
       return response()->json($entreprises);
 
 
@@ -271,7 +276,7 @@ class EntrepriseController extends Controller
         else{
             return view('admin.entreprise.profile_entreprises', compact('entreprise', 'departement'));
         }
-        
+
     }
 
     public function getImage($path)
@@ -360,7 +365,7 @@ class EntrepriseController extends Controller
     }
 
 
-    
+
     public function modification_assujetti_entreprise($id){
         $fonct = new FonctionGenerique();
         $assujetti = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
