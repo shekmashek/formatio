@@ -199,6 +199,7 @@ class SessionController extends Controller
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
         $presence_detail = DB::select("select * from v_emargement where groupe_id = ?", [$projet[0]->groupe_id]);
+        // dd($presence_detail);
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
@@ -247,7 +248,7 @@ class SessionController extends Controller
             $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
             $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
             $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
-            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]); 
+            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]);
         }else{
             return response()->json(['status'=>'400']);
         }
@@ -509,7 +510,7 @@ class SessionController extends Controller
             return response()->json(['status'=>'400']);
         }elseif($salle != null){
             DB::insert("insert into salle_formation_of(cfp_id,salle_formation) value(?,?)",[$cfp_id,$salle]);
-            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]); 
+            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]);
             return response()->json(['status'=>'200','salles'=>$salles]);
         }
     }

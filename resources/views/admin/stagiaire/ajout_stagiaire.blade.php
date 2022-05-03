@@ -131,7 +131,7 @@
                         @if ($stg->photos != null)
                             <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">
                         @else
-                            <span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">{{ $stg->sans_photo }}
+                            <span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">{{ $stg->sans_photos }}
                             </span>
                         @endif
                     </td>
@@ -367,7 +367,7 @@ td{
                         photo = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
                         photo = photo.replace(":?",userData[i].photos);
                     }
-                    // alert(html);    
+                    // alert(html);
                     html +='<tr id="row_'+userData[i].stagiaire_id+'">';
                     html += '<td>'+photo+'</td>';
                     html +='<td>'+userData[i].matricule+'</td>';

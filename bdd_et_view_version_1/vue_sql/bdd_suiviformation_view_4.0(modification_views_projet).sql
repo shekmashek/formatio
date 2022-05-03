@@ -363,6 +363,8 @@ create or replace view v_detail_session as
         dom.id as id_domaine,
         dom.nom_domaine,
         mf.nom_formation,
+        f.photos,
+        concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
         f.nom_formateur,
         f.prenom_formateur,
         f.mail_formateur,
@@ -411,6 +413,7 @@ create or replace view v_detail_session as
     dom.id,
     dom.nom_domaine,
     mf.nom_formation,
+    f.photos,
     f.nom_formateur,
     f.prenom_formateur,
     f.mail_formateur,
@@ -513,7 +516,7 @@ select
         s.entreprise_id,
         s.user_id,
         s.photos,
-        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photo,
+        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
         (s.service_id) departement_id,
         s.cin,
         s.date_naissance,
@@ -853,12 +856,12 @@ create or replace view v_projet_formation as
 -- from groupes g
 -- join projets p on p.id = g.projet_id
 -- join moduleformation mf on g.module_id = mf.module_id
--- group by 
+-- group by
 --     g.projet_id,
 --     p.nom_projet,
 --     mf.formation_id,
 --     mf.nom_formation,
---     p.cfp_id; 
+--     p.cfp_id;
 
 
 
@@ -868,7 +871,7 @@ select
     f.photos
 from details d
 join formateurs f on f.id = d.formateur_id
-group by 
+group by
     d.groupe_id,
     d.formateur_id,
     f.photos;

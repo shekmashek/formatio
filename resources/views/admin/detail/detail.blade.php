@@ -192,7 +192,7 @@
                                             <select name="formateur[]" style="height: 2.361rem" id=""
                                                 class="form-control  my-1" required>
                                                 <option value="" selected hidden> Choisir formateur </option>
-                                                @foreach ($formateur_cfp as $format)
+                                                @foreach ($formateur as $format)
                                                     <option value="{{ $format->formateur_id }}">
                                                         {{ $format->nom_formateur . ' ' . $format->prenom_formateur }}
                                                     </option>

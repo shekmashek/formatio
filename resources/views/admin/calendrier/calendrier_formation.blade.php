@@ -332,13 +332,14 @@
                     var userDataDetail = JSON.parse(data);
                     var details = userDataDetail['details'];
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
+                    console.log(details);
                     var detail_id = userDataDetail['detail_id'];
 
 
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
-                            title: groupe_entreprises[$i].nom_formation
+                            title: groupe_entreprises[0].nom_formation
                             , start: details[$i][0].date_detail
                             ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i][0].nom_projet
