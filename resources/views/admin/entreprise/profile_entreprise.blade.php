@@ -31,7 +31,7 @@
                                     </div>
                                     {{-- <p>{{$var->fonction_chef}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i> --}}
                                 </div>
-                                <div class="hover" >
+                                <div class="hover">
                                     <a href="{{route('modification_nom_entreprise',$entreprise->id)}}">
                                      <h4 class="f-w-600 mt-5" style="margin-left: 165px">{{$entreprise->nom_etp }}</h4>
                                     </a>
