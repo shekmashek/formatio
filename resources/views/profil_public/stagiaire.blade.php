@@ -38,9 +38,14 @@
                                 <div class="col-lg-6 col-md-6  detail">
                                     <h4>Informations professionnelles</h4>
                                     <span><i class="fa fa-id-card"></i> Matricule : {{$stagiaire->matricule}}</span><br>
-                                    <span><i class="fa fa-briefcase"></i> Département:  {{ $departement->nom_departement }}</span><br>
-                                    <span><i class="fa fa-briefcase"></i> Service:  {{ $service->nom_service }}</span><br>
-                                    <span><i class="fa fa-briefcase"></i> Branche:  {{ $branche->nom_branche }}</span><br>
+                                    @if($stagiaire->service_id == null)
+                                        <span><i class="fa fa-briefcase"></i> Département:  {{ $departement }}</span><br>
+                                        <span><i class="fa fa-briefcase"></i> Service:  {{ $service }}</span><br>
+                                    @else
+                                        <span><i class="fa fa-briefcase"></i> Département:  {{ $departement->nom_departement }}</span><br>
+                                        <span><i class="fa fa-briefcase"></i> Service:  {{ $service->nom_service }}</span><br>
+                                    @endif
+                                   <span><i class="fa fa-briefcase"></i> Branche:  {{ $branche->nom_branche }}</span><br>
                                 </div>
                             </div>
 

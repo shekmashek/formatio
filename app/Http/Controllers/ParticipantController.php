@@ -837,10 +837,15 @@ class ParticipantController extends Controller
             $stagiaire = $stagiaires_tmp[0];
             $initial_stagiaire = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where id =  ?', [$id ]);
 
-            $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
+            if($stagiaire->service_id == null){
+                $service = "---------------";
+                $departement = "---------------";
+            }
+            else{
+                $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
+                $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
+            }
             $entreprise = $fonct->findWhereMulitOne("entreprises", ["id"], [$stagiaire->entreprise_id]);
-
-            $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
             $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
             if($stagiaire->genre_stagiaire == 1){
                 $genre = 'Femme';

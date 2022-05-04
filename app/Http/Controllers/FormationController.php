@@ -32,7 +32,7 @@ class FormationController extends Controller
 
         $id_user = Auth::user()->id;
         if (Gate::allows('isCFP')) {
-            $cfp_id = cfp::where('user_id', $id_user)->value('id');
+            // $cfp_id = cfp::where('user_id', $id_user)->value('id');
             $formation = formation::with('Domaine')->orderBy('domaine_id')->get();
             return view('admin.formation.formation', compact('formation'));
         }
