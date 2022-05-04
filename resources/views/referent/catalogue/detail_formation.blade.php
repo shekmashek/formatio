@@ -28,7 +28,8 @@
             <div class="col-lg-8 col-md-8 pe-5 module_detail">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
-                    <h4 class="py-4">{{$res->nom_formation}} - {{$res->nom_module}}</h4>
+                    <h4 class="py-4">{{$res->nom_module}}</h4>
+                    <p>{{$res->nom_formation}}</p>
                     <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
@@ -46,7 +47,7 @@
                 </div>
             </div>
             <div id="objectif"></div>
-            <div class="row row-cols-auto module_detail_heure justify-content-around">
+            <div class="row row-cols-auto module_detail_heure justify-content-around w-100">
                 <div class="col"><i class="bx bxs-alarm bx_icon"></i>
                     <span>
                         @isset($res->duree_jour)
@@ -62,6 +63,10 @@
                 <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
+                <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong>&nbsp;HT</span></div>
+                {{-- <div class="col pt-1" ><a href="#" role="button" class="btn_demander">Demander un dévis</a></div>
+                 <div class="text-center mt-5"><a href="#" role="button" class="btn_demander">Demander un dévis</a></div> --}}
             </div>
         </div>
         <div class="row detail__formation__detail py-5">
@@ -69,13 +74,11 @@
             <div class="col-lg-9 pe-5">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
+                <h3 class="pb-3">Objectifs de la formation</h3>
                 <div class="row module_detail_content p-5">
-
                     <div class="col-lg-12">
-                        <h3 class="pb-3">Objectifs</h3>
                         <p>{{$res->objectif}}</p>
                         <div id="pour_qui"></div>
-                        <a href="#programme__formation" class="btn_next" role="button">Consulter le programme de cette formation</a>
                     </div>
                 </div>
                 {{-- section 1 --}}
@@ -154,8 +157,8 @@
                 <div id="programme__formation"></div>
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <div class="row module_detail_content mt-5">
-                    <h3 class="pt-3 pb-3">Programme de la formation</h3>
+                <h3 class="pt-3">Programme de la formation</h3>
+                <div class="row mt-5">
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="accordion" id="accordion__program">
@@ -302,67 +305,15 @@
                     <div class="row g-0 m-0">
                         <div class="detail__prix">
                             <div class="detail__prix__text">
-                                <p class="pt-2"><b>INTRA</b></p>
+                                <p class="pt-2 text-uppercase"><b>competences a acquérir</b></p>
                             </div>
                         </div>
                     </div>
-                    <div class="row g-0 m-0">
-                        <div class="detail__modal pt-3">
-                            <div>
-                                <p class="text-uppercase">{{$res->modalite_formation}}</p>
-                            </div>
-                        </div>
+                    <div class="pt-3">
+                        @foreach ($competences as $compt)
+                            <p><i class='bx bx-check-double text-success' ></i>&nbsp;{{$compt->titre_competence}}</p>
+                        @endforeach
                     </div>
-                    <div class="row g-0 m-0 ps-2">
-                        <div class="col-lg-4 detail_ref">
-                            <div>
-                                <p><i class="bx bx-clipboard"></i>&nbsp;Réf :</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 g-0 m-0 detail_ref_ref">
-                            <div>
-                                <p class="m-0 mt-1">{{ $res->reference }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hr">
-                    <div class="row g-0 m-0">
-                        <div class="col-lg-4 p-0 ps-2 detail_ref">
-                            <div>
-                                <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 detail_ref_ref">
-                            <div>
-                                <p class="mt-1 m-0">
-                                    <span>
-                                        @isset($res->duree_jour)
-                                        {{$res->duree_jour}} jours
-                                        @endisset
-                                    </span>
-                                    <span>
-                                        @isset($res->duree)
-                                        /{{$res->duree}} h
-                                        @endisset
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hr">
-                    <div class="row g-0 m-0">
-                        <div class="col-lg-4 p-0 ps-2 detail_ref">
-                            <div>
-                                <p>{{$devise->devise}} &nbsp;Prix :</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 detail_ref_ref">
-                            <div>
-                                <p class="m-0 mt-1"><span class="prix">{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;{{$devise->devise}}</span>&nbsp;HT</p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hr">
                     <div class="row g-0 m-0 detail_ref_ref">
                         <div class="col-lg-12 py-5">
                             <a href="#" role="button" class="btn_demander">Demander un dévis</a>

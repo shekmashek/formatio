@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
 <div class="container-fluid">
-    <a href="#" class="btn_creer text-center filter mx-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
-    <span class="nombre_pagination text-center filter mx-2"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
+    <a href="#" class="btn_creer text-center filter mx-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher filtres</a>
+    <div class="d-flex flex-row"><span class="nombre_pagination text-center filter "><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span></div>
 
         {{-- si nom entiter exist --}}
 
@@ -74,7 +74,7 @@
 </div>
 <section class="annuaire mb-5">
     <div class="container my-5">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="row mb-5">
                 <div class="col-12 alphabet">
                     @foreach ($initial as $init)
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="col-10 justify-content-center px-5">
+            <div class="col-9 justify-content-center px-5">
                 <div id="result">
                     @foreach ($cfps as $cfp)
                     <div class="row detail_content mb-5">

@@ -74,10 +74,12 @@
                 <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
+                <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col"><span>&nbsp;{{$devise->devise}}&nbsp;<span>{{number_format($res->prix, 0, ' ', ' ')}}</span>&nbsp;HT</span></div>
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
-            <div class="col-lg-9 detail__formation__content">
+            <div class="col-lg-12 detail__formation__content">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <h3 class="pb-3">Objectifs de la formation  </h3>
@@ -323,83 +325,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {{-- FIXME:mise en forme de design --}}
-            <div class="col-lg-3 detail__formation__item__right">
-                <div class="row detail__formation__item__main__head align-items-center">
-                    <div class="detail__prix__head">
-                        <div class="detail__prix__text">
-                            <p class="pt-2"><b>INTRA</b></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row detail__formation__item__main mt-3 text-center">
-                    <div class="col-lg-6 detail__prix__main__ref">
-                        <div>
-                            <p><i class="bx bx-clipboard"></i>&nbsp;Réf :</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 detail__prix__main__ref2">
-                        <div>
-                            <p>{{ $res->reference }}</p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__main text-center">
-                    <div class="col-lg-6 detail__prix__main__dure">
-                        <div>
-                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 detail__prix__main__dure2">
-                        <div>
-                            <p>
-                                <span>
-                                    @isset($res->duree_jour)
-                                    {{$res->duree_jour}} jours
-                                    @endisset
-                                </span>
-                                <span>
-                                    @isset($res->duree)
-                                    /{{$res->duree}} h
-                                    @endisset
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <hr class="hr">
-                <div class="row detail__formation__item__rmain text-center">
-                    <div class="col-lg-6 detail__prix__main__prix">
-                        <div >
-                            <p>{{$devise->devise}}&nbsp;Prix : </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 detail__prix__main__prix2">
-                        <div>
-                            <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;{{$devise->devise}}</span>&nbsp;HT</p>
-
-                        </div>
-                    </div>
-                </div>
-
-              @can('isReferent')
-              <hr class="hr">
-              <div class="row detail__formation__item__main">
-                <div class="col-lg-12 detail__prix__main__btn py-5">
-                    <form action="{{route('demande_devis.store')}}" method="post">
-                        @csrf
-                        <input type="text" hidden name="module_id" value="{{$res->module_id}}">
-                        <button type="submit" class="btn">Demander un dévis</button>
-                    </form>
-
-                </div>
-            </div>
-              @endcan
-
-
             </div>
         </div>
     </div>
