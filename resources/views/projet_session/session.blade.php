@@ -281,64 +281,37 @@
         font-size: 12px;
         margin-bottom: .3rem;
         margin-top: .3rem;
-        /* transform: rotate(-45deg); */
-        /* overflow: hidden;
-        background: linear-gradient(to right, #fff 20%, #fff 40%, #ECD08C 50%, #ECD08C 55%, #fff 70%, #fff 100%);
-        background-size: 200% auto;
-        
-        animation: shine 3s linear infinite; */
     }
-
-    /* .test_animation{
-        position: absolute;
-        display: block;
-        overflow: hidden;
-        background: linear-gradient(to right, #fff 20%, #fff 40%, #ECD08C 50%, #ECD08C 55%, #fff 70%, #fff 100%);
-        background-size: 200% auto;
-    } */
 
     .planning:hover {
         background-color: #eeeeee;
     }
 
-    @keyframes shine {
-        to {
-        background-position: 200% center;
-        }
-    }fff
-
-    @keyframes test{
+    @keyframes action{
         0%{
-            /* opacity: 1; */
-            /* color: red; */
-            /* font-size: .1rem; */
-            /* background-color: #fdaed5; */
-            
+            filter: brightness(0.99);
         }
         25%{
-            /* font-size: .8rem;
-            color: black; */
+            filter: brightness(0.96);
         }
         50%{
-            /* transition: all .5s ease;
-            transform: scale(1.1); */
+            filter: brightness(0.97);
         }
         75%{
-            /* color: #7635dc; */
+            filter: brightness(0.98);
         }
         100%{
-            /* opacity: 1; */
-            /* transform: rotateZ(360deg); */
+            filter: brightness(1);
         }
     }
 
 
-    /* .test_animation{
-        animation-name: test;
+    .action_animation{
+        animation-name: action;
         animation-duration: 3s;
         animation-delay: 1s;
         animation-iteration-count: infinite;
-    } */
+    }
 
     /* .btn_modifier_statut:focus{
     color: blue;
@@ -471,7 +444,10 @@
                         <div class="nav-item active" role="presentation">
                             <a href="#detail" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between py-1 active test_animation"
+                                <button class="planning d-flex justify-content-between py-1 active 
+                                @can('isCFP')
+                                    {{ 'action_animation' }}
+                                @endcan"
                                     onclick="openCity(event, 'detail')" style="width: 100%">
                                     <p class="m-0 p-0">PLANNING</p>
                                     @if ($test == 0)
@@ -487,7 +463,18 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1 test_animation"
+                                    <button class="planning d-flex justify-content-between py-1 
+                                    @if ($type_formation_id = 1)
+                                        @can('isCFP')
+                                            {{ 'action_animation' }}
+                                        @endcan    
+                                    @endif
+                                    @if ($type_formation_id = 2)
+                                        @can('isReferent')
+                                            {{ 'action_animation' }}
+                                        @endcan    
+                                    @endif
+                                     "
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
                                         <p class="m-0 p-0">APPRENANTS</p>
                                         @if (count($stagiaire) == 0)
@@ -504,7 +491,7 @@
                         <div class="nav-item" role="presentation">
                             <a href="#ressource" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between py-1"
+                                <button class="planning d-flex justify-content-between py-1 action_animation"
                                     onclick="openCity(event, 'ressource')" style="width: 100%">
                                     <p class="m-0 p-0">RESSOURCES</p>
                                     @if (count($ressource) == 0)
@@ -520,7 +507,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#frais" class="nav-link p-0" id="frais-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between py-1 action_animation"
                                         onclick="openCity(event, 'frais')" style="width: 100%">
                                         <p class="m-0 p-0">FRAIS ANNEXES</p>
                                         @if (count($all_frais_annexe) <= 0)
@@ -535,7 +522,10 @@
                         <div class="nav-item" role="presentation">
                             <a href="#document" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between py-1"
+                                <button class="planning d-flex justify-content-between py-1 
+                                    @canany(['isCFP','isFormateur'])
+                                        {{ 'action_animation' }}
+                                    @endcan"
                                     onclick="openCity(event, 'document')" style="width: 100%">
                                     <p class="m-0 p-0">DOCUMENTS</p>
                                     {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
@@ -560,7 +550,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#emargement" class="nav-link p-0" id="emargement-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between py-1 action_animation"
                                         onclick="openCity(event, 'emargement')" style="width: 100%">
                                         <p class="m-0 p-0">EMARGEMENT</p>
                                         <i class="fal fa-dot-circle me-2" style="color: grey"></i>
@@ -570,7 +560,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation" class="nav-link p-0" id="evaluation-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between py-1 action_animation"
                                         onclick="openCity(event, 'evaluation')" style="width: 100%">
                                         <p class="m-0 p-0">PRE EVALUATION</p>
                                         @if ($evaluation_avant <= 0)
@@ -584,7 +574,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between py-1 action_animation"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
                                         @if ($evaluation_apres <= 0)
