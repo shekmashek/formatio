@@ -1055,7 +1055,7 @@ Route::get('/fonctionnalitea', function () {
     return view('/fonctionnalitea');
 });
 //Route budgetisation
-Route::get('budget','PlanFormationController@budfgetisation')->name('budget');
+Route::get('budget','PlanFormationController@budgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
 //Routerecherche cfp et entreprise
@@ -1219,3 +1219,6 @@ Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('mod
 Route::post('/employes/filtre/query', 'DepartementController@filtre')->name('stagiaire.filter');
 Route::get('/employes/filtre/query/name', 'DepartementController@filtreName')->name('stagiaire.filter.name');
 Route::get('/employes/filtre/query/matricule', 'DepartementController@filtreMatricule')->name('stagiaire.filter.matricule');
+Route::get('/employes/filtre/query/role', 'DepartementController@filtreRole')->name('stagiaire.filter.role');
+//filtre referents
+Route::get('/referents/filtre/query', 'TestController@filtrereferent')->name('referent.filter');

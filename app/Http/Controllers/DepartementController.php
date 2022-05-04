@@ -132,15 +132,22 @@ class DepartementController extends Controller
 
         $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
 
-        $emps = DB::table("stagiaires")
-                ->select("*")
-                ->where('entreprise_id', '=', $etp_id)
+        $emps = DB::table('users')
+                ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
+                ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
+                ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
+                ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
+                    'role_id', 'mail_stagiaire', 'photos',
+                    'stagiaires.user_id', 'fonction_stagiaire', 
+                    'users.name', 'users.telephone', 'users.email')
+                ->where('stagiaires.entreprise_id', '=', $etp_id)
                 ->where('nom_stagiaire', 'like', '%'.$request->get('name').'%')
                 ->orWhere('matricule', 'like', '%'.$request->get('name').'%')
                 ->get();
 
-        // dd($emps);    
-        return json_encode($emps);    
+        // dd(json_encode([$emps, $role]));    
+        // return json_encode([$emps, $role]);   
+        return json_encode($emps);   
     }
 
     // filtre matricule
@@ -150,10 +157,39 @@ class DepartementController extends Controller
 
         $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
 
-        $emps = DB::table("stagiaires")
-                ->select("*")
-                ->where('entreprise_id', '=', $etp_id)
+        $emps = DB::table('users')
+                ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
+                ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
+                ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
+                ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
+                    'role_id', 'mail_stagiaire', 'photos',
+                    'stagiaires.user_id', 'fonction_stagiaire', 
+                    'users.name', 'users.telephone', 'users.email')
+                ->where('stagiaires.entreprise_id', '=', $etp_id)
                 ->where('matricule', 'like', '%'.$request->get('matricule').'%')
+                ->get();
+
+        // dd($emps);   
+        return json_encode($emps);    
+    }
+
+    // filtre role
+    public function filtreRole(Request $request){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $emps = DB::table('users')
+                ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
+                ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
+                ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
+                ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
+                    'role_id', 'mail_stagiaire', 'photos',
+                    'stagiaires.user_id', 'fonction_stagiaire', 
+                    'users.name', 'users.telephone', 'users.email')
+                ->where('stagiaires.entreprise_id', '=', $etp_id)
+                ->where('role_name', 'like', '%'.$request->get('role_name').'%')
                 ->get();
 
         // dd($emps);   

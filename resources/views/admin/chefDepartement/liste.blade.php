@@ -5,6 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/employes.css')}}">
 <div class="container-fluid px-5">
+
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -283,8 +284,8 @@
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
                                             <th>Role asigné</th>
-                                            <th>Role non asigné</th>
-                                            <th>Netoyé</th>
+                                            <th class="rnla">Role non asigné</th>
+                                            <th class="rnlh">Netoyé</th>
 
                                         </tr>
                                     </thead>
@@ -613,19 +614,20 @@
     </div>
 </div>
 
-<div class="filtrer mt-3">
+<div class="filtrer mt-3 testFilter">
     <div class="row">
-        <div class="col">
-            <p class="m-0">Filter vos équipes</p>
-        </div>
-        <div class="col text-end">
-            <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+        <div class="row">
+            <div class="col-md-11">
+                <p class="m-0" style="color: #0052D4; text-transform: uppercase">Filter vos équipes</p>
+            </div>
+            <div class="col-md-1 text-end">
+                <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+            </div>
         </div>
         <hr class="mt-2">
         {{-- @canany(['isReferent', 'isCFP']) --}}
         <div class="col-12 pe-3">
             <div class="row mb-3 p-2 pt-0">
-                <div class="row">
                     <form action="/employes/filtre/query" method="post">
                         @csrf
                         
@@ -635,23 +637,38 @@
                                 <option value="{{ $stg->id }}">{{ $stg->fonction_stagiaire }}</option> 
                             @endforeach
                         </select>
-                        <input type="submit" value="Filtrer" class="btn btn-sm btn-info mt-2" style="width: 150px">
+                        <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
                     </form>
-                    <form action="/employes/filtre/query/name" method="post">
-                        @csrf
-                        <input style="width: 300px" type="text" name="name" id="name" class="mt-3 form-control form-sm mb-2" placeholder="Entrez un nom ou maricule ...">
-                    </form>
-                    <form action="/employes/filtre/query/matricule" method="post">
-                        @csrf
-                        <input style="width: 300px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-sm mb-2" placeholder="Entrez une matricule ...">
-                    </form>
-                    {{-- <form action="/employes/filtre/query" method="POSt">
-                        @csrf
-                        <input type="text" name="searchPers" id="searchPers" class="form-control form-sm mb-2" placeholder="Entrez une Fonction ...">
-                        <input type="submit" value="Filtrer" class="btn btn-sm btn-success mb-2 fl">
-                    </form> --}}
-                </div>
-                <a style="color: blue" href="{{ route('employes') }}"><i class="fa-solid fa-arrow-rotate-right"></i> Actualiser</a>
+                    <p>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Autre options de recherche 
+                                  </a>
+                            </div>
+                            <div class="col-md-1">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        
+                    </p>
+                      <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <form action="/employes/filtre/query/name" method="post" >
+                                @csrf
+                                <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-sm mb-2" placeholder="Entrez un nom ...">
+                            </form>
+                            <form action="/employes/filtre/query/matricule" method="post">
+                                @csrf
+                                <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-sm mb-2" placeholder="Entrez une matricule ...">
+                            </form>
+                            <form action="/employes/filtre/query/role" method="post">
+                                @csrf
+                                <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-sm mb-2" placeholder="Entrez un rôle ...">
+                            </form>
+                        </div>
+                      </div>
+                    <a style="color: blue; margin-top: 10px;" href="{{ route('employes') }}"><i class="fa-solid fa-arrow-rotate-right"></i> Actualiser</a>
             </div>
         </div>
     </div>
@@ -659,6 +676,8 @@
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     //Pour chaque div de classe randomColor
@@ -832,6 +851,10 @@
 {{--filtre name--}}
 <script type="text/javascript">
     $('body').on('keyup','#name',function(){
+        $('#matricule').val('');
+        $('#role_name').val('');
+        $('.rnla').hide();
+        $('.rnlh').hide();
         var name = $(this).val();
         console.log(name)
 
@@ -860,12 +883,14 @@
                         '</td><td>'+value.fonction_stagiaire+
                         '</td><td>'+value.mail_stagiaire+
                         '</td><td>'+value.telephone_stagiaire+
+                        '</td><td>'+value.role_name+
                         '</td><tr>';
                     
                    
                     console.log(tableRow);
                 });
                 $('#dynamic_row').append(tableRow);
+                
             }
             
         });
@@ -875,6 +900,10 @@
 {{--filtre matricule--}}
 <script type="text/javascript">
     $('body').on('keyup','#matricule',function(){
+        $('#name').val('');
+        $('#role_name').val('');
+        $('.rnla').hide();
+        $('.rnlh').hide();
         var matricule = $(this).val();
         console.log(matricule)
 
@@ -893,7 +922,7 @@
 
                 $.each(res, function (index, value) { 
 
-                    tableRow += '<tr>';
+                    tableRow += '<tr class="text-center content_table">';
                     tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
                     tableRow = tableRow.replace(":?",value.photos);
                     tableRow +=     
@@ -903,14 +932,64 @@
                         '</td><td>'+value.fonction_stagiaire+
                         '</td><td>'+value.mail_stagiaire+
                         '</td><td>'+value.telephone_stagiaire+
+                        '</td><td>'+value.role_name+
                         '</td><tr>';
                     
-                    $('#dynamic_row').append(tableRow);
+                    
                     console.log(tableRow);
                 });
+                $('#dynamic_row').append(tableRow);
+                
             }
-            
+
         });
     });
 </script>
+
+{{--filtre role--}}
+<script type="text/javascript">
+    $('body').on('keyup','#role_name',function(){
+        $('#name').val('');
+        $('#matricule').val('');
+        $('.rnla').hide();
+        $('.rnlh').hide();
+        var role_name = $(this).val();
+        console.log(role_name)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("stagiaire.filter.role") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                role_name: role_name,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_row').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.matricule+
+                        '</td><td>'+value.nom_stagiaire+
+                        '</td><td>'+value.prenom_stagiaire+
+                        '</td><td>'+value.fonction_stagiaire+
+                        '</td><td>'+value.mail_stagiaire+
+                        '</td><td>'+value.telephone_stagiaire+
+                        '</td><td>'+value.role_name+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#dynamic_row').append(tableRow);
+            }
+
+        });
+    });
+</script>
+
 @endsection

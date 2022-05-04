@@ -9,7 +9,7 @@
                 <h4 class="h4">Résultat du filtre</h4>
             </div>
             <div class="col-md-2">
-                <a href="{{ route('employes') }}" class="btn btn-success btn-sm" style="width: 120px">Retour</a>
+                <a href="{{ route('employes') }}" class="btn btn-success btn-sm" style="width: 120px; background-color: #7635dc">Retour</a>
             </div>
         </div>
     <table class="table table-hover table-striped">
