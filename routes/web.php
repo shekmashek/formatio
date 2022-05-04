@@ -260,7 +260,7 @@ Route::get('/profil_referent/{id?}', 'ResponsableController@affReferent')->name(
 // Route::get('aff_parametre_referent', 'ResponsableController@affParametreReferent')->name('aff_parametre_referent');
 
 
-Route::get('aff_parametre_referent','ResponsableController@affParametreReferent')->name('aff_parametre_referent');
+Route::get('aff_parametre_referent/{id?}','ResponsableController@affParametreReferent')->name('aff_parametre_referent');
 
 // editer profil responsable
 Route::get('edit_responsable','ResponsableController@edit_profil')->name('edit_responsable');
@@ -1055,7 +1055,7 @@ Route::get('/fonctionnalitea', function () {
     return view('/fonctionnalitea');
 });
 //Route budgetisation
-Route::get('budget','PlanFormationController@budfgetisation')->name('budget');
+Route::get('budget','PlanFormationController@budgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
 //Routerecherche cfp et entreprise

@@ -84,7 +84,7 @@
                             </span>
                         @else
                             <span class="text-end">
-                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="50%" height="50%" class="">
+                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="120px" height="60px" class="">
                             </span>
                             @endif
                         </a>
@@ -221,7 +221,7 @@
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
                     {{-- @if($referent->assujetti_id == null ) --}}
                         <a href="" class="none_">
-                            <p class="p-1 m-0" style="font-size: 12px;">TVA en pourcentage (%)<span style="float: right;">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">TVA<span style="float: right;">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         </a>
                     {{-- @elseif($referent->assujetti_id == 1)
                         <a href="{{route('modification_assujetti_entreprise',$refs->entreprise_id)}}" class="none_">

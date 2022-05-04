@@ -39,7 +39,7 @@
                         <a href="{{route('modification_logo_cfp',$cfps->id)}}">
                         @if($cfps->logo == NULL )
                             <span class="text-end">
-                                <img src="" alt="Logo centre de formation professionnel" width="50%" height="50%">
+                                <img src="" alt="Logo centre de formation professionnel" width="120px" height="60px">
                             </span>
                         @else
                             <span class="text-end">
@@ -224,7 +224,7 @@
                 </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
                         <a href="" class="none_">
-                            <p class="p-1 m-0" style="font-size: 12px;">TVA en pourcentage (%)<span style="float: right;">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">TVA<span style="float: right;">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         </a>
                 </div>
             </div>
