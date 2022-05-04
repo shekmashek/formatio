@@ -28,6 +28,8 @@
                         </div>
                         <div class=" bg-light">
                             <div class="row">
+                                <h2 class=" text-center ">{{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}</h2>
+
                                 <div class="col-lg-6 col-md-6  detail">
                                     <h4>Informations personnelles</h4>
                                     <span><i class="fa fa-calendar"></i> Né le {{date('j \\ F Y', strtotime($stagiaire->date_naissance))}}</span><br>

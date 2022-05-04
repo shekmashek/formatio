@@ -28,6 +28,7 @@
                         </div>
                         <div class=" bg-light">
                             <div class="row">
+                                <h2 class=" text-center ">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}}</h2>
                                 <div class="col-lg-6 col-md-6  detail">
                                     <h4>Informations personnelles</h4>
                                     <span><i class="fa fa-calendar"></i> Né le {{date('j \\ F Y', strtotime($formateur->date_naissance))}}</span><br>
