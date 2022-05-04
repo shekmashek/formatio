@@ -30,13 +30,13 @@
                             <div class="row">
                                 <h2 class=" text-center ">{{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}</h2>
 
-                                <div class="col-lg-6 col-md-6  detail">
+                                <div class="col-lg-6 col-md-6  detail mt-5">
                                     <span><i class="fa fa-calendar"></i> Né le {{date('j \\ F Y', strtotime($stagiaire->date_naissance))}}</span><br>
                                     <span><i class="fa fa-envelope"></i> {{$stagiaire->mail_stagiaire}}</span><br>
                                     <span><i class="fa fa-phone-square"></i> {{$stagiaire->telephone_stagiaire}}</span><br>
                                     <span><i class="fa fa-address-book" ></i> {{$stagiaire->lot}} {{$stagiaire->quartier}} {{$stagiaire->ville}} {{$stagiaire->code_postal}}</span>
                                 </div>
-                                <div class="col-lg-6 col-md-6  detail">
+                                <div class="col-lg-6 col-md-6  detail mt-5">
                                     <span><i class="fa fa-id-card"></i> Matricule : {{$stagiaire->matricule}}</span><br>
                                     @if($stagiaire->service_id == null)
                                         <span><i class="fa fa-briefcase"></i> Département:  {{ $departement }}</span><br>
