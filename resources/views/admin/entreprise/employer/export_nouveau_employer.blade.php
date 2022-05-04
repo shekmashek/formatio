@@ -4,6 +4,9 @@
 @endsection
 @section('content')
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="{{asset('assets/js/jquery.js')}}"></script>
+<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/js/bootstrap.js')}}"></script>
 
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
@@ -90,7 +93,7 @@
             <p>Tout d'abord, vous devrez avoir un fichier excel des listes des stagiaires avec des exception comportant seulement ses colonnes requis pour les informations minimum:</p>
             <p>1°):<span> Maximum 30 personne(s) </span></p>
             <p>2°):Les champs neccéssaire: <span> "Matricule" , "Nom", "Prénom", "CIN", "email"</span></p>
-            <p>3°): Faire <span>copier coller </span> les données en sélectionnants la prémière ligne ou utiliser la racourcie CRTL+A et CRTL+C (pour copier) et CRTL+V pour coller</p>
+            <p>3°): Faire <span>copier coller </span> les données en sélectionnants la prémière ligne "Matricule N°1" ou utiliser la racourcie CRTL+A et CRTL+C (pour copier) et CRTL+V pour coller</p>
         </div>
         {{-- <div class="col-md-4"></div> --}}
     </div>
@@ -126,31 +129,38 @@
                         @for($i = 1; $i <= 30; $i++) <tr align="center">
                             <td>
                                 <div class="form-group">
-                                    <input class=" ml-2 form-control form-control-sm" id="matricule_{{$i}}" type="text" name="matricule_{{$i}}" placeholder="Matricule N° {{$i}}">
-                                <span style="color: red" id="matricule_err_"></span>
-                                <div class="invalid-feedback">
-                                    Please choose a matricule.
-                                  </div>
+                                    <input autocomplete="off" class=" ml-2 form-control form-control-sm" id="matricule_{{$i}}" type="text" name="matricule_{{$i}}" placeholder="Matricule N° {{$i}}">
+                                    <br>
+                                    <p style="color: red" id="matricule_err_{{$i}}"></p>
+                                    <div class="invalid-feedback">
+                                        Please choose a matricule.
+                                    </div>
                                 </div>
                             </td>
                             <td>
                                 {{-- <div class="form-group"> --}}
-                                <input class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}" placeholder="Nom">
+                                <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}" placeholder="Nom">
                                 {{-- </div> --}}
                             </td>
                             <td>
-                                <div class="input-group">
-                                    <input class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}" placeholder="Prénom">
+                                <div class="form-group">
+                                    <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}" placeholder="Prénom">
                                 </div>
                             </td>
                             <td>
-                                <div class="input-group">
-                                    <input class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}" placeholder="CIN">
+                                <div class="form-group">
+                                    <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}" placeholder="CIN">
+                                    <br>
+                                    <p style="color: red" id="cin_err_{{$i}}"></p>
+
                                 </div>
                             </td>
                             <td>
-                                <div class="input-group">
-                                    <input class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}" placeholder="E-mail">
+                                <div class="form-group">
+                                    <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}" placeholder="E-mail">
+                                    <br>
+                                    <p style="color: red" id="email_err_{{$i}}"></p>
+
                                 </div>
                             </td>
                             </tr>
@@ -159,7 +169,7 @@
                     </tbody>
                 </table>
                 <div class="form-group mt-2" align="center">
-                    <button type="submit" class="btn btn_creer">sauvegarder</button>
+                    <button type="submit" class="btn btn_creer" id="saver_multi_stg">sauvegarder</button>
 
                 </div>
             </form>
@@ -167,71 +177,6 @@
     </div>
 </div>
 
-{{--
-<form class="row g-3 needs-validation" novalidate>
-    <div class="col-md-4">
-      <label for="validationCustom01" class="form-label">First name</label>
-      <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    <div class="col-md-4">
-      <label for="validationCustom02" class="form-label">Last name</label>
-      <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    <div class="col-md-4">
-      <label for="validationCustomUsername" class="form-label">Username</label>
-      <div class="input-group has-validation">
-        <span class="input-group-text" id="inputGroupPrepend">@</span>
-        <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-        <div class="invalid-feedback">
-          Please choose a username.
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <label for="validationCustom03" class="form-label">City</label>
-      <input type="text" class="form-control" id="validationCustom03" required>
-      <div class="invalid-feedback">
-        Please provide a valid city.
-      </div>
-    </div>
-    <div class="col-md-3">
-      <label for="validationCustom04" class="form-label">State</label>
-      <select class="form-select" id="validationCustom04" required>
-        <option selected disabled value="">Choose...</option>
-        <option>...</option>
-      </select>
-      <div class="invalid-feedback">
-        Please select a valid state.
-      </div>
-    </div>
-    <div class="col-md-3">
-      <label for="validationCustom05" class="form-label">Zip</label>
-      <input type="text" class="form-control" id="validationCustom05" required>
-      <div class="invalid-feedback">
-        Please provide a valid zip.
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-        <label class="form-check-label" for="invalidCheck">
-          Agree to terms and conditions
-        </label>
-        <div class="invalid-feedback">
-          You must agree before submitting.
-        </div>
-      </div>
-    </div>
-    <div class="col-12">
-      <button class="btn btn-primary" type="submit">Submit form</button>
-    </div>
-  </form> --}}
 </div>
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -242,8 +187,8 @@
             $txt = $(this);
             setTimeout(function() {
 
-                // var values = $txt.val().split(/\s+/);
-                var values = $txt.val().split(/\t+/);
+                var values = $txt.val().split(/\s+/);
+                // var values = $txt.val().split(/\t+/);
                 var currentRowIndex = $txt.parent().parent().index();
                 var currentColIndex = $txt.parent().index();
 
@@ -269,75 +214,145 @@
 
 
 
-
-    $('#liste_etp').on('change', function() {
-        $('#departement_id').empty();
-        var id = $(this).val();
-        $.ajax({
-            url: "{{route('show_dep')}}"
-            , type: 'get'
-            , data: {
-                id: id
-            }
-            , success: function(response) {
-                var userData = response;
-                for (var $i = 0; $i < userData.length; $i++) {
-                    $("#departement_id").append('<option value="' + userData[$i].id + '">' + userData[$i].departement.nom_departement + '</option>');
-                }
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
-
-    });
-
     /*================================ verify champ inscription =====================================*/
 
     $(document).ready(function() {
 
-  /*      $('#suivant_etp_1').prop('disabled', true);
-        document.getElementById("nif_etp_err").innerHTML = "NIF incomplète!";
-        document.getElementById("matricule_resp_etp_err").innerHTML = "Matricule ne doit pas être null!";
-        $('#suivant_etp_confirmer').prop('disabled', true);
-*/
-        // ========= field N°1 et N°2 pour entreprise inscription =================================
-/*
-        $('#formInsert input').change(function() {
+/*     $('#saver_multi_stg').prop('disabled', true); */
+
+        $('#formInsert input').keyup(function() {
 
             for (let i = 1; i <= 30; i += 1) {
-                if($("#matricule_"+i).val()!=null){
-                    let names = "#matricule_err_"+i;
-                    document.getElementById("error_logo_etp").innerHTML == '';
 
+       /*         if ($("matricule_err_" + i).html() == '' &&
+                    $("email_err_" + i).html() == '' &&
+                    $("cin_err_" + i).html() == '') {
+                    $('#saver_multi_stg').prop('disabled', false);
+                } else {
+                    $('#saver_multi_stg').prop('disabled', true);
                 }
+*/
+                if ($("#matricule_" + i).val() != null) {
+                    var matricule = $("#matricule_" + i).val();
+                    document.getElementById("matricule_err_" + i).innerHTML = '';
+
+                    $.ajax({
+                        url: "{{route('employes.export.verify_matricule_stg')}}"
+                        , type: 'get'
+                        , data: {
+                            valiny: matricule
+                        }
+                        , success: function(response) {
+                            var userData = response;
+                            if (userData.length > 0) {
+                                document.getElementById("matricule_err_" + i).innerHTML = 'matricule existe déjà';
+              /*                  if ( $("email_err_" + i).html() == '' &&
+                                    $("cin_err_" + i).html() == '') {
+                                    $('#saver_multi_stg').prop('disabled', false);
+                                } else {
+                                    $('#saver_multi_stg').prop('disabled', true);
+                                } */
+                            } else {
+                                document.getElementById("matricule_err_" + i).innerHTML = '';
+                            }
+                        }
+                        , error: function(error) {
+                            console.log(error);
+                        }
+                    });
+
+                    if ($("#email_" + i).val() != null) {
+                        document.getElementById("email_err_" + i).innerHTML = '';
+
+                        var email = $("#email_" + i).val();
+                        $.ajax({
+                            url: "{{route('employes.export.verify_email_stg')}}"
+                            , type: 'get'
+                            , data: {
+                                valiny: email
+                            }
+                            , success: function(response) {
+                                var userData = response;
+                                if (userData.length > 0) {
+                                    document.getElementById("email_err_" + i).innerHTML = 'E-mail existe déjà';
+                           /*         if ($("matricule_err_" + i).html() == '' &&
+                                        $("cin_err_" + i).html() == '') {
+                                        $('#saver_multi_stg').prop('disabled', false);
+                                    } else {
+                                        $('#saver_multi_stg').prop('disabled', true);
+                                    } */
+                                } else {
+                                    document.getElementById("email_err_" + i).innerHTML = '';
+                                }
+                            }
+                            , error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+
+                    if ($("#cin_" + i).val() != null) {
+                        var cin = $("#cin_" + i).val();
+                        document.getElementById("cin_err_" + i).innerHTML = '';
+
+                        $.ajax({
+                            url: "{{route('employes.export.verify_cin_stg')}}"
+                            , type: 'get'
+                            , data: {
+                                valiny: cin
+                            }
+                            , success: function(response) {
+                                var userData = response;
+                                if (userData.length > 0) {
+
+                                    document.getElementById("cin_err_" + i).innerHTML = "CIN existe déjà";
+                    /*                if ($("matricule_err_" + i).html() == '' &&
+                                        $("email_err_" + i).html() == '' ) {
+                                        $('#saver_multi_stg').prop('disabled', false);
+                                    } else {
+                                        $('#saver_multi_stg').prop('disabled', true);
+                                    } */
+                                } else {
+                                    document.getElementById("cin_err_" + i).innerHTML = '';
+                                }
+                            }
+                            , error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                }
+
+
+
             }
         });
 
 
     });
-*/
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-  'use strict'
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict'
 
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+
 </script>
 
 @endsection

@@ -688,6 +688,11 @@ Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')-
 Route::get('employes.liste','ParticipantController@liste_employer')->name('employes.liste');
 Route::get('employes.export.nouveau','ParticipantController@export_excel_new_participant')->name('employes.export.nouveau');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
+
+Route::get('employes.export.verify_matricule_stg','ParticipantController@verify_matricule_stg')->name('employes.export.verify_matricule_stg');
+Route::get('employes.export.verify_email_stg','ParticipantController@verify_email_stg')->name('employes.export.verify_email_stg');
+Route::get('employes.export.verify_cin_stg','ParticipantController@verify_cin_stg')->name('employes.export.verify_cin_stg');
+
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement','ChefDepartementController');
 Route::get('/destroy_chefDepartement','ChefDepartementController@destroy')->name('destroy_chefDepartement');
@@ -891,7 +896,7 @@ Route::post('enregistrement_branche','DepartementController@enregistrement_branc
 
 Route::get('affiche_departement','DepartementController@liste_dep')->name('affiche_departement');
 // ======= export excel copier coller participant
-// Route::get('export_excel_new_participant','ParticipantController@export_excel_new_participant')->name('export_excel_new_participant');
+Route::get('export_excel_new_participant','ParticipantController@teste')->name('export_excel_new_participant');
 Route::get('show_excel','ViexExcelController@index')->name('show_excel');
 // Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
 Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep');

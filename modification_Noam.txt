@@ -11,3 +11,12 @@ CREATE TABLE devise
 
 insert into devise values
 (1,"Ariary","AR");
+
+
+-Branch: debug_collaboration:
+
+- alter table factures add column nbre_participant int(11) DEFAULT 0;
+
+recopier view :dans facture bdd_suiviformation_mise_a_jour_6.sql(facturation)
+-v_totale_participant_session
+-v_liste_facture
