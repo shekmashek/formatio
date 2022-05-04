@@ -263,8 +263,6 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
     JOIN stagiaires s ON
         s.id = pg.stagiaire_id;
 
-
-
 create or replace view v_projet_cfp as
     select
         p.id as projet_id,

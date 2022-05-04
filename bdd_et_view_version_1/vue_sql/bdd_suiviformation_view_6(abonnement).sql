@@ -49,7 +49,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_cfp AS SELECT
     a.status,
     a.cfp_id,
     a.categorie_paiement_id,
-    a.activite,
+    a.activiter,
     cat_p.categorie,
     t_ab.nom_type
 FROM

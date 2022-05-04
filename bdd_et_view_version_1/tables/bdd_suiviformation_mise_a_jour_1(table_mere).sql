@@ -233,7 +233,7 @@ CREATE TABLE responsables_cfp(
   fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
