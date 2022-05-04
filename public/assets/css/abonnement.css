@@ -1,3 +1,4 @@
+
 .carHead{
     width:auto;
     background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57));
@@ -182,7 +183,7 @@ ul p{
 /* ---------------- */
 
 .card {
-    max-width: 250px;
+    width: 250px;
     height: 380px;
     position: relative;
     padding: 20px;
@@ -257,8 +258,8 @@ ul p{
 
 .card:hover {
     background-color: gold;
-    background-color: rgba(238, 237, 237, 0.624);
-    transform: scale(1.1);
+    /* background-color: rgba(238, 237, 237, 0.624); */
+    /* transform: scale(1.1); */
 }
 
 .card:hover .bx.bx-check {
@@ -328,4 +329,31 @@ ul p{
 .nav-tabs .nav-item a{
     text-decoration: none;
     text-decoration-line: none;
+}
+
+.deconnexion_text {
+    color: #333 !important;
+    background-color: white !important;
+    border: 1px solid rgba(202, 202, 202, 0.618) !important;
+    margin-top: 15px !important;
+    border-radius: 5px !important;
+    margin: 0 auto;
+    height: 38px !important;
+}
+
+.deconnexion_text:hover{
+    border-color: red !important;
+    color: red !important;
+}
+
+.profil_btn{
+    margin: 0 auto;
+}
+
+.btn-primary:hover{
+    border-radius: 5px;
+}
+
+.btn-primary a:hover{
+    color: white;
 }

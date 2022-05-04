@@ -846,7 +846,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
-                                                    <div>
+                                                    <div class="">
                                                         <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                                             </a></p>
