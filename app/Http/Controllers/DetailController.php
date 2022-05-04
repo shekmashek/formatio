@@ -300,9 +300,25 @@ class DetailController extends Controller
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
-        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('detail', 'stg', 'date_groupe'));
-        //return view('admin.calendrier.detail_pdf' ,compact('detail', 'stg','date_groupe'));
-        return $pdf->download('Detail du projet.pdf');
+        $status = DB::select("
+        select
+        g.status as status_groupe,
+        g.date_debut,
+        g.date_fin,
+        case
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'Terminé'
+                    when (g.date_debut - curdate()) < 0 then 'En cours'
+                    else 'A venir' end
+            when g.status = 1 then 'Prévisionnel'
+            when g.status = 0 then 'Créer'end item_status_groupe
+            from groupes g
+            where g.id =?
+        ",[$id_groupe]);
+        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('status','detail', 'stg', 'date_groupe'));
+      //  return view('admin.calendrier.detail_pdf' ,compact('status','detail', 'stg','date_groupe'));
+      return $pdf->download('Detail du projet.pdf');
     }
     //filtre calendrier
     public function rechercheModuleCalendar(Request $request){
