@@ -331,25 +331,13 @@
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
                     var details = userDataDetail['details'];
-                    console.log(details);
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
 
                     var detail_id = userDataDetail['detail_id'];
 
 
                     for (var $i = 0; $i < details.length; $i++) {
-                        for(var $j = $i+1; $j < details.length; $j++){
-                            if (details[$i][0].groupe_id ==details[$j][0].groupe_id ) {
-                                var letters = '0123456789ABCDEF';
-                                var couleur = '#';
-                                for (var i = 0; i < 6; i++) {
-                                    couleur += letters[Math.floor(Math.random() * 16)];
-                                }
-                            }
-                            else{
-                                couleur = getRandomColor();
-                            }
-                        }
+
                         event.push({
                             @can('isStagiaire')
                                 title: groupe_entreprises[$i][0].nom_formation
@@ -358,7 +346,7 @@
                             title: groupe_entreprises[$i].nom_formation
                             @endcan
                             , start: details[$i][0].date_detail
-                            ,backgroundColor:couleur
+                            ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i][0].nom_projet
                             , h_debut: details[$i][0].h_debut
                             , h_fin: details[$i][0].h_fin
