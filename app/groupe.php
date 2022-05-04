@@ -34,20 +34,20 @@ class Groupe extends Model
         $nb_detail = DB::select('select ifnull(count(groupe_id),0) as nombre_detail from details where groupe_id = ?', [$groupe_id])[0]->nombre_detail;
         $nb_participant = DB::select('select ifnull(count(groupe_id),0) as nombre_participant from participant_groupe where groupe_id = ?',[$groupe_id])[0]->nombre_participant;
         if($nb_presence < $nb_detail * $nb_participant){
-            return '#ff0000';
+            return '#bdbebd';
         }
         elseif($nb_presence = $nb_detail * $nb_participant){
             return '#00ff00';
         }
         elseif($nb_detail * $nb_participant == 0){
-            return '#ff0000';
+            return '#bdbebd';
         }
     }
 
     public function statut_evaluation($groupe_id){
         $somme_eval = DB::select('select ifnull(sum(note_apres),0) as somme_note from evaluation_stagiaires where groupe_id = ?',[$groupe_id])[0]->somme_note;
         if($somme_eval == 0){
-            return '#ff0000';
+            return '#bdbebd';
         }
         elseif($somme_eval > 0){
             return '#00ff00';

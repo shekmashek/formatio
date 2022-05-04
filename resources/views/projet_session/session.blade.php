@@ -1,4 +1,5 @@
 @extends('./layouts/admin')
+@inject('groupe', 'App\Groupe')
 @section('content')
 <style>
     .corps_planning .nav-link {
@@ -553,7 +554,14 @@
                                     <button class="planning d-flex justify-content-between py-1 action_animation"
                                         onclick="openCity(event, 'emargement')" style="width: 100%">
                                         <p class="m-0 p-0">EMARGEMENT</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        @php
+                                            $pres = $groupe->statut_presences($projet[0]->groupe_id);
+                                            if ($pres == '#00ff00') {
+                                                echo '<i class="fa fa-check-circle me-2" style="color: chartreuse"></i>';
+                                            }elseif ($pres == '#bdbebd') {
+                                                echo '<i class="fal fa-dot-circle me-2" style="color: grey"></i>';
+                                            }
+                                        @endphp
                                     </button>
                                 </a>
                             </div>
