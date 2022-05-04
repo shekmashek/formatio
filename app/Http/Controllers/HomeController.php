@@ -32,6 +32,7 @@ use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
 use App\EvaluationChaud;
+use App\Groupe;
 use App\Models\getImageModel;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
@@ -843,12 +844,7 @@ public function recherche_cfp(Request $request,$page = null)
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-
             $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?',[$cfp_id,$formateur_id,$nb_par_page,$offset]);
-            // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-
-            // $entreprise = $entp->getEntreprise($etp2, $etp1);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
@@ -891,6 +887,14 @@ public function recherche_cfp(Request $request,$page = null)
 
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id','page','fin_page','nb_projet','debut','fin','nb_par_page'));
         }
+    }
+
+    public function statut_presence_emargement(Request $req){
+        $groupe_id = $req->groupe;
+        $groupe = new Groupe();
+        $statut_presence = $groupe->statut_presences($groupe_id);
+        $statut_evaluation = $groupe->statut_evaluation($groupe_id);
+        return response()->json(['presence'=>$statut_presence,'evaluation'=>$statut_evaluation]);
     }
 
     public function compte(Request $request)

@@ -292,7 +292,7 @@
             filter: brightness(0.99);
         }
         25%{
-            filter: brightness(0.96);
+            filter: brightness(0.95);
         }
         50%{
             filter: brightness(0.97);

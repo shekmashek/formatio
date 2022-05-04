@@ -875,3 +875,12 @@ group by
     d.groupe_id,
     d.formateur_id,
     f.photos;
+
+create or replace view v_presence_groupe as 
+    select
+        p.detail_id,
+        p.stagiaire_id,
+        p.status,
+        d.groupe_id
+    from presences p 
+    join details d on d.id = p.detail_id;

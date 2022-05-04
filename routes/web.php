@@ -1213,3 +1213,5 @@ Route::get('parametrage_salle','SalleFormationController@index')->name('parametr
 Route::post('enregistrer_salle_of','SalleFormationController@store')->name('enregistrer_salle_of');
 Route::get('supprimer_salle/{id?}','SalleFormationController@destroy')->name('supprimer_salle');
 Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('modifier_salle');
+
+Route::get('statut_presence_emargement','HomeController@statut_presence_emargement')->name('statut_presence_emargement');

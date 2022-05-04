@@ -132,3 +132,4 @@ join responsables r on
     r.entreprise_id = e.id
 WHERE
     d.activiter = 1;
+

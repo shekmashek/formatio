@@ -2,6 +2,9 @@
 @section('title')
     <p class="text_header m-0 mt-1">Projets</p>
 @endsection
+
+@inject('groupe', 'App\Groupe')
+
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
 
@@ -10,7 +13,6 @@
             border-radius: 1rem;
             background-color: #637381;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -18,7 +20,6 @@
             border-radius: 1rem;
             background-color: #00CDAC;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -26,7 +27,6 @@
             border-radius: 1rem;
             background-color: #314755;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -34,7 +34,6 @@
             border-radius: 1rem;
             background-color: #26a0da;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -42,7 +41,6 @@
             border-radius: 1rem;
             background-color: #b31217;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -50,7 +48,6 @@
             border-radius: 1rem;
             background-color: #1E9600;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -58,15 +55,14 @@
             border-radius: 1rem;
             background-color: #2B32B2;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-end:1rem;
         }
 
         .statut_active {
             border-radius: 1rem;
             background-color: rgb(15, 126, 145);
             color: whitesmoke;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -870,6 +866,7 @@
                                 <th> Date du projet</th>
                                 <th> Modalité</th>
                                 <th> Statut </th>
+                                <th></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
@@ -900,9 +897,21 @@
                                         </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
                                         <td>{{ $pj->modalite }}</td>
-                                        <td class="text-center m-0">
+                                        <td>
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
                                                 {{ $pj->item_status_groupe }}</p>
+                                        </td>
+                                        <td align="left">
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color: 
+                                            @php
+                                                echo $groupe->statut_presences($pj->groupe_id);
+                                            @endphp
+                                            "></i>&nbsp;Emargement</p>
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color: 
+                                            @php
+                                                echo $groupe->statut_evaluation($pj->groupe_id);
+                                            @endphp    
+                                            "></i>&nbsp;Evaluation</p>
                                         </td>
                                     </tr>
                                 @endforeach
