@@ -353,6 +353,8 @@ WHERE
     AND type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
 
+-- 04.05.2022 8:34 start here --
+
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
     v_facture.*,
     (v_temp_facture.montant_facture) montant_total,
@@ -509,6 +511,7 @@ LEFT JOIN factures ON v_groupe_entreprise.groupe_entreprise_id = factures.groupe
 GROUP BY
     v_groupe_entreprise.projet_id,
     v_groupe_entreprise.entreprise_id;
+
 
 CREATE OR REPLACE VIEW v_count_session_projet AS SELECT
     (COUNT(groupe_entreprise_id)) session_non_facturer,

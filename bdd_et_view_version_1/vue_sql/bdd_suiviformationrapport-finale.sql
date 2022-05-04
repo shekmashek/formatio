@@ -1,10 +1,15 @@
 
+
+-- !! NE PAS UTILISER  --
+
 create or replace view v_liste_formateur_projet as
 select
     projet_id,formateur_id,nom_projet,nom_formateur,prenom_formateur,photos
     from v_detailmoduleformationprojetformateur group by
     projet_id,formateur_id,nom_projet,nom_formateur,prenom_formateur,photos;
 
+
+-- !! table participantsessions introuvable/inexistante --
 create or replace view v_liste_stagiaire_groupe as
 select
     stagiaire_id,nom_stagiaire,prenom_stagiaire,groupe_id,nom_groupe,
@@ -290,6 +295,8 @@ from
 where
     stagaire_id = stagiaires.id and groupe_id = groupes.id ;
 
+
+-- needed for 4.0 on line 803 --
 create table detail_evaluation_apprenants(
     id bigint(20) unsigned primary key not null auto_increment,
     note_avant DECIMAL(4,2) NOT NULL DEFAULT 0,

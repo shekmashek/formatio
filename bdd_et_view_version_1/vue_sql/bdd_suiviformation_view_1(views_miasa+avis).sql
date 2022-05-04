@@ -67,7 +67,7 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     f.photos,
     f.mail_formateur,
     f.numero_formateur,
-    f.genre,
+    f.genre_id,
     f.date_naissance,
     (f.adresse) adresse_formateur,
     f.cin,
@@ -200,6 +200,8 @@ STATUS
 END couleur
 FROM
     froid_evaluations;
+
+
 CREATE OR REPLACE VIEW v_pourcentage_status AS SELECT
     cfp_id,
     projet_id,
@@ -215,6 +217,8 @@ GROUP BY
     cfp_id,
     projet_id,
     stagiaire_id;
+
+
 CREATE OR REPLACE VIEW v_liste_avis AS SELECT
     module_id,
     stagiaire_id,
@@ -231,6 +235,8 @@ ORDER BY
     date_avis
 DESC
     ;
+
+
 CREATE OR REPLACE VIEW v_avis AS SELECT
     module_id,
     ROUND(
@@ -241,6 +247,8 @@ FROM
     avis
 GROUP BY
     module_id;
+
+
 CREATE OR REPLACE VIEW v_nombre_avis_par_module AS SELECT
     module_id,
     COUNT(*) AS nombre
@@ -257,6 +265,9 @@ FROM
 GROUP BY
     module_id,
     note;
+
+
+
 CREATE OR REPLACE VIEW v_moyenne_avis_module AS SELECT
     module_id,
     SUM(note) / COUNT(module_id) AS moyenne_avis
@@ -264,6 +275,9 @@ FROM
     v_nombre_note
 GROUP BY
     module_id;
+
+
+
 CREATE OR REPLACE VIEW v_pourcentage_avis AS SELECT
     nn.module_id,
     CEIL(nn.note) AS note,
@@ -281,6 +295,9 @@ ORDER BY
     nn.note
 DESC
     ;
+
+
+
 CREATE OR REPLACE VIEW v_module_nombre AS SELECT
     m.id,
     m.reference,
@@ -289,6 +306,9 @@ CREATE OR REPLACE VIEW v_module_nombre AS SELECT
 FROM
     modules m
 CROSS JOIN nombre n;
+
+
+
 CREATE OR REPLACE VIEW v_statistique_avis AS SELECT
     mn.id AS module_id,
     mn.nombre,
@@ -340,6 +360,8 @@ JOIN niveaux n ON
     n.id = m.niveau_id
 LEFT JOIN v_moyenne_avis_module a ON
     m.id = a.module_id;
+
+
 
 CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.id AS module_id,

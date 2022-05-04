@@ -1,3 +1,4 @@
+
 create table type_formations(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   type_formation varchar(250) not null
@@ -63,6 +64,7 @@ create table mes_documents(
   groupe_id bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 drop table if exists detail_evaluation_action_formation;
 create table detail_evaluation_action_formation(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -74,6 +76,7 @@ create table detail_evaluation_action_formation(
     groupe_id  bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+---------------------------------
 
 create table salle_formation_of(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

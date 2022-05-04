@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE VIEW v_type_abonnement_role_etp AS SELECT
     t.id AS type_abonnement_role_id,
     t.type_abonne_id,
@@ -9,8 +10,11 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_etp AS SELECT
     a.status,
     a.entreprise_id,
     a.categorie_paiement_id,
+    
+    -- ces deux champs sont à ajouter plus tard --
     a.activite,
     a.type_arret,
+    
     t_ab.nom_type,
     cat_p.categorie
 
@@ -50,8 +54,11 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_cfp AS SELECT
     a.status,
     a.cfp_id,
     a.categorie_paiement_id,
+
+-- ces deux champs sont à ajouter plus tard --
     a.activite,
     a.type_arret,
+
     cat_p.categorie,
     t_ab.nom_type
 FROM
@@ -81,6 +88,8 @@ CREATE OR REPLACE VIEW v_abonnement_role as SELECT
     type_ab.nom_type,
     abonne.id as abonne_id,
     abonne.abonne_name
+
+-- mot clé non reconnu près de types --
 FROM type_abonnement_roles types
 JOIN type_abonnements type_ab ON type_ab.id = types.type_abonnement_id
 JOIN type_abonnes abonne ON abonne.id = types.type_abonne_id;

@@ -21,6 +21,8 @@ CREATE OR REPLACE VIEW v_chef_departement_entreprise AS SELECT
     chef.id as chef_id,
     chef.nom_chef,
     chef.prenom_chef,
+
+    -- champ genre_id introuvable --
     chef.genre_id,
     chef.fonction_chef,
     chef.mail_chef,

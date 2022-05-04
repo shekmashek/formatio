@@ -250,6 +250,8 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.mail_stagiaire,
         s.telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
+
+        -- mettre s.photot as photo_stagiaire, --
         s.photos,
         s.cin,
         s.date_naissance,
@@ -383,7 +385,7 @@ create or replace view v_horaire_cfp as
     join reseaux_sociaux rs on rs.cfp_id = cfps.id;
 
 
---script calendrier
+-- script calendrier
 SELECT * FROM details
 INNER JOIN projets ON details.projet_id = projets.id
 INNER JOIN groupes ON details.groupe_id = groupes.id

@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE VIEW v_programme AS SELECT
     cfp_id,
     formation_id,

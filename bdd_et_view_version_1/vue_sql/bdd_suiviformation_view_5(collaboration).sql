@@ -387,6 +387,9 @@ JOIN formateurs f ON
 WHERE
     d.activiter = 1;
 
+
+-- needed for 4.0 on line 755 --
+
 CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     d.activiter AS activiter_demande,
     c.id AS cfp_id,
@@ -604,3 +607,4 @@ JOIN entreprises e ON
     d.demmandeur_etp_id = e.id
 JOIN secteurs se ON
     e.secteur_id = se.id;
+    

@@ -10,6 +10,7 @@ CREATE TABLE `factures_abonnements` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- needed for 6 view on line 97 --
 CREATE TABLE `factures_abonnements_cfp` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `abonnement_cfps_id` bigint(20) UNSIGNED NOT NULL REFERENCES abonnements(id) ON DELETE CASCADE,
@@ -41,7 +42,7 @@ CREATE TABLE `encaissements_abonnements_cfps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
---Add column : entreprises / OF and create table assujetti
+-- Add column : entreprises / OF and create table assujetti ------------
 CREATE TABLE `assujetti` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `assujetti` boolean not null default false,
