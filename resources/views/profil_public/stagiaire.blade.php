@@ -23,7 +23,7 @@
                                 </div>
                             </span>
                             @else
-                            <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" class="image-ronde form_photo">
+                            <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" class="image-ronde form_photo" width="400px">
                             @endif
                         </div>
                         <div class=" bg-light">
