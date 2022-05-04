@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-6 text-center icon_choice">
                     <a href="{{route('create+compte+client/employeur')}}" class="" role="button">
-                        <p class="txt_titre">Entreprise</p>
+                        <p class="txt_titre etp_txt">Entreprise</p>
                         <i class='bx bxs-city'></i>
                     </a>
                 </div>

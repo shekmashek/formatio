@@ -349,10 +349,10 @@ select.list-dt:focus {
       opacity: 0;
     }
     25%{
-      transform: rotate(180deg);
+      transform: rotate(-180deg);
     }
     50%{
-      transform: rotate(-180deg);
+      transform: rotate(360deg);
     }
     75%{
       opacity: 1;
@@ -361,17 +361,52 @@ select.list-dt:focus {
 
 .image_accueil{
     animation-name: images;
-    animation-duration: 5s;
+    animation-duration: 10s;
     animation-iteration-count: infinite;
     animation-delay: 5s;
 }
 
 .form_content{
-    padding-top: 7rem;
+    padding-top: 1rem;
     background: linear-gradient(60deg, #4222c3, #7635dc);
 }
 
 .form_content .txt_enter{
     color: white;
     margin-bottom: 3rem;
+}
+
+.input_file{
+    border: none !important;
+    border-bottom: 1px solid grey !important;
+}
+.a_proposdeVous{
+    color: black;
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.lien_confidentiel{
+    color: black;
+}
+
+.robot_input{
+    border: none !important;
+}
+
+.robot_input:focus{
+    border: none !important;
+}
+
+.suivant_etp_1,
+.suivant_of_1,
+.previous,
+.suivant_of_confirmer,
+.suivant_etp_confirmer{
+    border-radius: 5px !important;
+}
+
+.etp_txt{
+    margin-bottom: 3.7rem;
 }
