@@ -30,15 +30,13 @@
                             <div class="row">
                                 <h2 class=" text-center ">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}}</h2>
                                 <div class="col-lg-6 col-md-6  detail">
-                                    <h4>Informations personnelles</h4>
                                     <span><i class="fa fa-calendar"></i> Né le {{date('j \\ F Y', strtotime($formateur->date_naissance))}}</span><br>
                                     <span><i class="fa fa-envelope"></i> {{$formateur->mail_formateur}}</span><br>
                                     <span><i class="fa fa-phone-square"></i> {{$formateur->numero_formateur}}</span><br>
                                     <span><i class="fa fa-address-book" ></i> {{$formateur->adresse}}</span>
                                 </div>
                                 <div class="col-lg-6 col-md-6 detail">
-                                    <h4>Informations professionnelles</h4>
-                                    <span><i class="fa fa-briefcase"></i> Poste: {{$formateur->specialite}}</span><br>
+                                     <span><i class="fa fa-briefcase"></i> Poste: {{$formateur->specialite}}</span><br>
                                     <span><i class="fa fa-graduation-cap"></i> Niveau d'étude: {{$formateur->niveau}}</span><br>
                                 </div>
                             </div>
