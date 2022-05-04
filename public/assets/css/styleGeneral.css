@@ -424,7 +424,7 @@ ul li a {
 }
 
 .filtrer.afficher {
-    width: 500px;
+    width: 400px;
     overflow-y: auto;
     right: 0px;
 }
