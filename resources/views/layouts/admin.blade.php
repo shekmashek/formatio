@@ -103,13 +103,13 @@
             </li> --}}
             @endcanany
             @canany(['isReferent'])
-            <li>
+            {{-- <li>
                 <a href="{{route('liste_departement')}}" class="d-flex nav_linke">
                     <i class='bx bx-home-alt'></i>
                     <span class="links_name">Departements</span>
                 </a>
 
-            </li>
+            </li> --}}
             @endcanany
             @can('isCFP')
             <li>
@@ -163,13 +163,13 @@
             </li>
             @endcanany
             @canany(['isReferent'])
-            <li>
+            {{-- <li>
                 <a href="{{route('projet_interne')}}" class="d-flex nav_linke">
                     <i class='bx bxl-netlify'></i>
                     <span class="links_name">Formation Interne</span>
                 </a>
 
-            </li>
+            </li> --}}
             @endcanany
             @canany(['isStagiaire'])
             <li>
@@ -181,13 +181,13 @@
             </li>
             @endcanany
             @canany(['isCFP','isReferent','isManager'])
-            <li>
+            {{-- <li>
                 <a href="{{route('appel_offre.index')}}" class="d-flex nav_linke">
                     <i class='bx bx-mail-send'></i>
                     <span class="links_name">Appel d'Offre</span>
                 </a>
 
-            </li>
+            </li> --}}
             @endcanany
             {{-- utilisateurs --}}
             @canany(['isSuperAdmin','isAdmin'])
@@ -252,13 +252,13 @@
             </li> --}}
             @endcanany
             @canany(['isReferent'])
-            <li>
+            {{-- <li>
                 <a href="{{route('employes')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
                     <span class="links_name">Equipe admnistrative</span>
                 </a>
 
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
@@ -365,12 +365,12 @@
             {{-- competence --}}
             @canany(['isSuperAdmin','isReferent','isManager'])
             @canany(['isReferent'])
-            <li>
+            {{-- <li>
                 <a href="{{route('demande_test_niveau')}}" class="d-flex nav_linke">
                     <i class='bx bx-network-chart'></i>
                     <span class="links_name">Aptitudes</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
@@ -379,23 +379,23 @@
                 </a>
             </li> --}}
             @endcanany
-            <li>
+            {{-- <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bxs-doughnut-chart'></i>
                     <span class="links_name">Compétence</span>
                 </a>
-            </li>
+            </li> --}}
             @endcanany
 
             {{-- plan de formation --}}
             @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
-            <li>
+            {{-- <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-scatter-chart'></i>
                     <span class="links_name">Plan</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('listePlanFormation')}}" class="d-flex nav_linke">
@@ -454,12 +454,14 @@
                     <span class="links_name">Librairies</span>
                 </a>
             </li> --}}
-            <li>
+            {{-- <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
-                    {{-- <i class='bx bx-book-add'></i> --}}
+                    {{-- <i class='bx bx-book-add'></i> --}
+
+
                     <span class="links_name">Librairies</span>
                 </a>
-            </li>
+            </li> --}}
             @endcan
         </ul>
 
@@ -627,9 +629,9 @@
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
                                         <li><a class="dropdown-item" href="{{route('departement.create')}}"><i
                                                     class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a></li>
-                                        <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
+                                        {{-- <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
                                                     class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel d'offre</a>
-                                        </li>
+                                        </li> 
                                         <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
                                                     class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
                                                 stagiaire</a></li>
@@ -652,7 +654,7 @@
                                             <a class="dropdown-item" href="{{route('projets')}}">
                                                 <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
 
