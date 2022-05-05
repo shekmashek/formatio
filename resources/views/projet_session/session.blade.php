@@ -10,13 +10,13 @@
         transition: all 200ms;
         text-transform: uppercase;
         padding-top: 10px;
-        border: none;
     }
+
 
     .nav-item .nav-link button.active {
         /* border-bottom: 3px solid #7635dc !important; */
         color: #7635dc;
-        border: none;
+        border-right:.2rem solid  #7635dc;
     }
 
     .nav-tabs .nav-link:hover {
@@ -30,6 +30,14 @@
         text-decoration-line: none;
     }
 
+    .corps_planning .nav-item .planning{
+        border-right:.2rem solid  #c5c4c49b;
+    }
+
+    .corps_planning .nav-item .planning{
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
 </style>
 <style>
     .shadow {
@@ -221,15 +229,7 @@
         font-weight: bold;
     }
 
-    /* .active{
-    color: rgb(130,33,100);
-    background-color: white;
-    font-weight: bold;
-} */
-    .corps_planning {
-        /* border: 1px solid grey; */
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 3px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    }
+
 
     button {
         background-color: white;
@@ -452,7 +452,7 @@
         </section>
         <section>
             <div class="row p-0 d-flex flex-row" role="tabpanel">
-                <div class="col-md-2">
+                <div class="col-md-2 nav_session">
                     <div class="corps_planning m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
                         <div class="nav-item active" role="presentation">
                             <a href="#detail" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
