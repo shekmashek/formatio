@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Departement</p>
+    <p class="text_header m-0 mt-1">Departement / Sérvice</p>
 @endsection
 @section('content')
 
@@ -63,9 +63,9 @@
 
 
 
-    <div class="container my-5">
+    <div class="container">
         <div class="row">
-            <h4>Départements/Services</h4>
+            {{-- <h4>Départements/Services</h4> --}}
             @if(Session::has('success'))
             <div class="alert alert-success">
                 <strong>{{Session::get('success')}}</strong>

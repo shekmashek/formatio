@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text-white ms-5">Détail facture</h3>
+<h3 class="text_header m-0 mt-1">Détail facture</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
@@ -10,44 +10,13 @@
 
 <div id="page-wrapper">
     <div class="container-fluid">
-        {{-- <div class="row">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                            <li class="nav-item btn_next">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
-        Liste des Factures</a>
-        </li>
-        @canany(['isCFP','isCFPrincipale'])
-        <li class="nav-item btn_next">
-            <a class="nav-link  {{ Route::currentRouteNamed('facture') ? 'active' : '' }}" href="{{route('facture')}}">
-                Nouveau Facture</a>
-        </li>
-        <li class="nav-item btn_next">
-            <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$montant_totale->num_facture)}}">
-                PDF</a>
-        </li>
-        @endcanany
-        @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
-        <li class="nav-item btn_next">
-            <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
-                PDF</a>
-        </li>
-        @endcanany
-        </ul>
-    </div>
-</div>
-</nav> --}}
 </div>
 
 <div class="m-4">
     <section class="section1 mb-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <div class="btn_racourcis">
+                <div class="">
                     <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
                         Retour à la liste des factures</a></div>
             </li>
@@ -132,7 +101,7 @@
                                     <h6>N° BC: {{$facture[0]->reference_bc}}</h6>
                                     <h6>Date de facturation: {{$montant_totale->invoice_date}}</h6>
                                     <h6>Date de règlement: {{$montant_totale->due_date}}</h6>
-                                    <h6>Reste à payer(MGA): Ar {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
+                                    <h6>Reste à payer({{$devise->devise}}): {{number_format($montant_totale->dernier_montant_ouvert,0,","," ")}} </h6>
                                 </div>
                             </div>
 
@@ -177,12 +146,12 @@
                                         </td>
                                         <td>
                                             <div align="left">
-                                                Ar {{number_format($montant_facture->pu,0,","," ")}}
+                                                {{$devise->devise." ".number_format($montant_facture->pu,0,","," ")}}
                                             </div>
                                         </td>
                                         <td>
                                             <div align="right">
-                                                Ar {{number_format($montant_facture->hors_taxe,0,","," ")}}
+                                                {{$devise->devise." ".number_format($montant_facture->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -203,7 +172,7 @@
                                         <td></td>
                                         <td>
                                             <div align="right">
-                                                Ar -{{number_format($fa->montant_total,0,","," ")}}
+                                                {{$devise->devise." -".number_format($fa->montant_total,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -219,12 +188,12 @@
                                         <td>{{$frais_annexe->qte}}</td>
                                         <td>
                                             <div align="left">
-                                                Ar {{number_format($frais_annexe->pu,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->pu,0,","," ")}}
                                             </div>
                                         </td>
                                         <td>
                                             <div align="right">
-                                                Ar {{number_format($frais_annexe->hors_taxe,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -246,7 +215,7 @@
                                                     <td>Montant Brut HT</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->montant_brut_ht,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->montant_brut_ht,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -256,7 +225,7 @@
                                                     <td>Remise</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar -{{number_format($montant_totale->remise,0,","," ")}}
+                                                            {{$devise->devise." -".number_format($montant_totale->remise,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -265,7 +234,7 @@
                                                     <td>Net Commercial HT</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->net_commercial,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->net_commercial,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -274,7 +243,7 @@
                                                     <td>TVA({{$facture[0]->pourcent}} %)</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->tva,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->tva,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -285,7 +254,7 @@
                                                     <td>Acompte</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar -{{number_format($montant_totale->sum_acompte,0,","," ")}}
+                                                            {{$devise->devise." -".number_format($montant_totale->sum_acompte,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -300,7 +269,7 @@
                                                     <td>Net à payer TTC</td>
                                                     <td>
                                                         <div align="right">
-                                                            Ar {{number_format($montant_totale->montant_total,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->montant_total,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -316,7 +285,7 @@
                     </div>
                 </div>
 
-                <p>Arretée la présente facture à la somme de: {{$lettre_montant}} Ariary</p>
+                <p>Arretée la présente facture à la somme de: {{$lettre_montant." ".$devise->devise}}</p>
                 <p>mode de paiement: {{$montant_totale->description_financement}}</p>
                 @if($facture[0]->other_message!=null)
                 <p>Autre Message</p>

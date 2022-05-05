@@ -835,11 +835,17 @@ class ParticipantController extends Controller
             $stagiaires_tmp = DB::select('SELECT * FROM stagiaires where id = ?', [$id]);
 
             $stagiaire = $stagiaires_tmp[0];
+            $initial_stagiaire = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where id =  ?', [$id ]);
 
-            $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
+            if($stagiaire->service_id == null){
+                $service = "---------------";
+                $departement = "---------------";
+            }
+            else{
+                $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
+                $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
+            }
             $entreprise = $fonct->findWhereMulitOne("entreprises", ["id"], [$stagiaire->entreprise_id]);
-
-            $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
             $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
             if($stagiaire->genre_stagiaire == 1){
                 $genre = 'Femme';
@@ -847,7 +853,7 @@ class ParticipantController extends Controller
             if($stagiaire->genre_stagiaire == 2){
                 $genre = 'Homme';
             }
-            return view('admin.participant.profile', compact('entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
+            return view('profil_public.stagiaire', compact('initial_stagiaire','entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
         }
         // $stagiaire=stagiaire::findOrFail($id);
         // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))

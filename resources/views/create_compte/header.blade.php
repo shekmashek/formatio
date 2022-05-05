@@ -40,10 +40,10 @@
 <body class="m-0 p-0">
 
     <div class="container-fluid">
-        <header>
+        {{-- <header>
             <nav class="navbar navbar-expand-lg" style="position:fixed top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img src="{{ asset('img/images/logo_fmg54Ko.png') }}" alt="background" class="img-fluid" style="width: 2.5rem; height: 2.5rem;">
+                    <a class="navbar-brand" href="#"><img src="{{ asset('img/logo_formation/logo_fmg7635dc trans.png') }}" alt="background" class="img-fluid" style="width: 2.5rem; height: 2.5rem;">
                     </a>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -56,17 +56,12 @@
                     </div>
                 </div>
             </nav>
-        </header>
+        </header> --}}
 
 
-        <div class="row justify-content-center">
-            <div class="col-md-5 ">
-                @yield('content')
-
-                <p style="font-size: 10px" class="mt-2">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ici.</a> Vous voulez revenir à l'accueil?  Appuyez sur <a href="{{route('create+compte+client')}}" style="color: blue">accueil</a></p>
-
-            </div>
-            {{-- <div class="col-md-2"></div> --}}
+        <div class="row">
+            @yield('content')
+            {{-- <p style="font-size: 10px" class="mt-2">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ici.</a> Vous voulez revenir à l'accueil?  Appuyez sur <a href="{{route('create+compte+client')}}" style="color: blue">accueil</a></p> --}}
         </div>
 
     </div>

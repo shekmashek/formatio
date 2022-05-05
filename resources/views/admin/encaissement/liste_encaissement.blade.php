@@ -209,36 +209,9 @@
 
 </style>
 <div class="container-fluid">
-    {{-- <div class="row">
-        <div class="col-lg-12">
-            <br>
-            <h3>EXTRAIT DE COMPTE CLIENT</h3>
-        </div>
-    </div> --}}
 
-    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-
-                    <li class="nav-item">
-                        <a class="nav-link btn_next  {{ Route::currentRouteNamed('liste_facture',2) || Route::currentRouteNamed('liste_facture',2) ? 'active' : '' }}" href="{{route('liste_facture',2)}}">
-    Liste des Factures</a>
-    </li>
-    @canany(['isSuperAdmin','isCFP'])
-    <li class="nav-item ">
-        <a class="nav-link btn_next {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
-            PDF liste encaissement</a>
-    </li>
-    @endcanany
-    </ul>
-</div>
-</div>
-</nav> --}}
 <div class="m-4">
     <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-        {{-- <li></li> --}}
         <li class="nav-item">
             <a href="{{route('liste_facture')}}" class="nav-link">
                 Retour à la liste des factures
@@ -282,9 +255,9 @@
                                         <td> <a href="{{route('detail_facture',$info->num_facture)}}">
                                             {{ $info->num_facture }}</a>
                                         </td>
-                                        <td>Ar {{ number_format($info->montant_facture, 2, ',', ' ') }}</td>
-                                        <td>Ar {{ number_format($info->payement, 2, ',', ' ') }}</td>
-                                        <td>Ar {{ number_format($info->montant_ouvert, 2, ',', ' ') }}</td>
+                                        <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                        <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                        <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
                                         <td>{{ $info->description }}</td>
                                         <td><button class="button_tail btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button>&nbsp;
                                             <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_creer btn-block mb-2 supprimer" style="color: red"><span class="fa fa-trash"></span></button></a>
@@ -351,16 +324,16 @@
             , success: function(response) {
                 var valiny = JSON.parse(response)[0];
                 var html = '';
-                html += '<textarea  autocomplete="off" name="libelle" id="libelle" class="text_description form-control" >' + valiny.userData[1] + '</textarea>';
+                html += '<textarea  autocomplete="off" name="libelle" id="libelle" class="text_description form-control"  rows="5">' + valiny.userData[1] + '</textarea>';
                 html += '<div class="inputbox inputboxP mt-3">';
-                html += '<span>Montant à facturer</span>';
-                html += '<input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" value="' + valiny.userData[0] + '" required="required"><br>';
+                html += '<span>Montant à enaisser</span>';
+                html += '<input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" value="' + valiny.userData[0] + '" required style="height: 50px;"><br>';
                 html += '<input type="hidden" name="encaissement_id" value="' + id + '">';
                 html += '<input type="hidden" name="num_facture" value="' + valiny.userData[2] + '">';
                 html += '</div>';
                 html += '<div class="form-group  mt-3">';
-                html += '<span>Mode de payement<strong style="color:#ff0000;">*</strong></span>';
-                html += '<select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example">';
+                html += '<span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>';
+                html += '<select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example" style="height: 50px;">';
                 html += '<option value="' + valiny.mode_finance_edit.id + '" selected>' + valiny.mode_finance_edit.description + '</option>';
                 var tab = valiny.mode_finance_list;
                 for (var i = 0; i < tab.length; i += 1) {
@@ -369,11 +342,11 @@
                 html += '</select>';
                 html += '</div>';
                 html += '<div class="inputbox inputboxP mt-3">';
-                html += '<span>Date de payement<strong style="color:#ff0000;">*</strong></span>';
-                html += '<input type="date" name="date_encaissement" class="form-control formPayement" required="required" value=' + valiny.userData[3] + '>';
+                html += '<span>Date de paiement<strong style="color:#ff0000;">*</strong></span>';
+                html += '<input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;" value=' + valiny.userData[3] + '>';
                 html += '</div>';
-                html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_enregistrer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
-                html += '<button type="submit" class="btn btn_enregistrer px-3">Modifier</button>';
+                html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
+                html += '<button type="submit" class="btn btn_creer px-3">Modifier</button>';
                 $("#modification").append(html);
             }
             , error: function(error) {

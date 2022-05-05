@@ -1,12 +1,12 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Modification nom</h3>
+    <h3 class="text_header m-0 mt-1">Modification nom</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profil_of',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('affichage_parametre_cfp',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 
 <center>

@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Utilisateur</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -18,6 +21,11 @@
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}">
                                         Entreprises</a>
                                 </li>
+                                
+                                {{-- <li class="nav-item mx-1">
+                                    <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('liste_entreprise') ? 'active' : '' }}" href="{{route('liste_entreprise')}}">
+                                        Entreprises</a>
+                                </li> --}}
                                 <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
                                         Organisme de Formation</a>
@@ -49,14 +57,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                        <li class="nav-item mx-1">
+                        {{-- <li class="nav-item mx-1">
                             <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
                                 Responsables des ETP</a>
-                        </li>
-                        <li class="nav-item mx-1">
+                        </li> --}}
+                        {{-- <li class="nav-item mx-1">
                             <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
                                 Stagiaires</a>
-                        </li>
+                        </li> --}}
                     </ul>
 
 
@@ -65,13 +73,13 @@
         </nav>
 
 
-        <form action="{{ route('utilisateur_new_resp_etp') }}">
+        {{-- <form action="{{ route('utilisateur_new_resp_etp') }}">
             @csrf
             <p style="display: flex; justify-content:end;">
                 <button type="submit" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Resposable</button>
                 &nbsp;
             </p>
-        </form>
+        </form> --}}
 
 
         {{-- </div> --}}
@@ -85,7 +93,7 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th> # </th>
+                                        <th> Photos</th>
                                         <th>Nom d'utilisateur</th>
                                         <th>E-mail</th>
                                         <th> Téléphone </th>
@@ -96,16 +104,17 @@
                                 </thead>
 
                                 <tbody>
+                               
 
                                     @foreach($datas as $resp)
                                     <tr>
                                         <td style="width: 10%;"><a class="dropdown-item" href="{{ route('profil_of',$resp->id) }}">
                                                 @if ($resp->photos==null)
-                                                <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/users.png')}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
-
+                                                <img class="img-fluid  " alt="Responsive image" src="{{asset('images/responsables/users.png')}}" style="height:50px; width:50px;border-radius:100%"> </a>
                                             @else
 
-                                            <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/'.$resp->photos)}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
+                                            <img class="img-fluid " alt="Responsive image" src="{{asset('images/responsables/'.$resp->photos)}}"  style="height:50px; width:50px;border-radius:100%" ></a>
+                                        
                                             @endif
                                         </td>
                                         <td>{{$resp->nom_resp." ".$resp->prenom_resp}}</td>
@@ -126,9 +135,9 @@
                                                         <i class="fa fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                                        <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
-                                                        <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a>
+                                                        <a class="dropdown-item" href="{{route('profil_referent')}}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
+                                                        {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                                        <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a> --}}
                                                     </ul>
                                                 </div>
                                             </div>

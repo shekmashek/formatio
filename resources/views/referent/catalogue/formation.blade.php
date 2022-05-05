@@ -81,7 +81,7 @@
                                         class='bx bxs-notification me-2'></i>{{$mod->modalite_formation}}</p>
                             </div>
                             <div class="col-6 text-center">
-                                <p class="text-capitalize"><span class="prix">{{$mod->prix}}&nbsp;AR&nbsp;<span class="text-muted">HT</span></span> </p>
+                                <p class="text-capitalize"><span class="prix">{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span class="text-muted">HT</span></span> </p>
                             </div>
                         </div>
                     </div>

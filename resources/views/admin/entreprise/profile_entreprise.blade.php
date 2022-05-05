@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="hover" >
                                     <a href="{{route('modification_nom_entreprise',$entreprise->id)}}">
-                                     <h4 class="f-w-600 mt-5" style="margin-left: 142px">{{$entreprise->nom_etp }}</h4>
+                                     <h4 class="f-w-600 mt-5" style="margin-left: 165px">{{$entreprise->nom_etp }}</h4>
                                     </a>
                                 </div>
                             </div>
@@ -45,31 +45,20 @@
                                             <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                                 <div class="row">
                                                     <div class="col-md-12 text-center">
-                                                        <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;Assugetti</p>
-                                                        <a href="{{route('modification_rcs_entreprise',$entreprise->id)}}">
 
-                                                        <h6 class="text-muted f-w-400">
-                                                            @if($entreprise->rcs==NULL)
-                                                            <strong style="color: red">incomplète</strong>
-                                                            @else
-                                                            {{$entreprise->rcs}}
-                                                            @endif
-                                                        </h6>
+                                                        <p class=" mt-1 m-b-5 f-w-600"><i class='bx bx-money-withdraw'></i>&nbsp;Assujetti à la TVA</p>
+                                                        @if($entreprise->assujetti_id == null)
+                                                        <a href="{{route('modification_assujetti_entreprise',$entreprise->id)}}">
+                                                            <p class="text-primary text-decoration-underline">incomplète</p>
                                                         </a>
+                                                        @elseif($entreprise->assujetti_id == 1)
+                                                            <a href="{{route('modification_assujetti_entreprise',$entreprise->id)}}"><span class="text-primary text-decoration-underline">Assujetti</span></a> 
+                                                        @else
+                                                            <a href="{{route('modification_assujetti_entreprise',$entreprise->id)}}"><span class="text-primary text-decoration-underline">Non assujetti</span></a> 
+                                                        @endif
                                                     </div>
-                                                    {{-- <div class="col-sm-6">
-                                                        <p class="m-b-10 f-w-600"><i class="bx bx-book"></i>&nbsp;CIF</p>
-                                                        <a href="{{route('modification_cif_entreprise',$entreprise->id)}}">
-
-                                                        <h6 class="text-muted f-w-400">
-                                                            @if($entreprise->cif==NULL)
-                                                            <strong style="color: red">incomplète</strong>
-                                                            @else
-                                                            {{$entreprise->cif}}
-                                                            @endif</h6>
-                                                        </a>
-                                                    </div> --}}
                                                 </div>
+                                                <br>
                                             </div>
 
                                         <div class="row">
@@ -165,7 +154,7 @@
                                     </div>
                                     </div>
                                     <div class="row">
-                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
+                                        {{-- <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <div class="row">
                                             <div class="col-md-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-home"></i>&nbsp;Adresse</p>
@@ -183,18 +172,17 @@
                                             <div class="col-md-6">
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp;Site web</p>
                                                 <a href="{{route('modification_site_etp_entreprise',$entreprise->id)}}">
-
                                                 <h6 class="text-muted f-w-400">
-                                                @if($entreprise->site_etp==NULL)
-                                                <strong style="color: red">incomplète</strong>
-                                                @else
-                                              {{$entreprise->site_etp}}
-                                                @endif
-                                            </h6>
+                                                    @if($entreprise->site_etp==NULL)
+                                                        <strong style="color: red">incomplète</strong>
+                                                    @else
+                                                        {{$entreprise->site_etp}}
+                                                    @endif
+                                                </h6>
                                                 </a>
                                             </div>
                                         </div>
-                                        </div>
+                                        </div> --}}
 
 
                                     <div class="row">

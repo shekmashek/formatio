@@ -146,8 +146,8 @@ class SessionController extends Controller
             }
 
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
-            $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
-            $formateur_cfp = $fonct->concatTwoList($formateur2, []);
+            // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
+            $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
             // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             $documents = $drive->file_list($cfp_nom,"Mes documents");
@@ -199,6 +199,7 @@ class SessionController extends Controller
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
         $presence_detail = DB::select("select * from v_emargement where groupe_id = ?", [$projet[0]->groupe_id]);
+        // dd($presence_detail);
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
@@ -247,7 +248,7 @@ class SessionController extends Controller
             $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
             $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
             $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
-            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]); 
+            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]);
         }else{
             return response()->json(['status'=>'400']);
         }
@@ -421,7 +422,7 @@ class SessionController extends Controller
         $date_debut = $session->date_debut;
         $date_fin = $session->date_fin;
         $mail_etp = $session->email_etp;
-        Mail::to($session->mail_cfp)->send(new acceptation_session($mail_etp,$name_session,$name_etp,$date_debut,$date_fin));
+        Mail::to('vonjitahinaranjelison@gmail.com')->send(new acceptation_session('contact@formation.mg',$name_session,$name_etp,$date_debut,$date_fin));
         // fin
         DB::update('update groupes set status = 2 where id = ?',[$request->groupe]);
         return back();
@@ -440,7 +441,7 @@ class SessionController extends Controller
             $mail_cfp = $session->mail_cfp;
             Mail::to($mail_cfp)->send(new annuler_session($mail_acteur,$name_session,$name_etp,$name_cfp,$date_debut,$date_fin));
         }
-        DB::update('update groupes set status = 1 where id = ?',[$request->groupe]);
+        DB::update('update groupes set status = 7 where id = ?',[$request->groupe]);
         return back();
     }
 
@@ -509,7 +510,7 @@ class SessionController extends Controller
             return response()->json(['status'=>'400']);
         }elseif($salle != null){
             DB::insert("insert into salle_formation_of(cfp_id,salle_formation) value(?,?)",[$cfp_id,$salle]);
-            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]); 
+            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]);
             return response()->json(['status'=>'200','salles'=>$salles]);
         }
     }

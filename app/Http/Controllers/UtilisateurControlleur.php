@@ -37,6 +37,7 @@ class UtilisateurControlleur extends Controller
         $liste = entreprise::orderBy('nom_etp')->get();
         if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
         else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
+       
         return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
     }
 
@@ -50,11 +51,11 @@ class UtilisateurControlleur extends Controller
     public function liste_formateur()
     {
         $datas = formateur::orderBy("nom_formateur")->get();
-        if (count($datas) <= 0) {
-            return view('admin.utilisateur.guide');
-        } else {
+        // if (count($datas) <= 0) {
+        //     return view('admin.utilisateur.guide');
+        // } else {
             return view('admin.utilisateur.utilisateur_formateur', compact('datas'));
-        }
+        // }
     }
 
     public function store(Request $request)
@@ -343,7 +344,10 @@ class UtilisateurControlleur extends Controller
         $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$id]);
         $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$id]);
 
-        return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux'));
+        $cfp = cfp::findOrFail($id);
+        // dd($cfp);
+        
+        return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux','cfp'));
     }
     public function register_cfp(Request $request)
     {

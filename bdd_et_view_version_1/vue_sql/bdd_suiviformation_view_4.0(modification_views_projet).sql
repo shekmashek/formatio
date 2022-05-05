@@ -26,7 +26,6 @@ create or replace view v_projet_session as
     from projets p
     join type_formations tf on p.type_formation_id = tf.id
     join cfps on p.cfp_id = cfps.id
-    join entreprise on
     join v_totale_session ts on ts.projet_id = p.id;
 
 
@@ -274,6 +273,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         f.mail_formateur,
         f.numero_formateur,
         f.photos,
+        concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
         p.nom_projet,
         (c.nom) nom_cfp,
         c.logo as logo_cfp,
@@ -360,6 +360,8 @@ create or replace view v_detail_session as
         dom.id as id_domaine,
         dom.nom_domaine,
         mf.nom_formation,
+        f.photos,
+        concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
         f.nom_formateur,
         f.prenom_formateur,
         f.mail_formateur,
@@ -408,6 +410,7 @@ create or replace view v_detail_session as
     dom.id,
     dom.nom_domaine,
     mf.nom_formation,
+    f.photos,
     f.nom_formateur,
     f.prenom_formateur,
     f.mail_formateur,
@@ -509,7 +512,7 @@ select
         s.entreprise_id,
         s.user_id,
         s.photos,
-        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photo,
+        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
         (s.service_id) departement_id,
         s.cin,
         s.date_naissance,
@@ -518,7 +521,7 @@ select
         s.activiter as activiter_stagiaire,
         s.branche_id,
         ifnull(d.nom_departement,' ') as nom_departement,
-         ifnull(d.nom_service,' ') as nom_service,
+        ifnull(d.nom_service,' ') as nom_service,
         mf.reference,
         mf.nom_module,
         mf.nom_formation,
@@ -823,3 +826,46 @@ create or replace view v_projet_formateur as
     join
         v_groupe_projet_module gpm
     on gpm.groupe_id = fp.groupe_id;
+
+
+create or replace view v_projet_formation as
+    select
+        projet_id,
+        formation_id,
+        nom_formation,
+        cfp_id
+    from v_groupe_projet_entreprise_module
+    group by
+        projet_id,
+        formation_id,
+        nom_formation,
+        cfp_id;
+
+-- select
+--     g.projet_id,
+--     p.nom_projet,
+--     mf.formation_id,
+--     mf.nom_formation,
+--     p.cfp_id
+-- from groupes g
+-- join projets p on p.id = g.projet_id
+-- join moduleformation mf on g.module_id = mf.module_id
+-- group by
+--     g.projet_id,
+--     p.nom_projet,
+--     mf.formation_id,
+--     mf.nom_formation,
+--     p.cfp_id;
+
+
+
+select
+    d.groupe_id,
+    d.formateur_id,
+    f.photos
+from details d
+join formateurs f on f.id = d.formateur_id
+group by
+    d.groupe_id,
+    d.formateur_id,
+    f.photos;

@@ -184,6 +184,16 @@
         .icones{
              background: #7535dc3f;
         }
+        .fc-h-event{
+            border: none !important;
+            margin-bottom: 3px;
+        }
+
+        .fc-h-event .fc-event-title-container:hover{
+            color: #7635dc;
+            background-color: white;
+            border: 1px solid #7635dc;
+        }
 
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
@@ -312,7 +322,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script> --}}
 
     <script>
-
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
         window.addEventListener("DOMContentLoaded", (event) => {
 
             var nom_module = $('#nom_module').val();
@@ -330,11 +347,23 @@
                     var formations = userDataDetail['formations'];
 
                     for (var $i = 0; $i < details.length; $i++) {
+                        for(var $j = $i+1; $j < details.length; $j++){
+                            if (details[$i].groupe_id ==details[$j].groupe_id ) {
+                                var letters = '0123456789ABCDEF';
+                                var couleur = '#';
+                                for (var i = 0; i < 6; i++) {
+                                    couleur += letters[Math.floor(Math.random() * 16)];
+                                }
+                            }
+                            else{
+                                couleur = getRandomColor();
+                            }
+                        }
 
                         event.push({
                             title: formations[$i][0].nom_formation
                             , start: details[$i].date_detail
-                            ,backgroundColor:"green"
+                            ,backgroundColor:couleur
                             , nom_projet: details[$i].nom_projet
                             , nom_module: modules[$i][0].nom_module
                             , h_debut: details[$i].h_debut
@@ -379,11 +408,12 @@
                         , headerToolbar: {
                             left: 'prev,next'
                             , center: 'title'
-                            , right: 'dayGridMonth,timeGridWeek'
+                            , right: 'dayGridMonth'
 
                         }
                         , editable: true
                         , eventClick: function(info) {
+
                             $('#detail').css('display','block');
 
                             $.ajax({
@@ -455,7 +485,7 @@
 
                                     var liste_app = document.getElementById('liste_app');
                                     liste_app.innerHTML = '';
-                                    // alert(JSON.stringify(response));
+                                    // alert(entreprises[0].nom_etp);
 
                                     var userDataDetail = JSON.parse(response);
                                     // alert(userData.length);
@@ -500,6 +530,7 @@
                                         cfp = cfp.replace(":?",userData[$i].cfp_id);
                                         $('#cfp').append(cfp);
 
+                                        // alert(entreprises[$i].nom_etp);
                                         etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+entreprises[$i].nom_etp+'</a>'
                                         etp = etp.replace(":?",entreprises[$i].entreprise_id);
                                         $('#etp').append(etp);

@@ -312,18 +312,7 @@ create or replace view v_projet_cfp as
             date_projet,
             totale_session;
 
-create or replace view v_projet_formation as
-    select
-        projet_id,
-        formation_id,
-        nom_formation,
-        cfp_id
-    from v_groupe_projet_entreprise_module
-    group by
-        projet_id,
-        formation_id,
-        nom_formation,
-        cfp_id;
+
 
 -- create or replace view v_horaire_cfp as
 --     select

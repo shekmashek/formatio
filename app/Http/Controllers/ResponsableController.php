@@ -134,6 +134,7 @@ class ResponsableController extends Controller
     public function index($id = null)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
+
         $info_impression = [
             'id' => null,
             'nom_entreprise' => 'Tout'
@@ -273,14 +274,21 @@ class ResponsableController extends Controller
     public function affReferent($id = null)
     {
         $user_id = Auth::user()->id;
+
         if (Gate::allows('isReferent')) {
+
             if ($id != null) {
+
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+
             } else {
+
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
+
                 $entreprise = responsable::where('user_id',$user_id)->value('id');
+
                 $branche = branche::findorFail($id);
-                // dd($branch);
+
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
             }
@@ -288,7 +296,9 @@ class ResponsableController extends Controller
             return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise','branche'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
+
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+            dd($refs);
             return view('admin.responsable.profilResponsable', compact('refs'));
         }
     }
@@ -306,13 +316,14 @@ class ResponsableController extends Controller
             // } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
                 $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
-              
+                // dd($branche);
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
-                // dd('eto2');
+                $referent = entreprise::findOrFail($id);
+                $entreprise = entreprise::with('Secteur')->findOrFail($id);
             // }
 
-            return view('admin.responsable.affichage_parametreReferent', compact('refs','nom_entreprise','branche'));
+            return view('admin.responsable.affichage_parametreReferent', compact('refs','nom_entreprise','branche','referent','entreprise'));
         }
         // // if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 

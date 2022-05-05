@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Groupe</h3>
+    <h3 class="text_header m-0 mt-1">Groupe</h3>
 @endsection
 @section('content')
 <div id="page-wrapper">

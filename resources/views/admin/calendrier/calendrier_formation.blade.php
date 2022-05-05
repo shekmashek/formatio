@@ -185,6 +185,17 @@
              background: #7535dc3f;
         }
 
+        .fc-h-event{
+            border: none !important;
+            margin-bottom: 3px;
+        }
+
+        .fc-h-event .fc-event-title-container:hover{
+            color: #7635dc;
+            background-color: white;
+            border: 1px solid #7635dc;
+        }
+
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
@@ -312,11 +323,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script> --}}
 
     <script>
-
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
         window.addEventListener("DOMContentLoaded", (event) => {
 
             var nom_module = $('#nom_module').val();
-
             $.ajax({
                 type: "GET"
                 , url: "{{route('allEventEntreprise')}}"
@@ -324,18 +341,23 @@
                 , success: function(data) {
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
-
                     var details = userDataDetail['details'];
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
+
                     var detail_id = userDataDetail['detail_id'];
 
 
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
+                            @can('isStagiaire')
+                                title: groupe_entreprises[$i][0].nom_formation
+                            @endcan
+                            @can('isReferent')
                             title: groupe_entreprises[$i].nom_formation
+                            @endcan
                             , start: details[$i][0].date_detail
-                            ,backgroundColor:"green"
+                            ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i][0].nom_projet
                             , h_debut: details[$i][0].h_debut
                             , h_fin: details[$i][0].h_fin
@@ -357,7 +379,7 @@
                         , headerToolbar: {
                             left: 'prev,next'
                             , center: 'title'
-                            , right: 'dayGridMonth,timeGridWeek'
+                            , right: 'dayGridMonth'
 
                         }
                         , editable: true
@@ -430,9 +452,10 @@
                                         formateur.innerHTML = '';
                                         var lieu = document.getElementById('lieu');
                                         lieu.innerHTML = '';
-
+                                        @canany(['isReferent','isCFP','isFormateur'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
+                                        @endcanany
                                         // alert(JSON.stringify(response));
 
                                         var userDataDetail = JSON.parse(response);
@@ -446,6 +469,7 @@
                                         var initial_stg = userDataDetail['initial_stg'];
                                         var entreprises = userDataDetail['entreprises'];
                                         var formations = userDataDetail['formations'];
+
                                         var id_detail = userDataDetail['id_detail'];
                                         var images = '';
                                         var html = '';
@@ -459,6 +483,7 @@
                                         var etp = '';
                                         var printpdf = '';
                                         for (var $i = 0; $i < userData.length; $i++) {
+
                                             printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
                                             printpdf = printpdf.replace(":?",id_detail);
                                             $('#printpdf').append(printpdf);
@@ -487,10 +512,13 @@
                                                 logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
                                                 $('#logo_formateur').removeClass('randomColor photo_users');
                                             }
-                                            else{
+                                            else {
+                                                // console.log(photo_formateur[0]);
+                                                // alert(JSON.stringify(photo_formateur));
                                                 logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
                                                 // $('.photo_users').append(html);
                                             }
+
 
                                             $('#logo_formateur').append(logo_formateur);
 
@@ -507,19 +535,20 @@
                                             html = html.replace(":?",userData[$i].formateur_id);
                                             $('#formateur').append(html);
 
-                                            formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+formations[$i].nom_formation+'</a>'
+                                            formation += '<a href="{{url("select_par_formation/:?")}}" target = "_blank">'+formations[$i].nom_formation+'</a>';
                                             formation = formation.replace(":?",formations[$i].formation_id);
+
                                             $('#formation').append(formation);
 
 
-                                            modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+formations[$i].nom_module+'</a>'
+                                            modules += '<a href="{{url("select_par_module/:?")}}" target = "_blank">'+formations[$i].nom_module+'</a>';
                                             modules = modules.replace(":?",formations[$i].module_id);
                                             $('#module').append(modules);
 
                                         }
                                         var html = '';
                                         for (var $j = 0; $j < date_groupe.length; $j++) {
-                                            html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'&nbsp <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                            html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i>'+date_groupe[$j].date_detail+'<i class = "bx bxs-time icones"></i>'+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>';
                                         }
                                         $('#date_formation').append(html);
 
@@ -527,12 +556,12 @@
 
                                         for (var $a = 0; $a < stg.length; $a++) {
                                             if(stg[$a].photos == null) {
-                                            html += '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
+                                                html = '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html += '</td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
                                             }
                                             else{
-                                                html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html = html.replace(":!",stg[$a].photos);
 

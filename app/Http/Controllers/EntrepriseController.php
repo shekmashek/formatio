@@ -263,9 +263,15 @@ class EntrepriseController extends Controller
     {
 
         $entreprise = entreprise::with('Secteur')->findOrFail($id);
-        // $departement = DepartementEntreprise::with('Departement')->where('entreprise_id', $id)->get();
         $departement = DB::select('select * from departement_entreprises where entreprise_id = ?', [$id]);
+        if (Gate::allows('isReferent')) {
         return view('admin.entreprise.profile_entreprise', compact('entreprise', 'departement'));
+
+        }
+        else{
+            return view('admin.entreprise.profile_entreprises', compact('entreprise', 'departement'));
+        }
+        
     }
 
     public function getImage($path)
@@ -352,6 +358,30 @@ class EntrepriseController extends Controller
             return redirect()->route('profile_entreprise',[$id]);
            }
     }
+
+
+    
+    public function modification_assujetti_entreprise($id){
+        $fonct = new FonctionGenerique();
+        $assujetti = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+        return view('admin.entreprise.modification_profil.modification_assujetti_entreprise', compact('assujetti'));
+    }
+
+
+
+    public function enregistrer_assujetti_entreprise(Request $request,$id){
+        $id_assujeti = $request->assujetti;
+        if($id_assujeti == null){
+            return back()->withErrors("erreur_assujetti", "Choississez vos type d\'impôt de votre entreprise avant de cliquer sur enregistrer");
+           }
+           else{
+            DB::update('update entreprises set assujetti_id = ? where id = ?', [$request->assujetti,$id]);
+            // ('insert into values (?, ?)' entreprises set assujeti_id = ? where id = ?', [$request->assujetti,$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
+           }
+    }
+
+
     public function modification_cif_entreprise($id){
         $fonct = new FonctionGenerique();
         $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);

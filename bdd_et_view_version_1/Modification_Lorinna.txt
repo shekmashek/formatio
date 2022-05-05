@@ -15,3 +15,9 @@ JOIN responsables r ON
 -----------20Avril
 recréer vu v_demmande_cfp_etp =>bdd_suiviformation_view_5(collaboration)
 recréer vu v_demmande_etp_cfp =>bdd_suiviformation_view_5(collaboration)
+
+---------26 AVRIL
+ajout colone telephone_etp dans  bdd_suiviformation_mise_a_jour_15(v_apple_offre)
+
+
+

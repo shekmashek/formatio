@@ -23,9 +23,9 @@
                         <div class="row g-0 m-0" style="align-items: center">
                             <div class="col-12 d-flex justify-content-between" style="align-items: center">
                                 <div class="col" align="right">
-                                    <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
+                                    {{-- <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
                                         <span class="btn_enregistrer text-center">Retour - Liste des factures</span>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                          </div>

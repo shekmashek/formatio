@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Liste plan de formation </h3>
+    <p class="text_header m-0 mt-1">Listes plan de formation</p>
 @endsection
 @section('content')
 <div id="page-wrapper">
@@ -15,6 +15,7 @@
             <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
+                <br>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <ul class="nav nav-pills">

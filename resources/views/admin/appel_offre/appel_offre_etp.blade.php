@@ -151,7 +151,7 @@
 
                             <tr class="test">
                                 <th scope="row">
-                                    <img src="{{asset('images/entreprises/'.$non_publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
+                                    <img src="{{asset('images/entreprises/'.$nom_publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
                                     <br>
                                     <p>{{$nom_publier->nom_etp}}</p>
                                     <p><a data-bs-toggle="collapse" href="#detail_{{$nom_publier->id}}" role="button" aria-expanded="false" aria-controls="detail_{{$nom_publier->id}}">détail</a></p>
@@ -184,7 +184,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div align="left">
-                                        <img src="{{asset('images/entreprises/'.$non_publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
+                                        <img src="{{asset('images/entreprises/'.$nom_publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
                                         <h5>{{$nom_publier->nom_etp}}</h5>
                                         <p>{{$nom_publier->email_etp}}</p>
                                         <p></p>

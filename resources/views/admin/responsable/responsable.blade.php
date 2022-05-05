@@ -31,7 +31,7 @@
                             <li class="nav-item dropdown">
                                 <form class="navbar-form navbar-left " role="search">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
                                             Tout <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
@@ -45,7 +45,7 @@
                                         </ul>
                                     </div>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
                                             Rechercher par entreprise <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
@@ -134,16 +134,16 @@
                                         <td>
                                             <center>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         @can('isSuperAdmin')
-                                                        <li type="button" style="font-size:15px;"> <a class="modifier" title="Modifier le profil" id="{{$d->id}}" data-toggle="modal" data-target="#myModal"><i style="font-size:18px;" class="fa fa-edit"></i>&nbsp;Modifier </a></li>
+                                                        <li type="button" style="font-size:15px;"> <a class="modifier" title="Modifier le profil" id="{{$d->id}}" data-bs-toggle="modal" data-target="#myModal"><i style="font-size:18px;" class="fa fa-edit"></i>&nbsp;Modifier </a></li>
                                                         <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_{{$d->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li>
 
                                                         @endcan
-                                                        <li type="button" style="font-size:15px;"><a href="{{route('affResponsable', $d)}}" class="afficher" title="Afficher le profil" id="{{$d->id}}"><i style="font-size:18px;" class="fa fa-user"></i>&nbsp; Profil </a></li>
+                                                        <li type="button" style="font-size:15px;"><a href="{{route('profil_referent', $d)}}" class="afficher" title="Afficher le profil" id="{{$d->id}}"><i style="font-size:18px;" class="fa fa-user"></i>&nbsp; Profil </a></li>
                                                     </div>
                                                 </div>
                                             </center>

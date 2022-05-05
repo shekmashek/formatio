@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification photo</h3>
+@endsection
 @section('content')
 <style>
    .input{
@@ -58,7 +61,7 @@
         }
 </style>
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profil_of',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('affichage_parametre_cfp',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}

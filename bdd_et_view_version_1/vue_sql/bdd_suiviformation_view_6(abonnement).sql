@@ -10,6 +10,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_etp AS SELECT
     a.entreprise_id,
     a.categorie_paiement_id,
     a.activite,
+    a.type_arret,
     t_ab.nom_type,
     cat_p.categorie
 
@@ -49,7 +50,8 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_cfp AS SELECT
     a.status,
     a.cfp_id,
     a.categorie_paiement_id,
-    a.activiter,
+    a.activite,
+    a.type_arret,
     cat_p.categorie,
     t_ab.nom_type
 FROM

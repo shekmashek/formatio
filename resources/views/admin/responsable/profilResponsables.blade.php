@@ -83,8 +83,7 @@
                 <p class="text-center">Informations générales</p>
 
                 <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
-                    <p class="p-1 m-0" style="font-size: 12px;">PHOTO
-                    </p>
+                    <p class="p-1 m-0" style="font-size: 12px;">PHOTO</p>
                     <a href="{{route('edit_photos_resp',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos==null)

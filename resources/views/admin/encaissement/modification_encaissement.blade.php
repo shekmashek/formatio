@@ -1,5 +1,7 @@
 @extends('./layouts/admin')
-Modification
+@section('title')
+<p class="text_header m-0 mt-1">Modification</p>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">

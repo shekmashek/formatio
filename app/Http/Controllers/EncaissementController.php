@@ -27,6 +27,8 @@ class EncaissementController extends Controller
     }
     public function index(Request $request)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $id_etp = $request->entreprise_id;
         $id_projet = $request->projet_id;
         $id_facture = encaissement::getIdFacture($id_projet);
@@ -34,7 +36,7 @@ class EncaissementController extends Controller
             $datas = DB::select('select * from frais_annexes');
             $data = encaissement::getProjetEntreprise($id_etp, $id_projet);
             $infos = encaissement::getFactureEncaissement($id_projet, $id_facture[0]->id);
-            return view('admin.encaissement.encaissement', compact('datas', 'data', 'id_facture', 'infos'));
+            return view('admin.encaissement.encaissement', compact('devise','datas', 'data', 'id_facture', 'infos'));
         } else {
             $projet = projet::get()->unique('nom_projet');
             $data = projet::orderBy('nom_projet')->with('entreprise')->take($id_projet)->get();
@@ -49,6 +51,8 @@ class EncaissementController extends Controller
 
     public function encaissement(Request $request)
     {
+        // dd($request->input());
+
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
@@ -69,10 +73,11 @@ class EncaissementController extends Controller
     {
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         $numero_fact = $request->num_facture;
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        return view('admin.encaissement.liste_encaissement', compact('encaissement', 'numero_fact'));
+        return view('admin.encaissement.liste_encaissement', compact('devise','encaissement', 'numero_fact'));
     }
 
     public function generatePDF($numero_fact, Request $request)
@@ -80,6 +85,7 @@ class EncaissementController extends Controller
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
 
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
@@ -96,7 +102,7 @@ class EncaissementController extends Controller
         ]);
 
 
-        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement', 'montant_totale','cfp','entreprise','facture'));
+        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('devise','encaissement', 'montant_totale','cfp','entreprise','facture'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -131,12 +137,10 @@ class EncaissementController extends Controller
 
     public function modification(Request $request)
     {
-        $fonct = new FonctionGenerique();
-
         $id_encaissement = $request->encaissement_id;
         $encaissement = encaissement::where('id', $id_encaissement)->get(['payement', 'libelle', 'num_facture', 'date_encaissement', 'mode_financement_id']);
-        $mode_finance = $fonct->findWhereMulitOne("mode_financements", ["id"], [$encaissement[0]->mode_financement_id]);
-        $mode_finance_list = $fonct->findWhereParam("mode_financements", ["id"], ["!="], [$encaissement[0]->mode_financement_id]);
+        $mode_finance = $this->fonct->findWhereMulitOne("mode_financements", ["id"], [$encaissement[0]->mode_financement_id]);
+        $mode_finance_list = $this->fonct->findWhereParam("mode_financements", ["id"], ["!="], [$encaissement[0]->mode_financement_id]);
 
         $data["userData"][0] = intval($encaissement[0]->payement);
         $data["userData"][1] = $encaissement[0]->libelle;

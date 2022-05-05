@@ -224,6 +224,7 @@
                 </div>
             </div>
         </div>
+        <p>Arretée la présente facture à la somme de:<strong> {{$lettre_montant}} Ariary</strong></p>
     </div>
 </body>
 </html>

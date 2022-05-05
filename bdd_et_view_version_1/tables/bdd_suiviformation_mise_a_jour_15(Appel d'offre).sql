@@ -22,6 +22,7 @@ SELECT
     domaines.nom_domaine,
     DATE_FORMAT(date_fin, "%d %M  %Y") date_name,
     entreprises.nom_etp,
+    entreprises.telephone_etp,
     entreprises.logo,
     entreprises.site_etp,
     entreprises.email_etp,

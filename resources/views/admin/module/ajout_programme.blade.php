@@ -374,12 +374,12 @@
                 <div class="row detail__formation__item__rmain text-center">
                     <div class="col-lg-6 detail__prix__main__prix">
                         <div >
-                            <p><i class='bx bx-euro'></i>&nbsp;Prix : </p>
+                            <p>{{$devise->devise}}&nbsp;Prix : </p>
                         </div>
                     </div>
                     <div class="col-lg-6 detail__prix__main__prix2">
                         <div>
-                            <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+                            <p><span>{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;{{$devise->devise}}</span>&nbsp;HT</p>
 
                         </div>
                     </div>

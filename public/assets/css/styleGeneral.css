@@ -412,7 +412,7 @@ ul li a {
     position: fixed;
     top: 3rem;
     right: -50px;
-    height: 100%;
+    min-height: 100vh;
     width: 0px;
     background: white;
     padding: 6px 14px;
@@ -423,6 +423,7 @@ ul li a {
     border-left: 1px solid grey;
     float: right;
     z-index: 999;
+    overflow-x: hidden;
 }
 
 .filtrer.afficher {
@@ -811,10 +812,26 @@ input:-webkit-autofill:active {
     text-decoration: none;
 }
 
+.btn_creer_trie{
+    background-color: white;
+    border: none;
+    border-radius: 50px;
+    padding: .2rem .5rem;
+    color: black;
+    font-size: .700rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    text-decoration: none;
+}
+
 .btn_creer a{
     font-size: .8rem;
     position: relative;
     bottom: .2rem;
+}
+
+.btn_creer_trie:hover{
+    background: #6373812a;
+    color: blue;
 }
 
 .btn_creer:hover{

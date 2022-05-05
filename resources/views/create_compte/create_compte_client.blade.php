@@ -11,253 +11,218 @@
     {{Session::get('error')}}
 </div>
 @endif
+<link rel="stylesheet" href="{{asset('assets/css/inputControlAccueilIndex.css')}}">
 
-<style>
-    .input_inscription {
-        padding: 2px;
-        border-radius: 100px;
-        box-sizing: border-box;
-        color: #9E9E9E;
-        border: 1px solid #BDBDBD;
-        font-size: 16px;
-        letter-spacing: 1px;
-        height: 50px !important;
-        border: 2px solid #aa076c17 !important;
+<div class="container-fluid">
+    <div class="row justify-content-center vh-100">
+        <div class="col-6 form_content">
+            <h3 class="text-center txt_enter">Veuillez entrer le profil professionnel de votre entreprise</h3>
+            <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <ul id="progressbars" class="mt-0">
+                    <li class="active" id="etape1"></li>
+                    <li id="etape2"></li>
+                    <li id="etape3"></li>
+                </ul>
 
+                <div id="formulaire">
 
-    }
+                    <fieldset class="shadow p-3 bg-body rounded field-etp">
+                            <div class="form-group">
+                                <label for="name_etp" class="">Raison Sociale(Nom de votre
+                                    entreprise)<strong style="color:#ff0000;">*</strong></label>
+                                <input type="text" name="name_etp" class="form-control input" id="name_etp"
+                                    required />
 
-    .input_inscription:focus {
-        -moz-box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        border: 2px solid #AA076B !important;
-        outline-width: 0 !important;
-    }
-
-
-    .form-control-placeholder {
-        position: absolute;
-        top: 1rem;
-        padding: 12px 2px 0 2px;
-        padding: 0;
-        padding-top: 2px;
-        padding-bottom: 5px;
-        padding-left: 5px;
-        padding-right: 5px;
-        transition: all 300ms;
-        opacity: 0.5;
-        left: 2rem;
-    }
-
-    .input_inscription:focus+.form-control-placeholder,
-    .input_inscription:valid+.form-control-placeholder {
-        font-size: 95%;
-        font-weight: bolder;
-        top: 1rem;
-        transform: translate3d(0, -100%, 0);
-        opacity: 1;
-        backgroup-color: white;
-    }
-
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-        box-shadow: 0 0 0 30px white inset !important;
-        -webkit-box-shadow: 0 0 0 30px white inset !important;
-    }
-
-</style>
-
-<form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
-    @csrf
-
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-
-            <ul id="progressbars" class="mt-0">
-                <li class="active" id="etape1"></li>
-                <li id="etape2"></li>
-                <li id="etape3"></li>
-                {{-- <li id="confirm"></li> --}}
-            </ul>
-
-            <div id="formulaire">
-
-                <fieldset class="shadow p-3 bg-body rounded field-etp">
-                    <h6 align="center" class="mb-2">Votre Société</strong></h4>
-                        <div class="form-group">
-                            <input type="text" name="name_etp" class="form-control input_inscription" id="name_etp" required />
-                            <label for="name_etp" class="form-control-placeholder">Raison Sociale(Nom de votre entreprise)<strong style="color:#ff0000;">*</strong></label>
-                            @error('name_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="name_etp_err"></span>
-
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" name="nif" required class="form-control input_inscription" id="nif_etp" />
-                            <label for="nif_etp" class="form-control-placeholder">Numero d'Identité Fiscale<strong style="color:#ff0000;">*</strong></label>
-                            @error('nif')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="nif_etp_err"></span>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlInput1" class="form-control-label">Logo(60Ko max)<strong style="color:#ff0000;">*</strong></label>
-                            <input type="file" required name="logo_etp" class="form-control" id="logo_etp" />
-                            @error('logo_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <p id="error_logo_etp" style="color:#ff0000;"></p>
-
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group m-0">
-                                    <label for="#" class="form-control-label">Secteur d'activité<strong style="color:#ff0000;">*</strong></label>
-                                    <select class="form-select" aria-label="Default select example" name="secteur_id" required id="secteur_id">
-                                        @foreach ($secteur as $sect)
-                                        <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
-                                        @endforeach
-                                    </select>
+                                @error('name_etp')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000;"> {{$message}} </span>
                                 </div>
+                                @enderror
+                                <span style="color:#ff0000;" id="name_etp_err"></span>
                             </div>
 
-                        </div>
+                            <div class="form-group">
+                                <label for="nif_etp" class="">Numero d'Identité Fiscale<strong
+                                        style="color:#ff0000;">*</strong></label>
+                                <input type="text" name="nif" required class="form-control input"
+                                    id="nif_etp" />
 
-                        {{-- <div class="row" align="center"> --}}
-                        <input type="button" name="next" class="next action-button  suivant_etp_1 " value="Suivant" />
-                        {{-- <input type="button" name="next" class="next action-button " value="Suivant" /> --}}
-                        {{--  --}}
-                        {{-- </div> --}}
-                </fieldset>
+                                @error('nif')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                </div>
+                                @enderror
+                                <span style="color:#ff0000; font-size: 0.8rem" id="nif_etp_err"></span>
 
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1" class="form-control-label">Logo(60Ko max)<strong
+                                        style="color:#ff0000;">*</strong></label>
+                                <input type="file" required name="logo_etp" class="form-control input_file" id="logo_etp" />
+                                @error('logo_etp')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                </div>
+                                @enderror
+                                <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem">les extension de type *.jpg, *.png, *.jpeg et *.webp seulement sont autorisé</p>
 
-                {{-- --}}
-
-                <fieldset class="shadow p-3 bg-body rounded field2-etp">
-                    <h6 align="left" class="mb-2">A propos de vous,responsable de la formation de la société</strong></h4>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <input type="text" required name="matricule_resp_etp" class="form-control input_inscription" id="matricule_resp_etp" />
-                                    <label for="matricule_resp_etp" class="form-control-placeholder" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
-                                    @error('matricule_resp_etp')
-                                    <div class="col-sm-6">
-                                        <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group m-0">
+                                        <label for="#" class="form-control-label">Secteur d'activité<strong
+                                                style="color:#ff0000;">*</strong></label>
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="secteur_id" required id="secteur_id">
+                                            @foreach ($secteur as $sect)
+                                            <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    @enderror
                                 </div>
-                                <span style="color:#ff0000;" id="matricule_resp_etp_err"></span>
 
                             </div>
-                            <div class="col"></div>
-                        </div>
 
-                        <div class="form-group">
-                            <input type="text" required name="nom_resp_etp" class="form-control input_inscription" id="nom_resp_etp" />
-                            <label for="nom_resp_etp" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                            @error('nom_resp_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="nom_resp_etp_err"></span>
+                            <input type="button" name="next" class="next btn action-button  suivant_etp_1 "
+                                id="suivant_etp_1" value="Suivant" />
+                    </fieldset>
 
-                        </div>
 
-                        <div class="form-group">
-                            <input type="text" name="prenom_resp_etp" class="form-control input_inscription" id="prenom_resp_etp" />
-                            <label for="prenom_resp_etp" class="form-control-placeholder" align="left">Prénom</label>
-                            @error('prenom_resp_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <input type="text" required name="cin_resp_etp" class="form-control input_inscription" id="cin_resp_etp" />
-                            <label for="cin_resp_etp" class="form-control-placeholder" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
-                            @error('cin_resp_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="cin_resp_etp_err"></span>
-                        </div>
+                    {{-- --}}
 
-                        <div class="form-group">
-                            <input type="email" required name="email_resp_etp" class="form-control input_inscription" id="email_resp_etp" />
-                            <label for="email_resp_etp" class="form-control-placeholder" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
-                            @error('email_resp_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
-                            </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="email_resp_etp_err"></span>
+                    <fieldset class="shadow p-3 bg-body rounded field2-etp">
+                        <h6 align="left" class="mb-3 a_proposdeVous">A propos de vous,responsable de ressource humaine</strong></h4>
 
-                        </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="matricule_resp_etp" class="" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
+                                        <input type="text" required name="matricule_resp_etp"
+                                            class="form-control input mb-1" id="matricule_resp_etp" placeholder="Matricule"/>
 
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <input name="value_confident" class="form-check-input me-5" type="checkbox" value="1" id="flexCheckDefault" style="width: 18px" required>
-                                <label class="form-check-label m-0" for="flexCheckDefault" align="left">
-                                    <a href="{{route('condition_generale_de_vente')}}" class="nav-item" target="_blank">J'ai lu et accepter <strong style="color: blue">les termes de confidentiels</strong> du plateforme</a>
-                                </label>
-                            </div>
-                        </div>
+                                        @error('matricule_resp_etp')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <span style="color:#ff0000; font-size: 0.8rem" id="matricule_resp_etp_err"></span>
 
-                        <div class="row justify-content-center">
-                            <h6 class="" align="left"><strong style="font-size: 15px">Je ne suis pas un robot</strong><strong style="color:#ff0000;">!</strong></h6>
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-1" style="display: grid; place-content: center;">
-                                <h6> <strong>16</strong></h6>
-                            </div>
-                            <div class="col-sm-1" style="display: grid; place-content: center;">
-                                <h6> <strong> + </strong></h6>
-                            </div>
-                            <div class="col-sm-1" style="display: grid; place-content: center;">
-                                <div class="form-group">
-                                    <input required type="number" name="val_robot" class="form-control input" placeholder="?" id="val_robot" style="width: 60px; border: none; outline: none; position:relative; top:0.5rem;" />
                                 </div>
                             </div>
-                            <div class="col-sm-1" style="display: grid; place-content: center;">
-                                <h6> <strong> = </strong></h6>
+
+                            <div class="form-group">
+                                <label for="nom_resp_etp" class="" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
+                                <input type="text" required name="nom_resp_etp" class="form-control input" id="nom_resp_etp" placeholder="Nom"/>
+                                @error('nom_resp_etp')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                </div>
+                                @enderror
+                                <span style="color:#ff0000; font-size: 0.8rem" id="nom_resp_etp_err"></span>
+
                             </div>
-                            <div class="col-sm-1" style="display: grid; place-content: center;">
-                                <h6> <strong> 27 </strong></h6>
+
+                            <div class="form-group">
+                                <label for="prenom_resp_etp" class=""
+                                    align="left">Prénom</label>
+                                <input type="text" name="prenom_resp_etp" class="form-control input"
+                                    id="prenom_resp_etp" placeholder="Prenom"/>
+
+                                @error('prenom_resp_etp')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="cin_resp_etp" class="" align="left">CIN<strong
+                                        style="color:#ff0000;">*</strong></label>
+                                <input type="text" required name="cin_resp_etp" class="form-control input"
+                                    id="cin_resp_etp" placeholder="CIN"/>
+
+                                @error('cin_resp_etp')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                </div>
+                                @enderror
+                                <span style="color:#ff0000; font-size: 0.8rem" id="cin_resp_etp_err"></span>
                             </div>
 
-                            <div class="col-sm-3"></div>
-                        </div>
+                            <div class="form-group">
+                                <label for="email_resp_etp" class="" align="left">Email
+                                    Responsable<strong style="color:#ff0000;">*</strong></label>
+                                <input type="email" required name="email_resp_etp"
+                                    class="form-control input mb-1" id="email_resp_etp" />
+
+                                @error('email_resp_etp')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                </div>
+                                @enderror
+                                <span style="color:#ff0000; font-size: 0.8rem" id="email_resp_etp_err"> veuillez entrer votre mail</span>
+
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-sm-12">
+                                    <input name="value_confident" class="form-check-input me-2" type="checkbox"
+                                        value="1" id="flexCheckDefault" style="width: 18px" required>
+                                    <label class="form-check-label m-0" for="flexCheckDefault" align="left">
+                                        <a href="{{route('condition_generale_de_vente')}}" class="nav-item lien_confidentiel"
+                                            target="_blank">J'ai lu et accepter <strong>les termes
+                                                de confidentiels</strong> du plateforme</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <h6 class="text-center"><strong style="font-size: 15px">Je ne suis pas un
+                                        robot</strong><strong style="color:#ff0000;">!</strong></h6>
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-1" style="display: grid; place-content: center;">
+                                    <h6> <strong>16</strong></h6>
+                                </div>
+                                <div class="col-sm-1" style="display: grid; place-content: center;">
+                                    <h6> <strong> + </strong></h6>
+                                </div>
+                                <div class="col-sm-1" style="display: grid; place-content: center;">
+                                    <div class="form-group">
+                                        <input required type="number" name="val_robot" class="form-control input"
+                                            placeholder="?" id="val_robot"
+                                            style="width: 60px; border: none; outline: none; position:relative; top:0.5rem;" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-1" style="display: grid; place-content: center;">
+                                    <h6> <strong> = </strong></h6>
+                                </div>
+                                <div class="col-sm-1" style="display: grid; place-content: center;">
+                                    <h6> <strong> 27 </strong></h6>
+                                </div>
+
+                                <div class="col-sm-3"></div>
+                            </div>
 
 
+                            <input type="button" name="previous" class="previous action-button" value="Précedent" />
 
-        <input type="button" name="previous" class="previous action-button" value="Précedent" />
+                            <button type="submit" class="btn action-button suivant_etp_confirmer"
+                                id="suivant_etp_confirmer">Confirmer</button>
 
-
-        <button type="submit" class=" action-button suivant_etp_confirmer">Confirmer</button>
-
-                                {{-- <button type="submit" class=" action-button">Confirmer</button> --}}
-                        </div>
+                            {{-- <button type="submit" class=" action-button">Confirmer</button> --}}
+                </div>
                 </fieldset>
-
-
+            </form>
+        </div>
+        <div class="col-6">
+            <div class="text-center">
+                <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" class="img-fluid ">
+            </div>
+        </div>
     </div>
+</div>
 
-
-
-</form>
 @endsection
 @extends('create_compte.footer')

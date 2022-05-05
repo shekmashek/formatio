@@ -1,12 +1,13 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Profil du responsable de centre de formation professionnel</h3>
+@endsection
 @section('content')
 
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-
             <h3>Utilisateurs /</h3>
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
@@ -82,7 +83,7 @@
                 <tbody>
                     @foreach ($responsables as $resp)
                     <tr>
-                        <td style="width: 10%;"><a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}">
+                        <td style="width: 10%;"><a class="dropdown-item" href="{{ route('profil_du_responsable',$resp->id) }}">
                                 @if ($resp->photos_resp_cfp==null)
                                 <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/users.png')}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
 
@@ -91,7 +92,7 @@
                             <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/responsables/'.$resp->photos_resp_cfp)}}" width="30%" height="30%" style="cellapading=0;" cellspacing="0"> </a>
                             @endif
                         </td>
-                        <td> <a class="dropdown-item" href="{{ route('profil_cfp',$resp->id) }}"><strong>{{ $resp->nom_resp_cfp." ".$resp->prenom_resp_cfp }}</strong> </a></td>
+                        <td> <a class="dropdown-item" href="{{ route('profil_du_responsable',$resp->id) }}"><strong>{{ $resp->nom_resp_cfp." ".$resp->prenom_resp_cfp }}</strong> </a></td>
                         <td>
                             @if ($resp->prioriter==true)
                             {{ $resp->email_resp_cfp }} (<strong style="color: green">principale</strong>)

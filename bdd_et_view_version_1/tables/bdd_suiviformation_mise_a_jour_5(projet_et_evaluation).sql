@@ -142,6 +142,8 @@ CREATE TABLE `description_champ_reponse` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE description_champ_reponse
+add column point_champ int(5) default 0;
 
 CREATE TABLE `reponse_evaluationchaud` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

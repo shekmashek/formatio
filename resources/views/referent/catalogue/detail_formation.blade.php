@@ -353,12 +353,12 @@
                     <div class="row g-0 m-0">
                         <div class="col-lg-4 p-0 ps-2 detail_ref">
                             <div>
-                                <p><i class='bx bx-euro'></i>&nbsp;Prix :</p>
+                                <p>{{$devise->devise}} &nbsp;Prix :</p>
                             </div>
                         </div>
                         <div class="col-lg-8 detail_ref_ref">
                             <div>
-                                <p class="m-0 mt-1"><span class="prix">{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;AR</span>&nbsp;HT</p>
+                                <p class="m-0 mt-1"><span class="prix">{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;{{$devise->devise}}</span>&nbsp;HT</p>
                             </div>
                         </div>
                     </div>
