@@ -553,7 +553,7 @@ Route::get('groupe_projet_edit','FactureController@getGroupe_projet_edit')->name
 Route::get('taxe','FactureController@getTaxe')->name('taxe');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');
-Route::get('liste_facture/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}','FactureController@redirection_facture')->name('liste_facture');
+Route::get('liste_facture/{nbPage_full?}/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}','FactureController@redirection_facture')->name('liste_facture');
 Route::get('edit_facture/{id}','FactureController@edit_facture')->name('edit_facture');
 Route::post('modifier_facture/{num_facture}/{entreprise_id}','FactureController@modifier_facture')->name('modifier_facture');
 Route::get('delete_session_facture/{num_fact}/{grp_etp_id}','FactureController@delete_session_facture')->name('delete_session_facture');
