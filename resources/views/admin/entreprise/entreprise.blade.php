@@ -41,6 +41,18 @@
                             <a class="nav-link {{ Route::currentRouteNamed('departement.index') ? 'active' : '' }}" aria-current="page" href="{{route('departement.index')}}">
                             <i class='bx bx-building' style="font-size: 20px;"></i><span>&nbsp;Departement</span></a>
                         </li> --}}
+                        <li class="nav-item mx-1">
+                            <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}" >
+                                Responsables  Entreprises</a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
+                                Organisme de Formation</a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
+                                Super Admin</a>
+                        </li>
 
                     </ul>
                     </div>
@@ -129,9 +141,9 @@
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                        <li style="font-size:15px"><a href="#"   class=" modifierEtp lien" title="Modifier" id="{{$etp->id}}" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa fa-pencil" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
-                                                        <li style="font-size:15px"><a href="{{route('profile_entreprise',$etp->id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>Afficher</a></li>
-                                                        <li style="font-size:15px"><a href="#" data-bs-toggle="modal"  data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li>
+                                                        {{-- <li style="font-size:15px"><a href="#"   class=" modifierEtp lien" title="Modifier" id="{{$etp->id}}" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa fa-pencil" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li> --}}
+                                                        <li style="font-size:15px"><a href="{{route('aff_parametre_referent',$etp->id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>Afficher</a></li>
+                                                        {{-- <li style="font-size:15px"><a href="#" data-bs-toggle="modal"  data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li> --}}
                                                     </div>
                                                 </td>
                                             </tr>

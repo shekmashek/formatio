@@ -44,6 +44,11 @@ class ResponsableCfpController extends Controller
             return view('cfp.responsable_cfp.profile', compact('refs'));
 
         }
+        if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
+            $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
+            return view('cfp.responsable_cfp.profiles', compact('refs'));
+            
+        }
 
     }
 
@@ -66,6 +71,15 @@ class ResponsableCfpController extends Controller
             }
             return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux'));
 
+        }
+        if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
+            $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
+            // dd($refs);
+            $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
+            $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
+            return view('cfp.responsable_cfp.affParametre_cfps', compact('refs','horaire','reseaux_sociaux'));
+
+            
         }
 
     }

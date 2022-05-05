@@ -13,7 +13,7 @@
   </div>
 
 @endforeach
-<button class="btn btn-primary" type="submit"> Valider</button>
+<button class="btn btn_enregistrer mt-3" type="submit"> Valider</button>
 
 </form>
 </div>

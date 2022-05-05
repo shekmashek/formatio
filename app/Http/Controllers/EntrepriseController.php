@@ -79,8 +79,6 @@ class EntrepriseController extends Controller
             $entreprise = entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
             if ($id) $datas = entreprise::orderBy('nom_etp')->take($id)->get();
             else  $datas = entreprise::orderBy("nom_etp")->get();
-
-
             // return view('cfp.profile_entreprise', compact('datas', 'entreprise'));
             return view('admin.entreprise.entreprise', compact('datas', 'entreprise'));
         }

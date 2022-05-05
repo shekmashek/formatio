@@ -21,10 +21,7 @@
             when g.status = 1 then 'status_grise'
             when g.status = 0 then 'Créer'end class_status_groupe
     from groupes g
-
 select * from v_projet_session  order by date_projet desc limit 0,3
-
-
 
 CREATE OR REPLACE VIEW v_detailmodule AS
     SELECT

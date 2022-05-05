@@ -34,11 +34,19 @@ class UtilisateurControlleur extends Controller
     }
     public function index($id = null)
     {
-        $liste = entreprise::orderBy('nom_etp')->get();
+        // $liste = entreprise::orderBy('nom_etp')->get();
+        // dd($liste);
         if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
-        else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
+        
+        else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->where('prioriter',1)->get();
+    //    $data=responsable::with('entreprise')->get();
+        // return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
+        $entreprise = $this->fonct->findAll("entreprises");
+        // dd($datas);
        
-        return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
+
+        $branches = $this->fonct->findAll("departement_entreprises");
+        return view('admin.utilisateur.entreprise', compact('entreprise', 'branches','datas'));
     }
 
     public function create($id = null)
@@ -68,6 +76,7 @@ class UtilisateurControlleur extends Controller
         // dd( $this->fonct->findWhere("v_user_role",["role_id"],["1"]));
         // $users = User::where('role_id', "1")->get();
         $users = $this->fonct->findWhere("v_user_role", ["role_id"], ["1"]);
+        // dd($users);
         $liste = entreprise::orderBy('nom_etp')->get();
         return view('admin/utilisateur/admin', compact('liste', 'users'));
     }
@@ -81,17 +90,23 @@ class UtilisateurControlleur extends Controller
         $password = $user->password;
         $hashedPwd = Hash::make($password);
         $user->password = $hashedPwd;
-        $user->role_id = $request->role_id;
-
+        // $user->role_id = $request->role_id;
+        $user->cin= $request->cin;
         $user->save();
         return back();
     }
 
     public function cfp()
     {
-        $liste = entreprise::orderBy('nom_etp')->get();
-        $cfps = cfp::all();
-        return view('admin.utilisateur.cfp', compact('liste', 'cfps'));
+        // $liste = entreprise::orderBy('nom_etp')->get();
+       
+        // $cfps = cfp::orderBy("nom")->with('responsable_cfp')->get();
+       
+        // $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
+        // dd($cfps);
+         $responsables = $this->fonct->findAll("v_responsable_cfp");
+      
+        return view('admin.utilisateur.cfp', compact('responsables'));
     }
 
     public function entreprise()
@@ -344,10 +359,7 @@ class UtilisateurControlleur extends Controller
         $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$id]);
         $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$id]);
 
-        $cfp = cfp::findOrFail($id);
-        // dd($cfp);
-        
-        return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux','cfp'));
+        return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux'));
     }
     public function register_cfp(Request $request)
     {

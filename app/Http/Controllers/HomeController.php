@@ -1063,7 +1063,6 @@ public function recherche_cfp(Request $request,$page = null)
     public function budget_previsionnel(){
         $current_year = Carbon::now()->format('Y');
         $entreprise_id = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-
         //get total budget de l'année courant de l'entreprise
         $total_budget = DB::select('select ifnull(sum(budget_total),0) as total from v_budgetisation where entreprise_id = ? and annee =  ?', [$entreprise_id[0]->entreprise_id,$current_year]);
         //get total budget réalisé de l'entreprise
@@ -1071,9 +1070,7 @@ public function recherche_cfp(Request $request,$page = null)
         //get total budget engagé de l'entreprise
         $total_engage = DB::select('select ifnull(sum(montant_total),0) as engage from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id,"en_cour",$current_year]);
         //get total budget restant
-
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
-
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
     //creation iframe

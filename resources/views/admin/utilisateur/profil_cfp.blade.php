@@ -47,13 +47,15 @@
                                 <div class="col-lg-12 text-center d-flex flex-column">
                                     <span style="font-size: 17px;"><i class='bx bx-money-withdraw'></i> Assujetti à la TVA</span>
                                     @if($cfp->assujetti_id == null)
-                                    <a href="{{route('modification_assujetti_cfp',$cfp->id)}}">
+                                    {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
                                         <p class="mt-2 text-primary text-decoration-underline">incomplète</p>
                                     </a>
                                     @elseif($cfp->assujetti_id == 1)
-                                        <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"><span class="mt-2 text-primary text-decoration-underline">Assujetti</span></a>
+                                        {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
+                                            <span class="mt-2 text-primary text-decoration-underline">Assujetti</span></a>
                                     @else 
-                                        <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"><span class="mt-2 text-primary text-decoration-underline">Non assujetti</span></a> 
+                                        {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
+                                            <span class="mt-2 text-primary text-decoration-underline">Non assujetti</span></a> 
                                     @endif
                                     <hr class="m-0 p-0 mt-0">
                                 </div>
