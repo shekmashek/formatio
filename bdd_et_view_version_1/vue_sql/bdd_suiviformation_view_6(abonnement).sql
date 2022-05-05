@@ -8,6 +8,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_etp AS SELECT
     a.date_fin,
     a.status,
     a.entreprise_id,
+    e.nom_etp as nom_entreprise,
     a.categorie_paiement_id,
     a.activite,
     a.type_arret,
@@ -21,8 +22,9 @@ JOIN abonnements a ON
 JOIN type_abonnements t_ab ON
     t_ab.id = t.type_abonnement_id
 JOIN categorie_paiements cat_p ON
-    cat_p.id = a.categorie_paiement_id;
-
+    cat_p.id = a.categorie_paiement_id
+JOIN entreprises e ON
+    e.id = a.entreprise_id;
 
 CREATE OR REPLACE VIEW v_categorie_abonnement_etp AS SELECT
     ta.*,
@@ -49,6 +51,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_role_cfp AS SELECT
     a.date_fin,
     a.status,
     a.cfp_id,
+    c.nom as nom_of,
     a.categorie_paiement_id,
     a.activite,
     a.type_arret,
@@ -61,7 +64,9 @@ JOIN abonnement_cfps a ON
 JOIN type_abonnements t_ab ON
     t_ab.id = t.type_abonnement_id
 JOIN categorie_paiements cat_p ON
-    cat_p.id = a.categorie_paiement_id;
+    cat_p.id = a.categorie_paiement_id
+JOIN cfps c ON
+    c.id = a.cfp_id ;
 
 CREATE OR REPLACE VIEW v_categorie_abonnements_cfp AS SELECT
     ta.*,

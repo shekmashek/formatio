@@ -1207,7 +1207,7 @@ Route::get('/arret_immediat_abonnement_entreprise/{id}','AbonnementController@ar
 Route::get('/arret_fin_abonnement_entreprise/{id}','AbonnementController@arret_fin_abonnement_entreprise')->name('arret_fin_abonnement_entreprise');
 //arret immédiat pour organisme de formation
 Route::get('/arret_immediat_abonnement_of/{id}','AbonnementController@arret_immediat_abonnement_of')->name('arret_immediat_abonnement_of');
-
+Route::get('/arret_fin_abonnement_of/{id}','AbonnementController@arret_fin_abonnement_of')->name('arret_fin_abonnement_of');
 
 Route::get('parametrage_salle','SalleFormationController@index')->name('parametrage_salle');
 Route::post('enregistrer_salle_of','SalleFormationController@store')->name('enregistrer_salle_of');

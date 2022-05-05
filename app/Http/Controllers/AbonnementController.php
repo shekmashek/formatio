@@ -602,16 +602,7 @@ class AbonnementController extends Controller
         $fonct = new FonctionGenerique();
         $liste = $fonct->findAll('v_abonnement_facture_entreprise');
         $cfpListe = $fonct->findAll('v_abonnement_facture');
-
-        $nom_entreprise = [];
-        $nom_cfp = [];
-        for ($i=0; $i < count($liste); $i++) {
-            array_push($nom_entreprise ,$fonct->findWhere('entreprises',['id'],[$liste[$i]->entreprise_id]));
-        }
-        for ($i=0; $i < count($cfpListe); $i++) {
-            array_push($nom_cfp ,$fonct->findWhere('cfps',['id'],[$cfpListe[$i]->cfp_id]));
-        }
-        return view('superadmin.activation-abonnement', compact('liste', 'nom_entreprise','cfpListe'));
+        return view('superadmin.activation-abonnement', compact('liste','cfpListe'));
     }
     //activation de compte
     public function activation()
@@ -848,15 +839,25 @@ class AbonnementController extends Controller
         $dateNow = Carbon::today()->toDateString();
         $date_fin = $fonct->findWhere('abonnements',['id'],[$id]);
         if($dateNow == $date_fin)  DB::update('update abonnements set activite = ?, type_arret = ? where id = ?', [0,"fin abonnement",$id]);
-        return back()->with('arret_fin','Votre abonnement sera désactivé automatiquement après un mois');
+        return back()->with('arret_fin','Votre abonnement sera désactivé automatiquement dans un mois');
     }
     //arret de l'abonnemement pour cfp
     public function arret_immediat_abonnement_of($id){
-        DB::update('update abonnement_cfps set activite = ? where id = ?', [0,$id]);
-        return back();
+        DB::update('update abonnement_cfps set activite = ?, type_arret = ? where id = ?', [0,"immediat",$id]);
+        return back()->with('arret_immediat','Vous venez de désactiver votre abonnement');
+    }
+
+    public function arret_fin_abonnement_of($id){
+        $fonct = new FonctionGenerique();
+        $dateNow = Carbon::today()->toDateString();
+        $date_fin = $fonct->findWhere('abonnements',['id'],[$id]);
+        if($dateNow == $date_fin)  DB::update('update abonnement_cfps set activite = ?, type_arret = ? where id = ?', [0,"fin abonnement",$id]);
+        return back()->with('arret_fin','Votre abonnement sera désactivé automatiquement dans un mois');
     }
     /** TRI */
     public function tri_client(){
+        $tri_nom =  DB::select('select * from v_abonnement_facture_entreprise  order by nom_entreprise');
+        return response()->json($tri_nom);
     }
 
 }
