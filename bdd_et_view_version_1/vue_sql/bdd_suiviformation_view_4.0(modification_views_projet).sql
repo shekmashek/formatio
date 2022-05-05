@@ -793,11 +793,14 @@ create or replace view v_session_projet as
         p.type_formation_id,
         p.status as status_projet,
         p.created_at as date_projet,
-        mf.*
+        mf.*,
+        c.adresse_lot,
+        c.adresse_ville
     from
     groupes g join projets p
     on g.projet_id = p.id
-    join moduleformation mf on mf.module_id = g.module_id;
+    join moduleformation mf on mf.module_id = g.module_id
+    join cfps c on mf.cfp_id = c.id;
 
 
 create or replace view v_evaluation_apprenant as

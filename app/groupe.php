@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class Groupe extends Model
 {
@@ -57,5 +58,16 @@ class Groupe extends Model
     public function infos_session($groupe_id){
         $info = DB::select('select count(id) as nb_detail,sum(TIME_TO_SEC(h_fin) - TIME_TO_SEC(h_debut)) as difference from details where groupe_id = ?',[$groupe_id])[0];
         return $info;
+    }
+
+    public function inscrit_session_inter($groupe_id){
+        $user_id = Auth::user()->id;
+        $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+        $result = DB::select('select ifnull(count(id),0) as nombre from groupe_entreprises where groupe_id = ? and entreprise_id = ?', [$groupe_id,$etp_id])[0];
+        if($result->nombre > 0){
+            return 1;
+        }elseif($result->nombre == 0){
+            return 0;
+        }
     }
 }

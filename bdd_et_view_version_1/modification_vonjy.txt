@@ -110,3 +110,5 @@ creation table salle_formation_of => Modification_bdd(projet)
 
 --------mai 4
 creation vu v_presence_groupe => bdd_suiviformation_view_4.0(modification_views_projet)
+--------mai 5
+creation vu v_session_projet => bdd_suiviformation_view_4.0(modification_views_projet)

@@ -255,7 +255,7 @@
         /* background-color: white; */
         /* border: none; */
         border-radius: 30px;
-        padding: .2rem 1rem;
+        padding: 1rem 1rem;
         color: black;
         /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
     }
@@ -267,8 +267,9 @@
     }
 
     .btn_modifier_statut:hover {
-        background: #eeeeee;
-        color: rgb(0, 0, 0);
+        background-color: white; 
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
 
     .planning {
@@ -343,8 +344,8 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="p-3 bg-body rounded ">
-        <nav class="body_nav m-0 d-flex justify-content-between">
-            <div>
+        <nav class="body_nav m-0 d-flex ">
+            <div class="row">
                 <div class="d-flex m-0 p-0 height_default">
                     <h5>{{ $module_session->reference . ' - ' . $module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
                     <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
@@ -363,15 +364,16 @@
 
                     <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
                     <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
-                    <a href="{{ route('liste_projet') }}" class="ms-auto"><button class="btn liste_projet"><i class='bx bx-list-ul'></i>&nbsp; <span>Liste des projets</span></button></a>
                 </div>
             </div>
-            
+            <div class="row w-100 pe-5">
+                <p class="text-end"><a href="{{ route('liste_projet') }}" ><button class="btn liste_projet ms-auto"><i class='bx bx-list-ul'></i>&nbsp; <span>Liste des projets</span></button></a></p>
+            </div>
             @canany(['isReferent','isCFP'])
-                <div>
-                    <div class="btn_modifier_statut dropdown">
+                <div class="row">
+                    <div class=" dropdown">
 
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                        <a class="dropdown-toggle btn_modifier_statut" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
                             aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
                             <i class='bx bx-slider icon_creer'></i>Modifier statut
 
@@ -472,12 +474,12 @@
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
                                     <button class="planning d-flex justify-content-between
-                                    @if ($type_formation_id = 1)
+                                    @if ($type_formation_id == 1)
                                         @can('isCFP')
                                             {{ 'action_animation' }}
                                         @endcan    
                                     @endif
-                                    @if ($type_formation_id = 2)
+                                    @if ($type_formation_id == 2)
                                         @can('isReferent')
                                             {{ 'action_animation' }}
                                         @endcan    

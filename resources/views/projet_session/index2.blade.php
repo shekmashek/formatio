@@ -268,7 +268,7 @@
                                                         <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    {{ $etp->nom_etp }}
+                                                                    {{ $etp->nom_etp}}
                                                                 @endif
                                                             @endforeach
                                                         </td>
