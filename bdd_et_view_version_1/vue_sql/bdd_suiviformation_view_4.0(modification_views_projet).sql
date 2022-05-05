@@ -803,7 +803,7 @@ where
 create or replace view v_montant_session as
     select
         g.id as groupe_id,
-        ifnull(count(pg.stagiaire_id),0) as nombre_stg,
+    ifnull(count(pg.stagiaire_id),0) as nombre_stg,
         ifnull((mf.prix * count(pg.stagiaire_id)),0) as montant_session
     from groupes g
     left join participant_groupe pg

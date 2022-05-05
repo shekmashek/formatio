@@ -934,7 +934,7 @@
                                 </div>
                                 <button class="btn btn-light btn-sm apprCat " type="button" data-bs-toggle="collapse" data-bs-target="#apprInter" aria-expanded="false" aria-controls="apprInter"><i class="fas fa-angle-down"></i></button>
                             </li>
-                            <div id="apprInter" class="collapse p-2"><a href="'+lien+'"><span>Cliquer ici pour collaborer avec une entreprise</span></a></div>
+                            <div id="apprInter" class="collapse p-2"><a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une entreprise</span></a></div>
                     </div>
                     @endcan 
                     @can('isStagiaire')
