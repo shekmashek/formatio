@@ -235,7 +235,7 @@
 </div>
 <div class="container">
     <div class="row head_content">
-        <div class="col-4 first_col">
+        <div class="col-3 first_col">
             <div class="row">
                 <div class="col-4 logo">
                     <a href="{{route('modification_logo_cfp',$cfps->id)}}">
@@ -252,17 +252,25 @@
                 </div>
                 <div class="col-8">
                     <div>
-                        <p>{{$cfps->nom}}</p>
+                        <p class="nom_org">{{$cfps->nom}}</p>
                         <p>{{$cfps->slogan}}</p>
                         <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Changer nom</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-4">
-            <p>{{count($modules_counts)}}</p>
+        <div class="col-3 second_col">
+            <p class="text-muted text-center">Nombres des Modules</p>
+            <p class="text-center nb_modules text-muted">{{count($modules_counts)}}</p>
         </div>
-        <div class="col-4"></div>
+        <div class="col-3 second_col">
+            <p class="text-muted text-center">Nombres des Projets</p>
+            <p class="text-center nb_modules text-muted">{{count($projets_counts)}}</p>
+        </div>
+        <div class="col-3 second_col">
+            <p class="text-muted text-center">Nombres des Sessions</p>
+            <p class="text-center nb_modules text-muted">{{count($sessions_counts)}}</p>
+        </div>
     </div>
     <div class="row">
         <div class="col-5"></div>

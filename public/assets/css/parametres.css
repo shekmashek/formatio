@@ -12,6 +12,14 @@
     border-right: 1px solid rgb(222, 221, 221);
 }
 
+.second_col{
+    padding: 2rem 2rem;
+    border: none;
+    border-right: 1px solid rgb(222, 221, 221);
+    display: grid;
+    place-content: center;
+}
+
 .action_name{
     background-color: #7635dc;
     border: none;
@@ -29,4 +37,13 @@
 
 .action_name:focus{
     text-decoration: none;
+}
+
+.nom_org{
+    font-size: 2rem;
+}
+
+.nb_modules{
+    font-weight: 700;
+    font-size: 2rem;
 }

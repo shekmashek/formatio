@@ -61,11 +61,13 @@ class ResponsableCfpController extends Controller
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
                 $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$refs->cfp_id]);
                 $modules_counts = $fonct->findWhere("modules",["cfp_id"],[$refs->cfp_id]);
+                $projets_counts = $fonct->findWhere("projets",["cfp_id"],[$refs->cfp_id]);
+                $sessions_counts = DB::select('select grp.id from groupes as grp join projets as prj on grp.projet_id = prj.id where prj.cfp_id = ?',[$refs->cfp_id]);
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
                 // dd($cfps->assujetti_id);
             }
-            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts'));
+            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts'));
 
         }
 
