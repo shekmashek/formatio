@@ -184,6 +184,16 @@
         .icones{
              background: #7535dc3f;
         }
+        .fc-h-event{
+            border: none !important;
+            margin-bottom: 3px;
+        }
+
+        .fc-h-event .fc-event-title-container:hover{
+            color: #7635dc;
+            background-color: white;
+            border: 1px solid #7635dc;
+        }
 
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
