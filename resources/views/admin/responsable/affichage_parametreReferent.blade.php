@@ -178,7 +178,7 @@
 
 
         <div class="col-lg-4">
-            <div class="form-control" style="height: 418px;">
+            <div class="form-control" style="height: 389px;">
                 <p class="text-center">Information de facturation</p>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="mt-5">
                     <a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="">
@@ -201,7 +201,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="form-control" style="height: 418px; ">
+            <div class="form-control" style="height: 389px; ">
                 <p class="text-center">Information de taxation</p>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="mt-5">
                     @if($referent->assujetti_id == null )

@@ -191,6 +191,33 @@
                         @endif
                     </a>
                 </div>
+                <div style="border-bottom: solid 1px #e8dfe5;">
+                    <a href="{{route('modification_nif', $cfps->id)}}">
+                        @if($cfps->nif == NULL)
+                            <p class="p-1 m-0" style="font-size: 12px;">NIF<span style="float: right; color:red;">incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                        @else
+                            <p class="p-1 m-0" style="font-size: 12px;">NIF<span style="float: right;">{{$cfps->nif}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                        @endif
+                    </a>
+                </div>
+                <div style="border-bottom: solid 1px #e8dfe5;">
+                    <a href="{{route('modification_stat', $cfps->id)}}">
+                        @if($cfps->stat == NULL or $cfps->stat == 'XXXXXXX')
+                            <p class="p-1 m-0" style="font-size: 12px;">STAT<span style="float: right; color:red;">incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                        @else
+                            <p class="p-1 m-0" style="font-size: 12px;">STAT<span style="float: right;">{{$cfps->stat}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                        @endif
+                    </a>
+                </div>
+                <div style="border-bottom: solid 1px #e8dfe5;">
+                    <a href="{{route('modification_rcs_cfps', $cfps->id)}}">
+                        @if($cfps->rcs == NULL or $cfps->rcs == 'XXXXXXX')
+                            <p class="p-1 m-0" style="font-size: 12px;">RCS<span style="float: right; color:red;">incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                        @else
+                            <p class="p-1 m-0" style="font-size: 12px;">RCS<span style="float: right;">{{$cfps->rcs}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                        @endif
+                    </a>
+                </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" >
                     <a href="{{route('modification_site_web',$cfps->id)}}" class="">
                         @if($cfps->site_web == NULL)
@@ -206,7 +233,7 @@
         <div class="col-lg-4">
             <div class="form-control" style="height:324px">
                 <p class="text-center">Informations de taxation</p>
-                <div style="border-bottom: solid 1px #e8dfe5;" class="">
+                <div style="border-bottom: solid 1px #e8dfe5;" class="mt-5">
                     {{-- <a href="{{route('profil_of',$refs->cfp_id)}}"> --}}
                         @if($cfps->assujetti_id == null )
                             <a href="{{route('modification_assujetti_cfp',$cfps->id)}}" class="none_">
@@ -224,7 +251,7 @@
                 </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
                         <a href="" class="none_">
-                            <p class="p-1 m-0" style="font-size: 12px;">TVA<span style="float: right;">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">TVA<span style="float: right;"> &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         </a>
                 </div>
             </div>
