@@ -7,7 +7,7 @@ CREATE TABLE `formateurs` (
   `photos` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  genre_id bigint(20) unsigned REFERENCES genre(id);,
+  genre_id bigint(20) unsigned REFERENCES genre(id),
   `date_naissance` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `adresse` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

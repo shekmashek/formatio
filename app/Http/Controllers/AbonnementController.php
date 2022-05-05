@@ -594,12 +594,24 @@ class AbonnementController extends Controller
     //liste des demandes d'abonnement
     public function listeAbonne()
     {
-        $abonnementCFP = DB::select('select nom_type,tarif,abonnement_id from v_categorie_abonnements_cfp group by nom_type,tarif,abonnement_id');
-        // $abonnementETP = DB::select('select nom_type,tarif,abonnement_id from v_categorie_abonnement_etp group by nom_type,tarif,abonnement_id');
-        // dd($abonnementETP);
-        $abonnementETP = DB::select('select nom_type,tarif,abonnement_id,count(type_abonnement_role_id) as total_inscrit from v_categorie_abonnement_etp group by nom_type,tarif');
+        // $abonnementCFP = DB::select('select nom_type,tarif,abonnement_id from v_categorie_abonnements_cfp group by nom_type,tarif,abonnement_id');
+        // // $abonnementETP = DB::select('select nom_type,tarif,abonnement_id from v_categorie_abonnement_etp group by nom_type,tarif,abonnement_id');
+        // // dd($abonnementETP);
+        // $abonnementETP = DB::select('select nom_type,tarif,abonnement_id,count(type_abonnement_role_id) as total_inscrit from v_categorie_abonnement_etp group by nom_type,tarif');
+        //return view('superadmin.listeAbonne', compact('abonnementETP', 'abonnementCFP'));
+        $fonct = new FonctionGenerique();
+        $liste = $fonct->findAll('v_abonnement_facture_entreprise');
+        $cfpListe = $fonct->findAll('v_abonnement_facture');
 
-        return view('superadmin.listeAbonne', compact('abonnementETP', 'abonnementCFP'));
+        $nom_entreprise = [];
+        $nom_cfp = [];
+        for ($i=0; $i < count($liste); $i++) {
+            array_push($nom_entreprise ,$fonct->findWhere('entreprises',['id'],[$liste[$i]->entreprise_id]));
+        }
+        for ($i=0; $i < count($cfpListe); $i++) {
+            array_push($nom_cfp ,$fonct->findWhere('cfps',['id'],[$cfpListe[$i]->cfp_id]));
+        }
+        return view('superadmin.activation-abonnement', compact('liste', 'nom_entreprise','cfpListe'));
     }
     //activation de compte
     public function activation()
@@ -842,6 +854,9 @@ class AbonnementController extends Controller
     public function arret_immediat_abonnement_of($id){
         DB::update('update abonnement_cfps set activite = ? where id = ?', [0,$id]);
         return back();
+    }
+    /** TRI */
+    public function tri_client(){
     }
 
 }

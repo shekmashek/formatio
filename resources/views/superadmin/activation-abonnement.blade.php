@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+
 {{-- <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,58 +33,21 @@
         </div>
     </div> --}}
 
-<div class="container-fluid">
+<div class="container-fluid mt-5">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-
-            <div class="d-flex flex-row justify-content-between py-5">
-
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Type d'abonnement</b><br>
-                    @foreach ($type as $tp )
-                        <p>{{$tp->type_abonnement->nom_type}} - {{$tp->type_abonne->abonne_name}}</p>
-                    @endforeach
-                </div>
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Abonnement</b>
-                    @if($liste!=null)
-                        {{-- @foreach ($liste as $listes) --}}
-                            <p><h5 class="th_color">{{$liste[0]->categorie}} </h5></p>
-                            <input type="text" value = "{{$liste[0]->categorie}}" hidden id="abonnementCtg">
-                        {{-- @endforeach --}}
-                    @endif
-                    {{-- @if($cfpListe!=null)
-                        @foreach ($cfpListe as $lst)
-                            <p><h5 class="th_color">{{$lst->categorie}} </h5></p>
-                            <input type="text" value = "{{$lst->categorie}}" hidden id="abonnementCtg">
-                        @endforeach
-                    @endif --}}
-                </div>
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Tarif</b>
-                    @foreach ($tarif as $tf)
-                        <p><h5 class="th_color">{{$tf->tarif}} Ar</h5></p>
-                    @endforeach
-                </div>
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Total inscrit</b>
-                    @foreach ($nbAbonnement as $nb)
-                        <p><h5 class="th_color">{{$nb->abonnement_count}}</h5></p>
-                    @endforeach
-                </div>
-            </div>
-
             <div class="card px-3">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
-                        <th> Client </th>
-                        <th> Date demande </th>
-                        <th> Début </th>
-                        <th> Fin </th>
-                        <th> Status </th>
-
-                        <th> Activation </th>
+                        <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
+                        <th>Type d'organisation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Date d'inscription &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Début &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Fin &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Status &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Activation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                     </thead>
                     <tbody>
                         @if($liste!=null)
@@ -90,6 +55,8 @@
                             @foreach($liste as $listes)
                                     <tr>
                                         <td class="th_color"> {{$nom_entreprise[$i][0]->nom_etp}} </td>
+                                        <td class="th_color">Entreprise</td>
+                                        <td class="th_color"> {{$listes->nom_type}}</td>
                                         <td class="th_color">  {{$listes->date_demande}} </td>
                                         <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                         <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -111,9 +78,12 @@
                                     @php $i+=1; @endphp
                             @endforeach
                         @else
+                            @php $i = 0; @endphp
                             @foreach ($cfpListe as $listes)
                                 <tr>
-                                    <td class="th_color"> {{$listes->cfp->nom}} </td>
+                                    <td class="th_color"> {{$nom_cfp[$i][0]->nom}} </td>
+                                    <td class="th_color">Organisme de formation</td>
+                                    <td class="th_color"> {{$listes->nom_type}}</td>
                                     <td class="th_color">  {{$listes->date_demande}} </td>
                                     <td class="th_color"> <span id = "debut_{{$listes->id}}" >{{$listes->date_debut}}</span> </td>
                                     <td class="th_color"><span id = "fin_{{$listes->id}}" > {{$listes->date_fin}} </span> </td>
@@ -132,6 +102,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @php $i+=1; @endphp
                             @endforeach
                         @endif
 
@@ -189,6 +160,22 @@
 
 
                 }
+            },
+            error:function(error){
+                console.log(error)
+            }
+        });
+    });
+    $( "#client" ).on( "click", function() {
+        //on supprime le contenu du tableau
+        $('.table tbody').remove();
+        $.ajax({
+            type: "GET",
+            url: "{{route('tri_client')}}",
+            dataType: "html",
+            success:function(response){
+                var userData=JSON.parse(response);
+                
             },
             error:function(error){
                 console.log(error)

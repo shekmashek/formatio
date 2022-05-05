@@ -1213,3 +1213,6 @@ Route::get('parametrage_salle','SalleFormationController@index')->name('parametr
 Route::post('enregistrer_salle_of','SalleFormationController@store')->name('enregistrer_salle_of');
 Route::get('supprimer_salle/{id?}','SalleFormationController@destroy')->name('supprimer_salle');
 Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('modifier_salle');
+
+/** TRI ABONNEMENT */
+Route::get('tri_client','AbonnementController@tri_client')->name('tri_client');

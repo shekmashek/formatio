@@ -59,9 +59,10 @@ CREATE TABLE `branches` (
   foreign key(entreprise_id) references entreprises (id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 CREATE TABLE `abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date NOT '0000-0000-00',
+  `date_demande` date default current_timestamp(),
   `date_debut` date DEFAULT current_timestamp(),
   `date_fin` date DEFAULT current_timestamp(),
   `mode_financement_id` bigint(20) UNSIGNED NOT NULL  REFERENCES mode_financements(id) ON DELETE CASCADE,
@@ -90,8 +91,8 @@ CREATE TABLE chef_departements (
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   photos varchar(255) COLLATE utf8mb4_unicode_ci,
   activiter boolean not null default true,
-  created_at timestamp NULL DEFAULT 'XXXXXX',
-  updated_at timestamp NULL DEFAULT 'XXXXXX'
+  created_at timestamp  DEFAULT current_timestamp(),
+  updated_at timestamp  DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -99,8 +100,8 @@ CREATE TABLE `chef_dep_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `departement_entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES departement_entreprises(id) ON DELETE CASCADE,
   `chef_departement_id` bigint(20) UNSIGNED NOT NULL REFERENCES chef_departements(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT 'XXXXXXX',
-  `updated_at` timestamp NULL DEFAULT 'XXXXXXX'
+  `created_at` timestamp default current_timestamp(),
+  `updated_at` timestamp default current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -110,7 +111,7 @@ CREATE TABLE responsables (
   nom_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_resp varchar(255) COLLATE utf8mb4_unicode_ci,
   sexe_resp varchar(255) COLLATE utf8mb4_unicode_ci,
-  date_naissance_resp date current_timestamp(),
+  date_naissance_resp date default current_timestamp(),
   cin_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
   email_resp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_resp varchar(255) COLLATE utf8mb4_unicode_ci,
@@ -119,9 +120,9 @@ CREATE TABLE responsables (
   departement_entreprises_id bigint(20) UNSIGNED,
   service_id bigint(20) UNSIGNED,
   branche_id bigint(20) UNSIGNED,
-  genre_id bigint(20) unsigned REFERENCES genre(id);,
+  genre_id bigint(20) unsigned REFERENCES genre(id),
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
@@ -158,7 +159,7 @@ CREATE TABLE stagiaires (
   activiter tinyint(1) NOT NULL DEFAULT '1',
   branche_id bigint(20) UNSIGNED ,
   quartier varchar(225) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  code_postal varchar(225) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  code_postal varchar(225) COLLATE utf8mb4_unicode_ci  default 'XXX',
   ville varchar(225) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   region varchar(225) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   lot varchar(225) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX'
