@@ -190,11 +190,11 @@
                     </a>
                 </div>
 
-                <div style="border-bottom: solid 1px #e8dfe5;" class="">
+                {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
                     <a href="" class="none">
                         <p class="p-1 m-0" style="font-size: 10.3px;">Branche<span style="float: right;">{{$branche->nom_branche}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                     </a>
-                </div>
+                </div> --}}
 
                 {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
                     <a hrefs="#">
@@ -208,5 +208,6 @@
             </div>
         </div>
     </div>
+</div>
 
     @endsection

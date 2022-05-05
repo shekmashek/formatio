@@ -254,7 +254,7 @@ Route::get('/destroy_responsable','ResponsableController@destroy')->name('destro
 Route::post('/update_responsable/{id?}','ResponsableController@update')->name('update_responsable');
 Route::post('update_entreprise/{id?}','ResponsableController@update_etp')->name('update_entreprise');
 //
-Route::get('/profil_referent/{id?}', 'ResponsableController@affReferent')->name('profil_referent');
+Route::get('profil_referent', 'ResponsableController@affReferent')->name('profil_referent');
 
 // affichage parametre referent
 // Route::get('aff_parametre_referent', 'ResponsableController@affParametreReferent')->name('aff_parametre_referent');
@@ -1216,3 +1216,5 @@ Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('mod
 
 /** TRI ABONNEMENT */
 Route::get('tri_client','AbonnementController@tri_client')->name('tri_client');
+/**Presence */
+Route::get('statut_presence_emargement','HomeController@statut_presence_emargement')->name('statut_presence_emargement');

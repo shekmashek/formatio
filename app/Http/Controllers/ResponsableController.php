@@ -271,29 +271,29 @@ class ResponsableController extends Controller
         //  dd($rqt);
         return redirect()->route('liste_responsable');
     }
-    public function affReferent($id = null)
+    public function affReferent()
     {
         $user_id = Auth::user()->id;
+         if (Gate::allows('isReferentPrincipale')) {
 
-        if (Gate::allows('isReferent')) {
 
-            if ($id != null) {
+            // if ($id != null) {
 
-                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+            //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
 
-            } else {
+            // } else {
 
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
 
                 $entreprise = responsable::where('user_id',$user_id)->value('id');
 
-                $branche = branche::findorFail($id);
+                // $branche = branche::findorFail($id);
 
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
-            }
+            // }
             // dd($refs);
-            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise','branche'));
+            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
