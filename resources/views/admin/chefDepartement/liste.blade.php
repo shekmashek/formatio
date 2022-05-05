@@ -455,16 +455,15 @@
                                             <th>Matricule</th>
                                             <th>Nom</th>
                                             <th>Prénom</th>
-
                                             <th>Fonction</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
                                             <th>Role asigné</th>
-                                            <th>Role non asigné</th>
-                                            <th>Netoyé</th>
+                                            <th class="rlc">Role non asigné</th>
+                                            <th class="rlc">Netoyé</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="dynamic_rowC">
                                         @for($i=0;$i<count($chef);$i+=1) <tr class="text-center content_table">
 
                                             <td>
@@ -786,17 +785,17 @@
                                         <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
                                     </form>
                                     <hr>
-                                    <form action="/employes/filtre/query/name" method="post" >
+                                    <form action="/chefs/filtre/query/name" method="post" >
                                         @csrf
-                                        <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                        <input style="width: 265px" type="text" name="nameChef" id="nameChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
                                     </form>
-                                    <form action="/employes/filtre/query/matricule" method="post">
+                                    <form action="/chefs/filtre/query/matricule" method="post">
                                         @csrf
-                                        <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                        <input style="width: 265px" type="text" name="matriculeChef" id="matriculeChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
                                     </form>
-                                    <form action="/employes/filtre/query/role" method="post">
+                                    <form action="/chefs/filtre/query/role" method="post">
                                         @csrf
-                                        <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                        <input style="width: 265px" type="text" name="roleChef" id="roleChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
                                     </form>
                                 </div>
                             </div>
@@ -1257,6 +1256,147 @@
                     console.log(tableRow);
                 });
                 $('#dynamic_rowR').append(tableRow);
+                
+            }
+            
+        });
+    });
+</script>
+
+{{--filtre chef name--}}
+<script type="text/javascript">
+    $('body').on('keyup','#nameChef',function(){
+        $('#matriculeChef').val('');
+        $('#roleChef').val('');
+        $('.rlc').hide();
+
+        var nameChef = $(this).val();
+        console.log(nameChef)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("chef.filter.name") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                nameChef: nameChef,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_rowC').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/chefDepartement/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.id+
+                        '</td><td>'+value.nom_chef+
+                        '</td><td>'+value.prenom_chef+
+                        '</td><td>'+value.fonction_chef+
+                        '</td><td>'+value.mail_chef+
+                        '</td><td>'+value.telephone_chef+
+                        '</td><td>'+value.role_name+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#dynamic_rowC').append(tableRow);
+                
+            }
+            
+        });
+    });
+</script>
+
+{{--filtre chef matricule--}}
+<script type="text/javascript">
+    $('body').on('keyup','#matriculeChef',function(){
+        $('#roleChef').val('');
+        $('#nameChef').val('');
+        $('.rlc').hide();
+
+        var matriculeChef = $(this).val();
+        console.log(matriculeChef)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("chef.filter.matricule") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                matriculeChef: matriculeChef,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_rowC').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/chefDepartement/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.id+
+                        '</td><td>'+value.nom_chef+
+                        '</td><td>'+value.prenom_chef+
+                        '</td><td>'+value.fonction_chef+
+                        '</td><td>'+value.mail_chef+
+                        '</td><td>'+value.telephone_chef+
+                        '</td><td>'+value.role_name+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#dynamic_rowC').append(tableRow);
+                
+            }
+            
+        });
+    });
+</script>
+
+{{--filtre chef role--}}
+<script type="text/javascript">
+    $('body').on('keyup','#roleChef',function(){
+        $('#matriculeChef').val('');
+        $('#nameChef').val('');
+        $('.rlc').hide();
+
+        var roleChef = $(this).val();
+        console.log(roleChef)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("chef.filter.role") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                roleChef: roleChef,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_rowC').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/chefDepartement/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.id+
+                        '</td><td>'+value.nom_chef+
+                        '</td><td>'+value.prenom_chef+
+                        '</td><td>'+value.fonction_chef+
+                        '</td><td>'+value.mail_chef+
+                        '</td><td>'+value.telephone_chef+
+                        '</td><td>'+value.role_name+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#dynamic_rowC').append(tableRow);
                 
             }
             
