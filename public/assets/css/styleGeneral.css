@@ -659,10 +659,11 @@ ul li a {
 
 
 .header-right .header_img {
-    width: auto;
+    width: 70px !important;
     overflow: hidden;
     cursor: pointer;
     height: auto;
+    padding: 0 .5rem;
     position: relative;
     bottom: 0.5rem;
     right: 2rem;
@@ -812,6 +813,15 @@ input:-webkit-autofill:active {
     text-decoration: none;
 }
 
+.btn_vous{
+    background-color: white;
+    border: none;
+    border-radius: 30px;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    text-decoration: none;
+}
+
 .btn_creer_trie{
     background-color: white;
     border: none;
@@ -879,7 +889,7 @@ input:-webkit-autofill:active {
 
 .text_apprendre{
     position: relative;
-    top: .2rem;
+    bottom: .3rem;
     font-size: .8rem;
     animation-name: completer_programme;
     animation-duration: 4s;

@@ -51,7 +51,7 @@
                                 </div>
                                 @else
                                 @foreach($mod_en_cours as $mod)
-                                <div class="col-4 list_module">
+                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
                                     <div class="row detail__formation__result new_card_module bg-light mb-3"
                                         id="border_premier">
                                         <div class=" detail__formation__result__content">
@@ -217,7 +217,7 @@
                                 </div>
                                 @else
                                 @foreach($mod_non_publies as $mod)
-                                <div class="col-4 list_module">
+                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
                                     <div class="row detail__formation__result new_card_module bg-light mb-3"
                                         id="border_premier">
                                         <div class=" detail__formation__result__content">
@@ -449,7 +449,7 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <div class="col-12 ps-3">
+                        <div class="col-lg-12 ps-3">
                             <div class="row pading_bas d-flex flex-wrap">
                                 @if($mod_publies == null)
                                 <div class="si_vide row mt-4">
@@ -459,7 +459,7 @@
                                 </div>
                                 @else
                                 @foreach($mod_publies as $mod)
-                                <div class="col-4 list_module">
+                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
                                     <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
                                         id="border_premier">
                                         <div class="col-lg-12 col-md-12 detail__formation__result__content">

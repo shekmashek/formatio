@@ -1,0 +1,32 @@
+.head_content{
+    background: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    max-height: 300px;
+    border: 1px solid rgb(222, 221, 221);
+    border-top: none;
+}
+
+.first_col{
+    padding: 2rem 2rem;
+    border: none;
+    border-right: 1px solid rgb(222, 221, 221);
+}
+
+.action_name{
+    background-color: #7635dc;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: .4rem 1rem;
+}
+
+.action_name:hover{
+    color: #7635dc;
+    background-color: white;
+    border:1px solid #7635dc;
+    border-radius: 15px;
+}
+
+.action_name:focus{
+    text-decoration: none;
+}

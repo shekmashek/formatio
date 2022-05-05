@@ -60,11 +60,12 @@ class ResponsableCfpController extends Controller
             else{
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
                 $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$refs->cfp_id]);
+                $modules_counts = $fonct->findWhere("modules",["cfp_id"],[$refs->cfp_id]);
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
                 // dd($cfps->assujetti_id);
             }
-            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux'));
+            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts'));
 
         }
 

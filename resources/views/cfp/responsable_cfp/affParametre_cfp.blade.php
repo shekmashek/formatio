@@ -1,8 +1,9 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Affichage du parametre de centre de formation</h3>
+    <h3 class="text_header m-0 mt-1">Parametres</h3>
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/parametres.css')}}">
 <style>
     .image-ronde {
         width: 30px;
@@ -45,7 +46,7 @@
                             <span class="text-end">
                                 <img src="{{asset('images/CFP/'.$cfps->logo)}}" width="50%" height="50%" class="">
                             </span>
-                            @endif
+                        @endif
                         </a>
                     </div>
                 </div>
@@ -140,7 +141,7 @@
                 </div>
 
 
-                
+
                 {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
                     <a href="{{route('profil_of',$refs->cfp_id)}}">
                         <p class="p-1 m-0" style="font-size: 12px;">ORGANISME DE FORMATION<span style="float: right;">{{$refs->nom_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
@@ -231,5 +232,42 @@
             <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
         </div>
     </div>
-
-    @endsection
+</div>
+<div class="container">
+    <div class="row head_content">
+        <div class="col-4 first_col">
+            <div class="row">
+                <div class="col-4 logo">
+                    <a href="{{route('modification_logo_cfp',$cfps->id)}}">
+                        @if($cfps->logo == NULL )
+                            <span class="text-end">
+                                <img src="" alt="Logo centre de formation professionnel" >
+                            </span>
+                        @else
+                            <span class="text-end">
+                                <img src="{{asset('images/CFP/'.$cfps->logo)}}" alt="Logo centre de formation professionnel" class="img-fluid">
+                            </span>
+                        @endif
+                    </a>
+                </div>
+                <div class="col-8">
+                    <div>
+                        <p>{{$cfps->nom}}</p>
+                        <p>{{$cfps->slogan}}</p>
+                        <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Changer nom</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <p>{{count($modules_counts)}}</p>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-5"></div>
+        <div class="col-2"></div>
+    </div>
+</div>
+@endsection

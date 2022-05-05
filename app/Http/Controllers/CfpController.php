@@ -177,7 +177,7 @@ class CfpController extends Controller
         return redirect()->back()->with('error_nom', 'Entrez le nom de votre organisme avant de cliquer sur enregistrer');
        }
        else{
-        DB::update('update cfps set nom = ? where id = ?', [$request->nom,$id]);
+        DB::update('update cfps set nom = ?, slogan = ? where id = ?', [$request->nom,$request->slogan,$id]);
         return redirect()->route('profil_of',[$id]);
        }
 

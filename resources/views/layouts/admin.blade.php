@@ -491,7 +491,7 @@
                     <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt=""
                             class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
-                <div class="col-5 align-items-center justify-content-start d-flex flex-row ">
+                <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
                     @canany(['isSuperAdmin'])
 
                     <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3">
@@ -608,10 +608,10 @@
                     @endcanany
                 </div>
 
-                <div class="col-4 header-right align-items-center d-flex flex-row">
+                <div class="col-5 header-right align-items-center d-flex flex-row">
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
                         <div class="btn_creer me-2">
-                            <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
+                            <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
                         </div>
 
                         <div class="">
@@ -781,15 +781,14 @@
 
                         </div>
                     </div>
-                    <div class="ms-4">
-                        <div class=" btn_creer header_img" style="height: 34px">
+                    <div class="col-2">
+                        <div class=" btn_vous header_img" style="height: 34px">
                             {{-- <p class="m-0 ms-2"></p> --}}
                             {{-- <i class='bx bxs-user-circle user_icon'></i> --}}
                             <span class="d-flex mt-1" style="text-decoration: none; color:black; font-size:12px"
                                 type="button">
                                 <i class=' bx bxs-user' style="font-size: 17px; position: relative; top:.1rem;"></i>
-                                <span class="mt-1" style="font-size: 11.7px">Vous</span> <i
-                                    class='bx bx-caret-down mt-1'></i>
+                                <span class="mt-1" style="font-size: 11.7px">Vous</span> <i class='bx bx-caret-down mt-1'></i>
                             </span>
                         </div>
                         <div class="pdp_profil mt-3" id="box_profil">
