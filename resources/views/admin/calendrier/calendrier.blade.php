@@ -343,38 +343,55 @@
                     var userDataDetail = JSON.parse(data);
                     // alert(userData.length);
                     var details = userDataDetail['detail'];
+
                     var modules = userDataDetail['modules'];
                     var formations = userDataDetail['formations'];
 
                     for (var $i = 0; $i < details.length; $i++) {
                         for(var $j = $i+1; $j < details.length; $j++){
                             if (details[$i].groupe_id ==details[$j].groupe_id ) {
+                                var $k = $i;
+                                var $l = $j;
                                 var letters = '0123456789ABCDEF';
                                 var couleur = '#';
                                 for (var i = 0; i < 6; i++) {
                                     couleur += letters[Math.floor(Math.random() * 16)];
                                 }
                             }
-                            else{
-                                couleur = getRandomColor();
-                            }
+                        }
+                        if($i == $k ||  $i == $l){
+                            event.push({
+                                title: formations[$i][0].nom_formation
+                                , start: details[$i].date_detail
+                                ,backgroundColor:couleur
+                                , nom_projet: details[$i].nom_projet
+                                , nom_module: modules[$i][0].nom_module
+                                , h_debut: details[$i].h_debut
+                                , h_fin: details[$i].h_fin
+                                , lieu: details[$i].lieu
+                                , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
+                                , detail_id: details[$i].details_id
+                                , nom_cfp: details[$i].nom_cfp
+                                , customRender: true
+                            });
+                        }
+                        else{
+                            event.push({
+                                title: formations[$i][0].nom_formation
+                                , start: details[$i].date_detail
+                                ,backgroundColor:getRandomColor()
+                                , nom_projet: details[$i].nom_projet
+                                , nom_module: modules[$i][0].nom_module
+                                , h_debut: details[$i].h_debut
+                                , h_fin: details[$i].h_fin
+                                , lieu: details[$i].lieu
+                                , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
+                                , detail_id: details[$i].details_id
+                                , nom_cfp: details[$i].nom_cfp
+                                , customRender: true
+                            });
                         }
 
-                        event.push({
-                            title: formations[$i][0].nom_formation
-                            , start: details[$i].date_detail
-                            ,backgroundColor:couleur
-                            , nom_projet: details[$i].nom_projet
-                            , nom_module: modules[$i][0].nom_module
-                            , h_debut: details[$i].h_debut
-                            , h_fin: details[$i].h_fin
-                            , lieu: details[$i].lieu
-                            , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
-                            , detail_id: details[$i].details_id
-                            , nom_cfp: details[$i].nom_cfp
-                            , customRender: true
-
-                        });
                     }
                     // $.each(userDataDetail, function(i, entry) {
                     //     console.log( entry);
