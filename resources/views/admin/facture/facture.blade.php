@@ -211,107 +211,7 @@
 
 <div class="container-fluid">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
-    <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
-
-        @if(isset($invoice_dte) && isset($due_dte))
-
-        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-        <a href="{{ route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]) ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
-        @elseif ($pagination["debut_aff"] <= 1) <a href="{{ route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{ route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-            @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                <a href="{{route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{  route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-                @else
-                <a href="{{ route('search_par_date',[($pagination["debut_aff"] - $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{ route('search_par_date',[($pagination["debut_aff"] + $pagination["nb_limit"]),$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @endif
-
-                @elseif(isset($solde_debut) && isset($solde_fin))
-
-                @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-                <a href="{{ route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{ route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]) ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
-                @elseif ($pagination["debut_aff"] <= 1) <a href="{{ route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-                    @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                        <a href="{{route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                        <a href="{{  route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-                        @else
-                        <a href="{{ route('search_par_solde',[($pagination["debut_aff"] - $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                        <a href="{{ route('search_par_solde',[($pagination["debut_aff"] + $pagination["nb_limit"]),$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                        @endif
-                        {{-- --}}
-                        @elseif(isset($num_fact))
-
-                        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-                        <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                        <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
-                        @elseif ($pagination["debut_aff"] == 1)
-                        <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                        <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-                        @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                            <a href="{{route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                            <a href="{{  route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-                            @else
-                            <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                            <a href="{{ route('search_par_num_fact',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                            @endif
-                            {{-- --}}
-                            @elseif(isset($entiter_id))
-
-                            @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-                            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
-                            @elseif ($pagination["debut_aff"] == 1)
-                            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                            <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-                            @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                                <a href="{{route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{  route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-                                @else
-                                <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] - $pagination["nb_limit"]),$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('search_par_entiter',[ ($pagination["debut_aff"] + $pagination["nb_limit"]),$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                                @endif
-
-                                {{-- --}}
-                                @else
-
-                                @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-                                <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                                @elseif ($pagination["debut_aff"] == 1)
-                                <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-                                @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                                    <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-                                    @else
-                                    <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                                    @endif
-
-
-
-                                    @endif
-
-
-
-    </span>
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             {{-- <li></li> --}}
@@ -321,27 +221,45 @@
                 </a>
             </li>
             <li class="nav-item">
+                @if (isset($pour_list))
+                @if ($pour_list == "INACTIF")
                 <a href="#" class="nav-link active" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="true">
-                    Brouillon
-                    @if (count($facture_inactif) > 0)
-                    {{count($facture_inactif)}}
-                    @endif
-                </a>
+                    @else
+                    <a href="#" class="nav-link" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="false">
+                        @endif
+                        @else
+                        <a href="#" class="nav-link active" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="true">
+                @endif
+                            Brouillon
+                            {{count($facture_inactif)}}
+                        </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
-                    Impayé
-                    @if (count($facture_actif) > 0)
-                    {{count($facture_actif)}}
-                    @endif
-                </a>
+                @if (isset($pour_list))
+                @if ($pour_list == "ACTIF")
+                <a href="#" class="nav-link active" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="true">
+                    @else
+                    <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
+                        @endif
+                        @else
+                        <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
+                @endif
+                            Impayé
+                            {{count($facture_actif)}}
+                        </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
+                @if (isset($pour_list))
+                @if ($pour_list == "PAYER")
+                <a href="#" class="nav-link active" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="true">
+                    @else
+                    <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
+                        @endif
+                        @else
+                        <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
+                @endif
                     Payé
-                    @if (count($facture_payer) > 0)
                     {{count($facture_payer)}}
-                    @endif
                 </a>
             </li>
         </ul>
@@ -354,7 +272,146 @@
 
                 <div class="tab-content" id="nav-tabContent">
 
+                    @if (isset($pour_list))
+                    @if ($pour_list == "INACTIF")
                     <div class="tab-pane fade show active" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
+                        @else
+                        <div class="tab-pane fade" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
+                            @endif
+                    @else
+                            <div class="tab-pane fade show active" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
+                    @endif
+
+                        <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination_brouillon["debut_aff"]."-".$pagination_brouillon["fin_aff"]." sur ".$pagination_brouillon["totale_pagination"]}}</span>
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @if ($pagination_brouillon["nb_limit"] >= $pagination_brouillon["totale_pagination"])
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @elseif ($pagination_brouillon["debut_aff"] == 1)
+
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture', [ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @elseif ($pagination_brouillon["debut_aff"] == $pagination_brouillon["fin_aff"] || $pagination_brouillon["debut_aff"]> $pagination_brouillon["fin_aff"])
+
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin  ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @else
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin  ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$solde_debut,$solde_fin  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ,$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[ ($pagination_brouillon["debut_aff"] - $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ ($pagination_brouillon["debut_aff"] + $pagination_brouillon["nb_limit"]),$pagination_actif["debut_aff"],$pagination_payer["debut_aff"],"INACTIF" ]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @endif
+                            {{-- -------- --}}
+
+                            @endif
+
+
+
+                        </span>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -485,7 +542,153 @@
                     </div>
                     {{-- --}}
 
+
+                    @if (isset($pour_list))
+                    @if ($pour_list == "ACTIF")
+                    <div class="tab-pane fade show active" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
+                        @else
+                        <div class="tab-pane fade" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
+                            @endif
+                    @else
                     <div class="tab-pane fade" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
+                        @endif
+
+                    {{-- <div class="tab-pane fade" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab"> --}}
+
+                        <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination_actif["debut_aff"]."-".$pagination_actif["fin_aff"]." sur ".$pagination_actif["totale_pagination"]}}</span>
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @if ($pagination_actif["nb_limit"] >= $pagination_actif["totale_pagination"])
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @elseif ($pagination_actif["debut_aff"] == 1)
+
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @elseif ($pagination_actif["debut_aff"] == $pagination_actif["fin_aff"] || $pagination_actif["debut_aff"]> $pagination_actif["fin_aff"])
+
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte  ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @else
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$solde_debut,$solde_fin ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF",$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] - $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[$pagination_brouillon["debut_aff"],($pagination_actif["debut_aff"] + $pagination_actif["nb_limit"]),$pagination_payer["debut_aff"],"ACTIF"] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @endif
+                            {{-- -------- --}}
+
+                            @endif
+
+                        </span>
+
                         <table class="table table-hover">
                             <tr>
                                 <th scope="col">Type</th>
@@ -697,7 +900,151 @@
 
                     {{-- --}}
 
+                    @if (isset($pour_list))
+                    @if ($pour_list == "PAYER")
+                    <div class="tab-pane fade show active" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
+                        @else
+                        <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
+                            @endif
+                    @else
                     <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
+                        @endif
+
+                    {{-- <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab"> --}}
+
+                        <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination_payer["debut_aff"]."-".$pagination_payer["fin_aff"]." sur ".$pagination_payer["totale_pagination"]}}</span>
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @if ($pagination_payer["nb_limit"] >= $pagination_payer["totale_pagination"])
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @elseif ($pagination_payer["debut_aff"] == 1)
+
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @elseif ($pagination_payer["debut_aff"] == $pagination_payer["fin_aff"] || $pagination_payer["debut_aff"]> $pagination_payer["fin_aff"])
+
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin  ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin  ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button">
+                                <i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @endif
+
+                            {{-- =============== condition pagination ==================== --}}
+                            @else
+
+                            @if(isset($invoice_dte) && isset($due_dte))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_date',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$invoice_dte,$due_dte  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($solde_debut) && isset($solde_fin))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin  ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_solde',[$pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ,$solde_debut,$solde_fin  ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($num_fact))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_num_fact',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$num_fact ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @elseif(isset($entiter_id))
+                            {{-- -------- --}}
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('search_par_entiter',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER",$entiter_id ] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                            @else
+                            {{-- -------- --}}
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] - $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                            <a href="{{ route('liste_facture',[ $pagination_brouillon["debut_aff"],$pagination_actif["debut_aff"],($pagination_payer["debut_aff"] + $pagination_payer["nb_limit"]),"PAYER" ]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                            @endif
+                            {{-- -------- --}}
+
+                            @endif
+
+                        </span>
                         <table class="table table-hover">
                             <tr>
                                 <th scope="col">Type</th>
@@ -1458,7 +1805,7 @@
             , url: "{{route('trie_par_num_facture')}}"
             , data: {
                 data_value: $(this).val()
-                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
             }
             , dataType: "html"
             , success: function(response) {
@@ -1544,7 +1891,7 @@
             , url: "{{route('trie_par_entiter')}}"
             , data: {
                 data_value: $(this).val()
-                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
             }
             , dataType: "html"
             , success: function(response) {
@@ -1627,7 +1974,7 @@
             , url: "{{route('trie_par_dte')}}"
             , data: {
                 data_value: $(this).val()
-                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
             }
             , dataType: "html"
             , success: function(response) {
@@ -1708,7 +2055,7 @@
             , url: "{{route('trie_par_totale_payer')}}"
             , data: {
                 data_value: $(this).val()
-                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
             }
             , dataType: "html"
             , success: function(response) {
@@ -1790,7 +2137,7 @@
             , url: "{{route('trie_par_reste_payer')}}"
             , data: {
                 data_value: $(this).val()
-                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
             }
             , dataType: "html"
             , success: function(response) {

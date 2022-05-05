@@ -553,7 +553,7 @@ Route::get('groupe_projet_edit','FactureController@getGroupe_projet_edit')->name
 Route::get('taxe','FactureController@getTaxe')->name('taxe');
 
 Route::get('facture','FactureController@fullFacture')->name('facture');
-Route::get('liste_facture/{nbPage?}','FactureController@redirection_facture')->name('liste_facture');
+Route::get('liste_facture/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}','FactureController@redirection_facture')->name('liste_facture');
 Route::get('edit_facture/{id}','FactureController@edit_facture')->name('edit_facture');
 Route::post('modifier_facture/{num_facture}/{entreprise_id}','FactureController@modifier_facture')->name('modifier_facture');
 Route::get('delete_session_facture/{num_fact}/{grp_etp_id}','FactureController@delete_session_facture')->name('delete_session_facture');
@@ -569,11 +569,11 @@ Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFactu
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
 
 //============================== recherche facture ================
-Route::get('search_par_date/{nbPage?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date')->name('search_par_date');
-Route::get('search_par_num_fact/{nbPage?}/{num_fact?}','FactureController@search_par_num_fact')->name('search_par_num_fact');
-Route::get('search_par_entiter/{nbPage?}/{entiter_id?}','FactureController@search_par_entiter')->name('search_par_entiter');
-Route::get('search_par_solde_pagination/{nbPage?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date_pagination')->name('search_par_solde_pagination');
-Route::get('search_par_solde/{nbPage?}/{solde_debut?}/{solde_fin?}','FactureController@search_par_intervale_solde')->name('search_par_solde');
+Route::get('search_par_date/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date')->name('search_par_date');
+Route::get('search_par_num_fact/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{num_fact?}','FactureController@search_par_num_fact')->name('search_par_num_fact');
+Route::get('search_par_entiter/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{entiter_id?}','FactureController@search_par_entiter')->name('search_par_entiter');
+Route::get('search_par_solde_pagination/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date_pagination')->name('search_par_solde_pagination');
+Route::get('search_par_solde/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{solde_debut?}/{solde_fin?}','FactureController@search_par_intervale_solde')->name('search_par_solde');
 //============================== trie colonne table  facture ================
 Route::get('trie_par_num_facture','FactureController@trie_par_num_facture')->name('trie_par_num_facture');
 Route::get('trie_par_entiter','FactureController@trie_par_entiter')->name('trie_par_entiter');
@@ -685,13 +685,16 @@ Route::get('employes','DepartementController@liste')->name('employes');
 Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')->name('affProfilChefDepartement');
 
 
-Route::get('employes.liste','ParticipantController@liste_employer')->name('employes.liste');
+Route::get('employes.liste/{nbPag?}','ParticipantController@liste_employer')->name('employes.liste');
 Route::get('employes.export.nouveau','ParticipantController@export_excel_new_participant')->name('employes.export.nouveau');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
 
 Route::get('employes.export.verify_matricule_stg','ParticipantController@verify_matricule_stg')->name('employes.export.verify_matricule_stg');
 Route::get('employes.export.verify_email_stg','ParticipantController@verify_email_stg')->name('employes.export.verify_email_stg');
 Route::get('employes.export.verify_cin_stg','ParticipantController@verify_cin_stg')->name('employes.export.verify_cin_stg');
+
+Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
+Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
 
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement','ChefDepartementController');

@@ -211,9 +211,59 @@
 
 <div class="container-fluid">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
-    <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">1-5 sur 10</span>
-        <a href="#" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="#" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+    <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
+
+        {{-- @if ( ($pagination["debut_aff"]-$pagination["nb_limit"]) < 1 && ($pagination["debut_aff"]+$pagination["nb_limit"]) < $pagination["totale_pagination"])
+
+    <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @elseif (($pagination["debut_aff"]-$pagination["nb_limit"]) < 1 && ($pagination["debut_aff"]+$pagination["nb_limit"])>= $pagination["totale_pagination"])
+
+            <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+            <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+            @elseif (($pagination["debut_aff"]-$pagination["nb_limit"]) >= $pagination["nb_limit"] && ($pagination["debut_aff"]+$pagination["nb_limit"]) < $pagination["totale_pagination"]) <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                @elseif (($pagination["debut_aff"]-$pagination["nb_limit"]) >= $pagination["nb_limit"] && ($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+
+                <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                @elseif (($pagination["debut_aff"]-$pagination["nb_limit"]) == 1 && ($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+
+                <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                @elseif (($pagination["debut_aff"]-$pagination["nb_limit"]) == 1 && ($pagination["debut_aff"]+$pagination["nb_limit"]) < $pagination["totale_pagination"]) <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                    @endif --}}
+
+                    @if ($pagination["debut_aff"] >= $pagination["totale_pagination"])
+
+                    <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                    @elseif ($pagination["debut_aff"] == 1)
+
+                    <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                    <a href="{{ route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                    @elseif ($pagination["debut_aff"] == $pagination["totale_pagination"] || $pagination["debut_aff"]> $pagination["totale_pagination"])
+
+                        <a href="{{route('employes.liste',$pagination["debut_aff"] -  $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{  route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button"  style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                        @else
+
+                        <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                        @endif
+
     </span>
 
     <div class="m-4">
@@ -221,12 +271,12 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="{{route('employes.liste')}}" class="nav-link active">
-                   liste des employers
+                    liste des employers
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{route('departement.create')}}" class="nav-link">
-                   nouveau
+                    nouveau
                 </a>
             </li>
             <li class="nav-item">
@@ -255,22 +305,69 @@
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
+
+                        @foreach ($employers as $emp)
                         <tr>
+                            <td>
+                                <a href="#">
+                                    <center>
+                                        @if($emp->photos == null)
+                                        <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
+                                            <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                                        </p>
+                                        @else
+                                        <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                        @endif
+                                    </center>
+                                </a>
+                            </td>
+                            <td>
+                                @if ($emp->activiter==1)
+                                <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+
+                                @else
+                                <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+
+                                @endif
+                            </td>
+                            <th>
+                                {{$emp->nom_stagiaire}}
+                            </th>
+                            <td>
+                                {{$emp->prenom_stagiaire}}
+                            </td>
+                            <td>
+                                {{$emp->mail_stagiaire}}
+                            </td>
+                            <td>
+                                @if($emp->telephone_stagiaire==null)
+                                ----
+                                @else
+                                {{$emp->telephone_stagiaire}}
+                                @endif
+                            </td>
+                            <td>
+                                @if ($emp->activiter==1)
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
+                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                                </div>
+                                @else
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
+                                    <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
+                                </div>
+                                @endif
+                            </td>
+
+                        </tr>
+                        @endforeach
+                        {{-- <tr>
                             <td>
                                 <a href="#">
                                     <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ;">
                                         <span class="" style="position:relative; top: .5rem;"><b>ANF</b></span>
                                     </p>
-                                    {{-- @if($referent[$i]->photos == null)
-                                    <center>
-                                        <p class="randomColor text-center" style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;">
-                                            <span class="" style="position:relative; top: .9rem;"><b>{{$referent[$i]->nm}}{{$referent[$i]->pr}}</b></span>
-                                        </p>
-                                    </center>
-                                    @else
-                                    <a href="{{asset('images/responsables/'.$referent[$i]->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/responsables/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                                    @endif --}}
-
                                 </a>
                             </td>
                             <td>
@@ -288,27 +385,14 @@
                             <td>
                                 032 86 837 25
                             </td>
-                             <td>
-                                <div class="dropdown">
-                                    <div class="btn-group dropstart">
-                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item">
-                                                desactiver
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    <button type="submit" class="btn "><span class="fa fa-trash"></span> Retiré dans le plateforme</button>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
+                                    <input class="form-check-input ajouter_stg" type="checkbox" data-user-id="1" data-role-id="3" value="2" checked>
                                 </div>
                             </td>
 
-                        </tr>
+                        </tr> --}}
 
                     </tbody>
                 </table>
@@ -362,8 +446,8 @@
                                 <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
                                 <br>
                                 <select class="form-select" autocomplete="on">
-                                  <option value="">actif</option>
-                                  <option value="">inactif</option>
+                                    <option value="">actif</option>
+                                    <option value="">inactif</option>
                                 </select>
                                 <br>
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
@@ -382,22 +466,45 @@
             <meta name="csrf-token" content="{{ csrf_token() }}" />
 
             <script type="text/javascript">
-                $(document).on("keyup change", "#dte_debut", function() {
-                    document.getElementById("dte_fin").setAttribute("min", $(this).val());
+                /*============ stg =================*/
+                $(".desactiver_stg").on('click', function(e) {
+                    var user_id = $(this).data("user-id");
+                    var stg_id = $(this).val();
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.liste.desactiver')}}"
+                        , data: {
+                            user_id: user_id
+                            , emp_id: stg_id
+                        }
+                        , success: function(response) {
+                                window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                });
+                $(".activer_stg").on('click', function(e) {
+                    var user_id = $(this).data("user-id");
+                    var stg_id = $(this).val();
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.liste.activer')}}"
+                        , data: {
+                            user_id: user_id
+                            , emp_id: stg_id
+                        }
+                        , success: function(response) {
+                                window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
                 });
 
-                $(document).on("keyup change", "#solde_debut", function() {
-                    document.getElementById("solde_fin").setAttribute("min", $(this).val());
-                    $("#solde_fin").val($(this).val());
-                });
-
-
-
-                /*------------------------------------------------- Numero Facture-------------------------------------------------------------------*/
-
-
-                /*------------------------------------------------- Numero Facture-------------------------------------------------------------------*/
-
+                /*=================================================================================*/
                 function number_format(number, decimals, decPoint, thousandsSep) {
                     decimals = decimals || 0;
                     number = parseFloat(number);
@@ -652,7 +759,7 @@
                         , url: "{{route('trie_par_num_facture')}}"
                         , data: {
                             data_value: $(this).val()
-                            , nb_pagination:0
+                            , nb_pagination: 0
                         }
                         , dataType: "html"
                         , success: function(response) {

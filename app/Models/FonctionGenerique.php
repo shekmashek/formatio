@@ -409,20 +409,26 @@ class FonctionGenerique extends Model
             $totale_pagination = 0;
         }
         $debut_aff = 0;
-        $fin_aff = 1;
+        $fin_aff = 0;
 
-        if ($totale_pagination == 1) {
+
+
+     /*   if ($totale_pagination == 1) {
             $nb_debut_pag = 1;
             $fin_aff = 1;
-        }
+        } */
         if ($nb_debut_pag <= 0 || $nb_debut_pag == null) {
             $nb_debut_pag = 1;
         }
 
         if ($nb_debut_pag == 1) { // 1
+            $nb_debut_pag = 1;
             $debut_pagination = 0; //
             $debut_aff = 1;
-            $fin_aff = $debut_pagination + $nb_limit;
+            $fin_aff = $nb_debut_pag + $nb_limit;
+            if($fin_aff>=$totale_pagination){
+                $fin_aff = $totale_pagination;
+            }
         }
         if ($nb_debut_pag > 1 && $nb_debut_pag < $totale_pagination) {
             $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
@@ -433,8 +439,17 @@ class FonctionGenerique extends Model
         if ($nb_debut_pag  == $totale_pagination) {
             $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
             $fin_aff = ($nb_debut_pag - 1) + $nb_limit;
+            if($fin_aff>=$totale_pagination){
+                $fin_aff = $totale_pagination;
+            }
             $debut_aff = $nb_debut_pag;
         }
+
+        // if($fin_aff>=$totale_pagination){
+        //     $fin_aff = $totale_pagination;
+        // } else {
+        //     $fin_aff = $nb_debut_pag+$nb_limit;
+        // }
 
         $data["nb_limit"] = $nb_limit;
         $data["debut_aff"] = $debut_aff;

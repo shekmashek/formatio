@@ -50,11 +50,71 @@ class ParticipantController extends Controller
     }
 
 
+public function desactiver_stagiaire(Request $req){
 
-    public function liste_employer()
+    $stg = new stagiaire();
+    $user_id = $req->user_id;
+    $emp_id = $req->emp_id;
+    $entreprise_id = 0;
+    if (Gate::allows('isReferent')) {
+        $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id])->entreprise_id;
+    }
+    if (Gate::allows('isManager')) {
+        $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
+    }
+    $status = $stg->desactiver($user_id,$emp_id,$entreprise_id);
+
+    return response()->json($status);
+}
+
+public function activer_stagiaire(Request $req){
+
+    $stg = new stagiaire();
+    $user_id = $req->user_id;
+    $emp_id = $req->emp_id;
+    $entreprise_id = 0;
+    if (Gate::allows('isReferent')) {
+        $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id])->entreprise_id;
+    }
+    if (Gate::allows('isManager')) {
+        $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
+    }
+    $status = $stg->activer($user_id,$emp_id,$entreprise_id);
+
+    return response()->json($status);
+}
+
+    public function liste_employer($paginations=null)
     {
+        $entreprise_id = 0;
+        $nb_limit=5;
+        $user_id = Auth::user()->id;
 
-        return view("admin.entreprise.employer.liste_employer");
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
+        }
+        $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id",["entreprise_id"],["="], [$entreprise_id],"AND");
+
+        if($paginations!=null){
+
+            if($paginations<=0){
+                $paginations=1;
+            }
+            $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations,$nb_limit);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET ".($paginations-1),[$entreprise_id]);
+
+        } else {
+            if($paginations<=0){
+                $paginations=1;
+            }
+            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET 0",[$entreprise_id]);
+            $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0,$nb_limit);
+
+        }
+        return view("admin.entreprise.employer.liste_employer",compact('employers','pagination'));
     }
 
     public function index()

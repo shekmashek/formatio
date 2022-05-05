@@ -241,17 +241,13 @@
             <li class="nav-item">
                 <a href="#" class="nav-link active" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="true">
                     Impayé
-                    @if (count($facture_actif) > 0)
                     {{count($facture_actif)}}
-                    @endif
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
                     Payé
-                    @if (count($facture_payer) > 0)
                     {{count($facture_payer)}}
-                    @endif
                 </a>
             </li>
         </ul>
