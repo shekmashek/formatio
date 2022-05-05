@@ -116,7 +116,18 @@
     </div>
 @endif
 <nav class="d-flex justify-content-between mb-1 ">
-    <span class="titre_detail_session"><strong style="font-size: 14px">Séance(s) de la session</strong></span>
+    <span class="titre_detail_session">
+    @php
+        $info = $groupe->infos_session($projet[0]->groupe_id);
+        if ($info->difference == null && $info->nb_detail == 0) {
+            echo $info->nb_detail.' séance 0 heure';
+        }elseif ($info->difference != null && $info->nb_detail == 1) {
+            echo $info->nb_detail. ' séance '.gmdate("H:i", $info->difference);
+        }elseif ($info->difference != null && $info->nb_detail > 1) {
+            echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }
+    @endphp  
+    </span>
     @canany(['isCFP'])
     <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
         data-bs-target="#modal_nouveau_detail">

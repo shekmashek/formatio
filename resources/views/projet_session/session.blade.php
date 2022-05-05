@@ -330,6 +330,15 @@
         margin-right: .3rem;
     }
 
+    .liste_projet{
+        background-color: #f1f1f1;
+        margin: 0;
+        padding: 1;
+    }
+
+    .liste_projet:hover{
+        background-color: #e0dede;
+    }
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
@@ -360,6 +369,9 @@
                     <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
                     <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
                 </div>
+            </div>
+            <div>
+                <a href="{{ route('liste_projet') }}"><button class="btn liste_projet"><i class='bx bx-list-ul'></i>&nbsp; <span>Liste des projets</span></button></a>
             </div>
             @canany(['isReferent','isCFP'])
                 <div>

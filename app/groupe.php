@@ -53,4 +53,9 @@ class Groupe extends Model
             return '#00ff00';
         }
     }
+
+    public function infos_session($groupe_id){
+        $info = DB::select('select count(id) as nb_detail,sum(TIME_TO_SEC(h_fin) - TIME_TO_SEC(h_debut)) as difference from details where groupe_id = ?',[$groupe_id])[0];
+        return $info;
+    }
 }

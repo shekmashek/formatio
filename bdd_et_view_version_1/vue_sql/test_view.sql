@@ -133,3 +133,4 @@ join responsables r on
 WHERE
     d.activiter = 1;
 
+select count(id) as nb_detail,sum(TIME_TO_SEC(h_fin) - TIME_TO_SEC(h_debut)) as difference from details where groupe_id = 27;
