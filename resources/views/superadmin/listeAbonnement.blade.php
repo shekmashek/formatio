@@ -164,15 +164,21 @@
                                 <td>{{$fact->nom_type}}</td>
                                 <td>{{$fact->categorie}}</td>
                                 @if($fact->activite == 1)
-                                    <td>En cours</td>
+                                    <td><span style="background-color: green;padding:5px;color:white"> En cours </span></td>
                                 @else
-                                    <td>Terminé</td>
+                                    <td><span style="background-color: red;padding:5px;color:white"> Terminé </span></td>
                                 @endif
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                          Arrêter le service
-                                        </button>
+                                        @if($fact->activite == 0)
+                                            <button class="btn btn-secondary dropdown-toggle disabled" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Arrêter le service
+                                            </button>
+                                        @else
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Arrêter le service
+                                            </button>
+                                        @endif
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @can('isReferent')
                                                 <li>
@@ -184,10 +190,10 @@
                                             @endcan
                                             @can('isCFP')
                                                 <li>
-                                                    <a class="dropdown-item" href=""><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                    <a class="dropdown-item" href="{{route('arret_immediat_abonnement_of',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                                    <a class="dropdown-item" href="{{route('arret_fin_abonnement_of',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
                                                 </li>
                                             @endcan
                                         </ul>

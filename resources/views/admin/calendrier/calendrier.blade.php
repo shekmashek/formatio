@@ -343,23 +343,29 @@
                     var userDataDetail = JSON.parse(data);
                     // alert(userData.length);
                     var details = userDataDetail['detail'];
-
+                    console.log(details);
                     var modules = userDataDetail['modules'];
                     var formations = userDataDetail['formations'];
+                    var letters = '0123456789ABCDEF';
+                    var couleur = '#';
+                    for (var i = 0; i < 6; i++) {
+                        couleur += letters[Math.floor(Math.random() * 16)];
+                    }
 
                     for (var $i = 0; $i < details.length; $i++) {
+                        // couleur  = "red";
+                        // var meme_groupe = new Array();
                         for(var $j = $i+1; $j < details.length; $j++){
-                            if (details[$i].groupe_id ==details[$j].groupe_id ) {
-                                var $k = $i;
-                                var $l = $j;
-                                var letters = '0123456789ABCDEF';
-                                var couleur = '#';
-                                for (var i = 0; i < 6; i++) {
-                                    couleur += letters[Math.floor(Math.random() * 16)];
-                                }
+                            if (details[$i].groupe_id == details[$j].groupe_id ) {
+                                meme_groupe = details[$i].groupe_id;
+                                // meme_groupe.push(details[$i].groupe_id ) ;
                             }
                         }
-                        if($i == $k ||  $i == $l){
+                        if(details[$i].groupe_id == meme_groupe){
+                            // couleur  = "red";
+
+                            // console.log("ambany",details[$i].groupe_id);
+                            // console.log("mitovy",couleur);
                             event.push({
                                 title: formations[$i][0].nom_formation
                                 , start: details[$i].date_detail
@@ -374,8 +380,13 @@
                                 , nom_cfp: details[$i].nom_cfp
                                 , customRender: true
                             });
+                            for (var i = 0; i < 6; i++) {
+                                couleur += letters[Math.floor(Math.random() * 16)];
+                            }
                         }
                         else{
+                            // console.log("tsy mitovy",$i);
+                            // console.log("tsy mitovy",getRandomColor());
                             event.push({
                                 title: formations[$i][0].nom_formation
                                 , start: details[$i].date_detail
