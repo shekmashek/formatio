@@ -580,9 +580,9 @@
                                 class="d-flex flex-column"><i class='bx bxs-calendar-week'></i>
                                 <span class="text_racourcis">Agenda</span></span>
                         </a>
-                        <a href="{{route('liste_entreprise')}}" class="btn_racourcis me-4" role="button"><span
+                        <a href="{{route('liste_equipe_admin')}}" class="btn_racourcis me-4" role="button"><span
                                 class="d-flex flex-column"><i class='bx bxs-group'></i>
-                                <span class="text_racourcis">Listes equipes</span></span>
+                                <span class="text_racourcis">Equipe admin</span></span>
                         </a>
                     </div>
                     @endcanany

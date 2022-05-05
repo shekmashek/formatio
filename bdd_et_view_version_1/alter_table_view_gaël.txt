@@ -9,3 +9,5 @@ ALTER TABLE formateurs_interne ADD url_photo VARCHAR(155) ;
 
 
 ajout colonne adresse_quartier dans view v_demande_cfp_etp
+
+modification vieaw v_responsable_cfp 

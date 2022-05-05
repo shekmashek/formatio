@@ -492,6 +492,9 @@ Route::get('suppression_programme','ProgrammeController@suppre_programme')->name
 Route::get('editer_programme','ProgrammeController@edit')->name('editer_programme');
 
 
+// route liste equipe adminb pour O.F
+Route::get('liste_equipe_admin','ResponsableCfpController@listeEquipeAdminCFP')->name('liste_equipe_admin');
+
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');
 // Route::get('insertion_cours','CoursControlleur@store')->name('insertion_cours');
@@ -1130,6 +1133,10 @@ Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('m
 Route::get('/modification_nom_organisme/{id}','CfpController@edit_nom')->name('modification_nom_organisme');
 Route::get('/modification_adresse_organisme/{id}','CfpController@edit_adresse')->name('modification_adresse_organisme');
 
+Route::get('/modification_nif/{id}','CfpController@edit_nif')->name('modification_nif');
+Route::get('/modification_stat/{id}','CfpController@edit_stat')->name('modification_stat');
+Route::get('/modification_rcs_cfps/{id}','CfpController@edit_rcs')->name('modification_rcs_cfps');
+
 Route::get('/modification_assujetti_cfp/{id}','CfpController@edit_assujetti_cfp')->name('modification_assujetti_cfp');
 Route::post('enregistrer_assujetti_cfp/{id}','CfpController@enregistrer_assujetti_cfp')->name('enregistrer_assujetti_cfp');
 
@@ -1159,6 +1166,11 @@ Route::post('/enregistrer_modification_phone_cfp/{id}','CfpController@modifier_p
 Route::post('/enregistrer_modification_logo_cfp/{id}','CfpController@modifier_logo')->name('enregistrer_modification_logo_cfp');
 Route::post('/enregistrer_modification_nom_cfp/{id}','CfpController@modifier_nom')->name('enregistrer_modification_nom_cfp');
 Route::post('/enregistrer_modification_adresse_cfp/{id}','CfpController@modifier_adresse')->name('enregistrer_modification_adresse_cfp');
+
+Route::post('/enregistrer_modification_nif_cfp/{id}','CfpController@modifier_nif')->name('enregistrer_modification_nif_cfp');
+Route::post('/enregistrer_modification_stat_cfp/{id}','CfpController@modifier_stat')->name('enregistrer_modification_stat_cfp');
+Route::post('/enregistrer_modification_rcs_cfp/{id}','CfpController@modifier_rcs')->name('enregistrer_modification_rcs_cfp');
+
 Route::post('/enregistrer_modification_slogan_cfp/{id}','CfpController@modifier_slogan')->name('enregistrer_modification_slogan_cfp');
 Route::post('/enregistrer_modification_site_cfp/{id}','CfpController@modifier_site')->name('enregistrer_modification_site_cfp');
 

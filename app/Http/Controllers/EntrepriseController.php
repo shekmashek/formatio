@@ -299,7 +299,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set email_etp = ? where id = ?', [$request->email,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
     public function modification_nif_entreprise($id){
@@ -313,7 +313,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set nif = ? where id = ?', [$request->nif,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
     public function modification_telephone_entreprise($id){
@@ -327,7 +327,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set telephone_etp = ? where id = ?', [$request->telephone,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
     public function modification_stat_entreprise($id){
@@ -341,7 +341,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set stat = ? where id = ?', [$request->stat,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
     public function modification_rcs_entreprise($id){
@@ -355,7 +355,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set rcs = ? where id = ?', [$request->rcs,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
 
@@ -393,7 +393,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set cif = ? where id = ?', [$request->cif,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
     public function modification_adresse_entreprise($id){
@@ -406,7 +406,7 @@ class EntrepriseController extends Controller
             DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ?
                where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
 
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
 
 
     }
@@ -421,7 +421,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set site_etp = ? where id = ?', [$request->site_etp,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
     public function modification_nom_etp($id){
@@ -435,7 +435,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set nom_etp = ? where id = ?', [$request->nom_etp,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
     public function modification_logo($id){
@@ -456,7 +456,7 @@ class EntrepriseController extends Controller
            }
            else{
             DB::update('update entreprises set logo  = ? where id = ?', [$input,$id]);
-            return redirect()->route('profile_entreprise',[$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
 }
