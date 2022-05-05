@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody id="tbody">
-            @forelse ($emps as $v)
+            @forelse ($referents as $v)
                 <tr>
                     <td>
                         @if($v->photos == null)
@@ -33,13 +33,13 @@
                             <p class="randomColor text-center"
                                 style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;">
                                 <span class=""
-                                    style="position:relative; top: .9rem;"><b>{{$v->nom_stagiaire}}{{$v->prenom_stagiaire}}</b></span>
+                                    style="position:relative; top: .9rem;"><b>{{$v->nom_resp}}{{$v->prenom_resp}}</b></span>
                             </p>
                         </center>
                         @else
-                        <a href="{{asset('images/stagiaires/'.$v->photos)}}"><img
+                        <a href="{{asset('images/responsables/'.$v->photos)}}"><img
                                 title="clicker pour voir l'image"
-                                src="{{asset('images/stagiaires/'.$v->photos)}}"
+                                src="{{asset('images/responsables/'.$v->photos)}}"
                                 style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                         {{-- <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50"
                             height="50">
@@ -47,11 +47,11 @@
                         @endif
                     </td>
                     <td>{{ $v->matricule }}</td>
-                    <td>{{ $v->nom_stagiaire }}</td>
-                    <td>{{ $v->prenom_stagiaire }}</td>
-                    <td>{{ $v->fonction_stagiaire }}</td>
-                    <td>{{ $v->mail_stagiaire }}</td>
-                    <td>{{ $v->telephone_stagiaire }}</td>
+                    <td>{{ $v->nom_resp }}</td>
+                    <td>{{ $v->prenom_resp }}</td>
+                    <td>{{ $v->fonction_resp }}</td>
+                    <td>{{ $v->email_resp }}</td>
+                    <td>{{ $v->telephone_resp }}</td>
                     
                 </tr>
             @empty

@@ -17,13 +17,13 @@
                     <div class="col-md-8 mb-3">
                         <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                             <li class="nav-item ms-5">
-                                <a href="#" class="btn_next" id="employé" data-bs-toggle="tab" data-bs-target="#tab-employé"
+                                <a href="#" class="btn_next referentClass" id="employé" data-bs-toggle="tab" data-bs-target="#tab-employé"
                                     type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
                                     Référents
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="btn_next" id="referent" data-bs-toggle="tab"
+                                <a href="#" class="btn_next employeClass" id="referent" data-bs-toggle="tab"
                                     data-bs-target="#tab-employe" type="button" role="tab" aria-controls="tab-referent"
                                     aria-selected="true">
                                     Employés
@@ -37,14 +37,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="btn_next" id="manager" data-bs-toggle="tab" data-bs-target="#tab-manager"
+                                <a href="#" class="btn_next chefClass" id="manager" data-bs-toggle="tab" data-bs-target="#tab-manager"
                                     type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
                                     Chef de département
                                 </a>
                             </li>
                         </ul>
                     </div>
-    
                     <div class="col-md">
                         <div class="">
                             <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
@@ -76,7 +75,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="dynamic_rowR">
                                         @for($i = 0; $i < count($referent); $i++) <tr class="text-center content_table">
                                             <td>
                                                 @if($referent[$i]->photos == null)
@@ -614,6 +613,8 @@
     </div>
 </div>
 
+
+{{--filter employes--}}
 <div class="filtrer mt-3 testFilter">
     <div class="row">
         <div class="row">
@@ -628,18 +629,8 @@
         {{-- @canany(['isReferent', 'isCFP']) --}}
         <div class="col-12 pe-3">
             <div class="row mb-3 p-2 pt-0">
-                    <form action="/employes/filtre/query" method="post">
-                        @csrf
-                        
-                        <select name="test" id="test" class="form-control form-control-sm" style="width: 300px">
-                            <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
-                            @foreach ($stagiaires as $stg)
-                                <option value="{{ $stg->id }}">{{ $stg->fonction_stagiaire }}</option> 
-                            @endforeach
-                        </select>
-                        <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
-                    </form>
-                    <p>
+                    
+                    {{-- <p>
                         <div class="row">
                             <div class="col-md-11">
                                 <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -667,8 +658,152 @@
                                 <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-sm mb-2" placeholder="Entrez un rôle ...">
                             </form>
                         </div>
+                      </div> --}}
+
+                      <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                              Référents
+                            </button>
+                          </h2>
+                          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <form action="/referents/filtre/query" method="post">
+                                    @csrf
+                                    
+                                    <select name="testReferent" id="testReferent" class="form-control form-control-sm" style="width: 265px">
+                                        <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
+                                        @foreach ($referent as $rf)
+                                            <option value="{{ $rf->id }}">{{ $rf->fonction_resp }}</option> 
+                                        @endforeach
+                                    </select>
+                                    <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
+                                </form>
+                                <hr>
+                                <form action="/referents/filtre/query/name" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="nameReferent" id="nameReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                </form>
+                                <form action="/referents/filtre/query/matricule" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="matriculeReferent" id="matriculeReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                </form>
+                                <form action="/referents/filtre/query/role" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="roleReferent" id="roleReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                              Employés
+                            </button>
+                          </h2>
+                          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <form action="/employes/filtre/query" method="post">
+                                    @csrf
+                                    
+                                    <select name="test" id="test" class="form-control form-control-sm" style="width: 265px">
+                                        <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
+                                        @foreach ($stagiaires as $stg)
+                                            <option value="{{ $stg->id }}">{{ $stg->fonction_stagiaire }}</option> 
+                                        @endforeach
+                                    </select>
+                                    <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
+                                </form>
+                                <hr>
+                                <form action="/employes/filtre/query/name" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                </form>
+                                <form action="/employes/filtre/query/matricule" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                </form>
+                                <form action="/employes/filtre/query/role" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                              Formateur interne
+                            </button>
+                          </h2>
+                          <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                {{-- <form action="/employes/filtre/query" method="post">
+                                    @csrf
+                                    
+                                    <select name="test" id="test" class="form-control form-control-sm" style="width: 265px">
+                                        <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
+                                        @foreach ($stagiaires as $stg)
+                                            <option value="{{ $stg->id }}">{{ $stg->fonction_stagiaire }}</option> 
+                                        @endforeach
+                                    </select>
+                                    <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
+                                </form>
+                                <hr>
+                                <form action="/employes/filtre/query/name" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                </form>
+                                <form action="/employes/filtre/query/matricule" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                </form>
+                                <form action="/employes/filtre/query/role" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                </form> --}}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingFour">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Chef de département
+                              </button>
+                            </h2>
+                            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <form action="/chefs/filtre/query" method="post">
+                                        @csrf
+                                        
+                                        <select name="testChef" id="testChef" class="form-control form-control-sm" style="width: 265px">
+                                            <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
+                                            @foreach ($chef as $ch)
+                                                <option value="{{ $ch->id }}">{{ $ch->fonction_chef }}</option> 
+                                            @endforeach
+                                        </select>
+                                        <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
+                                    </form>
+                                    <hr>
+                                    <form action="/employes/filtre/query/name" method="post" >
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                    </form>
+                                    <form action="/employes/filtre/query/matricule" method="post">
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                    </form>
+                                    <form action="/employes/filtre/query/role" method="post">
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                    </form>
+                                </div>
+                            </div>
+                          </div>
                       </div>
-                    <a style="color: blue; margin-top: 10px;" href="{{ route('employes') }}"><i class="fa-solid fa-arrow-rotate-right"></i> Actualiser</a>
+
+                    {{-- <a style="color: blue; margin-top: 10px;" href="{{ route('employes') }}"><i class="fa-solid fa-arrow-rotate-right"></i> Actualiser</a> --}}
             </div>
         </div>
     </div>
@@ -992,4 +1127,140 @@
     });
 </script>
 
+{{--filtre referent name--}}
+    <script type="text/javascript">
+        $('body').on('keyup','#nameReferent',function(){
+            $('#matriculeReferent').val('');
+            $('#roleReferent').val('');
+
+            var nameReferent = $(this).val();
+            console.log(nameReferent)
+
+            $.ajax({
+                method: 'GET',
+                url: '{{ route("referent.filter.name") }}',
+                dataType: 'json',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    nameReferent: nameReferent,
+                },
+                success: function (res) { 
+                    var tableRow ='';
+                            
+                    $('#dynamic_rowR').html('');
+
+                    $.each(res, function (index, value) { 
+
+                        tableRow += '<tr class="text-center content_table">';
+                        tableRow +='<td><img src="{{asset("images/responsables/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                        tableRow = tableRow.replace(":?",value.photos);
+                        tableRow +=     
+                            '</td><td>'+value.matricule+
+                            '</td><td>'+value.nom_resp+
+                            '</td><td>'+value.prenom_resp+
+                            '</td><td>'+value.fonction_resp+
+                            '</td><td>'+value.email_resp+
+                            '</td><td>'+value.telephone_resp+
+                            '</td><td>'+value.role_name+
+                            '</td><tr>';
+                        console.log(tableRow);
+                    });
+                    $('#dynamic_rowR').append(tableRow);
+                    
+                }
+                
+            });
+        });
+    </script>
+
+    {{--filtre referent matricule--}}
+    <script type="text/javascript">
+        $('body').on('keyup','#matriculeReferent',function(){
+            $('#nameReferent').val('');
+            $('#roleReferent').val('');
+
+            var matriculeReferent = $(this).val();
+            console.log(matriculeReferent)
+
+            $.ajax({
+                method: 'GET',
+                url: '{{ route("referent.filter.matricule") }}',
+                dataType: 'json',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    matriculeReferent: matriculeReferent,
+                },
+                success: function (res) { 
+                    var tableRow ='';
+                            
+                    $('#dynamic_rowR').html('');
+
+                    $.each(res, function (index, value) { 
+
+                        tableRow += '<tr class="text-center content_table">';
+                        tableRow +='<td><img src="{{asset("images/responsables/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                        tableRow = tableRow.replace(":?",value.photos);
+                        tableRow +=     
+                            '</td><td>'+value.matricule+
+                            '</td><td>'+value.nom_resp+
+                            '</td><td>'+value.prenom_resp+
+                            '</td><td>'+value.fonction_resp+
+                            '</td><td>'+value.email_resp+
+                            '</td><td>'+value.telephone_resp+
+                            '</td><td>'+value.role_name+
+                            '</td><tr>';
+                        console.log(tableRow);
+                    });
+                    $('#dynamic_rowR').append(tableRow);
+                    
+                }
+                
+            });
+        });
+    </script>
+
+<script type="text/javascript">
+    $('body').on('keyup','#roleReferent',function(){
+        $('#nameReferent').val('');
+        $('#matriculeReferent').val('');
+
+        var roleReferent = $(this).val();
+        console.log(roleReferent)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("referent.filter.role") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                roleReferent: roleReferent,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_rowR').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/responsables/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.matricule+
+                        '</td><td>'+value.nom_resp+
+                        '</td><td>'+value.prenom_resp+
+                        '</td><td>'+value.fonction_resp+
+                        '</td><td>'+value.email_resp+
+                        '</td><td>'+value.telephone_resp+
+                        '</td><td>'+value.role_name+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#dynamic_rowR').append(tableRow);
+                
+            }
+            
+        });
+    });
+</script>
 @endsection

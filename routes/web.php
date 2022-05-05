@@ -1220,5 +1220,15 @@ Route::post('/employes/filtre/query', 'DepartementController@filtre')->name('sta
 Route::get('/employes/filtre/query/name', 'DepartementController@filtreName')->name('stagiaire.filter.name');
 Route::get('/employes/filtre/query/matricule', 'DepartementController@filtreMatricule')->name('stagiaire.filter.matricule');
 Route::get('/employes/filtre/query/role', 'DepartementController@filtreRole')->name('stagiaire.filter.role');
+
 //filtre referents
-Route::get('/referents/filtre/query', 'TestController@filtrereferent')->name('referent.filter');
+Route::post('/referents/filtre/query', 'DepartementController@filtreReferent')->name('referent.filter');
+Route::get('/referents/filtre/query/name', 'DepartementController@filtreReferentName')->name('referent.filter.name');
+Route::get('/referents/filtre/query/matricule', 'DepartementController@filtreReferentMatricule')->name('referent.filter.matricule');
+Route::get('/referents/filtre/query/role', 'DepartementController@filtreReferentRole')->name('referent.filter.role');
+
+//filtre chef departement
+Route::post('/chefs/filtre/query', 'DepartementController@filtreChef')->name('chef.filter');
+Route::get('/chefs/filtre/query/name', 'DepartementController@filtreChefName')->name('chef.filter.name');
+Route::get('/chefs/filtre/query/matricule', 'DepartementController@filtreChefMatricule')->name('chef.filter.matricule');
+Route::get('/chefs/filtre/query/role', 'DepartementController@filtreChefRole')->name('chef.filter.role');

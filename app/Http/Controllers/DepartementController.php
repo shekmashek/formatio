@@ -107,7 +107,7 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
-    // filtre fonction
+    // filtre Employes
     public function filtre(Request $request){
 
         $user_id = Auth::user()->id;
@@ -117,7 +117,6 @@ class DepartementController extends Controller
         $emps = DB::table("stagiaires")
                 ->select("*")
                 ->where('entreprise_id', '=', $etp_id)
-                // ->where('fonction_stagiaire', 'like', '%'.$request->get('test').'%')
                 ->where('stagiaires.id',$request->test)
                 ->get();
 
@@ -125,7 +124,7 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.filtre', compact('emps'));
     }
     
-    // filtre name
+    // filtre employes name
     public function filtreName(Request $request){
 
         $user_id = Auth::user()->id;
@@ -150,7 +149,7 @@ class DepartementController extends Controller
         return json_encode($emps);   
     }
 
-    // filtre matricule
+    // filtre employes matricule
     public function filtreMatricule(Request $request){
 
         $user_id = Auth::user()->id;
@@ -173,7 +172,7 @@ class DepartementController extends Controller
         return json_encode($emps);    
     }
 
-    // filtre role
+    // filtre employes role
     public function filtreRole(Request $request){
 
         $user_id = Auth::user()->id;
@@ -194,6 +193,177 @@ class DepartementController extends Controller
 
         // dd($emps);   
         return json_encode($emps);    
+    }
+
+
+    //filtre referent
+    public function filtreReferent(Request $request){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $referents = DB::table("responsables")
+                ->select("*")
+                ->where('entreprise_id', '=', $etp_id)
+                ->where('responsables.id',$request->testReferent)
+                ->get();  
+        // dd($referents);    
+        return view('admin.chefDepartement.filtreReferent', compact('referents'));
+    }
+
+    //filtre referent name
+    public function filtreReferentName(Request $request){
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $referents = DB::table('users')
+                ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
+                ->join('responsables', 'responsables.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
+                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name', 
+                'matricule', 
+                'nom_resp', 'prenom_resp',
+                    'role_id', 'email_resp', 'photos',
+                    'responsables.user_id', 'fonction_resp')
+                ->where('responsables.entreprise_id', '=', $etp_id)
+                ->where('nom_resp', 'like', '%'.$request->get('nameReferent').'%')
+                // ->orWhere('matricule', 'like', '%'.$request->get('name').'%')
+                ->get();
+
+        // dd($referents);
+        return json_encode($referents);
+    }
+
+    //filtre referent matricule
+    public function filtreReferentMatricule(Request $request){
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $referents = DB::table('users')
+                ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
+                ->join('responsables', 'responsables.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
+                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name', 
+                'matricule', 
+                'nom_resp', 'prenom_resp',
+                    'role_id', 'email_resp', 'photos',
+                    'responsables.user_id', 'fonction_resp', 
+                    'users.name', 'users.telephone', 'users.email')
+                ->where('responsables.entreprise_id', '=', $etp_id)
+                ->where('matricule', 'like', '%'.$request->get('matriculeReferent').'%')
+                ->get();
+
+        // dd($referents);
+        return json_encode($referents);
+    }
+
+    //filtre referent role
+    public function filtreReferentRole(Request $request){
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $referents = DB::table('users')
+                ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
+                ->join('responsables', 'responsables.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
+                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name', 
+                'matricule', 
+                'nom_resp', 'prenom_resp',
+                    'role_id', 'email_resp', 'photos',
+                    'responsables.user_id', 'fonction_resp', 
+                    'users.name', 'users.telephone', 'users.email')
+                ->where('responsables.entreprise_id', '=', $etp_id)
+                ->where('role_name', 'like', '%'.$request->get('roleReferent').'%')
+                ->get();
+
+        // dd($referents);
+        return json_encode($referents);
+    }
+
+    //filtre chef
+    public function filtreChef(Request $request){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $chefs = DB::table("chef_departements")
+                ->select("*")
+                ->where('entreprise_id', '=', $etp_id)
+                ->where('chef_departements.id',$request->testChef)
+                ->get();  
+        // dd($chefs);    
+        return view('admin.chefDepartement.filtreChef', compact('chefs'));
+    }
+
+    //filtre chef name
+    public function filtreChefName(Request $request){
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $chefs = DB::table('users')
+                ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
+                ->join('chef_departements', 'chef_departements.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
+                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name', 
+                    'chef_departements.id', 'nom_chef', 'prenom_chef',
+                    'role_id', 'mail_chef', 'photos',
+                    'chef_departements.user_id', 'fonction_chef')
+                ->where('chef_departements.entreprise_id', '=', $etp_id)
+                ->where('nom_chef', 'like', '%'.$request->get('nameChef').'%')
+                ->get();
+
+        // dd($chefs);
+        return json_encode($chefs);
+    }
+
+    //filtre chef matricule
+    public function filtreChefMatricule(Request $request){
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $chefs = DB::table('users')
+                ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
+                ->join('chef_departements', 'chef_departements.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
+                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name', 
+                    'chef_departements.id', 'nom_chef', 'prenom_chef',
+                    'role_id', 'mail_chef', 'photos',
+                    'chef_departements.user_id', 'fonction_chef')
+                ->where('chef_departements.entreprise_id', '=', $etp_id)
+                ->where('chef_departements.id', 'like', '%'.$request->get('matriculeChef').'%')
+                ->get();
+
+        // dd($chefs);
+        return json_encode($chefs);
+    }
+
+    //filtre chef matricule
+    public function filtreChefRole(Request $request){
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $chefs = DB::table('users')
+                ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
+                ->join('chef_departements', 'chef_departements.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
+                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name', 
+                    'chef_departements.id', 'nom_chef', 'prenom_chef',
+                    'role_id', 'mail_chef', 'photos',
+                    'chef_departements.user_id', 'fonction_chef')
+                ->where('chef_departements.entreprise_id', '=', $etp_id)
+                ->where('role_name', 'like', '%'.$request->get('roleChef').'%')
+                ->get();
+
+        // dd($chefs);
+        return json_encode($chefs);
     }
 
     /*   public function liste()
