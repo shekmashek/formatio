@@ -122,7 +122,7 @@
                                 <td>{{$fact->invoice_date}}</td>
                                 <td>{{$fact->due_date}}</td>
                                 @if($fact->status_facture == "Non payé")
-                                    <td><span style="background-color: red;padding:5px;color:white">{{$fact->status_facture}}</span></td>
+                                    <td><span style="background-color: red;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                 @endif
                             </tr>
                             @php $i += 1; @endphp
@@ -151,22 +151,24 @@
                       <tr>
                         <th scope="col">Date d'inscription</th>
                         <th scope="col">Type d'abonnement</th>
-                        <th scope="col">Catégorie</th>
+                        <th scope="col">Prochaine facture</th>
                         <th scope="col">Activité</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-
+                        @php $i = 0; @endphp
                         @foreach ($facture as $fact )
+
                             <tr>
                                 <td>{{$fact->invoice_date}}</td>
-                                <td>{{$fact->nom_type}}</td>
-                                <td>{{$fact->categorie}}</td>
+
+                                <td>{{$fact->nom_type}}&nbsp;,&nbsp;{{$fact->categorie}}&nbsp;,&nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
+                                <td>{{$facture_suivant[$i]}}</td>
                                 @if($fact->activite == 1)
-                                    <td><span style="background-color: green;padding:5px;color:white"> En cours </span></td>
+                                    <td><span style="background-color: green;padding:10px;color:white;border-radius:10px"> En cours </span></td>
                                 @else
-                                    <td><span style="background-color: red;padding:5px;color:white"> Terminé </span></td>
+                                    <td><span style="background-color: red;padding:10px;color:white;border-radius:10px"> Terminé </span></td>
                                 @endif
                                 <td>
                                     <div class="dropdown">
@@ -200,6 +202,9 @@
                                       </div>
                                 </td>
                             </tr>
+                            @php
+                                $i+=1;
+                            @endphp
                         @endforeach
 
                     </tbody>

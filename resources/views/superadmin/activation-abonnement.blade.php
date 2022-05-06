@@ -164,7 +164,8 @@
         tmpDate.setDate(tmpDate.getDate() + noOfDays);
         return tmpDate;
     }
-    $( ".activer" ).on( "change", function() {
+    $(".activer" ).on( "change", function() {
+        alert('ok');
         var statut,idAbonnement;
         if($( this ).prop('checked')){
             statut = "Activé";
@@ -176,37 +177,37 @@
         }
 
 
-        $.ajax({
-            type: "GET",
-            url: "{{route('activer_compte')}}",
-            data:{Id:idAbonnement,Statut:statut},
-            dataType: "html",
-            success:function(response){
-                var userData=JSON.parse(response);
-                for (var $i = 0; $i < userData.length; $i++){
-                    $('#span_statut').text(userData[$i].statut);
-                    if (userData[$i].statut == "Activé") {
-                        $('#label_statut_'+userData[$i].id).text(userData[$i].status);
-                        $('#statut_'+userData[$i].id).text('Désactivé');
-                    }
-                    else{
+        // $.ajax({
+        //     type: "GET",
+        //     url: "{{route('activer_compte')}}",
+        //     data:{Id:idAbonnement,Statut:statut},
+        //     dataType: "html",
+        //     success:function(response){
+        //         var userData=JSON.parse(response);
+        //         for (var $i = 0; $i < userData.length; $i++){
+        //             $('#span_statut').text(userData[$i].statut);
+        //             if (userData[$i].statut == "Activé") {
+        //                 $('#label_statut_'+userData[$i].id).text(userData[$i].status);
+        //                 $('#statut_'+userData[$i].id).text('Désactivé');
+        //             }
+        //             else{
 
-                        $('#label_statut_'+userData[$i].id).text(userData[$i].status);
+        //                 $('#label_statut_'+userData[$i].id).text(userData[$i].status);
 
-                        $('#statut_'+userData[$i].id).text('Activé');
-                    }
-                    $('#debut_'+userData[$i].id).text(userData[$i].date_debut);
-                    $('#fin_'+userData[$i].id).text(userData[$i].date_fin);
+        //                 $('#statut_'+userData[$i].id).text('Activé');
+        //             }
+        //             $('#debut_'+userData[$i].id).text(userData[$i].date_debut);
+        //             $('#fin_'+userData[$i].id).text(userData[$i].date_fin);
 
 
-                }
-            },
-            error:function(error){
-                console.log(error)
-            }
-        });
+        //         }
+        //     },
+        //     error:function(error){
+        //         console.log(error)
+        //     }
+        // });
     });
-    $( "#client_etp" ).on( "click", function() {
+    $("#client_etp" ).on( "click", function() {
         //on supprime le contenu du tableau
         $('.entreprise').empty();
 
@@ -217,7 +218,7 @@
             success:function(response){
                 var html = '';
                 var client=JSON.parse(response);
-                console.log(client);
+
                 for (var i = 0; i < client.length; i++) {
                     // console.log(client[i].nom_entreprise);
                     html += '<tr>';
@@ -229,11 +230,14 @@
                     html += '<td>'+client[i].status+'</td>';
                     html += '<td><div class="form-check form-switch"><input class="form-check-input activer" data-id='+client[i].abonnement_id+' type="checkbox" role="switch"/> <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_'+client[i].abonnement_id+'>Activer</label></div></td>';
                     html += '</tr>';
-                    console.log("contenu html:",html);
+
                     $('.entreprise').append(html);
                     html = '';
                 }
+                /* Remplacer icone down to up*/
 
+                // el.removeClass('fa icon_trie fa-arrow-down');
+                // el.addClass('fa icon_trie fa-arrow-up');
 
             },
             error:function(error){
