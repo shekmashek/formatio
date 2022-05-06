@@ -953,6 +953,89 @@
             <div class="apprendre mt-3">
                 <div class="row">
                     <div class="col">
+                    <p class="m-0 titre_apprendre"> Apprendre</p>
+                    </div>
+                    <div class="col text-end close">
+                        <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
+                        <i class="bx bx-x" role="button"></i>
+                    </div>
+                    <hr class="mt-2">
+                    @can('isAdmin')
+                    <div class="tutorielApprendreAdmin">Admin</div>
+                    @endcan
+                    @can('isCFP')
+                    <div class="tutorielApprendreCfp">
+                        <h5>Créer un nouveau projet de formation</h5>
+                        <p class="m-0 p-1">
+                            <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis suivant :</span>
+                        </p>
+                        <div class="list-group list-group-flush" id="accordion">
+                            <li class="list-group-item align-items-start ">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprCat" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprCat">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">1. Avoir un catalogue de formation</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprCat" class="collapse p-1">
+                                    <hr>
+                                    <a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue de formation</span></a>
+                                </div>
+                            </li>
+                            <li class="list-group-item  align-items-start">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprForm" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprFormateur">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">2. Ajouter des formateurs</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprFormateur" class="collapse  p-1">
+                                    <hr>
+                                    <a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item align-items-start listeApprendre">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprInter" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprInter">
+                                    <div class="ms-2 me-auto">
+                                        <div class=" text-sm">3. Collaborer avec les entreprises qui ont des projets en commun avec vous </div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprInter" class="collapse">
+                                    <hr>
+                                    <a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une entreprise</span></a>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="tutorielApprendre"></div>
+                    @endcan
+                    @can('isStagiaire')
+                    <div class="tutorielApprendreStagiaire">Stagiaire</div>
+                    @endcan
+
+                    @can('isReferent')
+                    <div class="tutorielApprendreReferent">Referent</div>
+                    @endcan
+
+                    @can('isManager')
+                    <div class="tutorielApprendreManager">Manager</div>
+                    @endcan
+
+                    @can('isFormateur')
+                    <div class="tutorielApprendreFormateur">Formateur</div>
+                    @endcan
+                        <!-- <h6 class="title_apprendre"><u>Annuaire</u></h6>
+                        <h6 class="title_apprendre"><u>Agenda</u></h6> -->
+
+                </div>
+            </div>
+
+        </div>
+            {{-- <div class="apprendre mt-3">
+                <div class="row">
+                    <div class="col">
                         <p class="m-0 titre_apprendre">Apprendre</p>
                     </div>
                     <div class="col text-end close">
@@ -1013,7 +1096,7 @@
                         <h6 class="title_apprendre"><u>Agenda</u></h6> -->
 
                 </div>
-            </div>
+            </div> --}}
 
         </div>
         {{-- footer --}}
