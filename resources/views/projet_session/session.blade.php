@@ -41,7 +41,6 @@
     }
 
     * {
-        font-family: 'Open Sans';
         font-size: .9rem;
     }
 
@@ -62,7 +61,6 @@
     color: rgb(3, 0, 0); */
         padding: 6px 8px;
         border-radius: 4px 4px 0 0;
-        font-family: 'Open Sans';
     }
 
     .numero_session {

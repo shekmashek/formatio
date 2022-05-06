@@ -1014,6 +1014,7 @@ Route::get('delete_role_use','RoleController@delete_role_user')->name('delete_ro
 Route::post('insert_session','GroupeController@insert_session')->name('insert_session');
 //Route impression detail_calendrier
 Route::get('detail_printpdf/{id}','DetailController@detail_printpdf')->name('detail_printpdf');
+Route::get('fiche_technique_pdf/{id}','SessionController@fiche_technique_pdf')->name('fiche_technique_pdf');
 
 //=================== route pour moderne,fléxible et sécurisé etc
 Route::get('/moderne', function () {
