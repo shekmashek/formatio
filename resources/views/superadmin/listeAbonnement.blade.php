@@ -117,8 +117,8 @@
 
                                 <td>{{$fact->nom_type}}</td>
                                 <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
-                                <td>{{number_format($tva[$i], 0, ',', '.')}} Ar</td>
-                                <td>{{number_format($net_ttc[$i], 0, ',', '.')}} Ar</td>
+                                {{-- <td>{{number_format($tva[$i], 0, ',', '.')}} Ar</td>
+                                <td>{{number_format($net_ttc[$i], 0, ',', '.')}} Ar</td> --}}
                                 <td>{{$fact->invoice_date}}</td>
                                 <td>{{$fact->due_date}}</td>
                                 @if($fact->status_facture == "Non payé")

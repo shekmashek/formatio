@@ -63,11 +63,39 @@
         </div>
     </div>
 </nav>
+            {{-- <form class="navbar-form navbar-left" role="search">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
+                        Tout <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{route('utilisateur_cfp',2)}}">5</a></li>
+                        <li><a href="{{route('utilisateur_cfp',10)}}">10</a></li>
+                        <li><a href="{{route('utilisateur_cfp',25)}}">25</a></li>
+                        <li><a href="{{route('utilisateur_cfp',50)}}">50</a></li>
+                        <li><a href="{{route('utilisateur_cfp',100)}}">100</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{route('utilisateur_cfp')}}">Tout</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
+                    Rechercher par entreprise <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {{-- @foreach($entreprise as $etp)
+                            <li><a href="{{route('utilisateur.show',$etp->id)}}">{{$etp->nom_etp}}</a></li>
+                        @endforeach --}}
+                        {{-- <li class="divider"></li>
+                        <li><a href="{{route('utilisateur_cfp')}}">Tout</a></li>
+                    </ul>
+                </div>
+            </form> --}} 
 
-{{-- <form action="{{ route('utilisateur_new_cfp') }}">
-    @csrf
-    <p style="display: flex; justify-content:end;">
-        <button type="submit" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Organisme</button>
+            {{-- <form action="{{ route('utilisateur_new_cfp') }}">
+                @csrf
+                <p style="display: flex; justify-content:end;">
+                    <button type="submit" class="btn btn_enregistrer mx-1">&nbsp; Nouveau Organisme</button>
         &nbsp;
     </p>
 </form> --}}
@@ -87,12 +115,12 @@
             <th> Action </th>
         </thead>
         <tbody>
-            @foreach ($responsables as $resp)
+            @foreach ($datas as $resp)
             <tr>
                 {{-- <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_du_responsable',$resp->id) }}"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$resp->logo)}}" style="width:120px;hei" cellspacing="0"> </a></td> --}}
 
-                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href=""> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$resp->logo_cfp)}}" style="width:120px;hei" cellspacing="0"> </a></td>
-                <td>{{ $resp->nom_cfp}}</td>
+                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href=""> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$resp->cfp->logo)}}" style="width:120px;hei" cellspacing="0"> </a></td>
+                <td>{{ $resp->cfp->nom}}</td>
                 <td> <a class="dropdown-item" href=""><span>{{ $resp->nom_resp_cfp}}</span><span class="ms-1">{{ $resp->prenom_resp_cfp}}</span>  </a></td>
                 <td>{{ $resp->email_resp_cfp}}</td>
                 <td>{{ $resp->telephone_resp_cfp}}</td>

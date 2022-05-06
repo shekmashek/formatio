@@ -737,6 +737,11 @@
                                             </a>
                                         </li>
                                         <li>
+                                            <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
+                                                <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Responsable
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a class="dropdown-item" href="{{route('nouveau_groupe',['type_formation'=>1])}}">
                                                 <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
                                             </a>

@@ -27,6 +27,7 @@ use App\taux_devises;
 use Illuminate\Support\Facades\Gate;
 use App\Models\FonctionGenerique;
 use App\cfp;
+use App\tva;
 use App\Devise;
 use App\chefDepartement;
 use App\formateur;
@@ -763,9 +764,7 @@ public function recherche_cfp(Request $request,$page = null)
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
             $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-
             $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
-            dd($data);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         }
@@ -1084,15 +1083,33 @@ public function recherche_cfp(Request $request,$page = null)
     }
     //taxe
     public function taxe(){
-        
-        return view('layouts.taxe');
+        // $tva=DB::select('select * from valeur_TVA ORDER BY id DESC LIMIT 1');
+        // $id=tva::value('id');
+        $tva=DB::select('select * from taxes where id =?',[1]);
+        // $tva=DB::select('select * from valeur_TVA  ');
+        // $taux=tva::findOrFail($request->id);
+    //     dd($taux);
+    //    dd($taux);
+        return view('layouts.taxe',compact('tva'));
     }
+    public function update_tva(Request $request)
+    {
+        // $tva=tva::where('id',$request->id)->update(['tva'=>$request->tva]);
+    DB::update('update taxes set pourcent=? where id=?',[$request->tva,$request->id]);
+    return back();
+    }
+    // public function delete_tva($id)
+    // {
+    //     DB::delete('delete from valeur_TVA where id = ?', [$id]);
+    //     return back();
+    
     //enregistrer taxe
-    public function taxe_enregistrer(Request $request)
-    {    
-        $inserer = DB::insert('insert into valeur_TVA (tva) value (?)', [$request->tva]);
-        return back();
-    }
+    // public function taxe_enregistrer(Request $request)
+    // {    
+    //     $inserer = DB::update('update taxes set pourcent=? where id=?', [$request->tva,1]);
+    //     return back();
+    // }
+   
     //devise
     public function getDevise()
     {
@@ -1102,15 +1119,27 @@ public function recherche_cfp(Request $request,$page = null)
     }
 
     public function devise(){
-       
-        
+    
         // $liste=DB::select('select * from devises ');
         // $devises=DB::select('select * from v_devise order by created_at Desc ');
         // $taux=DB::select('select * from taux_devises ');
         //       $dev = new Devise();
         // $devis_actuel =  $dev->getListDevise();
-      
-        return view('layouts.devis');
+        // $devise=DB::select('select * from devise ORDER BY id DESC LIMIT 1');
+        $devise=DB::select('select * from devise where id =?',[8]);
+
+        // $devise=DB::select('select * from devise  ');
+        return view('layouts.devis',compact('devise'));
+    }
+    public function update_devise(Request $request)
+    {
+        DB::update('update devise set devise=? where id=?',[$request->devise,$request->id]);
+        return back();
+    }
+    public function delete_devise($id)
+    {
+        DB::delete('delete devise from devise where id=?',[$id]);
+        return back();
     }
     // public function edit($id)
     // {
@@ -1168,7 +1197,7 @@ public function recherche_cfp(Request $request,$page = null)
                    
         //     }
         // }
-        $inserer = DB::insert('insert into devise (devise) value (?)', [$request->devis]);
+        $inserer = DB::update('update  devise set devise=? where  id=?', [$request->devis,8]);
 
         return back();
     }

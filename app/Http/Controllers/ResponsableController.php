@@ -332,13 +332,14 @@ class ResponsableController extends Controller
             $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
             $referent = entreprise::findOrFail($id);
              $entreprise_id=entreprise::where('id',$id)->value('id');
+            
+             $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$entreprise_id]);
+             
             $responsables=responsable::where('entreprise_id',$entreprise_id)->where('prioriter',0)->get();
          
-           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','referent','responsables'));
+           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','referent','responsables','abonnement'));
         }
     }
-
-
     public function show($id)
     {
         $liste = entreprise::orderBy("nom_etp")->get();

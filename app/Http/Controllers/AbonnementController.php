@@ -309,7 +309,7 @@ class AbonnementController extends Controller
 
                //liste facturation
             $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
-
+           
             //generation nouvelle facture chaque mois si l'utilisateur a choisi l'offre mensuel
             $max_id_facture = $this->abonnement_model->findMax('v_abonnement_facture','facture_id');
 
@@ -351,6 +351,7 @@ class AbonnementController extends Controller
                         $annee = strftime('%Y',strtotime($dernier_facture[0]->invoice_date));
                     }
                 }
+             
             }
 
             else{

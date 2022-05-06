@@ -17,6 +17,7 @@
         cursor:default;
     }
 </style>
+
 <div class="row">
     <div class="row mt-2">
 
@@ -231,6 +232,64 @@
             <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
         </div>
     </div> --}} 
+    <div class="container mt-3">
+        <div class="row ">
+            <div class="col-md-6">
+                <span style="font-size: 16px">Historiques d'Abonnement</span>
+                <table class="table">
+                    <thead style="font-size: 12px; color: #737373">
+                    <th>Date debut d'abonnement</th>
+                    <th>Date fin d'abonnement</th>
+                    <th>Numero Facture</th>
+                    <th>Status facture</th>
+                     <th>Type d'abonnement</th> 
+                    <th>Montant</th>
+                    <th>Categorie Paiement</th>
+                  
+                    </thead>
+                @foreach ($abonnement as $abn)
+                        
+                    <tbody style="font-size: 11px; color:  #545454""> 
+                    <tr>
+                        <td><span>{{$abn->date_debut}}</span></td>
+                        <td><span>{{$abn->date_fin}}</span></td>
+                        <td><span>{{$abn->num_facture}}</span></td>
+                        <td> {{$abn->status_facture}}</td>
+                        <td>{{$abn->nom_type}}</td> 
+                        <td>{{$abn->montant_facture}}</td>
+                        <td>{{$abn->categorie}}</td>
+                    </tr>
+                </tbody>
+                @endforeach
+                </table>
+            </div>
+         
+            <div class="col-md-6">
 
+            
+                <span style="font-size: 16px">Liste des responsables</span>
+                <table class="table">
+                    <thead style="font-size: 12px; color: #737373">
+                    <th>Responsables</th>
+                    <th>Telephone</th>
+                    <th>Email</th>
+                    <th>Date d'inscription</th>
+                    </thead>
+                @foreach ($responsables as $resp )
+                        
+                    <tbody style="font-size: 11px; color:  #545454"">
+                    <tr>
+                        <td><span>{{$resp->nom_resp_cfp}}</span><span class="ms-2">{{$resp->prenom_resp_cfp}}</span></td>
+                        <td>{{$resp->telephone_resp_cfp}}</td>
+                        <td>{{$resp->email_resp_cfp}}</td>
+                        <td>{{$resp->created_at}}</td>
+                    </tr>
+                </tbody>
+                @endforeach
+                </table>
+            </div>
+       
+    </div>
+    </div>
 
     @endsection

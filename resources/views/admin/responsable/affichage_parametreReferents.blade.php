@@ -180,7 +180,7 @@
 
 
         <div class="col-lg-6">
-            <div class="form-control" style="height: 418px;">
+            <div class="form-control" style="height: 330px;">
                 <p class="text-center">Coordonnées</p>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="mt-5">
                     {{-- <a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class=""> --}}
@@ -238,14 +238,44 @@
             </div>
         </div>
     </div> --}}
-    <div class="container">
-        <div class="row mt-5">
-            <div class="col-md-5">
+    <div class="container mt-4">
+        <div class="row ">
+            
+        <div class="col-md-6">
+            <span style="font-size: 16px">Historiques d'Abonnement</span>
+            <table class="table">
+                <thead style="font-size: 12px; color: #737373">
+                <th>Date debut d'abonnement</th>
+                <th>Date fin d'abonnement</th>
+                <th>Numero Facture</th>
+                <th>Status facture</th>
+                 <th>Type d'abonnement</th> 
+                <th>Montant</th>
+                <th>Categorie Paiement</th>
+                </thead>
+            @foreach ($abonnement as $abn)
+            <tbody style="font-size: 11px; color: #545454"> 
+                <tr>
+                    <td><span>{{$abn->date_debut}}</span></td>
+                    <td><span>{{$abn->date_fin}}</span></td>
+                    <td><span>{{$abn->num_facture}}</span></td>
+                    <td>{{$abn->status_facture}}</td>
+                    <td>{{$abn->nom_type}}</td> 
+                    <td>{{$abn->montant_facture}}</td>
+                    <td>{{$abn->categorie}}</td>
+                </tr>
+            </tbody>
+            @endforeach
+            </table>
+        </div>
+       
+        <div class="col-md-6">
 
             
-            <h4>Liste des responsables</h4>
+            
+            <span style="font-size: 16px">Liste des responsables</span>
             <table class="table">
-                <thead>
+                <thead style="font-size: 12px; color: #737373">
                 <th>Responsables</th>
                 <th>Telephone</th>
                 <th>Email</th>
@@ -253,7 +283,7 @@
                 </thead>
                 @foreach ($responsables as $resp )
                     
-                <tbody>
+                <tbody style="font-size: 11px; color:  #545454"">
                 <tr>
                     <td><span>{{$resp->nom_resp}}</span><span class="ms-2">{{$resp->prenom_resp}}</span></td>
                     <td>{{$resp->telephone_resp}}</td>
@@ -263,9 +293,6 @@
             </tbody>
                 @endforeach
             </table>
-        </div>
-        <div class="col-md-7">
-            <h4>Historiques d'Abonnement</h4>
         </div>
     </div>
     </div>

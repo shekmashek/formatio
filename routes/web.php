@@ -147,6 +147,7 @@ Route::resource('utilisateur','UtilisateurControlleur')->except([
 ]);
 Route::get('/show_stagiaire/{id?}','UtilisateurControlleur@show_stagiaire')->name('show_stagiaire');
 Route::get('/liste_utilisateur/{id?}','UtilisateurControlleur@index')->name('liste_utilisateur');
+// Route::get('/show_etp/{id?}','UtilisateurControlleur@show_etp')->name('show_etp');
 Route::get('/utilisateur_stagiaire/{id?}','UtilisateurControlleur@create')->name('utilisateur_stagiaire');
 Route::get('/utilisateur_formateur','UtilisateurControlleur@liste_formateur')->name('utilisateur_formateur');
 
@@ -154,7 +155,7 @@ Route::get('/utilisateur_admin','UtilisateurControlleur@admin')->name('utilisate
 Route::get('/utilisateur_new_admin','UtilisateurControlleur@new_admin')->name('utilisateur_new_admin');
 
 //route cfp
-Route::get('/utilisateur_cfp','UtilisateurControlleur@cfp')->name('utilisateur_cfp');
+Route::get('/utilisateur_cfp/{id?}','UtilisateurControlleur@cfp')->name('utilisateur_cfp');
 Route::get('/utilisateur_resp_cfp','UtilisateurControlleur@show_resp_cfp')->name('utilisateur_resp_cfp');
 Route::get('/update_resp_cfp/{id}','UtilisateurControlleur@update_resp_cfp')->name('update_resp_cfp');
 Route::get('/update_resp_etp/{id}','UtilisateurControlleur@update_resp_etp')->name('update_resp_etp');
@@ -1044,6 +1045,13 @@ Route::post('recherche_cfp','HomeController@recherche_cfp')->name('recherche_cfp
 
 //Route pour taxe dans interface super Admin
 Route::get('taxes','HomeController@taxe')->name('taxes');
+Route::post('update_tva','HomeController@update_tva')->name('update_tva');
+Route::get('delete_tva/{id}','HomeController@delete_tva')->name('delete_tva');
+Route::post('update_devise','HomeController@update_devise')->name('update_devise');
+Route::get('delete_devise/{id}','HomeController@delete_devise')->name('delete_devise');
+
+
+
 Route::get('devise','HomeController@devise')->name('devise');
 // Route::get('getDevise','HomeController@getDevise')->name('getDevise');
 Route::post('taxe_enregistrer','HomeController@taxe_enregistrer')->name('taxe_enregistrer');
