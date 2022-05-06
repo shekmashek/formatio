@@ -1,8 +1,8 @@
 <style>
-    .icon_plus {
+    /* .icon_plus {
         border: 2px solid whitesmoke;
         font-size: 0.5rem;
-    }
+    } */
 
     .nouveau_detail {
         background-color: #822164;
@@ -42,7 +42,7 @@
         text-align: center;
     }
 
-    .icon_plus {
+    /* .icon_plus {
         color: #b8368f;
         margin-top: -1rem;
         font-size: 3rem;
@@ -52,7 +52,7 @@
 
     .icon_plus:hover {
         cursor: pointer;
-    }
+    } */
 
     p {
         text-align: center !important;

@@ -37,7 +37,7 @@ class UtilisateurControlleur extends Controller
         $liste = entreprise::orderBy('nom_etp')->get();
         if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
         else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
-       
+
         return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
     }
 
@@ -346,8 +346,8 @@ class UtilisateurControlleur extends Controller
 
         $cfp = cfp::findOrFail($id);
         // dd($cfp);
-        
-        return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux','cfp'));
+
+        return redirect('affichage_parametre_cfp');
     }
     public function register_cfp(Request $request)
     {

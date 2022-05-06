@@ -624,7 +624,7 @@
                                     <i class='bx bx-plus-medical icon_creer'></i>Créer
                                 </a>
 
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
 
                                     <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
                                                 class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
@@ -725,7 +725,7 @@
                                         <i class='bx bx-plus-medical icon_creer'></i>Créer
 
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
                                         <li>
                                             <a class="dropdown-item" href="{{route('nouveau_module')}}">
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
