@@ -97,23 +97,23 @@
                                     <td class="th_color"> {{$listes->nom_of}} </td>
                                     <td class="th_color"> {{$listes->nom_type}},&nbsp;{{$listes->categorie}},&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td></td>
                                     <td class="th_color">  {{$listes->date_demande}} </td>
-                                    <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
-                                    <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
+                                    <td class="th_color"> <span id = "debut_of_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
+                                    <td class="th_color"><span id = "fin_of_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
 
                                     {{-- <td><span ">{{$fact->status_facture}}</span></td> --}}
 
                                     @if($listes->status == "En attente")
-                                        <td> <span style="background-color: orange;padding:10px;color:white;border-radius:10px" id = "label_statut_{{$listes->abonnement_id}}" > {{$listes->status}} </span> </td>
+                                        <td> <span style="background: orange;padding:10px;color:white;border-radius:10px" id = "label_statut_of_{{$listes->abonnement_id}}" > {{$listes->status}} </span> </td>
                                     @elseif ($listes->status == "Activé")
-                                        <td> <span style="background-color: green;padding:10px;color:white;border-radius:10px"  id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
+                                        <td> <span style="background: green;padding:10px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
                                     @else
-                                        <td>  <span style="background-color: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
+                                        <td>  <span style="background: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
                                     @endif
                                     <td>
                                         <!-- Default switch -->
                                         <div class="form-check form-switch">
                                             <input class="form-check-input activer_of" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
-                                            <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->abonnement_id}}">Activer</label>
+                                            <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_of_{{$listes->abonnement_id}}">Activer</label>
                                         </div>
                                     </td>
                                 </tr>
@@ -155,21 +155,21 @@
             success:function(response){
                 var userData=JSON.parse(response);
                 for (var $i = 0; $i < userData.length; $i++){
-                    $('#span_statut').text(userData[$i].statut);
-                    if (userData[$i].statut == "Activé") {
+                    $('#span_statut').text(userData[$i].status);
+                    if (userData[$i].status === "Activé") {
                         $('#label_statut_'+userData[$i].id).text(userData[$i].status);
                         $('#statut_'+userData[$i].id).text('Désactivé');
+                        // $('#label_statut_'+userData[$i].id).css("background","red");
+                        $('#label_statut_'+userData[$i].id).css("background","green");
                     }
                     else{
-
                         $('#label_statut_'+userData[$i].id).text(userData[$i].status);
-
                         $('#statut_'+userData[$i].id).text('Activé');
+                        // $('#label_statut_'+userData[$i].id).css("background","green");
+                        $('#label_statut_'+userData[$i].id).css("background","red");
                     }
                     $('#debut_'+userData[$i].id).text(userData[$i].date_debut);
                     $('#fin_'+userData[$i].id).text(userData[$i].date_fin);
-
-
                 }
             },
             error:function(error){
@@ -180,7 +180,7 @@
     /* activation compte pour of*/
     $(".activer_of" ).on( "change", function() {
         var statut,idAbonnement;
-        if($( this ).prop('checked')){
+        if($(this).prop('checked')){
             statut = "Activé";
             idAbonnement = $(this).data('id');
         }
@@ -191,25 +191,27 @@
 
         $.ajax({
             type: "GET",
-            url: "{{route('activer_compte')}}",
+            url: "{{route('activer_compte_of')}}",
             data:{Id:idAbonnement,Statut:statut},
             dataType: "html",
             success:function(response){
                 var userData=JSON.parse(response);
+                console.log(userData);
                 for (var $i = 0; $i < userData.length; $i++){
-                    $('#span_statut').text(userData[$i].statut);
-                    if (userData[$i].statut == "Activé") {
-                        $('#label_statut_'+userData[$i].id).text(userData[$i].status);
-                        $('#statut_'+userData[$i].id).text('Désactivé');
+                    $('#span_statut_of').text(userData[$i].statut);
+
+                    if (userData[$i].status === "Activé") {
+                        $('#label_statut_of_'+userData[$i].id).text(userData[$i].status);
+                        $('#statut_of_'+userData[$i].id).text('Désactivé');
+                        $('#label_statut_of_'+userData[$i].id).css("background","green");
                     }
                     else{
-
-                        $('#label_statut_'+userData[$i].id).text(userData[$i].status);
-
-                        $('#statut_'+userData[$i].id).text('Activé');
+                        $('#label_statut_of_'+userData[$i].id).text(userData[$i].status);
+                        $('#statut_of_'+userData[$i].id).text('Activé');
+                        $('#label_statut_of_'+userData[$i].id).css("background","red");
                     }
-                    $('#debut_'+userData[$i].id).text(userData[$i].date_debut);
-                    $('#fin_'+userData[$i].id).text(userData[$i].date_fin);
+                    $('#debut_of_'+userData[$i].id).text(userData[$i].date_debut);
+                    $('#fin_of_'+userData[$i].id).text(userData[$i].date_fin);
 
 
                 }

@@ -712,7 +712,10 @@ class AbonnementController extends Controller
             ->where('abonnement_cfps_id',$id)
             ->update(['statut' => 'Payé']);
 
-        $liste = abonnement::where('id', $id)->get();
+        $liste = abonnement_cfp::where('id', $id)->get();
+        // return response()->json([
+        //     'success' => $liste
+        // ]);
         return response()->json($liste);
 
     }
