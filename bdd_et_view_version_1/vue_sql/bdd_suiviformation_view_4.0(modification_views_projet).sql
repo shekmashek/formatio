@@ -385,41 +385,8 @@ create or replace view v_detail_session as
     JOIN domaines dom ON
         mf.domaine_id = dom.id
     join type_formations tf
-        on tf.id = p.type_formation_id
-    GROUP BY
-    d.id,
-    d.lieu,
-    d.h_debut,
-    d.h_fin,
-    d.date_detail,
-    d.formateur_id,
-    d.projet_id,
-    d.groupe_id,
-    d.cfp_id,
-    g.max_participant,
-    g.min_participant,
-    g.nom_groupe,
-    g.module_id,
-    g.date_debut,
-    g.date_fin,
-    g.status,
-    g.activiter,
-    mf.reference,
-    mf.nom_module,
-    mf.formation_id,
-    dom.id,
-    dom.nom_domaine,
-    mf.nom_formation,
-    f.photos,
-    f.nom_formateur,
-    f.prenom_formateur,
-    f.mail_formateur,
-    f.numero_formateur,
-    p.nom_projet,
-    c.nom,
-    p.type_formation_id,
-    tf.type_formation
-    ;
+        on tf.id = p.type_formation_id;
+    
 
 CREATE OR REPLACE VIEW v_participant_groupe AS
     SELECT

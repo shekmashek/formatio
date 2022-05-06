@@ -326,6 +326,9 @@ create table ressources(
   demandeur varchar(255) not null,
   groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES goupes(id) ON DELETE CASCADe
 );
+alter table ressources add column pris_en_charge VARCHAR(200);
+alter table ressources add column note text;
+
 
 create table frais_annexe_formation(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

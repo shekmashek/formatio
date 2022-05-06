@@ -27,6 +27,7 @@ use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
 use App\Models\getImageModel;
 use App\Presence;
+use PDF;
 use Exception;
 use Illuminate\Support\Facades\URL;
 
@@ -286,6 +287,8 @@ class SessionController extends Controller
     public function ajout_ressource(Request $request){
         $ressource = $request->ressource;
         $groupe_id = $request->groupe;
+        $pris_en_charge = $request->pris_en_charge;
+        $note = $request->note;
         $id_user = Auth::user()->id;
         $demandeur = '';
         if (Gate::allows('isCFP')){
@@ -297,7 +300,7 @@ class SessionController extends Controller
         if(Gate::allows('isReferent')){
             $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id= ?',[$id_user])[0]->nom_etp;
         }
-        DB::insert('insert into ressources(description,demandeur,groupe_id) values(?,?,?)',[$ressource,$demandeur,$groupe_id]);
+        DB::insert('insert into ressources(description,demandeur,groupe_id,pris_en_charge,note) values(?,?,?,?,?)',[$ressource,$demandeur,$groupe_id,$pris_en_charge,$note]);
         $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
         return response()->json($all_ressources);
     }
@@ -515,6 +518,24 @@ class SessionController extends Controller
             $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]);
             return response()->json(['status'=>'200','salles'=>$salles]);
         }
+    }
+
+    public function fiche_technique_pdf($id)
+    {   
+        try{
+            $info_projet = DB::select('select type_formation,nom_cfp,logo_cfp,nom_projet,groupe_id,nom_groupe,item_status_groupe,nom_formation,nom_module from v_groupe_projet_module where groupe_id = ?',[$id])[0];
+            $entreprise = DB::select('select nom_etp,logo from v_groupe_entreprise where groupe_id = ?',[$id])[0];
+            $formateurs = DB::select('select photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur',[$id]);
+            $lieux = DB::select('select lieu from details where groupe_id = ? group by lieu',[$id]);
+            $stagiaires = DB::select('select * from  v_stagiaire_groupe where groupe_id = ?',[$id]);
+            $date_groupe =  DB::select('select date_detail,h_debut,h_fin from details where groupe_id = ?',[$id]);
+            // return view('projet_session.fiche_technique_pdf' ,compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
+            $pdf = PDF::loadView('projet_session.fiche_technique_pdf', compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
+            return $pdf->download('fiche_technique.pdf');
+        }catch(Exception $e){
+            return back()->with('pdf_error','Impossible de télécharger le pdf.');
+        }
+        
     }
 
 }

@@ -112,3 +112,7 @@ creation table salle_formation_of => Modification_bdd(projet)
 creation vu v_presence_groupe => bdd_suiviformation_view_4.0(modification_views_projet)
 --------mai 5
 creation vu v_session_projet => bdd_suiviformation_view_4.0(modification_views_projet)
+
+--------mai 6
+alter table ressources add column pris_en_charge VARCHAR(200);
+alter table ressources add column note text;

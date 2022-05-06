@@ -157,7 +157,13 @@
                     class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
         </div>
-
+        @if (Session::has('pdf_error'))
+            <div class="alert alert-danger ms-4 me-4">
+                <ul>
+                    <li>{!! \Session::get('pdf_error') !!}</li>
+                </ul>
+            </div>
+        @endif
         <div class="row w-100">
 
             <div class="col-12 ps-5">
@@ -244,7 +250,7 @@
                                         <th> Date du projet</th>
 
                                         <th> Statut </th>
-                                            <th></th>
+                                        <th rowspan="2"></th>
                                         @if ($prj->type_formation_id == 1)
                                             <th></th>
                                         @endif
@@ -277,12 +283,13 @@
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
                                                                 {{ $pj->item_status_groupe }}</p>
+                                                                
                                                         </td>
+                                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                                         @if ($prj->type_formation_id == 1)
-                                                            <td>
-                                                                <a style="background: none"
-                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}"><button
-                                                                        class="btn rapport_finale">Rapport</button></a>
+                                                            <td class="p-0">
+                                                                <a class="mt-2"
+                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank"><button class="btn">Rapport</button></a>
                                                             </td>
                                                         @endif
                                                         @can('isCFP')
@@ -866,7 +873,7 @@
                                 <th> Date du projet</th>
                                 <th> Modalité</th>
                                 <th> Statut </th>
-                                <th></th>
+                                <th rowspan="2"></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
@@ -901,6 +908,7 @@
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
                                                 {{ $pj->item_status_groupe }}</p>
                                         </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td align="left">
                                             <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
                                             @php
@@ -935,6 +943,7 @@
                                 {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
                                 <th> Statut </th>
+                                <th></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
@@ -963,6 +972,7 @@
                                             <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -983,6 +993,7 @@
                                 <th> Centre de formation </th>
                                 <th> Formation </th>
                                 <th> Module</th>
+                                <th></th>
                                 <th>Evaluation </th>
                             </thead>
                             <tbody class="tbody_projet">
@@ -995,6 +1006,7 @@
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
                                             @if ($pj->statut_eval == 0)
                                                 <a class="btn btn_filtre filtre_appliquer"

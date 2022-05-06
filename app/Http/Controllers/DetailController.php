@@ -306,7 +306,7 @@ class DetailController extends Controller
     {
         // dd(request()->Id);
         $detail = DB::select('select * from v_detailmodule where detail_id = ' . $id);
-
+        
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);
