@@ -3,7 +3,7 @@
     <p class="text_header m-0 mt-1">Projets</p>
 @endsection
 
-@inject('groupe', 'App\Groupe')
+@inject('groupe', 'App\groupe')
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
@@ -902,15 +902,15 @@
                                                 {{ $pj->item_status_groupe }}</p>
                                         </td>
                                         <td align="left">
-                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color: 
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
                                             @php
                                                 echo $groupe->statut_presences($pj->groupe_id);
                                             @endphp
                                             "></i>&nbsp;Emargement</p>
-                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color: 
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
                                             @php
                                                 echo $groupe->statut_evaluation($pj->groupe_id);
-                                            @endphp    
+                                            @endphp
                                             "></i>&nbsp;Evaluation</p>
                                         </td>
                                     </tr>
