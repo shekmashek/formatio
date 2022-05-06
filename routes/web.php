@@ -759,6 +759,7 @@ Route::get('show_role','AbonnementController@show')->name('show_role');
 Route::get('tarif.create','AbonnementController@formulaire_tarif_categorie')->name('tarif.create');
 Route::get('ListeAbonnement', 'AbonnementController@ListeAbonnement')->name('ListeAbonnement');
 Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
+Route::get('activer_compte_gratuit/{id}','AbonnementController@activer_compte_gratuit')->name('activer_compte_gratuit');
 // //route abonnement page
 // Route::get('configuration_abonnement', function () {
 //     return view('superadmin.abonnement');

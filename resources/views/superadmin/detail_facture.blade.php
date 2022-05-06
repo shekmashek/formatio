@@ -144,14 +144,17 @@
                                         <h5>Facture N°: {{$facture[0]->num_facture}}</h5>
                                         <h6>Date de facturation: {{$facture[0]->invoice_date}}</h6>
                                         <h6>Date d'échéance: {{$facture[0]->due_date}}</h6>
-                                        <h6>Mode de paiement:
-                                        <select class="form-select-lg mb-3" name="" id="paiement">
-                                            <option value="">Choisissez un mode de paiement...</option>
-                                            @foreach ($mode_paiements as $paiement)
-                                                <option value="{{ $paiement->description }}">{{$paiement->description}}</option>
-                                            @endforeach
-                                        </select>
-                                        </h6>
+                                        @if ($facture[0]->nom_type != "Gratuit")
+                                            <h6>Mode de paiement:
+                                                <select class="form-select-lg mb-3" name="" id="paiement">
+                                                    <option value="">Choisissez un mode de paiement...</option>
+                                                    @foreach ($mode_paiements as $paiement)
+                                                        <option value="{{ $paiement->description }}">{{$paiement->description}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </h6>
+                                        @endif
+
                                         <div class="card detail_virement" style="width: 32rem;display: none">
                                             <div class="card-body">
                                                 <h5 class="card-title">Paiement par virement</h5>
