@@ -612,7 +612,7 @@
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
                         <div class="btn_creer me-2" id="text_apprendre">
                             <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
-                            <span class="text_apprendre" role="button" >Apprendre</span>
+                            <span class="text_apprendre" role="button">Apprendre</span>
                         </div>
 
                         <div class="">
@@ -953,7 +953,7 @@
             <div class="apprendre mt-3">
                 <div class="row">
                     <div class="col">
-                        <p class="m-0 titre_apprendre">Apprendre</p>
+                    <p class="m-0 titre_apprendre"> Apprendre</p>
                     </div>
                     <div class="col text-end close">
                         <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
@@ -969,30 +969,47 @@
                         <p class="m-0 p-1">
                             <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis suivant :</span>
                         </p>
-                        <ol class="list-group list-group-numbered list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
-                                <div class="ms-2 me-auto">
-                                    <div class="text-sm">Avoir un catalogue de formation</div>
+                        <div class="list-group list-group-flush" id="accordion">
+                            <li class="list-group-item align-items-start ">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprCat" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprCat">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">1. Avoir un catalogue de formation</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprCat" class="collapse p-1">
+                                    <hr>
+                                    <a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue de formation</span></a>
                                 </div>
-                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse" data-bs-target="#apprCat" aria-expanded="false" aria-controls="apprCat"><i class="fas fa-angle-down"></i></button>
                             </li>
-                            <div id="apprCat" class="collapse p-2"><a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue de formation</span></a></div>
-                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
-                                <div class="ms-2 me-auto">
-                                    <div class="text-sm">Ajouter des formateurs</div>
-                                </div>
-                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse" data-bs-target="#apprFormateur" aria-expanded="false" aria-controls=""><i class="fas fa-angle-down"></i></button>
+                            <li class="list-group-item  align-items-start">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprForm" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprFormateur">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">2. Ajouter des formateurs</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprFormateur" class="collapse  p-1">
+                                    <hr>
+                                    <a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a>
+                                </div>  
                             </li>
-                            <div id="apprFormateur" class="collapse p-2"><a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a></div>
 
-                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
-                                <div class="ms-2 me-auto">
-                                    <div class=" text-sm">Collaborer avec les entreprises qui ont des projets en commun avec vous </div>
+                            <li class="list-group-item align-items-start listeApprendre">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprInter" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprInter">   
+                                    <div class="ms-2 me-auto">
+                                        <div class=" text-sm">3. Collaborer avec les entreprises qui ont des projets en commun avec vous </div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a> 
+                                <div id="apprInter" class="collapse">
+                                    <hr>
+                                    <a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une entreprise</span></a>
                                 </div>
-                                <button class="btn btn-light btn-sm apprCat " type="button" data-bs-toggle="collapse" data-bs-target="#apprInter" aria-expanded="false" aria-controls="apprInter"><i class="fas fa-angle-down"></i></button>
                             </li>
-                            <div id="apprInter" class="collapse p-2"><a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une entreprise</span></a></div>
+                        </div>
                     </div>
+                    <div class="tutorielApprendre"></div>
                     @endcan
                     @can('isStagiaire')
                     <div class="tutorielApprendreStagiaire">Stagiaire</div>

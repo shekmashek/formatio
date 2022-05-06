@@ -1233,3 +1233,11 @@ font-size: 0.850rem;
     font-size: 10px;
     position: relative;
 }
+
+.listeApprendre:hover{
+    text-decoration: none !important;
+}
+
+.listeApprendre:visited{
+    color: #7635dc !important;
+}
