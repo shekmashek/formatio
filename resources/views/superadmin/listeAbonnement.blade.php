@@ -123,6 +123,8 @@
                                 <td>{{$fact->due_date}}</td>
                                 @if($fact->status_facture == "Non payé")
                                     <td><span style="background-color: red;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
+                                @else
+                                    <td><span style="background-color: green;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                 @endif
                             </tr>
                             @php $i += 1; @endphp
@@ -167,6 +169,8 @@
                                 <td>{{$facture_suivant[$i]}}</td>
                                 @if($fact->activite == 1)
                                     <td><span style="background-color: green;padding:10px;color:white;border-radius:10px"> En cours </span></td>
+                                @elseif ($fact->status == "En attente")
+                                    <td><span style="background-color: orange;padding:10px;color:white;border-radius:10px"> En attente </span></td>
                                 @else
                                     <td><span style="background-color: red;padding:10px;color:white;border-radius:10px"> Terminé </span></td>
                                 @endif

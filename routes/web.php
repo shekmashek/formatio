@@ -770,6 +770,7 @@ Route::post('enregistrer_abonnement','AbonnementController@enregistrer_abonnemen
 Route::get('activation_page','AbonnementController@activation')->name('activation_page');
 Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
 Route::get('activer_compte','AbonnementController@activer')->name('activer_compte');
+Route::get('activer_compte_of','AbonnementController@activer_of')->name('activer_compte_of');
 Route::get('/impression_facture/{id}','AbonnementController@impression')->name('impression_facture');
 //====================== Demmande de collaboration
 Route::get('collaboration','CollaborationController@collaboration')->name('collaboration');

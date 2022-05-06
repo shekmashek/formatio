@@ -36,10 +36,16 @@
         }
 
         .payer{
-            border: 3px solid rgb(7, 158, 7);
+            color: #637381;
+            font-size: 3rem;
+            justify-content: end;
+        }
+        .payer span{
+            border: 3px solid green;
             padding: .5rem 1rem;
             border-radius: 10px;
         }
+
 
 </style>
 
