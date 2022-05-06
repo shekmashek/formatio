@@ -405,7 +405,31 @@ class AbonnementController extends Controller
             $offregratuit = offre_gratuit::with('type_abonne')->get();
         }
     }
+    //activation compte gratuit
+    public function activer_compte_gratuit($id){
+        $dtNow = Carbon::today()->toDateString();
 
+        $expiration = Carbon::today()->addDays(60)->toDateString();
+        if (Gate::allows('isReferent')) {
+            DB::table('abonnements')
+            ->where('id', $id)
+            ->update(['status' => "Activé",'activite' => 1, 'date_debut' => $dtNow, 'date_fin' => $expiration]);
+
+            DB::table('factures_abonnements')
+                ->where('abonnement_id',$id)
+                ->update(['statut' => 'Payé']);
+        }
+        if (Gate::allows('isCFP')) {
+            DB::table('abonnement_cfps')
+            ->where('id', $id)
+            ->update(['status' => "Activé",'activite' => 1, 'date_debut' => $dtNow, 'date_fin' => $expiration]);
+
+            DB::table('factures_abonnements_cfp')
+            ->where('abonnement_cfps_id',$id)
+            ->update(['statut' => 'Payé']);
+        }
+        return back();
+    }
     //abonnement
     public function Abonnement()
     {
@@ -672,6 +696,7 @@ class AbonnementController extends Controller
 
         $Statut = $request->Statut;
         $dt = Carbon::today()->toDateString();
+
         $mensuel = strtotime(date("Y-m-d", strtotime($dt)) . " + 31 days");
         $annuel = strtotime(date("Y-m-d", strtotime($dt)) . " +1 year");
 
@@ -713,7 +738,10 @@ class AbonnementController extends Controller
             ->where('abonnement_cfps_id',$id)
             ->update(['statut' => 'Payé']);
 
-        $liste = abonnement::where('id', $id)->get();
+        $liste = abonnement_cfp::where('id', $id)->get();
+        // return response()->json([
+        //     'success' => $liste
+        // ]);
         return response()->json($liste);
 
     }

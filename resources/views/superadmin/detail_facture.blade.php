@@ -144,21 +144,44 @@
                                         <h5>Facture N°: {{$facture[0]->num_facture}}</h5>
                                         <h6>Date de facturation: {{$facture[0]->invoice_date}}</h6>
                                         <h6>Date d'échéance: {{$facture[0]->due_date}}</h6>
-                                        <h6>Mode de paiement:
-                                        <select class="form-control col-2" name="" id="">
-                                            @foreach ($mode_paiements as $paiement)
-                                                <option value="">{{$paiement->description}}</option>
-                                            @endforeach
-                                        </select>
-                                        </h6>
+                                        @if ($facture[0]->nom_type != "Gratuit")
+                                            <h6>Mode de paiement:
+                                                <select class="form-select-lg mb-3" name="" id="paiement">
+                                                    <option value="">Choisissez un mode de paiement...</option>
+                                                    @foreach ($mode_paiements as $paiement)
+                                                        <option value="{{ $paiement->description }}">{{$paiement->description}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </h6>
+                                        @endif
+
+                                        <div class="card detail_virement" style="width: 32rem;display: none">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Paiement par virement</h5>
+                                                <p class="card-text">Veuillez remplir les informations vers ce lien</p>
+                                                <a href="#" class="btn btn-primary">Virement</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="card detail_cheque" style="width: 32rem;display: none">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Paiement par chèque</h5>
+                                                <p class="card-text">Veuillez suivre ce lien</p>
+                                                <a href="#" class="btn btn-primary">Paiement par chèque</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="card detail_espece" style="width: 32rem;display: none">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Paiement par espèce</h5>
+                                                <span class="card-text">Veuillez contacter le responsable de UpSkills</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-
-
-
 
                         <div class="container-fluid my-4">
 
@@ -197,5 +220,28 @@
     </div>
 </div>
 
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script>
+    /* detail paiement */
+    $("#paiement" ).on( "change", function() {
+        if($(this).val()=="Virement bancaire"){
+            $('.detail_virement').css("display","block");
+            $('.detail_cheque').css("display","none");
+            $('.detail_espece').css("display","none");
+        }
+        if($(this).val()=="Chèque"){
+            $('.detail_cheque').css("display","block");
+            $('.detail_virement').css("display","none");
+            $('.detail_espece').css("display","none");
+        }
+        if($(this).val()=="Espece"){
+            $('.detail_espece').css("display","block");
+            $('.detail_virement').css("display","none");
+            $('.detail_cheque').css("display","none");
+        }
+
+    });
+</script>
 
 @endsection

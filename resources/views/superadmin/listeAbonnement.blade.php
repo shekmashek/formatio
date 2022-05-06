@@ -106,6 +106,11 @@
                         <th scope="col">Invoice date</th>
                         <th scope="col">Due date</th>
                         <th scope="col">Statut</th>
+                        @foreach ($facture as $fact )
+                            @if ($fact->nom_type == "Gratuit" && $fact->status_facture == "Non payé"))
+                                <th scope="col">Payer la facture</th>
+                            @endif
+                        @endforeach
                       </tr>
                     </thead>
                     <tbody>
@@ -126,6 +131,10 @@
                                 @else
                                     <td><span style="background-color: green;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                 @endif
+                                @if ($fact->nom_type == "Gratuit" && $fact->status_facture == "Non payé")
+                                    <td scope="col"><button class="btn btn-primary"> <a href="{{route('activer_compte_gratuit',$fact->abonnement_id)}}"> Payer </a></button></td>
+                                @endif
+
                             </tr>
                             @php $i += 1; @endphp
                         @endforeach
