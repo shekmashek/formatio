@@ -1,0 +1,126 @@
+.head_content{
+    background: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    max-height: 300px;
+    border: 1px solid rgb(222, 221, 221);
+    border-top: none;
+}
+
+.first_col{
+    padding: 2rem 2rem;
+    border: none;
+    border-right: 1px solid rgb(222, 221, 221);
+}
+
+.second_col{
+    padding: 2rem 2rem;
+    border: none;
+    border-right: 1px solid rgb(222, 221, 221);
+    display: grid;
+    place-content: center;
+}
+
+.action_name{
+    background-color: #7635dc;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: .4rem 1rem;
+}
+
+.action_name:hover{
+    color: #7635dc;
+    background-color: white;
+    border:1px solid #7635dc;
+    border-radius: 15px;
+}
+
+.action_other{
+    color: #7635dc;
+    background-color: white;
+    border:1px solid #7635dc;
+    border-radius: 15px;
+    padding: .4rem 1rem;
+}
+
+.action_other:hover{
+    background-color: #7635dc;
+    border: none;
+    border-radius: 15px;
+    color: white;
+}
+
+.action_other_not{
+    color: red;
+    background-color: white;
+    border:1px solid red;
+    border-radius: 15px;
+    padding: .4rem 1rem;
+}
+
+.action_other_not:hover{
+    background-color: red;
+    border: none;
+    border-radius: 15px;
+    color: white;
+}
+
+.action_name:focus{
+    text-decoration: none;
+}
+
+.nom_org{
+    font-size: 2rem;
+}
+
+.nb_modules{
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.row_bas{
+    border-top: 1px solid rgb(222, 221, 221);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.third_col{
+    display: grid;
+    place-content: center;
+}
+
+.txt_row_bas{
+    font-size: 0.850rem;
+}
+
+a:hover{
+    color: #7635dc;
+}
+
+.info_plus{
+    background: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    height: auto;
+    border: 1px solid rgb(222, 221, 221);
+}
+
+.info_plus3{
+    background: white;
+    height: auto;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: 1px solid rgb(222, 221, 221);
+}
+
+.border_bas{
+    border-bottom: 1px solid rgb(222, 221, 221);
+}
+
+
+
+.icon_sociaux{
+    font-size: 1.5rem;
+    color: #637381;
+    position: relative;
+    top: .3rem;
+}

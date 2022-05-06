@@ -28,13 +28,13 @@
 
                 <div class="col-6 text-center icon_choice">
                     <a href="{{route('create+compte+client/OF')}}" role="button">
-                        <p class="txt_titre">Organisme de Formation</p>
+                        <p class="txt_titre fs-5">Organisme de Formation</p>
                         <i class='bx bxs-home'></i>
                     </a>
                 </div>
                 <div class="col-6 text-center icon_choice">
                     <a href="{{route('create+compte+client/employeur')}}" class="" role="button">
-                        <p class="txt_titre etp_txt">Entreprise</p>
+                        <p class="txt_titre etp_txt fs-5">Entreprise</p>
                         <i class='bx bxs-city'></i>
                     </a>
                 </div>
@@ -43,9 +43,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="text-center">
-                <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" class="img-fluid ">
+        <div class="col-6 image_accueil">
+            <div class="text-center ">
+                <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" class="img-fluid" width="300px" height="300px">
             </div>
         </div>
     </div>

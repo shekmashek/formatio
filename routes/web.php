@@ -1127,6 +1127,7 @@ Route::get('/modification_adresse_organisme/{id}','CfpController@edit_adresse')-
 Route::get('/modification_nif/{id}','CfpController@edit_nif')->name('modification_nif');
 Route::get('/modification_stat/{id}','CfpController@edit_stat')->name('modification_stat');
 Route::get('/modification_rcs_cfps/{id}','CfpController@edit_rcs')->name('modification_rcs_cfps');
+Route::get('/modification_cif_cfps/{id}','CfpController@edit_cif')->name('modification_cif_cfps');
 
 Route::get('/modification_assujetti_cfp/{id}','CfpController@edit_assujetti_cfp')->name('modification_assujetti_cfp');
 Route::post('enregistrer_assujetti_cfp/{id}','CfpController@enregistrer_assujetti_cfp')->name('enregistrer_assujetti_cfp');
@@ -1161,6 +1162,7 @@ Route::post('/enregistrer_modification_adresse_cfp/{id}','CfpController@modifier
 Route::post('/enregistrer_modification_nif_cfp/{id}','CfpController@modifier_nif')->name('enregistrer_modification_nif_cfp');
 Route::post('/enregistrer_modification_stat_cfp/{id}','CfpController@modifier_stat')->name('enregistrer_modification_stat_cfp');
 Route::post('/enregistrer_modification_rcs_cfp/{id}','CfpController@modifier_rcs')->name('enregistrer_modification_rcs_cfp');
+Route::post('/enregistrer_modification_cif_cfp/{id}','CfpController@modifier_cif')->name('enregistrer_modification_cif_cfp');
 
 Route::post('/enregistrer_modification_slogan_cfp/{id}','CfpController@modifier_slogan')->name('enregistrer_modification_slogan_cfp');
 Route::post('/enregistrer_modification_site_cfp/{id}','CfpController@modifier_site')->name('enregistrer_modification_site_cfp');

@@ -66,11 +66,21 @@ class ResponsableCfpController extends Controller
             else{
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
                 $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$refs->cfp_id]);
+                $modules_counts = $fonct->findWhere("modules",["cfp_id"],[$refs->cfp_id]);
+                $projets_counts = $fonct->findWhere("projets",["cfp_id"],[$refs->cfp_id]);
+                $factures_counts = $fonct->findWhere("factures",["cfp_id"],[$refs->cfp_id]);
+                $formateurs_counts = $fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id","activiter"],[$refs->cfp_id,1]);
+                $entreprises_counts = $fonct->findWhere("demmande_cfp_etp",["demmandeur_cfp_id","activiter"],[$refs->cfp_id,1]);
+                $projetInter_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,2]);
+                $projetIntra_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,1]);
+                $sessions_counts = DB::select('select grp.id from groupes as grp join projets as prj on grp.projet_id = prj.id where prj.cfp_id = ?',[$refs->cfp_id]);
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
-                // dd($cfps->assujetti_id);
+                $tva = DB::select('select * from taxes where id = ?', [1]);
+               
+
             }
-            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux'));
+            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {

@@ -118,6 +118,10 @@ class CfpController extends Controller
         return view('cfp.modification_profil.modification_rcs',compact('rcs'));
     }
 
+    public function edit_cif($id, Request $request){
+        $cif = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.modification_cif',compact('cif'));
+    }
 
     public function enregistrer_assujetti_cfp(Request $request,$id){
         $id_assujeti = $request->assujetti;
@@ -195,7 +199,7 @@ class CfpController extends Controller
         return redirect()->back()->with('error_nom', 'Entrez le nom de votre organisme avant de cliquer sur enregistrer');
        }
        else{
-        DB::update('update cfps set nom = ? where id = ?', [$request->nom,$id]);
+        DB::update('update cfps set nom = ?, slogan = ? where id = ?', [$request->nom,$request->slogan,$id]);
         return redirect()->route('affichage_parametre_cfp',[$id]);
        }
 
@@ -241,6 +245,11 @@ class CfpController extends Controller
 
     public function modifier_rcs($id, Request $request){
         DB::update('update cfps set rcs = ? where id = ?', [$request->rcs, $id]);
+        return redirect()->route('affichage_parametre_cfp', [$id]);
+    }
+
+    public function modifier_cif($id, Request $request){
+        DB::update('update cfps set cif = ? where id = ?', [$request->cif, $id]);
         return redirect()->route('affichage_parametre_cfp', [$id]);
     }
 

@@ -38,16 +38,9 @@ class UtilisateurControlleur extends Controller
         // $liste = entreprise::orderBy('nom_etp')->get();
         // dd($liste);
         if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
-        
-        else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->where('prioriter',1)->get();
-    //    $data=responsable::with('entreprise')->get();
-        // return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
-        $entreprise = $this->fonct->findAll("entreprises");
-        // dd($datas);
-       
+        else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
 
-        $branches = $this->fonct->findAll("departement_entreprises");
-        return view('admin.utilisateur.entreprise', compact('entreprise', 'branches','datas'));
+        return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
     }
 
     public function create($id = null)
@@ -357,7 +350,10 @@ class UtilisateurControlleur extends Controller
         $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$id]);
         $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$id]);
 
-        return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux'));
+        $cfp = cfp::findOrFail($id);
+        // dd($cfp);
+
+        return redirect('affichage_parametre_cfp');
     }
     public function register_cfp(Request $request)
     {
@@ -511,7 +507,7 @@ class UtilisateurControlleur extends Controller
     //     $datas = entreprise::where('id', $id)->get();
     //     $entreprise = entreprise::orderBy('nom_etp')->get()->unique('nom_etp');
     //     return view('admin.utilisateur.entreprise', compact('entreprise','datas'));
-        
+
     // }
     public function show_stagiaire($id)
     {
