@@ -86,9 +86,9 @@
                         @php
                             $info = $groupe->infos_session($info_projet->groupe_id);
                             if ($info->difference == null && $info->nb_detail == 0) {
-                                echo $info->nb_detail.' séance 0 heure';
+                                echo $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
                             }elseif ($info->difference != null && $info->nb_detail == 1) {
-                                echo $info->nb_detail. ' séance '.gmdate("H:i", $info->difference);
+                                echo $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
                             }elseif ($info->difference != null && $info->nb_detail > 1) {
                                 echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
                             }

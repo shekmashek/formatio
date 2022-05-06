@@ -3,7 +3,7 @@
     <p class="text_header m-0 mt-1">Projets</p>
 @endsection
 
-@inject('groupe', 'App\Groupe')
+@inject('groupe', 'App\groupe')
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
@@ -289,7 +289,7 @@
                                                         @if ($prj->type_formation_id == 1)
                                                             <td class="p-0">
                                                                 <a class="mt-2"
-                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}"><button class="btn">Rapport</button></a>
+                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank"><button class="btn">Rapport</button></a>
                                                             </td>
                                                         @endif
                                                         @can('isCFP')

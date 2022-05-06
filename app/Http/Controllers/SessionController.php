@@ -286,6 +286,8 @@ class SessionController extends Controller
     public function ajout_ressource(Request $request){
         $ressource = $request->ressource;
         $groupe_id = $request->groupe;
+        $pris_en_charge = $request->pris_en_charge;
+        $note = $request->note;
         $id_user = Auth::user()->id;
         $demandeur = '';
         if (Gate::allows('isCFP')){
@@ -297,7 +299,7 @@ class SessionController extends Controller
         if(Gate::allows('isReferent')){
             $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id= ?',[$id_user])[0]->nom_etp;
         }
-        DB::insert('insert into ressources(description,demandeur,groupe_id) values(?,?,?)',[$ressource,$demandeur,$groupe_id]);
+        DB::insert('insert into ressources(description,demandeur,groupe_id,pris_en_charge,note) values(?,?,?,?,?)',[$ressource,$demandeur,$groupe_id,$pris_en_charge,$note]);
         $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
         return response()->json($all_ressources);
     }

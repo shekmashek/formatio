@@ -1,5 +1,5 @@
 @extends('./layouts/admin')
-@inject('groupe', 'App\Groupe')
+@inject('groupe', 'App\groupe')
 @section('content')
 <style>
     .corps_planning .nav-link {
@@ -51,10 +51,10 @@
     .chiffre_d_affaire p {
         font-size: 0.9rem;
     }
-
+/* 
     .corps_planning {
-        font-size: 0.9rem;
-    }
+        font-size: 1.5rem;
+    } */
 
     .body_nav {
         /* background-color: #e8e8e9;
@@ -282,6 +282,10 @@
         background-color: #eeeeee;
     }
 
+    .planning p{
+        font-size: .8rem;
+    }
+
     @keyframes action{
         0%{
             filter: brightness(0.99);
@@ -325,13 +329,15 @@
     }
 
     .liste_projet{
-        background-color: #f1f1f1;
+        background-color: #637381;
         margin: 0;
         padding: 1;
+        color: #ffffff;
     }
 
     .liste_projet:hover{
-        background-color: #e0dede;
+        background-color: #cfccccc5;
+        color: #191818;
     }
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -342,69 +348,73 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="p-3 bg-body rounded ">
-        <nav class="body_nav m-0 d-flex ">
+        <nav class="body_nav m-0">
             <div class="row">
-                <div class="d-flex m-0 p-0 height_default">
-                    <h5>{{ $module_session->reference . ' - ' . $module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
-                    <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
-                    <span class="modalite ms-3 mb-2 p-1 ps-2 pe-2">{{ $modalite }}</span>
-                </div>
-                <div class="d-flex m-0 p-0 height_default">
-                    <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong> </p>
-                    <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
-                    &nbsp;&nbsp;&nbsp;
-                    {{-- @canany(['isCFP', 'isReferent'])
-                        <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                        <p class="text-dark mt-3"> <strong>@php
-                            echo number_format($prix->montant_session, 2, '.', ' ');
-                        @endphp Ar</strong> </p>
-                    @endcanany --}}
+                <div class="col-lg-6">
+                    <div class="d-flex m-0 p-0 height_default">
+                        <h5>{{ $module_session->reference . ' - ' . $module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
+                        <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
+                        <span class="modalite ms-3 mb-2 p-1 ps-2 pe-2">{{ $modalite }}</span>
+                    </div>
+                    <div class="d-flex m-0 p-0 height_default">
+                        <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong> </p>
+                        <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
+                        &nbsp;&nbsp;&nbsp;
+                        {{-- @canany(['isCFP', 'isReferent'])
+                            <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
+                            <p class="text-dark mt-3"> <strong>@php
+                                echo number_format($prix->montant_session, 2, '.', ' ');
+                            @endphp Ar</strong> </p>
+                        @endcanany --}}
 
-                    <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
-                    <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
-                </div>
-            </div>
-            <div class="row w-100 pe-5">
-                <p class="text-end"><a href="{{ route('liste_projet') }}" ><button class="btn liste_projet ms-auto"><i class='bx bx-list-ul'></i>&nbsp; <span>Liste des projets</span></button></a></p>
-            </div>
-            @canany(['isReferent','isCFP'])
-                <div class="row">
-                    <div class=" dropdown">
-
-                        <a class="dropdown-toggle btn_modifier_statut" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
-                            aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                            <i class='bx bx-slider icon_creer'></i>Modifier statut
-
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="ya">
-                            <li class="mt-1">
-                                <a class="dropdown-item"
-                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 5]) }}">
-                                    <i class='bx bx-check'></i>&nbsp;Cloturé
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 6]) }}">
-                                    <i class='bx bxs-report'></i>&nbsp;Reporté
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('annuler_session', [$projet[0]->groupe_id]) }}">
-                                    <i class='bx bx-x'></i>&nbsp;Annulée
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 8]) }}">
-                                    <i class='bx bx-refresh'></i>&nbsp;Repprogrammer
-                                </a>
-                            </li>
-                        </ul>
+                        <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
+                        <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
                     </div>
                 </div>
-            @endcanany
-            
+                <div class="col-lg-6 d-flex justify-content-end">
+                    @canany(['isReferent','isCFP'])
+                        <div class="dropdown">
+
+                            <a class="dropdown-toggle btn_modifier_statut" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                <i class='bx bx-slider icon_creer'></i>Modifier statut
+
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="ya">
+                                <li class="mt-1">
+                                    <a class="dropdown-item"
+                                        href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 5]) }}">
+                                        <i class='bx bx-check'></i>&nbsp;Cloturé
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 6]) }}">
+                                        <i class='bx bxs-report'></i>&nbsp;Reporté
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('annuler_session', [$projet[0]->groupe_id]) }}">
+                                        <i class='bx bx-x'></i>&nbsp;Annulée
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 8]) }}">
+                                        <i class='bx bx-refresh'></i>&nbsp;Repprogrammer
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endcanany
+                    <div>
+                        <p><a href="{{ route('fiche_technique_pdf', [$projet[0]->groupe_id]) }}" ><button class="btn liste_projet me-1"><i class='bx bxs-cloud-download'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
+                    </div>
+                    <div>
+                        <p class="text-end"><a href="{{ route('liste_projet') }}" ><button class="btn liste_projet ms-1"> <span>Retour sur la liste des projets</span></button></a></p>
+                    </div>
+                </div>
+            </div>
         </nav>
         <section class="bg-light py-1">
             <div class="m-0 p-0">
@@ -591,7 +601,7 @@
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
                                     <button class="planning d-flex justify-content-between action_animation"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                                        <p class="m-0 pt-2 pb-2">EVALUATION APRES FORMATION</p>
+                                        <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         @if ($evaluation_apres <= 0)
                                             <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @else
@@ -607,7 +617,7 @@
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
                                     <button class="planning d-flex justify-content-between"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                                        <p class="m-0 pt-2 pb-2">EVALUATION DES STAGIAIRES</p>
+                                        <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         @if ($evaluation_apres <= 0)
                                             <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @else
