@@ -1,113 +1,143 @@
 @extends('./layouts/admin')
+
 @section('title')
-    <h3 class="text_header m-0 mt-1">Profil</h3>
+    <h3 class="text_header m-0 mt-1">CV</h3>
 @endsection
+
+
+
+@section('cv-css')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="{{asset('css/cv_profil_formateur.css')}}">
+  
+@endsection
+
+
 @section('content')
-<div class="container">
-    <!-- partie haut du cv -->
-    <div class="row pt-5 pb-5 cv_theque" id="en_tete">
-        <div class="col-lg-4">
-            <img src="{{asset('images/formateurs/'.$formateur[0]->photos)}}" class="img-fluid img" style="width : 150px; height : 150px;border-radius : 100%; cursor: pointer;">
-        </div>
 
-        <div class="col-lg-8">
-            <h1 class="text-white nom_form nomform"><strong style="text-transform: uppercase;">{{$formateur[0]->nom_formateur}}</strong>&nbsp;</br><em class="text-capitalize">{{$formateur[0]->prenom_formateur}}</em></h1>
-            <h2 class="text-white text-capitalize">{{$formateur[0]->specialite}}</h2>
-        </div>
-    </div>
-    <!-- partie bas du cv -->
-    <!-- partie gauche -->
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="row-lg-4 cv_theque_profil">
-                <div class="col-lg mt-5 pb-5">
-                    <h1 class="bordure1">PROFIL</h1>
-                    <p class="mt-4">Nom : {{$formateur[0]->nom_formateur}}</p>
-                    <p class="mt-4 text-capitalize">Prenom : {{$formateur[0]->prenom_formateur}}</p>
-                    <p class="mt-4">Date de naissance : </br>{{$formateur[0]->date_naissance}}</p>
-                    <p class="mt-4 text-capitalize">Sexe : {{$genre}}</p>
+
+<style>
+  
+  </style>
+
+<div class="resume-wrapper">
+        <section class="profile section-padding">
+            <div class="container">
+                <div class="picture-resume-wrapper">
+                    <div class="picture-resume picture-box">
+
+                      {{-- photo --}}
+                        <img src="https://via.placeholder.com/300" alt="" />
+                        <!-- <svg version="1.1" viewBox="0 0 350 350">
+      
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -9" result="cm" />
+        </filter>
+      </defs>
+      
+    </svg> -->
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="name-wrapper">
+                    <h1>{{ $formateur[0]->nom_formateur }} <br />{{ $formateur[0]->prenom_formateur }}</h1>
+                </div>
+                <div class="clearfix"></div>
+                <div class="contact-info clearfix">
+                    <ul class="list-titles">
+                        <li>Call</li>
+                        <li>Mail</li>
+
+                        <li>Home</li>
+                        <li>Born</li>
+                    </ul>
+                    <ul class="list-content ">
+                        <li>{{ $formateur[0]->numero_formateur }}</li>
+                        <li>{{ $formateur[0]->mail_formateur }}</li>
+
+                        <li>{{ $formateur[0]->adresse }}</li>
+                        <li>{{ $formateur[0]->date_naissance }}</li>
+                    </ul>
+                </div>
+                <div class="contact-presentation">
+                    <p><span class="bold">Lorem</span> ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+                        euismod congue nisi, nec consequat quam. In consectetur faucibus turpis eget laoreet. Sed nec
+                        imperdiet purus. </p>
+                </div>
+                <div class="contact-social clearfix">
+                    <ul class="list-titles">
+                        <li>Facebook</li>
+                        <li>linkedIn</li>
+
+                    </ul>
+                    <ul class="list-content">
+                        <li><a href="">@webdevtrick</a></li>
+                        <li><a href="">@webdevtrick</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="experience section-padding">
+            <div class="container">
+                <h3 class="experience-title">Experience</h3>
+
+                <div class="experience-wrapper">
+
+                    @forelse ($experience as $exps)
+                        <div class="company-wrapper clearfix">
+                            <div class="experience-title">{{ $exps->nom_entreprise }}</div>
+                            <div class="time">{{ $exps->debut_travail }}&nbsp; - &nbsp;{{ $exps->fin_travail }}
+                            </div>
+                        </div>
+
+                        <div class="job-wrapper clearfix">
+                            <div class="experience-title">&sbquo;&nbsp;{{ $exps->poste_occuper }}&nbsp;&nbsp;</div>
+                            <div class="company-description">
+                                <p>{{ $exps->taches }}</p>
+                            </div>
+                        </div>
+                    @empty
+                        {{-- a bootstrap centerd text --}}
+                        <div class="text-center">
+                            <h1>Aucune experience</h1>
+                        </div>
+                    @endforelse
+
 
                 </div>
-            </div>
-            <div class="row-lg-4 mt-5 pb-5 cv_theque_contact">
-                <div class="col-lg">
-                    <h1 class="bordure2">CONTACT</h1>
-                    <div class="row mt-4">
-                        <div class="col-lg-2">
-                            <i class="fa fa-map-marker" aria-hidden="true" style="font-size:30px"></i>
-                        </div>
-                        <div class="col-lg-10">
-                        <p class="text-capitalize">{{$formateur[0]->adresse}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <i class="fa fa-envelope" aria-hidden="true" style="font-size:30px"></i>
-                        </div>
-                        <div class="col-lg-10">
-                        <p>{{$formateur[0]->mail_formateur}}</p>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-lg-2">
-                            <i class="fa fa-phone" aria-hidden="true" style="font-size:30px"></i>
-                        </div>
-                        <div class="col-lg-10">
-                        <p>{{$formateur[0]->numero_formateur}}</p>
-                        </div>
-                    </div>
+
+                <div class="section-wrapper clearfix">
+                    <h3 class="section-title">Skills</h3>
+                    <ul>
+                        <li class="skill-percentage">HTML / HTML5</li>
+                        <li class="skill-percentage">CSS / CSS3 / SASS / LESS</li>
+                        <li class="skill-percentage">Javascript</li>
+                        <li class="skill-percentage">Jquery</li>
+                        <li class="skill-percentage">Wordpress</li>
+                        <li class="skill-percentage">PHP</li>
+
+                    </ul>
+
                 </div>
-            </div>
-            <div class="row-lg-4 mt-5 pb-5 cv_theque_niveau">
-                <div class="col-lg">
-                    <h1 class="bordure3">NIVEAU</br>D'ETUDES</h1>
-                    <p class="mt-4 text-capitalize">{{$formateur[0]->niveau}}</p>
+
+                <div class="section-wrapper clearfix">
+                    <h3 class="section-title">Spécialité</h3>
+                    <p>
+                        {{ $formateur[0]->specialite }}
+                    </p>
                 </div>
+
             </div>
-        </div>
-        <!-- partie droite -->
-        <div class="col-lg-8 ps-5 bg-dark">
-            <div class="row-lg-4 mt-5 pb-5 cv_theque_comp_exp">
-                <div class="col-lg">
-                    <h1 class="bordure4">COMPETENCES</h1>
-                    <!-- liste de competence faire un boucle pour les afficher donc juste une seule liste -->
-                    <div class="row ms-4 mt-4">
-                        <ul class="list-group text-white">
-                            @foreach ($competence as $comp)
-                                <tr>
-                                    <td>
-                                        <li class="text-capitalize mt-2">{{$comp->domaine}}&nbsp;:&nbsp;{{$comp->competence}}</li>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row-lg-4 mt-5 mb-5 cv_theque_comp_exp">
-                <div class="col-lg">
-                    <h1 class="bordure5">EXPERIENCES PROFESSIONNELLES</h1>
-                    <!-- liste de competence faire un boucle pour les afficher donc juste une seule liste -->
-                    <!-- titre de l'experience -->
-                    @foreach ($experience as $exps)
-                    <div class="row">
-                        <div class="row mt-4 d-flex flex-row">
-                            <h3 class="text-white"><span class="text-capitalize societe">{{$exps->nom_entreprise}}</span>&sbquo;&nbsp;{{$exps->poste_occuper}}&nbsp;&nbsp;<span class="text-white date_exp" style="text-transform: uppercase;">{{$exps->debut_travail}}&nbsp;-&nbsp;{{$exps->fin_travail}}</span></h3>
-                        </div>
-                <!-- date de l'experience -->
-                    </div>
-                    {{-- domaine et experience --}}
-                    <div class="row">
-                        <div class="row ms-4">
-                            <ul class="list-group text-white">
-                                <li class="text-capitalize">{{$exps->taches}}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+        </section>
+
+        <div class="clearfix"></div>
     </div>
-</div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js'></script>
+    <script src="function.js"></script>
 @endsection

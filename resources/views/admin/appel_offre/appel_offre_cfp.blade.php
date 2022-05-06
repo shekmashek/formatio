@@ -223,7 +223,7 @@
                                                 <tr class="test">
                                                     <th scope="row">
                                                         <span role="button" onclick="afficherInfos();">
-                                                            <img src="{{asset('images/entreprises/'.$publier->logo)}}"
+                                                            <img src="{{ asset('images/entreprises/' . $publier->logo) }}"
                                                                 class="card-img-top" alt="..."
                                                                 style="width: 100px; height:40px;">
                                                             <br>
@@ -263,7 +263,7 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div align="left">
-                                                           <img src="{{asset('images/entreprises/'.$publier->logo)}}" 
+                                                            <img src="{{ asset('images/entreprises/' . $publier->logo) }}"
                                                                 class="card-img-top" alt="..."
                                                                 style="width: 100px; height:40px;">
                                                             <h5>{{ $publier->nom_etp }}</h5>
@@ -282,7 +282,8 @@
                                                 <h6><strong class="fw-lighter"> Recherche de formation </strong>
                                                     <strong>{{ $publier->nom_formation }}</strong> <strong
                                                         class="fw-lighter"> du domaine</strong>
-                                                    <strong>{{ $publier->nom_domaine }}</strong></h6>
+                                                    <strong>{{ $publier->nom_domaine }}</strong>
+                                                </h6>
                                                 <p class="text-muted">{{ $publier->description_court }}</p>
 
                                                 <p><strong class="fw-lighter">L'offre a été postulé le</strong>
@@ -290,7 +291,8 @@
                                                         class="fw-lighter">Les interventions du préstataire s'étaleront
                                                         à la date</strong> <strong>{{ $publier->date_fin }}</strong>
                                                     <strong class="fw-lighter">à</strong>
-                                                    <strong>{{ $publier->hr_fin }}</strong></p>
+                                                    <strong>{{ $publier->hr_fin }}</strong>
+                                                </p>
 
                                                 <div class="row my-1">
                                                     <div class="col">
@@ -413,28 +415,40 @@
                         <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
                     </div>
                     <hr class="mt-2">
-                   <span class="text-center"> <img src="{{asset('images/entreprises/'.$publier->logo)}}" style="height: 100px;width:100px"></span>  
-                   <div style="font-size: 13px">
-                        <div class="text-center mt-2">
-                            <span>  {{$publier->nom_etp}}</span>
-                        </div>
-                        <div class="text-center mt-2">
-                            <span>Email:{{$publier->email_etp}}</span>
-                        </div>
-                        <div class="text-center mt-2">
-                            <span> Téléphone:{{$publier->telephone_etp}}</span>
-                        
-                        </div>
-                        <div class="text-center mt-2">
-                            <span> Site web:{{$publier->site_etp}}</span>
-                         </div>
-                         
-                        </div> 
+
+                    
+                    {{-- forelse loop on appel_offre_publier --}}
+
+                    @foreach ($appel_offre_publier as $publier)
+                    <div>
+
+
+                        <span class="text-center"> <img src="{{ asset('images/entreprises/' . $publier->logo) }}"
+                            style="height: 100px;width:100px">
+                    </span>
+                    
+                    <div style="font-size: 13px">
+                    <div class="text-center mt-2">
+                        <span> {{ $publier->nom_etp }}</span>
+                    </div>
+                    <div class="text-center mt-2">
+                        <span>Email:{{ $publier->email_etp }}</span>
+                    </div>
+                    <div class="text-center mt-2">
+                        <span> Téléphone:{{ $publier->telephone_etp }}</span>
+                    
+                    </div>
+                    <div class="text-center mt-2">
+                        <span> Site web:{{ $publier->site_etp }}</span>
+                    </div>
+                    
+                    </div>
+                    </div>
+                    @endforeach
 
 
 
 
-                       
 
                 </div>
             </div>

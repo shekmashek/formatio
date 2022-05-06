@@ -109,7 +109,7 @@
 
             <div class="bordure"> <a href="{{route('condition_generale_de_vente')}}" target="_blank" rel="noopener noreferrer"> Condition
                     d'utilisation</a> </div>
-            <div class="bordure"> <a href="{{url('tarifs')}}" target="_blank" rel="noopener noreferrer"> Tarifs</a></div>
+            <div class="bordure"> <a href="{{url('tarifs')}}" target="_blank" rel="noopener noreferrer">Tarifs</a></div>
             <div class="bordure"><a href="#" target="_blank" rel="noopener noreferrer">Crédits</a></div>
             <div class="ps-3 version">V 1.0.9</div>
         </div>

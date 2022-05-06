@@ -253,7 +253,9 @@ class DepartementController extends Controller
 
         $rqt = db::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
         $nb = count($rqt);
-        $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
+        
+        // 05-05-2022-09:49 : rectification erreur SQL : ajout de toutes les colones de v_departement_service_entreprise à la fin de la requete
+        $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement, departement_entreprise_id,service_id,entreprise_id,nom_etp, nom_service", [$id_etp]);
         $nb_serv = count($service_departement);
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
         $nb_branche = count($branches);

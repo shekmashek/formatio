@@ -102,8 +102,8 @@
                                             <div class="select-group">
                                                 <select name="sexe" id="sexe" class="form-control">
                                                     <option value="null" disabled selected hidden>Sexe</option>
-                                                    <option value="1">Homme</option>
-                                                    <option value="2">Femme</option>
+                                                    <option value="2">Homme</option>
+                                                    <option value="1">Femme</option>
                                                 </select>
                                             </div>
                                             @error('sexe')
@@ -129,6 +129,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="adresse" id="adresse" pattern="[A-Za-z0-9.&' -/]{1,255}" title="5 à 255 caractères" placeholder="Adresse Lot ou Rue*" required>
+                                                {{-- <input type="text" class="form-control" name="adresse" id="adresse" title="5 à 255 caractères" placeholder="Adresse Lot ou Rue*" required> --}}
                                             </div>
                                             @error('adresse')
                                             <div class="col-sm-6">
@@ -139,7 +140,8 @@
                                         <div class="col">
 
                                             <div class="form-group">
-                                                <input type="mail" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse e-mail*" required>
+                                                <input type="email" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse e-mail*" required>
+                                                {{-- <input type="email" class="form-control" name="mail" id="mail" title="entre votre adresse mail" placeholder="adresse e-mail*" required> --}}
                                                 <span style="color:#ff0000;" id="mail_err"></span>
                                             </div>
                                             @error('mail')
@@ -225,17 +227,20 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="entreprise[]" pattern="[A-Za-z0-9.@&' -/]{1,50}" title="5 à 50 caractères" id="entreprise" placeholder="Nom entreprise" class="domaine" required>
+                                                        {{-- <input type="text" class="form-control" name="entreprise[]" pattern="[A-Za-z0-9.@&' -/]{1,50}" title="5 à 50 caractères" id="entreprise" placeholder="Nom entreprise" class="domaine" required> --}}
+                                                        <input type="text" class="form-control" name="entreprise[]" title="5 à 50 caractères" id="entreprise" placeholder="Nom entreprise" class="domaine" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="poste[]" id="poste" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Poste occupé" class="domaine" required>
+                                                        {{-- <input type="text" class="form-control" name="poste[]" id="poste" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Poste occupé" class="domaine" required> --}}
+                                                        <input type="text" class="form-control" name="poste[]" id="poste" title="5 à 100 caractères" placeholder="Poste occupé" class="domaine" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="taches[]" id="taches" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Description des tâches faites dans l'entreprise" class="domaine" required>
+                                                        {{-- <input type="text" class="form-control" name="taches[]" id="taches" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Description des tâches faites dans l'entreprise" class="domaine" required> --}}
+                                                        <input type="text" class="form-control" name="taches[]" id="taches" title="5 à 100 caractères" placeholder="Description des tâches faites dans l'entreprise" class="domaine" required>
                                                     </div>
                                                 </div>
                                             </div>

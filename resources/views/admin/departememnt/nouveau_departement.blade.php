@@ -59,6 +59,12 @@
             border-bottom: 2px solid black;
         }
 
+/* my styles */
+
+        .departement_box {
+
+        }
+
     </style>
 
 
@@ -81,17 +87,17 @@
                 <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                     <li class="nav-item">
                         <a href="#" style="color: rgb(102, 15, 241)" class=" active" id="tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
-                            gestion de département
+                            Gestion de département
                         </a>
                     </li>
                     <li class="nav-item ms-5">
                         <a href="#" style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                            gestion de service
+                            Gestion de service
                         </a>
                     </li>
                     <li class="nav-item ms-5">
                         <a href="#" style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#branche" type="button" role="tab" aria-controls="branche" aria-selected="false">
-                            gestion de branche
+                            Gestion de branche
                         </a>
                     </li>
 
@@ -108,8 +114,8 @@
         <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="tab">
 
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-5">
+                <div class="row m-2">
+                    <div class="col-md-5 mb-4 mt-4 departement_box box">
 
                         <div class="shadow p-3 mb-5 bg-body rounded ">
 

@@ -18,8 +18,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
-    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('assets/css/styleGeneral.css') }}">
+    <link rel="shortcut icon" href="{{ asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+
+    @yield('cv-css')
 </head>
 
 <body>
@@ -43,7 +45,7 @@
 
 
 
-                @canany(['isReferent'])
+            @canany(['isReferent'])
                 <li>
                     <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
                         <i class='bx bxs-pie-chart-alt-2'></i>
@@ -51,23 +53,23 @@
                     </a>
                 </li>
 
-                @endcanany
-                @canany(['isCFP'])
+            @endcanany
+            @canany(['isCFP'])
                 <li>
                     <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
                         <i class='bx bxs-pie-chart-alt-2'></i>
                         <span class="links_name">BI</span>
                     </a>
                 </li>
-                @endcanany
-                @canany(['isSuperAdmin'])
+            @endcanany
+            @canany(['isSuperAdmin'])
                 <li>
                     <a href="{{ route('creer_iframe') }}" class="d-flex  nav_linke">
                         <i class='bx bxs-pie-chart-alt-2'></i>
                         <span class="links_name"> BI </span>
                     </a>
                 </li>
-                @endcanany
+            @endcanany
 
 
 
@@ -82,15 +84,15 @@
             </li>
             @endcanany --}}
             {{-- entreprise --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            <li>
-                <a href="{{route('liste_entreprise')}}" class="d-flex nav_linke">
-                    <i class='bx bx-building-house'></i>
-                    <span class="links_name">Entreprises</span>
-                </a>
+            @canany(['isSuperAdmin', 'isAdmin'])
+                <li>
+                    <a href="{{ route('liste_entreprise') }}" class="d-flex nav_linke">
+                        <i class='bx bx-building-house'></i>
+                        <span class="links_name">Entreprises</span>
+                    </a>
 
-            </li>
-            {{-- integrer dans la page
+                </li>
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('nouvelle_entreprise')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -103,35 +105,35 @@
             </li> --}}
             @endcanany
             @canany(['isReferent'])
-            <li>
-                <a href="{{route('liste_departement')}}" class="d-flex nav_linke">
-                    <i class='bx bx-home-alt'></i>
-                    <span class="links_name">Departements</span>
-                </a>
+                <li>
+                    <a href="{{ route('liste_departement') }}" class="d-flex nav_linke">
+                        <i class='bx bx-home-alt'></i>
+                        <span class="links_name">Departements</span>
+                    </a>
 
-            </li>
+                </li>
             @endcanany
             @can('isCFP')
-            <li>
-                <a href="{{route('liste_entreprise')}}" class="d-flex nav_linke">
-                    <i class='bx bx-building-house'></i>
-                    <span class="links_name">Entreprises</span>
-                </a>
+                <li>
+                    <a href="{{ route('liste_entreprise') }}" class="d-flex nav_linke">
+                        <i class='bx bx-building-house'></i>
+                        <span class="links_name">Entreprises</span>
+                    </a>
 
-            </li>
+                </li>
             @endcan
             @can('isReferent')
-            <li>
-                <a href="{{route('list_cfp')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-business'></i>
-                    <span class="links_name">Organisme (OF)</span>
-                </a>
+                <li>
+                    <a href="{{ route('list_cfp') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-business'></i>
+                        <span class="links_name">Organisme (OF)</span>
+                    </a>
 
-            </li>
+                </li>
             @endcan
             {{-- projet de formation --}}
 
-            {{-- @canany(['isCFP','isFormateur'])
+            {{-- @canany(['isCFP', 'isFormateur'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
@@ -154,77 +156,77 @@
             </li>
             @endcanany --}}
             @canany(['isReferent'])
-            <li>
-                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bx-library'></i>
-                    <span class="links_name">Projets</span>
-                </a>
+                <li>
+                    <a href="{{ route('liste_projet') }}" class="d-flex nav_linke">
+                        <i class='bx bx-library'></i>
+                        <span class="links_name">Projets</span>
+                    </a>
 
-            </li>
+                </li>
             @endcanany
             @canany(['isReferent'])
-            <li>
-                <a href="{{route('projet_interne')}}" class="d-flex nav_linke">
-                    <i class='bx bxl-netlify'></i>
-                    <span class="links_name">Formation Interne</span>
-                </a>
+                <li>
+                    <a href="{{ route('projet_interne') }}" class="d-flex nav_linke">
+                        <i class='bx bxl-netlify'></i>
+                        <span class="links_name">Formation Interne</span>
+                    </a>
 
-            </li>
+                </li>
             @endcanany
             @canany(['isStagiaire'])
-            <li>
-                <a href="{{route('liste_projet',['id'=>1])}}" class="d-flex nav_linke">
-                    <i class='bx bx-library'></i>
-                    <span class="links_name">Projets</span>
-                </a>
+                <li>
+                    <a href="{{ route('liste_projet', ['id' => 1]) }}" class="d-flex nav_linke">
+                        <i class='bx bx-library'></i>
+                        <span class="links_name">Projets</span>
+                    </a>
 
-            </li>
+                </li>
             @endcanany
-            @canany(['isCFP','isReferent','isManager'])
-            <li>
-                <a href="{{route('appel_offre.index')}}" class="d-flex nav_linke">
-                    <i class='bx bx-mail-send'></i>
-                    <span class="links_name">Appel d'Offre</span>
-                </a>
+            @canany(['isCFP', 'isReferent', 'isManager'])
+                <li>
+                    <a href="{{ route('appel_offre.index') }}" class="d-flex nav_linke">
+                        <i class='bx bx-mail-send'></i>
+                        <span class="links_name">Appel d'Offre</span>
+                    </a>
 
-            </li>
+                </li>
             @endcanany
             {{-- utilisateurs --}}
-            @canany(['isSuperAdmin','isAdmin'])
+            @canany(['isSuperAdmin', 'isAdmin'])
 
-            <li>
-                <a href="{{route('utilisateur_stagiaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-user-circle'></i>
-                    <span class="links_name">Stagiaires</span>
-                </a>
+                <li>
+                    <a href="{{ route('utilisateur_stagiaire') }}" class="d-flex nav_linke">
+                        <i class='bx bx-user-circle'></i>
+                        <span class="links_name">Stagiaires</span>
+                    </a>
 
-            </li>
-            <li>
-                <a href="{{route('utilisateur_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Formateurs</span>
-                </a>
+                </li>
+                <li>
+                    <a href="{{ route('utilisateur_formateur') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-user-rectangle'></i>
+                        <span class="links_name">Formateurs</span>
+                    </a>
 
-            </li>
+                </li>
             @endcanany
             {{-- formateurs --}}
 
             @canany(['isCFP'])
-            <li>
-                <a href="{{route('liste_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Formateurs</span>
-                </a>
+                <li>
+                    <a href="{{ route('liste_formateur') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-user-rectangle'></i>
+                        <span class="links_name">Formateurs</span>
+                    </a>
 
-            </li>
-            {{-- <li>
+                </li>
+                {{-- <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
                     <span class="links_name">Nouveau Formateur</span>
                 </a>
 
             </li> --}}
-            {{-- integrer dans la page
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -234,15 +236,15 @@
             </li> --}}
             @endcanany
             {{-- manager --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            <li>
-                <a href="{{route('employes')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Manager</span>
-                </a>
+            @canany(['isSuperAdmin', 'isAdmin'])
+                <li>
+                    <a href="{{ route('employes') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-user-rectangle'></i>
+                        <span class="links_name">Manager</span>
+                    </a>
 
-            </li>
-            {{-- integrer dans la page
+                </li>
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -252,14 +254,14 @@
             </li> --}}
             @endcanany
             @canany(['isReferent'])
-            <li>
-                <a href="{{route('employes')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Equipe admnistrative</span>
-                </a>
+                <li>
+                    <a href="{{ route('employes') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-user-rectangle'></i>
+                        <span class="links_name">Equipe admnistrative</span>
+                    </a>
 
-            </li>
-            {{-- integrer dans la page
+                </li>
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -269,15 +271,15 @@
             </li> --}}
             @endcanany
             {{-- Referent --}}
-            @canany(['isAdmin','isSuperAdmin'])
-            <li>
-                <a href="{{route('liste_responsable')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Réferents</span>
-                </a>
+            @canany(['isAdmin', 'isSuperAdmin'])
+                <li>
+                    <a href="{{ route('liste_responsable') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-user-rectangle'></i>
+                        <span class="links_name">Réferents</span>
+                    </a>
 
-            </li>
-            {{-- integrer dans la page
+                </li>
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_responsable')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -319,13 +321,13 @@
 
             {{-- calendrire de formations
             <li>
-                @canany(['isReferent','isStagiaire','isManager'])
+                @canany(['isReferent', 'isStagiaire', 'isManager'])
                     <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
                         <i class='bx bxs-calendar'></i>
                         <span class="links_name">Calendrier</span>
                     </a>
-                @endcan--}}
-                {{-- @canany(['isCFP', 'isFormateur'])
+                @endcan --}}
+            {{-- @canany(['isCFP', 'isFormateur'])
                 <a href="{{route('calendrier')}}" class="d-flex nav_linke">
                     <i class='bx bxs-calendar'></i>
                     <span class="links_name">Calendrier</span>
@@ -336,7 +338,7 @@
             </li>-}}
 
             {{-- commercial --}}
-            {{-- @canany(['isSuperAdmin','isCFP','isReferent'])
+            {{-- @canany(['isSuperAdmin', 'isCFP', 'isReferent'])
             <li>
                 <a href="{{route('collaboration')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-account'></i>
@@ -345,15 +347,15 @@
 
             </li>
             @endcanany --}}
-            @canany(['isCFP','isReferent'])
-            <li>
-                <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Factures</span>
-                </a>
+            @canany(['isCFP', 'isReferent'])
+                <li>
+                    <a href="{{ route('liste_facture') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-bank'></i>
+                        <span class="links_name">Factures</span>
+                    </a>
 
-            </li>
-            {{-- integrer dans la page
+                </li>
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -363,40 +365,40 @@
 
             @endcanany
             {{-- competence --}}
-            @canany(['isSuperAdmin','isReferent','isManager'])
-            @canany(['isReferent'])
-            <li>
-                <a href="{{route('demande_test_niveau')}}" class="d-flex nav_linke">
-                    <i class='bx bx-network-chart'></i>
-                    <span class="links_name">Aptitudes</span>
-                </a>
-            </li>
-            {{-- integrer dans la page
+            @canany(['isSuperAdmin', 'isReferent', 'isManager'])
+                @canany(['isReferent'])
+                    <li>
+                        <a href="{{ route('demande_test_niveau') }}" class="d-flex nav_linke">
+                            <i class='bx bx-network-chart'></i>
+                            <span class="links_name">Aptitudes</span>
+                        </a>
+                    </li>
+                    {{-- integrer dans la page
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
                     <span class="links_name">Total facture</span>
                 </a>
             </li> --}}
-            @endcanany
-            <li>
-                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-doughnut-chart'></i>
-                    <span class="links_name">Compétence</span>
-                </a>
-            </li>
+                @endcanany
+                <li>
+                    <a href="{{ route('liste_projet') }}" class="d-flex nav_linke">
+                        <i class='bx bxs-doughnut-chart'></i>
+                        <span class="links_name">Compétence</span>
+                    </a>
+                </li>
             @endcanany
 
             {{-- plan de formation --}}
-            @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
-            <li>
-                <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
-                    href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-scatter-chart'></i>
-                    <span class="links_name">Plan</span>
-                </a>
-            </li>
-            {{-- integrer dans la page
+            @canany(['isSuperAdmin', 'isStagiaire', 'isManager', 'isReferent'])
+                <li>
+                    <a @canany(['isStagiaire']) href="{{ route('planFormation.index') }}" @endcanany
+                        href="{{ route('liste_demande_stagiaire') }}" class="d-flex nav_linke">
+                        <i class='bx bx-scatter-chart'></i>
+                        <span class="links_name">Plan</span>
+                    </a>
+                </li>
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('listePlanFormation')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -405,16 +407,16 @@
             </li> --}}
             @endcanany
             {{-- abonemment --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            <li>
-                <a href="{{route('listeAbonne')}}" class="d-flex nav_linke">
-                    <i class='bx bxl-sketch'></i>
-                    <span class="links_name">Abonnées</span>
-                </a>
+            @canany(['isSuperAdmin', 'isAdmin'])
+                <li>
+                    <a href="{{ route('listeAbonne') }}" class="d-flex nav_linke">
+                        <i class='bx bxl-sketch'></i>
+                        <span class="links_name">Abonnées</span>
+                    </a>
 
-            </li>
+                </li>
 
-            {{-- integrer dans la page
+                {{-- integrer dans la page
             <li>
                 <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -423,23 +425,22 @@
             </li> --}}
             @endcanany
 
-            @canany(['isReferent','isCFP'])
-            <li>
-                <a href="{{route('ListeAbonnement')}}" class="d-flex nav_linke">
-                    <i class='bx bxl-sketch'></i>
-                    <span class="links_name">Abonnement</span>
-                </a>
-            </li>
+            @canany(['isReferent', 'isCFP'])
+                <li>
+                    <a href="{{ route('ListeAbonnement') }}" class="d-flex nav_linke">
+                        <i class='bx bxl-sketch'></i>
+                        <span class="links_name">Abonnement</span>
+                    </a>
+                </li>
 
             @endcan
             @can('isFormateur')
-            <li>
-                <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex nav_linke">
-                    <i class='bx bxs-notepad'></i>
-                    <span class="links_name">Mon CV</span>
-                </a>
-            </li>
-
+                <li>
+                    <a href="{{ route('profilProf', Auth::user()->id) }}" class="d-flex nav_linke">
+                        <i class='bx bxs-notepad'></i>
+                        <span class="links_name">Mon CV</span>
+                    </a>
+                </li>
             @endcan
 
             {{-- <li>
@@ -448,18 +449,18 @@
                 </a>
             </li> --}}
             @can('isCFP')
-            {{-- <li>
+                {{-- <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-book-add'></i>
                     <span class="links_name">Librairies</span>
                 </a>
             </li> --}}
-            <li>
-                <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
-                    {{-- <i class='bx bx-book-add'></i> --}}
-                    <span class="links_name">Librairies</span>
-                </a>
-            </li>
+                <li>
+                    <a href="{{ route('gestion_documentaire') }}" class="d-flex nav_linke">
+                        {{-- <i class='bx bx-book-add'></i> --}}
+                        <span class="links_name">Librairies</span>
+                    </a>
+                </li>
             @endcan
         </ul>
 
@@ -486,104 +487,123 @@
                     <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
                 </div> --}}
                 <div class="col-3 d-flex flex-row padding_logo">
-                    <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt="" class="img-fluid menu_logo me-3"></span>@yield('title')
+                    <span><img src="{{ asset('img/logo_formation/logo_fmg7635dc.png') }}" alt=""
+                            class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
                 <div class="col-5 align-items-center justify-content-start d-flex flex-row ">
                     @canany(['isSuperAdmin'])
 
-                                    <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3"  >
-                                        <span class="d-flex flex-column">  <i class='bx bxs-user'></i><span class="text_racourcis">Utilisateurs</span></span>
+                        <a href="{{ route('liste_utilisateur') }}" class="btn_racourcis me-4 mt-3">
+                            <span class="d-flex flex-column"> <i class='bx bxs-user'></i><span
+                                    class="text_racourcis">Utilisateurs</span></span>
 
 
-                                    </a>
-                                        <a href="{{route('categorie')}}"  class="btn_racourcis me-4 mt-3"  >
+                        </a>
+                        <a href="{{ route('categorie') }}" class="btn_racourcis me-4 mt-3">
 
-                                           <span class="d-flex flex-column"><i class='bx bxs-doughnut-chart'></i><span class="text_racourcis">Categories</span></span>
-                                        </a>
+                            <span class="d-flex flex-column"><i class='bx bxs-doughnut-chart'></i><span
+                                    class="text_racourcis">Categories</span></span>
+                        </a>
 
-                                        <a href="{{route('module')}}"  class="btn_racourcis me-4 mt-3"  >
+                        <a href="{{ route('module') }}" class="btn_racourcis me-4 mt-3">
 
-                                           <span class="d-flex flex-column"><i class='bx bx-book'></i><span class="text_racourcis"> Formations</span></span>
+                            <span class="d-flex flex-column"><i class='bx bx-book'></i><span class="text_racourcis">
+                                    Formations</span></span>
 
-                                        </a>
-                                        <a href="{{ route('taxes') }}" class="btn_racourcis me-4 mt-3"    >
-                                            <span class="d-flex flex-column"><i class='bx bx-spreadsheet'></i><span class="text_racourcis"> Taxe</span></span>
-                                        </a>
-                                        <a href="{{ route('devise') }}" class="btn_racourcis me-4 mt-3"    >
-                                            <span class="d-flex flex-column"><i class='bx bx-receipt'></i><span class="text_racourcis"> Devise</span></span>
-                                        </a>
+                        </a>
+                        <a href="{{ route('taxes') }}" class="btn_racourcis me-4 mt-3">
+                            <span class="d-flex flex-column"><i class='bx bx-spreadsheet'></i><span class="text_racourcis">
+                                    Taxe</span></span>
+                        </a>
+                        <a href="{{ route('devise') }}" class="btn_racourcis me-4 mt-3">
+                            <span class="d-flex flex-column"><i class='bx bx-receipt'></i><span class="text_racourcis">
+                                    Devise</span></span>
+                        </a>
 
 
 
 
 
 
-                     @endcanany
-                    @canany('isReferent','isStagiaire','isManager')
-                    <div class="row">
+                    @endcanany
+                    @canany('isReferent', 'isStagiaire', 'isManager')
+                        <div class="row">
 
-                        <form method="GET" action="{{route('result_formation')}}">
-                            @csrf
-                            <div class="form-row">
-                                <div class="searchBoxMod d-flex flex-row mt-4">
-                                    {{-- <input class="searchInputMod recherche_formation" type="text"
+                            <form method="GET" action="{{ route('result_formation') }}">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="searchBoxMod d-flex flex-row mt-4">
+                                        {{-- <input class="searchInputMod recherche_formation" type="text"
                                         name="nom_formation" placeholder="Rechercher par formations...">
                                     <button class="searchButtonMod recherche_formation" href="#">
                                      </button> --}}
-                                    <a href="{{route('liste_formation')}}" class="btn_racourcis me-4" role="button"
-                                        onclick="afficher_catalogue()"><span class="d-flex flex-column"><i class='bx bxs-category-alt'></i><span class="text_racourcis">Catalogue</span></span></a>
-                                    <a href="{{route('annuaire')}}" class="btn_racourcis me-4" role="button"
-                                        onclick="afficher_annuaire()"><span class="d-flex flex-column"><i class='bx bx-analyse'></i><span class="text_racourcis">Annuaire</span></span></a>
-                                    @canany(['isReferent','isStagiaire','isManager'])
-                                        <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
-                                        <a href="{{route('employes')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">Listes employées</span></span></a>
-                                    @endcan
-                                    @canany(['isCFP','isFormateur'])
-                                    <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
-                                    @endcanany
+                                        <a href="{{ route('liste_formation') }}" class="btn_racourcis me-4" role="button"
+                                            onclick="afficher_catalogue()"><span class="d-flex flex-column"><i
+                                                    class='bx bxs-category-alt'></i><span
+                                                    class="text_racourcis">Catalogue</span></span></a>
+                                        <a href="{{ route('annuaire') }}" class="btn_racourcis me-4" role="button"
+                                            onclick="afficher_annuaire()"><span class="d-flex flex-column"><i
+                                                    class='bx bx-analyse'></i><span
+                                                    class="text_racourcis">Annuaire</span></span></a>
+                                        @canany(['isReferent', 'isStagiaire', 'isManager'])
+                                            <a href="{{ route('calendrier_formation') }}" class="btn_racourcis me-4"
+                                                role="button"><span class="d-flex flex-column"><i
+                                                        class='bx bxs-calendar-edit'></i><span
+                                                        class="text_racourcis">Agenda</span></span></a>
+                                            <a href="{{ route('employes') }}" class="btn_racourcis me-4" role="button"><span
+                                                    class="d-flex flex-column"><i class='bx bxs-group'></i><span
+                                                        class="text_racourcis">Listes employées</span></span></a>
+                                        @endcan
+                                        @canany(['isCFP', 'isFormateur'])
+                                            <a href="{{ route('calendrier') }}" class="btn_racourcis me-4" role="button"><span
+                                                    class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span
+                                                        class="text_racourcis">Agenda</span></span></a>
+                                        @endcanany
 
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
                     @endcanany
                     @canany('isCFP')
-                    <div class="d-flex flex-row">
-                        <a href="{{route('liste_module')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-customize'></i><span class="text_racourcis">Modules</span></span>
-                        </a>
-                        <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bx-library'></i><span class="text_racourcis">Projets</span></span>
-                        </a>
-                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i>
-                                <span class="text_racourcis">Agenda</span></span>
-                        </a>
-                        <a href="{{route('liste_entreprise')}}" class="btn_racourcis me-4" role="button"><span
-                            class="d-flex flex-column"><i class='bx bxs-group'></i>
-                            <span class="text_racourcis">Listes equipes</span></span>
-                    </a>
-                    </div>
+                        <div class="d-flex flex-row">
+                            <a href="{{ route('liste_module') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bxs-customize'></i><span
+                                        class="text_racourcis">Modules</span></span>
+                            </a>
+                            <a href="{{ route('liste_projet') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bx-library'></i><span
+                                        class="text_racourcis">Projets</span></span>
+                            </a>
+                            <a href="{{ route('calendrier') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bxs-calendar-week'></i>
+                                    <span class="text_racourcis">Agenda</span></span>
+                            </a>
+                            <a href="{{ route('liste_entreprise') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bxs-group'></i>
+                                    <span class="text_racourcis">Listes equipes</span></span>
+                            </a>
+                        </div>
                     @endcanany
                     @canany('isStagiaire')
-                    <div class="d-flex flex-row">
-                        <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bx-library'></i><span
-                                    class="text_racourcis">Projets</span></span></a>
-                        <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
-                                    class="text_racourcis">Agenda</span></span></a>
-                    </div>
+                        <div class="d-flex flex-row">
+                            <a href="{{ route('liste_projet') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bx-library'></i><span
+                                        class="text_racourcis">Projets</span></span></a>
+                            <a href="{{ route('calendrier_formation') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
+                                        class="text_racourcis">Agenda</span></span></a>
+                        </div>
                     @endcanany
                     @canany('isFormateur')
-                    <div class="d-flex flex-row">
-                        <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bx-library'></i><span
-                                    class="text_racourcis">Projets</span></span></a>
-                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
-                                    class="text_racourcis">Agenda</span></span></a>
-                    </div>
+                        <div class="d-flex flex-row">
+                            <a href="{{ route('liste_projet') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bx-library'></i><span
+                                        class="text_racourcis">Projets</span></span></a>
+                            <a href="{{ route('calendrier') }}" class="btn_racourcis me-4" role="button"><span
+                                    class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
+                                        class="text_racourcis">Agenda</span></span></a>
+                        </div>
                     @endcanany
                 </div>
 
@@ -595,152 +615,175 @@
 
                         <div class="">
                             @can('isManager')
-                            <div class="btn_creer dropdown">
-
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none" aria-haspopup="true">
-                                    <i class='bx bx-plus-medical icon_creer'></i>Créer
-                                </a>
-
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
-                                    <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
-                                                class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
-                                            stagiaire</a></li>
-                                    <li><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i
-                                                class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
-                                            formation</a></li>
-                                    <li><a class="dropdown-item" href="{{route('budget')}}"><i
-                                                class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
-
-                                </ul>
-                            </div>
-                            @endcan
-                            @can('isReferent')
-                            <div class="d-flex flex-row">
                                 <div class="btn_creer dropdown">
 
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                        data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none"
+                                        aria-haspopup="true">
                                         <i class='bx bx-plus-medical icon_creer'></i>Créer
-
                                     </a>
 
-                                    <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="{{route('departement.create')}}"><i
-                                                    class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a></li>
-                                        <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
-                                                    class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel d'offre</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                                        <li><a class="dropdown-item" href="{{ route('planFormation.index') }}"> <i
                                                     class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
                                                 stagiaire</a></li>
-                                        <li><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i
+                                        <li><a class="dropdown-item" href="{{ route('ajout_plan') }}"> <i
                                                     class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
                                                 formation</a></li>
-                                        <li><a class="dropdown-item" href="{{route('budget')}}"><i
+                                        <li><a class="dropdown-item" href="{{ route('budget') }}"><i
                                                     class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('formations')}}">
-                                                <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module Interne
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('formateurs')}}">
-                                                <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur Interne
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('projets')}}">
-                                                <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </div>
-
-                                <div class="ms-2">
+                            @endcan
+                            @can('isReferent')
+                                <div class="d-flex flex-row">
                                     <div class="btn_creer dropdown">
 
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                                            <i class='bx bxs-cog icones_creer'></i>
-                                            Paramètres
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
+                                            style="text-decoration: none">
+                                            <i class='bx bx-plus-medical icon_creer'></i>Créer
+
                                         </a>
 
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                            <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}"><i
-                                                        class="fas fa-building icon_plus  "></i>&nbsp; Information légales</a></li>
-                                            <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
-                                                        class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                            <li><a class="dropdown-item" href="{{ route('departement.create') }}"><i
+                                                        class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a>
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('liste_departement')}}">
-                                                <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de l'entreprise
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}">
-                                                <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
-                                                <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
-                                            </a></li>
+                                            <li><a class="dropdown-item" href="{{ route('nouveau+appel+offre') }}"> <i
+                                                        class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel
+                                                    d'offre</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{ route('planFormation.index') }}"> <i
+                                                        class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
+                                                    stagiaire</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('ajout_plan') }}"> <i
+                                                        class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
+                                                    formation</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('budget') }}"><i
+                                                        class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('formations') }}">
+                                                    <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module Interne
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('formateurs') }}">
+                                                    <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau
+                                                    Formateur Interne
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('projets') }}">
+                                                    <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
+
+                                    <div class="ms-2">
+                                        <div class="btn_creer dropdown">
+
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
+                                                style="text-decoration: none">
+                                                <i class='bx bxs-cog icones_creer'></i>
+                                                Paramètres
+                                            </a>
+
+                                            <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('aff_parametre_referent') }}"><i
+                                                            class="fas fa-building icon_plus  "></i>&nbsp; Information
+                                                        légales</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('ListeAbonnement') }}"> <i
+                                                            class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{ route('liste_departement') }}">
+                                                        <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de
+                                                        l'entreprise
+                                                    </a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('aff_parametre_referent') }}">
+                                                        <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
+                                                    </a></li>
+                                                <li><a class="dropdown-item" href="{{ route('parametrage_salle') }}">
+                                                        <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
+                                                    </a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                             @endcan
                             @can('isCFP')
-                            <div class="d-flex flex-row">
-                                <div class="btn_creer dropdown">
-
-                                    <a class="dropdown-toggle ms-2" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
-
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="ya">
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('nouveau_module')}}">
-                                                <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
-                                                <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('nouveau_groupe',['type_formation'=>1])}}">
-                                                <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}">
-                                                <i class='bx bx-library icon_plus'></i>&nbsp;Projet Inter
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('facture')}}">
-                                                <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouvelle Facture
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="ms-2">
+                                <div class="d-flex flex-row">
                                     <div class="btn_creer dropdown">
 
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                                            <i class='bx bxs-cog icones_creer'></i>
-                                            Paramètres
-                                        </a>
+                                        <a class="dropdown-toggle ms-2" href="#" role="button" id="dropdownMenuLink"
+                                            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
+                                            style="text-decoration: none">
+                                            <i class='bx bx-plus-medical icon_creer'></i>Créer
 
-                                        <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                            <li><a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}"><i
-                                                        class="fas fa-building icon_plus  "></i>&nbsp; Information légales</a></li>
-                                            <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
-                                                        class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="ya">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('nouveau_module') }}">
+                                                    <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
+                                                </a>
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
-                                                <i class='bx bxs-building icon_plus'></i>&nbsp;Salle de formation
-                                            </a></li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('nouveau_formateur') }}">
+                                                    <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau
+                                                    Formateur
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('nouveau_groupe', ['type_formation' => 1]) }}">
+                                                    <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('nouveau_groupe_inter', ['type_formation' => 2]) }}">
+                                                    <i class='bx bx-library icon_plus'></i>&nbsp;Projet Inter
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('facture') }}">
+                                                    <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouvelle Facture
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
+                                    <div class="ms-2">
+                                        <div class="btn_creer dropdown">
+
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
+                                                style="text-decoration: none">
+                                                <i class='bx bxs-cog icones_creer'></i>
+                                                Paramètres
+                                            </a>
+
+                                            <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('affichage_parametre_cfp') }}"><i
+                                                            class="fas fa-building icon_plus  "></i>&nbsp; Information
+                                                        légales</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('ListeAbonnement') }}"> <i
+                                                            class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{ route('parametrage_salle') }}">
+                                                        <i class='bx bxs-building icon_plus'></i>&nbsp;Salle de formation
+                                                    </a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                             @endcan
 
                         </div>
@@ -749,8 +792,11 @@
                         <div class=" btn_creer header_img" style="height: 34px">
                             {{-- <p class="m-0 ms-2"></p> --}}
                             {{-- <i class='bx bxs-user-circle user_icon'></i> --}}
-                            <span class="d-flex mt-1" style="text-decoration: none; color:black; font-size:12px" type="button">
-                                <i class=' bx bxs-user' style="font-size: 17px; position: relative; top:.1rem;"></i> <span class="mt-1" style="font-size: 11.7px">Vous</span> <i class='bx bx-caret-down mt-1'></i>
+                            <span class="d-flex mt-1" style="text-decoration: none; color:black; font-size:12px"
+                                type="button">
+                                <i class=' bx bxs-user' style="font-size: 17px; position: relative; top:.1rem;"></i>
+                                <span class="mt-1" style="font-size: 11.7px">Vous</span> <i
+                                    class='bx bx-caret-down mt-1'></i>
                             </span>
                         </div>
                         <div class="pdp_profil mt-3" id="box_profil">
@@ -767,42 +813,43 @@
                                                     </div>
                                                 </span>
                                                 <p id="nom_etp"></p>
-                                                <h6 class="mb-0 text-center">{{Auth::user()->name}}</h6>
-                                                <h6 class="mb-0 text-center text-muted">{{Auth::user()->email}}</h6>
+                                                <h6 class="mb-0 text-center">{{ Auth::user()->name }}</h6>
+                                                <h6 class="mb-0 text-center text-muted">{{ Auth::user()->email }}</h6>
                                                 <div class="text-center">
                                                     @can('isManagerPrincipale')
-                                                    <a href="{{route('affProfilChefDepartement')}}"><button
-                                                            class="btn profil_btn mt-4 mb-2">Gérer votre
-                                                            compte</button></a><br>
+                                                        <a href="{{ route('affProfilChefDepartement') }}"><button
+                                                                class="btn profil_btn mt-4 mb-2">Gérer votre
+                                                                compte</button></a><br>
                                                     @endcan
                                                     @can('isFormateurPrincipale')
-                                                    <a href="{{route('profile_formateur')}}"><button
-                                                            class="btn profil_btn mt-4 mb-2">Gérer votre
-                                                            compte</button></a><br>
+                                                        <a href="{{ route('profile_formateur') }}"><button
+                                                                class="btn profil_btn mt-4 mb-2">Gérer votre
+                                                                compte</button></a><br>
                                                     @endcan
                                                     @can('isStagiairePrincipale')
-                                                    <a href="{{route('profile_stagiaire')}}"><button
-                                                            class="btn profil_btn mt-4 mb-2">Gérer votre
-                                                            compte</button></a><br>
+                                                        <a href="{{ route('profile_stagiaire') }}"><button
+                                                                class="btn profil_btn mt-4 mb-2">Gérer votre
+                                                                compte</button></a><br>
                                                     @endcan
                                                     @can('isReferentPrincipale')
-                                                    <a href="{{route('profil_referent')}}"><button
-                                                            class="btn profil_btn mt-4 mb-2">Gérer votre
-                                                            compte</button></a><br>
+                                                        <a href="{{ route('profil_referent') }}"><button
+                                                                class="btn profil_btn mt-4 mb-2">Gérer votre
+                                                                compte</button></a><br>
                                                     @endcan
                                                     @can('isCFPPrincipale')
-                                                    <a href="{{route('profil_du_responsable')}}"><button
-                                                            class="btn profil_btn mt-4 mb-2">Gérer votre
-                                                            compte</button></a><br>
+                                                        <a href="{{ route('profil_du_responsable') }}"><button
+                                                                class="btn profil_btn mt-4 mb-2">Gérer votre
+                                                                compte</button></a><br>
                                                     @endcan
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
-                                                    <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
+                                                    <input type="text" value="{{ Auth::user()->id }}" id="id_user"
+                                                        hidden>
 
-                                                        <p class="text-muted">Connécté en tant que :
-                                                            <ul id="liste_role" class="d-flex flex-column"></ul>
-                                                        </p>
+                                                    <p class="text-muted">Connécté en tant que :
+                                                    <ul id="liste_role" class="d-flex flex-column"></ul>
+                                                    </p>
 
                                                 </div>
                                                 <hr>
@@ -828,16 +875,16 @@
                                     </div>
                                     <div class="card-body py-0">
                                         <div class="d-flex flex-row py-0 card_body_text">
-                                            <a href="{{url('politique_confidentialite')}}" target="_blank">
+                                            <a href="{{ url('politique_confidentialite') }}" target="_blank">
                                                 <p class="m-0">Politique de confidentialité</p>
                                             </a>
                                             &nbsp;-&nbsp;
-                                            <a href="{{route('condition_generale_de_vente')}}" target="_blank">
+                                            <a href="{{ route('condition_generale_de_vente') }}" target="_blank">
                                                 <p class="m-0">Conditions d'utilisation</p>
                                             </a>
                                         </div>
                                         <div class="d-flex flex-row py-0 card_body_text">
-                                            <a href="{{url('contacts')}}" target="_blank">
+                                            <a href="{{ url('contacts') }}" target="_blank">
                                                 <p class="m-0">Contactez-nous</p>
                                             </a>
                                             &nbsp;-&nbsp;
@@ -854,6 +901,7 @@
             {{-- header --}}
             {{-- content --}}
             <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 4.5rem;">
+
                 @yield('content')
 
             </div>
@@ -923,7 +971,7 @@
                 </div>
             </div>
 
-    </div>
+        </div>
         {{-- footer --}}
     </div>
 
@@ -944,34 +992,35 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script> --}}
-    <script src="{{asset('js/admin.js')}}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
     <script type="text/javascript">
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
-        //On change la couleur de fond au hasard
-            $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
+            //On change la couleur de fond au hasard
+            $(this).css("background-color", '#' + (Math.random() * 0xFFFFFF << 0).toString(16).slice(-6));
         })
 
         $(document).ready(function() {
             var pdp = "";
             $.ajax({
-                url: '{{ route("profile_resp") }}'
-                , type: 'get'
-                , success: function(response) {
+                url: '{{ route('profile_resp') }}',
+                type: 'get',
+                success: function(response) {
                     var userData = response;
 
-                    if(userData['photo'] == 'oui'){
-                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
+                    if (userData['photo'] == 'oui') {
+                        var html =
+                            '<img src="{{ asset(':?') }}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
                         html = html.replace(":?", userData['user']);
                         // alert(JSON.stringify(userData));
                         $('.photo_users').append(html);
                     }
-                    if(userData['photo'] == 'non'){
-                        var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];
+                    if (userData['photo'] == 'non') {
+                        var html = userData['user'][0]['nm'] + '' + userData['user'][0]['pr'];
                         $('.photo_users').append(html);
                     }
-                }
-                , error: function(error) {
+                },
+                error: function(error) {
                     console.log(error);
                 }
             });
@@ -980,22 +1029,21 @@
         $(document).ready(function() {
             var pdp = "";
             $.ajax({
-                url: '{{ route("logos") }}'
-                , type: 'get'
-                , success: function(response) {
+                url: '{{ route('logos') }}',
+                type: 'get',
+                success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
+                    var html =
+                        '<img src="{{ asset('images/:?') }}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
 
                     $('.logo_etp_user').append(html);
-                }
-                , error: function(error) {
+                },
+                error: function(error) {
                     console.log(error);
                 }
             });
         });
-
-
     </script>
 </body>
 

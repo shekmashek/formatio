@@ -8,14 +8,14 @@ CREATE TABLE valeur_TVA
 
 
 
-CREATE TABLE devises
+CREATE TABLE devise
 (
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
     reference varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into devises values
+insert into devise values
 (1,"Ariary","AR"),
 (2,"Euro","€"),
 (3,"Dollar","$");

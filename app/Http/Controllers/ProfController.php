@@ -149,17 +149,20 @@ class ProfController extends Controller
                 return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 60Ko');
             }
             else{
-                if($request->sexe == "homme") $genre = 2;
-                if($request->sexe == "femme") $genre = 1;
-                if($request->sexe == "null") $genre = null;
 
+                // if($request->sexe == "homme") $genre = 2;
+                // if($request->sexe == "femme") $genre = 1;
+                // if($request->sexe == "null") $genre = null;
+                
+                
+// dd($request->all());
 
                 $frm = new formateur();
                 $frm->nom_formateur = $request->nom;
                 $frm->prenom_formateur = $request->prenom;
                 $frm->mail_formateur = $request->mail;
                 $frm->numero_formateur = $request->phone;
-                $frm->genre_id = $genre;
+                $frm->genre_id = $request->sexe;
                 $frm->date_naissance = $request->date_naissance;
                 $frm->adresse = $request->adresse;
                 $frm->CIN = $request->cin;
