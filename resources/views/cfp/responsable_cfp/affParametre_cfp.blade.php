@@ -251,7 +251,13 @@
                 </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
                         <a href="" class="none_">
-                            <p class="p-1 m-0" style="font-size: 12px;">TVA<span style="float: right;"> &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">TVA
+                                <span style="float: right;">
+                                    @foreach($tva as $tva_cfp)
+                                        {{$tva_cfp->pourcent}}
+                                    @endforeach
+                                    &nbsp;</span>
+                            </p>
                         </a>
                 </div>
             </div>

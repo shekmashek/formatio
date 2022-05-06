@@ -732,6 +732,13 @@
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
+                                        @can('isCFPPrincipale')
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
+                                                    <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau réferent
+                                                </a>
+                                            </li>
+                                        @endcan
                                         <li>
                                             <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
                                                 <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
@@ -756,6 +763,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                @can('isCFPPrincipale')
                                 <div class="ms-2">
                                     <div class="btn_creer dropdown">
 
@@ -777,6 +785,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                @endcan
                             </div>
                             @endcan
 
