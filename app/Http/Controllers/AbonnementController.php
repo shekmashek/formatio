@@ -361,6 +361,7 @@ class AbonnementController extends Controller
                         $annee = strftime('%Y',strtotime($dernier_facture[0]->invoice_date));
                     }
                 }
+             
             }
 
             else{

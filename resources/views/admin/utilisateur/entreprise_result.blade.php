@@ -59,7 +59,7 @@
                     Rechercher par entreprise <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        @foreach($entreprise as $etp)
+                        @foreach($entreprises as $etp)
                             <li><a href="{{route('utilisateur.show',$etp->id)}}">{{$etp->nom_etp}}</a></li>
                         @endforeach
                         <li class="divider"></li>
@@ -107,7 +107,7 @@
                 <thead>
                     <th> Logo </th>
                     <th> Entreprises</th>
-                    <th> Responsables Principales </th>
+                    <th> Responsables </th>
                    
                     <th> E-mail </th>
                     <th> Téléphone </th>
@@ -151,9 +151,9 @@
                             <img width="80" height="50" class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/entreprises/'.$data->entreprise->logo)}}" style="cellapading=0;" cellspacing="0">
                         </td>
                         <td><span>{{ $data->entreprise->nom_etp }}</span></td>
-                        <td><span>{{ $data->nom_resp}}</span><span class="ms-1">{{ $data->prenom_resp}}</span></td>
+                        <td><span>{{ $data->nom_resp}}</span><span class="ms-1">{{ $data->prenom_resp}}(<strong style="color: green" >principale</strong>)</span></td>
                       
-                        <td>{{ $data->entreprise->email_etp}}</td>
+                        <td>{{ $data->email_resp}}</td>
                         <td>{{ $data->telephone_resp}}</td>
                         <td>{{ $data->created_at}}</td>
                         

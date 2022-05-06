@@ -142,12 +142,12 @@
                                 <td>
 
                                     <div class="btn-group dropleft">
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('affResponsableCfp',$etp->id)}}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
-                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                            <a class="dropdown-item" href="{{route('profil_du_responsable',$etp->id)}}"><i class="fa fa-eye"></i> &nbsp; Afficher</a>
+                                            {{-- <a class="dropdown-item" href="" data-toggle="modal" data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash"></i> <strong style="color: red">Mettre fin à la collaboration</strong></a> --}}
                                         </div>
                                     </div>
                                 </td>

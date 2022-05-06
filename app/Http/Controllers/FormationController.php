@@ -231,13 +231,17 @@ class FormationController extends Controller
     {
 
         $categorie = formation::all();
-        return view('superadmin.catalogue.categories_formations', compact('categorie'));
+        // $ctg= formation::where('status', 1)->get();
+        $formation=DB::select('select * from formations where status=?',[1]);
+        // dd($ctg);
+        return view('superadmin.catalogue.categories_formations', compact('categorie','formation'));
     }
     public function module_formations()
     {
 
         $module = module::all();
-        return view('superadmin.catalogue.formation_publier', compact('module'));
+        $modules=module::where('status', 2)->get();
+        return view('superadmin.catalogue.formation_publier', compact('module','modules'));
     }
     public function ajout_categorie(Request $request)
     {

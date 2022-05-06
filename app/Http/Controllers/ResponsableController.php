@@ -298,13 +298,13 @@ class ResponsableController extends Controller
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-            dd($refs);
+           
             return view('admin.responsable.profilResponsable', compact('refs'));
         }
     }
 
 
-    public function affParametreReferent(){
+    public function affParametreReferent($id = null){
 
         // $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
@@ -325,14 +325,20 @@ class ResponsableController extends Controller
 
             return view('admin.responsable.affichage_parametreReferent', compact('refs','nom_entreprise','branche','referent','entreprise'));
         }
-        // // if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
-
-        // //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-        // //     return view('admin.responsable.affichage_parametreReferent', compact('refs'));
-        // }
+         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
+            $refs = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+            $entreprise = entreprise::with('Secteur')->findOrFail($id);
+            $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
+            $referent = entreprise::findOrFail($id);
+             $entreprise_id=entreprise::where('id',$id)->value('id');
+            
+             $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$entreprise_id]);
+             
+            $responsables=responsable::where('entreprise_id',$entreprise_id)->where('prioriter',0)->get();
+         
+           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','referent','responsables','abonnement'));
+        }
     }
-
-
     public function show($id)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
