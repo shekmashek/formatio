@@ -86,17 +86,17 @@
                                                                 @php
                                                                 echo number_format($mod->prix, 0, ' ', ' ');
                                                                 @endphp
-                                                                &nbsp;AR</span>&nbsp;HT<span>/pers</span>
+                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
                                                         </p>
                                                         <p class="m-0 ">
                                                             <span class="new_module_prix">
                                                                 @if($mod->prix_groupe == null)
-                                                                <span>-&nbsp;&nbsp;&nbsp;AR&nbsp;HT<span>/grp</span></span>
+                                                                <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
                                                                 @else
                                                                 @php
                                                                 echo number_format($mod->prix_groupe, 0, ' ', ' ');
                                                                 @endphp
-                                                                &nbsp;AR</span>&nbsp;HT<span>/grp</span>
+                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
                                                             @endif
                                                         </p>
                                                     </div>
@@ -251,17 +251,17 @@
                                                                 @php
                                                                 echo number_format($mod->prix, 0, ' ', ' ');
                                                                 @endphp
-                                                                &nbsp;AR</span>&nbsp;HT<span>/pers</span>
+                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
                                                         </p>
                                                         <p class="m-0 ">
                                                             <span class="new_module_prix">
                                                                 @if($mod->prix_groupe == null)
-                                                                <span>-&nbsp;&nbsp;&nbsp;AR&nbsp;HT<span>/grp</span></span>
+                                                                <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
                                                                 @else
                                                                 @php
                                                                 echo number_format($mod->prix_groupe, 0, ' ', ' ');
                                                                 @endphp
-                                                                &nbsp;AR</span>&nbsp;HT<span>/grp</span>
+                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
                                                             @endif
                                                         </p>
                                                     </div>
@@ -495,17 +495,17 @@
                                                             @php
                                                             echo number_format($mod->prix, 0, ' ', ' ');
                                                             @endphp
-                                                            &nbsp;AR</span>&nbsp;HT<span>/pers</span>
+                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
                                                     </p>
                                                     <p class="m-0 ">
                                                         <span class="new_module_prix">
                                                             @if($mod->prix_groupe == null)
-                                                            <span>-&nbsp;&nbsp;&nbsp;AR&nbsp;HT<span>/grp</span></span>
+                                                            <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
                                                             @else
                                                             @php
                                                             echo number_format($mod->prix_groupe, 0, ' ', ' ');
                                                             @endphp
-                                                            &nbsp;AR</span>&nbsp;HT<span>/grp</span>
+                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
                                                         @endif
                                                     </p>
                                                 </div>
@@ -816,7 +816,7 @@
                                                     <div class="col-lg-7 detail__prix__main__prix2">
                                                         <div>
                                                             <p id="preview_prix" class="text-center"><span
-                                                                    class="acf-prix" id="prix"></span>&nbsp;AR&nbsp;HT
+                                                                    class="acf-prix" id="prix"></span>&nbsp;{{$devise->devise}}&nbsp;HT
                                                             </p>
                                                         </div>
                                                     </div>
@@ -929,7 +929,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en AR</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
@@ -940,7 +940,7 @@
                                                     <input type="text" id="rangePrimary" class="prix_range" readonly/>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en AR</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
@@ -1040,7 +1040,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en AR</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
@@ -1051,7 +1051,7 @@
                                                     <input type="text" id="rangeSecondary" class="prix_range" readonly/>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en AR</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
@@ -1151,7 +1151,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en AR</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
@@ -1162,7 +1162,7 @@
                                                     <input type="text" id="rangeThird" class="prix_range" readonly/>
                                                 </div>
                                             </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en AR</p>
+                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
