@@ -580,9 +580,9 @@
                                 class="d-flex flex-column"><i class='bx bxs-calendar-week'></i>
                                 <span class="text_racourcis">Agenda</span></span>
                         </a>
-                        <a href="{{route('liste_entreprise')}}" class="btn_racourcis me-4" role="button"><span
+                        <a href="{{route('liste_equipe_admin')}}" class="btn_racourcis me-4" role="button"><span
                                 class="d-flex flex-column"><i class='bx bxs-group'></i>
-                                <span class="text_racourcis">Listes equipes</span></span>
+                                <span class="text_racourcis">Equipe admin</span></span>
                         </a>
                     </div>
                     @endcanany
@@ -731,6 +731,13 @@
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
+                                        @can('isCFPPrincipale')
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
+                                                    <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau réferent
+                                                </a>
+                                            </li>
+                                        @endcan
                                         <li>
                                             <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
                                                 <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
@@ -755,6 +762,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                @can('isCFPPrincipale')
                                 <div class="ms-2">
                                     <div class="btn_creer dropdown">
 
@@ -776,6 +784,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                @endcan
                             </div>
                             @endcan
 
@@ -951,13 +960,65 @@
             <div class="apprendre mt-3">
                 <div class="row">
                     <div class="col">
-                        <p class="m-0">Apprendre</p>
+                        <p class="m-0 titre_apprendre">Apprendre</p>
                     </div>
-                    <div class="col text-end">
-                        <i class="bx bx-x " role="button" onclick="afficherTuto();"></i>
+                    <div class="col text-end close">
+                        <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
+                        <i class="bx bx-x" role="button"></i>
                     </div>
                     <hr class="mt-2">
-                    apprendre
+                    @can('isAdmin')
+                    <div class="tutorielApprendreAdmin">Admin</div>
+                    @endcan
+                    @can('isCFP')
+                    <div class="tutorielApprendreCfp">
+                        <h5>Créer un nouveau projet de formation</h5>
+                        <p class="m-0 p-1">
+                            <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis suivant :</span>
+                        </p>
+                        <ol class="list-group list-group-numbered list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
+                                <div class="ms-2 me-auto">
+                                    <div class="text-sm">Avoir un catalogue de formation</div>
+                                </div>
+                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse" data-bs-target="#apprCat" aria-expanded="false" aria-controls="apprCat"><i class="fas fa-angle-down"></i></button>
+                            </li>
+                            <div id="apprCat" class="collapse p-2"><a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue de formation</span></a></div>
+                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
+                                <div class="ms-2 me-auto">
+                                    <div class="text-sm">Ajouter des formateurs</div>
+                                </div>
+                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse" data-bs-target="#apprFormateur" aria-expanded="false" aria-controls=""><i class="fas fa-angle-down"></i></button>
+                            </li>
+                            <div id="apprFormateur" class="collapse p-2"><a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a></div>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
+                                <div class="ms-2 me-auto">
+                                    <div class=" text-sm">Collaborer avec les entreprises qui ont des projets en commun avec vous </div>
+                                </div>
+                                <button class="btn btn-light btn-sm apprCat " type="button" data-bs-toggle="collapse" data-bs-target="#apprInter" aria-expanded="false" aria-controls="apprInter"><i class="fas fa-angle-down"></i></button>
+                            </li>
+                            <div id="apprInter" class="collapse p-2"><a href="liste_entreprise"><span>Cliquer ici pour collaborer avec une entreprise</span></a></div>
+                    </div>
+                    @endcan
+                    @can('isStagiaire')
+                    <div class="tutorielApprendreStagiaire">Stagiaire</div>
+                    @endcan
+
+                    @can('isReferent')
+                    <div class="tutorielApprendreReferent">Referent</div>
+                    @endcan
+
+                    @can('isManager')
+                    <div class="tutorielApprendreManager">Manager</div>
+                    @endcan
+
+                    @can('isFormateur')
+                    <div class="tutorielApprendreFormateur">Formateur</div>
+                    @endcan
+                        <!-- <h6 class="title_apprendre"><u>Annuaire</u></h6>
+                        <h6 class="title_apprendre"><u>Agenda</u></h6> -->
+
                 </div>
             </div>
 
@@ -983,6 +1044,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script> --}}
     <script src="{{asset('js/admin.js')}}"></script>
+    <script src="{{asset('js/apprendre.js')}}"></script>
     <script type="text/javascript">
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {

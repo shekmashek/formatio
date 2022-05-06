@@ -78,7 +78,7 @@ class DetailController extends Controller
             INNER JOIN groupes ON details.groupe_id = groupes.id
             INNER JOIN formateurs ON details.formateur_id = formateurs.id
             INNER JOIN cfps ON details.cfp_id = cfps.id
-            WHERE details.cfp_id = ?
+            WHERE details.cfp_id = ? order by details.groupe_id
             ',[$cfp_id]);
 
             $modules = array();

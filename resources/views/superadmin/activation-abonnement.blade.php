@@ -1,5 +1,31 @@
 @extends('layouts.admin')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<style>
+.navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+    transform: scale(1.1);
+    border: none;
+}
+</style>
+
 {{-- <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,65 +57,35 @@
         </div>
     </div> --}}
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-
-            <div class="d-flex flex-row justify-content-between py-5">
-
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Type d'abonnement</b><br>
-                    @foreach ($type as $tp )
-                        <p>{{$tp->type_abonnement->nom_type}} - {{$tp->type_abonne->abonne_name}}</p>
-                    @endforeach
-                </div>
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Abonnement</b>
-                    @if($liste!=null)
-                        {{-- @foreach ($liste as $listes) --}}
-                            <p><h5 class="th_color">{{$liste[0]->categorie}} </h5></p>
-                            <input type="text" value = "{{$liste[0]->categorie}}" hidden id="abonnementCtg">
-                        {{-- @endforeach --}}
-                    @endif
-                    {{-- @if($cfpListe!=null)
-                        @foreach ($cfpListe as $lst)
-                            <p><h5 class="th_color">{{$lst->categorie}} </h5></p>
-                            <input type="text" value = "{{$lst->categorie}}" hidden id="abonnementCtg">
-                        @endforeach
-                    @endif --}}
-                </div>
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Tarif</b>
-                    @foreach ($tarif as $tf)
-                        <p><h5 class="th_color">{{$tf->tarif}} Ar</h5></p>
-                    @endforeach
-                </div>
-                <div class="card card_abonnement mx-1 align-items-center text-center">
-                    <b>Total inscrit</b>
-                    @foreach ($nbAbonnement as $nb)
-                        <p><h5 class="th_color">{{$nb->abonnement_count}}</h5></p>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="card px-3">
-                <table class="table">
+<div class="container-fluid mt-5">
+    <div class="m-4" role="tabpanel">
+        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            <li class="nav-item">
+                <a href="#entreprise" class="nav-link active" data-bs-toggle="tab">Entreprise</a>
+            </li>
+            <li class="nav-item">
+                <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="entreprise">
+                <table class="table table-hover">
                     <thead>
-                        <th> Client </th>
-                        <th> Date demande </th>
-                        <th> Début </th>
-                        <th> Fin </th>
-                        <th> Status </th>
-
-                        <th> Activation </th>
+                        <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client_etp" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
+                         <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Date d'inscription &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Début &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Fin &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Status &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Activation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                     </thead>
-                    <tbody>
+                    <tbody class="entreprise">
                         @if($liste!=null)
                             @php $i = 0; @endphp
                             @foreach($liste as $listes)
                                     <tr>
-                                        <td class="th_color"> {{$nom_entreprise[$i][0]->nom_etp}} </td>
+                                        <td class="th_color"> {{$listes->nom_entreprise}} </td>
+                                        <td class="th_color"> {{$listes->nom_type}}</td>
                                         <td class="th_color">  {{$listes->date_demande}} </td>
                                         <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                         <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -110,39 +106,54 @@
                                     </tr>
                                     @php $i+=1; @endphp
                             @endforeach
-                        @else
-                            @foreach ($cfpListe as $listes)
-                                <tr>
-                                    <td class="th_color"> {{$listes->cfp->nom}} </td>
-                                    <td class="th_color">  {{$listes->date_demande}} </td>
-                                    <td class="th_color"> <span id = "debut_{{$listes->id}}" >{{$listes->date_debut}}</span> </td>
-                                    <td class="th_color"><span id = "fin_{{$listes->id}}" > {{$listes->date_fin}} </span> </td>
-                                    @if($listes->status == "En attente")
-                                        <td> <label class="label_orange" id = "label_statut_{{$listes->id}}" > {{$listes->status}} </label> </td>
-                                    @elseif ($listes->status == "Activé")
-                                        <td> <label class="label_vert" id = "label_statut_{{$listes->id}}"> {{$listes->status}} </label> </td>
-                                    @else
-                                        <td> <label class="label_rouge" id = "label_statut_{{$listes->id}}"> {{$listes->status}} </label> </td>
-                                    @endif
-                                     <td>
-                                        <!-- Default switch -->
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input activer" data-id="{{$listes->id}}" type="checkbox" role="switch"/>
-                                            <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->id}}">Activer</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
                         @endif
-
                     </tbody>
                 </table>
             </div>
-
+            <div class="tab-pane fade" id="of">
+                <table class="table table-hover">
+                    <thead>
+                        <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
+                         <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Date d'inscription &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Début &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Fin &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Status &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th> Activation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                    </thead>
+                    <tbody>
+                        @if($cfpListe!=null)
+                            @php $i = 0; @endphp
+                            @foreach ($cfpListe as $listes)
+                                <tr>
+                                    <td class="th_color"> {{$listes->nom_of}} </td>
+                                    <td class="th_color"> {{$listes->nom_type}}</td>
+                                    <td class="th_color">  {{$listes->date_demande}} </td>
+                                    <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
+                                    <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
+                                    @if($listes->status == "En attente")
+                                        <td> <label class="label_orange" id = "label_statut_{{$listes->abonnement_id}}" > {{$listes->status}} </label> </td>
+                                    @elseif ($listes->status == "Activé")
+                                        <td> <label class="label_vert" id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
+                                    @else
+                                        <td> <label class="label_rouge" id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
+                                    @endif
+                                    <td>
+                                        <!-- Default switch -->
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input activer" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
+                                            <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->abonnement_id}}">Activer</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @php $i+=1; @endphp
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-md-2"></div>
     </div>
-
 </div>
 
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -189,6 +200,41 @@
 
 
                 }
+            },
+            error:function(error){
+                console.log(error)
+            }
+        });
+    });
+    $( "#client_etp" ).on( "click", function() {
+        //on supprime le contenu du tableau
+        $('.entreprise').empty();
+
+        $.ajax({
+            type: "GET",
+            url: "{{route('tri_client')}}",
+            dataType: "html",
+            success:function(response){
+                var html = '';
+                var client=JSON.parse(response);
+                console.log(client);
+                for (var i = 0; i < client.length; i++) {
+                    // console.log(client[i].nom_entreprise);
+                    html += '<tr>';
+                    html += '<td>'+client[i].nom_entreprise+'</td>';
+                    html += '<td>'+client[i].nom_type+'</td>';
+                    html += '<td>'+client[i].date_demande+'</td>';
+                    html += '<td>'+client[i].date_debut+'</td>';
+                    html += '<td>'+client[i].date_fin+'</td>';
+                    html += '<td>'+client[i].status+'</td>';
+                    html += '<td><div class="form-check form-switch"><input class="form-check-input activer" data-id='+client[i].abonnement_id+' type="checkbox" role="switch"/> <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_'+client[i].abonnement_id+'>Activer</label></div></td>';
+                    html += '</tr>';
+                    console.log("contenu html:",html);
+                    $('.entreprise').append(html);
+                    html = '';
+                }
+
+
             },
             error:function(error){
                 console.log(error)

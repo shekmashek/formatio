@@ -52,7 +52,7 @@
                     <span class="span_name"> <input type="text" class="label_text" id="nom" disabled > </span>
                     <span class="span_name"> <input type="text" class="label_text" id="prenom" disabled > </span>
                     <span class="span_name"> <input type="text" class="label_text" id="fonction" disabled> </span>
-                    <span class="span_ajout" id="boutton_add">
+                    <span class="span_ajout" id="boutton_add" style="display: none;">
                         <i class="boutton fa fa-plus-circle" id="add_apprenant"></i>
                     </span>
                 </div>
@@ -123,6 +123,11 @@
                 @can('isCFP')
                      <th></th>
                 @endcan
+                @if ($type_formation_id == 2)
+                    @can('isReferent')
+                        <th></th>
+                    @endcan
+                @endif
             </thead>
             <tbody id="participant_groupe">
                 @foreach ($stagiaire as  $stg)
@@ -146,6 +151,11 @@
                     @can('isCFP')
                         <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
                     @endcan
+                    @if ($type_formation_id == 2)
+                        @can('isReferent')
+                            <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
+                        @endcan
+                    @endif
                 </tr>
                 <div class="modal fade" id="delete_stg_{{$stg->stagiaire_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">

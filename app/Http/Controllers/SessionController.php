@@ -135,6 +135,8 @@ class SessionController extends Controller
             // $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $requette = $projet->requette_detail_session_of($cfp_id,$id);
             $datas = DB::select($requette);
+
+
             // dd($datas);
             if($type_formation_id  == 1){
                 $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
@@ -496,7 +498,7 @@ class SessionController extends Controller
             DB::insert('insert into groupe_entreprises (groupe_id, entreprise_id) values (?, ?)', [$request->id_groupe, $etp_id]);
             return redirect()->route('detail_session',['id_session'=>$request->id_groupe]);
         }catch(Exception $e){
-            return back()->with('error','Insription échouée!');
+            return redirect()->route('detail_session',[$request->id_groupe,2]);
         }
     }
 

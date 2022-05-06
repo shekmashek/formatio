@@ -14,7 +14,7 @@
                 @can('isCFP')
                 <div class="col-12 d-flex justify-content-between" style="align-items: center">
                     <div class="col">
-                        <h3 class="mt-2">Nouvelle Moudule</h3>
+                        <h3 class="mt-2">Nouvelle Module</h3>
                     </div>
                     <div class="col search_formatiom">
                         <form action="">

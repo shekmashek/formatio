@@ -338,6 +338,9 @@ ul li a {
 .apprendre_btn button{
     display: grid;
 }
+.apprendre span{
+    font-size: 0.8rem;
+}
 /* infos */
 .infos{
     position: fixed;

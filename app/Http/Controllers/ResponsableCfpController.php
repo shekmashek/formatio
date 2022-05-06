@@ -12,6 +12,7 @@ use App\cfp;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
 use App\ResponsableCfpModel;
+use App\responsable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 
@@ -36,7 +37,6 @@ class ResponsableCfpController extends Controller
         if (Gate::allows('isCFP')) {
             if ($id!=null) {
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
-
             }
             else{
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
@@ -70,9 +70,10 @@ class ResponsableCfpController extends Controller
                 $sessions_counts = DB::select('select grp.id from groupes as grp join projets as prj on grp.projet_id = prj.id where prj.cfp_id = ?',[$refs->cfp_id]);
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
+                $tva = DB::select('select * from taxes where id = ?', [1]);
                 // dd($cfps->assujetti_id);
             }
-            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts'));
+            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
         }
 
@@ -94,6 +95,19 @@ class ResponsableCfpController extends Controller
         //
     }
 
+
+
+    public function listeEquipeAdminCFP(Request $request) {
+        $fonct = new FonctionGenerique();
+        $user_id = Auth::id();
+        if (Gate::allows('isCFP')){
+            $resp_connecte = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $cfp_id = $resp_connecte->cfp_id;
+            $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where user_id = ? and activiter = 1 and cfp_id = ?' , [$user_id , $cfp_id]);
+            // dd($cfp_id , $cfp);
+        return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp'));
+        }
+    }
 
     public function store(Request $request)
     {

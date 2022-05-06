@@ -160,7 +160,7 @@ CREATE TABLE `tarif_categories` (
 
 
 CREATE TABLE cfps (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,74
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
@@ -178,7 +178,7 @@ CREATE TABLE cfps (
   updated_at timestamp NULL DEFAULT current_timestamp(),
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  default 'XXXXXXX',
+  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX',
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -206,11 +206,9 @@ CREATE TABLE reseaux_sociaux (
 
 alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL;
 alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
-alter table cfps rename column domaine_de_formation to slogan;
-
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date NOT current_timestamp(),
+  `date_demande` date DEFAULT current_timestamp(),
   `date_debut` date DEFAULT current_timestamp(),
   `date_fin` date DEFAULT current_timestamp(),
   `mode_paiement` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -235,7 +233,7 @@ CREATE TABLE responsables_cfp(
   fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',

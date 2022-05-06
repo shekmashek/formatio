@@ -1,4 +1,5 @@
 @extends('./layouts/admin')
+@inject('groupe', 'App\Groupe')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 @if (Session::has('error'))
@@ -339,14 +340,25 @@
                                             echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
                                     </div>
                                     <div class="col-3 text-center">
-                                        <span>Analamahitsy</span>
+                                        <span>{{ $data->adresse_ville.', '.$data->adresse_lot }}</span>
                                     </div>
                                     <div class="col-3 text-center">
                                         <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>
                                     </div>
-                                    @canany(['isManager','isReferent','isStagiaire'])
+                                    {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
+                                    @canany(['isReferent'])
                                         <div class="col-3 text-center">
-                                            <a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}" class="btn_inscription" role="button">S'inscrire</a>
+                                            <a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}" class="btn_inscription" role="button">
+                                                @php
+                                                    $inscrit = $groupe->inscrit_session_inter($data->groupe_id);
+                                                    if ($inscrit == 0) {
+                                                        echo "S'inscrire";
+                                                    }
+                                                    if ($inscrit == 1) {
+                                                        echo "Déjà inscrit";
+                                                    }
+                                                @endphp
+                                            </a>
                                         </div>
                                     @endcanany
                                 </div>

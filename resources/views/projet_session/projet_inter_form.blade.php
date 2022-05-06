@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau Projet Inter</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container pt-5">
