@@ -569,11 +569,12 @@ Route::get('verifyFacture','FactureController@verifyFacture')->name('verifyFactu
 Route::get('verifyReferenceBC','FactureController@verifyReferenceBC')->name('verifyReferenceBC');
 
 //============================== recherche facture ================
-Route::get('search_par_date/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date')->name('search_par_date');
-Route::get('search_par_num_fact/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{num_fact?}','FactureController@search_par_num_fact')->name('search_par_num_fact');
-Route::get('search_par_entiter/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{entiter_id?}','FactureController@search_par_entiter')->name('search_par_entiter');
+Route::get('search_par_date/{nbPage_full?}/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date')->name('search_par_date');
+Route::get('search_par_solde/{nbPage_full?}/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{solde_debut?}/{solde_fin?}','FactureController@search_par_intervale_solde')->name('search_par_solde');
+Route::get('search_par_num_fact/{nbPage_full?}/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{num_fact?}','FactureController@search_par_num_fact')->name('search_par_num_fact');
+Route::get('search_par_entiter/{nbPage_full?}/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{entiter_id?}','FactureController@search_par_entiter')->name('search_par_entiter');
 Route::get('search_par_solde_pagination/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date_pagination')->name('search_par_solde_pagination');
-Route::get('search_par_solde/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{solde_debut?}/{solde_fin?}','FactureController@search_par_intervale_solde')->name('search_par_solde');
+
 //============================== trie colonne table  facture ================
 Route::get('trie_par_num_facture','FactureController@trie_par_num_facture')->name('trie_par_num_facture');
 Route::get('trie_par_entiter','FactureController@trie_par_entiter')->name('trie_par_entiter');

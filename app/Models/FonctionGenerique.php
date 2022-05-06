@@ -334,7 +334,7 @@ class FonctionGenerique extends Model
     public function queryWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
     {
         if ($nbPag == null) {
-            $nbPag = 0;
+            $nbPag = 1;
         }
         $query = "SELECT * FROM " . $nomTab;
         if (count($para) != count($val)) {
@@ -359,7 +359,9 @@ class FonctionGenerique extends Model
                     $query .= " , ";
                 }
             }
-            $query .= " " . $order . "  limit " . $nb_limit . " offset " . $nbPag;
+            // $query .= " " . $order . "  limit " . $nb_limit . " offset " . $nbPag;
+            $query .= " " . $order . "  limit " . $nb_limit . " offset " . ($nbPag-1);
+
             return $query;
         }
     }
