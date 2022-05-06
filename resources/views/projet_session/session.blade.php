@@ -1,5 +1,5 @@
 @extends('./layouts/admin')
-@inject('groupe', 'App\Groupe')
+@inject('groupe', 'App\groupe')
 @section('content')
 <style>
     .corps_planning .nav-link {
@@ -267,7 +267,7 @@
     }
 
     .btn_modifier_statut:hover {
-        background-color: white; 
+        background-color: white;
         color: black;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
@@ -406,7 +406,7 @@
                     </div>
                 </div>
             @endcanany
-            
+
         </nav>
         <section class="bg-light py-1">
             <div class="m-0 p-0">
@@ -454,7 +454,7 @@
                         <div class="nav-item active" role="presentation">
                             <a href="#detail" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between  active 
+                                <button class="planning d-flex justify-content-between  active
                                 @can('isCFP')
                                     {{ 'action_animation' }}
                                 @endcan"
@@ -477,12 +477,12 @@
                                     @if ($type_formation_id == 1)
                                         @can('isCFP')
                                             {{ 'action_animation' }}
-                                        @endcan    
+                                        @endcan
                                     @endif
                                     @if ($type_formation_id == 2)
                                         @can('isReferent')
                                             {{ 'action_animation' }}
-                                        @endcan    
+                                        @endcan
                                     @endif
                                      "
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
@@ -532,7 +532,7 @@
                         <div class="nav-item" role="presentation">
                             <a href="#document" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between 
+                                <button class="planning d-flex justify-content-between
                                     @canany(['isCFP','isFormateur'])
                                         {{ 'action_animation' }}
                                     @endcan"
