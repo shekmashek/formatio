@@ -28,10 +28,10 @@
                         @else
                             <p class="nom_org">{{$cfps->nom}}</p>
                         @endif
-                        @if($cfps->nom == NULL )
+                        @if($cfps->slogan == NULL )
                             <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Ajouter Slogan</a>
                         @else
-                            <p class="nom_org">{{$cfps->slogan}}</p>
+                            <p>{{$cfps->slogan}}</p>
                         @endif
                         <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Modifier</a>
                     </div>
@@ -92,7 +92,7 @@
                     @if($cfps->telephone == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;Téléphone Incomplète</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p>{{$cfps->telephone}}</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" class="action_other">Modifier Numéro</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;{{$cfps->telephone}}</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" class="action_other">Modifier Numéro</a></p></div>
                     @endif
                 </div>
             </div>
