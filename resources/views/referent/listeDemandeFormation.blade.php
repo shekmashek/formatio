@@ -8,14 +8,14 @@
         <div class="row">
             <div class="col-lg-12">
             	<br>
-                <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                <div class="shadow-sm p-3 bg-body rounded">
                     <div class="container-fluid">
                     <div class="shadow p-3 mb-5 bg-body rounded">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-10">
                                 {{-- <br>
-                <h3>Plan de formation et budgetisation</h3>
-                <br> --}}
+                                <h3>Plan de formation et budgetisation</h3>
+                                <br> --}}
                                 <div class="panel-heading">
                                         <ul class="nav nav-pills">
                                             <button type = "button" class ="btn_next {{ Route::currentRouteNamed('planFormation') ? 'active' : '' }}"><a href="{{route('planFormation.index')}}" ><span class="fa fa-th-list"></span>  Nouvelle demande</a></button>&nbsp;&nbsp;
@@ -37,8 +37,13 @@
                                         </ul>
                                 </div>
                             </div>
-                            </div>
+                            <div class="col-lg">
+                                <div class="">
+                                    <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+                                </div>
+                            </div> 
                         </div>
+                    </div>
                 {{-- <h3>Liste des demandes du plan de formation: {{$liste[0]->annee_plan->Annee}}</h3> --}}
 
                 <table class="table">

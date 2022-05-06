@@ -949,7 +949,8 @@
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
-                                        <td>{{ $pj->modalite }}</td>
+                                        {{-- <td>{{ $pj->modalite }}</td> --}}
+                                        <td>{{ $pj->module_id }}</td>
                                         <td>
                                             <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}
                                             </p>

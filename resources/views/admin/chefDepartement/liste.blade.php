@@ -3,6 +3,12 @@
     <h3 class="text_header m-0 mt-1">Manager</h3>
 @endsection
 @section('content')
+<style>
+    .bgTest {
+        background-color: #7635DC;
+        color: white
+    }
+</style>
 <link rel="stylesheet" href="{{asset('assets/css/employes.css')}}">
 <div class="container-fluid px-5">
 
@@ -478,7 +484,7 @@
                                                 @else
                                                 <a href="{{asset('images/chefDepartement/'.$chef[$i]->photos)}}"> <img
                                                         title="clicker pour voir l'image"
-                                                        src="{{asset('images/chefDepartements/'.$chef[$i]->photos)}}"
+                                                        src="{{asset('images/chefDepartement/'.$chef[$i]->photos)}}"
                                                         style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                             </td>
                                             @endif
@@ -668,16 +674,9 @@
                           </h2>
                           <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
-                                <form action="/referents/filtre/query" method="post">
+                                <form action="/referents/filtre/query/fonction" method="post" >
                                     @csrf
-                                    
-                                    <select name="testReferent" id="testReferent" class="form-control form-control-sm" style="width: 265px">
-                                        <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
-                                        @foreach ($referent as $rf)
-                                            <option value="{{ $rf->id }}">{{ $rf->fonction_resp }}</option> 
-                                        @endforeach
-                                    </select>
-                                    <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
+                                    <input style="width: 265px" type="text" name="fonctionReferent" id="fonctionReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
                                 </form>
                                 <hr>
                                 <form action="/referents/filtre/query/name" method="post" >
@@ -703,16 +702,9 @@
                           </h2>
                           <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
-                                <form action="/employes/filtre/query" method="post">
+                                <form action="/employes/filtre/query/fonction" method="post">
                                     @csrf
-                                    
-                                    <select name="test" id="test" class="form-control form-control-sm" style="width: 265px">
-                                        <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
-                                        @foreach ($stagiaires as $stg)
-                                            <option value="{{ $stg->id }}">{{ $stg->fonction_stagiaire }}</option> 
-                                        @endforeach
-                                    </select>
-                                    <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
+                                    <input style="width: 265px" type="text" name="test" id="test" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
                                 </form>
                                 <hr>
                                 <form action="/employes/filtre/query/name" method="post" >
@@ -775,14 +767,10 @@
                                 <div class="accordion-body">
                                     <form action="/chefs/filtre/query" method="post">
                                         @csrf
-                                        
-                                        <select name="testChef" id="testChef" class="form-control form-control-sm" style="width: 265px">
-                                            <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
-                                            @foreach ($chef as $ch)
-                                                <option value="{{ $ch->id }}">{{ $ch->fonction_chef }}</option> 
-                                            @endforeach
-                                        </select>
-                                        <input type="submit" value="Filtrer" class="btn btn-sm mt-2" style="width: 150px; background-color: #7635dc; color: #fff">
+                                        <form action="/chefs/filtre/query/fonction" method="post" >
+                                            @csrf
+                                            <input style="width: 265px" type="text" name="fonctionChef" id="fonctionChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
+                                        </form>
                                     </form>
                                     <hr>
                                     <form action="/chefs/filtre/query/name" method="post" >
@@ -982,11 +970,63 @@
 
 </script>
 
+{{--filtre fonction employe--}}
+<script type="text/javascript">
+    $('body').on('keyup','#test',function(){
+        $('#matricule').val('');
+        $('#name').val('');
+        $('#role_name').val('');
+        $('.rnla').hide();
+        $('.rnlh').hide();
+
+        var test = $(this).val();
+        console.log(test)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("stagiaire.filter.fonction") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                test: test,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_row').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.matricule+
+                        '</td><td>'+value.nom_stagiaire+
+                        '</td><td>'+value.prenom_stagiaire+
+                        '</td><td>'+value.fonction_stagiaire+
+                        '</td><td>'+value.mail_stagiaire+
+                        '</td><td>'+value.telephone_stagiaire+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
+                        '</td><tr>';
+                    
+                   
+                    console.log(tableRow);
+                });
+                $('#dynamic_row').append(tableRow);
+                
+            }
+            
+        });
+    });
+</script>
+
 {{--filtre name--}}
 <script type="text/javascript">
     $('body').on('keyup','#name',function(){
         $('#matricule').val('');
         $('#role_name').val('');
+        $('#test').val('');
         $('.rnla').hide();
         $('.rnlh').hide();
         var name = $(this).val();
@@ -1017,7 +1057,7 @@
                         '</td><td>'+value.fonction_stagiaire+
                         '</td><td>'+value.mail_stagiaire+
                         '</td><td>'+value.telephone_stagiaire+
-                        '</td><td>'+value.role_name+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                         '</td><tr>';
                     
                    
@@ -1036,6 +1076,7 @@
     $('body').on('keyup','#matricule',function(){
         $('#name').val('');
         $('#role_name').val('');
+        $('#test').val('');
         $('.rnla').hide();
         $('.rnlh').hide();
         var matricule = $(this).val();
@@ -1066,7 +1107,7 @@
                         '</td><td>'+value.fonction_stagiaire+
                         '</td><td>'+value.mail_stagiaire+
                         '</td><td>'+value.telephone_stagiaire+
-                        '</td><td>'+value.role_name+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                         '</td><tr>';
                     
                     
@@ -1080,11 +1121,12 @@
     });
 </script>
 
-{{--filtre role--}}
+{{--filtre employe role--}}
 <script type="text/javascript">
     $('body').on('keyup','#role_name',function(){
         $('#name').val('');
         $('#matricule').val('');
+        $('#test').val('');
         $('.rnla').hide();
         $('.rnlh').hide();
         var role_name = $(this).val();
@@ -1115,7 +1157,7 @@
                         '</td><td>'+value.fonction_stagiaire+
                         '</td><td>'+value.mail_stagiaire+
                         '</td><td>'+value.telephone_stagiaire+
-                        '</td><td>'+value.role_name+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                         '</td><tr>';
                     console.log(tableRow);
                 });
@@ -1126,11 +1168,59 @@
     });
 </script>
 
+{{--filtre referent fonction--}}
+<script type="text/javascript">
+    $('body').on('keyup','#fonctionReferent',function(){
+        $('#matriculeReferent').val('');
+        $('#roleReferent').val('');
+        $('#nameReferent').val('');
+
+        var fonctionReferent = $(this).val();
+        console.log(fonctionReferent)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("referent.filter.fonction") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                fonctionReferent: fonctionReferent,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_rowR').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/responsables/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.matricule+
+                        '</td><td>'+value.nom_resp+
+                        '</td><td>'+value.prenom_resp+
+                        '</td><td>'+value.fonction_resp+
+                        '</td><td>'+value.email_resp+
+                        '</td><td>'+value.telephone_resp+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#dynamic_rowR').append(tableRow);
+                
+            }
+            
+        });
+    });
+</script>
+
 {{--filtre referent name--}}
     <script type="text/javascript">
         $('body').on('keyup','#nameReferent',function(){
             $('#matriculeReferent').val('');
             $('#roleReferent').val('');
+            $('#fonctionReferent').val('');
 
             var nameReferent = $(this).val();
             console.log(nameReferent)
@@ -1160,7 +1250,7 @@
                             '</td><td>'+value.fonction_resp+
                             '</td><td>'+value.email_resp+
                             '</td><td>'+value.telephone_resp+
-                            '</td><td>'+value.role_name+
+                            '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                             '</td><tr>';
                         console.log(tableRow);
                     });
@@ -1177,6 +1267,7 @@
         $('body').on('keyup','#matriculeReferent',function(){
             $('#nameReferent').val('');
             $('#roleReferent').val('');
+            $('#fonctionReferent').val('');
 
             var matriculeReferent = $(this).val();
             console.log(matriculeReferent)
@@ -1206,7 +1297,7 @@
                             '</td><td>'+value.fonction_resp+
                             '</td><td>'+value.email_resp+
                             '</td><td>'+value.telephone_resp+
-                            '</td><td>'+value.role_name+
+                            '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                             '</td><tr>';
                         console.log(tableRow);
                     });
@@ -1218,10 +1309,12 @@
         });
     </script>
 
+{{--filtre referent role--}}
 <script type="text/javascript">
     $('body').on('keyup','#roleReferent',function(){
         $('#nameReferent').val('');
         $('#matriculeReferent').val('');
+        $('#fonctionReferent').val('');
 
         var roleReferent = $(this).val();
         console.log(roleReferent)
@@ -1251,11 +1344,59 @@
                         '</td><td>'+value.fonction_resp+
                         '</td><td>'+value.email_resp+
                         '</td><td>'+value.telephone_resp+
-                        '</td><td>'+value.role_name+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                         '</td><tr>';
                     console.log(tableRow);
                 });
                 $('#dynamic_rowR').append(tableRow);
+                
+            }
+            
+        });
+    });
+</script>
+
+{{--filtre chef fonction--}}
+<script type="text/javascript">
+    $('body').on('keyup','#fonctionChef',function(){
+        $('#matriculeChef').val('');
+        $('#roleChef').val('');
+        $('#nameChef').val('');
+        $('.rlc').hide();
+
+        var fonctionChef = $(this).val();
+        console.log(fonctionChef)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("chef.filter.fonction") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                fonctionChef: fonctionChef,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_rowC').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/chefDepartement/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.id+
+                        '</td><td>'+value.nom_chef+
+                        '</td><td>'+value.prenom_chef+
+                        '</td><td>'+value.fonction_chef+
+                        '</td><td>'+value.mail_chef+
+                        '</td><td>'+value.telephone_chef+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#dynamic_rowC').append(tableRow);
                 
             }
             
@@ -1268,6 +1409,7 @@
     $('body').on('keyup','#nameChef',function(){
         $('#matriculeChef').val('');
         $('#roleChef').val('');
+        $('#fonctionChef').val('');
         $('.rlc').hide();
 
         var nameChef = $(this).val();
@@ -1298,7 +1440,7 @@
                         '</td><td>'+value.fonction_chef+
                         '</td><td>'+value.mail_chef+
                         '</td><td>'+value.telephone_chef+
-                        '</td><td>'+value.role_name+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                         '</td><tr>';
                     console.log(tableRow);
                 });
@@ -1315,6 +1457,7 @@
     $('body').on('keyup','#matriculeChef',function(){
         $('#roleChef').val('');
         $('#nameChef').val('');
+        $('#fonctionChef').val('');
         $('.rlc').hide();
 
         var matriculeChef = $(this).val();
@@ -1345,7 +1488,7 @@
                         '</td><td>'+value.fonction_chef+
                         '</td><td>'+value.mail_chef+
                         '</td><td>'+value.telephone_chef+
-                        '</td><td>'+value.role_name+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                         '</td><tr>';
                     console.log(tableRow);
                 });
@@ -1362,6 +1505,7 @@
     $('body').on('keyup','#roleChef',function(){
         $('#matriculeChef').val('');
         $('#nameChef').val('');
+        $('#fonctionChef').val('');
         $('.rlc').hide();
 
         var roleChef = $(this).val();
@@ -1392,7 +1536,7 @@
                         '</td><td>'+value.fonction_chef+
                         '</td><td>'+value.mail_chef+
                         '</td><td>'+value.telephone_chef+
-                        '</td><td>'+value.role_name+
+                        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
                         '</td><tr>';
                     console.log(tableRow);
                 });
@@ -1400,6 +1544,40 @@
                 
             }
             
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#employé').addClass('bgTest');
+
+        $("#employé").click(function(){
+            $('#employé').addClass('bgTest');
+            $("#referent").removeClass("bgTest");
+            $('#formateur').removeClass('bgTest');
+            $('#manager').removeClass('bgTest');
+        });
+
+        $("#referent").click(function(){
+            $('#referent').addClass('bgTest');
+            $("#employé").removeClass("bgTest");
+            $('#formateur').removeClass('bgTest');
+            $('#manager').removeClass('bgTest');
+        });
+
+        $("#manager").click(function(){
+            $('#manager').addClass('bgTest');
+            $("#employé").removeClass("bgTest");
+            $("#referent").removeClass("bgTest");
+            $('#formateur').removeClass('bgTest');
+        });
+
+        $("#formateur").click(function(){
+            $('#formateur').addClass('bgTest');
+            $("#employé").removeClass("bgTest");
+            $("#referent").removeClass("bgTest");
+            $('#manager').removeClass('bgTest');
         });
     });
 </script>

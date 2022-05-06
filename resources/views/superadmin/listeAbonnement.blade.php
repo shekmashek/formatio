@@ -10,6 +10,11 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid">
+    <div class="col-md">
+        <div class="">
+            <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+        </div>
+    </div>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">
@@ -22,7 +27,7 @@
                 <a href="#facture" class="nav-link" data-toggle="tab">Factures</a>
             </li>
         </ul>
-
+        
         <div class="tab-content">
             <div class="tab-pane fade show" id="abonnement">
                 @if (\Session::has('erreur'))
@@ -198,6 +203,118 @@
 
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{--filter employes--}}
+<div class="filtrer mt-3 testFilter">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-11">
+                <p class="m-0" style="color: #0052D4; text-transform: uppercase">Filter vos Abonnements</p>
+            </div>
+            <div class="col-md-1 text-end">
+                <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+            </div>
+        </div>
+        <hr class="mt-2">
+        {{-- @canany(['isReferent', 'isCFP']) --}}
+        <div class="col-12 pe-3">
+            <div class="row mb-3 p-2 pt-0">
+                      <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                              Historique des services
+                            </button>
+                          </h2>
+                          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <form action="/referents/filtre/query/fonction" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="fonctionReferent" id="fonctionReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
+                                </form>
+                                <hr>
+                                <form action="/referents/filtre/query/name" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="nameReferent" id="nameReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                </form>
+                                <form action="/referents/filtre/query/matricule" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="matriculeReferent" id="matriculeReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                </form>
+                                <form action="/referents/filtre/query/role" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="roleReferent" id="roleReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                              Abonnements
+                            </button>
+                          </h2>
+                          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <form action="/employes/filtre/query/fonction" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="test" id="test" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
+                                </form>
+                                <hr>
+                                <form action="/employes/filtre/query/name" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                </form>
+                                <form action="/employes/filtre/query/matricule" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                </form>
+                                <form action="/employes/filtre/query/role" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingFour">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Factures
+                              </button>
+                            </h2>
+                            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <form action="/chefs/filtre/query" method="post">
+                                        @csrf
+                                        <form action="/chefs/filtre/query/fonction" method="post" >
+                                            @csrf
+                                            <input style="width: 265px" type="text" name="fonctionChef" id="fonctionChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
+                                        </form>
+                                    </form>
+                                    <hr>
+                                    <form action="/chefs/filtre/query/name" method="post" >
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="nameChef" id="nameChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                    </form>
+                                    <form action="/chefs/filtre/query/matricule" method="post">
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="matriculeChef" id="matriculeChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                    </form>
+                                    <form action="/chefs/filtre/query/role" method="post">
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="roleChef" id="roleChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                    </form>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                    {{-- <a style="color: blue; margin-top: 10px;" href="{{ route('employes') }}"><i class="fa-solid fa-arrow-rotate-right"></i> Actualiser</a> --}}
             </div>
         </div>
     </div>

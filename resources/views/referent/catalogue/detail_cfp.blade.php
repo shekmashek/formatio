@@ -257,7 +257,7 @@
                         {{-- <p>{{ $avis->commentaire }}</p> --}}
                     </div>
 
-                    {{-- @endforeach --}}  insert into horaires(jours,h_entree,h_sortie,cfp_id) values (5,7,17,2);
+                    {{-- @endforeach --}}
                 </div>
             </div>
         </div>

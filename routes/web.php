@@ -1215,20 +1215,19 @@ Route::get('supprimer_salle/{id?}','SalleFormationController@destroy')->name('su
 Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('modifier_salle');
 
 //filtre employes
-// Route::get('/employes/filtre', 'DepartementController@filtre');
-Route::post('/employes/filtre/query', 'DepartementController@filtre')->name('stagiaire.filter');
+Route::get('/employes/filtre/query/fonction', 'DepartementController@filtreFonction')->name('stagiaire.filter.fonction');
 Route::get('/employes/filtre/query/name', 'DepartementController@filtreName')->name('stagiaire.filter.name');
 Route::get('/employes/filtre/query/matricule', 'DepartementController@filtreMatricule')->name('stagiaire.filter.matricule');
 Route::get('/employes/filtre/query/role', 'DepartementController@filtreRole')->name('stagiaire.filter.role');
 
 //filtre referents
-Route::post('/referents/filtre/query', 'DepartementController@filtreReferent')->name('referent.filter');
+Route::get('/referents/filtre/query/fonction', 'DepartementController@filtreReferent')->name('referent.filter.fonction');
 Route::get('/referents/filtre/query/name', 'DepartementController@filtreReferentName')->name('referent.filter.name');
 Route::get('/referents/filtre/query/matricule', 'DepartementController@filtreReferentMatricule')->name('referent.filter.matricule');
 Route::get('/referents/filtre/query/role', 'DepartementController@filtreReferentRole')->name('referent.filter.role');
 
 //filtre chef departement
-Route::post('/chefs/filtre/query', 'DepartementController@filtreChef')->name('chef.filter');
+Route::get('/chefs/filtre/query/fonction', 'DepartementController@filtreChef')->name('chef.filter.fonction');
 Route::get('/chefs/filtre/query/name', 'DepartementController@filtreChefName')->name('chef.filter.name');
 Route::get('/chefs/filtre/query/matricule', 'DepartementController@filtreChefMatricule')->name('chef.filter.matricule');
 Route::get('/chefs/filtre/query/role', 'DepartementController@filtreChefRole')->name('chef.filter.role');
