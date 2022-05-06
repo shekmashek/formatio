@@ -211,9 +211,9 @@
                 <div id='calendar' style="width:100%;"></div>
             </div>
             <div class="col-sm-6" id="detail" style="display: none">
-                <div class="card" style="width: auto;">
+                {{-- <div class="card" style="width: auto;">
                     <div id="editor"></div>
-                    <div class="card-body" id="test">
+                    <div class="card-body" id="test">--}}
                         <h2 class="card-title" style="text-align: center;">
                             Projet de formation: <label id="types"></label><br>
                             <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label>
@@ -255,9 +255,9 @@
                                 </tbody>
                             </table>
                         @endcanany
-                    </div>
+                    {{-- </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="filtrer mt-3">
             <div class="row">
