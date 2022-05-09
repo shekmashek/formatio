@@ -2,8 +2,11 @@
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
+
+
     $(document).ready(function() {
         $("#myModal").modal('show');
+
     });
 
     /*--------------------------------------------------------------------------------------------------------------------*/
@@ -71,6 +74,223 @@
         return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
     }
 
+
+
+    function getDataFactureTous(full_facture, devise) {
+        var html_tous = '';
+        if (full_facture.length > 0) {
+
+            for (var i_act = 0; i_act < full_facture.length; i_act += 1) {
+
+                if (full_facture[i_act].reference_type_facture == "Acompte") {
+                    console.log(JSON.stringify(full_facture[i_act]));
+                }
+                var url_detail_facture = "{{ route('detail_facture', ':id') }}";
+                url_detail_facture = url_detail_facture.replace(":id", full_facture[i_act].num_facture);
+
+                var url_edit_facture = "{{ route('edit_facture', ':id') }}";
+                url_edit_facture = url_edit_facture.replace(":id", full_facture[i_act].num_facture);
+
+                var url_form_facture = "{{ route('valid_facture') }}";
+
+                var url_delete_facture = "{{ route('delete_facture', ':id') }}";
+                url_delete_facture = url_delete_facture.replace(":id", full_facture[i_act].num_facture);
+
+                var url_liste_encaissement_facture = "{{ route('listeEncaissement', ':id') }}";
+                url_liste_encaissement_facture = url_liste_encaissement_facture.replace(":id", full_facture[i_act].num_facture);
+
+                var url_pdf_liste_encaissement_facture = "{{ route('pdf+liste+encaissement', ':id') }}";
+                url_pdf_liste_encaissement_facture = url_pdf_liste_encaissement_facture.replace(":id", full_facture[i_act].num_facture);
+
+                var url_form_encaissement = "{{ route('encaisser') }}";
+
+                html_tous += " <tr><td> <a href=" + url_detail_facture + ">";
+
+                if (full_facture[i_act].reference_type_facture == "Facture") {
+
+                    html_tous += "  <div style='background-color: green; border-radius: 10px; text-align: center;color: white'>" +
+                        full_facture[i_act].reference_type_facture +
+                        "</div>";
+                } else if (full_facture[i_act].reference_type_facture == "Avoir") {
+
+                    html_tous += "   <div style='background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white'>" +
+                        full_facture[i_act].reference_type_facture +
+                        " </div> ";
+                } else if (full_facture[i_act].reference_type_facture == "Acompte") {
+                    html_tous += "    <div style='background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white'> " +
+                        full_facture[i_act].reference_type_facture +
+                        " </div> ";
+                    /*     console.log(JSON.stringify(full_facture[i_act].reference_type_facture)); */
+                }
+
+                /* else {
+
+                    html_tous += "   <div style='background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white'>"; +
+                    full_facture[i_act].reference_type_facture +
+                        " </div>";
+                } */
+
+                html_tous += "  </a></td><th>";
+                html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].num_facture + "   </a> </th> <td>";
+                html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].nom_etp + " </a></td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].invoice_date + " </a> </td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].due_date + " </a> </td><td>";
+
+                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(full_facture[i_act].montant_total, 0, ",", " ") + " </a> </td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(full_facture[i_act].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+
+                html_tous += "  <a href=" + url_detail_facture + "> ";
+
+
+                if (full_facture[i_act].dernier_montant_ouvert <= 0) {
+                    html_tous += '<div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';
+                } else {
+                    if (full_facture[i_act].facture_encour == "valider") {
+                        if (full_facture[i_act].jour_restant > 0) {
+                            html_tous += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white"> envoyé  </div>';
+                        } else {
+                            html_tous += '<div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white"> en retard </div>';
+                        }
+                    } else if (full_facture[i_act].facture_encour == "en_cour") {
+                        if (full_facture[i_act].jour_restant > 0) {
+                            html_tous += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">  partiellement payé  </div>';
+                        } else {
+                            html_tous += '<div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">  en retard </div>';
+                        }
+                    }
+                }
+
+
+                html_tous += "   </a> </td>";
+                html_tous += "<td>";
+
+
+
+                if (full_facture[i_act].facture_encour == "valider") {
+
+                    html_tous += ' <div class="dropdown"><div class="btn-group dropstart"> <button type="button" class="btn  btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> </button> ';
+                    html_tous += '  <ul class="dropdown-menu">';
+                    html_tous += '  <a href="#" class="dropdown-item">';
+                    html_tous += ' <button type="button" class=" btn  payement" data-id="' + full_facture[i_act].num_facture + '" id="' + full_facture[i_act].num_facture + '" data-bs-toggle="modal" data-bs-target="#modal' + full_facture[i_act].cfp_id + '_' + full_facture[i_act].num_facture + '">Faire un encaissement</button>';
+                    html_tous += '</a>';
+                    html_tous += '<a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                    html_tous += '</ul>';
+                    html_tous += ' </div> </div>';
+
+                } else if (full_facture[i_act].facture_encour == "en_cour") {
+
+                    html_tous += '<div class="dropdown">';
+                    html_tous += '<div class="btn-group dropstart">';
+                    html_tous += '<button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">';
+                    html_tous += '</button>';
+                    html_tous += '<ul class="dropdown-menu">';
+                    html_tous += '<a href="#" class="dropdown-item">';
+                    html_tous += '<button type="button" class=" btn  payement" data-id="' + full_facture[i_act].num_facture + '" id="' + full_facture[i_act].num_facture + '" data-bs-toggle="modal" data-bs-target="#modal' + full_facture[i_act].cfp_id + '_' + full_facture[i_act].num_facture + '">Faire un encaissement</button>';
+                    html_tous += '</a>'
+                    html_tous += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                    html_tous += '<hr class="dropdown-divider">';
+                    html_tous += '<a class="dropdown-item" href="' + url_pdf_liste_encaissement_facture + '">';
+                    html_tous += '<button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>';
+                    html_tous += '</ul> </div></div>';
+
+                } else if (full_facture[i_act].facture_encour == "terminer") {
+
+                    html_tous += '  <div class="dropdown ">';
+                    html_tous += '<div class = "btn-group dropstart">';
+                    html_tous += '<button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>';
+                    html_tous += '<ul class = "dropdown-menu" >';
+                    html_tous += '<li class="dropdown-item">';
+                    html_tous += ' <a href="' + url_edit_facture + '">  <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier facture</button>';
+                    html_tous += '</a></li> <li class = "dropdown-item"> ';
+                    html_tous += '<form action = "' + url_form_facture + '" method = "POST">';
+                    html_tous += '@csrf';
+                    html_tous += '<input name = "num_facture" type = "hidden" value = "' + full_facture[i_act].num_facture + '" >';
+                    html_tous += '<button type="submit" class="btn ">Valider facture</button>';
+                    html_tous += "</form>";
+                    html_tous += "</li> <li>";
+                    html_tous += '<a class="dropdown-item" href="' + url_delete_facture + '">';
+                    html_tous += '<button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>';
+                    html_tous += " </a> </li></ul> </div> </div>";
+
+                } else {
+
+                    html_tous += '  <div class="dropdown ">';
+                    html_tous += '<div class = "btn-group dropstart">';
+                    html_tous += '<button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>';
+                    html_tous += '<ul class = "dropdown-menu" >';
+                    html_tous += '<li class="dropdown-item">';
+                    html_tous += ' <a href="' + url_edit_facture + '">  <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier facture</button>';
+                    html_tous += '</a></li> <li class = "dropdown-item"> ';
+                    html_tous += '<form action = "' + url_form_facture + '" method = "POST">';
+                    html_tous += '@csrf';
+                    html_tous += '<input name = "num_facture" type = "hidden" value = "' + full_facture[i_act].num_facture + '" >';
+                    html_tous += '<button type="submit" class="btn ">Valider facture</button>';
+                    html_tous += "</form>";
+                    html_tous += "</li> <li>";
+                    html_tous += '<a class="dropdown-item" href="' + url_delete_facture + '">';
+                    html_tous += '<button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>';
+                    html_tous += " </a> </li></ul> </div> </div>";
+                }
+
+
+
+                html_tous += "</td> </tr>";
+
+
+                html_tous += ' <div id="modal' + full_facture[i_act].cfp_id + '_' + full_facture[i_act].num_facture + '" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">';
+
+                html_tous += '<div class="modal-dialog">';
+                html_tous += '<div class="modal-content">';
+                html_tous += '<div class="modal-header">';
+                html_tous += '<div class="modal-title text-md">';
+                html_tous += '<h6>Encaisser la facture  N° : <span class="text-mued" id="num_fact_encaissement">' + full_facture[i_act].num_facture + '</span></h6>';
+
+                html_tous += '<h5>Reste à payer : <strong><label id="montant"></label> ' + devise.devise + ' ' + number_format(full_facture[i_act].dernier_montant_ouvert, 0, ",", " ") + '</strong></h5>';
+                html_tous += '</div>';
+                html_tous += '</div>';
+                html_tous += '<div class="modal-body">';
+                html_tous += '<form action="' + url_form_encaissement + '" id="formPayement" method="POST">';
+                html_tous += '@csrf';
+                html_tous += '<input autocomplete="off" type="text" value="' + full_facture[i_act].num_facture + '" name="num_facture" class="form-control formPayement" required="required" hidden> </div>';
+
+                html_tous += '<div class="inputbox inputboxP mt-3  ms-1">';
+                html_tous += '<span>Description</span>';
+                html_tous += ' <textarea autocomplete="off" name="libelle" id="libelle" class="text_description form-control" placeholder="description" rows="5"></textarea>';
+
+                html_tous += '</div>';
+                html_tous += ' <div class="inputbox inputboxP mt-3  ms-1">';
+                html_tous += ' <span>Montant à facturer</span>';
+                html_tous += ' <input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" required="required" style="height: 50px;"> </div>';
+
+                html_tous += ' <div class="form-group  mt-3  ms-1">';
+                html_tous += '   <span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>';
+                html_tous += '  <select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example" style="height: 50px;">';
+                html_tous += '</select>';
+                html_tous += '</div>';
+                html_tous += '<div class="inputbox inputboxP mt-3  ms-1">';
+                html_tous += '<span>Date de paiement<strong style="color:#ff0000;">*</strong></span>';
+                html_tous += '<input type="date" name="date_encaissement" id="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">';
+                html_tous += ' </div>';
+                html_tous += ' <div class="inputbox inputboxP mt-3" id="numero_facture"></div>';
+                html_tous += '</form>';
+                html_tous += '<div class="mt-4 mb-4">';
+                html_tous += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>';
+                html_tous += '</div>';
+                html_tous += '</div>';
+                html_tous += ' </div>';
+                html_tous += '</div>';
+                html_tous += '</div>';
+
+
+            }
+        } else {
+            html_tous += '<tr><td colspan = "10" class = "text-center" style = "color:red;" > Aucun Résultat </td> </tr> ';
+        }
+        return html_tous;
+    }
+
+
+
     function getDataFactureBrouillon(facture_inactif, devise) {
         var html_inactif = '';
         if (facture_inactif.length > 0) {
@@ -102,8 +322,8 @@
                         " </div> ";
                 } else if (facture_inactif[i_act].reference_type_facture == "Acompte") {
 
-                    html_inactif += "    <div style='background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white'> "; +
-                    facture_inactif[i_act].reference_type_facture +
+                    html_inactif += "    <div style='background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white'> " +
+                        facture_inactif[i_act].reference_type_facture +
                         " </div> ";
                 } else {
 
@@ -206,8 +426,8 @@
                         " </div> ";
                 } else {
 
-                    html_actif += "   <div style='background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white'>"; +
-                    facture_actif[i_actif].reference_type_facture +
+                    html_actif += "   <div style='background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white'>" +
+                        facture_actif[i_actif].reference_type_facture +
                         " </div>";
                 }
 
@@ -353,8 +573,8 @@
                         " </div> ";
                 } else if (facture_payer[i_payer].reference_type_facture == "Acompte") {
 
-                    html_payer += "    <div style='background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white'> "; +
-                    facture_payer[i_payer].reference_type_facture +
+                    html_payer += "    <div style='background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white'> " +
+                        facture_payer[i_payer].reference_type_facture +
                         " </div> ";
                 } else {
 
@@ -403,35 +623,120 @@
 
         if (valiny["entiter"] == "OF") {
 
+            var full_facture = valiny["full_facture"];
             var facture_inactif = valiny["facture_inactif"];
             var facture_actif = valiny["facture_actif"];
             var facture_payer = valiny["facture_payer"];
 
+            var html_full = getDataFactureTous(full_facture, devise);
             var html_inactif = getDataFactureBrouillon(facture_inactif, devise);
             var html_actif = getDataFactureValider(facture_actif, devise);
             var html_payer = getDataFacturePayer(facture_payer, devise);
 
+
             return {
-                "html_inactif": html_inactif
+                "html_full": html_full
+                , "html_inactif": html_inactif
                 , "html_actif": html_actif
                 , "html_payer": html_payer
             };
+
         } else {
+            var full_facture = valiny["full_facture"];
             var facture_actif = valiny["facture_actif"];
             var facture_payer = valiny["facture_payer"];
+
+            var html_full = getDataFactureTous(full_facture, devise);
             var html_actif = getDataFactureValider(facture_actif, devise);
             var html_payer = getDataFacturePayer(facture_payer, devise);
 
             return {
-                "html_actif": html_actif
+                "html_full": html_full
+                , "html_actif": html_actif
                 , "html_payer": html_payer
             };
         }
 
     }
 
+    /*============================================================================*/
+    function getDataRequetTrie(idName,trie_par_rep) {
+    var dataValiny = {
+
+        data_value: $(idName).val()
+        , nb_pagination_brouillon: @php echo $pagination_brouillon["debut_aff"];@endphp
+        , nb_pagination_full: @php echo $pagination_full["debut_aff"];@endphp
+        , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
+        , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
+        ,trie_par: trie_par_rep
+    };
+
+    @php  if (isset($invoice_dte) && isset($due_dte)) {    @endphp
+
+        dataValiny = {
+            data_value: $(idName).val()
+            , nb_pagination_brouillon: @php echo $pagination_brouillon["debut_aff"];@endphp
+            , nb_pagination_full: @php echo $pagination_full["debut_aff"];@endphp
+            , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
+            , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
+            , invoice_dte : document.getElementById("debut_dte").value
+            , due_dte : document.getElementById("fin_dte").value
+            ,trie_par: trie_par_rep
+        };
+
+        @php
+    } else if (isset($solde_debut) && isset($solde_fin)) {
+    @endphp
 
 
+        dataValiny = {
+            data_value: $(idName).val()
+            , nb_pagination_brouillon: @php echo $pagination_brouillon["debut_aff"];@endphp
+            , nb_pagination_full: @php echo $pagination_full["debut_aff"];@endphp
+            , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
+            , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
+            , solde_debut : @php echo $solde_debut;@endphp
+            , solde_fin : @php echo $solde_fin;@endphp
+            ,trie_par: trie_par_rep
+        };
+
+        @php
+    } else if (isset($num_fact)) {
+    @endphp
+
+
+        dataValiny = {
+            data_value: $(idName).val()
+            , nb_pagination_brouillon: @php echo $pagination_brouillon["debut_aff"];@endphp
+            , nb_pagination_full: @php echo $pagination_full["debut_aff"];@endphp
+            , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
+            , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
+            , num_fact : "@php echo $num_fact;@endphp"
+            ,trie_par: trie_par_rep
+        };
+
+
+        @php
+    } else if (isset($entiter_id)) {
+    @endphp
+
+
+        dataValiny = {
+            data_value: $(idName).val()
+            , nb_pagination_brouillon: @php echo $pagination_brouillon["debut_aff"];@endphp
+            , nb_pagination_full: @php echo $pagination_full["debut_aff"];@endphp
+            , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
+            , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
+            , entiter_id : "@php echo $entiter_id;@endphp"
+            ,trie_par: trie_par_rep
+        };
+
+        @php
+    }
+    @endphp
+
+    return dataValiny;
+}
     /*==============================================================================================*/
 
     $(".dte_facturation_filtre").on('click', function(e) {
@@ -525,7 +830,8 @@
                 .addClass("bxs-chevron-down");
         }
     });
-/* =================================================================================================*/
+    /* =================================================================================================*/
+
 
     $(".num_fact_trie").on('click', function(e) {
         var valiny = $(this).val();
@@ -580,37 +886,35 @@
             .removeClass("color-text-trie")
             .addClass("fa-arrow-down");
 
+           var dataValue = getDataRequetTrie(".num_fact_trie","NUM_FACT");
+
         $.ajax({
             method: "GET"
-            , url: "{{route('trie_par_num_facture')}}"
-            , data: {
-                data_value: $(this).val()
-                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
-            }
+            , url: "{{route('facture.trie')}}"
+            , data: dataValue
             , dataType: "html"
             , success: function(response) {
-
-
 
                 var valiny = JSON.parse(response);
                 var resultat = getDataFacture(response);
 
                 if (valiny["entiter"] == "OF") {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_brouillon').empty().append(resultat["html_inactif"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 } else {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
-
-
 
             }
             , error: function(error) {
                 console.log(error)
             }
         });
+
     });
 
     /*--------------------------------------------- Nom Entité-----------------------------------------------------------------------*/
@@ -666,13 +970,12 @@
             $(".nom_entiter_trie").val(0);
         }
 
+        var dataValue = getDataRequetTrie(".nom_entiter_trie","ENTITE");
+
         $.ajax({
             method: "GET"
-            , url: "{{route('trie_par_entiter')}}"
-            , data: {
-                data_value: $(this).val()
-                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
-            }
+            , url: "{{route('facture.trie')}}"
+            , data: dataValue
             , dataType: "html"
             , success: function(response) {
 
@@ -680,13 +983,16 @@
                 var resultat = getDataFacture(response);
 
                 if (valiny["entiter"] == "OF") {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_brouillon').empty().append(resultat["html_inactif"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 } else {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
+
 
             }
             , error: function(error) {
@@ -749,13 +1055,12 @@
             $(".dte_reglement_trie").val(0);
         }
 
+        var dataValue = getDataRequetTrie(".dte_reglement_trie","DUE_DTE");
+
         $.ajax({
             method: "GET"
-            , url: "{{route('trie_par_dte')}}"
-            , data: {
-                data_value: $(this).val()
-                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
-            }
+            , url: "{{route('facture.trie')}}"
+            , data: dataValue
             , dataType: "html"
             , success: function(response) {
 
@@ -763,10 +1068,12 @@
                 var resultat = getDataFacture(response);
 
                 if (valiny["entiter"] == "OF") {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_brouillon').empty().append(resultat["html_inactif"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 } else {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
@@ -830,26 +1137,24 @@
             $(".total_payer_trie").val(0);
         }
 
+        var dataValue = getDataRequetTrie(".total_payer_trie","TOTAL_SOLDE");
+
         $.ajax({
             method: "GET"
-            , url: "{{route('trie_par_totale_payer')}}"
-            , data: {
-                data_value: $(this).val()
-                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
-            }
+            , url: "{{route('facture.trie')}}"
+            , data: dataValue
             , dataType: "html"
             , success: function(response) {
 
-
-
                 var valiny = JSON.parse(response);
                 var resultat = getDataFacture(response);
-
                 if (valiny["entiter"] == "OF") {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_brouillon').empty().append(resultat["html_inactif"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 } else {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
@@ -912,24 +1217,24 @@
             $(".rest_payer_trie").val(0);
         }
 
+        var dataValue = getDataRequetTrie(".rest_payer_trie","RESTE_SOLDE");
+
         $.ajax({
             method: "GET"
-            , url: "{{route('trie_par_reste_payer')}}"
-            , data: {
-                data_value: $(this).val()
-                , nb_pagination: @php echo $pagination_brouillon["debut_aff"];@endphp
-            }
+            , url: "{{route('facture.trie')}}"
+            , data: dataValue
             , dataType: "html"
             , success: function(response) {
 
                 var valiny = JSON.parse(response);
                 var resultat = getDataFacture(response);
-
                 if (valiny["entiter"] == "OF") {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_brouillon').empty().append(resultat["html_inactif"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 } else {
+                    $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }

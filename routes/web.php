@@ -576,6 +576,8 @@ Route::get('search_par_entiter/{nbPage_full?}/{nbPage_inactif?}/{nbPage_actif?}/
 Route::get('search_par_solde_pagination/{nbPage_inactif?}/{nbPage_actif?}/{nbPage_payer?}/{fact_paginer?}/{invoice_dte?}/{due_dte?}','FactureController@search_par_date_pagination')->name('search_par_solde_pagination');
 
 //============================== trie colonne table  facture ================
+Route::get('facture.trie','FactureController@trie_par')->name('facture.trie');
+
 Route::get('trie_par_num_facture','FactureController@trie_par_num_facture')->name('trie_par_num_facture');
 Route::get('trie_par_entiter','FactureController@trie_par_entiter')->name('trie_par_entiter');
 Route::get('trie_par_dte','FactureController@trie_par_dte')->name('trie_par_dte');

@@ -211,44 +211,70 @@
 
 <div class="container-fluid">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
-    <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
-        @if ($pagination["fin_aff"] >= $pagination["totale_pagination"])
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+    @if(isset($invoice_dte) && isset($due_dte))
+    <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
+    @elseif(isset($solde_debut) && isset($solde_fin))
+    <a href="{{route('liste_facture')}}"><span class="btn_creer  text-center filter"><span style="position: relative; bottom: -0.2rem">
+            </span> filtre activé <i class="fas fa-times"></i></span>
+    </a>
+    @elseif(isset($num_fact))
+    <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
+    @elseif(isset($entiter_id))
+    <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
+    @else
 
-        @elseif ($pagination["debut_aff"] == 1)
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-        <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+    @endif
 
-        @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-            <a href="{{route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{  route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-            @else
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-            <a href="{{ route('liste_facture',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-            @endif
-    </span>
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            {{-- <li></li> --}}
             <li class="nav-item">
-                <a href="{{route('liste_facture')}}" class="nav-link">
-                    TOUT
-                </a>
+
+                @if (isset($pour_list))
+                @if ($pour_list == "TOUT")
+                <a href="#" class="nav-link active" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="true">
+                    @else
+                    <a href="#" class="nav-link" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="false">
+                        @endif
+                        @else
+                        <a href="#" class="nav-link" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="false">
+                            @endif
+                            TOUT
+                            {{count($full_facture)}}
+                        </a>
+
             </li>
             <li class="nav-item">
+                @if (isset($pour_list))
+                @if ($pour_list == "ACTIF")
                 <a href="#" class="nav-link active" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="true">
-                    Impayé
-                    {{count($facture_actif)}}
-                </a>
+                    @else
+                    <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
+                        @endif
+                        @else
+                        <a href="#" class="nav-link active" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="true">
+                            @endif
+                            Impayé
+                            {{count($facture_actif)}}
+                        </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
-                    Payé
-                    {{count($facture_payer)}}
-                </a>
+                @if (isset($pour_list))
+                @if ($pour_list == "PAYER")
+                <a href="#" class="nav-link active" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="true">
+                    @else
+                    <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
+                        @endif
+                        @else
+                        <a href="#" class="nav-link" id=" nav-payer-tab" data-bs-toggle="tab" data-bs-target="#nav-payer" type="button" role="tab" aria-controls="nav-payer" aria-selected="false">
+                            @endif
+                            Payé
+                            {{count($facture_payer)}}
+                        </a>
             </li>
         </ul>
 
@@ -258,912 +284,507 @@
 
                 <div class="tab-content" id="nav-tabContent">
 
-                    <div class="tab-pane fade show active" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
-                        <table class="table  table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-
-                                    </th>
-                                    <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="list_data_trie_valider">
-                                @if (count($facture_actif) > 0)
-                                @foreach ($facture_actif as $actif)
-                                <tr>
-                                    <td>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-
-                                            @if ($actif->reference_type_facture == "Facture")
-                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
-                                            @elseif($actif->reference_type_facture == "Avoir")
-                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
-                                            @elseif($actif->reference_type_facture == "Acompte")
-                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
-                                            @else
-                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
-                                            @endif
-
-                                        </a>
-                                    </td>
-                                    <th>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->num_facture}}
-                                        </a>
-                                    </th>
-                                    <td>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->nom_cfp}}
-                                        </a>
-                                    </td>
-                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->invoice_date}}
-                                        </a>
-                                    </td>
-                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->due_date}}
-                                        </a>
-                                    </td>
-                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                        </a>
-                                    </td>
-                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            @if ($actif->jour_restant >0)
-                                            @if ($actif->facture_encour == "en_cour")
-                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                                partiellement payé
-                                            </div>
-                                            @else
-                                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                                envoyé
-                                            </div>
-                                            @endif
-
-                                            @else
-                                            <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                                en retard
-                                            </div>
-                                            @endif
-                                        </a>
-                                    </td>
-
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
-                                </tr>
+                    @if (isset($pour_list))
+                    @if ($pour_list == "TOUT")
+                    <div class="tab-pane fade show active" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
+                        @else
+                        <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
+                            @endif
+                            @else
+                            <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
                                 @endif
-                            </tbody>
-                        </table>
-                    </div>
 
+                                {{------------------------------------------------------------------------------- pagination facture full--}}
+                                @include("admin.facture.pagination_etp.pagination_tout_facture")
 
-                    {{-- --}}
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            </th>
+                                            <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            </th>
+                                            <th scope="col">Date de facturation</th>
+                                            <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            </th>
+                                            <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            </th>
+                                            <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            </th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="list_data_trie_tous">
+                                        @if (count($full_facture) > 0)
+                                        @foreach ($full_facture as $actif)
 
-                    <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
-                        <table class="table  table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Date de facturation</th>
-                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                        <tr>
+                                            <td>
+                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
 
-                                    </th>
-                                    <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                    </th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="list_data_trie_payer">
-                                @if (count($facture_payer) > 0)
-                                @foreach ($facture_payer as $actif)
-                                <tr>
-                                    <td>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            @if ($actif->reference_type_facture == "Facture")
-                                            <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
-                                            @elseif($actif->reference_type_facture == "Avoir")
-                                            <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
-                                            @elseif($actif->reference_type_facture == "Acompte")
-                                            <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
+                                                    @if ($actif->reference_type_facture == "Facture")
+                                                    <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                        {{$actif->reference_type_facture}}
+                                                    </div>
+                                                    @elseif($actif->reference_type_facture == "Avoir")
+                                                    <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                        {{$actif->reference_type_facture}}
+                                                    </div>
+                                                    @elseif($actif->reference_type_facture == "Acompte")
+                                                    <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                        {{$actif->reference_type_facture}}
+                                                    </div>
+                                                    @else
+                                                    <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                        {{$actif->reference_type_facture}}
+                                                    </div>
+                                                    @endif
+
+                                                </a>
+
+                                            </td>
+                                            <th>
+                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                    {{$actif->num_facture}}
+                                                </a>
+                                            </th>
+                                            <td>
+                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                    {{$actif->nom_etp}}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                    {{$actif->invoice_date}}
+                                                </a>
+                                            </td>
+                                            <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                                    {{$actif->due_date}}
+                                                </a>
+                                            </td>
+                                            <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                    {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                </a>
+                                            </td>
+                                            <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                    {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+
+                                                    @if($actif->dernier_montant_ouvert<=0)
+                                                    <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
+                                                        payé
+                                                    </div>
+                                                    @else
+                                                    @if($actif->facture_encour =="valider")
+                                                    @if ($actif->jour_restant >0)
+                                                    <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                        envoyé
+                                                    </div>
+                                                    @else
+                                                    <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                        en retard
+                                                    </div>
+                                                    @endif
+                                                    @elseif($actif->facture_encour =="en_cour")
+                                                    @if ($actif->jour_restant >0)
+                                                    <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                        partiellement payé
+                                                    </div>
+                                                    @else
+                                                    <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                        en retard
+                                                    </div>
+                                                    @endif
+                                                    @endif
+                                                    @endif
+
+                                                    </a>
+                                            </td>
+
+                                            </tr>
+                                            @endforeach
                                             @else
-                                            <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
-                                                {{$actif->reference_type_facture}}
-                                            </div>
+                                            <tr>
+                                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                            </tr>
                                             @endif
-                                        </a>
-                                    </td>
-                                    <th>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->num_facture}}
-                                        </a>
-                                    </th>
-                                    <td>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->nom_cfp}}
-                                        </a>
-                                    </td>
+                                        </tbody>
+                                    </table>
 
-                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->invoice_date}}
-                                        </a>
-                                    </td>
-                                    <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            {{$actif->due_date}}
-                                        </a>
-                                    </td>
-                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                        </a>
-                                    </td>
-                                    <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
-                                            <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
-                                                payé
-                                            </div>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
-                                </tr>
+                        </div>
+
+
+                        {{-- --}}
+
+                        @if (isset($pour_list))
+                        @if ($pour_list == "ACTIF")
+                        <div class="tab-pane fade show active" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
+                            @else
+                            <div class="tab-pane fade" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
                                 @endif
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {{-- --}}
-
-                </div>
-
-
-            </div>
-
-
-            <div class="filtrer mt-3">
-                <div class="row">
-                    <div class="col">
-                        <p class="m-0">Filtre</p>
-                    </div>
-                    <div class="col text-end">
-                        <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
-                    </div>
-                    <hr class="mt-2">
-                    <div class="row mt-0">
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_thematique">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
-                                <br>
-                                <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
-                        </div>
-                        <hr>
-                        <p>
-                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="search_num_fact">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
-                                @csrf
-                                <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
-                                <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
-                                <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
-                            </form>
-                        </div>
-                        <hr>
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" aria-controls="detail_par_solde">Recherche par intervale de solde</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_solde">
-                            <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left">Solde entre {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
-                                <input required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
-                                <br>
-                                <label for="dte_fin" class="form-label" align="left"> à {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
-                                <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
-                        </div>
-                        <hr>
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par organisme</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_etp">
-                            <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
-                                <br>
-                                <select class="form-select" autocomplete="on">
-                                    @foreach ($cfp as $cf)
-                                    <option value="{{$cf->cfp_id}}">{{$cf->nom}}</option>
-                                    @endforeach
-                                </select>
-                                <br>
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
-                        </div>
-                        <hr>
-
-                    </div>
-                </div>
-            </div>
-
-
-
-            <script src="{{ asset('assets/js/jquery.js') }}"></script>
-            <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-            <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-            <script type="text/javascript">
-                $(document).on("keyup change", "#dte_debut", function() {
-                    document.getElementById("dte_fin").setAttribute("min", $(this).val());
-                });
-
-                $(document).on("keyup change", "#solde_debut", function() {
-                    document.getElementById("solde_fin").setAttribute("min", $(this).val());
-                    $("#solde_fin").val($(this).val());
-                });
-
-
-
-                /*------------------------------------------------- Numero Facture-------------------------------------------------------------------*/
-
-
-                /*------------------------------------------------- Numero Facture-------------------------------------------------------------------*/
-
-                function number_format(number, decimals, decPoint, thousandsSep) {
-                    decimals = decimals || 0;
-                    number = parseFloat(number);
-
-                    if (!decPoint || !thousandsSep) {
-                        decPoint = '.';
-                        thousandsSep = ',';
-                    }
-
-                    var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
-                    var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
-                    var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
-                    var formattedNumber = "";
-
-                    while (numbersString.length > 3) {
-                        formattedNumber += thousandsSep + numbersString.slice(-3)
-                        numbersString = numbersString.slice(0, -3);
-                    }
-
-                    return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
-                }
-
-
-                function getDataFactureValider(facture_actif, devise) {
-                    var html_actif = '';
-
-                    if (facture_actif.length > 0) {
-
-                        for (var i_actif = 0; i_actif < facture_actif.length; i_actif += 1) {
-
-                            var url_detail_facture = "{{ route('detail_facture_etp', [':id',':id2']) }}";
-                            url_detail_facture = url_detail_facture.replace(":id", facture_actif[i_actif].cfp_id);
-                            url_detail_facture = url_detail_facture.replace(":id2", facture_actif[i_actif].num_facture);
-
-                            var url_edit_facture = "{{ route('edit_facture', ':id') }}";
-                            url_edit_facture = url_edit_facture.replace(":id", facture_actif[i_actif].num_facture);
-
-                            var url_form_facture = "{{ route('valid_facture') }}";
-
-                            var url_liste_encaissement_facture = "{{ route('listeEncaissement', ':id') }}";
-                            url_liste_encaissement_facture = url_liste_encaissement_facture.replace(":id", facture_actif[i_actif].num_facture);
-
-                            var url_pdf_liste_encaissement_facture = "{{ route('pdf+liste+encaissement', ':id') }}";
-                            url_pdf_liste_encaissement_facture = url_pdf_liste_encaissement_facture.replace(":id", facture_actif[i_actif].num_facture);
-
-                            var url_delete_facture = "{{ route('delete_facture', ':id') }}";
-                            url_delete_facture = url_delete_facture.replace(":id", facture_actif[i_actif].num_facture);
-
-                            var url_form_encaissement = "{{ route('encaisser') }}";
-
-                            html_actif += " <tr><td> <a href=" + url_detail_facture + ">";
-
-                            if (facture_actif[i_actif].reference_type_facture == "Facture") {
-
-                                html_actif += "  <div style='background-color: green; border-radius: 10px; text-align: center;color: white'>" +
-                                    facture_actif[i_actif].reference_type_facture +
-                                    "</div>";
-                            } else if (facture_actif[i_actif].reference_type_facture == "Avoir") {
-
-                                html_actif += "   <div style='background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white'>" +
-                                    facture_actif[i_actif].reference_type_facture +
-                                    " </div> ";
-                            } else if (facture_actif[i_actif].reference_type_facture == "Acompte") {
-
-                                html_actif += "  <div style='background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white'> " +
-                                    facture_actif[i_actif].reference_type_facture +
-                                    " </div> ";
-                            } else {
-
-                                html_actif += "   <div style='background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white'>"; +
-                                facture_actif[i_actif].reference_type_facture +
-                                    " </div>";
-                            }
-
-                            html_actif += "  </a></td><th>";
-                            html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].num_facture + "   </a> </th> <td>";
-                            html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].nom_cfp + " </a></td><td>";
-                            html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].invoice_date + " </a> </td><td>";
-                            html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].due_date + " </a> </td><td>";
-
-                            html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].montant_total, 0, ",", " ") + " </a> </td><td>";
-                            html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
-
-
-
-                            html_actif += "  <a href=" + url_detail_facture + "> ";
-
-                            if (facture_actif[i_actif].jour_restant > 0) {
-                                if ($facture_actif[i_actif].facture_encour == "en_cour") {
-                                    html_actif += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white"> partiellement payé</html_actif+=div>';
-                                } else {
-                                    html_actif += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white"> envoyé </div>';
-                                }
-                            } else {
-                                html_actif += " <div style='background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white'> en retard </div>";
-                            }
-                            html_actif += " </a> </td>";
-
-
-
-                            html_actif += "</tr>";
-
-
-                        }
-                    } else {
-                        html_actif += '<tr><td colspan = "10" class = "text-center" style = "color:red;" > Aucun Résultat </td> </tr> ';
-
-                    }
-
-                    return html_actif;
-                }
-
-                function getDataFacturePayer(facture_payer, devise) {
-                    var html_payer = '';
-                    if (facture_payer.length > 0) {
-
-                        for (var i_payer = 0; i_payer < facture_payer.length; i_payer += 1) {
-
-                            var url_detail_facture = "{{ route('detail_facture_etp', [':id',':id2']) }}";
-                            url_detail_facture = url_detail_facture.replace(":id", facture_payer[i_payer].cfp_id);
-                            url_detail_facture = url_detail_facture.replace(":id2", facture_payer[i_payer].num_facture);
-
-                            var url_liste_encaissement_facture = "{{ route('listeEncaissement', ':id') }}";
-                            url_liste_encaissement_facture = url_liste_encaissement_facture.replace(":id", facture_payer[i_payer].num_facture);
-
-                            var url_pdf_liste_encaissement_facture = "{{ route('pdf+liste+encaissement', ':id') }}";
-                            url_pdf_liste_encaissement_facture = url_pdf_liste_encaissement_facture.replace(":id", facture_payer[i_payer].num_facture);
-
-                            var url_pdf_facture_facture = "{{ route('imprime_feuille_facture', ':id') }}";
-                            url_pdf_facture_facture = url_pdf_facture_facture.replace(":id", facture_payer[i_payer].num_facture);
-
-
-                            html_payer += " <tr><td> <a href=" + url_detail_facture + ">";
-
-                            if (facture_payer[i_payer].reference_type_facture == "Facture") {
-
-                                html_payer += "  <div style='background-color: green; border-radius: 10px; text-align: center;color: white'>" +
-                                    facture_payer[i_payer].reference_type_facture +
-                                    "</div>";
-                            } else if (facture_payer[i_payer].reference_type_facture == "Avoir") {
-
-                                html_payer += "   <div style='background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white'>" +
-                                    facture_payer[i_payer].reference_type_facture +
-                                    " </div> ";
-                            } else if (facture_payer[i_payer].reference_type_facture == "Acompte") {
-
-                                html_payer += "    <div style='background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white'> "; +
-                                facture_payer[i_payer].reference_type_facture +
-                                    " </div> ";
-                            } else {
-
-                                html_payer += "   <div style='background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white'>"; +
-                                facture_payer[i_payer].reference_type_facture +
-                                    " </div>";
-                            }
-
-                            html_payer += "  </a></td><th>";
-                            html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].num_facture + "   </a> </th> <td>";
-                            html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].nom_cfp + " </a></td><td>";
-                            html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].invoice_date + " </a> </td><td>";
-                            html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].due_date + " </a> </td><td>";
-
-                            html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].montant_total, 0, ",", " ") + " </a> </td><td>";
-                            html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
-
-                            html_payer += "  <a href=" + url_detail_facture + "> ";
-                            html_payer += '<div style="background-color:  rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';
-                            html_payer += " </a> </td>";
-
-                            html_payer += "</tr>";
-                        }
-                    } else {
-                        html_payer += '<tr><td colspan = "10" class = "text-center" style = "color:red;" > Aucun Résultat </td> </tr> ';
-                    }
-                    return html_payer;
-                }
-
-
-                function getDataFacture(response) {
-                    var valiny = JSON.parse(response);
-                    var devise = valiny["devise"];
-
-                    var facture_actif = valiny["facture_actif"];
-                    var facture_payer = valiny["facture_payer"];
-                    var html_actif = getDataFactureValider(facture_actif, devise);
-                    var html_payer = getDataFacturePayer(facture_payer, devise);
-                    return {
-                        "html_actif": html_actif
-                        , "html_payer": html_payer
-                    };
-                }
-
-
-
-                /*==============================================================================================*/
-
-                $(".num_fact_trie").on('click', function(e) {
-                    var valiny = $(this).val();
-
-
-                    if ($(".num_fact_trie").val() == 0) {
-                        $(".num_fact_trie").val(1);
-                    } else {
-
-                        $(".num_fact_trie").val(0);
-                    }
-
-                    if (
-                        $(".num_fact_trie")
-                        .find(".icon_trie")
-                        .hasClass("fa-arrow-down")
-                    ) {
-                        $(".num_fact_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-down")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-up");
-                    } else {
-                        $(".num_fact_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-up")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-down");
-                    }
-
-                    $('.nom_entiter_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.dte_reglement_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.total_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.rest_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $.ajax({
-                        method: "GET"
-                        , url: "{{route('trie_par_num_facture')}}"
-                        , data: {
-                            data_value: $(this).val()
-                            , nb_pagination: @php echo $pagination["debut_aff"];@endphp
-                        }
-                        , dataType: "html"
-                        , success: function(response) {
-
-
-
-                            var valiny = JSON.parse(response);
-                            var resultat = getDataFacture(response);
-
-                            $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
-                            $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
-
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                });
-
-                /*--------------------------------------------- Nom Entité-----------------------------------------------------------------------*/
-
-                $(".nom_entiter_trie").on('click', function(e) {
-                    var valiny = $(this).val();
-
-                    if (
-                        $(".nom_entiter_trie")
-                        .find(".icon_trie")
-                        .hasClass("fa-arrow-down")
-                    ) {
-                        $(".nom_entiter_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-down")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-up");
-                    } else {
-                        $(".nom_entiter_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-up")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-down");
-                    }
-
-                    $('.num_fact_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-
-                    $('.dte_reglement_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-
-                    $('.total_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-
-                    $('.rest_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-
-                    if ($(".nom_entiter_trie").val() == 0) {
-                        $(".nom_entiter_trie").val(1);
-                    } else {
-                        $(".nom_entiter_trie").val(0);
-                    }
-
-                    $.ajax({
-                        method: "GET"
-                        , url: "{{route('trie_par_entiter')}}"
-                        , data: {
-                            data_value: $(this).val()
-                            , nb_pagination: @php echo $pagination["debut_aff"];@endphp
-                        }
-                        , dataType: "html"
-                        , success: function(response) {
-
-                            var valiny = JSON.parse(response);
-                            var resultat = getDataFacture(response);
-
-                            $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
-                            $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
-
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                });
-
-                /*--------------------------------------------- Date de règlement -----------------------------------------------------------------------*/
-
-                $(".dte_reglement_trie").on('click', function(e) {
-                    var valiny = $(this).val();
-
-                    if (
-                        $(".dte_reglement_trie")
-                        .find(".icon_trie")
-                        .hasClass("fa-arrow-down")
-                    ) {
-                        $(".dte_reglement_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-down")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-up");
-                    } else {
-                        $(".dte_reglement_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-up")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-down");
-                    }
-
-
-                    $('.num_fact_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.nom_entiter_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.total_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.rest_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    if ($(".dte_reglement_trie").val() == 0) {
-                        $(".dte_reglement_trie").val(1);
-                    } else {
-                        $(".dte_reglement_trie").val(0);
-                    }
-
-                    $.ajax({
-                        method: "GET"
-                        , url: "{{route('trie_par_dte')}}"
-                        , data: {
-                            data_value: $(this).val()
-                            , nb_pagination: @php echo $pagination["debut_aff"];@endphp
-                        }
-                        , dataType: "html"
-                        , success: function(response) {
-
-                            var valiny = JSON.parse(response);
-                            var resultat = getDataFacture(response);
-
-                            $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
-                            $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
-
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                });
-
-                /*--------------------------------------------- Totale à payer -----------------------------------------------------------------------*/
-
-                $(".total_payer_trie").on('click', function(e) {
-                    var valiny = $(this).val();
-
-                    if (
-                        $(".total_payer_trie")
-                        .find(".icon_trie")
-                        .hasClass("fa-arrow-down")
-                    ) {
-                        $(".total_payer_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-down")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-up");
-                    } else {
-                        $(".total_payer_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-up")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-down");
-                    }
-
-                    $('.num_fact_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.nom_entiter_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.dte_reglement_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-
-                    $('.rest_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("fa-arrow-up")
-                        .removeClass("color-text-trie")
-                        .addClass("fa-arrow-down");
-                    if ($(".total_payer_trie").val() == 0) {
-                        $(".total_payer_trie").val(1);
-                    } else {
-                        $(".total_payer_trie").val(0);
-                    }
-
-                    $.ajax({
-                        method: "GET"
-                        , url: "{{route('trie_par_totale_payer')}}"
-                        , data: {
-                            data_value: $(this).val()
-                            , nb_pagination: @php echo $pagination["debut_aff"];@endphp
-                        }
-                        , dataType: "html"
-                        , success: function(response) {
-
-
-
-                            var valiny = JSON.parse(response);
-                            var resultat = getDataFacture(response);
-
-                            $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
-                            $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                });
-
-                /*--------------------------------------------- Totale reste à payer -----------------------------------------------------------------------*/
-
-                $(".rest_payer_trie").on('click', function(e) {
-                    var valiny = $(this).val();
-
-                    if (
-                        $(".rest_payer_trie")
-                        .find(".icon_trie")
-                        .hasClass("fa-arrow-down")
-                    ) {
-                        $(".rest_payer_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-down")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-up");
-                    } else {
-                        $(".rest_payer_trie")
-                            .find(".icon_trie")
-                            .removeClass("fa-arrow-up")
-                            .addClass("color-text-trie")
-                            .addClass("fa-arrow-down");
-                    }
-
-                    $('.num_fact_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-
-                    $('.nom_entiter_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-
-                    $('.dte_reglement_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-
-                    $('.total_payer_trie')
-                        .find(".icon_trie")
-                        .removeClass("color-text-trie")
-                        .removeClass("fa-arrow-up")
-                        .addClass("fa-arrow-down");
-                    if ($(".rest_payer_trie").val() == 0) {
-                        $(".rest_payer_trie").val(1);
-                    } else {
-                        $(".rest_payer_trie").val(0);
-                    }
-
-                    $.ajax({
-                        method: "GET"
-                        , url: "{{route('trie_par_reste_payer')}}"
-                        , data: {
-                            data_value: $(this).val()
-                            , nb_pagination: @php echo $pagination["debut_aff"];@endphp
-                        }
-                        , dataType: "html"
-                        , success: function(response) {
-
-                            var valiny = JSON.parse(response);
-                            var resultat = getDataFacture(response);
-
-                            $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
-                            $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
-
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                });
-
-
-
-                // Example starter JavaScript for disabling form submissions if there are invalid fields
-                (function() {
-                    'use strict'
-
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.querySelectorAll('.needs-validation')
-
-                    // Loop over them and prevent submission
-                    Array.prototype.slice.call(forms)
-                        .forEach(function(form) {
-                            form.addEventListener('submit', function(event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-
-            </script>
-
-
-            @endsection
+                                @else
+                                <div class="tab-pane fade  show active" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
+                                    @endif
+
+                                    {{------------------------------------------------------------------------------- pagination facture activer--}}
+                                    @include("admin.facture.pagination_etp.pagination_facture_actif")
+
+
+                                    <table class="table  table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                </th>
+                                                <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                </th>
+                                                <th scope="col">Date de facturation</th>
+                                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                </th>
+                                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+
+                                                </th>
+                                                <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                </th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="list_data_trie_valider">
+                                            @if (count($facture_actif) > 0)
+                                            @foreach ($facture_actif as $actif)
+                                            <tr>
+                                                <td>
+                                                    <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+
+                                                        @if ($actif->reference_type_facture == "Facture")
+                                                        <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                            {{$actif->reference_type_facture}}
+                                                        </div>
+                                                        @elseif($actif->reference_type_facture == "Avoir")
+                                                        <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                            {{$actif->reference_type_facture}}
+                                                        </div>
+                                                        @elseif($actif->reference_type_facture == "Acompte")
+                                                        <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                            {{$actif->reference_type_facture}}
+                                                        </div>
+                                                        @else
+                                                        <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                            {{$actif->reference_type_facture}}
+                                                        </div>
+                                                        @endif
+
+                                                    </a>
+                                                </td>
+                                                <th>
+                                                    <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                        {{$actif->num_facture}}
+                                                    </a>
+                                                </th>
+                                                <td>
+                                                    <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                        {{$actif->nom_cfp}}
+                                                    </a>
+                                                </td>
+                                                <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                        {{$actif->invoice_date}}
+                                                    </a>
+                                                </td>
+                                                <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                        {{$actif->due_date}}
+                                                    </a>
+                                                </td>
+                                                <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                        {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                    </a>
+                                                </td>
+                                                <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                        {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                        @if ($actif->jour_restant >0)
+                                                        @if ($actif->facture_encour == "en_cour")
+                                                        <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                            partiellement payé
+                                                        </div>
+                                                        @else
+                                                        <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                            envoyé
+                                                        </div>
+                                                        @endif
+
+                                                        @else
+                                                        <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                            en retard
+                                                        </div>
+                                                        @endif
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                            <tr>
+                                                <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
+                                            </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                {{-- --}}
+
+                                @if (isset($pour_list))
+                                @if ($pour_list == "PAYER")
+                                <div class="tab-pane fade show active" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
+                                    @else
+                                    <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
+                                        @endif
+                                        @else
+                                        <div class="tab-pane fade" id="nav-payer" role="tabpanel" aria-labelledby="nav-payer-tab">
+                                            @endif
+
+                                            {{------------------------------------------------------------------------------- pagination facture payer--}}
+                                            @include("admin.facture.pagination_etp.pagination_facture_payer")
+
+
+                                            <table class="table  table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </th>
+                                                        <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </th>
+                                                        <th scope="col">Date de facturation</th>
+                                                        <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </th>
+                                                        <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+
+                                                        </th>
+                                                        <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </th>
+                                                        <th scope="col">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="list_data_trie_payer">
+                                                    @if (count($facture_payer) > 0)
+                                                    @foreach ($facture_payer as $actif)
+                                                    <tr>
+                                                        <td>
+                                                            <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                                @if ($actif->reference_type_facture == "Facture")
+                                                                <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
+                                                                    {{$actif->reference_type_facture}}
+                                                                </div>
+                                                                @elseif($actif->reference_type_facture == "Avoir")
+                                                                <div style="background-color: rgb(144, 196, 202); border-radius: 10px; text-align: center;color: white">
+                                                                    {{$actif->reference_type_facture}}
+                                                                </div>
+                                                                @elseif($actif->reference_type_facture == "Acompte")
+                                                                <div style="background-color: rgb(140, 137, 137); border-radius: 10px; text-align: center;color: white">
+                                                                    {{$actif->reference_type_facture}}
+                                                                </div>
+                                                                @else
+                                                                <div style="background-color: rgb(150, 181, 150); border-radius: 10px; text-align: center;color: white">
+                                                                    {{$actif->reference_type_facture}}
+                                                                </div>
+                                                                @endif
+                                                            </a>
+                                                        </td>
+                                                        <th>
+                                                            <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                                {{$actif->num_facture}}
+                                                            </a>
+                                                        </th>
+                                                        <td>
+                                                            <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                                {{$actif->nom_cfp}}
+                                                            </a>
+                                                        </td>
+
+                                                        <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                                {{$actif->invoice_date}}
+                                                            </a>
+                                                        </td>
+                                                        <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                                {{$actif->due_date}}
+                                                            </a>
+                                                        </td>
+                                                        <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                                {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                            </a>
+                                                        </td>
+                                                        <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                                {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
+                                                                <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
+                                                                    payé
+                                                                </div>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                    @else
+                                                    <tr>
+                                                        <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
+                                                    </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        {{-- --}}
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="filtrer mt-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="m-0">Filtre</p>
+                                        </div>
+                                        <div class="col text-end">
+                                            <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                                        </div>
+                                        <hr class="mt-2">
+                                        <div class="row mt-0">
+                                            <p>
+                                                <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique" class="dte_facturation_filtre">Recherche par intervale de date de facturation <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                            </p>
+                                            <div class="collapse multi-collapse" id="detail_par_thematique">
+                                                <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="dte_debut" class="form-label" align="left"> Date début<strong style="color:#ff0000;">*</strong></label>
+                                                                <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="dte_fin" class="form-label" align="left">Date fin <strong style="color:#ff0000;">*</strong></label>
+                                                                <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div align="center">
+                                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <hr>
+                                            <p>
+                                                <a data-bs-toggle="collapse" class="num_fact_filtre" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par numero de facture <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                            </p>
+                                            <div class="collapse multi-collapse" id="search_num_fact">
+                                                <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <hr>
+                                            <p>
+                                                <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" class="solde_total_payer_filtre" aria-controls="detail_par_solde">Recherche par intervale de solde total à payer <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                            </p>
+                                            <div class="collapse multi-collapse" id="detail_par_solde">
+                                                <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
+                                                    @csrf
+
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                <input required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div align="center">
+                                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <hr>
+                                            <p>
+                                                <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Recherche par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                            </p>
+                                            <div class="collapse multi-collapse" id="detail_par_etp">
+                                                <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
+                                                    <br>
+                                                    <select class="form-select" autocomplete="on" name="entiter_id" id="entiter_id">
+                                                        @foreach ($cfp as $cf)
+                                                        <option value="{{$cf->cfp_id}}">{{$cf->nom}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <br>
+                                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                </form>
+                                            </div>
+                                            <hr>
+                                            <p>
+                                                <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status(mbol vita) <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                            </p>
+                                            <div class="collapse multi-collapse" id="detail_par_status">
+                                                <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <select class="form-select" name="entiter_id" id="entiter_id">
+                                                                    <option value="INACTIF">Nom envoyé</option>
+                                                                    <option value="ACTIF">Envoyé</option>
+                                                                    <option value="EN_COUR">Partiellement payé</option>
+                                                                    <option value="PAYER">Payé</option>
+                                                                    <option value="RETARD">En retard</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <button type="submit" class="btn_creer mt-2">Recherche</button>
+
+                                                        </div>
+                                                    </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- inmportation fonction js pour cfp --}}
+                                    @include("admin.facture.function_js.js_etp")
+
+
+                                    @endsection

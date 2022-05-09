@@ -331,7 +331,46 @@ class FonctionGenerique extends Model
     }
 
     // find where avec odrer by
+
     public function queryWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
+    {
+        if ($nbPag == null) {
+            $nbPag = 1;
+        }
+        $query="";
+        $query1="SELECT * FROM ";
+        $query2 = "(SELECT * FROM " . $nomTab;
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+
+            if(count($para)>0 && count($val)>0){
+                $query2 .= " WHERE ";
+                for ($i = 0; $i < count($para); $i++) {
+                    $query2 .= "" . $para[$i] . " " . $opt[$i] . " ? ";
+                    if ($i + 1 < count($para)) {
+                        $query2 .= " AND ";
+                    }
+                }
+            }
+
+            $query2 .= " LIMIT ".$nb_limit." OFFSET ".($nbPag-1).") AS t2";
+
+            $query = $query1." ".$query2;
+            $query .= "  ORDER BY ";
+
+            for ($j1 = 0; $j1 < count($tabOrderBy); $j1++) {
+                $query .= " " . $tabOrderBy[$j1];
+                if ($j1 + 1 < count($tabOrderBy)) {
+                    $query .= " , ";
+                }
+            }
+            $query.=" ".$order;
+            return $query;
+        }
+    }
+
+  /*  public function queryWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
     {
         if ($nbPag == null) {
             $nbPag = 1;
@@ -364,7 +403,7 @@ class FonctionGenerique extends Model
 
             return $query;
         }
-    }
+    } */
 
     public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
     {
@@ -404,7 +443,7 @@ class FonctionGenerique extends Model
 
     public function nb_liste_pagination($totaleDataList, $nb_debut_pag,$nb_limit)
     {
-        // $nb_limit = 5;
+
         if ($totaleDataList != null) {
             $totale_pagination = $totaleDataList;
         } else {
@@ -413,33 +452,25 @@ class FonctionGenerique extends Model
         $debut_aff = 0;
         $fin_aff = 0;
 
-
-
-     /*   if ($totale_pagination == 1) {
-            $nb_debut_pag = 1;
-            $fin_aff = 1;
-        } */
         if ($nb_debut_pag <= 0 || $nb_debut_pag == null) {
             $nb_debut_pag = 1;
         }
 
         if ($nb_debut_pag == 1) { // 1
             $nb_debut_pag = 1;
-            $debut_pagination = 0; //
             $debut_aff = 1;
             $fin_aff = $nb_debut_pag + $nb_limit;
+
             if($fin_aff>=$totale_pagination){
                 $fin_aff = $totale_pagination;
             }
         }
-        if ($nb_debut_pag > 1 && $nb_debut_pag < $totale_pagination) {
-            $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
-            $fin_aff = $nb_debut_pag + $nb_limit;
 
+        if ($nb_debut_pag > 1 && $nb_debut_pag < $totale_pagination) {
+            $fin_aff = $nb_debut_pag + $nb_limit;
             $debut_aff = $nb_debut_pag;
         }
         if ($nb_debut_pag  == $totale_pagination) {
-            $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
             $fin_aff = ($nb_debut_pag - 1) + $nb_limit;
             if($fin_aff>=$totale_pagination){
                 $fin_aff = $totale_pagination;
@@ -447,11 +478,9 @@ class FonctionGenerique extends Model
             $debut_aff = $nb_debut_pag;
         }
 
-        // if($fin_aff>=$totale_pagination){
-        //     $fin_aff = $totale_pagination;
-        // } else {
-        //     $fin_aff = $nb_debut_pag+$nb_limit;
-        // }
+        if($fin_aff>=$totale_pagination){
+            $fin_aff = $totale_pagination;
+        }
 
         $data["nb_limit"] = $nb_limit;
         $data["debut_aff"] = $debut_aff;
