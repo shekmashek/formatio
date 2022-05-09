@@ -357,8 +357,8 @@
                         <span class="modalite ms-3 mb-2 p-1 ps-2 pe-2">{{ $modalite }}</span>
                     </div>
                     <div class="d-flex m-0 p-0 height_default">
-                        <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong> </p>
-                        <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
+                        <p class=" text-dark mt-3"> {{ $projet[0]->nom_groupe }} </p>
+                        <p class="m-0">&nbsp; du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>
                         &nbsp;&nbsp;&nbsp;
                         {{-- @canany(['isCFP', 'isReferent'])
                             <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
@@ -368,7 +368,7 @@
                         @endcanany --}}
 
                         <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
-                        <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
+                        <p class="text-dark mt-3"> {{ $nombre_stg }} </p>
                     </div>
                 </div>
                 <div class="col-lg-6 d-flex justify-content-end">
@@ -660,9 +660,7 @@
                         <div id="chaud" class="tab-pane fade show tabcontent" role="tabpanel" aria-labelledby="document-tab"
                             style="display: none">
                             {{-- @include('projet_session.index_evaluation') --}}
-                            @include(
-                                'admin.evaluation.evaluationChaud.evaluationChaud'
-                            )
+                            @include('admin.evaluation.evaluationChaud.evaluationChaud')
                         </div>
                     @endcanany
                     <div id="emargement" class=" tab-pane fade show tabcontent" role="tabpanel"

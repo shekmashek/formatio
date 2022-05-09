@@ -848,3 +848,4 @@ create or replace view v_presence_groupe as
         d.groupe_id
     from presences p
     join details d on d.id = p.detail_id;
+

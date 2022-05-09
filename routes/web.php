@@ -1216,3 +1216,5 @@ Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('mod
 Route::get('tri_client','AbonnementController@tri_client')->name('tri_client');
 /**Presence */
 Route::get('statut_presence_emargement','HomeController@statut_presence_emargement')->name('statut_presence_emargement');
+
+Route::get('get_devise','SessionController@get_devise')->name('get_devise');
