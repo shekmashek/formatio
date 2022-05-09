@@ -99,7 +99,7 @@ public function new_emp(){
     public function liste_employer($paginations=null)
     {
         $entreprise_id = 0;
-        $nb_limit=3;
+        $nb_limit=10;
         $user_id = Auth::user()->id;
 
         if (Gate::allows('isReferent')) {
