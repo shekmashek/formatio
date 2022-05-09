@@ -1231,3 +1231,8 @@ Route::get('/chefs/filtre/query/fonction', 'DepartementController@filtreChef')->
 Route::get('/chefs/filtre/query/name', 'DepartementController@filtreChefName')->name('chef.filter.name');
 Route::get('/chefs/filtre/query/matricule', 'DepartementController@filtreChefMatricule')->name('chef.filter.matricule');
 Route::get('/chefs/filtre/query/role', 'DepartementController@filtreChefRole')->name('chef.filter.role');
+
+//filtre formateurs
+Route::get('/formateurs/filtre/query/name', 'ProfController@filtreProfName')->name('prof.filter.name');
+
+

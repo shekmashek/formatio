@@ -10,11 +10,11 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid">
-    <div class="col-md">
+    {{-- <div class="col-md">
         <div class="">
             <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         </div>
-    </div>
+    </div> --}}
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">
@@ -209,8 +209,8 @@
 </div>
 
 
-{{--filter employes--}}
-<div class="filtrer mt-3 testFilter">
+{{-- filter abonnement --}}
+{{-- <div class="filtrer mt-3 testFilter">
     <div class="row">
         <div class="row">
             <div class="col-md-11">
@@ -221,7 +221,6 @@
             </div>
         </div>
         <hr class="mt-2">
-        {{-- @canany(['isReferent', 'isCFP']) --}}
         <div class="col-12 pe-3">
             <div class="row mb-3 p-2 pt-0">
                       <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -313,12 +312,11 @@
                             </div>
                           </div>
                       </div>
-
-                    {{-- <a style="color: blue; margin-top: 10px;" href="{{ route('employes') }}"><i class="fa-solid fa-arrow-rotate-right"></i> Actualiser</a> --}}
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+
 <script>
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             let lien = ($(e.target).attr('href'));
