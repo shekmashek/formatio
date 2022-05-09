@@ -371,6 +371,22 @@ class FactureController extends Controller
             $num_fact = $req->num_fact;
         }
 
+        if ($nb_pag_full <= 0 || $nb_pag_full == null) {
+            $nb_pag_full = 1;
+        }
+
+        if ($nb_pag_inactif <= 0 || $nb_pag_inactif == null) {
+            $nb_pag_inactif = 1;
+        }
+
+        if ($nb_pag_actif <= 0 || $nb_pag_actif == null) {
+            $nb_pag_actif = 1;
+        }
+
+        if ($nbPagination_payer <= 0 || $nbPagination_payer == null) {
+            $nbPagination_payer = 1;
+        }
+
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
 
