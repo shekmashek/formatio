@@ -147,7 +147,7 @@
                         <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false"
                             aria-controls="search_num_fact">Recherche par nom d'organisme</a>
                     </p>
-                    <div class="collapse multi-collapse" id="search_num_fact">
+                    {{-- <div class="collapse multi-collapse" id="search_num_fact">
                         <form class=" mt-1 mb-2 form_colab" method="GET"
                             action="{{route('annuaire+recherche+par+entiter')}}" enctype="multipart/form-data">
                             @csrf
@@ -156,14 +156,14 @@
                             <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1"
                                 value="Recherche" />
                         </form>
-                    </div>
+                    </div> --}}
                     <hr>
                     <p>
                         <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false"
                             aria-controls="detail_par_solde">Recherche par adresse</a>
                     </p>
                     <div class="collapse multi-collapse" id="detail_par_solde">
-                        <form class="mt-1 mb-2 form_colab" action="{{route('annuaire+recherche+par+adresse')}}"
+                        {{-- <form class="mt-1 mb-2 form_colab" action="{{route('annuaire+recherche+par+adresse')}}"
                             method="GET" enctype="multipart/form-data">
                             @csrf
                             <label for="dte_debut" class="form-label" align="left"> quartier <strong
@@ -183,7 +183,7 @@
                             <input required type="text" name="reg" id="reg" class="form-control" />
 
                             <button type="submit" class="btn_creer mt-2">Recherche</button>
-                        </form>
+                        </form> --}}
                     </div>
                     <hr>
                 </div>
