@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 @section('content')
 <center>
-<div class="col-lg-4 mt-5">
+{{-- <div class="col-lg-4 mt-5">
     <div class="p-3 form-control">
  <form method="POST" action="{{route('devise_enregistrer')}}">
     @csrf
@@ -30,10 +30,60 @@
     
     </div>
     </div> --}} 
-    <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+    {{-- <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
  </form>
 </div>
-</div>
+</div>  --}}
+<div class="container">
+    <div class="col-md-8">
+        <table class="table mt-4">
+            <thead>
+            <th>Devise</th>
+            <th>Action</th>
+
+            </thead>
+            <tbody>
+                @foreach ($devise as $dev )
+                    
+              
+                <tr>
+                    <td>{{$dev->devise}}&nbsp;</td>
+                    <td>
+                        <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$dev->id}}">
+                            <i class='bx bxs-edit-alt'  style="color: green"></i>
+                          </a>
+                          {{-- <a href="{{route('delete_devise',$dev->id)}}" type="button"  onclick="return  confirm('voulez vraiment supprimer?')">
+                            <i class='bx bx-trash' style="color: red"></i>
+                          </a> --}}
+                    </td>
+                </tr>
+                <div class="modal fade" id="exampleModal_{{$dev->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1>Modification</h1>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{route('update_devise')}}"  method="post">
+                                    @csrf
+                                    <label for=""> devise</label>
+                                    <input type="text" class="form-control" required name="devise" value="{{$dev->devise}}">
+                                    <input type="hidden" class="form-control" required name="id" value="{{$dev->id}}"> <br><br>
+                                    
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Retour</button>
+                                    <button type="submit" class="btn btn-primary">&nbsp; Enregistrer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </tbody>
+
+        </table>
+    </div>
 </center>
 
                     {{-- <div class="row px-3 mt-4">
@@ -234,7 +284,7 @@
              $("#addRow").css("display", "inline-block");
     });
 
-//taxe devis
+//dev devis
     $(document).on('click', '#addRowMontant', function() {
         $('#montant').empty();
        

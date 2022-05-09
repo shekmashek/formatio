@@ -31,7 +31,7 @@
             </div>
 
         </div> --}}
-        <ul class="nav_list mb-5" id="menu">
+        <ul class="nav_list mb-5" onclick="activer(event);" id="menu">
 
             <li>
                 <a href="{{ route('home') }}" class="d-flex active nav_linke">
@@ -82,14 +82,14 @@
             </li>
             @endcanany --}}
             {{-- entreprise --}}
-            @canany(['isSuperAdmin','isAdmin'])
+            {{-- @canany(['isSuperAdmin','isAdmin'])
             <li>
                 <a href="{{route('liste_entreprise')}}" class="d-flex nav_linke">
                     <i class='bx bx-building-house'></i>
                     <span class="links_name">Entreprises</span>
                 </a>
 
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouvelle_entreprise')}}" class="d-flex nav_linke">
@@ -101,7 +101,44 @@
                 <a href="{{route('departement.index')}}">Département</a>
             </li>
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}}
+            @canany(['isSuperAdmin'])
+
+                                    {{-- <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3"  >
+                                        <span class="d-flex flex-column">  <i class='bx bxs-user'></i><span class="text_racourcis">Utilisateurs</span></span>
+
+
+                                    </a> --}}
+                                    <li>
+                                        <a href="{{route('categorie')}}" class="d-flex nav_linke">
+                                            <i class='bx bxs-doughnut-chart'></i>
+                                            <span class="links_name">Categories de formation</span>
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{{route('module')}}"  class="d-flex nav_linke">
+                                            <i class='bx bx-book'></i>
+                                            <span class="links_name">Formations</span>
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('taxes') }}"   class="d-flex nav_linke">
+                                            <i class='bx bx-spreadsheet'></i>
+                                            <span class="links_name">Taxe</span>
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a  href="{{ route('devise') }}"   class="d-flex nav_linke">
+                                            <i class='bx bx-receipt'></i>
+                                            <span class="links_name">Devise</span>
+                                        </a>
+
+                                    </li>
+
+                     @endcanany
             @canany(['isReferent'])
             {{-- <li>
                 <a href="{{route('liste_departement')}}" class="d-flex nav_linke">
@@ -190,7 +227,7 @@
             </li> --}}
             @endcanany
             {{-- utilisateurs --}}
-            @canany(['isSuperAdmin','isAdmin'])
+            {{-- @canany(['isSuperAdmin','isAdmin'])
 
             <li>
                 <a href="{{route('utilisateur_stagiaire')}}" class="d-flex nav_linke">
@@ -206,7 +243,7 @@
                 </a>
 
             </li>
-            @endcanany
+            @endcanany --}}
             {{-- formateurs --}}
 
             @canany(['isCFP'])
@@ -234,7 +271,7 @@
             </li> --}}
             @endcanany
             {{-- manager --}}
-            @canany(['isSuperAdmin','isAdmin'])
+            {{-- @canany(['isSuperAdmin','isAdmin'])
             <li>
                 <a href="{{route('employes')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
@@ -250,7 +287,7 @@
                 </a>
 
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}}
             @canany(['isReferent'])
             {{-- <li>
                 <a href="{{route('employes')}}" class="d-flex nav_linke">
@@ -271,12 +308,19 @@
             {{-- Referent --}}
             @canany(['isAdmin','isSuperAdmin'])
             <li>
+                <a href="{{route('utilisateur_superAdmin')}}" class="d-flex nav_linke">
+                    <i class='bx bxs-user'></i>
+                    <span class="links_name">Super Admin</span>
+                </a>
+
+            </li>
+            {{-- <li>
                 <a href="{{route('liste_responsable')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
                     <span class="links_name">Réferents</span>
                 </a>
 
-            </li>
+            </li> --}}
             {{-- integrer dans la page
             <li>
                 <a href="{{route('nouveau_responsable')}}" class="d-flex nav_linke">
@@ -363,7 +407,7 @@
 
             @endcanany
             {{-- competence --}}
-            @canany(['isSuperAdmin','isReferent','isManager'])
+            @canany(['isReferent','isManager'])
             @canany(['isReferent'])
             {{-- <li>
                 <a href="{{route('demande_test_niveau')}}" class="d-flex nav_linke">
@@ -388,14 +432,14 @@
             @endcanany
 
             {{-- plan de formation --}}
-            @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
-            {{-- <li>
+            @canany(['isStagiaire','isManager','isReferent'])
+            <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-scatter-chart'></i>
                     <span class="links_name">Plan</span>
                 </a>
-            </li> --}}
+            </li>
             {{-- integrer dans la page
             <li>
                 <a href="{{route('listePlanFormation')}}" class="d-flex nav_linke">
@@ -492,41 +536,7 @@
                             class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
                 <div class="col-5 align-items-center justify-content-start d-flex flex-row ">
-                    @canany(['isSuperAdmin'])
 
-                    <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3">
-                        <span class="d-flex flex-column"> <i class='bx bxs-user'></i><span
-                                class="text_racourcis">Utilisateurs</span></span>
-
-
-                    </a>
-                    <a href="{{route('categorie')}}" class="btn_racourcis me-4 mt-3">
-
-                        <span class="d-flex flex-column"><i class='bx bxs-doughnut-chart'></i><span
-                                class="text_racourcis">Categories</span></span>
-                    </a>
-
-                    <a href="{{route('module')}}" class="btn_racourcis me-4 mt-3">
-
-                        <span class="d-flex flex-column"><i class='bx bx-book'></i><span class="text_racourcis">
-                                Formations</span></span>
-
-                    </a>
-                    <a href="{{ route('taxes') }}" class="btn_racourcis me-4 mt-3">
-                        <span class="d-flex flex-column"><i class='bx bx-spreadsheet'></i><span class="text_racourcis">
-                                Taxe</span></span>
-                    </a>
-                    <a href="{{ route('devise') }}" class="btn_racourcis me-4 mt-3">
-                        <span class="d-flex flex-column"><i class='bx bx-receipt'></i><span class="text_racourcis">
-                                Devise</span></span>
-                    </a>
-
-
-
-
-
-
-                    @endcanany
                     @canany('isReferent','isStagiaire','isManager')
                     <div class="row">
 
@@ -547,13 +557,7 @@
                                                 class='bx bx-analyse'></i><span
                                                 class="text_racourcis">Annuaire</span></span></a>
                                     @canany(['isReferent','isStagiaire','isManager'])
-                                    <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4"
-                                        role="button"><span class="d-flex flex-column"><i
-                                                class='bx bxs-calendar-edit'></i><span
-                                                class="text_racourcis">Agenda</span></span></a>
-                                    <a href="{{route('employes')}}" class="btn_racourcis me-4" role="button"><span
-                                            class="d-flex flex-column"><i class='bx bxs-group'></i><span
-                                                class="text_racourcis">Listes employées</span></span></a>
+                                        <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
                                     @endcan
                                     @canany(['isCFP','isFormateur'])
                                     <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
@@ -570,20 +574,13 @@
                     <div class="d-flex flex-row">
                         <a href="{{route('liste_module')}}" class="btn_racourcis me-4" role="button"><span
                                 class="d-flex flex-column"><i class='bx bxs-customize'></i><span
-                                    class="text_racourcis">Modules</span></span>
-                        </a>
+                                    class="text_racourcis">Modules</span></span></a>
                         <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
                                 class="d-flex flex-column"><i class='bx bx-library'></i><span
-                                    class="text_racourcis">Projets</span></span>
-                        </a>
+                                    class="text_racourcis">Projets</span></span></a>
                         <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i>
-                                <span class="text_racourcis">Agenda</span></span>
-                        </a>
-                        <a href="{{route('liste_entreprise')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-group'></i>
-                                <span class="text_racourcis">Listes equipes</span></span>
-                        </a>
+                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
+                                    class="text_racourcis">Agenda</span></span></a>
                     </div>
                     @endcanany
                     @canany('isStagiaire')
@@ -607,15 +604,58 @@
                     </div>
                     @endcanany
                 </div>
-
                 <div class="col-4 header-right align-items-center d-flex flex-row">
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                        <div class="btn_creer me-2" id="text_apprendre">
-                            <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
-                            <span class="text_apprendre" role="button" >Apprendre</span>
+                        @can('isStagiaire')
+
+                        <div class="col-5 header-right align-items-center d-flex flex-row">
+                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer me-2">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="">
+                        @endcan
+                        @can('isManager')
+
+                        <div class="col-5 header-right align-items-center d-flex flex-row">
+                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer me-2">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @endcan
+                        @can('isReferent')
+
+                        <div class="col-5 header-right align-items-center d-flex flex-row">
+                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer me-2">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        @endcan
+                        @can('isCFP')
+                        <div class="col-5 header-right align-items-center d-flex flex-row">
+                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer me-2">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @endcan
+
+                             <div class="">
                             @can('isManager')
                             <div class="btn_creer dropdown">
 
@@ -625,7 +665,7 @@
                                     <i class='bx bx-plus-medical icon_creer'></i>Créer
                                 </a>
 
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
 
                                     <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
                                                 class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
@@ -702,12 +742,11 @@
                                                         class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
                                             </li>
                                             <li><a class="dropdown-item" href="{{route('liste_departement')}}">
-                                                    <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de
-                                                    l'entreprise
-                                                </a></li>
-                                            <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}">
-                                                    <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
-                                                </a></li>
+                                                <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de l'entreprise
+                                            </a></li>
+                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                                <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
+                                            </a></li>
                                             <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                     <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
                                                 </a></li>
@@ -726,20 +765,31 @@
                                         <i class='bx bx-plus-medical icon_creer'></i>Créer
 
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
                                         <li>
                                             <a class="dropdown-item" href="{{route('nouveau_module')}}">
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
+                                        @can('isCFPPrincipale')
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
+                                                    <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau réferent
+                                                </a>
+                                            </li>
+                                        @endcan
                                         <li>
                                             <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
                                                 <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item"
-                                                href="{{route('nouveau_groupe',['type_formation'=>1])}}">
+                                            <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
+                                                <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Responsable
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('nouveau_groupe',['type_formation'=>1])}}">
                                                 <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
                                             </a>
                                         </li>
@@ -756,6 +806,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                @can('isCFPPrincipale')
                                 <div class="ms-2">
                                     <div class="btn_creer dropdown">
 
@@ -777,20 +828,20 @@
                                         </ul>
                                     </div>
                                 </div>
+                                @endcan
                             </div>
                             @endcan
 
                         </div>
                     </div>
-                    <div class="ms-4">
-                        <div class=" btn_creer header_img" style="height: 34px">
+                    <div class="col-2">
+                        <div class=" btn_vous header_img" style="height: 34px">
                             {{-- <p class="m-0 ms-2"></p> --}}
                             {{-- <i class='bx bxs-user-circle user_icon'></i> --}}
                             <span class="d-flex mt-1" style="text-decoration: none; color:black; font-size:12px"
                                 type="button">
                                 <i class=' bx bxs-user' style="font-size: 17px; position: relative; top:.1rem;"></i>
-                                <span class="mt-1" style="font-size: 11.7px">Vous</span> <i
-                                    class='bx bx-caret-down mt-1'></i>
+                                <span class="mt-1" style="font-size: 11.7px">Vous</span> <i class='bx bx-caret-down mt-1'></i>
                             </span>
                         </div>
                         <div class="pdp_profil mt-3" id="box_profil">
@@ -847,7 +898,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
-                                                    <div>
+                                                    <div class="">
                                                         <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                                             </a></p>
@@ -953,6 +1004,89 @@
             <div class="apprendre mt-3">
                 <div class="row">
                     <div class="col">
+                    <p class="m-0 titre_apprendre"> Apprendre</p>
+                    </div>
+                    <div class="col text-end close">
+                        <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
+                        <i class="bx bx-x" role="button"></i>
+                    </div>
+                    <hr class="mt-2">
+                    @can('isAdmin')
+                    <div class="tutorielApprendreAdmin">Admin</div>
+                    @endcan
+                    @can('isCFP')
+                    <div class="tutorielApprendreCfp">
+                        <h5>Créer un nouveau projet de formation</h5>
+                        <p class="m-0 p-1">
+                            <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis suivant :</span>
+                        </p>
+                        <div class="list-group list-group-flush" id="accordion">
+                            <li class="list-group-item align-items-start ">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprCat" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprCat">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">1. Avoir un catalogue de formation</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprCat" class="collapse p-1">
+                                    <hr>
+                                    <a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue de formation</span></a>
+                                </div>
+                            </li>
+                            <li class="list-group-item  align-items-start">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprForm" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprFormateur">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">2. Ajouter des formateurs</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprFormateur" class="collapse  p-1">
+                                    <hr>
+                                    <a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item align-items-start listeApprendre">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprInter" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprInter">
+                                    <div class="ms-2 me-auto">
+                                        <div class=" text-sm">3. Collaborer avec les entreprises qui ont des projets en commun avec vous </div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprInter" class="collapse">
+                                    <hr>
+                                    <a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une entreprise</span></a>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="tutorielApprendre"></div>
+                    @endcan
+                    @can('isStagiaire')
+                    <div class="tutorielApprendreStagiaire">Stagiaire</div>
+                    @endcan
+
+                    @can('isReferent')
+                    <div class="tutorielApprendreReferent">Referent</div>
+                    @endcan
+
+                    @can('isManager')
+                    <div class="tutorielApprendreManager">Manager</div>
+                    @endcan
+
+                    @can('isFormateur')
+                    <div class="tutorielApprendreFormateur">Formateur</div>
+                    @endcan
+                        <!-- <h6 class="title_apprendre"><u>Annuaire</u></h6>
+                        <h6 class="title_apprendre"><u>Agenda</u></h6> -->
+
+                </div>
+            </div>
+
+        </div>
+            {{-- <div class="apprendre mt-3">
+                <div class="row">
+                    <div class="col">
                         <p class="m-0 titre_apprendre">Apprendre</p>
                     </div>
                     <div class="col text-end close">
@@ -1013,7 +1147,7 @@
                         <h6 class="title_apprendre"><u>Agenda</u></h6> -->
 
                 </div>
-            </div>
+            </div> --}}
 
         </div>
         {{-- footer --}}
@@ -1042,7 +1176,7 @@
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
         //On change la couleur de fond au hasard
-            $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
+        $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         })
 
         $(document).ready(function() {

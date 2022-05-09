@@ -27,11 +27,13 @@ use App\taux_devises;
 use Illuminate\Support\Facades\Gate;
 use App\Models\FonctionGenerique;
 use App\cfp;
+use App\tva;
 use App\Devise;
 use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
 use App\EvaluationChaud;
+use App\Groupe;
 use App\Models\getImageModel;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
@@ -200,9 +202,9 @@ class HomeController extends Controller
            //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from stagiaires where user_id  = ? ', [Auth::user()->id]);
-            
+
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
-          
+
             $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?', [$databaseName, 'stagiaires']);
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
@@ -763,9 +765,7 @@ public function recherche_cfp(Request $request,$page = null)
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
             $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-
             $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
-            dd($data);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         }
@@ -843,12 +843,7 @@ public function recherche_cfp(Request $request,$page = null)
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-
             $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?',[$cfp_id,$formateur_id,$nb_par_page,$offset]);
-            // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-
-            // $entreprise = $entp->getEntreprise($etp2, $etp1);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
@@ -891,6 +886,14 @@ public function recherche_cfp(Request $request,$page = null)
 
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id','page','fin_page','nb_projet','debut','fin','nb_par_page'));
         }
+    }
+
+    public function statut_presence_emargement(Request $req){
+        $groupe_id = $req->groupe;
+        $groupe = new Groupe();
+        $statut_presence = $groupe->statut_presences($groupe_id);
+        $statut_evaluation = $groupe->statut_evaluation($groupe_id);
+        return response()->json(['presence'=>$statut_presence,'evaluation'=>$statut_evaluation]);
     }
 
     public function compte(Request $request)
@@ -1063,7 +1066,6 @@ public function recherche_cfp(Request $request,$page = null)
     public function budget_previsionnel(){
         $current_year = Carbon::now()->format('Y');
         $entreprise_id = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-
         //get total budget de l'année courant de l'entreprise
         $total_budget = DB::select('select ifnull(sum(budget_total),0) as total from v_budgetisation where entreprise_id = ? and annee =  ?', [$entreprise_id[0]->entreprise_id,$current_year]);
         //get total budget réalisé de l'entreprise
@@ -1071,9 +1073,7 @@ public function recherche_cfp(Request $request,$page = null)
         //get total budget engagé de l'entreprise
         $total_engage = DB::select('select ifnull(sum(montant_total),0) as engage from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id,"en_cour",$current_year]);
         //get total budget restant
-
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
-
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
     //creation iframe
@@ -1087,37 +1087,67 @@ public function recherche_cfp(Request $request,$page = null)
     }
     //taxe
     public function taxe(){
-        
-        return view('layouts.taxe');
+        // $tva=DB::select('select * from valeur_TVA ORDER BY id DESC LIMIT 1');
+        // $id=tva::value('id');
+        $tva=DB::select('select * from taxes where id =?',[1]);
+        // $tva=DB::select('select * from valeur_TVA  ');
+        // $taux=tva::findOrFail($request->id);
+    //     dd($taux);
+    //    dd($taux);
+        return view('layouts.taxe',compact('tva'));
     }
+    public function update_tva(Request $request)
+    {
+        // $tva=tva::where('id',$request->id)->update(['tva'=>$request->tva]);
+    DB::update('update taxes set pourcent=? where id=?',[$request->tva,$request->id]);
+    return back();
+    }
+    // public function delete_tva($id)
+    // {
+    //     DB::delete('delete from valeur_TVA where id = ?', [$id]);
+    //     return back();
+    
     //enregistrer taxe
-    public function taxe_enregistrer(Request $request)
-    {    
-        $inserer = DB::insert('insert into valeur_TVA (tva) value (?)', [$request->tva]);
-        return back();
-    }
+    // public function taxe_enregistrer(Request $request)
+    // {    
+    //     $inserer = DB::update('update taxes set pourcent=? where id=?', [$request->tva,1]);
+    //     return back();
+    // }
+   
     //devise
     public function getDevise()
     {
         $data = $this->fonct->findAll("devises");
-      
+
         return response()->json($data);
     }
 
     public function devise(){
-       
-        
+    
         // $liste=DB::select('select * from devises ');
         // $devises=DB::select('select * from v_devise order by created_at Desc ');
         // $taux=DB::select('select * from taux_devises ');
         //       $dev = new Devise();
         // $devis_actuel =  $dev->getListDevise();
-      
-        return view('layouts.devis');
+        // $devise=DB::select('select * from devise ORDER BY id DESC LIMIT 1');
+        $devise=DB::select('select * from devise');
+
+        // $devise=DB::select('select * from devise  ');
+        return view('layouts.devis',compact('devise'));
+    }
+    public function update_devise(Request $request)
+    {
+        DB::update('update devise set devise=? where id=?',[$request->devise,$request->id]);
+        return back();
+    }
+    public function delete_devise($id)
+    {
+        DB::delete('delete devise from devise where id=?',[$id]);
+        return back();
     }
     // public function edit($id)
     // {
-       
+
     //    $devise_edit=Devise::findOrfail($id);
     //    return view('layouts.edit_devise',compact('devise_edit'));
     // }
@@ -1135,7 +1165,7 @@ public function recherche_cfp(Request $request,$page = null)
     // {
     //     // DB::table('devises ')->where('id', $id)->delete();
     //     $id = $request->id;
-       
+
     //     DB::delete('delete from devises where id = ?', [$id]);
 
     //     return redirect()->route('devise');
@@ -1148,53 +1178,53 @@ public function recherche_cfp(Request $request,$page = null)
     // }
     // public function update_taux(Request $request,$id)
     // {
-       
+
     //     DB::update('update taux_devises set valeur_ariary= ?, created_at= ?  where id= ?', [$request->ar,$request->data_tx,$id]);
     //     return redirect()->route('devise');
     // }
     // public function delete_taux(Request $request,$id)
     // {
     //     $id = $request->id;
-       
+
     //     DB::delete('delete from taux_devises  where id = ?', [$id]);
 
     //     return redirect()->route('devise');
     // }
     //enregistrer devise
     public function devise_enregistrer(Request $request)
-    {   
+    {
         // if ($request["devise"]) {
         //     for ($i = 0; $i < count($request["devise"]); $i += 1) {
         //         $devis= $request["devise"][$i];
         //         $ref= $request["reference"][$i];
         // $inserer = DB::insert('insert into devises (description,reference) value (?,?)', [$devis,$ref]);
-                   
+
         //     }
         // }
-        $inserer = DB::insert('insert into devise (devise) value (?)', [$request->devis]);
+        $inserer = DB::update('update  devise set devise=? where  id=?', [$request->devis,8]);
 
         return back();
     }
     // //taxe devise
     // public function taux_enregistrer(Request $request)
-    // {   
+    // {
     //     $date_taux=$request->date_taux;
-   
+
     //     if ($request["devise_id"]) {
     //         for ($i = 0; $i < count($request["devise_id"]); $i += 1) {
     //             $devis_id= $request["devise_id"][$i];
     //             $val= $request["valeur"][$i];
     //             $ariary= $request["ar"][$i];
     //     $inserer = DB::insert('insert into taux_devises (devise_id,valeur_default,valeur_ariary,created_at,updated_at) value (?,?,?,?,?)', [$devis_id,$val,$ariary,$date_taux,$date_taux]);
-                   
+
     //         }
     //     }
 
 
-        
+
     //     return back();
     // }
-  
+
     public function enregistrer_iframe_etp(Request $request){
         $url_iframe = $request->iframe_url;
         $etp_id = $request->entreprise_id;

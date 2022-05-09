@@ -151,8 +151,8 @@ a:focus {
 }
 
 .titre_module p {
-    color: #7635dc;
-    font-size: 1.5rem;
+    color: black;
+    font-size: 1.3rem;
     font-weight: 500;
 }
 
@@ -209,7 +209,7 @@ a:focus {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     padding: 1rem;
     transition: all 0.5s ease;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 .liste__formation__item:hover .liste__formation {
     transform: scale(1.5s);
@@ -240,7 +240,7 @@ a:focus {
 #border_premier {
     border: none;
     background: white;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
     border-radius: 5px;
 }
 .module_detail {
@@ -293,7 +293,7 @@ a:focus {
     position: sticky;
     top: 8.5rem;
     background-color: white;
-    border: 1px solid grey;
+    border: 1px solid rgb(219, 217, 217);
     /* border-radius: 25px; */
 }
 .detail__prix {

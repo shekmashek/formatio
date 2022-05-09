@@ -31,6 +31,7 @@ class DetailController extends Controller
             return $next($request);
         });
         $this->fonct = new FonctionGenerique();
+        $this->groupes = new groupe();
     }
     public function calendrier(){
 
@@ -67,8 +68,6 @@ class DetailController extends Controller
             $detail = $this->fonct->findAll('v_detailmodule');
         }
         if (Gate::allows('isCFP')) {
-
-
             $fonct = new FonctionGenerique();
             $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
             $cfp_id = $rqt[0]->cfp_id;
@@ -78,7 +77,7 @@ class DetailController extends Controller
             INNER JOIN groupes ON details.groupe_id = groupes.id
             INNER JOIN formateurs ON details.formateur_id = formateurs.id
             INNER JOIN cfps ON details.cfp_id = cfps.id
-            WHERE details.cfp_id = ?
+            WHERE details.cfp_id = ? order by details.groupe_id
             ',[$cfp_id]);
 
             $modules = array();
@@ -274,6 +273,17 @@ class DetailController extends Controller
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select status_groupe,date_detail,h_debut,h_fin,detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where groupe_id = ' . $id_groupe);
 
+        /**Recuperer duree total de la session */
+        $nb_seance = '';
+        $info = $this->groupes->infos_session($id_groupe);
+        if ($info->difference == null && $info->nb_detail == 0) {
+            $nb_seance = $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail == 1) {
+            $nb_seance = $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail > 1) {
+            $nb_seance = $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }
+
         //on teste d'abord si le formateur a une photo ou non
         $test_photo_formateur = $detail[0]->photos;
 
@@ -289,14 +299,14 @@ class DetailController extends Controller
             $photo_form = 'oui';
         }
 
-        return response()->json(['id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
+        return response()->json(['nb_seance'=>$nb_seance,'id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
     }
     //impression
     public function detail_printpdf($id)
     {
         // dd(request()->Id);
         $detail = DB::select('select * from v_detailmodule where detail_id = ' . $id);
-
+        
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
         $id_groupe = $detail[0]->groupe_id;
         $date_groupe =  DB::select('select * from v_detailmodule where groupe_id = ' . $id_groupe);

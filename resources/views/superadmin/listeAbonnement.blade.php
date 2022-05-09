@@ -106,6 +106,11 @@
                         <th scope="col">Invoice date</th>
                         <th scope="col">Due date</th>
                         <th scope="col">Statut</th>
+                        @foreach ($facture as $fact )
+                            @if ($fact->nom_type == "Gratuit" && $fact->status_facture == "Non payé"))
+                                <th scope="col">Payer la facture</th>
+                            @endif
+                        @endforeach
                       </tr>
                     </thead>
                     <tbody>
@@ -122,8 +127,14 @@
                                 <td>{{$fact->invoice_date}}</td>
                                 <td>{{$fact->due_date}}</td>
                                 @if($fact->status_facture == "Non payé")
-                                    <td><span style="background-color: red;padding:5px;color:white">{{$fact->status_facture}}</span></td>
+                                    <td><span style="background-color: red;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
+                                @else
+                                    <td><span style="background-color: green;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                 @endif
+                                @if ($fact->nom_type == "Gratuit" && $fact->status_facture == "Non payé")
+                                    <td scope="col"><button class="btn btn-primary"> <a href="{{route('activer_compte_gratuit',$fact->abonnement_id)}}"> Payer </a></button></td>
+                                @endif
+
                             </tr>
                             @php $i += 1; @endphp
                         @endforeach
@@ -151,28 +162,38 @@
                       <tr>
                         <th scope="col">Date d'inscription</th>
                         <th scope="col">Type d'abonnement</th>
-                        <th scope="col">Catégorie</th>
+                        <th scope="col">Prochaine facture</th>
                         <th scope="col">Activité</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-
+                        @php $i = 0; @endphp
                         @foreach ($facture as $fact )
+
                             <tr>
                                 <td>{{$fact->invoice_date}}</td>
-                                <td>{{$fact->nom_type}}</td>
-                                <td>{{$fact->categorie}}</td>
+
+                                <td>{{$fact->nom_type}}&nbsp;,&nbsp;{{$fact->categorie}}&nbsp;,&nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
+                                <td>{{$facture_suivant[$i]}}</td>
                                 @if($fact->activite == 1)
-                                    <td>En cours</td>
+                                    <td><span style="background-color: green;padding:10px;color:white;border-radius:10px"> En cours </span></td>
+                                @elseif ($fact->status == "En attente")
+                                    <td><span style="background-color: orange;padding:10px;color:white;border-radius:10px"> En attente </span></td>
                                 @else
-                                    <td>Terminé</td>
+                                    <td><span style="background-color: red;padding:10px;color:white;border-radius:10px"> Terminé </span></td>
                                 @endif
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                          Arrêter le service
-                                        </button>
+                                        @if($fact->activite == 0)
+                                            <button class="btn btn-secondary dropdown-toggle disabled" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Arrêter le service
+                                            </button>
+                                        @else
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Arrêter le service
+                                            </button>
+                                        @endif
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @can('isReferent')
                                                 <li>
@@ -184,16 +205,19 @@
                                             @endcan
                                             @can('isCFP')
                                                 <li>
-                                                    <a class="dropdown-item" href=""><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                    <a class="dropdown-item" href="{{route('arret_immediat_abonnement_of',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
+                                                    <a class="dropdown-item" href="{{route('arret_fin_abonnement_of',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
                                                 </li>
                                             @endcan
                                         </ul>
                                       </div>
                                 </td>
                             </tr>
+                            @php
+                                $i+=1;
+                            @endphp
                         @endforeach
 
                     </tbody>

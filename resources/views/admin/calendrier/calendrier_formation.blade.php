@@ -212,9 +212,9 @@
                 <div id='calendar' style="width:100%;"></div>
             </div>
             <div class="col-sm-6" id="detail" style="display: none">
-                <div class="card" style="width: auto;">
+                {{-- <div class="card" style="width: auto;">
                     <div id="editor"></div>
-                    <div class="card-body" id="test">
+                    <div class="card-body" id="test"> --}}
                         <h2 class="card-title" style="text-align: center;">
                             Projet de formation: <label id="types"></label><br>
                             <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label>
@@ -235,7 +235,7 @@
                         <label class="gauche">Module:</label>&nbsp;<label class="contenu" id="module"></label><br>
                         <label class="gauche">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
                         <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
-                        <label class="gauche" for="">Date - Heure:</label><br>
+                        <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
                          <hr>
                         @canany(['isReferent','isCFP','isFormateur'])
@@ -256,9 +256,9 @@
                                 </tbody>
                             </table>
                         @endcanany
-                    </div>
+                    {{-- </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="filtrer mt-3">
             <div class="row">
@@ -401,6 +401,8 @@
                                         session.innerHTML = '';
                                         var date_formation = document.getElementById('date_formation');
                                         date_formation.innerHTML = '';
+                                        var nb_seance = document.getElementById('nb_seance');
+                                        nb_seance.innerHTML = '';
                                         var types = document.getElementById('types');
                                         types.innerHTML = '';
                                         var statut = document.getElementById('statut');
@@ -464,6 +466,7 @@
                                         var statut_pj = userDataDetail['status'];
                                         var stg = userDataDetail['stagiaire'];
                                         var date_groupe = userDataDetail['date_groupe'];
+                                        var nb_seance = userDataDetail['nb_seance'];
                                         var test_photo = userDataDetail['photo_form'];
                                         var photo_formateur = userDataDetail['initial'];
                                         var initial_stg = userDataDetail['initial_stg'];
@@ -551,7 +554,7 @@
                                             html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i>'+date_groupe[$j].date_detail+'<i class = "bx bxs-time icones"></i>'+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>';
                                         }
                                         $('#date_formation').append(html);
-
+                                        $('#nb_seance').append(nb_seance);
                                         var html = '';
 
                                         for (var $a = 0; $a < stg.length; $a++) {

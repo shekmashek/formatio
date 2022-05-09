@@ -29,7 +29,6 @@
     text-decoration: none;
     text-decoration-line: none;
 }
-
 </style>
 @section('content')
 <div class="container-fluid">
@@ -45,7 +44,6 @@
                         <a class="nav-link" id="tab_of" data-bs-toggle="tab" href="#of" type="button" role="tab" aria-controls="of" aria-selected="true">
                             Organisme de Formation</a>
                     </li>
-                    
                 </ul>
                 <div class="tab-content mt-5" id="myTabContent">
                     {{-- entreprises --}}

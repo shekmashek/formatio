@@ -9,6 +9,7 @@ use App\stagiaire;
 use App\responsable;
 use App\formateur;
 use App\cfp;
+use App\responsable_cfp;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -34,10 +35,11 @@ class UtilisateurControlleur extends Controller
     }
     public function index($id = null)
     {
-        $liste = entreprise::orderBy('nom_etp')->get();
+        // $liste = entreprise::orderBy('nom_etp')->get();
+        // dd($liste);
         if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
         else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
-       
+
         return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
     }
 
@@ -68,6 +70,7 @@ class UtilisateurControlleur extends Controller
         // dd( $this->fonct->findWhere("v_user_role",["role_id"],["1"]));
         // $users = User::where('role_id', "1")->get();
         $users = $this->fonct->findWhere("v_user_role", ["role_id"], ["1"]);
+        // dd($users);
         $liste = entreprise::orderBy('nom_etp')->get();
         return view('admin/utilisateur/admin', compact('liste', 'users'));
     }
@@ -81,19 +84,22 @@ class UtilisateurControlleur extends Controller
         $password = $user->password;
         $hashedPwd = Hash::make($password);
         $user->password = $hashedPwd;
-        $user->role_id = $request->role_id;
-
+        // $user->role_id = $request->role_id;
+        $user->cin= $request->cin;
         $user->save();
         return back();
     }
-
     public function cfp()
     {
-        $liste = entreprise::orderBy('nom_etp')->get();
-        $cfps = cfp::all();
-        return view('admin.utilisateur.cfp', compact('liste', 'cfps'));
+        // $liste = entreprise::orderBy('nom_etp')->get();
+        // $cfps = cfp::orderBy("nom")->with('responsable_cfp')->get();
+        // $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
+        // dd($cfps);
+        $datas = responsable_cfp::orderBy("nom_resp_cfp")->with('cfp')->where('prioriter',1)->get();
+         $responsables = $this->fonct->findWhere("v_responsable_cfp ", ["prioriter"], ["1"]);
+        //  dd($responsables);
+        return view('admin.utilisateur.cfp', compact('responsables','datas'));
     }
-
     public function entreprise()
     {
         $entreprise = $this->fonct->findAll("entreprises");
@@ -346,8 +352,8 @@ class UtilisateurControlleur extends Controller
 
         $cfp = cfp::findOrFail($id);
         // dd($cfp);
-        
-        return view('admin.utilisateur.profil_cfp', compact('liste_cfps','horaire','reseaux_sociaux','cfp'));
+
+        return redirect('affichage_parametre_cfp');
     }
     public function register_cfp(Request $request)
     {
@@ -488,10 +494,21 @@ class UtilisateurControlleur extends Controller
     }
     public function show($id)
     {
-        $liste = entreprise::orderBy("nom_etp")->get();
-        $datas = responsable::orderBy('nom_resp')->where('entreprise_id', $id)->get();
-        return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
+        // $liste = entreprise::orderBy("nom_etp")->get();
+        // $datas = responsable::orderBy('nom_resp')->where('entreprise_id', $id)->get();
+        // return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
+        $entreprises = $this->fonct->findAll("entreprises");
+        $datas = responsable::where('id', $id)->get();
+        $entreprise = responsable::orderBy('nom_resp')->with('entreprise')->get()->unique('nom_resp');
+        return view('admin.utilisateur.entreprise_result', compact('datas', 'entreprise','entreprises'));
     }
+    // public function show_etp($id)
+    // {
+    //     $datas = entreprise::where('id', $id)->get();
+    //     $entreprise = entreprise::orderBy('nom_etp')->get()->unique('nom_etp');
+    //     return view('admin.utilisateur.entreprise', compact('entreprise','datas'));
+
+    // }
     public function show_stagiaire($id)
     {
         $liste = entreprise::orderBy("nom_etp")->get();

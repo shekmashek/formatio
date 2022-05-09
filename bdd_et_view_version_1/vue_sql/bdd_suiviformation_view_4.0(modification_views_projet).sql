@@ -273,7 +273,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         f.mail_formateur,
         f.numero_formateur,
         f.photos,
-        concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
+        concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photos,
         p.nom_projet,
         (c.nom) nom_cfp,
         c.logo as logo_cfp,
@@ -361,7 +361,7 @@ create or replace view v_detail_session as
         dom.nom_domaine,
         mf.nom_formation,
         f.photos,
-        concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
+        concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photos,
         f.nom_formateur,
         f.prenom_formateur,
         f.mail_formateur,
@@ -385,41 +385,8 @@ create or replace view v_detail_session as
     JOIN domaines dom ON
         mf.domaine_id = dom.id
     join type_formations tf
-        on tf.id = p.type_formation_id
-    GROUP BY
-    d.id,
-    d.lieu,
-    d.h_debut,
-    d.h_fin,
-    d.date_detail,
-    d.formateur_id,
-    d.projet_id,
-    d.groupe_id,
-    d.cfp_id,
-    g.max_participant,
-    g.min_participant,
-    g.nom_groupe,
-    g.module_id,
-    g.date_debut,
-    g.date_fin,
-    g.status,
-    g.activiter,
-    mf.reference,
-    mf.nom_module,
-    mf.formation_id,
-    dom.id,
-    dom.nom_domaine,
-    mf.nom_formation,
-    f.photos,
-    f.nom_formateur,
-    f.prenom_formateur,
-    f.mail_formateur,
-    f.numero_formateur,
-    p.nom_projet,
-    c.nom,
-    p.type_formation_id,
-    tf.type_formation
-    ;
+        on tf.id = p.type_formation_id;
+    
 
 CREATE OR REPLACE VIEW v_participant_groupe AS
     SELECT
@@ -787,11 +754,14 @@ create or replace view v_session_projet as
         p.type_formation_id,
         p.status as status_projet,
         p.created_at as date_projet,
-        mf.*
+        mf.*,
+        c.adresse_lot,
+        c.adresse_ville
     from
     groupes g join projets p
     on g.projet_id = p.id
-    join moduleformation mf on mf.module_id = g.module_id;
+    join moduleformation mf on mf.module_id = g.module_id
+    join cfps c on mf.cfp_id = c.id;
 
 
 create or replace view v_evaluation_apprenant as
@@ -869,3 +839,12 @@ group by
     d.groupe_id,
     d.formateur_id,
     f.photos;
+
+create or replace view v_presence_groupe as
+    select
+        p.detail_id,
+        p.stagiaire_id,
+        p.status,
+        d.groupe_id
+    from presences p
+    join details d on d.id = p.detail_id;

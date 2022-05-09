@@ -168,9 +168,9 @@
             </form>
 
         </div>
-        <div class="col-6">
+        <div class="col-6 image_accueil">
             <div class="text-center">
-                <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" class="img-fluid ">
+                <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" class="img-fluid" width="300px" height="300px">
             </div>
         </div>
     </div>
