@@ -84,10 +84,22 @@ public function activer_stagiaire(Request $req){
     return response()->json($status);
 }
 
+public function new_emp(){
+    // $fonct = new FonctionGenerique();
+
+
+    // if (Gate::allows('isReferent')) {
+    //     $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
+    //     $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?', [$entreprise_id]);
+    //     return view('admin.chefDepartement.chef', compact('liste_departement'));
+    // }
+    return view('admin.entreprise.employer.nouveau_employer');
+}
+
     public function liste_employer($paginations=null)
     {
         $entreprise_id = 0;
-        $nb_limit=5;
+        $nb_limit=3;
         $user_id = Auth::user()->id;
 
         if (Gate::allows('isReferent')) {

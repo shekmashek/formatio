@@ -5,19 +5,30 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
-<div id="page-wrapper">
-    {{-- <div class="shadow-sm p-3 mb-5 bg-body rounded"> --}}
-    <div class="container-fluid">
-        <div class="panel-heading d-flex mb-5">
-            <div class="mx-2">
-                <li class="btn_enregistrer text-center"><a href="{{route('employes')}}">Précedent</a></li>&nbsp;
-            </div>
-        </div>
-    </div>
-
-    <!-- /.row -->
+{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 
 
+<div class="container-fluid">
+
+    <div class="m-4">
+
+    <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+        <li class="nav-item">
+            <a href="{{route('employes.liste')}}" class="nav-link">
+                liste des employers
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('employes.new')}}" class="nav-link active">
+                nouveau
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('employes.export.nouveau')}}" class="nav-link">
+                export EXCEL employer
+            </a>
+        </li>
+    </ul>
     <div class="row">
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
@@ -147,6 +158,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

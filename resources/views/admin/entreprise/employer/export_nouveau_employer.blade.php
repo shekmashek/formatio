@@ -75,13 +75,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('departement.create')}}" class="nav-link">
+                <a href="{{route('employes.new')}}" class="nav-link">
                     nouveau
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link active">
-                    export employer
+                    export EXCEL employer
                 </a>
             </li>
         </ul>

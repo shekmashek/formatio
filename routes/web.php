@@ -578,12 +578,6 @@ Route::get('search_par_solde_pagination/{nbPage_inactif?}/{nbPage_actif?}/{nbPag
 //============================== trie colonne table  facture ================
 Route::get('facture.trie','FactureController@trie_par')->name('facture.trie');
 
-Route::get('trie_par_num_facture','FactureController@trie_par_num_facture')->name('trie_par_num_facture');
-Route::get('trie_par_entiter','FactureController@trie_par_entiter')->name('trie_par_entiter');
-Route::get('trie_par_dte','FactureController@trie_par_dte')->name('trie_par_dte');
-Route::get('trie_par_totale_payer','FactureController@trie_par_totale_payer')->name('trie_par_totale_payer');
-Route::get('trie_par_reste_payer','FactureController@trie_par_reste_payer')->name('trie_par_reste_payer');
-
 
 // ==========================================================================
 
@@ -697,6 +691,7 @@ Route::get('employes.export.verify_email_stg','ParticipantController@verify_emai
 Route::get('employes.export.verify_cin_stg','ParticipantController@verify_cin_stg')->name('employes.export.verify_cin_stg');
 
 Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
+Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
 Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
 
 // ===================== CHEF DE DEPARTEMENT

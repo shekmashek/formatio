@@ -1208,6 +1208,33 @@
                                                             </div>
                                                         </form>
                                                     </div>
+                                                    {{-- <hr>
+                                                    <p>
+                                                        <a data-bs-toggle="collapse" href="#detail_par_rest" role="button" aria-expanded="false" class="solde_reste_payer_filtre" aria-controls="detail_par_rest">Recherche par intervale de solde <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                    </p>
+                                                    <div class="collapse multi-collapse" id="detail_par_rest">
+                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
+                                                            @csrf
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                        <input required type="number" min="0" placeholder="valeur" name="reste_solde_payer_debut" id="reste_solde_payer_debut" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                        <input required type="number" name="reste_solde_payer_fin" id="reste_solde_payer_fin" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div align="center">
+                                                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                            </div>
+                                                        </form>
+                                                    </div> --}}
                                                     <hr>
                                                     <p>
                                                         <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Recherche par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
@@ -1243,7 +1270,7 @@
                                                         </form>
                                                     </div>
                                                     <hr>
-                                                    <p>
+                                                    {{-- <p>
                                                         <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status(mbol vita) <i class='bx icon_trie bxs-chevron-up'></i></a>
                                                     </p>
                                                     <div class="collapse multi-collapse" id="detail_par_status">
@@ -1269,7 +1296,7 @@
 
                                                             <br>
                                                         </form>
-                                                    </div>
+                                                    </div> --}}
 
                                                 </div>
                                             </div>
