@@ -220,11 +220,12 @@ class ModuleController extends Controller
 
     public function create()
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $fonct = new FonctionGenerique();
         $domaine = $fonct->findAll("domaines");
         $liste = formation::orderBy('nom_formation')->get();
         $niveau = Niveau::all();
-        return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau'));
+        return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau','devise'));
     }
 
     public function get_formation(Request $req)

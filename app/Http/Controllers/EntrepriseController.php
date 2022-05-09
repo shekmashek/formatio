@@ -269,7 +269,6 @@ class EntrepriseController extends Controller
         else{
             return view('admin.entreprise.profile_entreprises', compact('entreprise', 'departement'));
         }
-        
     }
 
     public function getImage($path)
@@ -294,11 +293,11 @@ class EntrepriseController extends Controller
     public function enregistrer_email_entreprise(Request $request,$id){
         if($request->email == null){
             return redirect()->back()->with('error_email', 'Entrez l\'e-mail de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set email_etp = ? where id = ?', [$request->email,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set email_etp = ? where id = ?', [$request->email,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_nif_entreprise($id){
         $fonct = new FonctionGenerique();
@@ -358,7 +357,7 @@ class EntrepriseController extends Controller
     }
 
 
-    
+
     public function modification_assujetti_entreprise($id){
         $fonct = new FonctionGenerique();
         $assujetti = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);

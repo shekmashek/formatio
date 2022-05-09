@@ -108,6 +108,7 @@
 .nav-item.active .nav-link {
     border-bottom: 3px solid #7635dc !important;
     border: none;
+    color: #7635dc
 }
 
 .nav-tabs .nav-link:hover {

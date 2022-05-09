@@ -24,7 +24,7 @@
                 <div class="col-8">
                     <div>
                         @if($cfps->nom == NULL )
-                            <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Ajouter Nom</a>
+                            <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Ajouter Nom</a><br>
                         @else
                             <p class="nom_org">{{$cfps->nom}}</p>
                         @endif
@@ -40,16 +40,31 @@
 
         </div>
         <div class="col-3 second_col">
-            <p class="text-muted text-center">Modules</p>
-            <p class="text-center nb_modules text-muted">{{count($modules_counts)}}</p>
+            <div class="row text-end p-0">
+                <i class='bx bxs-customize icon_infos p-0'></i>
+            </div>
+            <div class="row ps-2 ">
+                <p class="nb_modules m-0 p-0">{{count($modules_counts)}}</p>
+                <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Modules</p>
+            </div>
         </div>
         <div class="col-3 second_col">
-            <p class="text-muted text-center">Projets</p>
-            <p class="text-center nb_modules text-muted">{{count($projets_counts)}}</p>
+            <div class="row text-end p-0">
+                <i class='bx bxs-component icon_infos p-0'></i>
+            </div>
+            <div class="row ps-2 ">
+                <p class="nb_modules m-0 p-0">{{count($projets_counts)}}</p>
+                <p class="text-muted borderBotom_color2 p-0 pb-2 text-uppercase">Projets</p>
+            </div>
         </div>
         <div class="col-3 second_col">
-            <p class="text-muted text-center">Factures</p>
-            <p class="text-center nb_modules text-muted">{{count($factures_counts)}}</p>
+            <div class="row text-end p-0">
+                <i class='bx bxs-receipt icon_infos p-0'></i>
+            </div>
+            <div class="row ps-2 ">
+                <p class="nb_modules m-0 p-0">{{count($factures_counts)}}</p>
+                <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Factures</p>
+            </div>
         </div>
         <div class="row row_bas g-0">
             <div class="col third_col py-2">
@@ -190,7 +205,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->nif == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-sitemap icon_sociaux'></i>&nbsp;NIF Incomplète</p><p class="text-end"><a href="{{route('modification_nif',$cfps->id)}}" class="action_other_not">Compléter NIF</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-sitemap icon_sociaux'></i>&nbsp;Numéro d'Identification Fiscale Incomplète (NIF)</p><p class="text-end"><a href="{{route('modification_nif',$cfps->id)}}" class="action_other_not">Compléter NIF</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-sitemap icon_sociaux'></i>&nbsp;{{$cfps->nif}}</p><p class="text-end"><a href="{{route('modification_nif',$cfps->id)}}" class="action_other">Modifier NIF</a></p></div>
                     @endif
@@ -199,7 +214,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->stat == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-align-justify icon_sociaux'></i>&nbsp;STAT Incomplète</p><p class="text-end"><a href="{{route('modification_stat',$cfps->id)}}" class="action_other_not">Compléter STAT</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-align-justify icon_sociaux'></i>&nbsp;Statistiques Incomplète (STAT)</p><p class="text-end"><a href="{{route('modification_stat',$cfps->id)}}" class="action_other_not">Compléter STAT</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-align-justify icon_sociaux'></i>&nbsp;{{$cfps->stat}}</p><p class="text-end"><a href="{{route('modification_stat',$cfps->id)}}" class="action_other">Modifier STAT</a></p></div>
                     @endif
@@ -208,7 +223,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->rcs == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-check-shield icon_sociaux'></i>&nbsp;RCS Incomplète</p><p class="text-end"><a href="{{route('modification_rcs_cfps',$cfps->id)}}" class="action_other_not">Compléter RCS</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-check-shield icon_sociaux'></i>&nbsp;Registre du Commerce et des Sociétés Incomplète (RCS)</p><p class="text-end"><a href="{{route('modification_rcs_cfps',$cfps->id)}}" class="action_other_not">Compléter RCS</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-check-shield icon_sociaux'></i>&nbsp;{{$cfps->rcs}}</p><p class="text-end"><a href="{{route('modification_rcs_cfps',$cfps->id)}}" class="action_other">Modifier RCS</a></p></div>
                     @endif
@@ -217,7 +232,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->cif == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-check-shield icon_sociaux'></i>&nbsp;CIF Incomplète</p><p class="text-end"><a href="{{route('modification_cif_cfps',$cfps->id)}}" class="action_other_not">Compléter CIF</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-check-shield icon_sociaux'></i>&nbsp;Cérticat d'Identification Fiscale Incomplète (CIF)</p><p class="text-end"><a href="{{route('modification_cif_cfps',$cfps->id)}}" class="action_other_not">Compléter CIF</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-check-shield icon_sociaux'></i>&nbsp;{{$cfps->cif}}</p><p class="text-end"><a href="{{route('modification_cif_cfps',$cfps->id)}}" class="action_other">Modifier CIF</a></p></div>
                     @endif

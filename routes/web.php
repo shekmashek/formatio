@@ -1188,6 +1188,8 @@ Route::get('modification_nom_entreprise/{id}','EntrepriseController@modification
 Route::post('enregistrer_nom_entreprise/{id}','EntrepriseController@enregistrer_nom_etp')->name('enregistrer_nom_entreprise');
 Route::get('modification_logo/{id}','EntrepriseController@modification_logo')->name('modification_logo');
 Route::post('enregistrer_logo/{id}','EntrepriseController@enregistrer_logo')->name('enregistrer_logo');
+Route::get('modification_assujetti_entreprise/{id}','EntrepriseController@modification_assujetti_entreprise')->name('modification_assujetti_entreprise');
+Route::post('enregistrer_assujetti_entreprise/{id}','EntrepriseController@enregistrer_assujetti_entreprise')->name('enregistrer_assujetti_entreprise');
 
 // modification session
 Route::post('modifier_session_intra','GroupeController@modifier_session_intra')->name('modifier_session_intra');

@@ -48,7 +48,7 @@ class ResponsableCfpController extends Controller
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
             return view('cfp.responsable_cfp.profiles', compact('refs'));
-            
+
         }
 
     }
@@ -77,19 +77,19 @@ class ResponsableCfpController extends Controller
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
                 $tva = DB::select('select * from taxes where id = ?', [1]);
-               
+
 
             }
             return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
-           
+
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
             $cfp_id=cfp::where('id',$id)->value('id');
             // dd($cfp_id);
             $abonnement = $fonct->findWhere("v_abonnement_facture",["cfp_id"],[$cfp_id]);
-           
+
             // dd($cfp_id);
             // $responsables_cfp = $this->fonct->findWhere("v_responsable_cfp ", ["prioriter"], ["0"], ["cfp_id"], [$cfp_id]);
             $responsables=responsable_cfp::where('cfp_id',$cfp_id)->where('prioriter',0)->get();
