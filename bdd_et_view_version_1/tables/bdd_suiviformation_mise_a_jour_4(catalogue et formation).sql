@@ -65,8 +65,8 @@ CREATE TABLE modules (
   prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-alter table modules add status int(11) default 0;
-alter table modules add prix_groupe int(11) NULL;
+--alter table modules add status int(11) default 0;
+--alter table modules add prix_groupe int(11) NULL;
 
 INSERT INTO modules (id, reference, nom_module, formation_id, created_at, updated_at, prix, duree,duree_jour,prerequis, objectif, modalite_formation, description ,niveau_id,materiel_necessaire,cible,min,max,bon_a_savoir,prestation,cfp_id) VALUES
 (2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1),

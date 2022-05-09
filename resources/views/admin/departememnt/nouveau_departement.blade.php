@@ -56,9 +56,14 @@
         }
 
         .nav_bar_list .nav-item:hover {
-            border-bottom: 2px solid black;
+            border-bottom: 2px solid gray;
         }
-
+        .box{
+            min-height: 450px;
+        }
+        h4{
+            color: black;
+        }
     </style>
 
 
@@ -77,21 +82,21 @@
             </div>
             @endif
 
-            <div class="col-md-12 mt-5">
+            <div class="col-md-12 mt-3" style="margin-left: -50px">
                 <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                     <li class="nav-item">
-                        <a href="#" style="color: rgb(102, 15, 241)" class=" active" id="tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
-                            gestion de département
+                        <a href="#" style="color: rgb(102, 15, 241);text-decoration:none" class=" active" id="tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                            Gestion de département
                         </a>
                     </li>
                     <li class="nav-item ms-5">
-                        <a href="#" style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                            gestion de service
+                        <a href="#" style="color: rgb(102, 15, 241);text-decoration:none" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                            Gestion de service
                         </a>
                     </li>
                     <li class="nav-item ms-5">
-                        <a href="#" style="color: rgb(102, 15, 241)" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#branche" type="button" role="tab" aria-controls="branche" aria-selected="false">
-                            gestion de branche
+                        <a href="#" style="color: rgb(102, 15, 241);text-decoration:none" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#branche" type="button" role="tab" aria-controls="branche" aria-selected="false">
+                            Gestion de branche
                         </a>
                     </li>
 
@@ -111,7 +116,7 @@
                 <div class="row">
                     <div class="col-md-5">
 
-                        <div class="shadow p-3 mb-5 bg-body rounded ">
+                        <div class="shadow-lg p-3 mt-4 bg-body rounded box">
 
                             <h4>Départements</h4>
 
@@ -125,7 +130,7 @@
                                             <td>
                                                 <div align="left">
                                                     @if(isset($rqt))
-                                                    @for($i = 0; $i < count($rqt); $i++) <p><strong>{{$rqt[$i]->nom_departement}}</strong></p>
+                                                    @for($i = 0; $i < count($rqt); $i++) <p>{{$rqt[$i]->nom_departement}}</p>
                                                         @endfor
                                                         @endif
 
@@ -171,7 +176,7 @@
                                         </div>
                                         @else
                                         <tr>
-                                            <td colspan="3"> Aucun département pour l'entreprise</td>
+                                            <td colspan="3" class="text-center"> Aucun département pour l'entreprise</td>
                                         </tr>
                                         @endif
 
@@ -186,7 +191,7 @@
 
                     </div>
                     <div class="col-md-7">
-                        <div class="shadow p-3 mb-5 bg-body rounded ">
+                        <div class="shadow p-3 mt-4 bg-body rounded box">
 
                             <h4>Ajout de département</h4>
                             <form class="form form_colab" action="{{ route('departement.store') }}" method="POST">
@@ -196,12 +201,10 @@
                                         <input type="text" class="form-control mb-2" id="inlineFormInput" name="departement[]" placeholder="Nom de déprtement" required />
                                     </div>
                                     <div class="col ms-2">
-                                        <button type="button" class="btn btn-success mt-2" id="addRow1"><i class='bx bxs-plus-circle'></i></button>
+                                        <button type="button" class="btn btn-success " id="addRow1"><i class='bx bxs-plus-circle align-middle'></i></button>
                                     </div>
-
                                 </div>
                                 <div id="add_column"></div>
-
                                 <button type="submit" class="btn btn-primary mt-2">Sauvegarder</button>
 
                             </form>

@@ -67,7 +67,7 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     f.photos,
     f.mail_formateur,
     f.numero_formateur,
-    f.genre,
+    f.genre_id,
     f.date_naissance,
     (f.adresse) adresse_formateur,
     f.cin,

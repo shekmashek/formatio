@@ -9,7 +9,7 @@ CREATE OR REPLACE VIEW v_liste_formateur_projet AS SELECT
     photos,
     mail_formateur,
     numero_formateur,
-    genre,
+    genre_id,
     activiter_formateur,
     user_id
 FROM
@@ -24,7 +24,7 @@ GROUP BY
     photos,
     mail_formateur,
     numero_formateur,
-    genre,
+    genre_id,
      activiter_formateur,
     user_id;
 

@@ -312,7 +312,7 @@ CREATE OR REPLACE VIEW v_temp_facture AS SELECT
 FROM
     v_dernier_encaissement;
 
-
+----eto
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     factures.cfp_id,
     (factures.projet_id) as projet_id,

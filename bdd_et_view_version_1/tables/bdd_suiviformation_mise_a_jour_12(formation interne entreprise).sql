@@ -121,8 +121,7 @@ INSERT INTO `domaines_interne` (`id`, `nom_domaine`, `created_at`, `updated_at`)
 (33, 'Tourisme, Loisirs\r\n\r\n', NULL, NULL),
 (34, 'Transport, Permis\r\n', NULL, NULL);
 
-ALTER TABLE `domaines_interne`
-  ADD PRIMARY KEY (`id`);
+
 
 ALTER TABLE `domaines_interne`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
@@ -261,7 +260,8 @@ CREATE TABLE modules_interne (
   min int(11) NOT NULL,
   max int(11) NOT NULL,
   bon_a_savoir TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
+  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  status int(11) default 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 alter table modules_interne add status int(11) default 0;

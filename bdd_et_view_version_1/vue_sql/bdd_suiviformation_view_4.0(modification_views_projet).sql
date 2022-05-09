@@ -433,7 +433,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.mail_stagiaire,
         s.telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
-        s.photos,
+        s.photos as photo_stagiaire,
         s.service_id as departement_id,
         s.cin,
         s.date_naissance,
@@ -512,7 +512,7 @@ select
         s.telephone_stagiaire,
         s.entreprise_id,
         s.user_id,
-        s.photos,
+        s.photos as photo_stagiaire,
         concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photo,
         (s.service_id) departement_id,
         s.cin,
@@ -731,7 +731,7 @@ create or replace view v_projet_session_inter as
     from groupes g join projets p on g.projet_id = p.id
     join cfps on cfps.id = p.cfp_id;
 
-
+---eto aho zw
 create or replace view v_formateur_projet as
     select
         f.formateur_id,

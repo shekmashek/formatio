@@ -1004,7 +1004,7 @@ Route::post('recherche_thematique_formation','AppelOffreController@recherche_the
 Route::post('recherche_intervale_date_appel_offre','AppelOffreController@recherche_intervale_date_appel_offre')->name('recherche_intervale_date_appel_offre');
 
 
-// ================== Role User
+// ================== Role User 
 // Route::get('add_role_user/{user_id}/{role_id}','RoleController@add_role_user')->name('add_role_user');
 Route::get('add_role_user','RoleController@add_role_user')->name('add_role_user');
 
