@@ -295,6 +295,7 @@ class FactureController extends Controller
     }
 
 
+
     public function search_par_entiter(Request $req, $nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null, $entiter_id_pag = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
@@ -355,6 +356,139 @@ class FactureController extends Controller
             return view(
                 'admin.facture.facture_etp',
                 compact('pour_list', 'devise', 'cfp', 'entiter_id', 'pagination_full', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_payer')
+            );
+        }
+    }
+
+
+    public function search_par_status(Request $req, $nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null, $status_pag = null)
+    {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+        $mode_payement = DB::select('select * from mode_financements');
+        $nb_limit = 10;
+
+        $status = null;
+
+        $para = null;
+        $opt = null;
+        $val = null;
+
+
+        if ($status_pag != null) {
+            $status = $status_pag;
+        } else {
+            $status = $req->status;
+        }
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+            $etp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+            $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
+
+
+            if ($status == "EN_COUR") { // partiellement payer
+
+                $para = [  "cfp_id", "jour_restant", "dernier_montant_ouvert", "facture_encour","activiter" ];
+                $opt = ["=", ">=", ">", "=","="];
+                $val = [$cfp_id, 1, 0, "en_cour",True];
+
+            } else if ($status == "ACTIF") { // actif
+
+                $para = ["cfp_id", "jour_restant", "activiter","facture_encour"];
+                $opt = ["=", ">=", "=","!="];
+                $val = [$cfp_id, 1, True,"terminer"];
+
+            } else if ($status == "INACTIF") { // inactif
+
+                $para = ["cfp_id", "jour_restant", "activiter"];
+                $opt = ["=", ">=", "="];
+                $val = [$cfp_id, 1, FALSE];
+
+            } else if ($status == "PAYER") { // payer
+
+                $para = ["cfp_id", "dernier_montant_ouvert","activiter","facture_encour"];
+                $opt = ["=", "<=","=","="];
+                $val = [$cfp_id, 0,True,"terminer"];
+
+            } else { // retard
+
+                $para = ["cfp_id", "jour_restant", "facture_encour"];
+                $opt = ["=", "<=", "!="];
+                $val = [$cfp_id, 0, "terminer"];
+            }
+
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para, $opt, $val, "AND");
+
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture",$para, $opt, $val,["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif",$para, $opt, $val,["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para, $opt, $val, ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para, $opt, $val, ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture',
+                compact('pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'pour_list', 'devise', 'entreprise', 'status', 'full_facture', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer')
+            );
+        }
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+            $cfp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
+            $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+            $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
+
+            if ($status == "EN_COUR") { // partiellement payer
+
+                $para = [  "entreprise_id", "jour_restant", "dernier_montant_ouvert", "facture_encour","activiter" ];
+                $opt = ["=", ">=", ">", "=","="];
+                $val = [$entreprise_id, 1, 0, "en_cour",True];
+
+            } else if ($status == "ACTIF") { // actif
+
+                $para = ["entreprise_id", "jour_restant", "activiter"];
+                $opt = ["=", ">=", "="];
+                $val = [$entreprise_id, 1, True];
+
+            } else if ($status == "INACTIF") { // inactif
+
+                $para = ["entreprise_id", "jour_restant", "activiter"];
+                $opt = ["=", ">=", "="];
+                $val = [$entreprise_id, 1, FALSE];
+
+            } else if ($status == "PAYER") { // payer
+
+                $para = ["entreprise_id", "dernier_montant_ouvert","activiter"];
+                $opt = ["=", "<=","="];
+                $val = [$entreprise_id, 0,True];
+
+            } else { // retard
+
+                $para = ["entreprise_id", "jour_restant", "facture_encour"];
+                $opt = ["=", "<=", "!="];
+                $val = [$entreprise_id, 0, "terminer"];
+            }
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para, $opt, $val, "AND");
+
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", $para, $opt, $val, ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para, $opt, $val, ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para, $opt, $val, ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture_etp',
+                compact('pour_list', 'devise', 'cfp', 'status', 'pagination_full', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_payer')
             );
         }
     }
@@ -1559,5 +1693,4 @@ class FactureController extends Controller
             ]);
         }
     }
-
 }

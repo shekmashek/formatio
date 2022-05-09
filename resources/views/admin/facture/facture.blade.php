@@ -1270,16 +1270,16 @@
                                                         </form>
                                                     </div>
                                                     <hr>
-                                                    {{-- <p>
+                                                    <p>
                                                         <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status(mbol vita) <i class='bx icon_trie bxs-chevron-up'></i></a>
                                                     </p>
                                                     <div class="collapse multi-collapse" id="detail_par_status">
-                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
+                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">
                                                             @csrf
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <div class="form-group">
-                                                                        <select class="form-select" name="entiter_id" id="entiter_id">
+                                                                        <select class="form-select" name="status" id="status">
                                                                             <option value="INACTIF">Nom envoyé</option>
                                                                             <option value="ACTIF">Envoyé</option>
                                                                             <option value="EN_COUR">Partiellement payé</option>
@@ -1296,7 +1296,7 @@
 
                                                             <br>
                                                         </form>
-                                                    </div> --}}
+                                                    </div>
 
                                                 </div>
                                             </div>
