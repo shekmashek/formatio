@@ -342,6 +342,7 @@
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
                     var details = userDataDetail['details'];
+
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
 
                     var detail_id = userDataDetail['detail_id'];
@@ -351,20 +352,20 @@
 
                         event.push({
                             @can('isStagiaire')
-                                title: groupe_entreprises[$i][0].nom_formation
+                                title: details[$i].nom_formation
                             @endcan
                             @can('isReferent')
-                            title: groupe_entreprises[$i].nom_formation
+                            title: details[$i].nom_formation
                             @endcan
-                            , start: details[$i][0].date_detail
+                            , start: details[$i].date_detail
                             ,backgroundColor:getRandomColor()
-                            , nom_projet: details[$i][0].nom_projet
-                            , h_debut: details[$i][0].h_debut
-                            , h_fin: details[$i][0].h_fin
-                            , lieu: details[$i][0].lieu
-                            , formateur: details[$i][0].nom_formateur + ' ' + details[$i][0].prenom_formateur
-                            , detail_id: detail_id[$i][0].details_id
-                            , nom_cfp: details[$i][0].nom_cfp
+                            , nom_projet: details[$i].nom_projet
+                            , h_debut: details[$i].h_debut
+                            , h_fin: details[$i].h_fin
+                            , lieu: details[$i].lieu
+                            , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
+                            , detail_id: details[$i].details_id
+                            , nom_cfp: details[$i].nom_cfp
                             , customRender: true
 
                         });
