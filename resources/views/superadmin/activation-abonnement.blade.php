@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <style>
 .navigation_module .nav-link {
     color: #637381;
@@ -29,14 +30,184 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#entreprise" class="nav-link active" data-bs-toggle="tab">Entreprise</a>
+                <a href="#types" class="nav-link active" data-bs-toggle="tab">Nouveau type d'abonnement</a>
+            </li>
+            <li class="nav-item">
+                <a href="#entreprise" class="nav-link" data-bs-toggle="tab">Entreprise</a>
             </li>
             <li class="nav-item">
                 <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="entreprise">
+            <div class="tab-pane fade show active" id="types">
+                <div class="shadow p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
+                    @if (Session::has('message'))
+                        <div class="alert alert-success ms-4 me-4">
+                            <ul>
+                                <li>{!! \Session::get('message') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{route('abonnement.store')}}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <select class="form-select selectP input" id="type_abonne" name="type_abonne" aria-label="Default select example">
+                                            <option value="of">Organisme de Formation</option>
+                                            <option value="etp">Entreprise</option>
+                                        </select>
+                                        <label class="form-control-placeholder" for="type_enregistrement">Type d'abonnés<strong style="color:#ff0000;">*</strong></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-12">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" placeholder="Nom" required>
+                                        <label for="nom" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
+                                        @error('nom')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <input type="text" autocomplete="off"  name="description" class="form-control input" id="description" placeholder="Description" required />
+                                        <label for="description" class="form-control-placeholder" align="left">Description<strong style="color:#ff0000;">*</strong></label>
+                                        @error('description')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  mt-4">
+                            <div class="col-12">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <input type="text" name="prix" class="form-control input" id="prix" placeholder="Prix" required />
+                                        <label for="prix" class="form-control-placeholder" align="left">Prix</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  mt-4">
+                            <div class="col-4">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <input type="number" min="1" name="nb_utilisateur" class="form-control input" id="utilisateur" placeholder="Nombre d'utilisateur" required />
+                                        <label for="utilisateur" class="form-control-placeholder" align="left">Nombre d'utilisateur<strong style="color:#ff0000;">*</strong></label>
+                                        @error('utilisateur')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <input type="number" name="nb_formateur" min="1" class="form-control input" id="formateur" placeholder="Nombre de formateur" required />
+                                        <label for="formateur" class="form-control-placeholder" align="left">Nombre de formateur<strong style="color:#ff0000;">*</strong></label>
+                                        @error('formateur')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="illimite_utilisateur" type="checkbox" value="illimite" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                    Illimite
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  mt-4">
+                            <div class="col-4">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control input" min="1" id="min_emp" name="min_emp" placeholder="Nombre minimum d' employé"/>
+                                        <label for="min" class="form-control-placeholder" align="left">Nombre minimum d' employé<strong style="color:#ff0000;">*</strong></label>
+                                        <span style="color:#ff0000;" id="mail_err"></span>
+                                        @error('min')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <input type="number" class="form-control input" id="max_emp" name="max_emp" placeholder="Nombre maximum d' employé"/>
+                                    <label for="max" class="form-control-placeholder" align="left">Nombre maximum d' employé<strong style="color:#ff0000;">*</strong></label>
+                                    <span style="color:#ff0000;" id="mail_err"></span>
+                                    @error('max')
+                                    <div class="col-sm-6">
+                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="illimite_etp" type="checkbox" value="" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                      Illimite
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row  mt-4">
+                            <div class="col-6">
+                                <div class="row px-3">
+                                    <div class="form-group">
+                                        <input type="number" name="nb_projet" class="form-control input" min="1" id="projet" placeholder="Nombre de projet"/>
+                                        <label for="projet" class="form-control-placeholder" align="left">Nombre de projet<strong style="color:#ff0000;">*</strong></label>
+                                        <span style="color:#ff0000;" id="mail_err"></span>
+                                        @error('projet')
+                                        <div class="col-sm-6">
+                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="illimite_of" type="checkbox" value="illimite" id="flexCheckChecked">
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                    Illimite
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" text-center">
+                            <button type="submit" class="btn btn-lg btn_enregistrer">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane fade " id="entreprise">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client_etp" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
@@ -68,7 +239,7 @@
                                             <!-- Default switch -->
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input activer" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
-                                                <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->abonnement_id}}">Activer</label>
+                                                {{-- <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->abonnement_id}}">Activer</label> --}}
                                             </div>
                                         </td>
                                     </tr>
@@ -78,7 +249,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade" id="of">
+            <div class="tab-pane fade " id="of">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
@@ -113,7 +284,7 @@
                                         <!-- Default switch -->
                                         <div class="form-check form-switch">
                                             <input class="form-check-input activer_of" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
-                                            <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_of_{{$listes->abonnement_id}}">Activer</label>
+                                            {{-- <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_of_{{$listes->abonnement_id}}">Activer</label> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -135,6 +306,19 @@
         tmpDate.setDate(tmpDate.getDate() + noOfDays);
         return tmpDate;
     }
+    // $("#type_abonne" ).on("change", function() {
+    //     alert($(this).val() );
+    //     if($(this).val() == 'of'){
+    //         $('#projet').prop('disabled','false');
+    //         $('#min_emp').prop('disabled','true');
+    //         $('#max_emp').prop('disabled','true');
+    //     }
+    //     if($(this).val() == 'etp'){
+    //         $('#projet').prop('disabled','true');
+    //         $('#min_emp').prop('disabled','false');
+    //         $('#max_emp').prop('disabled','false');
+    //     }
+    // });
     /* activation compte entreprise */
     $(".activer" ).on( "change", function() {
         var statut,idAbonnement;

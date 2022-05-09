@@ -69,31 +69,76 @@ class AbonnementController extends Controller
      */
     public function store(Request $request)
     {
-        //enregistrement du type d'abonnement
-        $typeAbonnement = new type_abonnement();
-        $typeAbonnement->nom_type = $request->type_abonnement;
 
-        $nom_image = str_replace(' ', '_', $request->type_abonnement . '.' . $request->logo_abonnement->extension());
-        $str = 'images/abonnement';
-        $request->logo_abonnement->move(public_path($str), $nom_image);
+        $type_abonne = $request->type_abonne;
+        dd($type_abonne);
+        $limite_projet = $request->illimite_of;
+        $illimite_etp = $request->illimite_etp;
+        $nom_type = $request->nom_type;
+        $description = $request->description;
+        $prix = $request->prix;
 
-        $typeAbonnement->Logo = $nom_image;
-        $typeAbonnement->save();
+        //enregistrement du type d'abonnement pour entreprise
+        if($type_abonne == "of"){
+            if($limite_projet != null){
+                $illimite = 1;
+                $nb_utilisateur = 0;
+                $nb_formateur = 0;
+                $nb_projet = 0;
+            }
+            else {
+                $illimite = 0;
+                $nb_utilisateur = $request->nb_utilisateur;
+                $nb_formateur =  $request->nb_formateur;
+                $nb_projet = $request->nb_projet;
+            }
+            DB::insert('insert into type_abonnements_of (nom_type,description,tarif,nb_utilisateur,nb_formateur,min_emp,max_emp,illimite) values (?,?,?,?,?,?,?,?)', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite]);
 
-        $id_abonnement = type_abonnement::where('nom_type', $request->type_abonnement)->value('id');
+        }
+           //enregistrement du type d'abonnement pour of
+        if($type_abonne == "etp"){
+            if($illimite_etp != null and $request->illimite_utilisateur != null){
+                $illimite = 1;
+                $nb_utilisateur = 0;
+                $nb_formateur = 0;
+                $min_emp = 0;
+                $max_emp = 0;
+            }
+            else {
+                $illimite = 0;
+                $nb_utilisateur = $request->nb_utilisateur;
+                $nb_formateur =  $request->nb_formateur;
+                $min_emp = $request->min_emp;
+                $max_emp = $request->max_emp;
+            }
+            DB::insert('insert into type_abonnements_etp (nom_type,description,tarif,nb_utilisateur,nb_formateur,nb_projet,illimite) values (?,?,?,?,?,?,?)', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite]);
 
-        $type_abonne_id = $request->type_abonne;
+        }
 
-        //enregistrement type abonnement par type d'abonnés
-        $typeAbonneRole = new type_abonnement_role();
-        $typeAbonneRole->type_abonne_id = $type_abonne_id;
-        $typeAbonneRole->type_abonnement_id = $id_abonnement;
-        $typeAbonneRole->save();
+        // $typeAbonnement = new type_abonnement();
+        // $typeAbonnement->nom_type = $request->type_abonnement;
 
-        $idTypeAbonneRole = type_abonnement_role::where(['type_abonne_id' => $type_abonne_id], ['type_abonnement_id' => $id_abonnement])->value('id');
+        // $nom_image = str_replace(' ', '_', $request->type_abonnement . '.' . $request->logo_abonnement->extension());
+        // $str = 'images/abonnement';
+        // $request->logo_abonnement->move(public_path($str), $nom_image);
 
-        $this->abonnement_model->insert_tarif_categories($idTypeAbonneRole,1,$request->tarif_ab);
-        $this->abonnement_model->insert_tarif_categories($idTypeAbonneRole,2,$request->tarif_annuel);
+        // $typeAbonnement->Logo = $nom_image;
+        // $typeAbonnement->save();
+
+        // $id_abonnement = type_abonnement::where('nom_type', $request->type_abonnement)->value('id');
+
+        // $type_abonne_id = $request->type_abonne;
+
+        // //enregistrement type abonnement par type d'abonnés
+        // $typeAbonneRole = new type_abonnement_role();
+        // $typeAbonneRole->type_abonne_id = $type_abonne_id;
+        // $typeAbonneRole->type_abonnement_id = $id_abonnement;
+        // $typeAbonneRole->save();
+
+        // $idTypeAbonneRole = type_abonnement_role::where(['type_abonne_id' => $type_abonne_id], ['type_abonnement_id' => $id_abonnement])->value('id');
+
+        // $this->abonnement_model->insert_tarif_categories($idTypeAbonneRole,1,$request->tarif_ab);
+        // $this->abonnement_model->insert_tarif_categories($idTypeAbonneRole,2,$request->tarif_annuel);
 
         return redirect()->back()->with('message', 'Configuration d\'abonnement enregistré avec succès');
     }
@@ -361,7 +406,7 @@ class AbonnementController extends Controller
                         $annee = strftime('%Y',strtotime($dernier_facture[0]->invoice_date));
                     }
                 }
-             
+
             }
 
             else{

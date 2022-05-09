@@ -1,3 +1,33 @@
+
+--abonnement pour entreprise
+CREATE TABLE `type_abonnements_etp` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tarif`  decimal(15,2),
+  `nb_utilisateur` int(5) NOT NULL,
+  `nb_formateur` int(5) NOT NULL,
+  `nb_projet` int(5) NOT NULL,
+  `illimite`  boolean not null default false,
+  `created_at` timestamp NULL DEFAULT  current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT  current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--abonnement pour of
+CREATE TABLE `type_abonnements_of` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tarif`  decimal(15,2),
+  `nb_utilisateur` int(5) NOT NULL,
+  `nb_formateur` int(5) NOT NULL,
+  `min_emp` int(5) NOT NULL,
+  `max_emp` int(5) NOT NULL,
+  `illimite`  boolean not null default false,
+  `created_at` timestamp NULL DEFAULT  current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT  current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE `factures_abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `abonnement_id` bigint(20) UNSIGNED NOT NULL REFERENCES abonnements(id) ON DELETE CASCADE,
