@@ -121,3 +121,5 @@ alter table ressources add column note text;
 alter table salle_formation_of add column ville VARCHAR(200);
 
 update details set lieu = 'Antananarivo,  Analamihitsy Numerika DSI';
+
+update groupes set modalite = 'Présentiel';
