@@ -1,5 +1,9 @@
 @extends('layouts.admin')
+@section('title')
+<p class="text_header m-0 mt-1">Abonnement</p>
+@endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,125 +37,188 @@
                 </div>
             </nav>
         </div>
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="abonnement">
-                <div class="row mt-5">
-                    <div class="col">
-                        <div class="row align-items-center justify-content-center">
-                        </div>
-                        @foreach ($typeAbonnement as $types)
-                            @foreach ($tarif as $tf)
-                                 <div class="col-lg-6 col-md-6 ">
-                                    <div class="card d-flex align-items-center justify-content-center">
-                                        <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
-                                        <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
-                                                class="sup">AR</sup>/ mois</span>
-                                        <ul class="mb-5 list-unstyled text-muted">
-                                            <li><span class="bx bx-check me-2"></span>Test gratuit</li>
-                                            <li><span class="bx bx-check me-2"></span>Creation de Compte Pro</li>
-                                            <li><span class="bx bx-check me-2"></span>Accès à toutes les Fonctionalités </li>
-                                        </ul>
-                                        {{-- <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}" target="_blank">Commencer</a></div> --}}
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endforeach
-                    </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="col mt-5 justify-content-between">
+                    <div class="card d-flex align-items-center justify-content-center">
+                        <p class="h-1 pt-5 nom_type mt-5">{{ $typeAbonnement->nom_type }}</p>
+                        <span class="description mt-5">{{ $typeAbonnement->description }}</span>
+                        <span class="tarif"> <span class="number"> {{number_format($typeAbonnement->tarif,0, ',', '.')}}</span> <sup
+                                class="sup">AR</sup>/ mois</span>
 
-                    <div class="col-lg-6">
-                         <div class="card-title">
-                                @if(session()->has('message'))
-                                    <div class="alert alert-success">
-                                        {{ session()->get('message') }}
-                                    </div>
-                                @endif
+                        <ul class="mb-5 list-unstyled text-muted">
+                            @if($typeAbonnement->illimite == 1)
+                                <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
+                                <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
+                                <li><span class="bx bx-check me-2"></span>Employés illimités</li>
+                            @else
+                                <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->nb_utilisateur}} utilisateurs</li>
+                                <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->nb_formateur}} formateurs</li>
+                                <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->min_emp}} - {{$typeAbonnement->max_emp}}  employés</li>
+                            @endif
 
-                                <h3> Votre Compte actuel: {{$type_abonnement}}</h3>
-
-                            </div>
-                            <form action="{{route('enregistrer_abonnement')}}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    @if($entreprise!=null)
-                                        @foreach ($entreprise as $etp)
-                                            <div class="col-md-5">
-                                                <label for="">Nom</label>
-                                                <input type="text" class="form-control" value="{{$etp->nom_etp}}" readonly><br>
-
-                                                <label for="">Adresse de facturation</label>
-                                                <input type="text" class="form-control" value = "{{$etp->adresse_lot}} {{$etp->adresse_quartier}} {{$etp->adresse_ville}} {{$etp->adresse_region}} {{$etp->adresse_code_postal}} " readonly><br>
-
-                                                <label for="">Email</label>
-                                                <input type="text" class="form-control" value = "{{$etp->email_etp}}" readonly><br>
-
-                                                <label for="">Telephone</label>
-                                                <input type="text" class="form-control" value = "{{$etp->telephone_etp}}" readonly><br>
-                                            </div>
-
-                                            <div class="col-md-5">
-                                                <label for="">Compte actuel</label>
-                                                @if($nb == 0)
-                                                    <input type="text" class="form-control" value = "Gratuit" readonly><br>
-                                                @endif
-
-                                                <label for="">Referent</label>
-                                                <input type="text" class="form-control" value = "{{$etp->nom_resp}} {{$etp->prenom_resp}}" readonly><br>
-
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                    @if($cfps!=null)
-                                        @foreach ($cfps as $cfp)
-
-                                            <div class="col-md-5">
-                                                <label for="">Nom</label>
-                                                <input type="text" class="form-control" value="{{$cfp->nom}}" readonly><br>
-
-                                                <label for="">Adresse de facturation</label>
-                                                <input type="text" class="form-control" value = "{{$cfp->adresse_lot}} {{$cfp->adresse_ville}} {{$cfp->adresse_region}}" readonly><br>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <label for="">E-mail</label>
-                                                <input type="text" class="form-control" value = "{{$cfp->email}}" readonly><br>
-
-                                                <label for="">Téléphone</label>
-                                                <input type="text" class="form-control" value = "{{$cfp->telephone}}" readonly><br>
-                                            </div>
-
-                                            {{-- <div class="col-md-5">
-                                                <label for="">Compte actuel</label>
-                                                @if($nb == 0)
-                                                    <input type="text" class="form-control" value = "Gratuit" readonly><br>
-                                                @endif
-                                            </div> --}}
-                                        @endforeach
-                                    @endif
-
-
-                                    <div class="col-md-1"></div>
-                                </div>
-
-                                <div class="d-flex flex-row justify-content-lg-evenly">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            <small class="smalli">En envoyant cette demande d'abonnement, j'accepte les politiques de confidentialités,les Conditions générales d'utilisation,les conditions générales de vente </small>
-                                        </label>
-                                    </div>
-                                </div>
-                            <br><br>
-                            <div class="col text-center">
-                             <button class="btn btn-success" type="submit">Accepter le Changement de tarif</button>
-                            </div>
-                            <input type="text" value =" {{$type_abonnement_role_id}} " hidden name="type_abonnement_role_id">
-                            <input type="text" value="{{$categorie_paiement_id}}" hidden name="catg_id">
-                        </form>
-
+                        </ul>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+                <div class="shadow p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
+                    <h3> Votre Compte actuel: {{$type_abonnement}}</h3>
 
+                    <form action="{{route('enregistrer_abonnement')}}" method="POST">
+                        @csrf
+                        @if($entreprise!=null)
+                            @foreach ($entreprise as $etp)
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row px-3">
+                                        <div class="form-group">
+                                            <label for="nom" class="" align="left">Nom<strong style="color:#ff0000;"></strong></label>
+                                            <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly  value="{{$etp->nom_etp}}">
+                                            @error('nom')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <div class="row px-3">
+                                        <div class="form-group">
+                                            <label for="adresse" class="" align="left">Adresse de facturation<strong style="color:#ff0000;"></strong></label>
+                                            <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly value = "{{$etp->adresse_lot}} {{$etp->adresse_quartier}} {{$etp->adresse_ville}} {{$etp->adresse_region}} {{$etp->adresse_code_postal}} ">
+                                            @error('nom')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <div class="row px-3">
+                                        <div class="form-group">
+                                            <label for="adresse" class="" align="left">E-mail<strong style="color:#ff0000;"></strong></label>
+                                            <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly value = "{{$etp->email_etp}}">
+                                            @error('nom')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <div class="row px-3">
+                                        <div class="form-group">
+                                            <label for="adresse" class="" align="left">Telephone<strong style="color:#ff0000;"></strong></label>
+                                            <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly  value = "{{$etp->telephone_etp}}">
+                                            @error('nom')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <div class="row px-3">
+                                        <div class="form-group">
+                                            <label for="adresse" class="" align="left">Référent<strong style="color:#ff0000;"></strong></label>
+                                            <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly value = "{{$etp->nom_resp}} {{$etp->prenom_resp}}" >
+                                            @error('nom')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        @endif
+                        @if($cfps!=null)
+                            @foreach ($cfps as $cfp)
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row px-3">
+                                            <div class="form-group">
+                                                <label for="nom" class="" align="left">Nom<strong style="color:#ff0000;"></strong></label>
+                                                <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly  value="{{$cfp->nom}}">
+                                                @error('nom')
+                                                <div class="col-sm-6">
+                                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <div class="row px-3">
+                                            <div class="form-group">
+                                                <label for="adresse" class="" align="left">Adresse de facturation<strong style="color:#ff0000;"></strong></label>
+                                                <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly value = "{{$cfp->adresse_lot}} {{$cfp->adresse_ville}} {{$cfp->adresse_region}}  ">
+                                                @error('nom')
+                                                <div class="col-sm-6">
+                                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <div class="row px-3">
+                                            <div class="form-group">
+                                                <label for="adresse" class="" align="left">E-mail<strong style="color:#ff0000;"></strong></label>
+                                                <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly value = "{{$cfp->email}}">
+                                                @error('nom')
+                                                <div class="col-sm-6">
+                                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <div class="row px-3">
+                                            <div class="form-group">
+                                                <label for="adresse" class="" align="left">Telephone<strong style="color:#ff0000;"></strong></label>
+                                                <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" readonly  value = "{{$cfp->telephone}}">
+                                                @error('nom')
+                                                <div class="col-sm-6">
+                                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+
+
+                        <div class="d-flex flex-row justify-content-lg-evenly">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    <small class="smalli">En envoyant cette demande d'abonnement, j'accepte les politiques de confidentialités,les Conditions générales d'utilisation,les conditions générales de vente </small>
+                                </label>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col text-center">
+                            <button class="btn btn-success" type="submit">Accepter le Changement de tarif</button>
+                        </div>
+                        <input type="text" value ="{{$typeAbonnement->id}} " hidden name="type_abonnement_role_id">
+                    </form>
+                </div>
+           </div>
         </div>
     </div>
 </body>

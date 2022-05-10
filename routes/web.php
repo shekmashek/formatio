@@ -698,6 +698,24 @@ Route::post('/update_chef/{id}','ChefDepartementController@update_chef')->name('
 
 // =======================  ABONNEMENT
 Route::resource('abonnement','AbonnementController');
+// ================= Route abonnement ================= //
+Route::resource('abonnement', 'AbonnementController')->except('show');
+Route::get('show_role','AbonnementController@show')->name('show_role');
+Route::get('tarif.create','AbonnementController@formulaire_tarif_categorie')->name('tarif.create');
+Route::get('ListeAbonnement', 'AbonnementController@ListeAbonnement')->name('ListeAbonnement');
+Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
+Route::get('activer_compte_gratuit/{id}','AbonnementController@activer_compte_gratuit')->name('activer_compte_gratuit');
+
+
+// //route abonnement page
+Route::get('/abonnement-page/{id}', 'AbonnementController@Abonnement')->name('abonnement-page');
+Route::post('enregistrer_abonnement','AbonnementController@enregistrer_abonnement')->name('enregistrer_abonnement');
+Route::get('activation_page','AbonnementController@activation')->name('activation_page');
+Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
+Route::get('activer_compte','AbonnementController@activer')->name('activer_compte');
+Route::get('activer_compte_of','AbonnementController@activer_of')->name('activer_compte_of');
+Route::get('/impression_facture/{id}','AbonnementController@impression')->name('impression_facture');
+
 Route::get('/', function () {
     return view('index_accueil');
 // return view('page_travaux.plateforme_en_travaux');
@@ -707,6 +725,8 @@ Route::get('nouveau_type',function(){
 })->name('nouveau_type');
 Route::get('modifier_abonnement_of/{id}','AbonnementController@modifier_abonnement_of')->name('modifier_abonnement_of');
 Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@enregistrer_modification_abonnement_of')->name('enregistrer_modification_abonnement_of');
+Route::get('modifier_abonnement_entreprise/{id}','AbonnementController@modifier_abonnement_entreprise')->name('modifier_abonnement_entreprise');
+Route::post('enregistrer_modification_abonnement_etp/{id}','AbonnementController@enregistrer_modification_abonnement_etp')->name('enregistrer_modification_abonnement_etp');
 //ajouter nouveau plan
 Route::get('ajout_plan', function () {
     return view('referent.ajout_plan');
@@ -742,26 +762,7 @@ Route::get('notification_stagiaire','AutoEvaluationController@notifiaction')->na
 
 Route::get('profilFormateur/{id_formateur}','ProfController@cvFormateur')->name('profilFormateur');
 
-// ================= Route abonnement ================= //
-Route::resource('abonnement', 'AbonnementController')->except('show');
-Route::get('show_role','AbonnementController@show')->name('show_role');
-Route::get('tarif.create','AbonnementController@formulaire_tarif_categorie')->name('tarif.create');
-Route::get('ListeAbonnement', 'AbonnementController@ListeAbonnement')->name('ListeAbonnement');
-Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
-Route::get('activer_compte_gratuit/{id}','AbonnementController@activer_compte_gratuit')->name('activer_compte_gratuit');
-// //route abonnement page
-// Route::get('configuration_abonnement', function () {
-//     return view('superadmin.abonnement');
-// })->name('configuration_abonnement');
-// //Route activation abonnement
-// //route abonnement page
-Route::get('abonnement-page', 'AbonnementController@Abonnement')->name('abonnement-page');
-Route::post('enregistrer_abonnement','AbonnementController@enregistrer_abonnement')->name('enregistrer_abonnement');
-Route::get('activation_page','AbonnementController@activation')->name('activation_page');
-Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
-Route::get('activer_compte','AbonnementController@activer')->name('activer_compte');
-Route::get('activer_compte_of','AbonnementController@activer_of')->name('activer_compte_of');
-Route::get('/impression_facture/{id}','AbonnementController@impression')->name('impression_facture');
+
 //====================== Demmande de collaboration
 Route::get('collaboration','CollaborationController@collaboration')->name('collaboration');
 

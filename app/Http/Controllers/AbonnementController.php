@@ -225,23 +225,16 @@ class AbonnementController extends Controller
     {
 
         if (Gate::allows('isReferent')) {
-            $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 1)->get();
-            $responsable =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
-            $abn =type_abonnement::all();
-            $typeAbonne_id = 1;
 
+            $responsable =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $test_abonne =$this->fonct->findWhere('abonnements',['entreprise_id','status'],[$responsable[0]->entreprise_id,'En attente']);
 
 
             /** on récupère l'abonnement actuel */
             $abonnement_actuel = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$responsable[0]->entreprise_id]);
 
-            // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->get();
-            $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
-
-            $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->orderBy('tarif','asc')->get();
-
-            $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
+            //on recupere les types d'abonnements
+            $typeAbonnement =$this->fonct->findAll('type_abonnements_etp');
 
             //liste facturation
             // $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['entreprise_id'],[$responsable[0]->entreprise_id]);
@@ -334,7 +327,7 @@ class AbonnementController extends Controller
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture','abn', 'gratuit', 'typeAbonne_id', 'tarifAnnuel', 'offregratuit', 'typeAbonnement', 'tarif'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
             }
         }
         else {
@@ -478,18 +471,18 @@ class AbonnementController extends Controller
         return back();
     }
     //abonnement
-    public function Abonnement()
+    public function Abonnement($id)
     {
-        $tarif_id = request()->id;
-        $tarif = tarif_categorie::where('id', $tarif_id)->get();
-        $categorie_paiement_id = tarif_categorie::where('id', $tarif_id)->value('categorie_paiement_id');
-        $type_abonnement_role_id = tarif_categorie::where('id', $tarif_id)->value('type_abonnement_role_id');
+        // $tarif_id = request()->id;
+        // $tarif = tarif_categorie::where('id', $tarif_id)->get();
+        // $categorie_paiement_id = tarif_categorie::where('id', $tarif_id)->value('categorie_paiement_id');
+        // $type_abonnement_role_id = tarif_categorie::where('id', $tarif_id)->value('type_abonnement_role_id');
         // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('id', $type_abonnement_role_id)->get();
-        $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['types_id'],[$type_abonnement_role_id]);
 
+        $typeAbonnement =$this->fonct->findWhereMulitOne('type_abonnements_etp',['id'],[$id]);
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
+        // $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
 
         if (Gate::allows('isReferent')) {
             $resp =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
@@ -505,14 +498,14 @@ class AbonnementController extends Controller
                 //on teste d'abord si le dernier abonnement est gratuit,
                 if($etp_ab[0]->nom_type == "Gratuit") {
                    // si l'utilisateur choisi encore l'offre gratuit, il n'a plus droit d'accéder une deuxieme fois à cette offre
-                    if($typeAbonnement[0]->nom_type == "Gratuit"){
-                        return back()->with('erreur_abonnement','Vous ne pouvez plus choisir une deuxième fois cette offre');
-                    }
-                    // si l'utilisateur choisi une autre offre
-                    else{
+                    // if($typeAbonnement[0]->nom_type == "Gratuit"){
+                    //     return back()->with('erreur_abonnement','Vous ne pouvez plus choisir une deuxième fois cette offre');
+                    // }
+                    // // si l'utilisateur choisi une autre offre
+                    // else{
                         $type_abonnement = $etp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
-                    }
+                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                    // }
 
                 }
                 //si le dernnier abonnement n'est pas gratuit
@@ -531,13 +524,13 @@ class AbonnementController extends Controller
                         else{
                             if($etp_ab == null) $type_abonnement = "Gratuit";
                             else $type_abonnement = $etp_ab[0]->nom_type;
-                            return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                            return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
                         }
                     }
                     else{
                         if($etp_ab == null) $type_abonnement = "Gratuit";
                         else $type_abonnement = $etp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                        return view('superadmin.index_abonnement', compact('type_abonnement','etp_ab', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
                     }
 
                 }
@@ -546,7 +539,7 @@ class AbonnementController extends Controller
             else{
                 $type_abonnement = "Gratuit";
                 $cfps = null;
-                return view('superadmin.index_abonnement', compact('entreprise','type_abonnement','categorie_paiement_id', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                return view('superadmin.index_abonnement', compact('entreprise','type_abonnement', 'cfps', 'typeAbonnement'));
             }
         }
 
@@ -638,9 +631,8 @@ class AbonnementController extends Controller
         if ($cfp_id == null) {
             $abonnement->date_demande = $dt;
             $abonnement->status = "En attente";
-            $abonnement->type_abonnement_role_id = $request->type_abonnement_role_id;
+            $abonnement->type_abonnement_id = $request->type_abonnement_role_id;
             $abonnement->entreprise_id = $entreprise_id;
-            $abonnement->categorie_paiement_id = $request->catg_id;
             $abonnement->activite = 0;
             $abonnement->type_arret = "";
             $abonnement->save();
@@ -659,9 +651,8 @@ class AbonnementController extends Controller
         if ($entreprise_id == null) {
             $abonnement_cfp->date_demande = $dt;
             $abonnement_cfp->status = "En attente";
-            $abonnement_cfp->type_abonnement_role_id = $request->type_abonnement_role_id;
+            $abonnement_cfp->type_abonnement_id = $request->type_abonnement_role_id;
             $abonnement_cfp->cfp_id = $cfp_id;
-            $abonnement_cfp->categorie_paiement_id = $request->catg_id;
             $abonnement_cfp->activite = 0;
             $abonnement_cfp->type_arret = "";
             $abonnement_cfp->save();
@@ -976,6 +967,7 @@ class AbonnementController extends Controller
         return response()->json($tri_nom);
     }
     /** MODIFICATION TYPE D'ABONNEMENT */
+    //of
     public function modifier_abonnement_of($id){
         $abonnement = $this->fonct->findWhereMulitOne("type_abonnements_of",["id"],[$id]);
         return view('superadmin.modifier_type',compact('abonnement'));
@@ -986,7 +978,7 @@ class AbonnementController extends Controller
         $prix = $request->prix;
         $illimite_utilisateur = $request->illimite_utilisateur;
         $illimite_of = $request->illimite_of;
-        if($illimite_utilisateur!=null){
+        if($illimite_utilisateur==null and $request->nb_utilisateur!=null and $request->nb_formateur!=null){
             $nb_utilisateur = $request->nb_utilisateur;
             $nb_formateur = $request->nb_formateur;
             $illimite = 0;
@@ -996,13 +988,46 @@ class AbonnementController extends Controller
             $nb_formateur = 0;
             $illimite = 1;
         }
-        if($illimite_of!=null){
+        if($illimite_of==null and $request->nb_projet!=null){
             $nb_projet = $request->nb_projet;
         }
         else{
             $nb_projet = 0;
         }
-        DB::update('update type_abonnements_of set nom_type = ?, tarif = ?, nb_utilisateur = ?,nb_formateur = ?,nb_projet = ?,illimite = ? where id = ?', [$nom_type,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite]);
+        DB::update('update type_abonnements_of set nom_type = ?, tarif = ?, nb_utilisateur = ?,nb_formateur = ?,nb_projet = ?,illimite = ? where id = ?', [$nom_type,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite,$id]);
+        return redirect()->route('listeAbonne');
+    }
+    //entreprise
+    public function modifier_abonnement_entreprise($id){
+        $abonnement = $this->fonct->findWhereMulitOne("type_abonnements_etp",["id"],[$id]);
+        return view('superadmin.modifier_type_etp',compact('abonnement'));
+    }
+    public function enregistrer_modification_abonnement_etp(Request $request,$id){
 
+        $nom_type = $request->nom_type;
+        $description = $request->description;
+        $prix = $request->prix;
+        $illimite_utilisateur = $request->illimite_utilisateur;
+        $illimite_etp = $request->illimite_etp;
+        if($illimite_utilisateur==null and $request->nb_utilisateur!=null and $request->nb_formateur!=null){
+            $nb_utilisateur = $request->nb_utilisateur;
+            $nb_formateur = $request->nb_formateur;
+            $illimite = 0;
+        }
+        else{
+            $nb_utilisateur = 0;
+            $nb_formateur = 0;
+            $illimite = 1;
+        }
+        if($illimite_etp==null and $request->min_emp!=null and $request->max_emp!=null){
+            $min_emp = $request->min_emp;
+            $max_emp = $request->max_emp;
+        }
+        else{
+            $min_emp = 0;
+            $max_emp = 0;
+        }
+        DB::update('update type_abonnements_etp set nom_type = ?, tarif = ?, nb_utilisateur = ?,nb_formateur = ?,min_emp = ?,max_emp = ?,illimite = ? where id = ?', [$nom_type,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite,$id]);
+        return redirect()->route('listeAbonne');
     }
 }

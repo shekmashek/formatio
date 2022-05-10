@@ -470,8 +470,8 @@ class HomeController extends Controller
                 // $abn =type_abonnement::all();
 
                 $typeAbonne_id = 1;
-                $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
-                $name = DB::select('select nom_type from type_abonnements where id = ?', [$typeAbonnement]);
+                // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
+                $name = DB::select('select nom_type from v_type_abonnement_etp where entreprise_id = ? order by abonnement_id desc limit 1', [$entreprise_id]);
 
 
                 if ($id != null) {
@@ -1106,14 +1106,14 @@ public function recherche_cfp(Request $request,$page = null)
     // {
     //     DB::delete('delete from valeur_TVA where id = ?', [$id]);
     //     return back();
-    
+
     //enregistrer taxe
     // public function taxe_enregistrer(Request $request)
-    // {    
+    // {
     //     $inserer = DB::update('update taxes set pourcent=? where id=?', [$request->tva,1]);
     //     return back();
     // }
-   
+
     //devise
     public function getDevise()
     {
@@ -1123,7 +1123,7 @@ public function recherche_cfp(Request $request,$page = null)
     }
 
     public function devise(){
-    
+
         // $liste=DB::select('select * from devises ');
         // $devises=DB::select('select * from v_devise order by created_at Desc ');
         // $taux=DB::select('select * from taux_devises ');

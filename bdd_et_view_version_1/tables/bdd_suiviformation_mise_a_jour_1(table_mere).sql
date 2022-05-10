@@ -206,19 +206,7 @@ CREATE TABLE reseaux_sociaux (
 
 alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL;
 alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
-CREATE TABLE `abonnement_cfps` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date DEFAULT current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
-  `mode_paiement` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type_abonnement_role_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  `categorie_paiement_id` bigint(20) UNSIGNED NOT NULL REFERENCES categorie_paiements(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 CREATE TABLE responsables_cfp(

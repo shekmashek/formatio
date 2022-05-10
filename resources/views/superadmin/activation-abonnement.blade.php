@@ -96,7 +96,7 @@
                                         @endif
 
                                     </ul>
-                                    <button class="btn btn-primary"><a href="">Modifier</a></button>
+                                    <button class="btn btn-primary"><a href="{{route('modifier_abonnement_entreprise',$types_etp->id)}}">Modifier</a></button>
                                 </div>
                             </div>
                         @endforeach
