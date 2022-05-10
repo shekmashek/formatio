@@ -126,7 +126,7 @@
         }elseif ($info->difference != null && $info->nb_detail > 1) {
             echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
         }
-    @endphp  
+    @endphp
     </span>
     @canany(['isCFP'])
     <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
@@ -261,9 +261,9 @@
                                             <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
                                                 <option>Choississez votre salle de formation&hellip;</option>
                                                 @foreach ($salle_formation as $salle)
-                                                    <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
+                                                    <option value="{{ $salle->ville.',  '.$salle->salle_formation }}">{{ $salle->ville.', '.$salle->salle_formation }}</option>
                                                 @endforeach
-                                                <option class="ajout_salle" value="ajout">Ajouter une autre salle</option>
+                                                {{-- <option class="ajout_salle" value="ajout">Ajouter une autre salle</option> --}}
                                             </select>
                                         <button id="removeRow" type="button"><i
                                                 class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button>
@@ -371,6 +371,7 @@
                                         <th>CFP</th>
                                     @endcanany
                                     <th>Module</th>
+                                    <th>Ville</th>
                                     <th width="30%">Salle de formation</th>
                                     <th>Date</th>
                                     <th>Début</th>
@@ -391,7 +392,11 @@
                                                 <td>{{ $d->nom_cfp }}</td>
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>
-                                            <td>{{ $d->lieu }}</td>
+                                            @php
+                                                $salle = explode(",  ",$d->lieu);
+                                            @endphp
+                                            <td>{{ $salle[0] }}</td>
+                                            <td>{{ $salle[1] }}</td>
                                             <td>{{ $d->date_detail }}</td>
                                             <td>{{ $d->h_debut }} h</td>
                                             <td>{{ $d->h_fin }} h</td>
@@ -568,7 +573,7 @@
                                                 <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
                                                     <option>Choississez votre salle de formation&hellip;</option>
                                                     @foreach ($salle_formation as $salle)
-                                                        <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
+                                                        <option value="{{ $salle->ville.',  '.$salle->salle_formation }}">{{ $salle->ville.', '.$salle->salle_formation }}</option>
                                                     @endforeach
                                                 </select>
 

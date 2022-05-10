@@ -470,8 +470,8 @@ class HomeController extends Controller
                 // $abn =type_abonnement::all();
 
                 $typeAbonne_id = 1;
-                $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
-                $name = DB::select('select nom_type from type_abonnements where id = ?', [$typeAbonnement]);
+                // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
+                // $name = DB::select('select nom_type from type_abonnements where id = ?', [$typeAbonnement]);
 
 
                 if ($id != null) {
@@ -480,7 +480,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+                return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
             }
         }
 
@@ -1106,14 +1106,14 @@ public function recherche_cfp(Request $request,$page = null)
     // {
     //     DB::delete('delete from valeur_TVA where id = ?', [$id]);
     //     return back();
-    
+
     //enregistrer taxe
     // public function taxe_enregistrer(Request $request)
-    // {    
+    // {
     //     $inserer = DB::update('update taxes set pourcent=? where id=?', [$request->tva,1]);
     //     return back();
     // }
-   
+
     //devise
     public function getDevise()
     {
@@ -1123,7 +1123,7 @@ public function recherche_cfp(Request $request,$page = null)
     }
 
     public function devise(){
-    
+
         // $liste=DB::select('select * from devises ');
         // $devises=DB::select('select * from v_devise order by created_at Desc ');
         // $taux=DB::select('select * from taux_devises ');
