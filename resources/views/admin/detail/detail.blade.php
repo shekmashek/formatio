@@ -126,7 +126,7 @@
         }elseif ($info->difference != null && $info->nb_detail > 1) {
             echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
         }
-    @endphp  
+    @endphp
     </span>
     @canany(['isCFP'])
     <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
@@ -371,7 +371,7 @@
                                         <th>CFP</th>
                                     @endcanany
                                     <th>Module</th>
-                                    <th>ville</th>
+                                    <th>Ville</th>
                                     <th width="30%">Salle de formation</th>
                                     <th>Date</th>
                                     <th>Début</th>
@@ -393,7 +393,7 @@
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>
                                             @php
-                                                $salle = explode(", ",$d->lieu);
+                                                $salle = explode(",  ",$d->lieu);
                                             @endphp
                                             <td>{{ $salle[0] }}</td>
                                             <td>{{ $salle[1] }}</td>
