@@ -825,3 +825,8 @@ font-size: 0.850rem;
     font-weight: 500;
 }
 
+.icon_modif{
+    position: relative;
+    bottom: .35rem;
+}
+

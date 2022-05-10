@@ -136,10 +136,25 @@ a:hover{
 .icon_infos{
     font-size: 5rem;
     position: relative;
-    color: #63738162;
+    color: #7635dc;
     left: 5px;
     top: 30px;
+}
 
+.icon_infos2{
+    font-size: 5rem;
+    position: relative;
+    color: #26a0da;
+    left: 5px;
+    top: 30px;
+}
+
+.icon_infos3{
+    font-size: 5rem;
+    position: relative;
+    color: #2ebf91;
+    left: 5px;
+    top: 30px;
 }
 
 .second_col{
@@ -157,4 +172,8 @@ a:hover{
 }
 .borderBotom_color3{
     border-bottom: 3px solid #2ebf91;
+}
+
+a:focus{
+    text-decoration: none;
 }

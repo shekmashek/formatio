@@ -460,7 +460,7 @@ ul li a {
     transition: 0.5s;
     padding: 0.5rem;
     margin-left: 0.1rem;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 1px 1px 0px;
 }
 
 .header_toggle {
@@ -778,6 +778,11 @@ input:-webkit-autofill:active {
     padding: .5rem auto;
 }
 
+.btn_vous:hover{
+    background: #6373812a;
+    color: inherit !important;
+}
+
 .btn_creer_trie{
     background-color: white;
     border: none;
@@ -795,6 +800,10 @@ input:-webkit-autofill:active {
     bottom: .2rem;
 }
 
+.btn_creer a:hover{
+    color: inherit;
+}
+
 .btn_creer_trie:hover{
     background: #6373812a;
     color: blue;
@@ -802,7 +811,7 @@ input:-webkit-autofill:active {
 
 .btn_creer:hover{
     background: #6373812a;
-    color: blue;
+    color: inherit !important;
 }
 
 /* .btn_creer:focus{
@@ -821,12 +830,12 @@ input:-webkit-autofill:active {
     margin-right: .3rem;
 }
 
-.icones_creer{
-    /* background-image: linear-gradient(140deg, #cbcbcb, #474747); */
-    background-color: #637381;
+.icon_creer_admin{
+    /* background-image: linear-gradient(140deg, #cbcbcb, #474747);
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
+    color: transparent; */
+    color: #637381;
     font-size: 1.5rem;
     position: relative;
     top: .4rem;
@@ -839,7 +848,7 @@ input:-webkit-autofill:active {
 } */
 
 .icon_plus{
-    color: #7635dc;
+    color: #637381;
 }
 
 .text_apprendre{

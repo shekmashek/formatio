@@ -588,8 +588,28 @@ class ModuleController extends Controller
         );
     }
 
-    public function recherche_ref_nomMod_frmt(){
-
+    public function edit_name_module(Request $request){
+        $id = $request->id;
+        $nom = $request->nom_module;
+        DB::update('update modules set nom_module = ? where id = ?',[$nom, $id]);
+        return back();
     }
-
+    public function edit_description(Request $request){
+        $id = $request->id;
+        $description = $request->description;
+        DB::update('update modules set description = ? where id = ?',[$description, $id]);
+        return back();
+    }
+    public function edit_detail(Request $request){
+        $id = $request->id;
+        $jour = $request->jour;
+        $heure = $request->heure;
+        $modalite = $request->modalite;
+        $niveau = $request->niveau;
+        $reference = $request->reference;
+        $prix = $request->prix;
+        $prix_groupe = $request->prix_groupe;
+        DB::update('update modules set duree_jour = ?, duree = ?, modalite_formation = ?, reference = ?, prix = ?, prix_groupe = ?, niveau_id = ?  where id = ?',[$jour,$heure,$modalite,$reference,$prix,$prix_groupe,$niveau, $id]);
+        return back();
+    }
 }

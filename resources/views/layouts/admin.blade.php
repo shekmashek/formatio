@@ -608,10 +608,10 @@
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer pb-3">
                         @can('isStagiaire')
 
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -620,10 +620,10 @@
                         @endcan
                         @can('isManager')
 
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -632,10 +632,10 @@
                         @endcan
                         @can('isReferent')
 
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-12 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -644,10 +644,10 @@
 
                         @endcan
                         @can('isCFP')
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-end apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -655,14 +655,14 @@
 
                         @endcan
 
-                             <div class="">
+                        <div class="">
                             @can('isManager')
                             <div class="btn_creer dropdown">
 
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                     data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none"
                                     aria-haspopup="true">
-                                    <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                    <i class='bx bx-plus-medical icon_creer_admin'></i>Créer
                                 </a>
 
                                 <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
@@ -686,7 +686,7 @@
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                         data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                         style="text-decoration: none">
-                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                        <i class='bx bx-plus-medical icon_creer_admin'></i>Créer
 
                                     </a>
 
@@ -762,7 +762,7 @@
                                     <a class="dropdown-toggle ms-2" href="#" role="button" id="dropdownMenuLink"
                                         data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                         style="text-decoration: none">
-                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                        <i class='bx bx-plus-medical icon_creer_admin'></i>Créer
 
                                     </a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
@@ -812,7 +812,7 @@
 
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class='bx bxs-cog icones_creer'></i>
+                                            <i class='bx bxs-cog icon_creer_admin'></i>
                                             Paramètres
                                         </a>
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">

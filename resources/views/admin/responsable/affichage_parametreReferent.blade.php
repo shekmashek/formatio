@@ -35,26 +35,30 @@
 
         </div>
         <div class="col-3 second_col">
-            <div class="row text-end p-0">
-                <i class='bx bxs-component icon_infos p-0'></i>
-            </div>
-            <div class="row ps-2 ">
-                <p class="nb_modules m-0 p-0">{{count($projets_counts)}}</p>
-                <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Projets</p>
-            </div>
+            <a href="{{route('liste_projet')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-component icon_infos p-0'></i>
+                </div>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($projets_counts)}}</p>
+                    <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Projets</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-3 second_col">
+            <a href="{{route('liste_participant')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-user-detail icon_infos2 p-0'></i>
+                </div>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($stagiaires_counts)}}</p>
+                    <p class="text-muted borderBotom_color2 p-0 pb-2 text-uppercase">Stagiaires</p>
+                </div>
+            </a>
         </div>
         <div class="col-3 second_col">
             <div class="row text-end p-0">
-                <i class='bx bxs-user-detail icon_infos p-0'></i>
-            </div>
-            <div class="row ps-2 ">
-                <p class="nb_modules m-0 p-0">{{count($stagiaires_counts)}}</p>
-                <p class="text-muted borderBotom_color2 p-0 pb-2 text-uppercase">Stagiaires</p>
-            </div>
-        </div>
-        <div class="col-3 second_col">
-            <div class="row text-end p-0">
-                <i class='bx bxs-user-pin icon_infos p-0'></i>
+                <i class='bx bxs-user-pin icon_infos3 p-0'></i>
             </div>
             <div class="row ps-2 ">
                 <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
@@ -63,24 +67,32 @@
         </div>
         <div class="row row_bas g-0">
             <div class="col third_col py-2">
-                <p class="text-muted text-center m-1 txt_row_bas">Sessions</p>
-                <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projets_counts)}}</p>
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Sessions</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projets_counts)}}</p>
+                </a>
             </div>
             <div class="col third_col py-2">
                 <p class="text-muted text-center m-1 txt_row_bas">Modules Internes</p>
                 <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($modulesInternes_counts)}}</p>
             </div>
             <div class="col third_col py-2">
-                <p class="text-muted text-center m-1 txt_row_bas">Projets inter</p>
-                <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetInter_counts)}}</p>
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Projets inter</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetInter_counts)}}</p>
+                </a>
             </div>
             <div class="col third_col py-2">
-                <p class="text-muted text-center m-1 txt_row_bas">Projet Intra</p>
-                <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetIntra_counts)}}</p>
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Projet Intra</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetIntra_counts)}}</p>
+                </a>
             </div>
             <div class="col third_col py-2">
-                <p class="text-muted text-center m-1 txt_row_bas">Organisme Collaborés</p>
-                <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($cfp_counts)}}</p>
+                <a href="{{route('list_cfp')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Organisme Collaborés</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($cfp_counts)}}</p>
+                </a>
             </div>
         </div>
     </div>

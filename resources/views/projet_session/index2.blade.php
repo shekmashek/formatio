@@ -13,7 +13,6 @@
             border-radius: 1rem;
             background-color: #637381;
             color: white;
-            align-items: center margin: 0 auto;
         }
 
         .status_reprogrammer {
@@ -66,46 +65,6 @@
             align-items: center margin: 0 auto;
         }
 
-        /* .filter{
-        position: relative;
-        bottom: .5rem;
-        float: right;
-    } */
-        .btn_creer {
-            background-color: white;
-            border: none;
-            border-radius: 30px;
-            padding: .2rem 1rem;
-            color: black;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-        }
-
-        .btn_creer a {
-            font-size: .8rem;
-            position: relative;
-            bottom: .2rem;
-        }
-
-        .btn_creer:hover {
-            background: #6373812a;
-            color: blue;
-        }
-
-        .btn_creer:focus {
-            color: blue;
-            text-decoration: none;
-        }
-
-        .icon_creer {
-            background-image: linear-gradient(60deg, #f206ee, #0765f3);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            font-size: 1.5rem;
-            position: relative;
-            top: .4rem;
-            margin-right: .3rem;
-        }
 
         .pagination {
             background-clip: text;
@@ -283,7 +242,7 @@
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
                                                                 {{ $pj->item_status_groupe }}</p>
-                                                                
+
                                                         </td>
                                                         <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                                         @if ($prj->type_formation_id == 1)
@@ -881,13 +840,11 @@
                                         <td>{{ $pj->nom_projet }}</td>
                                         <td>
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button
-                                                        class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0"><button class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
@@ -947,17 +904,15 @@
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
-                                    <tr class="m-0">
+                                    <tr>
                                         <td>{{ $pj->nom_projet }}</td>
-                                        <td>
+                                        <td style="vertical-align: middle">
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button
-                                                        class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0 "><button class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
@@ -969,10 +924,10 @@
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         <td>{{ $pj->modalite }}</td>
                                         <td>
-                                            <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}
+                                            <p class="{{ $pj->class_status_groupe }} m-0">{{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
-                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 afficher_pdf"><i class="bx bxs-file-pdf" role="button"></i>PDF</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -16,12 +16,10 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">
-                <a href="#enCours" class="nav-link active" data-toggle="tab">Programme à
-                    Compléter&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
+                <a href="#enCours" class="nav-link active" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
             </li>
             <li class="nav-item">
-                <a href="#nonPublies" class="nav-link" data-toggle="tab">Compétence à
-                    compléter&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
+                <a href="#nonPublies" class="nav-link" data-toggle="tab">Configurer Compétence&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
             </li>
             <li class="nav-item">
                 <a href="#publies" class="nav-link" data-toggle="tab">Votre
@@ -80,7 +78,7 @@
                                                             class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                                         @endif
                                                     </div>
-                                                    <div class="col-6 ms-3 w-100">
+                                                    <div class="col-6 w-100">
                                                         <p class="m-0">
                                                             <span class="new_module_prix">
                                                                 @php
@@ -245,7 +243,7 @@
                                                             class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                                         @endif
                                                     </div>
-                                                    <div class="col-6 ms-3 w-100">
+                                                    <div class="col-6 w-100">
                                                         <p class="m-0">
                                                             <span class="new_module_prix">
                                                                 @php
@@ -300,31 +298,30 @@
                                             </div>
 
                                         </div>
-                                        <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-between text-center py-1">
+                                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-center text-center py-1">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-3" id="preview_niveau">
+                                            {{-- <div class="col-3" id="preview_niveau">
                                                 <button class="btn modifier pt-0"><a
                                                         href="{{route('modifier_module_prog',$mod->module_id)}}"><i
                                                             class='bx bx-edit background_grey'
                                                             style="color: #0052D4 !important;font-size: 15px"
                                                             title="modifier les informations"></i></a></button>
-                                            </div>
-                                            <div class="col-3" id="preview_niveau">
+                                            </div> --}}
+                                            <div class="" id="preview_niveau">
                                                 <button class="btn modifier_prog pt-0"><a
                                                         href="{{route('modif_programmes',$mod->module_id)}}"><i
                                                             class='bx bx-edit-alt background_grey4'
                                                             style="color: #801d68 !important;font-size: 15px"
                                                             title="modifier les programmes"></i></a></button>
                                             </div>
-                                            <div class="col-3" id="preview_niveau">
+                                            <div class="" id="preview_niveau">
                                                 <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal_{{$mod->module_id}}"><i
                                                         class="bx bx-trash background_grey2"
                                                         style="color: #ff0000 !important;font-size: 15px"
                                                         title="supprimer le module"></i></button>
                                             </div>
-                                            <div class="col-3" id="preview_niveau">
+                                            <div class="" id="preview_niveau">
                                                 <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
                                                     data-bs-toggle="modal" data-bs-target="#ModalAffichage"
                                                     id="{{$mod->module_id}}"><i
@@ -489,7 +486,7 @@
                                                         class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                                     @endif
                                                 </div>
-                                                <div class="col-6 ms-3 w-100">
+                                                <div class="col-6 w-100">
                                                     <p class="m-0">
                                                         <span class="new_module_prix">
                                                             @php

@@ -230,6 +230,18 @@
     font-size: 0.875rem;
 }
 
+tbody tr{
+    vertical-align: middle !important;
+}
+
+.afficher_pdf{
+    display: none !important;
+}
+
+.tbody_projet tr:hover .afficher_pdf{
+    display: block !important;
+}
+
 .tbody_projet {
     text-align: center;
     font-size: 0.875rem;
@@ -246,19 +258,19 @@
 
 .tbody_projet a {
     padding: 0.3rem;
-    background-color: #7535dc2d;
+    background-color: #5433FF;
     border-radius: 5px;
     cursor: pointer;
     transition: all .5ms ease;
-    color: #7635dc;
+    color: white;
     position: relative;
     /* top: 5px; */
 }
 
 .tbody_projet a:hover {
-    background-color: #63738131;
-    color: #7635dc;
-    transform: scale(1.05);
+    background-color: white;
+    border: 1px solid #5433FF;
+    color: #5433FF;
 }
 .centrer_edit{
     display: grid;
@@ -304,8 +316,6 @@
     font-size: 0.85rem;
     background-color: rgba(255, 255, 255, 0.822);
     border-radius: 5px;
-    cursor: pointer;
-    transition: all 200ms;
     color: black;
     border: none;
     box-shadow: none;
@@ -313,7 +323,7 @@
 }
 
 .filtre_projet:hover {
-    color: #7635dc;
+    color: black;
 }
 
 .filtre_appliquer {
@@ -383,28 +393,35 @@
     padding: 0.2rem;
     padding-left: 0.4rem;
     font-size: 0.85rem;
-    background-color: rgba(222, 222, 222, 0.822);
+    background-color: #2193b0;
     border-radius: 5px;
-    cursor: pointer;
     transition: all 200ms;
-    color: black;
+    color: white;
     border: none;
     box-shadow: none;
     outline: none;
-    cursor: none;
+    position: relative;
+    top: 10px;
 }
+
+.type_intra:hover,
+.type_inter:hover{
+    cursor: default;
+}
+
 .type_inter{
     padding: 0.2rem;
     padding-left: 0.4rem;
     font-size: 0.85rem;
-    background-color: rgb(136, 136, 136);
+    background-color: #2ebf91;
     border-radius: 5px;
     transition: all 200ms;
     color: rgb(255, 255, 255);
     border: none;
     box-shadow: none;
     outline: none;
-    cursor: default;
+    position: relative;
+    top: 10px;
 }
 .projet_formation{
     padding: 0.2rem;

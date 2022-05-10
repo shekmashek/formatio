@@ -52,3 +52,6 @@ recréer vue v_programme dans bdd_suiviformation_view_2(view)
 recréer vue v_exportcatalogue dans bdd_suiviformation_view_2(view)
 
 recréer vue v_groupe_projet_entreprise_module dans modification_views_projet.sql
+
+------- 10 mai --------------
+creation copie coller bdd_suiviformation_mise_a_jour_12(formation interne entreprise)

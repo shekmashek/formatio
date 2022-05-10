@@ -387,6 +387,11 @@ Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('a
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
 
+// ==================== modifications modules ========================//
+Route::post('modification_nom_module/{id}','ModuleController@edit_name_module')->name('modification_nom_module');
+Route::post('modification_description/{id}','ModuleController@edit_description')->name('modification_description');
+Route::post('modification_detail/{id}','ModuleController@edit_detail')->name('modification_detail');
+
 
 
 // affichage info OF

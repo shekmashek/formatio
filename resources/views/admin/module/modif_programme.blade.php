@@ -3,6 +3,7 @@
     <h3 class="text_header m-0 mt-1">Modification programme</h3>
 @endsection
 @section('content')
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
 <div class="row navigation_detail">
@@ -27,10 +28,11 @@
         <div class="row justify-content-space-between py-3 px-5" id="border_premier">
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
+                    <h5 class="text-success">Pour faire vos modifications cliquer sur l'icone modifier &nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h5>
                     @foreach ($infos as $res)
-                    <h4 class="py-4">{{$res->nom_module}}</h4>
+                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h4>
                     <p class="text_black">{{$res->nom_formation}} </p>
-                    <p class="text_black">{{$res->description}}</p>
+                    <p class="text_black">{{$res->description}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bxs-message-square-edit icon_creer' title="modifier description module"></i></span></p>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                         <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
@@ -73,8 +75,14 @@
                 <div class="col"><i class='bx bx-receipt bx_icon'></i><span
                     class="text_black">&nbsp;{{ $res->reference }}</span>
                 </div>
-                <div class="col">{{$devise->devise}}
-                    <span class="text_black text_prix">&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;</span>&nbsp;HT</span>
+                <div class="col">
+                    {{$devise->devise}}<span class="text_black text_prix">&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}&nbsp;</span>&nbsp;HT</span>
+                </div>
+                <div class="col">
+                    {{$devise->devise}}<span class="text_black text_prix">&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}&nbsp;</span>&nbsp;HT</span>
+                </div>
+                <div class="col">
+                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bxs-message-square-edit icon_creer' title="modifier details module"></i></span>
                 </div>
             </div>
         </div>
@@ -83,7 +91,7 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3">Objectifs de la formation</h3>
+                <h3 class="pb-3">Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></h3>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
                         <p>{{$res->objectif}}</p>
@@ -470,12 +478,182 @@
                     <?php $i++ ?>
                 </div>
             </div>
-            {{-- modal competence ajouter --}}
-
+            {{-- modal modification --}}
+            <div>
+                {{-- modification nom_module --}}
+                <div>
+                    <div class="modal" id="nom_module" aria-labelledby="nom_module" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="{{route('modification_nom_module',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Nom module</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control module module input" name="nom_module" required value="{{$res->nom_module}}" placeholder="Nom module" >
+                                            <label for="nom_module" class="form-control-placeholder">Nom module</label>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+                {{-- modification description --}}
+                <div>
+                    <div class="modal" id="description" aria-labelledby="description" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="{{route('modification_description',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Déscription module</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control module module input" name="description" required value="{{$res->description}}" placeholder="Déscription module" >
+                                            <label for="description" class="form-control-placeholder">Déscription</label>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modification detail --}}
+                <div>
+                    <div class="modal" id="refs" aria-labelledby="refs" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="{{route('modification_detail',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Détail module</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control jour input" id="jour" name="jour" min="1" max="365" onfocus="(this.type='number')" title="modifier durée en jours" value="{{$res->duree_jour}}" placeholder="Durée en Jours (J)" required>
+                                            <label for="acf-jour" class="form-control-placeholder">Durée en Jours (J)</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control jour input" id="heure" name="heure" min="1" max="8760" onfocus="(this.type='number')" title="modifier durée en heure" value="{{$res->duree}}" placeholder="Durée en Heure (H)" required>
+                                            <label for="acf-jour" class="form-control-placeholder">Durée en Heure (H)</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control select_formulaire modalite modalite input mt-3" id="modalite" name="modalite" style="height: 50px;">
+                                                @if($res->modalite_formation == 'En ligne')
+                                                <option value="{{$res->modalite_formation}}" selected>
+                                                    {{$res->modalite_formation}}</option>
+                                                <option value="Presentiel">Présentiel</option>
+                                                <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                @endif
+                                                @if($res->modalite_formation == 'Presentiel')
+                                                <option value="En ligne">En ligne</option>
+                                                <option value="{{$res->modalite_formation}}" selected>
+                                                    {{$res->modalite_formation}} </option>
+                                                <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                @endif
+                                                @if($res->modalite_formation == 'En ligne/Presentiel')
+                                                <option value="En ligne">En ligne</option>
+                                                <option value="Presentiel">Présentiel</option>
+                                                <option value="{{$res->modalite_formation}}" selected>
+                                                    {{$res->modalite_formation}} </option>
+                                                @endif
+                                            </select>
+                                            <label for="acf-modalite" class="form-control-placeholder">Modifier la modalite de formation...</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control select_formulaire niveau niveau input mt-3" id="niveau" name="niveau" style="height: 50px;">
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                @foreach($niveau as $nv)
+                                                <option value="{{$nv->id}}" data-value="{{$nv->niveau}}">
+                                                    {{$nv->niveau}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="acf-modalite" class="form-control-placeholder">Modifier le niveau</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control module module input" name="reference" required value="{{$res->reference}}" placeholder="Référence module" >
+                                            <label for="reference" class="form-control-placeholder">Référence</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control module module input" name="prix" required value="{{$res->prix}}" onfocus="(this.type='number')" placeholder="Prix module" >
+                                            <label for="prix" class="form-control-placeholder">Prix en {{$devise->devise}}</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control module module input" name="prix_groupe" required value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
+                                            <label for="prix_groupe" class="form-control-placeholder">Prix groupe en {{$devise->devise}}</label>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modification detail --}}
+                <div>
+                    <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="{{route('modification_detail',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Objectif de la formation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <textarea id="objectif_text" name="objectif" value="{{$res->objectif}}"></textarea>
+                                            <p>Hello World!</p>
+  <p>Some initial <strong>bold</strong> text</p>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
+<script>
+    let container = document.getElementById("objectif_text");
+    let options = {
+        debug: 'info',
+        modules: {
+            toolbar: '#toolbar'
+        },
+        placeholder: 'Compose an epic...',
+        readOnly: true,
+        theme: 'snow'
+    };
+    let editor = new Quill(container, options);
+</script>
 @endsection
