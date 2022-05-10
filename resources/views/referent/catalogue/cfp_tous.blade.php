@@ -25,8 +25,8 @@
             @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
 
             {{-- -------- --}}
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' pt-1></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' pt-1></i></a>
 
             @else
             {{-- -------- --}}
@@ -47,8 +47,8 @@
             @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
 
             {{-- -------- --}}
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' pt-1></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' pt-1></i></a>
 
             @else
             {{-- -------- --}}
@@ -68,8 +68,8 @@
             @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
 
             {{-- -------- --}}
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination' pt-1></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination' pt-1></i></a>
 
             @else
             {{-- -------- --}}
@@ -109,8 +109,8 @@
             @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
 
             {{-- -------- --}}
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination' pt-1></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination' pt-1></i></a>
 
             @else
             {{-- -------- --}}
@@ -118,6 +118,14 @@
             <a href="{{ route('annuaire',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
             @endif
+            @endif
+
+            @if(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+            <a href="{{route('annuaire')}}" class="btn_creer text-center filter  mx-2" role="button">
+                filtre activé <i class="fas fa-times"></i> </a>
+              @elseif(isset($nom_entiter))
+            <a href="{{route('annuaire')}}" class="btn_creer text-center filter  mx-2" role="button">
+                filtre activé <i class="fas fa-times"></i> </a>
             @endif
 
             <a href="#" class="btn_creer text-center filter mx-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
@@ -142,7 +150,7 @@
                     @foreach ($cfps as $cfp)
                     <div class="row detail_content mb-5">
                         <div class="col-2 logo_content">
-                            <a href="{{route('detail_cfp',$cfp->id)}}"><img src="{{asset(" images/CFP/".$cfp->logo)}}" alt="logo" class="img-fliud logo_img"></a>
+                            <a href="{{route('detail_cfp',$cfp->id)}}"><img src="{{asset("images/CFP/".$cfp->logo)}}" alt="logo" class="img-fliud logo_img"></a>
                         </div>
                         <div class="col-10 ">
                             <div class="row">
@@ -212,7 +220,7 @@
         <div class="filtrer mt-3">
             <div class="row">
                 <div class="col">
-                    <p class="m-0">Filtrer les organismes de formation</p>
+                    <p class="m-0">Filtre</p>
                 </div>
                 <div class="col text-end">
                     <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
@@ -260,20 +268,65 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
+
+    function getDataRequetTrie(idName, id_alpha) {
+
+        var dataValiny = {};
+
+        @php
+        if (isset($quartier) && isset($ville) && isset($code_postal) && isset($region)) {
+            @endphp
+
+            dataValiny = {
+                Alpha: id_alpha
+                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+                , quartier: "@php echo $quartier;@endphp"
+                , ville: "@php echo $ville;@endphp"
+                , code_postal: "@php echo $code_postal;@endphp"
+                , region: "@php echo $region;@endphp"
+            };
+
+            @php
+        } else if (isset($nom_entiter)) {
+            @endphp
+            dataValiny = {
+                Alpha: id_alpha
+                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+                , nom_entiter: "@php echo $nom_entiter;@endphp"
+            };
+                @php
+        } else {
+            @endphp
+
+            dataValiny = {
+                Alpha: id_alpha
+                , nb_pagination: @php echo $pagination["debut_aff"];@endphp
+            };
+            @php
+        }
+        @endphp
+
+        return dataValiny;
+    }
+
     $(document).ready(function() {
         $(".lien_filtre").click(function(e) {
             let id_alpha = e.target.id;
-
+            var dataValue = getDataRequetTrie(".lien_filtre", id_alpha);
+            console.log(JSON.stringify(dataValue));
+            /*
+            data: {
+                    Alpha: id_alpha
+                , }
+            */
             $.ajax({
                 method: "get"
                 , url: "{{route('alphabet_filtre')}}"
-                , data: {
-                    Alpha: id_alpha
-                , }
+                , data: dataValue
                 , dataType: "html"
                 , success: function(response) {
                     let userData = JSON.parse(response);
-
+console.log(JSON.stringify(response));
                     if (userData != null || undefined) {
                         let html = '';
 

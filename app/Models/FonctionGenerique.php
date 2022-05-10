@@ -355,6 +355,7 @@ class FonctionGenerique extends Model
             }
 
             $query2 .= " LIMIT ".$nb_limit." OFFSET ".($nbPag-1).") AS t2";
+   //   $query2 .= ") AS t2"; // vao2
 
             $query = $query1." ".$query2;
             $query .= "  ORDER BY ";
@@ -366,6 +367,9 @@ class FonctionGenerique extends Model
                 }
             }
             $query.=" ".$order;
+
+            // vao2
+          //  $query.=" LIMIT ".$nb_limit." OFFSET ".($nbPag-1)."";
             return $query;
         }
     }
@@ -407,8 +411,6 @@ class FonctionGenerique extends Model
 
     public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
     {
-
-        // $nbPag= ($nbPag-1);
         $data =  DB::select($this->queryWhereTrieOrderBy($nomTab, $para, $opt, $val, $tabOrderBy, $order, $nbPag, $nb_limit), $val);
         return $data;
     }
